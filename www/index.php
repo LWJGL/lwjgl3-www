@@ -116,7 +116,8 @@ $(document).ready(function () {
 	});
 
 	$(window).resize(repaint);
-	repaint();
+	$(window).ready(repaint);
+	setTimeout(repaint, 0);
 });
 </script>
 <?
