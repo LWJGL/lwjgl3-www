@@ -129,7 +129,7 @@ ob_end_clean();
 
 <section id="video-container">
 <?
-if (!$detect->isMobile() && !$detect->isTablet() && false) {
+if (!$detect->isMobile() && !$detect->isTablet()) {
 ?>
 	<video id="home-video" poster="//cdn.lwjgl.org/video/manfps.jpg" preload="auto" muted loop autoplay>
 		<source type="video/webm" src="//cdn.lwjgl.org/video/manfps.webm">
