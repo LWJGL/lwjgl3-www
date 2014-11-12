@@ -25,7 +25,7 @@ body {
 	overflow: hidden;
 }
 
-video {
+#home-video {
 	display: block;
 	width: 100%;
 }
@@ -128,14 +128,24 @@ ob_end_clean();
 <? include "header.php" ?>
 
 <section id="video-container">
-	<video poster="//cdn.lwjgl.org/video/manfps.jpg" preload="auto" muted loop autoplay>
+<?
+if (!$detect->isMobile() && !$detect->isTablet() && false) {
+?>
+	<video id="home-video" poster="//cdn.lwjgl.org/video/manfps.jpg" preload="auto" muted loop autoplay>
 		<source type="video/webm" src="//cdn.lwjgl.org/video/manfps.webm">
 		<source type="video/mp4" src="//cdn.lwjgl.org/video/manfps.mp4">
 	</video>
+<?
+} else {
+?>
+	<img id="home-video" src="//cdn.lwjgl.org/video/manfps.jpg" alt="">
+<?
+}
+?>
+
 	<div id="lwjgl-logo"><img src="//cdn.lwjgl.org/img/lwjgl3-w.png" alt="LWJGL"></div>
 	<div class="index-start">
 		<h1>Lightweight Java Gaming Library 3</h1>
-
 		<p><a href="/#start">LEARN MORE<br><i class="fa fa-angle-down"></i></a></p>
 	</div>
 </section>
@@ -144,7 +154,7 @@ ob_end_clean();
 
 <?
 if (!$detect->isMobile() && !$detect->isTablet()) {
-	?>
+?>
 	<iframe src="/inc/cube.html" style="display:block;width:200px;height:200px;border:0;margin:0 auto"></iframe>
 <?
 }
@@ -210,8 +220,6 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 	<br>
 	<div class="text-center">
 		<a class="btn btn-default btn-primary" href="http://v2.lwjgl.org/">LWJGL 2 WEBSITE</a>
-		<a class="btn btn-default" href="http://v2.lwjgl.org/download.php">LWJGL 2 DOWNLOAD</a>
-		<a class="btn btn-default" href="https://github.com/LWJGL/lwjgl">LWJGL 2 SOURCE</a>
 		<a class="btn btn-default" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
 	</div>
 </section>

@@ -5,7 +5,7 @@ include "header.php"
 
 <section class="container">
 	<br>
-	<h1><i class="fa fa-code"></i> LW<b>JGL</b> 3 Source</h1>
+	<h1><i class="fa fa-code"></i> LW<b>JGL</b> Source</h1>
 
 	<h3>Repository</h3>
 	<p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>

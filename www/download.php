@@ -5,7 +5,7 @@ include "header.php"
 
 <section class="container">
 	<br>
-	<h1>Download LW<b>JGL</b> 3</h1>
+	<h1>Download LW<b>JGL</b></h1>
 
 	<div class="row">
 		<div class="col-md-4">
@@ -40,8 +40,6 @@ include "header.php"
 		<p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
 		<p>
 			<a class="btn btn-default" href="http://v2.lwjgl.org/">LWJGL 2 WEBSITE</a>
-			<a class="btn btn-default" href="http://v2.lwjgl.org/download.php">LWJGL 2 DOWNLOAD</a>
-			<a class="btn btn-default" href="https://github.com/LWJGL/lwjgl">LWJGL 2 SOURCE</a>
 			<a class="btn btn-default" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
 		</p>
 		<br>
