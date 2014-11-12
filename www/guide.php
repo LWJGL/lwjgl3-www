@@ -11,16 +11,16 @@ include "header.php"
 
 	<h3>Getting Started</h3>
 
-	<p>Please use our <a href="http://new.lwjgl.org/download">download page</a> to download an LWJGL release. You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL will work on version 7 or newer. Then proceed by setting up a project in your favorite IDE and configuring like so:
+	<p>Please use our <a href="http://new.lwjgl.org/download">download page</a> to download an LWJGL release. You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL will work on version 7 or newer. Then proceed by setting up a project in your favorite IDE and configuring it like so:
 	<ul>
-		<li>Add the LWJGL jars to the classpath</li>
+		<li>Add the LWJGL jars to the classpath. This is usually done by setting up a library dependency for your project and attaching jars to it.</li>
 		<li>Set the <strong>-Djava.library.path</strong> system property (as a JVM launch argument) to the appropriate path for the target OS/architecture</li>
-		<li>Attach the LWJGL javadoc and source archives to the LWJGL jars (optional, but hightly recommended)(</li>
+		<li>Attach the LWJGL javadoc and source archives to the LWJGL library (optional, but hightly recommended)</li>
 	</ul>
 	</p>
 	
-	<p>You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes GLFW to create a window and clear the background color to red, using OpenGL:
-	<code><pre>import org.lwjgl.Sys;
+	<p>You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes GLFW to create a window and clear the background color to red, using OpenGL:</p>
+	<pre><code>import org.lwjgl.Sys;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.glfw.*;
 
@@ -100,7 +100,9 @@ public class HelloWorld {
 		new HelloWorld().execute();
 	}
 
-}</pre></code></p>
+}</code></pre>
+
+	<p>LWJGL is fully documented, you can explore the javadoc documentation online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3/wiki">wiki</a>. The <a href="https://github.com/LWJGL/lwjgl3/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is especially useful.</p>
 
 	<h3>Building from source</h3>
 
@@ -118,9 +120,9 @@ public class HelloWorld {
 		<li>and -f update_dependencies.xml &ndash; Forces all dependencies to be downloaded again.</li>
 	</ul></p>
 	
-	<p>Note that the target native architecture is determined by <em>os.arch</em> of the JVM that runs Ant. Use the LWJGL_BUILD_ARCH environment variable to override for cross-compilation.</p>
+	<p>Note that the target native architecture is determined by <em>os.arch</em> of the JVM that runs Ant. For cross-compiling, use the LWJGL_BUILD_ARCH environment variable to override it (set it to <em>x86</em> or <em>x64</em>).</p>
 	
-	<p>Binary dependencies are downloaded from the stable download branch. Use the LWJGL_BUILD_TYPE environment variable to override:
+	<p>Binary dependencies are downloaded from the stable download branch. Use the LWJGL_BUILD_TYPE environment variable to override this:
 	<ul>
 		<li>nightly &ndash; the latest successful build, possibly broken. Dependency repositories can be found <a href="https://github.com/LWJGL-CI">here</a></li>
 		<li>stable &ndash; the latest build that has been verified to work with LWJGL, the default</li>
@@ -128,7 +130,7 @@ public class HelloWorld {
 		<li>release/{build.version} &ndash; a specific previously released build</li>
 	</ul></p>
 	
-	<p>If you are using custom binaries, or simple need to work offline, set the LWJGL_BUILD_OFFLINE environment variable to one of true/on/yes.</p>
+	<p>If you are using custom binaries, or simply need to work offline, set the LWJGL_BUILD_OFFLINE environment variable to one of <em>true/on/yes</em>.</p>
 </section>
 
 <br><br>
@@ -138,7 +140,7 @@ public class HelloWorld {
 		<h1>Is LW<b>JGL</b> for me?</h1>
 
 		<p>LWJGL is simple but powerful. It is not for everyone.</p>
-		<p>If you're into OpenGL you'll feel right at home.</p>
+		<p>If you're into OpenGL, you'll feel right at home.</p>
 		<p>If you're just getting started, please familiarize yourself with each API first.</p>
 		<br>
 	</section>
