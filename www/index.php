@@ -164,7 +164,11 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 	<h2 class="text-center">What is LW<b>JGL</b> 3?</h2>
 	<div class="line-sep"></div>
 	<article>
-		<p>Short description of LWJGL 3...</p>
+		<p>LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the development of graphics (<a href="https://www.opengl.org/">OpenGL</a>), audio (<a href="http://www.openal.org/">OpenAL</a>) and parallel computing (<a href="https://www.khronos.org/opencl/">OpenCL</a>) applications. This access is direct and high-performance, yet also wrapped in a type-safe and user-friendly layer, appropriate for the Java ecosystem.</p>
+		
+		<p>LW<b>JGL</b> enables technology and provides low-level access. It is not a framework and does not provide higher-level utilities than what the native libraries expose. As such, novice programmers are encouraged to try one of the frameworks or game engines that make use of LWJGL, before working directly with the library.</p>
+		
+		<p>LW<b>JGL</b> is open source software and freely available at no charge.</p>
 	</article>
 	<br>
 	<div class="text-center">
@@ -180,27 +184,27 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 
 		<div class="row">
 			<div class="col-md-4">
+				<p><i class="fa fa-puzzle-piece"></i></p>
+				<h3>Low-level Bindings</h3>
+				<p>Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance and a Java-friendly binding layer.</p>
+				
 				<p><i class="fa fa-desktop"></i></p>
-				<h3>Multi-platform</h3>
-				<p>Publish your games or apps on Windows, Mac, Linux, all with the same code base.</p>
-
-				<p><i class="fa fa-book"></i></p>
-				<h3>Built-in Documentation</h3>
-				<p>Get great auto-complete and inline documentation on your favorite IDE.</p>
+				<h3>Cross-platform</h3>
+				<p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
 			</div>
 			<div class="col-md-4">
 				<p><i class="fa fa-github"></i></p>
 				<h3>Open Source</h3>
-				<p>Publish your games or apps on Windows, Mac, Linux, all with the same code base.</p>
 
+				<p>LWJGL is available under a <a href="http://new.lwjgl.org/license">BSD license</a>. Visit our <a href="https://github.com/LWJGL/lwjgl3">GitHub repository</a> to monitor progress, report issues and even contribute with your own code!</p>
 				<p><i class="fa fa-comments"></i></p>
 				<h3>Community</h3>
-				<p>Get great support from a big and growing community of game and application developers.</p>
+				<p>Need help? Our <a href="http://forum.lwjgl.org/">forums</a> is a great place to seek a solution. Up for a chat? Drop by our <a href="irc://irc.freenode.net/lwjgl">IRC channel</a> (#LWJGL on freenode).</p>
 			</div>
 			<div class="col-md-4">
-				<p><i class="fa fa-puzzle-piece"></i></p>
-				<h3>Low-level Bindings</h3>
-				<p>Low-level bindings to OpenGL, OpenCL, OpenAL.</p>
+				<p><i class="fa fa-book"></i></p>
+				<h3>Built-in Documentation</h3>
+				<p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
 
 				<p><i class="fa fa-gamepad"></i></p>
 				<h3>Controller</h3>
@@ -215,7 +219,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 	<h2 class="text-center">Looking for LWJGL 2?</h2>
 	<div class="line-sep"></div>
 	<article>
-		<p>Short description of LWJGL 2...</p>
+		<p>LWJGL 3 is a fresh start and LWJGL 2 is its predecessor. It has been used in the creation of dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang, <a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames</p>. It is also used by popular game engines, like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and <a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.
 	</article>
 	<br>
 	<div class="text-center">
