@@ -219,7 +219,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 	<h2 class="text-center">Looking for LWJGL 2?</h2>
 	<div class="line-sep"></div>
 	<article>
-		<p>LWJGL 3 is a fresh start and LWJGL 2 is its predecessor. It has been used in the creation of dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang, <a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames</p>. It is also used by popular game engines, like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and <a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.
+		<p>LWJGL 3 is a fresh start and LWJGL 2 is its predecessor. It has been used in the creation of dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang and <a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames. It is also used in popular game engines, like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and <a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.</p>
 	</article>
 	<br>
 	<div class="text-center">
