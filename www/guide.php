@@ -13,7 +13,11 @@ ob_start();
 ?>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeRDark.css">
-<style>section.codehlt { background-color: #1b2426; padding: 1px 0; }</style>
+<style>
+section.codehlt { background: #1b2426 url(//cdn.lwjgl.org/img/pattern.png); margin-bottom: 20px; vertical-align: top }
+.syntaxhighlighter { margin: 0 !important; padding: 20px 0; }
+.syntaxhighlighter .container:before { display: none; }
+</style>
 <?
 $pageStyle = ob_get_contents();
 ob_end_clean();
@@ -40,9 +44,9 @@ include "header.php"
 	
 	<p>You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes GLFW to create a window and clear the background color to red, using OpenGL:</p>
 </section>
-<section class="container-responsive codehlt">
-<code class="brush: java; tab-size: 4; toolbar: false">
-import org.lwjgl.Sys;
+<section class="codehlt">
+<div class="container">
+<code class="brush: java; tab-size: 4; toolbar: false">import org.lwjgl.Sys;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.glfw.*;
 
@@ -121,9 +125,8 @@ public class HelloWorld {
 	public static void main(String[] args) {
 		new HelloWorld().execute();
 	}
-
-}
-</code>
+}</code>
+</div>
 </section>
 <section class="container">
 	<p>LWJGL is fully documented, you can explore the javadoc documentation online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3/wiki">wiki</a>. The <a href="https://github.com/LWJGL/lwjgl3/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is especially useful.</p>

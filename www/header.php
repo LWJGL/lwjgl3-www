@@ -63,10 +63,11 @@
 
 	.credits {
 		margin-top: 20px;
-		padding: 20px 0 10px 0;
+		padding: 40px 0 30px 0;
 		font-size: 14px;
 		font-weight: 300;
-		background-color: #f9f9f9;
+		background-color: #1b2426;
+		color: #abb4b6;
 	}
 
 	.line-sep {
