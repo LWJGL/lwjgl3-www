@@ -191,24 +191,48 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 				<p><i class="fa fa-desktop"></i></p>
 				<h3>Cross-platform</h3>
 				<p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
+				
+				<p><i class="fa fa-question-circle"></i></p>
+				<h3>OpenGL Bindings</h3>
+				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions (including the latest 4.5 specification), all ARB, Khronos and OS-specific extensions ever released and dozens of popular vendor-specific extensions. If your favorite extension is missing, <a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
+				
+				<p><i class="fa fa-question-circle"></i></p>
+				<h3>OpenGL|ES Bindings</h3>
+				<p>(coming soon)</p>
 			</div>
 			<div class="col-md-4">
 				<p><i class="fa fa-github"></i></p>
 				<h3>Open Source</h3>
-
 				<p>LWJGL is available under a <a href="http://new.lwjgl.org/license">BSD license</a>. Visit our <a href="https://github.com/LWJGL/lwjgl3">GitHub repository</a> to monitor progress, report issues and even contribute with your own code!</p>
+				
 				<p><i class="fa fa-comments"></i></p>
 				<h3>Community</h3>
 				<p>Need help? Our <a href="http://forum.lwjgl.org/">forums</a> is a great place to seek a solution. Up for a chat? Drop by our <a href="irc://irc.freenode.net/lwjgl">IRC channel</a> (#LWJGL on freenode).</p>
+				
+				<p><i class="fa fa-question-circle"></i></p>
+				<h3>OpenCL Bindings</h3>
+				<p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all OpenCL version (including the latest 2.0 specification) and many useful extensions.</p>
+				
+				<p><i class="fa fa-question-circle"></i></p>
+				<h3>EGL Bindings</h3>
+				<p>(coming soon)</p>
 			</div>
 			<div class="col-md-4">
 				<p><i class="fa fa-book"></i></p>
 				<h3>Built-in Documentation</h3>
 				<p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
 
-				<p><i class="fa fa-gamepad"></i></p>
-				<h3>Controller</h3>
-				<p>Get great support game controllers, gamepads, joysticks, etc.</p>
+				<p><i class="fa fa-question-circle"></i></p>
+				<h3>GLFW Bindings</h3>
+				<p>Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage OpenGL contexts. Also features multi-monitor support, clipboard access, file drag-n-drop and <a href="http://www.glfw.org/docs/latest/news.html">many other</a> features</p>
+				
+				<p><i class="fa fa-question-circle"></i></p>
+				<h3>OpenAL Bindings</h3>
+				<p></p>
+				
+				<p><i class="fa fa-question-circle"></i></p>
+				<h3>Your favorite API here!</h3>
+				<p>Think LWJGL should have bindings to your favorite API? Let us know or <a href="https://github.com/LWJGL/lwjgl3/wiki/4.5.-The-Generator">contribute it</a> yourself!</p>
 			</div>
 		</div>
 
