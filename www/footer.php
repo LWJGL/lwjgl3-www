@@ -59,7 +59,18 @@
 	appendCss("//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
 })();
 </script>
-*/?>
+*/?><?
+if ( $_SERVER['SERVER_NAME'] == 'www.lwjgl.org' ) {
+?><script async src="//www.google-analytics.com/analytics.js"></script>
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-83518-1', 'auto');
+ga('require', 'displayfeatures');
+ga('send', 'pageview');
+</script>
+<?
+}
+?>
 <script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
 <script src="//cdn.jsdelivr.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <?

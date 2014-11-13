@@ -81,6 +81,8 @@
 		color: white;
 	}
 
+	.area-dark a { color: #63aae7 }
+
 	.area-dark .line-sep {
 		border-color: white;
 	}

@@ -39,7 +39,7 @@ include "header.php"
 
 		<p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
 		<p>
-			<a class="btn btn-default" href="http://v2.lwjgl.org/">LWJGL 2 WEBSITE</a>
+			<a class="btn btn-default" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
 			<a class="btn btn-default" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
 		</p>
 		<br>
