@@ -145,7 +145,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 
 	<div id="lwjgl-logo"><img src="//cdn.lwjgl.org/logo/lwjgl3-light.png" alt="LWJGL"></div>
 	<div class="index-start">
-		<h1>Lightweight Java Gaming Library 3</h1>
+		<h1>Lightweight Java Game Library 3</h1>
 		<p><a href="/#start">LEARN MORE<br><i class="fa fa-angle-down"></i></a></p>
 	</div>
 </section>

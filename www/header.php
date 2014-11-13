@@ -7,7 +7,7 @@
 	if ( isset($pageTitle) ) {
 		print $pageTitle;
 	} else {
-		print "LWJGL - Lightweight Java Gaming Library";
+		print "LWJGL - Lightweight Java Game Library";
 	}
 	?></title>
 	<link rel="shortcut icon" href="//cdn.lwjgl.org/fav.ico" type="image/x-icon">
