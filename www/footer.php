@@ -45,28 +45,27 @@
 	<p>Copyright &copy; 2012-2014 Lightweight Java Game Library Project. All rights reserved.</p>
 </div>
 </section>
-
+<?/*
 <script>
-WebFontConfig = {
-	google: { families: [ 'Fira+Sans:300,400,700:latin' ] }
-};
+"use strict";
 (function() {
-var wf = document.createElement('script');
-wf.src = '//ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-wf.async = 'true';
-document.body.appendChild(wf);
-var fontAwesome = document.createElement('link');
-fontAwesome.rel = "stylesheet";
-fontAwesome.href = "//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css";
-document.head.appendChild(fontAwesome);
+	function appendCss(url){
+		var css = document.createElement('link');
+		css.rel = "stylesheet";
+		css.href = url;
+		(document.head||document.elementsByTagName('head')[0]).appendChild(firaSans);
+	}
+	appendCss("//fonts.googleapis.com/css?family=Fira+Sans:300,400,700");
+	appendCss("//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
 })();
 </script>
-<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+*/?>
+<script src="//cdn.jsdelivr.net/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <?
 if ( isset($pageScript) ) {
 	print $pageScript;
 }
 ?>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 </body>
 </html>

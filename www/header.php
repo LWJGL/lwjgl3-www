@@ -11,7 +11,14 @@
 	}
 	?></title>
 	<link rel="shortcut icon" href="//cdn.lwjgl.org/fav.ico" type="image/x-icon">
-	<link rel=stylesheet href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+	<link rel=stylesheet href="//cdn.jsdelivr.net/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel=stylesheet href="//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css">
+	<link rel=stylesheet href="//fonts.googleapis.com/css?family=Fira+Sans:300,400,700">
+<?
+	if ( isset($pageStyle) ) {
+		print $pageStyle;
+	}
+?>
 	<style>
 	body {
 		background-color: white;
@@ -24,7 +31,7 @@
 	}
 
 	.navbar-default {
-		background-color: #000;
+		background-color: #1b2426;
 		border: 0;
 	}
 
@@ -69,12 +76,16 @@
 	}
 
 	.area-dark {
-		background-color: #313437;
+		background-color: #1b2426;
 		color: white;
 	}
 
 	.area-dark .line-sep {
 		border-color: white;
+	}
+
+	.syntaxhighlighter {
+		overflow: visible !important;
 	}
 	</style>
 <?
