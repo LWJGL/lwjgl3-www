@@ -3,13 +3,16 @@
 <head>
 	<meta charset="utf-8">
 	<meta name=viewport content="width=device-width, initial-scale=1">
-	<title><?
+<?
 	if ( isset($pageTitle) ) {
-		print $pageTitle;
+		print '<title>'.$pageTitle.'</title>';
 	} else {
-		print "LWJGL - Lightweight Java Game Library";
+		print '<title>'."LWJGL - Lightweight Java Game Library".'</title>';
 	}
-	?></title>
+	if ( isset($pageDesc) ) {
+		print '<meta name=description content="'.$pageDesc.'">';
+	}
+?>
 	<link rel="shortcut icon" href="//d2g0ezo1t7nqa0.cloudfront.net/fav.ico" type="image/x-icon">
 	<link rel=stylesheet href="//cdn.jsdelivr.net/bootstrap/3.3.1/css/bootstrap.min.css">
 	<noscript>

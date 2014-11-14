@@ -1,5 +1,6 @@
 <?
 $pageTitle = "LWJGL 3 Source & Build Status";
+$pageDesc = "Links to LWJGL Github repository and build status matrix";
 include "header.php"
 ?>
 

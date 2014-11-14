@@ -1,5 +1,6 @@
 <?
 $pageTitle = "Download LWJGL 3";
+$pageDesc = "Download release, stable, or nightly builds of LWJGL 3";
 include "header.php"
 ?>
 

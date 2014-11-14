@@ -23,7 +23,8 @@ pre { background-color: #1b2426; }
 $pageStyle = ob_get_contents();
 ob_end_clean();
 
-$pageTitle = "LWJGL 3 Guide";
+$pageTitle = "Getting started guide for LWJGL 3";
+$pageDesc = "This guide will help you get started with LWJGL 3";
 include "header.php"
 ?>
 

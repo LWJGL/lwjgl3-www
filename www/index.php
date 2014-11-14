@@ -1,4 +1,6 @@
 <?
+$pageDesc = "LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.";
+
 require_once "inc/Mobile_Detect.php";
 $detect = new Mobile_Detect;
 
