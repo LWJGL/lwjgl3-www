@@ -88,6 +88,15 @@ article {
 	min-height: 60px;
 	max-height: 60px;
 }
+
+.area-dark sup {
+	font-size: 14px;
+	line-height:1;
+}
+
+.area-dark small {
+	color: #6c8f91;
+}
 </style>
 <?
 $pageCss = ob_get_contents();
@@ -157,7 +166,6 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 
 <a id="start"></a>
 
-
 <section class="container home">
 	<h2 class="text-center">What is LW<b>JGL</b> 3?</h2>
 	<div class="line-sep"></div>
@@ -182,7 +190,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 </section>
 
 <div class="area-dark">
-	<section class="container home features">
+	<section class="container features">
 		<h2 class="text-center">Main Features</h2>
 		<div class="line-sep"></div>
 
@@ -223,14 +231,14 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 		</div><div class="row">
 			<div class="col-md-4">
 				<p><img src="//cdn.lwjgl.org/img/opengl.png" alt="OpenGL"></p>
-				<h3>OpenGL Bindings</h3>
+				<h3>OpenGL<sup>&reg;</sup> Bindings</h3>
 				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
 				(including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
 				and dozens of popular vendor-specific extensions. If your favorite extension is missing,
 				<a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
 			</div><div class="col-md-4">
 				<p><img src="//cdn.lwjgl.org/img/opencl.png" alt="OpenCL"></p>
-				<h3>OpenCL Bindings</h3>
+				<h3>OpenCL<sup>TM</sup> Bindings</h3>
 				<p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
 				OpenCL versions (including the latest 2.0 specification) and many useful extensions.</p>
 			</div><div class="col-md-4">
@@ -242,11 +250,11 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 		</div><div class="row">
 			<div class="col-md-4">
 				<p><img src="//cdn.lwjgl.org/img/opengl-es.png" alt="OpenGL|ES"></p>
-				<h3>OpenGL|ES Bindings</h3>
+				<h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
 				<p>(coming soon)</p>
 			</div><div class="col-md-4">
 				<p><img src="//cdn.lwjgl.org/img/egl.png" alt="OpenGL|ES"></p>
-				<h3>EGL Bindings</h3>
+				<h3>EGL<sup>TM</sup> Bindings</h3>
 				<p>(coming soon)</p>
 			</div><div class="col-md-4">
 				<p><i class="fa fa-question-circle" style="color:yellow"></i></p>
@@ -256,6 +264,14 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			</div>
 		</div>
 
+		<p class=text-center>
+			<small>OpenGL® and the oval logo are trademarks or registered trademarks of Silicon Graphics, Inc. in the United States and/or other countries worldwide.</small>
+			<br><small>OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</small>
+			<br><small>OpenGL ES logo is a trademark of Silicon Graphics Inc. used by permission by Khronos.</small>
+			<br><small>EGL and the EGL logo are trademarks of the Khronos Group Inc.</small>
+			<br><small></small>
+			<br><small></small>
+		</p>
 	</section>
 </div>
 
