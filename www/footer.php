@@ -54,7 +54,7 @@
 		css.href = url;
 		(document.head||document.elementsByTagName('head')[0]).appendChild(css);
 	}
-	var os = navigator.appVersion||"";
+	var os = navigator.userAgent||"";
 	if ( os.indexOf("Windows NT 5.1") === -1 && os.indexOf("Windows XP") === -1 ) {
 		appendCss("//fonts.googleapis.com/css?family=Fira+Sans:300,400,700");
 	}
