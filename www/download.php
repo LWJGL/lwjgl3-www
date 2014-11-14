@@ -16,7 +16,7 @@ include "header.php"
 		<div class="col-md-4">
 			<h3>Stable</h3>
 			<p>Latest build that has been verified to work.</p>
-			<p><a class="btn btn-warning" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD LWJGL 3 STABLE</a></p>
+			<p><a class="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD LWJGL 3 STABLE</a></p>
 		</div>
 		<div class="col-md-4">
 			<h3>Nightly</h3>
