@@ -45,7 +45,6 @@
 	<p>Copyright &copy; 2012-2014 Lightweight Java Game Library Project. All rights reserved.</p>
 </div>
 </section>
-<?/*
 <script>
 "use strict";
 (function() {
@@ -53,13 +52,16 @@
 		var css = document.createElement('link');
 		css.rel = "stylesheet";
 		css.href = url;
-		(document.head||document.elementsByTagName('head')[0]).appendChild(firaSans);
+		(document.head||document.elementsByTagName('head')[0]).appendChild(css);
 	}
-	appendCss("//fonts.googleapis.com/css?family=Fira+Sans:300,400,700");
+	var os = navigator.appVersion||"";
+	if ( os.indexOf("Windows NT 5.1") === -1 && os.indexOf("Windows XP") === -1 ) {
+		appendCss("//fonts.googleapis.com/css?family=Fira+Sans:300,400,700");
+	}
 	appendCss("//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
 })();
 </script>
-*/?><?
+<?
 if ( $_SERVER['SERVER_NAME'] == 'www.lwjgl.org' ) {
 ?><script async src="//www.google-analytics.com/analytics.js"></script>
 <script>

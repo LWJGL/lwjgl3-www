@@ -10,7 +10,7 @@ include "header.php"
 
 	<article class="row">
 		<div class="col-md-6 pull-right">
-			<img class="img-responsive" src="//cdn.lwjgl.org/logo/lwjgl3-dark.png" alt="">
+			<img class="img-responsive" src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-dark.png" alt="">
 		</div>
 		<div class="col-md-6">
 			<p>Copyright &copy; 2012-2014 Lightweight Java Game Library Project

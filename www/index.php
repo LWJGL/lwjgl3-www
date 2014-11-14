@@ -34,7 +34,7 @@ body {
 	position: absolute;
 	top: 0;
 	left: 0;
-	background: url(//cdn.lwjgl.org/img/pattern.png);
+	background: url(//d2g0ezo1t7nqa0.cloudfront.net/img/pattern.png);
 	background-color: rgba(0, 0, 0, .5);
 	width: 100%;
 }
@@ -84,11 +84,6 @@ article {
 	line-height: 60px;
 }
 
-.features img {
-	min-height: 60px;
-	max-height: 60px;
-}
-
 .area-dark sup {
 	font-size: 14px;
 	line-height:1;
@@ -132,7 +127,8 @@ $(document).ready(function () {
 
 	$(window).resize(repaint);
 	$(window).ready(repaint);
-	setTimeout(repaint, 0);
+	repaint();
+	setTimeout(repaint, 1000);
 });
 </script>
 <?
@@ -146,18 +142,18 @@ ob_end_clean();
 <?
 if (!$detect->isMobile() && !$detect->isTablet()) {
 ?>
-	<video id="home-video" poster="//cdn.lwjgl.org/video/manfps.jpg" preload="auto" muted loop autoplay>
-		<source type="video/webm" src="//cdn.lwjgl.org/video/manfps.webm">
-		<source type="video/mp4" src="//cdn.lwjgl.org/video/manfps.mp4">
+	<video id="home-video" poster="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" preload="auto" muted loop autoplay>
+		<source type="video/webm" src="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.webm">
+		<source type="video/mp4" src="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.mp4">
 	</video>
 <?
 } else {
 ?>
-	<img id="home-video" src="//cdn.lwjgl.org/video/manfps.jpg" alt="">
+	<img id="home-video" src="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" alt="">
 <?
 }
 ?>
-	<div id="lwjgl-logo"><img src="//cdn.lwjgl.org/logo/lwjgl3-light.png" alt="LWJGL"></div>
+	<div id="lwjgl-logo"><img src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light.png" alt="LWJGL"></div>
 	<div class="index-start">
 		<h1>Lightweight Java Game Library 3</h1>
 		<p><a href="/#start">LEARN MORE<br><i class="fa fa-angle-down"></i></a></p>
@@ -230,30 +226,30 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			</div>
 		</div><div class="row">
 			<div class="col-md-4">
-				<p><img src="//cdn.lwjgl.org/img/opengl.png" alt="OpenGL"></p>
+				<p><img width=122 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" alt="OpenGL"></p>
 				<h3>OpenGL<sup>&reg;</sup> Bindings</h3>
 				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
 				(including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
 				and dozens of popular vendor-specific extensions. If your favorite extension is missing,
 				<a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
 			</div><div class="col-md-4">
-				<p><img src="//cdn.lwjgl.org/img/opencl.png" alt="OpenCL"></p>
+				<p><img width=60 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" alt="OpenCL"></p>
 				<h3>OpenCL<sup>TM</sup> Bindings</h3>
 				<p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
 				OpenCL versions (including the latest 2.0 specification) and many useful extensions.</p>
 			</div><div class="col-md-4">
-				<p><img src="//cdn.lwjgl.org/img/openal.png" alt="OpenGL|ES"></p>
+				<p><img width=112 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" alt="OpenGL|ES"></p>
 				<h3>OpenAL Bindings</h3>
 				<p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
 				and audio effects. ALC and many extensions are also supported.</p>
 			</div>
 		</div><div class="row">
 			<div class="col-md-4">
-				<p><img src="//cdn.lwjgl.org/img/opengl-es.png" alt="OpenGL|ES"></p>
+				<p><img width=160 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" alt="OpenGL|ES"></p>
 				<h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
 				<p>(coming soon)</p>
 			</div><div class="col-md-4">
-				<p><img src="//cdn.lwjgl.org/img/egl.png" alt="OpenGL|ES"></p>
+				<p><img width=98 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/egl.png" alt="OpenGL|ES"></p>
 				<h3>EGL<sup>TM</sup> Bindings</h3>
 				<p>(coming soon)</p>
 			</div><div class="col-md-4">

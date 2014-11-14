@@ -14,9 +14,10 @@ ob_start();
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeRDark.css">
 <style>
-section.codehlt { background: #1b2426 url(//cdn.lwjgl.org/img/pattern.png); margin-bottom: 20px; vertical-align: top }
-.syntaxhighlighter { margin: 0 !important; padding: 20px 0; }
-.syntaxhighlighter .container:before { display: none; }
+section.codehlt { background: #1b2426 url(//d2g0ezo1t7nqa0.cloudfront.net/img/pattern.png); margin-bottom: 20px; vertical-align: top }
+.syntaxhighlighter { margin: 0 !important; padding: 12px 0; }
+.syntaxhighlighter .container:before, .syntaxhighlighter .container:after { display: none; }
+pre { background-color: #1b2426; }
 </style>
 <?
 $pageStyle = ob_get_contents();
@@ -46,7 +47,7 @@ include "header.php"
 </section>
 <section class="codehlt">
 <div class="container">
-<code class="brush: java; tab-size: 4; toolbar: false">import org.lwjgl.Sys;
+<pre style=";margin:0;border:0;border-radius:0"><code class="brush: java; tab-size: 4; toolbar: false">import org.lwjgl.Sys;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.glfw.*;
 
@@ -125,7 +126,7 @@ public class HelloWorld {
 	public static void main(String[] args) {
 		new HelloWorld().execute();
 	}
-}</code>
+}</code></pre>
 </div>
 </section>
 <section class="container">
