@@ -52,10 +52,10 @@
 		var css = document.createElement('link');
 		css.rel = "stylesheet";
 		css.href = url;
-		(document.head||document.elementsByTagName('head')[0]).appendChild(css);
+		(document.head||document.getElementsByTagName('head')[0]).appendChild(css);
 	}
-	var os = navigator.userAgent||"";
-	if ( os.indexOf("Windows NT 5.1") === -1 && os.indexOf("Windows XP") === -1 ) {
+	var win = navigator.userAgent.match(/Windows NT ([0-9]+\.[0-9]+)/);
+	if ( win === null || parseFloat(win[1]) >= 6.2 ) {
 		appendCss("//fonts.googleapis.com/css?family=Fira+Sans:300,400,700");
 	}
 	appendCss("//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");

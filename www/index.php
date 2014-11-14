@@ -265,9 +265,8 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			<br><small>OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</small>
 			<br><small>OpenGL ES logo is a trademark of Silicon Graphics Inc. used by permission by Khronos.</small>
 			<br><small>EGL and the EGL logo are trademarks of the Khronos Group Inc.</small>
-			<br><small></small>
-			<br><small></small>
 		</p>
+		<br>
 	</section>
 </div>
 
