@@ -50,10 +50,6 @@
 		font-weight: 300;
 	}
 
-	.navbar-default .navbar-brand b {
-		font-weight: normal;
-	}
-
 	.navbar-default .navbar-brand,
 	.navbar-default .navbar-nav>li>a {
 		color: #fff;
