@@ -54,10 +54,7 @@
 		css.href = url;
 		(document.head||document.getElementsByTagName('head')[0]).appendChild(css);
 	}
-	var win = navigator.userAgent.match(/Windows NT ([0-9]+\.[0-9]+)/);
-	if ( win === null || parseFloat(win[1]) >= 6.2 ) {
-		appendCss("//fonts.googleapis.com/css?family=Fira+Sans:300,400,700");
-	}
+	appendCss("//code.cdn.mozilla.net/fonts/fira.css");
 	appendCss("//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css");
 })();
 </script>

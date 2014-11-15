@@ -15,9 +15,11 @@
 ?>
 	<link rel="shortcut icon" href="//d2g0ezo1t7nqa0.cloudfront.net/fav.ico" type="image/x-icon">
 	<link rel=stylesheet href="//cdn.jsdelivr.net/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel=dns-prefetch href="//code.cdn.mozilla.net">
+	<link rel=dns-prefetch href="//www.google-analytics.com">
 	<noscript>
 	<link rel=stylesheet href="//cdn.jsdelivr.net/fontawesome/4.2.0/css/font-awesome.min.css">
-	<link rel=stylesheet href="//fonts.googleapis.com/css?family=Fira+Sans:300,400,700">
+	<link rel=stylesheet href="//code.cdn.mozilla.net/fonts/fira.css">
 	</noscript>
 <?
 	if ( isset($pageStyle) ) {
