@@ -185,8 +185,9 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 		<a class="btn btn-lg btn-primary" href="/download"><i class="fa fa-cloud-download"></i> DOWNLOAD</a>
 		<a class="btn btn-lg btn-default" href="/source"><i class="fa fa-code"></i> SOURCE</a>
 	</div>
+	<br>
 	<div class=text-center>
-		For more information, see the LWJGL 3 <a href="https://github.com/LWJGL/lwjgl3/wiki/1.3.-Roadmap">Roadmap</a>.
+		For more information, see the LW<b>JGL</b> 3 <a href="https://github.com/LWJGL/lwjgl3/wiki/1.3.-Roadmap">Roadmap</a>.
 	</div>
 </section>
 
@@ -279,7 +280,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 	<h2 class=text-center>Looking for LWJGL 2?</h2>
 	<div class=line-sep></div>
 	<article>
-		<p>LWJGL 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation of dozens of
+		<p>LW<b>JGL</b> 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation of dozens of
 		games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang and
 		<a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames. It is also
 		used in popular game engines, like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and
@@ -290,6 +291,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 		<a class="btn btn-default btn-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
 		<a class="btn btn-default" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
 	</div>
+	<br>
 	<div class=text-center>
 		<a href="https://github.com/LWJGL/lwjgl3/wiki/1.2.-Why-a-new-version">Why replace LWJGL 2?</a>
 	</div>
