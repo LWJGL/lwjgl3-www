@@ -156,7 +156,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 }
 ?>
 	<div id="lwjgl-logo"><img src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light.png" alt="LWJGL"></div>
-	<div class="index-start">
+	<div class=index-start>
 		<h1>Lightweight Java Game Library 3</h1>
 		<p><a href="/#start">LEARN MORE<br><i class="fa fa-angle-down"></i></a></p>
 	</div>
@@ -165,8 +165,8 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 <a id="start"></a>
 
 <section class="container home">
-	<h2 class="text-center">What is LW<b>JGL</b> 3?</h2>
-	<div class="line-sep"></div>
+	<h2 class=text-center>What is LW<b>JGL</b> 3?</h2>
+	<div class=line-sep></div>
 	<article>
 		<p>LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
 		development of graphics (<a href="https://www.opengl.org/">OpenGL</a>), audio
@@ -181,80 +181,83 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 		<p>LW<b>JGL</b> is open source software and freely available at no charge.</p>
 	</article>
 	<br>
-	<div class="text-center">
+	<div class=text-center>
 		<a class="btn btn-lg btn-primary" href="/download"><i class="fa fa-cloud-download"></i> DOWNLOAD</a>
 		<a class="btn btn-lg btn-default" href="/source"><i class="fa fa-code"></i> SOURCE</a>
 	</div>
+	<div class=text-center>
+		For more information, see the LWJGL 3 <a href="https://github.com/LWJGL/lwjgl3/wiki/1.3.-Roadmap">Roadmap</a>.
+	</div>
 </section>
 
-<div class="area-dark">
+<div class=area-dark>
 	<section class="container features">
-		<h2 class="text-center">Main Features</h2>
-		<div class="line-sep"></div>
+		<h2 class=text-center>Main Features</h2>
+		<div class=line-sep></div>
 
-		<div class="row">
-			<div class="col-md-4">
+		<div class=row>
+			<div class=col-md-4>
 				<p><i class="fa fa-puzzle-piece"></i></p>
 				<h3>Low-level Bindings</h3>
 				<p>Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance
 				and a Java-friendly binding layer.</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><i class="fa fa-github"></i></p>
 				<h3>Open Source</h3>
 				<p>LWJGL is available under a <a href="http://new.lwjgl.org/license">BSD license</a>. Visit our
 				<a href="https://github.com/LWJGL/lwjgl3">GitHub repository</a> to monitor progress, report issues
 				and even contribute with your own code!</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><i class="fa fa-book"></i></p>
 				<h3>Built-in Documentation</h3>
 				<p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
 			</div>
-		</div><div class="row">
-			<div class="col-md-4">
+		</div><div class=row>
+			<div class=col-md-4>
 				<p><i class="fa fa-desktop"></i></p>
 				<h3>Cross-platform</h3>
 				<p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><i class="fa fa-comments"></i></p>
 				<h3>Community</h3>
 				<p>Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up
 				for a chat? Drop by our <a href="irc://irc.freenode.net/lwjgl">IRC channel</a><br>(#LWJGL on freenode).</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><i class="fa fa-gears"></i></p>
 				<h3>GLFW Bindings</h3>
 				<p>Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage OpenGL
 				contexts. Also features multi-monitor support, clipboard access, file drag-n-drop, and
 				<a href="http://www.glfw.org/docs/latest/news.html">much more</a>.</p>
 			</div>
-		</div><div class="row">
-			<div class="col-md-4">
+		</div><div class=row>
+			<div class=col-md-4>
 				<p><img width=122 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" alt="OpenGL"></p>
 				<h3>OpenGL<sup>&reg;</sup> Bindings</h3>
 				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
 				(including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
 				and dozens of popular vendor-specific extensions. If your favorite extension is missing,
 				<a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><img width=60 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" alt="OpenCL"></p>
 				<h3>OpenCL<sup>TM</sup> Bindings</h3>
 				<p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
 				OpenCL versions (including the latest 2.0 specification) and many useful extensions.</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><img width=112 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" alt="OpenGL|ES"></p>
 				<h3>OpenAL Bindings</h3>
 				<p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
 				and audio effects. ALC and many extensions are also supported.</p>
 			</div>
-		</div><div class="row">
-			<div class="col-md-4">
+		</div><div class=row>
+			<div class=col-md-4>
 				<p><img width=160 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" alt="OpenGL|ES"></p>
 				<h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
 				<p>(coming soon)</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><img width=98 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/egl.png" alt="OpenGL|ES"></p>
 				<h3>EGL<sup>TM</sup> Bindings</h3>
 				<p>(coming soon)</p>
-			</div><div class="col-md-4">
+			</div><div class=col-md-4>
 				<p><i class="fa fa-question-circle" style="color:yellow"></i></p>
 				<h3>Your favorite API here!</h3>
 				<p>Think LWJGL should have bindings to your favorite API? Let us know or
@@ -273,8 +276,8 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 </div>
 
 <section class="container home">
-	<h2 class="text-center">Looking for LWJGL 2?</h2>
-	<div class="line-sep"></div>
+	<h2 class=text-center>Looking for LWJGL 2?</h2>
+	<div class=line-sep></div>
 	<article>
 		<p>LWJGL 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation of dozens of
 		games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang and
@@ -283,9 +286,12 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 		<a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.</p>
 	</article>
 	<br>
-	<div class="text-center">
+	<div class=text-center>
 		<a class="btn btn-default btn-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
 		<a class="btn btn-default" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
+	</div>
+	<div class=text-center>
+		<a href="https://github.com/LWJGL/lwjgl3/wiki/1.2.-Why-a-new-version">Why replace LWJGL 2?</a>
 	</div>
 </section>
 
