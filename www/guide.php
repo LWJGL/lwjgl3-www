@@ -135,7 +135,7 @@ public class HelloWorld {
 
 	<h3>Building from source</h3>
 
-	<p>Clone the <a href="https://github.com/LWJGL/lwjgl3.git">Git repository</a> locally, install JDK 7 and <a href="http://ant.apache.org/">Apache Ant</a>, set the JAVA7_HOME environment variable to point to a JDK 7 installation, then you should be ready to build. Use the following targets:
+	<p>Clone the <a href="https://github.com/LWJGL/lwjgl3.git">Git repository</a> locally, install a JDK and <a href="http://ant.apache.org/">Apache Ant</a>, optionally set the JAVA6_HOME environment variable to point to a JDK 6 installation, then you should be ready to build. Use the following targets:
 	<ul>
 		<li><em>ant</em> &ndash; Builds everything and runs the tests</li>
 		
@@ -160,6 +160,8 @@ public class HelloWorld {
 	</ul></p>
 	
 	<p>If you are using custom binaries, or simply need to work offline, set the LWJGL_BUILD_OFFLINE environment variable to one of <em>true/on/yes</em>.</p>
+	
+	<p>The LWJGL build process creates thousands of tiny files. If you wish to redirect output to another directory or storage device, you may set the LWJGL_BUILD_OUTPUT environment variable.</p>
 </section>
 
 <br><br>
