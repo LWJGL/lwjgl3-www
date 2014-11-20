@@ -8,11 +8,6 @@
 			<li><i class="fa-li fa fa-home"></i> <a href="/">Home</a></li>
 			<li><i class="fa-li fa fa-info-circle"></i> <a href="/#start">About</a></li>
 			<li><i class="fa-li fa fa-legal"></i> <a href="/license">License</a></li>
-<?/*
-			<li><i class="fa-li fa fa-question-circle"></i> <a href="/faq">F.A.Q.</a></li>
-			<li><i class="fa-li fa fa-gift"></i> <a href="#">Donations</a></li>
-			<li><i class="fa-li fa fa-envelope"></i> <a href="#">Contact</a></li>
-*/?>
 		</ul>
 	</div>
 	<div class="col-md-3">

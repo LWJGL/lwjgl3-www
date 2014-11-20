@@ -100,9 +100,6 @@
 	}
 ?>
 </head>
-<?/*
-<body class="<?= substr(explode(".", $_SERVER['PHP_SELF'])[0], 1) ?>">
-*/?>
 <body>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
