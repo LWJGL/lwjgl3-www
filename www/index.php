@@ -156,7 +156,7 @@ ob_end_clean();
 
 <section id="video-container">
 <?
-if (!$detect->isMobile() && !$detect->isTablet() && false) {
+if (!$detect->isMobile() && !$detect->isTablet()) {
 ?>
 	<video id="home-video" poster="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" preload="auto" muted loop autoplay>
 		<source type="video/webm" src="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.webm">
