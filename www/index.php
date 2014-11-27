@@ -17,12 +17,12 @@ body {
 }
 
 .navbar-collapse.in {
-	background: black;
+	background: #1b2426;
 }
 
 #video-container {
 	position: relative;
-	background-color: black;
+	background-color: #1b2426;
 	max-height: 100vh;
 	overflow: hidden;
 }
@@ -32,25 +32,28 @@ body {
 	width: 100%;
 }
 
-#lwjgl-logo {
-	position: absolute;
-	top: 0;
-	left: 0;
-	background: url(//d2g0ezo1t7nqa0.cloudfront.net/img/pattern.png);
-	background-color: rgba(0, 0, 0, .5);
-	width: 100%;
+#mobile-bg {
+	background: #1b2426 url(//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg) no-repeat;
+	background-size: cover;
+	height: 400px;
 }
 
-#lwjgl-logo img {
+#logo-bg {
+	position: absolute;
+	background: rgba(0,0,0,.5) url(//d2g0ezo1t7nqa0.cloudfront.net/img/pattern.png);
+	width: 100%;
+	top: 0;
+}
+
+#lwjgl-logo {
 	position: absolute;
 	width: 50%;
 	left: 50%;
 	margin-left: -25%;
-	top: 200px;
-	top: 30vh;
+	top: 75px;
 }
 
-.index-start {
+#index-start {
 	position: absolute;
 	width: 100%;
 	bottom: 0;
@@ -61,8 +64,18 @@ body {
 	font-weight: 300;
 }
 
+#index-start h1 {
+	transition: all 0.3s ease;
+}
+
+@media (max-width: 1199px) {
+	#index-start h1 {
+		font-size: 24px;
+	}
+}
+
 @media (max-width: 767px) {
-	.index-start h1 {
+	#index-start h1 {
 		font-size: 14px;
 	}
 }
@@ -107,30 +120,31 @@ ob_start();
 "use strict";
 $(document).ready(function () {
 	var container = $('#video-container');
+	var bg = $('#logo-bg');
 	var logo = $('#lwjgl-logo');
-	var img = logo.find('img');
+	var setMaxH = container.css('max-height').indexOf('px') === -1;
 
 	// Keep logo centered
 	function repaint() {
-		var newW = container.width();
+		if ( setMaxH ) {
+			container.css('max-height', $(window).height());
+		}
+
 		var newH = container.height();
+		var logoH = Math.round(container.width() / 2 * 372 / 1592);
 
-		var logoW = newW / 2;
-		var logoH = Math.round(logoW * 372 / 1592);
-
-		logo.height(newH);
-		img.css("top", (newH - logoH) / 2 + 'px');
+		bg.height(newH);
+		logo.css("top", (newH - logoH) / 2 + 'px');
 	}
 
-	// Learn more: animate scroll
 	$('a[href="/#start"]').click(function () {
 		$('body, html').animate({scrollTop: $('#start').offset().top}, 500);
 	});
 
 	$(window).resize(repaint);
 	$(window).ready(repaint);
+	$('video').on('canplay', repaint);
 	repaint();
-	setTimeout(repaint, 1000);
 });
 </script>
 <?
@@ -142,7 +156,7 @@ ob_end_clean();
 
 <section id="video-container">
 <?
-if (!$detect->isMobile() && !$detect->isTablet()) {
+if (!$detect->isMobile() && !$detect->isTablet() && false) {
 ?>
 	<video id="home-video" poster="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" preload="auto" muted loop autoplay>
 		<source type="video/webm" src="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.webm">
@@ -151,12 +165,13 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 <?
 } else {
 ?>
-	<img id="home-video" src="//d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" alt="">
+	<div id=mobile-bg></div>
 <?
 }
 ?>
-	<div id="lwjgl-logo"><img src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light.png" alt="LWJGL"></div>
-	<div class=index-start>
+	<div id=logo-bg></div>
+	<img id=lwjgl-logo src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light.png" alt="LWJGL">
+	<div id=index-start>
 		<h1>Lightweight Java Game Library 3</h1>
 		<p><a href="/#start">LEARN MORE<br><i class="fa fa-angle-down"></i></a></p>
 	</div>
