@@ -36,7 +36,7 @@ include "header.php"
 
 	<h3>Getting Started</h3>
 
-	<p>Please use our <a href="http://new.lwjgl.org/download">download page</a> to download an LWJGL release. You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL will work on version 7 or newer. Then proceed by setting up a project in your favorite IDE and configuring it like so:
+	<p>Please use our <a href="http://new.lwjgl.org/download">download page</a> to download an LWJGL release. You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL will work on version 6 or newer. Then proceed by setting up a project in your favorite IDE and configuring it like so:
 	<ul>
 		<li>Add the LWJGL jars to the classpath. This is usually done by setting up a library dependency for your project and attaching jars to it.</li>
 		<li>Set the <strong>-Djava.library.path</strong> system property (as a JVM launch argument) to the appropriate path for the target OS/architecture</li>
@@ -48,85 +48,122 @@ include "header.php"
 </section>
 <section class="codehlt">
 <div class="container">
-<pre style=";margin:0;border:0;border-radius:0"><code class="brush: java; tab-size: 4; toolbar: false">import org.lwjgl.Sys;
+<pre style=";margin:0;border:0;border-radius:0"><code class="brush: java; tab-size: 4; toolbar: false">package org.lwjgl.demo.glfw;
+
+import org.lwjgl.Sys;
+import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
-import org.lwjgl.system.glfw.*;
 
 import java.nio.ByteBuffer;
 
+import static org.lwjgl.glfw.Callbacks.*;
+import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
-import static org.lwjgl.system.glfw.GLFW.*;
 
 public class HelloWorld {
 
+	// We need to strongly reference callback instances.
+	private GLFWerrorfun errorfun;
+	private GLFWkeyfun   keyfun;
+
+	// The window handle
 	private long window;
 
-	public void execute() {
+	public void run() {
 		System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
 
 		try {
 			init();
 			loop();
+
+			// Release window and window callbacks
 			glfwDestroyWindow(window);
+			keyfun.release();
 		} finally {
+			// Terminate GLFW and release the GLFWerrorfun
 			glfwTerminate();
+			errorfun.release();
 		}
 	}
 
 	private void init() {
-		glfwSetErrorCallback(ErrorCallback.Util.getDefault());
+		// Setup an error callback. The default implementation
+		// will print the error message in System.err.
+		glfwSetErrorCallback(errorfun = errorfunPrint(System.err));
 
+		// Initialize GLFW. Most GLFW functions will not work before doing this.
 		if ( glfwInit() != GL11.GL_TRUE )
 			throw new IllegalStateException("Unable to initialize GLFW");
 
-		glfwDefaultWindowHints();
-		glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
-		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
+		// Configure our window
+		glfwDefaultWindowHints(); // optional, the current window hints are already the default
+		glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
+		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // the window will be resizable
 
 		int WIDTH = 300;
 		int HEIGHT = 300;
 
+		// Create the window
 		window = glfwCreateWindow(WIDTH, HEIGHT, "Hello World!", NULL, NULL);
 		if ( window == NULL )
 			throw new RuntimeException("Failed to create the GLFW window");
 
-		WindowCallback.set(window, new WindowCallbackAdapter() {
+		// Setup a key callback. It will be called every time a key is pressed, repeated or released.
+		glfwSetKeyCallback(window, keyfun = new GLFWkeyfun() {
 			@Override
-			public void key(long window, int key, int scancode, int action, int mods) {
+			public void invoke(long window, int key, int scancode, int action, int mods) {
 				if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-					glfwSetWindowShouldClose(window, GL_TRUE);
+					glfwSetWindowShouldClose(window, GL_TRUE); // We will detect this in our rendering loop
 			}
 		});
 
+		// Get the resolution of the primary monitor
 		ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		// Center our window
 		glfwSetWindowPos(
 			window,
 			(GLFWvidmode.width(vidmode) - WIDTH) / 2,
 			(GLFWvidmode.height(vidmode) - HEIGHT) / 2
 		);
 
+		// Make the OpenGL context current
 		glfwMakeContextCurrent(window);
+		// Enable v-sync
 		glfwSwapInterval(1);
 
+		// Make the window visible
 		glfwShowWindow(window);
 	}
 
 	private void loop() {
+		// This line is critical for LWJGL's interoperation with GLFW's
+		// OpenGL context, or any context that is managed externally.
+		// LWJGL detects the context that is current in the current thread,
+		// creates the ContextCapabilities instance and makes the OpenGL
+		// bindings available for use.
 		GLContext.createFromCurrent();
 
+		// Set the clear color
 		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
-		while ( glfwWindowShouldClose(window) == GL_FALSE ) {
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			glfwSwapBuffers(window);
+		// Run the rendering loop until the user has attempted to close
+		// the window or has pressed the ESCAPE key.
+		while ( glfwWindowShouldClose(window) == GL_FALSE ) {
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+
+			glfwSwapBuffers(window); // swap the color buffers
+
+			// Poll for window events. The key callback above will only be
+			// invoked during this call.
 			glfwPollEvents();
 		}
 	}
 
 	public static void main(String[] args) {
-		new HelloWorld().execute();
+		new HelloWorld().run();
 	}
+
 }</code></pre>
 </div>
 </section>
