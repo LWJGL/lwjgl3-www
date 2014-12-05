@@ -168,7 +168,7 @@ public class HelloWorld {
 </div>
 </section>
 <section class="container">
-	<p>LWJGL is fully documented, you can explore the javadoc documentation online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3/wiki">wiki</a>. The <a href="https://github.com/LWJGL/lwjgl3/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is especially useful.</p>
+	<p>LWJGL is fully documented, you can explore the javadoc documentation online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3/wiki">wiki</a>. The <a href="https://github.com/LWJGL/lwjgl3/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is especially useful. For more code examples, see the <a href="https://github.com/LWJGL/lwjgl3/tree/master/src/tests/org/lwjgl">tests module</a> in the LWJGL repository</p>
 
 	<h3>Building from source</h3>
 
