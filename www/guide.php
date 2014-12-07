@@ -48,9 +48,7 @@ include "header.php"
 </section>
 <section class="codehlt">
 <div class="container">
-<pre style=";margin:0;border:0;border-radius:0"><code class="brush: java; tab-size: 4; toolbar: false">package org.lwjgl.demo.glfw;
-
-import org.lwjgl.Sys;
+<pre style=";margin:0;border:0;border-radius:0"><code class="brush: java; tab-size: 4; toolbar: false">import org.lwjgl.Sys;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
@@ -64,8 +62,8 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class HelloWorld {
 
 	// We need to strongly reference callback instances.
-	private GLFWerrorfun errorfun;
-	private GLFWkeyfun   keyfun;
+	private GLFWErrorCallback errorCallback;
+	private GLFWKeyCallback   keyCallback;
 
 	// The window handle
 	private long window;
@@ -79,18 +77,18 @@ public class HelloWorld {
 
 			// Release window and window callbacks
 			glfwDestroyWindow(window);
-			keyfun.release();
+			keyCallback.release();
 		} finally {
 			// Terminate GLFW and release the GLFWerrorfun
 			glfwTerminate();
-			errorfun.release();
+			errorCallback.release();
 		}
 	}
 
 	private void init() {
 		// Setup an error callback. The default implementation
 		// will print the error message in System.err.
-		glfwSetErrorCallback(errorfun = errorfunPrint(System.err));
+		glfwSetErrorCallback(errorCallback = errorfunPrint(System.err));
 
 		// Initialize GLFW. Most GLFW functions will not work before doing this.
 		if ( glfwInit() != GL11.GL_TRUE )
@@ -110,7 +108,7 @@ public class HelloWorld {
 			throw new RuntimeException("Failed to create the GLFW window");
 
 		// Setup a key callback. It will be called every time a key is pressed, repeated or released.
-		glfwSetKeyCallback(window, keyfun = new GLFWkeyfun() {
+		glfwSetKeyCallback(window, keyCallback = new GLFWKeyCallback() {
 			@Override
 			public void invoke(long window, int key, int scancode, int action, int mods) {
 				if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
