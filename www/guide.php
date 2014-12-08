@@ -88,7 +88,7 @@ public class HelloWorld {
 	private void init() {
 		// Setup an error callback. The default implementation
 		// will print the error message in System.err.
-		glfwSetErrorCallback(errorCallback = errorfunPrint(System.err));
+		glfwSetErrorCallback(errorCallback = errorCallbackPrint(System.err));
 
 		// Initialize GLFW. Most GLFW functions will not work before doing this.
 		if ( glfwInit() != GL11.GL_TRUE )
