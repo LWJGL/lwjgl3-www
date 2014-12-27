@@ -23,7 +23,7 @@
 		<h3>Developers</h3>
 		<ul class="list-unstyled fa-ul">
 			<li><i class="fa-li fa fa-github"></i> <a href="https://github.com/LWJGL/lwjgl3">GitHub</a></li>
-			<li><i class="fa-li fa fa-book"></i> <a href="https://github.com/LWJGL/lwjgl3/wiki">Wiki</a></li>
+			<li><i class="fa-li fa fa-book"></i> <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">Wiki</a></li>
 			<li><i class="fa-li fa fa-bug"></i> <a href="https://github.com/LWJGL/lwjgl3/issues">Issues</a></li>
 			<li><i class="fa-li fa fa-file-code-o"></i> <a href="http://javadoc.lwjgl.org/">JavaDoc</a></li>
 		</ul>
