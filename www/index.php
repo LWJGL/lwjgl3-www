@@ -202,7 +202,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 	</div>
 	<br>
 	<div class=text-center>
-		For more information, see the LW<b>JGL</b> 3 <a href="https://github.com/LWJGL/lwjgl3/wiki/1.3.-Roadmap">Roadmap</a>.
+		For more information, see the LW<b>JGL</b> 3 <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.3.-Roadmap">Roadmap</a>.
 	</div>
 </section>
 
@@ -277,7 +277,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 				<p><i class="fa fa-question-circle" style="color:yellow"></i></p>
 				<h3>Your favorite API here!</h3>
 				<p>Think LWJGL should have bindings to your favorite API? Let us know or
-				<a href="https://github.com/LWJGL/lwjgl3/wiki/4.5.-The-Generator">contribute it</a> yourself!</p>
+				<a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.5.-The-Generator">contribute it</a> yourself!</p>
 			</div>
 		</div>
 
@@ -308,7 +308,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 	</div>
 	<br>
 	<div class=text-center>
-		<a href="https://github.com/LWJGL/lwjgl3/wiki/1.2.-Why-a-new-version">Why replace LWJGL 2?</a>
+		<a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Why-a-new-version">Why replace LWJGL 2?</a>
 	</div>
 </section>
 
