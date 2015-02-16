@@ -220,7 +220,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			</div><div class=col-md-4>
 				<p><i class="fa fa-github"></i></p>
 				<h3>Open Source</h3>
-				<p>LWJGL is available under a <a href="http://new.lwjgl.org/license">BSD license</a>. Visit our
+				<p>LWJGL is available under a <a href="http://www.lwjgl.org/license">BSD license</a>. Visit our
 				<a href="https://github.com/LWJGL/lwjgl3">GitHub repository</a> to monitor progress, report issues
 				and even contribute with your own code!</p>
 			</div><div class=col-md-4>
