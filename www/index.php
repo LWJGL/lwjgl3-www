@@ -247,32 +247,46 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
-				<p><img width=122 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" alt="OpenGL"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" alt="OpenGL"></p>
 				<h3>OpenGL<sup>&reg;</sup> Bindings</h3>
 				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
 				(including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
 				and dozens of popular vendor-specific extensions. If your favorite extension is missing,
 				<a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
 			</div><div class=col-md-4>
-				<p><img width=60 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" alt="OpenCL"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" alt="OpenCL"></p>
 				<h3>OpenCL<sup>TM</sup> Bindings</h3>
 				<p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
 				OpenCL versions (including the latest 2.0 specification) and many useful extensions.</p>
 			</div><div class=col-md-4>
-				<p><img width=112 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" alt="OpenGL|ES"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" alt="OpenAL"></p>
 				<h3>OpenAL Bindings</h3>
 				<p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
 				and audio effects. ALC and many extensions are also supported.</p>
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
-				<p><img width=160 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" alt="OpenGL|ES"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" alt="OpenGL|ES"></p>
 				<h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
 				<p>(coming soon)</p>
 			</div><div class=col-md-4>
-				<p><img width=98 height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/egl.png" alt="OpenGL|ES"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/egl.png" alt="EGL"></p>
 				<h3>EGL<sup>TM</sup> Bindings</h3>
 				<p>(coming soon)</p>
+			</div><div class=col-md-4>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/mantle.png" alt="Mantle"></p>
+				<h3>Mantle Bindings</h3>
+				<p>AMD's groundbreaking graphics API that promises to transform the world of game development to help bring better, faster games to the PC.<br>(coming soon)</p>
+			</div>
+		</div><div class=row>
+			<div class=col-md-4>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/oculus.png" alt="Oculus VR SDK"></p>
+				<h3>LibOVR Bindings</h3>
+				<p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.<br>(beta)</p>
+			</div><div class=col-md-4>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/xcode.png" alt="Objective-C"></p>
+				<h3>Objective-C Bindings</h3>
+				<p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on Mac OS X.</p>
 			</div><div class=col-md-4>
 				<p><i class="fa fa-question-circle" style="color:yellow"></i></p>
 				<h3>Your favorite API here!</h3>
