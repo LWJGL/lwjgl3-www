@@ -6,23 +6,23 @@ include "header.php"
 
 <section class="container">
 	<br>
-	<h1>Download LW<b>JGL</b></h1>
+	<h1>Download LW<b>JGL</b> 3</h1>
 
 	<div class="row">
 		<div class="col-md-4">
 			<h3>Release</h3>
-			<p>LWGL 3 has not had any releases yet.</p>
-			<p><a class="btn btn-success" disabled href="#"><i class="fa fa-clock-o"></i> CHECK BACK LATER</a></p>
+			<p>Latest official release.</p>
+			<p><a class="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i class="fa fa-clock-o"></i> DOWNLOAD LWJGL 3.0.0a</a></p>
 		</div>
 		<div class="col-md-4">
 			<h3>Stable</h3>
 			<p>Latest build that has been verified to work.</p>
-			<p><a class="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD LWJGL 3 STABLE</a></p>
+			<p><a class="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD STABLE</a></p>
 		</div>
 		<div class="col-md-4">
 			<h3>Nightly</h3>
-			<p>Bleeding edge, possibly broken</p>
-			<p><a class="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD LWJGL 3 NIGHTLY</a></p>
+			<p>Bleeding edge, possibly broken.</p>
+			<p><a class="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD NIGHTLY</a></p>
 			<br>
 
 			<h3>Build Status ( Nightly )</h3>
