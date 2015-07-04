@@ -12,20 +12,19 @@ include "header.php"
 		<div class="col-md-4">
 			<h3>Release</h3>
 			<p>Latest official release.</p>
-			<p><a class="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i class="fa fa-clock-o"></i> DOWNLOAD LWJGL 3.0.0a</a></p>
+			<p><a class="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i class="fa fa-clock-o"></i> DOWNLOAD RELEASE</a></p>
+			<iframe src="teamcity?id=LwjglReleases_StableToRelease" style="border:0;width:200px;height:40px"></iframe>
 		</div>
 		<div class="col-md-4">
 			<h3>Stable</h3>
 			<p>Latest build that has been verified to work.</p>
 			<p><a class="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD STABLE</a></p>
+			<iframe src="teamcity?id=LwjglReleases_NightlyToStable" style="border:0;width:200px;height:40px"></iframe>
 		</div>
 		<div class="col-md-4">
 			<h3>Nightly</h3>
 			<p>Bleeding edge, possibly broken.</p>
 			<p><a class="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip"><i class="fa fa-cloud-download"></i> DOWNLOAD NIGHTLY</a></p>
-			<br>
-
-			<h3>Build Status ( Nightly )</h3>
 			<iframe src="teamcity?id=lwjgl_Bundle" style="border:0;width:200px;height:40px"></iframe>
 		</div>
 	</div>
