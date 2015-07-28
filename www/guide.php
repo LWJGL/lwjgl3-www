@@ -39,7 +39,7 @@ include "header.php"
 	<p>Please use our <a href="http://www.lwjgl.org/download">download page</a> to download an LWJGL release. You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL will work on version 6 or newer. Then proceed by setting up a project in your favorite IDE and configuring it like so:
 	<ul>
 		<li>Add the LWJGL jars to the classpath. This is usually done by setting up a library dependency for your project and attaching jars to it.</li>
-		<li>Set the <strong>-Djava.library.path</strong> system property (as a JVM launch argument) to the appropriate path for the target OS/architecture</li>
+		<li>Set the <strong>-Djava.library.path</strong> system property (as a JVM launch argument) to the folder containing your native files</li>
 		<li>Attach the LWJGL javadoc and source archives to the LWJGL library (optional, but hightly recommended)</li>
 	</ul>
 	</p>
