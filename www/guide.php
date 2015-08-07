@@ -44,7 +44,9 @@ include "header.php"
 	</ul>
 	</p>
 	
-	<p>If you'd like to use Maven or Gradle, see <a href="https://github.com/badlogic/lwjgl3-maven-gradle">this example project</a>.</p>
+        <p>If you'd like to use Maven or Gradle, see <a href="https://github.com/badlogic/lwjgl3-maven-gradle">this example project</a>.
+            You may also use Ant with Ivy, like described in <a href="https://github.com/SilverTiger/lwjgl3-tutorial/wiki/Setup">this wiki page</a>.
+        </p>
 	
 	<p>You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes GLFW to create a window and clear the background color to red, using OpenGL:</p>
 </section>
