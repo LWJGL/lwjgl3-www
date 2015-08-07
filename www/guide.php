@@ -142,7 +142,7 @@ public class HelloWorld {
 		// LWJGL detects the context that is current in the current thread,
 		// creates the ContextCapabilities instance and makes the OpenGL
 		// bindings available for use.
-		GLContext.createFromCurrent();
+		GL.createCapabilities();
 
 		// Set the clear color
 		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
