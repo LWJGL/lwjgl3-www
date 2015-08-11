@@ -239,55 +239,73 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 				<p>Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up
 				for a chat? Drop by our <a href="irc://irc.freenode.net/lwjgl">IRC channel</a><br>(#LWJGL on freenode).</p>
 			</div><div class=col-md-4>
-				<p><i class="fa fa-gears"></i></p>
+				<p><i class="fa fa-gamepad"></i></p>
 				<h3>GLFW Bindings</h3>
-				<p>Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage OpenGL
-				contexts. Also features multi-monitor support, clipboard access, file drag-n-drop, and
+				<p>Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts.
+				Also features multi-monitor support, clipboard access, file drag-n-drop, and
 				<a href="http://www.glfw.org/docs/latest/news.html">much more</a>.</p>
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" alt="OpenGL"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" title="OpenGL"></p>
 				<h3>OpenGL<sup>&reg;</sup> Bindings</h3>
 				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
 				(including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
 				and dozens of popular vendor-specific extensions. If your favorite extension is missing,
 				<a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
 			</div><div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" alt="OpenCL"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" title="OpenCL"></p>
 				<h3>OpenCL<sup>TM</sup> Bindings</h3>
 				<p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
 				OpenCL versions (including the latest 2.0 specification) and many useful extensions.</p>
 			</div><div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" alt="OpenAL"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" title="OpenAL"></p>
 				<h3>OpenAL Bindings</h3>
 				<p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
 				and audio effects. ALC and many extensions are also supported.</p>
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" alt="OpenGL|ES"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" title="OpenGL|ES"></p>
 				<h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
-				<p>(coming soon)</p>
+				<p>A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
+				consoles, phones, appliances and vehicles. It consists of well-defined subsets of desktop OpenGL, creating
+				a flexible and powerful low-level interface between software and graphics acceleration.</p>
 			</div><div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/egl.png" alt="EGL"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/egl.png" title="EGL"></p>
 				<h3>EGL<sup>TM</sup> Bindings</h3>
-				<p>(coming soon)</p>
+				<p>An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native
+				platform window system. It handles graphics context management, surface/buffer binding and rendering
+				synchronization and enables high-performance, accelerated, mixed-mode 2D and 3D rendering using other
+				Khronos APIs.</p>
 			</div><div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/mantle.png" alt="Mantle"></p>
-				<h3>Mantle Bindings</h3>
-				<p>AMD's groundbreaking graphics API that promises to transform the world of game development to help bring better, faster games to the PC.<br>(coming soon)</p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/vulkan.png" title="Vulkan"></p>
+				<h3>Vulkan<sup>TM</sup> Bindings</h3>
+				<p>The new generation, open standard API for high-efficiency access to graphics and compute on modern GPUs.
+				This ground-up design provides applications direct control over GPU acceleration for maximized performance
+				and predictability.<br><br>(coming soon)</p>
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/oculus.png" alt="Oculus VR SDK"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/oculus.png" title="Oculus VR SDK"></p>
 				<h3>LibOVR Bindings</h3>
-				<p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.<br>(beta)</p>
+				<p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.<br><br>(beta)</p>
 			</div><div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/xcode.png" alt="Objective-C"></p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/xcode.png" title="Objective-C"></p>
 				<h3>Objective-C Bindings</h3>
 				<p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on Mac OS X.</p>
+
+				
 			</div><div class=col-md-4>
+				<p><i class="fa fa-gears"></i></p>
+				<h3>Customization &amp; Utilities</h3>
+				<p>Use <a href="https://sourceware.org/libffi/">libffi</a> to call functions from any native library, use
+				<a href="http://www.canonware.com/jemalloc">jemalloc</a> for efficient and tunable memory management, use
+				the <a href="https://github.com/nothings/stb">stb</a> collection of libraries for texture loading, font
+				rendering and much more.</p>
+			</div>
+		</div><div class=row>
+			<div>
 				<p><i class="fa fa-question-circle" style="color:yellow"></i></p>
 				<h3>Your favorite API here!</h3>
 				<p>Think LWJGL should have bindings to your favorite API? Let us know or
@@ -299,7 +317,8 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			<small>OpenGL® and the oval logo are trademarks or registered trademarks of Silicon Graphics, Inc. in the United States and/or other countries worldwide.</small>
 			<br><small>OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</small>
 			<br><small>OpenGL ES logo is a trademark of Silicon Graphics Inc. used by permission by Khronos.</small>
-			<br><small>EGL and the EGL logo are trademarks of the Khronos Group Inc.</small>
+			<br><small>EGL, the EGL logo, Vulkan and the Vulkan logo are trademarks of the Khronos Group Inc.</small>
+			<br><small>Oculus, Oculus VR, Oculus Rift, and the Oculus eye logo are trademarks or registered trademarks of Oculus VR, LLC.</small>
 		</p>
 		<br>
 	</section>
