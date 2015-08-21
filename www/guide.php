@@ -144,7 +144,8 @@ public class HelloWorld {
 		// LWJGL detects the context that is current in the current thread,
 		// creates the ContextCapabilities instance and makes the OpenGL
 		// bindings available for use.
-		GL.createCapabilities();
+		GL.createCapabilities(); // valid for latest build
+		//GLContext.createFromCurrent(); // use this line instead with the 3.0.0a build
 
 		// Set the clear color
 		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
@@ -170,11 +171,15 @@ public class HelloWorld {
 </div>
 </section>
 <section class="container">
-	<p>LWJGL is fully documented, you can explore the javadoc documentation online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>. The <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is especially useful. For more code examples, see the <a href="https://github.com/LWJGL/lwjgl3/tree/master/src/tests/org/lwjgl">tests module</a> in the LWJGL repository</p>
+	<p>LWJGL is fully documented, you can explore the javadoc documentation online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more
+	information about LWJGL's design choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>.
+	The <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is especially useful. For more code examples, see
+	the <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/core/src/test">LWJGL tests suite</a> and the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository.</p>
 
 	<h3>Building from source</h3>
 
-	<p>Clone the <a href="https://github.com/LWJGL/lwjgl3.git">Git repository</a> locally, install a JDK and <a href="http://ant.apache.org/">Apache Ant</a>, optionally set the JAVA6_HOME environment variable to point to a JDK 6 installation, then you should be ready to build. Use the following targets:
+	<p>Clone the <a href="https://github.com/LWJGL/lwjgl3.git">Git repository</a> locally, install a JDK and <a href="http://ant.apache.org/">Apache Ant</a>,
+	optionally set the JAVA6_HOME environment variable to point to a JDK 6 installation, then you should be ready to build. Use the following targets:
 	<ul>
 		<li><em>ant</em> &ndash; Builds everything and runs the tests</li>
 		
