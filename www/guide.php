@@ -174,7 +174,8 @@ public class HelloWorld {
 	<p>LWJGL is fully documented, you can explore the javadoc documentation online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more
 	information about LWJGL's design choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>.
 	The <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is especially useful. For more code examples, see
-	the <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/core/src/test">LWJGL tests suite</a> and the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository.</p>
+	the <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/core/src/test">LWJGL tests suite</a> and the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository.
+	For porting existing LWJGL 2 code to LWJGL 3, see the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>.</p>
 
 	<h3>Building from source</h3>
 
