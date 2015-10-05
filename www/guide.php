@@ -46,7 +46,9 @@ include "header.php"
 	
         <p>Instructions for downloading LWJGL artifacts with Maven/Gradle/Ivy can be found in the <a href="https://github.com/LWJGL/lwjgl3">project repository</a>.</p>
 	
-	<p>You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes GLFW to create a window and clear the background color to red, using OpenGL:</p>
+	<p>You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes GLFW to create a window and clear the background color to red, using OpenGL.</p>
+
+	<p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
 </section>
 <section class="codehlt">
 <div class="container">
@@ -54,9 +56,6 @@ include "header.php"
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
-import java.nio.ByteBuffer;
-
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
@@ -81,7 +80,7 @@ public class HelloWorld {
 			glfwDestroyWindow(window);
 			keyCallback.release();
 		} finally {
-			// Terminate GLFW and release the GLFWerrorfun
+			// Terminate GLFW and release the GLFWErrorCallback
 			glfwTerminate();
 			errorCallback.release();
 		}
@@ -90,7 +89,7 @@ public class HelloWorld {
 	private void init() {
 		// Setup an error callback. The default implementation
 		// will print the error message in System.err.
-		glfwSetErrorCallback(errorCallback = errorCallbackPrint(System.err));
+		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 
 		// Initialize GLFW. Most GLFW functions will not work before doing this.
 		if ( glfwInit() != GL11.GL_TRUE )
@@ -119,12 +118,12 @@ public class HelloWorld {
 		});
 
 		// Get the resolution of the primary monitor
-		ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+		GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 		// Center our window
 		glfwSetWindowPos(
 			window,
-			(GLFWvidmode.width(vidmode) - WIDTH) / 2,
-			(GLFWvidmode.height(vidmode) - HEIGHT) / 2
+			(vidmode.getWidth() - WIDTH) / 2,
+			(vidmode.getHeight() - HEIGHT) / 2
 		);
 
 		// Make the OpenGL context current
@@ -140,10 +139,9 @@ public class HelloWorld {
 		// This line is critical for LWJGL's interoperation with GLFW's
 		// OpenGL context, or any context that is managed externally.
 		// LWJGL detects the context that is current in the current thread,
-		// creates the ContextCapabilities instance and makes the OpenGL
+		// creates the GLCapabilities instance and makes the OpenGL
 		// bindings available for use.
-		GL.createCapabilities(); // valid for latest build
-		//GLContext.createFromCurrent(); // use this line instead with the 3.0.0a build
+		GL.createCapabilities();
 
 		// Set the clear color
 		glClearColor(1.0f, 0.0f, 0.0f, 0.0f);
