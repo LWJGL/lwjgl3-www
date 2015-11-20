@@ -10,10 +10,14 @@ include "header.php"
 
 	<div class="row">
 		<div class="col-md-4">
-			<h3>Release (obsolete)</h3>
+			<h3>Release</h3>
 			<p>Latest official release.</p>
-			<p><a class="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i class="fa fa-clock-o"></i> DOWNLOAD ALPHA</a></p>
+			<p><a class="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i class="fa fa-clock-o"></i> DOWNLOAD RELEASE</a></p>
 			<iframe src="teamcity?id=LwjglReleases_StableToRelease" style="border:0;width:200px;height:40px"></iframe>
+
+			<br>
+			<a href="https://github.com/LWJGL/lwjgl3/tree/master/doc/release/latest.md">Release notes</a><br>
+			<a href="https://github.com/LWJGL/lwjgl3/tree/master/doc/release">Version history</a>
 		</div>
 		<div class="col-md-4">
 			<h3>Stable (newer)</h3>
@@ -35,28 +39,30 @@ include "header.php"
 
 <div class="area-dark">
 	<section class="container">
-		<h1>Looking for LWJGL 2?</h1>
+		<p>Broken download? Let us know at the <a href="http://forum.lwjgl.org/">forums</a>.</p>
+	</section>
 
-		<p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
+	<section class="container">
+		<h3>Build from source?</h3>
+		<p>Click below if you prefer to build from source:</p>
 		<p>
-			<a class="btn btn-default" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
-			<a class="btn btn-default" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
+			<a class="btn btn-default" href="/source"><i class="fa fa-code"></i> Source</a>
+			<a class="btn btn-default" href="/guide#build"><i class="fa fa-info-circle"></i> Build instructions</a>
 		</p>
-		<br>
 	</section>
 </div>
-<br>
-<section class="container">
-	<p>Broken download? Let us know at the <a href="http://forum.lwjgl.org/">forums</a>.</p>
-</section>
+
+<br><br>
 
 <section class="container">
-	<h3>Build from source?</h3>
-	<p>Click below if you prefer to build from source:</p>
+	<h1>Looking for LWJGL 2?</h1>
+
+	<p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
 	<p>
-		<a class="btn btn-default" href="/source"><i class="fa fa-code"></i> Source</a>
-		<a class="btn btn-default" href="/guide#build"><i class="fa fa-info-circle"></i> Build instructions</a>
+		<a class="btn btn-default" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
+		<a class="btn btn-default" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
 	</p>
+	<br>
 </section>
 
 <? include "footer.php" ?>
