@@ -16,8 +16,8 @@ include "header.php"
 			<iframe src="teamcity?id=LwjglReleases_StableToRelease" style="border:0;width:200px;height:40px"></iframe>
 
 			<br><br>
-			<a href="https://github.com/LWJGL/lwjgl3/tree/master/doc/release/latest.md">Release notes</a><br>
-			<a href="https://github.com/LWJGL/lwjgl3/tree/master/doc/release">Version history</a>
+			<a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a><br>
+			<a href="https://github.com/LWJGL/lwjgl3/tree/master/doc/notes">Version history</a>
 		</div>
 		<div class="col-md-4">
 			<h3>Stable (newer)</h3>
