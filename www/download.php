@@ -15,7 +15,7 @@ include "header.php"
 			<p><a class="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i class="fa fa-clock-o"></i> DOWNLOAD RELEASE</a></p>
 			<iframe src="teamcity?id=LwjglReleases_StableToRelease" style="border:0;width:200px;height:40px"></iframe>
 
-			<br>
+			<br><br>
 			<a href="https://github.com/LWJGL/lwjgl3/tree/master/doc/release/latest.md">Release notes</a><br>
 			<a href="https://github.com/LWJGL/lwjgl3/tree/master/doc/release">Version history</a>
 		</div>
@@ -32,12 +32,12 @@ include "header.php"
 			<iframe src="teamcity?id=lwjgl_Bundle" style="border:0;width:200px;height:40px"></iframe>
 		</div>
 	</div>
-	<br>
 </section>
 
 <br><br>
 
 <div class="area-dark">
+	<br>
 	<section class="container">
 		<p>Broken download? Let us know at the <a href="http://forum.lwjgl.org/">forums</a>.</p>
 	</section>
@@ -50,9 +50,10 @@ include "header.php"
 			<a class="btn btn-default" href="/guide#build"><i class="fa fa-info-circle"></i> Build instructions</a>
 		</p>
 	</section>
+	<br>
 </div>
 
-<br><br>
+<br>
 
 <section class="container">
 	<h1>Looking for LWJGL 2?</h1>
