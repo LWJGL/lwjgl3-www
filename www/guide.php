@@ -52,7 +52,7 @@ include "header.php"
 </section>
 <section class="codehlt">
 <div class="container">
-<pre style=";margin:0;border:0;border-radius:0"><code class="brush: java; tab-size: 4; toolbar: false">import org.lwjgl.Sys;
+<pre style=";margin:0;border:0;border-radius:0"><code class="brush: java; tab-size: 4; toolbar: false">import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
@@ -70,7 +70,7 @@ public class HelloWorld {
 	private long window;
 
 	public void run() {
-		System.out.println("Hello LWJGL " + Sys.getVersion() + "!");
+		System.out.println("Hello LWJGL " + Version.getVersion() + "!");
 
 		try {
 			init();
@@ -92,13 +92,13 @@ public class HelloWorld {
 		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
 
 		// Initialize GLFW. Most GLFW functions will not work before doing this.
-		if ( glfwInit() != GL11.GL_TRUE )
+		if ( glfwInit() != GLFW_TRUE )
 			throw new IllegalStateException("Unable to initialize GLFW");
 
 		// Configure our window
 		glfwDefaultWindowHints(); // optional, the current window hints are already the default
-		glfwWindowHint(GLFW_VISIBLE, GL_FALSE); // the window will stay hidden after creation
-		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE); // the window will be resizable
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); // the window will be resizable
 
 		int WIDTH = 300;
 		int HEIGHT = 300;
@@ -113,7 +113,7 @@ public class HelloWorld {
 			@Override
 			public void invoke(long window, int key, int scancode, int action, int mods) {
 				if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-					glfwSetWindowShouldClose(window, GL_TRUE); // We will detect this in our rendering loop
+					glfwSetWindowShouldClose(window, GLFW_TRUE); // We will detect this in our rendering loop
 			}
 		});
 
@@ -122,8 +122,8 @@ public class HelloWorld {
 		// Center our window
 		glfwSetWindowPos(
 			window,
-			(vidmode.getWidth() - WIDTH) / 2,
-			(vidmode.getHeight() - HEIGHT) / 2
+			(vidmode.width() - WIDTH) / 2,
+			(vidmode.height() - HEIGHT) / 2
 		);
 
 		// Make the OpenGL context current
@@ -148,7 +148,7 @@ public class HelloWorld {
 
 		// Run the rendering loop until the user has attempted to close
 		// the window or has pressed the ESCAPE key.
-		while ( glfwWindowShouldClose(window) == GL_FALSE ) {
+		while ( glfwWindowShouldClose(window) == GLFW_FALSE ) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
 			glfwSwapBuffers(window); // swap the color buffers
