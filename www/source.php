@@ -31,9 +31,6 @@ include "header.php"
 			<h4>Linux x64</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master" alt=""></a></p>
 			<br>
-			<h4>Linux x86</h4>
-			<p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=travis-linux-x86" alt=""></a></p>
-			<br>
 			<h4>OS X</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=travis-osx" alt=""></a></p>
 			<br>
@@ -48,9 +45,6 @@ include "header.php"
 			<br>
 			<h4>Linux x64</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/glfw"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master" alt=""></a></p>
-			<br>
-			<h4>Linux x86</h4>
-			<p><a href="https://travis-ci.org/LWJGL-CI/glfw/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=travis-linux-x86" alt=""></a></p>
 			<br>
 			<h4>OS X</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/glfw/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=travis-osx" alt=""></a></p>
@@ -67,9 +61,6 @@ include "header.php"
 			<h4>Linux x64</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/openal-soft"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master" alt=""></a></p>
 			<br>
-			<h4>Linux x86</h4>
-			<p><a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=travis-linux-x86" alt=""></a></p>
-			<br>
 			<h4>OS X</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=travis-osx" alt=""></a></p>
 			<br>
@@ -84,9 +75,6 @@ include "header.php"
 			<br>
 			<h4>Linux x64</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/libffi"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/libffi.svg?branch=master" alt=""></a></p>
-			<br>
-			<h4>Linux x86</h4>
-			<p><a href="https://travis-ci.org/LWJGL-CI/libffi/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/libffi.svg?branch=travis-linux-x86" alt=""></a></p>
 			<br>
 			<h4>OS X</h4>
 			<p><a href="https://travis-ci.org/LWJGL-CI/libffi/branches"><img width=90 height=18 src="https://travis-ci.org/LWJGL-CI/libffi.svg?branch=travis-osx" alt=""></a></p>
