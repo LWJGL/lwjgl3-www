@@ -14,7 +14,7 @@ img {
 	padding-right: 5px;
 	vertical-align: top;
 }
-.tcTD_projectName, .buildConfigurationName, .buildResults {
+.projectName, .buildTypeName, .buildResults {
   display:none;
 }
 </style>
