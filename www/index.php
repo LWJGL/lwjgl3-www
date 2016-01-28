@@ -257,7 +257,7 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" title="OpenCL"></p>
 				<h3>OpenCL<sup>TM</sup> Bindings</h3>
 				<p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
-				OpenCL versions (including the latest 2.0 specification) and many useful extensions.</p>
+				OpenCL versions (including the latest 2.1 specification) and many useful extensions.</p>
 			</div><div class=col-md-4>
 				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" title="OpenAL"></p>
 				<h3>OpenAL Bindings</h3>
