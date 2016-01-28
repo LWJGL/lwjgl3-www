@@ -18,7 +18,7 @@ img {
   display:none;
 }
 </style>
-<script src="http://teamcity.lwjgl.org/externalStatus.html?js=1&buildTypeId=<?=$_GET['id']?>"></script>
+<script src="/externalStatus.html?js=1&buildTypeId=<?=$_GET['id']?>"></script>
 <script>
 "use strict";
 var links = document.getElementsByTagName("a");
