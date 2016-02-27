@@ -247,12 +247,10 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" title="OpenGL"></p>
-				<h3>OpenGL<sup>&reg;</sup> Bindings</h3>
-				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
-				(including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
-				and dozens of popular vendor-specific extensions. If your favorite extension is missing,
-				<a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/vulkan.png" title="Vulkan"></p>
+				<h3>Vulkan<sup>TM</sup> Bindings</h3>
+				<p>A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
+				GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.</p>
 			</div><div class=col-md-4>
 				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" title="OpenCL"></p>
 				<h3>OpenCL<sup>TM</sup> Bindings</h3>
@@ -266,6 +264,13 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
+				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" title="OpenGL"></p>
+				<h3>OpenGL<sup>&reg;</sup> Bindings</h3>
+				<p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
+				(including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
+				and dozens of popular vendor-specific extensions. If your favorite extension is missing,
+				<a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
+			</div><div class=col-md-4>
 				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" title="OpenGL|ES"></p>
 				<h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
 				<p>A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
@@ -278,12 +283,6 @@ if (!$detect->isMobile() && !$detect->isTablet()) {
 				platform window system. It handles graphics context management, surface/buffer binding and rendering
 				synchronization and enables high-performance, accelerated, mixed-mode 2D and 3D rendering using other
 				Khronos APIs.</p>
-			</div><div class=col-md-4>
-				<p><img height=60 src="//d2g0ezo1t7nqa0.cloudfront.net/img/vulkan.png" title="Vulkan"></p>
-				<h3>Vulkan<sup>TM</sup> Bindings</h3>
-				<p>The new generation, open standard API for high-efficiency access to graphics and compute on modern GPUs.
-				This ground-up design provides applications direct control over GPU acceleration for maximized performance
-				and predictability.<br><br>(coming soon)</p>
 			</div>
 		</div><div class=row>
 			<div class=col-md-4>
