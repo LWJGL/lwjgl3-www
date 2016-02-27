@@ -76,13 +76,13 @@ public class HelloWorld {
 			init();
 			loop();
 
-			// Release window and window callbacks
+			// Destroy window and window callbacks
 			glfwDestroyWindow(window);
-			keyCallback.release();
+			keyCallback.free();
 		} finally {
-			// Terminate GLFW and release the GLFWErrorCallback
+			// Terminate GLFW and free the GLFWErrorCallback
 			glfwTerminate();
-			errorCallback.release();
+			errorCallback.free();
 		}
 	}
 
@@ -196,7 +196,7 @@ public class HelloWorld {
 	<ul>
 		<li><em>nightly</em> &ndash; the latest successful build, possibly broken. Dependency repositories can be found <a href="https://github.com/LWJGL-CI">here</a></li>
 		<li><em>stable</em> &ndash; the latest build that has been verified to work with LWJGL, the default</li>
-		<li><em>release/latest</em> &ndash; the latest stable build that has been promoted to an official LWJGL release</li>
+		<li><em>release/latest</em> &ndash; the latest stable build that has been promoted to an official LWJGL $</li>
 		<li><em>release/{build.version}</em> &ndash; a specific previously released build</li>
 	</ul></p>
 	
