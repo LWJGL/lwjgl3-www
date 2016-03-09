@@ -78,11 +78,9 @@ public class HelloWorld {
 
 			// Destroy window and window callbacks
 			glfwDestroyWindow(window);
-			keyCallback.free();
 		} finally {
 			// Terminate GLFW and free the GLFWErrorCallback
 			glfwTerminate();
-			errorCallback.free();
 		}
 	}
 
