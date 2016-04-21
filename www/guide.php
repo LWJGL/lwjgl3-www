@@ -36,7 +36,7 @@ include "header.php"
 
 	<h3>Getting Started</h3>
 
-	<p>Please use our <a href="http://www.lwjgl.org/download">download page</a> to download an LWJGL release. You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL will work on version 6 or newer. Then proceed by setting up a project in your favorite IDE and configuring it like so:
+	<p>Please use our <a href="http://www.lwjgl.org/download">download page</a> to download an LWJGL release. You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL will work on version 8 or newer. Then proceed by setting up a project in your favorite IDE and configuring it like so:
 	<ul>
 		<li>Add the LWJGL jars to the classpath. This is usually done by setting up a library dependency for your project and attaching jars to it.</li>
 		<li>Set the <strong>-Djava.library.path</strong> system property (as a JVM launch argument) to the folder containing your native files</li>
@@ -56,15 +56,12 @@ include "header.php"
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 
+import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class HelloWorld {
-
-	// We need to strongly reference callback instances.
-	private GLFWErrorCallback errorCallback;
-	private GLFWKeyCallback   keyCallback;
 
 	// The window handle
 	private long window;
@@ -76,23 +73,23 @@ public class HelloWorld {
 			init();
 			loop();
 
-			// Destroy window and window callbacks
+			// Free the window callbacks and destroy the window
+			glfwFreeCallbacks(window);
 			glfwDestroyWindow(window);
-			keyCallback.free();
 		} finally {
-			// Terminate GLFW and free the GLFWErrorCallback
+			// Terminate GLFW and free the error callback
 			glfwTerminate();
-			errorCallback.free();
+			glfwSetErrorCallback(null).free();
 		}
 	}
 
 	private void init() {
 		// Setup an error callback. The default implementation
 		// will print the error message in System.err.
-		glfwSetErrorCallback(errorCallback = GLFWErrorCallback.createPrint(System.err));
+		GLFWErrorCallback.createPrint(System.err).set();
 
 		// Initialize GLFW. Most GLFW functions will not work before doing this.
-		if ( glfwInit() != GLFW_TRUE )
+		if ( !glfwInit() )
 			throw new IllegalStateException("Unable to initialize GLFW");
 
 		// Configure our window
@@ -109,12 +106,9 @@ public class HelloWorld {
 			throw new RuntimeException("Failed to create the GLFW window");
 
 		// Setup a key callback. It will be called every time a key is pressed, repeated or released.
-		glfwSetKeyCallback(window, keyCallback = new GLFWKeyCallback() {
-			@Override
-			public void invoke(long window, int key, int scancode, int action, int mods) {
-				if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
-					glfwSetWindowShouldClose(window, GLFW_TRUE); // We will detect this in our rendering loop
-			}
+		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+			if ( key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE )
+				glfwSetWindowShouldClose(window, true); // We will detect this in our rendering loop
 		});
 
 		// Get the resolution of the primary monitor
@@ -148,7 +142,7 @@ public class HelloWorld {
 
 		// Run the rendering loop until the user has attempted to close
 		// the window or has pressed the ESCAPE key.
-		while ( glfwWindowShouldClose(window) == GLFW_FALSE ) {
+		while ( !glfwWindowShouldClose(window) ) {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
 			glfwSwapBuffers(window); // swap the color buffers
@@ -176,7 +170,7 @@ public class HelloWorld {
 	<h3>Building from source</h3>
 
 	<p>Clone the <a href="https://github.com/LWJGL/lwjgl3.git">Git repository</a> locally, install a JDK and <a href="http://ant.apache.org/">Apache Ant</a>,
-	optionally set the JAVA6_HOME environment variable to point to a JDK 6 installation, then you should be ready to build. Use the following targets:
+	then you should be ready to build. Use the following targets:
 	<ul>
 		<li><em>ant</em> &ndash; Builds everything and runs the tests</li>
 		
