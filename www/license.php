@@ -13,7 +13,7 @@ include "header.php"
 			<img class="img-responsive" src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-dark.png" alt="">
 		</div>
 		<div class="col-md-6">
-			<p>Copyright &copy; 2012-2014 Lightweight Java Game Library Project
+			<p>Copyright &copy; 2012-2016 Lightweight Java Game Library Project
 				<br>All rights reserved.</p>
 
 			<p>Redistribution and use in source and binary forms, with or without
