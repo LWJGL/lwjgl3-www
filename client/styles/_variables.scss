@@ -1,0 +1,26 @@
+$enable-flex: false;
+$enable-shadows: true;
+$enable-gradients: true;
+$enable-transitions: true;
+
+$brand-primary: #1b2426;
+$body-color: $brand-primary;
+$body-color-dark-secondary: #6c8f91;
+
+$whitespace: 0.5rem;
+
+// Adjust heading sizes back to Bootstrap 3 defaults
+
+$font-size-h1: 2rem;
+$font-size-h2: 1.75rem;
+$font-size-h3: 1.5rem;
+$font-size-h4: 1.25rem;
+$font-size-h5: 1.25rem;
+$font-size-h6: 1rem;
+
+// Links
+// -------------------------
+
+$link-color: #0275d8;
+//$link-hover-color: darken($brand-primary, 25%);
+$link-color-dark: #63aae7;

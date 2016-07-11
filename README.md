@@ -1,170 +1,246 @@
-## [LWJGL.org](http://www.lwjgl.org) - The home of Lightweight Java Game Library 3
+## [LWJGL.org](https://www.lwjgl.org) - The home of Lightweight Java Game Library 3
 
 The website for LWJGL 3.
 
-### Requirements
+### Production Requirements
 
-- [NGINX](http://www.nginx.org/)
-- [PHP](http://www.php.net/)
+- [NGINX](http://nginx.org/)
+- [Node.js & NPM](https://nodejs.org/en/)
+- [PM2](https://github.com/Unitech/pm2)
+- [Let's Encrypt CLI](https://letsencrypt.org/)
 
 ### Dependencies
 
-The website uses the following external libraries/files:
+Static assets are loaded from LWJGL's CDN.
 
-- [Bootstrap](http://getbootstrap.com/)
-- [JQuery](http://www.jquery.com/)
-- [Fira Sans](http://mozilla.github.io/Fira/)
-- [SyntaxHighlighter](http://alexgorbatchev.com/SyntaxHighlighter/)
+Some libraries/files are loaded from other servers:
+
+- [highlight.js](https://highlightjs.org/)
 - [Google Analytics](http://www.google.com/analytics)
-
-All external files are loaded directly from CDNs and not bundled here.
-
-Custom stylesheets and scripts are inlined to avoid additional HTTP requests.
-
-Non-text content is loaded from LWJGL's CDN.
 
 Build status icons are loaded from travis-ci.org and TeamCity.
 
 The blog is [Ghost](https://ghost.org/), the forum is [SMF](http://www.simplemachines.org/), the old website can be found [here](https://github.com/LWJGL/lwjgl-www), and the old wiki is [MediaWiki](https://www.mediawiki.org/).
 
-### PHP Configuration
-
-Just make sure short_open_tag is set to on in your php.ini
-
-We use the [Mobile Detect Library](http://mobiledetect.net) to avoid loading the background video for mobile and tablet devices.
-
 ### NGINX Configuration
 
 Make sure you have [gzip compression](http://nginx.org/en/docs/http/ngx_http_gzip_module.html) enabled.
 
-Below you will find our current server configuration, we do routing on NGINX to keep things simple. Some rewrites ensure we don't break links for the old site.
+Below you will find our current server configuration. Some rewrites ensure we don't break links for the old site.
 
 ```Nginx
 server {
-	listen 80 default_server;
-	# listen [::]:80;
-	server_name
-		lwjgl.com
-		www.lwjgl.com
-		lwjgl.org;
+  listen 80;
+  server_name
+    lwjgl.org
+    www.lwjgl.org
+    lwjgl.com
+    www.lwjgl.com;
 
-	return 301 $scheme://www.lwjgl.org$request_uri;
+  location ~ ^/\.well-known\/acme-challenge/ {
+    root /srv/acme-challenge;
+    try_files $uri /$1;
+  }
+
+  location /webstart/ {
+    rewrite ^/(.*)$ http://legacy.lwjgl.org/$1 redirect;
+  }
+
+  location = /projects.php {
+    rewrite ^/(.*)$ http://legacy.lwjgl.org/$1 redirect;
+  }
+
+  location / {
+    return 301 https://www.lwjgl.org$request_uri;
+  }
 }
 
 server {
-	listen 80;
-	server_name www.lwjgl.org;
-	root /srv/lwjgl.org/site/www;
-	index index.php;
+  listen 443 ssl http2;
+  server_name lwjgl.org;
 
-	# Errors
+  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_stapling on;
+  ssl_stapling_verify on;
 
-	error_page 404 @404;
-	error_page 410 @410;
-	error_page 502 @502;
-	error_page 503 @503;
+  add_header Strict-Transport-Security "max-age=31536000; preload";
 
-	location /404.html {
-		internal;
-	}
-	
-	location /50x.html {
-		internal;
-	}
-	
-	location @404 {
-		if ($http_accept !~* "text/html") {
-			return 404;
-		}
-		rewrite ^(.*)$ /404.html break;
-	}
-	
-	location @410 {
-		if ($http_accept !~* "text/html") {
-			return 410;
-		}
-		rewrite ^(.*)$ /404.html break;
-	}
-	
-	location @502 {
-		if ($http_accept !~* "text/html") {
-			return 502;
-		}
-		rewrite ^(.*)$ /50x.html break;
-	}
-	
-	location @503 {
-		if ($http_accept !~* "text/html") {
-			return 503;
-		}
-		rewrite ^(.*)$ /50x.html break;
-	}
-	
-	location ~ \.(js|css|png|jpg|jpeg|gif|svg|ico|swf|mp3|wav|ogg)$ {
-		add_header Cache-Control "public, max-age=31536000";
-		try_files $uri =404;
-	}
+  return 301 https://www.lwjgl.org$request_uri;
+}
 
-	location ~ \.(html|htm|xml)$ {
-		charset utf-8;
-		add_header Cache-Control "public, max-age=31536000";
-		try_files $uri =404;
-	}
+server {
+  listen 443 ssl http2;
+  server_name www.lwjgl.org;
 
-	# Routing
-	
-	location = /wiki {
-		return 301 http://wiki.lwjgl.org/;
-	}
-	
-	location ^~ /wiki/ {
-		rewrite
-			^/wiki/(.*)
-			http://wiki.lwjgl.org/$1
-			permanent;
-	}
-	
-	location = /forum {
-		return 301 http://forum.lwjgl.org/;
-	}
-	
-	location ^~ /forum/ {
-		rewrite
-			^/forum/(.*)
-			http://forum.lwjgl.org/$1
-			permanent;
-	}
-	
-	location = /guide {
-		rewrite ^ /guide.php last;
-	}
-	
-	location = /download {
-		rewrite ^ /download.php last;
-	}
-	
-	location = /source {
-		rewrite ^ /source.php last;
-	}
-	location = /license {
-		rewrite ^ /license.php last;
-	}
-	
-	location = /teamcity {
-		rewrite ^ /teamcity.php last;
-	}
+  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_stapling on;
+  ssl_stapling_verify on;
 
-	# PHP
+  add_header Strict-Transport-Security "max-age=31536000; preload";
 
-	location ~ \.php$ {
-		try_files $uri =404;
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		fastcgi_pass unix:/var/run/php5-fpm.sock;
-		#fastcgi_pass 127.0.0.1:9000;
-		fastcgi_index index.php;
-		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-		include fastcgi_params;
-	}
+  location = /wiki {
+    return 301 http://wiki.lwjgl.org/;
+  }
+
+  location ^~ /wiki/ {
+    rewrite
+      ^/wiki/(.*)
+      http://wiki.lwjgl.org/$1
+      permanent;
+  }
+
+  location = /forum {
+    return 301 http://forum.lwjgl.org/;
+  }
+
+  location ^~ /forum/ {
+    rewrite
+      ^/forum/(.*)
+      http://forum.lwjgl.org/$1
+      permanent;
+  }
+
+  location = /projects.php {
+    rewrite ^/(.*)$ http://legacy.lwjgl.org/$1 permanent;
+  }
+
+  location = /externalStatus.html {
+    proxy_buffering off;
+    proxy_redirect off;
+    proxy_intercept_errors off;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host teamcity.lwjgl.org;
+    proxy_pass http://teamcity.lwjgl.org;
+  }
+
+  location / {
+    proxy_buffering off;
+    proxy_redirect off;
+    proxy_intercept_errors off;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_pass http://localhost:7687;
+  }
 
 }
 ```
+
+### Development Environment
+
+For watching and auto-reloading the server we use [nodemon](http://nodemon.io/). This is the only required
+global NPM package. Install with:
+
+```bash
+npm -g i nodemon
+```
+
+For react-transform-hmr to work the following configuration needs to be added inside the NGINX's server section:
+
+```Nginx
+location = /__webpack_hmr {
+  proxy_pass http://127.0.0.1:7687;
+  proxy_set_header Connection '';
+  proxy_http_version 1.1;
+  chunked_transfer_encoding off;
+  proxy_buffering off;
+  proxy_cache off;
+}
+```
+
+A minimal NGINX configuration for development can look like this:
+
+```Nginx
+server {
+  listen 80;
+  server_name
+    lwjgl.org
+    lwjgl.dev
+    lwjgl.local;
+  return 301 $scheme://www.lwjgl.local$request_uri;
+}
+
+server {
+  listen 80;
+  server_name
+    dev.lwjgl.org
+    www.lwjgl.org
+    www.lwjgl.dev
+    www.lwjgl.local;
+
+  location = /__webpack_hmr {
+    proxy_pass http://127.0.0.1:7687;
+    proxy_set_header Connection '';
+    proxy_http_version 1.1;
+    chunked_transfer_encoding off;
+    proxy_buffering off;
+    proxy_cache off;
+  }
+
+  location = /externalStatus.html {
+    proxy_buffering off;
+    proxy_redirect off;
+    proxy_intercept_errors off;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host teamcity.lwjgl.org;
+    proxy_pass http://teamcity.lwjgl.org;
+  }
+
+  location / {
+    proxy_buffering off;
+    proxy_redirect off;
+    proxy_intercept_errors off;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_pass http://localhost:7687;
+  }
+}
+```
+
+For avoiding issues with Strict-Transport-Security add the following rules in your host file or your proxy ( e.g. Fiddler )
+and use any of the following host names to test locally:
+
+```
+127.0.0.1 dev.lwjgl.org
+127.0.0.1 www.lwjgl.dev
+127.0.0.1 www.lwjgl.local
+```
+
+### Build/running in development
+
+```bash
+npm i
+npm styles
+npm start
+```
+
+Styles can be monitored for changes and automatically re-compiled with:
+
+```bash
+npm styles-watch
+```
+
+### Build/running in production
+
+```bash
+npm i
+npm run production
+NODE_ENV=production pm2 start server --name="lwjgl-www"
+pm2 save
+```
+
+### Known Issues
+
+- react-transform-hmr is deprecated. Use React Hot Reload 3
+- Add support for Node.js LTS

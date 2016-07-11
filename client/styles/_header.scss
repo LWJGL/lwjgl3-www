@@ -1,0 +1,103 @@
+.menu-pad {
+  padding-top: 4rem;
+}
+
+header {
+  $header-color: #fff;
+
+  background: $brand-primary;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  color: $header-color;
+  line-height: 3rem;
+
+  a {
+    font-weight: 300;
+    color: $header-color;
+    text-decoration: none;
+    &:focus, &:hover {
+      color: lightblue;
+      text-decoration: none;
+    }
+  }
+
+  ul.col-md-10 {
+    text-align: right;
+    margin: 0;
+    li {
+      display: inline-block;
+      padding-left: 2rem;
+    }
+  }
+
+}
+
+.sliding-menu {
+
+  a {
+    display: block;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .sliding-menu-icon {
+    padding: 0 15px;
+    margin: 0 -15px 0 0;
+    color: white;
+    &:hover, &:active {
+      color: yellow;
+    }
+  }
+
+  .sliding-menu-overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+    opacity: 0;
+    will-change: opacity;
+    transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
+    //transform: translateX(102%);
+  }
+
+  .sliding-menu-container {
+    background-color: #1b2426;
+    position: fixed;
+    padding: 0 15px;
+    right: 0;
+    top: 0;
+    text-align: left;
+    max-width: 320px;
+    min-width: 260px;
+    height: 100%;
+    overflow: auto;
+    will-change: transform;
+    transition: transform 0.3s cubic-bezier(0,0,0.3,1);
+    transform: translateX(102%);
+    pointer-events: none;
+    &.touching {
+      // Avoids resetting transform onTouchEnd
+      transition: none;
+    }
+  }
+
+  &.open {
+    .sliding-menu-overlay {
+      pointer-events: auto;
+      opacity: 1;
+    }
+
+    .sliding-menu-container {
+      pointer-events: auto;
+      transform: none;
+    }
+  }
+
+}
