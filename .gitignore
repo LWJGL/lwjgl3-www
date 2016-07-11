@@ -1,0 +1,17 @@
+
+# WebStorm/IntelliJ project files
+.idea
+*.iml
+
+# Node
+node_modules
+
+# Sensitive files
+/config.js
+
+# Generated files
+/manifest-js.json
+/manifest-css.json
+/public/css/*
+/public/js/*
+

@@ -1,0 +1,13 @@
+footer {
+  margin-top: 5px;
+}
+
+.copyright {
+  margin-top: 20px;
+  padding: 40px 0 30px 0;
+  font-size: 14px;
+  text-align: center;
+  background-color: $body-color;
+  color: $body-color-dark-secondary;
+  p { margin: 0; }
+}

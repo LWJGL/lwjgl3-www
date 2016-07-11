@@ -1,0 +1,11 @@
+extends layout
+
+block vars
+  - renderApp = true
+
+block content
+  if ( html )
+    #lwjgl-app
+      div!= html
+  else
+    #lwjgl-app
