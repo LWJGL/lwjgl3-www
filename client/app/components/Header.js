@@ -11,9 +11,49 @@ const styles = StyleSheet.create({
 });
 
 export default class extends React.Component {
+
+  previousY = 0;
+  currentY = 0;
+
+  componentDidMount() {
+    this.currentY = this.getScroll();
+    window.addEventListener('scroll', this.onScroll.bind(this));
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll.bind(this));
+  }
+
+  getScroll() {
+    return window.pageYOffset || document.documentElement.scrollTop;
+  }
+
+  onScroll() {
+    this.previousY = this.currentY;
+    this.currentY = this.getScroll();
+    this.nextTick();
+  }
+
+  nextTick() {
+    if ( !this.ticking ) {
+      requestAnimationFrame(this.update.bind(this));
+    }
+    this.ticking = true;
+  }
+
+  update() {
+    const offsetY = this.previousY - this.currentY;
+    if ( offsetY < 0 && this.currentY > 52 ) {
+      this.refs.header.classList.add('hidden');
+    } else {
+      this.refs.header.classList.remove('hidden');
+    }
+    this.ticking = false;
+  }
+
   render() {
     return (
-      <header role="navigation" className={css(this.props.isHome ? styles.home : null)}>
+      <header ref="header" role="navigation" className={css(this.props.isHome ? styles.home : null)}>
         <nav className="container-fluid">
           <div className="row">
             <div className="col-lg-2 col-xs-8"><IndexLink to="/">LW<b>JGL</b> 3</IndexLink></div>
