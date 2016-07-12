@@ -20,7 +20,3 @@ if ( process.browser && process.env.NODE_ENV === 'production' ) {
 
   (document.head||document.body).appendChild(script);
 }
-
-export default (...args) => {
-  window.ga.apply(null, args);
-};

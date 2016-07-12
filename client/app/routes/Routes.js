@@ -1,6 +1,5 @@
 import App from '../components/App'
 import nprogress from 'nprogress'
-import ga from '../utils/ga'
 
 const routes = {};
 let firstRoute = true;
@@ -19,7 +18,7 @@ function route(name, getComponentWrap) {
     getComponent(nextState, cb) {
       getComponentWrap(nextState, (err, module) => {
         if ( !firstRoute ) {
-          if ( process.env.NODE_ENV === 'production' ) {
+          if ( process.browser && process.env.NODE_ENV === 'production' ) {
             ga('send', 'pageview', `${nextState.location.pathname}${nextState.location.search}`);
           }
         }
