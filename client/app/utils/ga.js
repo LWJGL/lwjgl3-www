@@ -5,9 +5,8 @@ const track = function() {
 track.q = [];
 track.l = 1 * new Date();
 
-window.ga = track;
-
 if ( process.browser && process.env.NODE_ENV === 'production' ) {
+  window.ga = track;
   window.GoogleAnalyticsObject = 'ga';
 
   track('create', 'UA-83518-1', {cookieDomain: location.host});
