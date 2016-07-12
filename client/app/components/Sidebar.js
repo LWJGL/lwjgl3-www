@@ -8,12 +8,16 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
 
+    for ( let fn of ['onToggle','update','onTouchStart','onTouchMove','onTouchEnd'] )  {
+      this[fn] = this[fn].bind(this);
+    }
+
     this.state = {
       open: false
     };
   }
 
-  onToggle = () => {
+  onToggle() {
     if ( this.state.open ) {
       noscroll.off();
       focusTrap.deactivate();
@@ -25,18 +29,18 @@ export default class extends React.Component {
     }
 
     this.setState({open: !this.state.open});
-  };
+  }
 
-  onTouchStart = (evt) => {
+  onTouchStart(evt) {
     this.startX = evt.touches[0].pageX;
     this.currentX = this.startX;
 
     this.touchingSideNav = true;
     this.refs.sideContainer.classList.add('touching');
     requestAnimationFrame(this.update);
-  };
+  }
 
-  onTouchMove = (evt) => {
+  onTouchMove(evt) {
     if ( !this.touchingSideNav ) {
       return;
     }
@@ -47,9 +51,9 @@ export default class extends React.Component {
     if ( translateX < 0 ) {
       evt.preventDefault();
     }
-  };
+  }
 
-  onTouchEnd = (evt) => {
+  onTouchEnd(evt) {
     if ( !this.touchingSideNav ) {
       return;
     }
@@ -63,9 +67,9 @@ export default class extends React.Component {
       this.refs.sideContainer.classList.remove('touching');
       this.onToggle();
     }
-  };
+  }
 
-  update = () => {
+  update() {
     if ( !this.touchingSideNav ) {
       return;
     }
@@ -79,7 +83,7 @@ export default class extends React.Component {
     }
 
     this.refs.sideContainer.style.transform = `translateX(${translateX}px)`;
-  };
+  }
 
   render() {
     let isOpen = this.state.open;
