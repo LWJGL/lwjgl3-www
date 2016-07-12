@@ -17,11 +17,11 @@ export default class extends React.Component {
           <hr />
 
           <article className="row">
-            <div className="col-md-6 col-xs-12 pull-md-right">
+            <div className="col-lg-6 col-xs-12 pull-lg-right">
               <p><img className="img-fluid" src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-dark.png" alt="" /></p>
               <p><small>Copyright &copy; 2012-2016 Lightweight Java Game Library. All rights reserved.</small></p>
             </div>
-            <div className="col-md-6 col-xs-12 pull-md-left">
+            <div className="col-lg-6 col-xs-12 pull-lg-left">
               <p>Redistribution and use in source and binary forms, with or without
                 modification, are permitted provided that the following conditions are
                 met:</p>
