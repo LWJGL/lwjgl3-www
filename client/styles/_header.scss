@@ -13,6 +13,7 @@ header {
   z-index: 1;
   color: $header-color;
   line-height: 3rem;
+  font-size: 1.2rem;
 
   a {
     font-weight: 300;
@@ -24,7 +25,7 @@ header {
     }
   }
 
-  ul.col-md-10 {
+  ul.col-lg-10 {
     text-align: right;
     margin: 0;
     li {

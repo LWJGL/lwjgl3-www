@@ -16,9 +16,9 @@ export default class extends React.Component {
       <header role="navigation" className={css(this.props.isHome ? styles.home : null)}>
         <nav className="container-fluid">
           <div className="row">
-            <div className="col-md-2 col-xs-8"><IndexLink to="/">LW<b>JGL</b> 3</IndexLink></div>
+            <div className="col-lg-2 col-xs-8"><IndexLink to="/">LW<b>JGL</b> 3</IndexLink></div>
 
-            <ul className="list-unstyled col-md-10 hidden-sm-down">
+            <ul className="list-unstyled col-lg-10 hidden-md-down">
               <li><IndexLink to="/">HOME</IndexLink></li>
               <li><Link to="/guide">GET STARTED</Link></li>
               <li><Link to="/download">DOWNLOAD</Link></li>
@@ -27,7 +27,7 @@ export default class extends React.Component {
               <li><a href="http://blog.lwjgl.org/">BLOG</a></li>
             </ul>
 
-            <div className="col-xs-4 hidden-md-up text-xs-right">
+            <div className="col-xs-4 hidden-lg-up text-xs-right">
               <Sidebar />
             </div>
           </div>
