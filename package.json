@@ -93,11 +93,13 @@
     "react-transform-catch-errors": "1.0.2",
     "react-transform-hmr": "1.0.4",
     "redbox-react": "1.2.10",
+    "request": "2.73.0",
     "serve-favicon": "2.3.0",
     "tabbable": "1.0.4",
     "webpack": "2.1.0-beta.15",
     "webpack-dev-middleware": "1.6.1",
     "webpack-hot-middleware": "2.12.1",
+    "whatwg-fetch": "1.0.0",
     "yargs": "4.8.0"
   },
   "scripts": {

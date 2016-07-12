@@ -1,6 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router/es6'
+import BuildStatus from '../../components/BuildStatus'
 
 export default class extends React.Component {
 
@@ -23,7 +24,7 @@ export default class extends React.Component {
               <h3>Release</h3>
               <p>Latest official release.</p>
               <p><a className="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i className="fa fa-cloud-download" /> DOWNLOAD RELEASE</a></p>
-              <iframe className="build-status" src="teamcity?id=LwjglReleases_StableToRelease"></iframe>
+              <BuildStatus name="LwjglReleases_StableToRelease" />
 
               <p className="m-t-2">
                 <i className="fa fa-clock-o" /> <a href="https://github.com/LWJGL/lwjgl3/commits/master">ChangeLog</a>
@@ -34,13 +35,13 @@ export default class extends React.Component {
               <h3>Stable (newer)</h3>
               <p>Latest build that has been verified to work.</p>
               <p><a className="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip"><i className="fa fa-cloud-download" /> DOWNLOAD STABLE</a></p>
-              <iframe className="build-status" src="teamcity?id=LwjglReleases_NightlyToStable"></iframe>
+              <BuildStatus name="LwjglReleases_NightlyToStable" />
             </div>
             <div className="col-md-4 col-xs-12 p-y-1">
               <h3>Nightly (newest)</h3>
               <p>Bleeding edge, possibly broken.</p>
               <p><a className="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip"><i className="fa fa-cloud-download" /> DOWNLOAD NIGHTLY</a></p>
-              <iframe className="build-status" src="teamcity?id=lwjgl_Bundle"></iframe>
+              <BuildStatus name="lwjgl_Bundle" />
             </div>
           </div>
         </section>

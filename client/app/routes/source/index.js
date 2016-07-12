@@ -1,5 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
+import BuildStatus from '../../components/BuildStatus'
 
 export default class extends React.Component {
 
@@ -41,10 +42,10 @@ export default class extends React.Component {
               <p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
-              <iframe className="build-status" src="teamcity?id=lwjgl_Win64"></iframe>
+              <BuildStatus name="lwjgl_Win64" />
               <br />
               <h4>Windows x86</h4>
-              <iframe className="build-status" src="teamcity?id=lwjgl_Win32"></iframe>
+              <BuildStatus name="lwjgl_Win32" />
             </div>
             <div className="col-md-3 col-xs-12 p-y-2">
               <hr className="hidden-md-up" />
@@ -57,10 +58,10 @@ export default class extends React.Component {
               <p><a href="https://travis-ci.org/LWJGL-CI/glfw/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
-              <iframe className="build-status" src="teamcity?id=glfw_Win64"></iframe>
+              <BuildStatus name="glfw_Win64" />
               <br />
               <h4>Windows x86</h4>
-              <iframe className="build-status" src="teamcity?id=glfw_Win32"></iframe>
+              <BuildStatus name="glfw_Win32" />
             </div>
             <div className="col-md-3 col-xs-12 p-y-2">
               <hr className="hidden-md-up" />
@@ -73,10 +74,10 @@ export default class extends React.Component {
               <p><a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
-              <iframe className="build-status" src="teamcity?id=OpenALSoft_Win64"></iframe>
+              <BuildStatus name="OpenALSoft_Win64" />
               <br />
               <h4>Windows x86</h4>
-              <iframe className="build-status" src="teamcity?id=OpenALSoft_Win32"></iframe>
+              <BuildStatus name="OpenALSoft_Win32" />
             </div>
 
             <div className="col-md-3 col-xs-12 p-y-2">
@@ -90,10 +91,10 @@ export default class extends React.Component {
               <p><a href="https://travis-ci.org/LWJGL-CI/dyncall/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
-              <iframe className="build-status" src="teamcity?id=dyncall_Win64"></iframe>
+              <BuildStatus name="dyncall_Win64" />
               <br />
               <h4>Windows x86</h4>
-              <iframe className="build-status" src="teamcity?id=dyncall_Win32"></iframe>
+              <BuildStatus name="dyncall_Win32" />
             </div>
           </div>
         </section>

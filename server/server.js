@@ -1,3 +1,5 @@
+
+// Server
 import path from 'path'
 import express from 'express'
 import favicon from 'serve-favicon'
@@ -6,12 +8,16 @@ import fs from 'fs'
 import { argv } from 'yargs'
 import chalk from 'chalk'
 
+// Server-side rendering
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import Routes from '../client/app/routes/Routes'
 import Helmet from 'react-helmet'
 import { StyleSheetServer } from 'aphrodite'
+
+// For proxying requests to TeamCity
+import request from 'request';
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
@@ -84,9 +90,39 @@ app.use(express.static(path.join(__dirname, '../public'), {
 // ------------------------------------------------------------------------------
 
 app.get('/teamcity', (req, res, next) => {
-  res.render('teamcity', {
-    buildId: req.query.id,
-  });
+  request(
+    {
+      method: 'GET',
+      baseUrl: 'http://teamcity.lwjgl.org',
+      url: '/httpAuth/app/rest/builds/',
+      qs: {
+        locator: `running:false,count:1,buildType:${req.query.build}`
+      },
+      headers: {
+        'Accept': 'application/json'
+      },
+      auth: {
+        'user': config.teamcity.username,
+        'pass': config.teamcity.password
+      },
+      gzip: true,
+      followRedirect: false,
+      timeout: 5000
+    },
+    (error, response, data) => {
+      if ( error ) {
+        res.status(500).json({error:error.message});
+        return;
+      }
+
+      if ( response.statusCode !== 200 ) {
+        res.status(response.statusCode).json({error:'Invalid response'});
+        return;
+      }
+
+      res.json(JSON.parse(data));
+    }
+  );
 });
 
 app.get('*', (req, res, next) => {
