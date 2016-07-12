@@ -1,6 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import { Link } from 'react-router'
+import { Link } from 'react-router/es6'
 
 export default class extends React.Component {
 

@@ -25,6 +25,7 @@
     "babel-plugin-syntax-jsx": "6.8.0",
     "babel-plugin-syntax-object-rest-spread": "6.8.0",
     "babel-plugin-syntax-trailing-function-commas": "6.8.0",
+    "babel-plugin-system-import-transformer": "2.2.1",
     "babel-plugin-transform-async-to-generator": "6.8.0",
     "babel-plugin-transform-class-constructor-call": "6.8.0",
     "babel-plugin-transform-class-properties": "6.10.2",
@@ -80,10 +81,9 @@
     "gulp-sass": "2.3.2",
     "highlight.js": "9.5.0",
     "imports-loader": "0.6.5",
-    "lodash": "4.13.1",
-    "lodash-es": "4.13.1",
     "moment": "2.14.1",
     "morgan": "1.7.0",
+    "nprogress": "0.2.0",
     "pug": "2.0.0-beta3",
     "react": "15.2.1",
     "react-dom": "15.2.1",
@@ -98,7 +98,6 @@
     "webpack": "2.1.0-beta.15",
     "webpack-dev-middleware": "1.6.1",
     "webpack-hot-middleware": "2.12.1",
-    "whatwg-fetch": "1.0.0",
     "yargs": "4.8.0"
   },
   "scripts": {

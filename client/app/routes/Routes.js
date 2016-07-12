@@ -4,12 +4,12 @@ export default {
   childRoutes: [{
     path: '/',
     component: App,
-    indexRoute: require('./home'),
+    indexRoute: require('./home').default,
     childRoutes: [
-      require('./download'),
-      require('./guide'),
-      require('./license'),
-      require('./source'),
+      require('./download').default,
+      require('./guide').default,
+      require('./source').default,
+      require('./license').default,
     ]
   }]
 };

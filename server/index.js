@@ -7,23 +7,6 @@ if ( argv.production ) {
   process.env.NODE_ENV = 'production';
 }
 
-// Polyfill Webpack's require.ensure && require.include
-// This is required for React-Router dynamic routes to resolve properly
-// TODO: Might not need this anymore when Node and webpack both support a common loader API ( e.g. System.import )
-let proto = Object.getPrototypeOf(require);
-!proto.hasOwnProperty("ensure") && Object.defineProperties(proto, {
-  "ensure": {
-    value: function ensure(modules, callback) {
-      callback(this);
-    },
-    writable: false
-  },
-  "include": {
-    value: function include() {},
-    writable: false
-  }
-});
-
 // TODO: Remove Babel plugins
 // Most syntax+transform plugins require new V8 version ( Node v7+ )
 // ES6 modules are under consideration and may require code changes
@@ -31,16 +14,20 @@ let proto = Object.getPrototypeOf(require);
 require('babel-core/register')({
   highlightCode: false,
   extensions: ['.js'],
+  ignore: function(filename) {
+    return filename.indexOf('node_modules') > -1  && filename.indexOf('node_modules/react-router') === -1;
+  },
   plugins: [
-    'syntax-object-rest-spread',
-    'transform-async-to-generator',
-    'transform-flow-strip-types',
-    'transform-strict-mode',
-    'transform-object-rest-spread',
-    'transform-class-properties',
-    'transform-es2015-modules-commonjs',
-    'transform-react-jsx',
-    'syntax-jsx'
+    'syntax-object-rest-spread',  // V8
+    'transform-async-to-generator',  // V8
+    'transform-flow-strip-types',  // V8
+    'transform-strict-mode',  // Force strict mode
+    'transform-object-rest-spread',  // V8
+    'transform-class-properties',  // V8
+    ['system-import-transformer', { modules: 'common' }], // Polyfill System.import for Node.js
+    'transform-es2015-modules-commonjs',  // ES6 modules
+    'transform-react-jsx',  // For server-side rendering
+    'syntax-jsx',  // For server-side rendering
   ]
 });
 

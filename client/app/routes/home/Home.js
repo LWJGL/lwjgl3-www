@@ -2,7 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import {StyleSheet, css} from 'aphrodite'
 import stylesDefinition from './styles'
-import { Link } from 'react-router'
+import { Link } from 'react-router/es6'
 
 const styles = StyleSheet.create(stylesDefinition);
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link, IndexLink} from 'react-router'
+import {Link, IndexLink} from 'react-router/es6'
 import {StyleSheet, css} from 'aphrodite'
 import Sidebar from './Sidebar'
 

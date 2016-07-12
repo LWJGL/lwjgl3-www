@@ -89,19 +89,7 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
-
-    // Fetch Polyfill
-    new webpack.ProvidePlugin({
-      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
-    }),
-
-    // require('fg-loadcss/src/loadCSS');
-// require('fg-loadcss/src/cssrelpreload');
-
-
-// Moment.js Locales
-    new webpack.ContextReplacementPlugin(/moment[\\\/]locale$/, /^\.\/el$/)
+    })
   ]
 };
 

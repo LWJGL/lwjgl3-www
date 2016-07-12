@@ -1,12 +1,19 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { Router, browserHistory, applyRouterMiddleware } from 'react-router'
+import { match, Router, browserHistory, applyRouterMiddleware } from 'react-router/es6'
 import useScroll from 'react-router-scroll';
-import Routes from './routes/Routes'
+import routes from './routes/Routes'
+import nprogress from 'nprogress'
 
 const AppContainer = 'lwjgl-app';
+const { pathname, search, hash } = window.location;
+const location = `${pathname}${search}${hash}`;
 
-if ( typeof window !== 'undefined' ) {
+nprogress.configure({
+  showSpinner: false
+});
+
+if ( process.browser ) {
   require('./components/CSSPreloadPolyfill');
 
   if ( process.env.NODE_ENV === 'production' ) {
@@ -28,10 +35,14 @@ if ( typeof window !== 'undefined' ) {
   }
 }
 
-render((
-  <Router
-    history={browserHistory}
-    routes={Routes}
-    render={applyRouterMiddleware(useScroll())}
-  />
-), document.getElementById(AppContainer));
+// calling `match` is simply for side effects of
+// loading route/component code for the initial location
+match({routes, location}, () => {
+  render((
+    <Router
+      history={browserHistory}
+      routes={routes}
+      render={applyRouterMiddleware(useScroll())}
+    />
+  ), document.getElementById(AppContainer));
+});

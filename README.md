@@ -225,6 +225,12 @@ npm styles
 npm start
 ```
 
+Instead of just starting the server, we can monitor for changes with nodemon:
+
+```bash
+npm run watch
+```
+
 Styles can be monitored for changes and automatically re-compiled with:
 
 ```bash
@@ -236,8 +242,21 @@ npm styles-watch
 ```bash
 npm i
 npm run production
-NODE_ENV=production pm2 start server --name="lwjgl-www"
+```
+
+Start with PM2
+
+```
+cd /path/to/lwjgl3-www/server
+NODE_ENV=production pm2 start index.js --name lwjgl
 pm2 save
+```
+
+Start with forever
+
+```
+cd /path/to/lwjgl3-www/server
+forever start -a --uid lwjgl index.js
 ```
 
 ### Known Issues

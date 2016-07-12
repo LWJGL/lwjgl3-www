@@ -1,8 +1,14 @@
-module.exports = {
+import nprogress from 'nprogress'
+
+export default {
   path: 'guide',
   getComponent(nextState, cb) {
-    require.ensure([], (require) => {
-      cb(null, require('./Guide').default)
-    })
+    System.import('./Guide').then((module) => {
+      process.browser && nprogress.done();
+      cb(null, module.default);
+    });
+  },
+  onEnter() {
+    process.browser && nprogress.start();
   }
 };
