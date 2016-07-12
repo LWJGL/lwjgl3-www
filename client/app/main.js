@@ -4,6 +4,7 @@ import { match, Router, browserHistory, applyRouterMiddleware } from 'react-rout
 import useScroll from 'react-router-scroll';
 import routes from './routes/Routes'
 import nprogress from 'nprogress'
+import './utils/ga'
 
 const AppContainer = 'lwjgl-app';
 const { pathname, search, hash } = window.location;
@@ -15,24 +16,6 @@ nprogress.configure({
 
 if ( process.browser ) {
   require('./components/CSSPreloadPolyfill');
-
-  if ( process.env.NODE_ENV === 'production' ) {
-    window.GoogleAnalyticsObject = 'ga';
-    window.ga = function() {
-      ga.q.push(arguments)
-    };
-    ga.q = [];
-    ga.l = 1 * new Date();
-    ga('create', 'UA-83518-1', {cookieDomain: location.host});
-    ga('require', 'displayfeatures');
-    ga('send', 'pageview');
-
-    const script = document.createElement('script');
-    script.async = true;
-    script.src ='https://www.google-analytics.com/analytics.js';
-
-    (document.head||document.body).appendChild(script);
-  }
 }
 
 // calling `match` is simply for side effects of

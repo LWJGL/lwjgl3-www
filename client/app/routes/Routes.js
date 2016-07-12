@@ -1,11 +1,14 @@
 import App from '../components/App'
 import nprogress from 'nprogress'
+import ga from '../utils/ga'
 
 const routes = {};
 let firstRoute = true;
 
-// Route middleware for nprogress
-// We also avoid an additional module and allow webpack to tree shake via System.import
+// Router middleware
+//    Handles Google Analytics pageview tracking
+//    Handles nprogress toggling
+//    We use System.import for webpack tree shaking and code splitting
 function route(name, getComponentWrap) {
   if ( typeof routes[name] === 'undefined' ) {
     routes[name] = false;
@@ -15,6 +18,12 @@ function route(name, getComponentWrap) {
     path: name === '/' ? undefined : name,
     getComponent(nextState, cb) {
       getComponentWrap(nextState, (err, module) => {
+        if ( !firstRoute ) {
+          if ( process.env.NODE_ENV === 'production' ) {
+            ga('send', 'pageview', `${nextState.location.pathname}${nextState.location.search}`);
+          }
+        }
+
         if ( routes[name] === false ) {
           routes[name] = true;
 
@@ -24,6 +33,7 @@ function route(name, getComponentWrap) {
             nprogress.done();
           }
         }
+
         cb(null, module.default);
       });
     },
