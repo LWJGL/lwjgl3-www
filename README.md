@@ -6,7 +6,7 @@ The website for LWJGL 3.
 
 - [NGINX](http://nginx.org/)
 - [Node.js & NPM](https://nodejs.org/en/)
-- [PM2](https://github.com/Unitech/pm2)
+- [PM2](https://github.com/Unitech/pm2) or Forever
 - [Let's Encrypt CLI](https://letsencrypt.org/)
 
 ### Dependencies
@@ -18,9 +18,27 @@ Some libraries/files are loaded from other servers:
 - [highlight.js](https://highlightjs.org/)
 - [Google Analytics](http://www.google.com/analytics)
 
-Build status icons are loaded from travis-ci.org and TeamCity.
+Build status icons are loaded from travis-ci.org.
+
+A username account to LWJGL's TeamCity server is required for loading Windows build statuses.
 
 The blog is [Ghost](https://ghost.org/), the forum is [SMF](http://www.simplemachines.org/), the old website can be found [here](https://github.com/LWJGL/lwjgl-www), and the old wiki is [MediaWiki](https://www.mediawiki.org/).
+
+### App Configuration
+
+Place a .js file on the root directory named config.js
+
+```JavaScript
+export default {
+  "server": {
+    "port": Integer
+  },
+  "teamcity": {
+    "username": String,
+    "password": String
+  }
+}
+```
 
 ### NGINX Configuration
 
@@ -110,16 +128,6 @@ server {
     rewrite ^/(.*)$ http://legacy.lwjgl.org/$1 permanent;
   }
 
-  location = /externalStatus.html {
-    proxy_buffering off;
-    proxy_redirect off;
-    proxy_intercept_errors off;
-    proxy_http_version 1.1;
-    proxy_set_header Connection "";
-    proxy_set_header Host teamcity.lwjgl.org;
-    proxy_pass http://teamcity.lwjgl.org;
-  }
-
   location / {
     proxy_buffering off;
     proxy_redirect off;
@@ -185,16 +193,6 @@ server {
     proxy_cache off;
   }
 
-  location = /externalStatus.html {
-    proxy_buffering off;
-    proxy_redirect off;
-    proxy_intercept_errors off;
-    proxy_http_version 1.1;
-    proxy_set_header Connection "";
-    proxy_set_header Host teamcity.lwjgl.org;
-    proxy_pass http://teamcity.lwjgl.org;
-  }
-
   location / {
     proxy_buffering off;
     proxy_redirect off;
@@ -237,26 +235,53 @@ Styles can be monitored for changes and automatically re-compiled with:
 npm styles-watch
 ```
 
-### Build/running in production
+### Build for production
 
 ```bash
 npm i
 npm run production
 ```
 
-Start with PM2
+To run the production build
 
+```bash
+node server --production
 ```
+
+or
+
+```bash
+NODE_ENV=production node server
+```
+
+### Run in production with PM2
+
+```bash
 cd /path/to/lwjgl3-www/server
 NODE_ENV=production pm2 start index.js --name lwjgl
 pm2 save
 ```
 
-Start with forever
+### Run in production with forever
 
+Place a JSON file named forever.json on the root folder with the following contents:
+
+```json
+{
+    "uid": "lwjgl",
+    "append": true,
+    "watch": false,
+    "script": "index.js",
+    "sourceDir": "/path/to/lwjgl3-www/server",
+    "args": ["--production"],
+    "command": "node"
+}
 ```
-cd /path/to/lwjgl3-www/server
-forever start -a --uid lwjgl index.js
+
+and then run:
+
+```bash
+forever start forever.json
 ```
 
 ### Known Issues
