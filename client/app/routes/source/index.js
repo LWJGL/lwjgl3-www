@@ -36,10 +36,10 @@ export default class extends React.Component {
               <h2>LW<b>JGL</b> 3</h2>
               <br />
               <h4>Linux x64</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-linux64" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-linux64" alt="" /></a></p>
               <br />
               <h4>OS X</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-macosx" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
               <BuildStatus name="lwjgl_Win64" />
@@ -52,10 +52,10 @@ export default class extends React.Component {
               <h2>GLFW</h2>
               <br />
               <h4>Linux x64</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/glfw/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-linux64" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/glfw/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-linux64" alt="" /></a></p>
               <br />
               <h4>OS X</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/glfw/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-macosx" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/glfw/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
               <BuildStatus name="glfw_Win64" />
@@ -68,10 +68,10 @@ export default class extends React.Component {
               <h2>OpenAL Soft</h2>
               <br />
               <h4>Linux x64</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-linux64" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-linux64" alt="" /></a></p>
               <br />
               <h4>OS X</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-macosx" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
               <BuildStatus name="OpenALSoft_Win64" />
@@ -85,10 +85,10 @@ export default class extends React.Component {
               <h2>dyncall</h2>
               <br />
               <h4>Linux x64</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/dyncall/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-linux64" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/dyncall/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-linux64" alt="" /></a></p>
               <br />
               <h4>OS X</h4>
-              <p><a href="https://travis-ci.org/LWJGL-CI/dyncall/branches"><img width={90} height={18} src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-macosx" alt="" /></a></p>
+              <p><a href="https://travis-ci.org/LWJGL-CI/dyncall/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-macosx" alt="" /></a></p>
               <br />
               <h4>Windows x64</h4>
               <BuildStatus name="dyncall_Win64" />
