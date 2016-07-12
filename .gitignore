@@ -6,8 +6,9 @@
 # Node
 node_modules
 
-# Sensitive files
+# Configuration files
 /config.js
+forever.json
 
 # Generated files
 /manifest-js.json
