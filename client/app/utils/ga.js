@@ -1,13 +1,15 @@
 const track = function() {
-  track.q.push(arguments)
+  track.q.push(arguments);
 };
 
 track.q = [];
 track.l = 1 * new Date();
 
+window.ga = track;
+
 if ( process.browser && process.env.NODE_ENV === 'production' ) {
   window.GoogleAnalyticsObject = 'ga';
-  window.ga = track;
+
   track('create', 'UA-83518-1', {cookieDomain: location.host});
   track('require', 'displayfeatures');
   // Do not track view here because it will happen in the router
@@ -20,4 +22,6 @@ if ( process.browser && process.env.NODE_ENV === 'production' ) {
   (document.head||document.body).appendChild(script);
 }
 
-export default track;
+export default (...args) => {
+  window.ga.apply(null, args);
+};
