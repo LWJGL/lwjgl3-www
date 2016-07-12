@@ -7,6 +7,10 @@ body {
   overflow-y: scroll;
 }
 
+p {
+  line-height: 2rem;
+}
+
 h1,h2,h3 {
   // Lightweight rendering, getit?
   font-weight: 300;
@@ -24,12 +28,6 @@ b, strong {
       text-decoration: none;
     }
   }
-}
-
-.line-sep {
-  margin: 0 auto 10px auto;
-  width: 30px;
-  border-bottom: 2px solid $brand-primary;
 }
 
 .area-dark {

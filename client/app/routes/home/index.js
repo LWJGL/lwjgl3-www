@@ -33,40 +33,35 @@ export default React.createClass({
         </section>
 
         <section className="container p-y-2">
-          <h2 className="text-xs-center">What is LW<b>JGL</b> 3?</h2>
-          <div className="line-sep"></div>
-          <article>
-            <p>LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
-              development of graphics (<a href="https://www.opengl.org/">OpenGL</a>), audio
-              (<a href="http://www.openal.org/">OpenAL</a>) and parallel computing
-              (<a href="https://www.khronos.org/opencl/">OpenCL</a>) applications. This access is direct and high-performance,
-              yet also wrapped in a type-safe and user-friendly layer, appropriate for the Java ecosystem.</p>
+          <h1 className="text-xs-center">What is LW<b>JGL</b> 3?</h1>
+          <div className="row">
+            <div className="col-md-10 push-md-1 col-xs-12">
+              <p>LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
+                development of graphics (<a href="https://www.opengl.org/">OpenGL</a>), audio
+                (<a href="http://www.openal.org/">OpenAL</a>) and parallel computing
+                (<a href="https://www.khronos.org/opencl/">OpenCL</a>) applications. This access is direct and high-performance,
+                yet also wrapped in a type-safe and user-friendly layer, appropriate for the Java ecosystem.</p>
 
-            <p>LW<b>JGL</b> is an enabling technology and provides low-level access. It is not a framework and does not provide
-              higher-level utilities than what the native libraries expose. As such, novice programmers are encouraged to try
-              one of the frameworks or game engines that make use of LWJGL, before working directly with the library.</p>
+              <p>LW<b>JGL</b> is an enabling technology and provides low-level access. It is not a framework and does not provide
+                higher-level utilities than what the native libraries expose. As such, novice programmers are encouraged to try
+                one of the frameworks or game engines that make use of LWJGL, before working directly with the library.</p>
 
-            <p>LW<b>JGL</b> is open source software and freely available at no charge.</p>
-          </article>
+              <p>LW<b>JGL</b> is open source software and freely available at no charge.</p>
 
-          <div className="row text-xs-center">
-            <div className="col-md-6 col-xs-12 p-y-1 text-md-right">
-              <Link className="btn btn-lg btn-primary" to="/download"><i className="fa fa-cloud-download" /> DOWNLOAD</Link>
-            </div>
-            <div className="col-md-6 col-xs-12 p-y-1 text-md-left">
-              <Link className="btn btn-lg btn-outline-primary" to="/source"><i className="fa fa-code" /> SOURCE</Link>
+              <p className="text-xs-center">
+                <Link className="btn btn-primary m-y-1" to="/download"><i className="fa fa-cloud-download" /> DOWNLOAD</Link>
+                <br className="hidden-sm-up" />
+                {' '}<Link className="btn btn-outline-primary" to="/guide"><i className="fa fa-cube" /> GET STARTED</Link>
+                {' '}<Link className="btn btn-outline-primary" to="/source"><i className="fa fa-code" /> SOURCE</Link>
+              </p>
             </div>
           </div>
 
-          <div className="text-xs-center">
-            For more information, see the LW<b>JGL</b> 3 <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.3.-Roadmap">Roadmap</a>.
-          </div>
         </section>
 
         <div className="area-dark">
           <section className="container p-y-2 text-xs-center features">
-            <h2>Main Features</h2>
-            <div className="line-sep"></div>
+            <h1>Main Features</h1>
 
             <div className="row">
               <div className="col-md-4 col-xs-12 p-t-1">
@@ -199,26 +194,30 @@ export default React.createClass({
           </section>
         </div>
 
-        <section className="container p-y-2">
-          <h2 className="text-xs-center">Looking for LWJGL 2?</h2>
-          <div className="line-sep"></div>
-          <article>
-            <p>LW<b>JGL</b> 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation
-              of dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang
-              and <a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames.
-              It is also used in popular game engines,
-              like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and <a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.</p>
-          </article>
-          <br />
-          <div className="text-xs-center">
-            <a className="btn btn-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
-            &nbsp;
-            <a className="btn btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
-          </div>
-          <br />
-          <div className="text-xs-center">
-            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Why-a-new-version">Why replace LWJGL 2?</a><br />
-            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">Migration Guide</a>
+        <section className="container p-t-2">
+          <div className="row">
+            <div className="col-md-8 push-md-2 col-xs-12">
+              <h1 className="text-xs-center">Looking for LWJGL 2?</h1>
+
+              <p>
+                LW<b>JGL</b> 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation
+                of dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang
+                and <a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames.
+                It is also used in popular game engines,
+                like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and <a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.
+              </p>
+
+              <p className="text-xs-center">
+                <a className="btn btn-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
+                &nbsp;
+                <a className="btn btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
+              </p>
+
+              <p className="text-xs-center">
+                <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Why-a-new-version">Why replace LWJGL 2?</a><br />
+                <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">Migration Guide</a>
+              </p>
+            </div>
           </div>
         </section>
       </div>
