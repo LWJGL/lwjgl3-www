@@ -7,10 +7,10 @@ import Copyright from './Copyright'
 const App = React.createClass({
   render() {
 
-    const isHomepage = this.props.location.pathname==='/';
+    const isHomepage = this.props.location.pathname === '/';
 
     return (
-      <div className={!isHomepage?'menu-pad':null}>
+      <div className={!isHomepage ? 'menu-pad' : null}>
         <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Gaming Library" />
         <Header isHome={isHomepage} />
         {this.props.children}

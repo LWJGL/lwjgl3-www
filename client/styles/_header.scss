@@ -17,7 +17,15 @@ header {
   // This improves performance but creates a layer that cuts of the sliding menu
   // Maybe we should split the two as separate?
   //will-change: transform;
-  transition: transform 0.3s cubic-bezier(0,0,0.3,1);
+  transition: transform 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s cubic-bezier(0,0,0.3,1);
+
+  &.home {
+    background-color: transparent;
+  }
+
+  &.other {
+    transition: transform 0.3s cubic-bezier(0,0,0.3,1);
+  }
 
   &.hidden {
     transform: translateY(-4rem);

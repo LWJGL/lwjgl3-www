@@ -1,27 +1,25 @@
 import React from 'react'
 import {Link, IndexLink} from 'react-router/es6'
-import {StyleSheet, css} from 'aphrodite'
 import Sidebar from './Sidebar'
-
-const styles = StyleSheet.create({
-  home: {
-    backgroundColor: 'transparent',
-    position: 'absolute'
-  }
-});
 
 export default class extends React.Component {
 
   previousY = 0;
   currentY = 0;
+  dynamicMenu = false;
 
   componentDidMount() {
     this.currentY = this.getScroll();
+    this.dynamicMenu = this.props.isHome;
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll.bind(this));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.dynamicMenu = nextProps.isHome;
   }
 
   getScroll() {
@@ -48,12 +46,19 @@ export default class extends React.Component {
     } else {
       this.refs.header.classList.remove('hidden');
     }
+    if ( this.dynamicMenu )  {
+      if ( this.currentY > 52 ) {
+        this.refs.header.classList.remove('home');
+      } else {
+        this.refs.header.classList.add('home');
+      }
+    }
     this.ticking = false;
   }
 
   render() {
     return (
-      <header ref="header" role="navigation" className={css(this.props.isHome ? styles.home : null)}>
+      <header ref="header" role="navigation" className={this.props.isHome ? 'home' : 'other'}>
         <nav className="container-fluid">
           <div className="row">
             <div className="col-lg-2 col-xs-8"><IndexLink to="/">LW<b>JGL</b> 3</IndexLink></div>

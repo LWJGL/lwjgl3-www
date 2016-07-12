@@ -32,7 +32,7 @@ export default class extends React.Component {
     this.currentX = this.startX;
 
     this.touchingSideNav = true;
-    this.refs.sideContainer.className += ' touching';
+    this.refs.sideContainer.classList.add('touching');
     requestAnimationFrame(this.update);
   };
 
@@ -60,7 +60,7 @@ export default class extends React.Component {
     this.refs.sideContainer.style.transform = '';
 
     if ( translateX > 0 ) {
-      this.refs.sideContainer.className = 'sliding-menu-container';
+      this.refs.sideContainer.classList.remove('touching');
       this.onToggle();
     }
   };
