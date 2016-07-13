@@ -4,13 +4,6 @@ import { Link } from 'react-router/es6'
 import codeSample from './sample'
 import { highlight } from 'highlight.js'
 
-if ( process.browser ) {
-  let css = document.createElement('link');
-  css.rel = 'stylesheet';
-  css.href = '//cdn.jsdelivr.net/highlight.js/9.5.0/styles/darkula.min.css';
-  (document.head||document.body).appendChild(css);
-}
-
 const codeSampleHtml = highlight('java', codeSample);
 
 export default class extends React.Component {
