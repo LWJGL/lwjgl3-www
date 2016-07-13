@@ -2,7 +2,7 @@ import React from 'react'
 import {Link, IndexLink} from 'react-router/es6'
 import Sidebar from './Sidebar'
 
-export default class extends React.Component {
+export default class Header extends React.Component {
 
   previousY = 0;
   currentY = 0;

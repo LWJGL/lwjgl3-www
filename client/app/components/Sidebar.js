@@ -2,8 +2,10 @@ import React from 'react'
 import * as focusTrap from '../utils/focus-trap'
 import * as noscroll from '../utils/noscroll'
 import {Link, IndexLink} from 'react-router/es6'
+import FaBars from '../icons/bars'
+import FaClose from '../icons/close'
 
-export default class extends React.Component {
+export default class Sidebar extends React.Component {
 
   constructor(props) {
     super(props);
@@ -90,7 +92,7 @@ export default class extends React.Component {
 
     return (
       <div ref="slidingMenu" className={['sliding-menu', isOpen ? 'open' : null].join(' ')}>
-        <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle}><i className="fa fa-bars" /></button>
+        <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle}><FaBars /></button>
         <div className="sliding-menu-overlay" onClick={this.onToggle}></div>
         <div
           ref="sideContainer"
@@ -100,7 +102,7 @@ export default class extends React.Component {
           onTouchEnd={this.onTouchEnd}
         >
           <div className="text-xs-right">
-            <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle}><i className="fa fa-close" /></button>
+            <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle}><FaClose /></button>
           </div>
           <ul className="list-unstyled">
             <li><IndexLink to="/" onClick={this.onToggle}>HOME</IndexLink></li>

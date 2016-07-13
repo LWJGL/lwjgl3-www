@@ -4,9 +4,9 @@ import Header from './Header'
 import Footer from './Footer'
 import Copyright from './Copyright'
 
-const App = React.createClass({
-  render() {
+export default class App extends React.Component {
 
+  render() {
     const isHomepage = this.props.location.pathname === '/';
 
     return (
@@ -20,6 +20,5 @@ const App = React.createClass({
       </div>
     )
   }
-});
 
-export default App;
+}

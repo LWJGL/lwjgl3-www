@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class extends React.Component {
+export default class BuildStatus extends React.Component {
 
   constructor(props) {
     super(props);

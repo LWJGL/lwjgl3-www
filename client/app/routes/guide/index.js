@@ -2,11 +2,13 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router/es6'
 import codeSample from './sample'
-import { loadCSS } from 'fg-loadcss'
 import { highlight } from 'highlight.js'
 
 if ( process.browser ) {
-  loadCSS('//cdn.jsdelivr.net/highlight.js/9.5.0/styles/darkula.min.css');
+  let css = document.createElement('link');
+  css.rel = 'stylesheet';
+  css.href = '//cdn.jsdelivr.net/highlight.js/9.5.0/styles/darkula.min.css';
+  (document.head||document.body).appendChild(css);
 }
 
 const codeSampleHtml = highlight('java', codeSample);

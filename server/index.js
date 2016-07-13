@@ -15,17 +15,23 @@ require('babel-core/register')({
   highlightCode: false,
   extensions: ['.js'],
   ignore: function(filename) {
-    return filename.indexOf('node_modules') > -1  && filename.indexOf('node_modules/react-router') === -1;
+    return (
+      filename.indexOf('node_modules') > -1
+      && filename.indexOf('node_modules/react-router') === -1
+    );
   },
   plugins: [
+     ['system-import-transformer', { modules: 'common' }], // Polyfill System.import for Node.js
     'syntax-object-rest-spread',  // V8
     'transform-async-to-generator',  // V8
     'transform-flow-strip-types',  // V8
     'transform-strict-mode',  // Force strict mode
     'transform-object-rest-spread',  // V8
     'transform-class-properties',  // V8
-    ['system-import-transformer', { modules: 'common' }], // Polyfill System.import for Node.js
     'transform-es2015-modules-commonjs',  // ES6 modules
+    // ['transform-es2015-spread', {'loose': true}],  // V8
+    ['transform-es2015-destructuring', {'loose': true}],  // V8
+    'transform-es2015-parameters',  // V8
     'transform-react-jsx',  // For server-side rendering
     'syntax-jsx',  // For server-side rendering
   ]

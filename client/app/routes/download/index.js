@@ -23,27 +23,27 @@ export default class extends React.Component {
             <div className="col-md-4 col-xs-12 p-y-1">
               <h3>Release</h3>
               <p>Latest official release.</p>
-              <p><a className="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip"><i className="fa fa-cloud-download" /> DOWNLOAD RELEASE</a></p>
+              <p><a className="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip">DOWNLOAD RELEASE</a></p>
               <BuildStatus name="LwjglReleases_StableToRelease" />
-
-              <p className="m-t-2">
-                <i className="fa fa-clock-o" /> <a href="https://github.com/LWJGL/lwjgl3/commits/master">ChangeLog</a>
-                <br /><i className="fa fa-file-text-o" /> <a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
-              </p>
             </div>
             <div className="col-md-4 col-xs-12 p-y-1">
               <h3>Stable (newer)</h3>
               <p>Latest build that has been verified to work.</p>
-              <p><a className="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip"><i className="fa fa-cloud-download" /> DOWNLOAD STABLE</a></p>
+              <p><a className="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip">DOWNLOAD STABLE</a></p>
               <BuildStatus name="LwjglReleases_NightlyToStable" />
             </div>
             <div className="col-md-4 col-xs-12 p-y-1">
               <h3>Nightly (newest)</h3>
               <p>Bleeding edge, possibly broken.</p>
-              <p><a className="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip"><i className="fa fa-cloud-download" /> DOWNLOAD NIGHTLY</a></p>
+              <p><a className="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip">DOWNLOAD NIGHTLY</a></p>
               <BuildStatus name="lwjgl_Bundle" />
             </div>
           </div>
+          <hr />
+          <p>
+            <a href="https://github.com/LWJGL/lwjgl3/commits/master">ChangeLog</a>
+            <br /><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
+          </p>
         </section>
 
         <div className="area-dark p-y-2">
@@ -55,9 +55,9 @@ export default class extends React.Component {
               <h3>Build from source?</h3>
               <p>Click below if you prefer to build from source:</p>
               <p>
-                <Link className="btn btn-info" to="/source"><i className="fa fa-code" /> Source</Link>
+                <Link className="btn btn-outline-info" to="/source">Source</Link>
                 &nbsp;
-                <Link className="btn btn-info" to="/guide"><i className="fa fa-info-circle" /> Build instructions</Link>
+                <Link className="btn btn-outline-info" to="/guide">Build instructions</Link>
               </p>
             </section>
         </div>

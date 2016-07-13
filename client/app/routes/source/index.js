@@ -15,21 +15,19 @@ export default class extends React.Component {
         />
 
         <section className="container">
-          <h1><i className="fa fa-code"/> LW<b>JGL</b> Source</h1>
+          <h1>LW<b>JGL</b> Source</h1>
 
-          <h3 className="m-y-2">Repository</h3>
           <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
-          <p><a className="btn btn-success" href="https://github.com/LWJGL/lwjgl3"><i className="fa fa-github" /> Github Repository</a></p>
+          <p><a className="btn btn-success" href="https://github.com/LWJGL/lwjgl3">Github Repository</a></p>
 
-          <h3 className="m-y-2">Issue Tracker</h3>
-          <p>LWJGL's issue tracker is hosted on Github.</p>
-          <p><a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues"><i className="fa fa-bug" /> Issue Tracker</a></p>
+          <p>LWJGL's issue tracker is also hosted on Github.</p>
+          <p><a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a></p>
         </section>
 
         <hr />
 
         <section className="container p-t-2">
-          <h1><i className="fa fa-history" /> Build Status</h1>
+          <h1>Build Status</h1>
           <div className="row">
             <div className="col-md-3 col-xs-12 p-y-2">
               <hr className="hidden-md-up" />

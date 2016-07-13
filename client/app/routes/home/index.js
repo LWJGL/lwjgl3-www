@@ -3,10 +3,21 @@ import Helmet from 'react-helmet'
 import {StyleSheet, css} from 'aphrodite'
 import stylesDefinition from './styles'
 import { Link } from 'react-router/es6'
+import FaPuzzlePiece from '../../icons/puzzle-piece'
+import FaAngleDown from '../../icons/angle-down'
+import FaApple from '../../icons/apple'
+import FaBook from '../../icons/book'
+import FaCogs from '../../icons/cogs'
+import FaComments from '../../icons/comments'
+import FaDesktop from '../../icons/desktop'
+import FaGamepad from '../../icons/gamepad'
+import FaGitHub from '../../icons/github'
+import FaQuestionCircle from '../../icons/question-circle'
 
 const styles = StyleSheet.create(stylesDefinition);
 
-export default React.createClass({
+export default class Home extends React.Component {
+
   render() {
     return (
       <div>
@@ -20,10 +31,14 @@ export default React.createClass({
         />
 
         <section className={css(styles.videoContainer)}>
-          <video className={css(styles.video)} poster="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" preload="auto" muted={true} loop={true} autoPlay={true}>
-            <source type="video/webm" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.webm" />
-            <source type="video/mp4" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.mp4" />
-          </video>
+          {
+            process.browser ?
+              <video className={css(styles.video)} poster="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" preload="auto" muted={true} loop={true} autoPlay={true}>
+                <source type="video/webm" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.webm" />
+                <source type="video/mp4" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.mp4" />
+              </video>
+              : <img className={css(styles.video)} src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" alt="" />
+          }
           <div className={css(styles.videoOverlay)}></div>
           <img
             className={css(styles.logo)}
@@ -33,7 +48,7 @@ export default React.createClass({
           />
           <div className={css(styles.intro)}>
             <h1 className={css(styles.introTitle)}>Lightweight Java Game Library 3</h1>
-            <p className={css(styles.introText)}>LEARN MORE<br /><i className="fa fa-angle-down" /></p>
+            <p className={css(styles.introText)}>LEARN MORE<br /><FaAngleDown size={20} /></p>
           </div>
         </section>
 
@@ -54,10 +69,10 @@ export default React.createClass({
               <p>LW<b>JGL</b> is open source software and freely available at no charge.</p>
 
               <p className="text-xs-center">
-                <Link className="btn btn-primary m-y-1" to="/download"><i className="fa fa-cloud-download" /> DOWNLOAD</Link>
+                <Link className="btn btn-lg btn-outline-primary m-y-1" to="/download">DOWNLOAD</Link>
                 <br className="hidden-sm-up" />
-                {' '}<Link className="btn btn-outline-primary" to="/guide"><i className="fa fa-cube" /> GET STARTED</Link>
-                {' '}<Link className="btn btn-outline-primary" to="/source"><i className="fa fa-code" /> SOURCE</Link>
+                {' '}<Link className="btn btn-lg btn-outline-success" to="/guide">GET STARTED</Link>
+                {' '}<Link className="btn btn-lg btn-outline-info" to="/source">SOURCE</Link>
               </p>
             </div>
           </div>
@@ -69,40 +84,40 @@ export default React.createClass({
             <h1>Main Features</h1>
 
             <div className="row">
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-puzzle-piece" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaPuzzlePiece size={60} />
                 <h3>Low-level Bindings</h3>
                 <p>Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance
                   and a Java-friendly binding layer.</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-github" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaGitHub size={60} />
                 <h3>Open Source</h3>
                 <p>LWJGL is available under a <a href="http://www.lwjgl.org/license">BSD license</a>. Visit
                   our <a href="https://github.com/LWJGL/lwjgl3">GitHub repository</a> to monitor progress, report issues
                   and even contribute with your own code!</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-book" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaBook size={60} />
                 <h3>Built-in Documentation</h3>
                 <p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
               </div>
             </div>
 
             <div className="row">
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-desktop" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaDesktop size={60} />
                 <h3>Cross-platform</h3>
                 <p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-comments" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaComments size={60} />
                 <h3>Community</h3>
                 <p>Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up
                   for a chat? Drop by our <a href="irc://irc.freenode.net/lwjgl">IRC channel</a><br />(#LWJGL on freenode).</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-gamepad" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaGamepad size={60} />
                 <h3>GLFW Bindings</h3>
                 <p>Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts.
                   Also features multi-monitor support, clipboard access, file drag-n-drop,
@@ -111,19 +126,19 @@ export default React.createClass({
             </div>
 
             <div className="row">
-              <div className="col-md-4 col-xs-12 p-t-1">
+              <div className="col-md-4 col-xs-12 p-y-1">
                 <p><img height={60} src="/svg/Vulkan_RGB_June16.svg" title="Vulkan" /></p>
                 <h3>Vulkan<sup>TM</sup> Bindings</h3>
                 <p>A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
                   GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
+              <div className="col-md-4 col-xs-12 p-y-1">
                 <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x1.png" srcSet="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x1.png 1x, //d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x2.png 2x, //d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x4.png 4x" title="OpenCL" /></p>
                 <h3>OpenCL<sup>TM</sup> Bindings</h3>
                 <p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
                   OpenCL versions (including the latest 2.1 specification) and many useful extensions.</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
+              <div className="col-md-4 col-xs-12 p-y-1">
                 <p><img height={60} src="/svg/OpenAL_Logo.svg" title="OpenAL" /></p>
                 <h3>OpenAL Bindings</h3>
                 <p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
@@ -132,7 +147,7 @@ export default React.createClass({
             </div>
 
             <div className="row">
-              <div className="col-md-4 col-xs-12 p-t-1">
+              <div className="col-md-4 col-xs-12 p-y-1">
                 <p><img height={60} src="/svg/OpenGL_RGB_June16.svg" title="OpenGL" /></p>
                 <h3>OpenGL<sup>&reg;</sup> Bindings</h3>
                 <p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
@@ -140,14 +155,14 @@ export default React.createClass({
                   and dozens of popular vendor-specific extensions. If your favorite extension is
                   missing, <a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
+              <div className="col-md-4 col-xs-12 p-y-1">
                 <p><img height={60} src="/svg/OpenGL_ES_RGB_June16.svg" title="OpenGL|ES" /></p>
                 <h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
                 <p>A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
                   consoles, phones, appliances and vehicles. It consists of well-defined subsets of desktop OpenGL, creating
                   a flexible and powerful low-level interface between software and graphics acceleration.</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
+              <div className="col-md-4 col-xs-12 p-y-1">
                 <p><img height={60} src="/svg/EGL_RGB_June16.svg" title="EGL" /></p>
                 <h3>EGL<sup>TM</sup> Bindings</h3>
                 <p>An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native
@@ -158,18 +173,18 @@ export default React.createClass({
             </div>
 
             <div className="row">
-              <div className="col-md-4 col-xs-12 p-t-1">
+              <div className="col-md-4 col-xs-12 p-y-1">
                 <p><img height={60} src="/svg/oculus.svg" title="Oculus VR SDK" /></p>
                 <h3>LibOVR Bindings <small>(beta)</small></h3>
                 <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-apple" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaApple size={60} />
                 <h3>Objective-C Bindings</h3>
                 <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on Mac OS X.</p>
               </div>
-              <div className="col-md-4 col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-gears" /></p>
+              <div className="col-md-4 col-xs-12 p-y-1">
+                <FaCogs size={60} />
                 <h3>Customization &amp; Utilities</h3>
                 <p>Use <a href="https://sourceware.org/libffi/">libffi</a> to call functions from any native library,
                   use <a href="http://www.canonware.com/jemalloc">jemalloc</a> for efficient and tunable memory management,
@@ -180,7 +195,7 @@ export default React.createClass({
 
             <div className="row">
               <div className="col-xs-12 p-t-1">
-                <p><i className="fa fa-4x fa-question-circle" style={{color:"yellow"}} /></p>
+                <div className="m-b-1"><FaQuestionCircle size={60} color="yellow" /></div>
                 <h3>Your favorite API here!</h3>
                 <p>Think LWJGL should have bindings to your favorite API? Let us know
                   or <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.5.-The-Generator">contribute it</a> yourself!</p>
@@ -213,7 +228,7 @@ export default React.createClass({
               </p>
 
               <p className="text-xs-center">
-                <a className="btn btn-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
+                <a className="btn btn-outline-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
                 &nbsp;
                 <a className="btn btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
               </p>
@@ -228,4 +243,5 @@ export default React.createClass({
       </div>
     )
   }
-});
+
+}

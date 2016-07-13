@@ -14,10 +14,6 @@ nprogress.configure({
   showSpinner: false
 });
 
-if ( process.browser ) {
-  require('./components/CSSPreloadPolyfill');
-}
-
 // calling `match` is simply for side effects of
 // loading route/component code for the initial location
 match({routes, location}, () => {

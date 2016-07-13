@@ -44,8 +44,7 @@ export default {
     textAlign: 'center',
     padding: '0 2rem',
     color: 'white',
-    lineHeight: '1rem',
-    fontWeight: 300
+    fontWeight: 300,
   },
   introTitle: {
     '@media (max-width: 600px)': {
@@ -56,6 +55,7 @@ export default {
     }
   },
   introText: {
+    lineHeight: '1.5rem',
     '@media (max-width: 600px)': {
       fontSize: '.9rem'
     }

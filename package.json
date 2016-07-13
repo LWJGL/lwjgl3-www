@@ -72,7 +72,6 @@
     "cross-env": "1.0.8",
     "exports-loader": "0.6.3",
     "express": "5.0.0-alpha.2",
-    "fg-loadcss": "1.2.0",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "3.1.0",
     "gulp-cssmin": "0.1.7",
