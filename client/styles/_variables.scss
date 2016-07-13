@@ -3,6 +3,8 @@ $enable-shadows: true;
 $enable-gradients: true;
 $enable-transitions: true;
 
+$font-family-sans-serif: append($font-family-sans-serif, unquote('"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'));
+
 $brand-primary: #1b2426;
 $body-color: $brand-primary;
 $body-color-dark-secondary: #6c8f91;
