@@ -9,7 +9,7 @@ if ( process.browser && process.env.NODE_ENV === 'production' ) {
   window.ga = track;
   window.GoogleAnalyticsObject = 'ga';
 
-  track('create', 'UA-83518-1', {cookieDomain: location.host});
+  track('create', 'UA-83518-1', 'auto');
   track('require', 'displayfeatures');
   // Do not track view here because it will happen in the router
   // track('send', 'pageview');
