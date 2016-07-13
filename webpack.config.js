@@ -101,10 +101,13 @@ const config = {
 if ( process.env.NODE_ENV !== 'production' ) {
 
   config.devtool = 'eval';
-  //config.devtool = 'cheap-module-eval-source-map';
+  // config.devtool = 'cheap-module-eval-source-map';
+  // config.devtool = 'eval-source-map';
 
-  // Load WebPack Hot Middleware client
+  // WebPack Hot Middleware client & HMR plugins
   config.entry.main.unshift('webpack-hot-middleware/client');
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  config.plugins.push(new webpack.NoErrorsPlugin());
 
   // Avoid having to parse a manifest in dev mode
   config.output.filename = 'bundle.js';
@@ -125,10 +128,6 @@ if ( process.env.NODE_ENV !== 'production' ) {
       ]
     }]
   );
-
-  // Add Hot-Module Replacement WebPack plugins
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
-  config.plugins.push(new webpack.NoErrorsPlugin());
 
 } else {
 

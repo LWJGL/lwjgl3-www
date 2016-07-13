@@ -6,13 +6,13 @@ import routes from './routes/Routes'
 import nprogress from 'nprogress'
 import './utils/ga'
 
-const AppContainer = 'lwjgl-app';
-const { pathname, search, hash } = window.location;
-const location = `${pathname}${search}${hash}`;
-
+// Hide spinner from nprogress
 nprogress.configure({
   showSpinner: false
 });
+
+const {pathname, search, hash} = window.location;
+const location = `${pathname}${search}${hash}`;
 
 // calling `match` is simply for side effects of
 // loading route/component code for the initial location
@@ -23,5 +23,5 @@ match({routes, location}, () => {
       routes={routes}
       render={applyRouterMiddleware(useScroll())}
     />
-  ), document.getElementById(AppContainer));
+  ), document.getElementById('lwjgl-app'));
 });

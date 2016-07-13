@@ -4,9 +4,10 @@ The website for LWJGL 3.
 
 ### Known Issues
 
-- react-transform-hmr is deprecated. Use [React Hot Loader 3](https://github.com/gaearon/react-hot-loader) instead
-- We should probably support Node.js LTS ( currently v4.x, requires additional babel plugins ) 
-- Document Let's Encrypt certificate issuing/update process 
+- react-transform-hmr is being deprecated. Use [React Hot Loader 3](https://github.com/gaearon/react-hot-loader)
+  instead. Currently it is not possible to HMR lazy routes that are code split by webpack. Waiting for a solution.
+- We should probably support Node.js LTS ( currently v4.x, requires additional babel plugins ).
+- Document Let's Encrypt certificate issuing/update process.
 
 ### Production Requirements
 
@@ -42,11 +43,11 @@ Place a .js file in the root directory named config.js
 ```JavaScript
 export default {
   "server": {
-    "port": Integer
+    "port": 8080
   },
   "teamcity": {
-    "username": String,
-    "password": String
+    "username": "<user>",
+    "password": "<pass>"
   }
 }
 ```
@@ -59,20 +60,7 @@ For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
 npm -g i nodemon
 ```
 
-For react-transform-hmr to work the following configuration needs to be added inside the NGINX's server section:
-
-```Nginx
-location = /__webpack_hmr {
-  proxy_pass http://127.0.0.1:7687;
-  proxy_set_header Connection '';
-  proxy_http_version 1.1;
-  chunked_transfer_encoding off;
-  proxy_buffering off;
-  proxy_cache off;
-}
-```
-
-A minimal NGINX configuration for development can look like this:
+A minimal NGINX configuration for development ( w/ Hot Module Reloading ) can look like this:
 
 ```Nginx
 server {
@@ -84,7 +72,7 @@ server {
     www.lwjgl.local;
 
   location = /__webpack_hmr {
-    proxy_pass http://127.0.0.1:7687;
+    proxy_pass http://127.0.0.1:8080;
     proxy_set_header Connection '';
     proxy_http_version 1.1;
     chunked_transfer_encoding off;
@@ -100,7 +88,7 @@ server {
     proxy_set_header Connection "";
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
-    proxy_pass http://127.0.0.1:7687;
+    proxy_pass http://127.0.0.1:8080;
   }
 }
 ```
