@@ -3,13 +3,16 @@
 // ----------------------------------------------------------------------------------------------------------------
 
 @import "variables";
+@import "../../node_modules/bootstrap/scss/variables";
+
+//$font-family-sans-serif: append($font-family-sans-serif, unquote('"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'));
+//$font-family-base: $font-family-sans-serif;
 
 // ----------------------------------------------------------------------------------------------------------------
 // BOOTSTRAP
 // ----------------------------------------------------------------------------------------------------------------
 
-// Core variables and mixins
-@import "../../node_modules/bootstrap/scss/variables";
+// Mixins
 @import "../../node_modules/bootstrap/scss/mixins";
 
 // // Reset and dependencies
