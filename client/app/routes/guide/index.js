@@ -48,7 +48,7 @@ export default class extends React.Component {
           <p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
         </section>
 
-        <section className="area-dark p-y-1"><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:codeSampleHtml.value}}></code></pre></section>
+        <section className="p-y-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:codeSampleHtml.value}}></code></pre></section>
 
         <section className="container p-t-2">
           <p>
