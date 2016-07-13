@@ -3,7 +3,7 @@ import Helmet from 'react-helmet'
 import { Link } from 'react-router/es6'
 import BuildStatus from '../../components/BuildStatus'
 
-export default class extends React.Component {
+export default class DownloadRoute extends React.Component {
 
   render() {
     return (

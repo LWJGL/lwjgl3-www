@@ -6,7 +6,7 @@ import { highlight } from 'highlight.js'
 
 const codeSampleHtml = highlight('java', codeSample);
 
-export default class extends React.Component {
+export default class GuideRoute extends React.Component {
 
   render() {
     return (

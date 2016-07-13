@@ -16,7 +16,7 @@ import FaQuestionCircle from '../../icons/question-circle'
 
 const styles = StyleSheet.create(stylesDefinition);
 
-export default class Home extends React.Component {
+export default class HomeRoute extends React.Component {
 
   render() {
     return (
