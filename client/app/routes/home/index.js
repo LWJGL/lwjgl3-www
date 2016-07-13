@@ -25,7 +25,12 @@ export default React.createClass({
             <source type="video/mp4" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.mp4" />
           </video>
           <div className={css(styles.videoOverlay)}></div>
-          <img className={css(styles.logo)} src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light.png" alt="LWJGL" />
+          <img
+            className={css(styles.logo)}
+            src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light@x1.png"
+            srcSet="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light@x2.png 2x"
+            alt="LWJGL 3"
+          />
           <div className={css(styles.intro)}>
             <h1 className={css(styles.introTitle)}>Lightweight Java Game Library 3</h1>
             <p className={css(styles.introText)}>LEARN MORE<br /><i className="fa fa-angle-down" /></p>
@@ -107,19 +112,19 @@ export default React.createClass({
 
             <div className="row">
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/vulkan.png" title="Vulkan" /></p>
+                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/Vulkan_RGB_June16.svg" title="Vulkan" /></p>
                 <h3>Vulkan<sup>TM</sup> Bindings</h3>
                 <p>A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
                   GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.</p>
               </div>
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl.png" title="OpenCL" /></p>
+                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x1.png" srcSet="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x1.png 1x, //d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x2.png 2x, //d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x4.png 4x" title="OpenCL" /></p>
                 <h3>OpenCL<sup>TM</sup> Bindings</h3>
                 <p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
                   OpenCL versions (including the latest 2.1 specification) and many useful extensions.</p>
               </div>
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/openal.png" title="OpenAL" /></p>
+                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/OpenAL_Logo.svg" title="OpenAL" /></p>
                 <h3>OpenAL Bindings</h3>
                 <p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
                   and audio effects. ALC and many extensions are also supported.</p>
@@ -128,7 +133,7 @@ export default React.createClass({
 
             <div className="row">
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl.png" title="OpenGL" /></p>
+                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/OpenGL_RGB_June16.svg" title="OpenGL" /></p>
                 <h3>OpenGL<sup>&reg;</sup> Bindings</h3>
                 <p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
                   (including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
@@ -136,14 +141,14 @@ export default React.createClass({
                   missing, <a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
               </div>
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/opengl-es.png" title="OpenGL|ES" /></p>
+                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/OpenGL_ES_RGB_June16.svg" title="OpenGL|ES" /></p>
                 <h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
                 <p>A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
                   consoles, phones, appliances and vehicles. It consists of well-defined subsets of desktop OpenGL, creating
                   a flexible and powerful low-level interface between software and graphics acceleration.</p>
               </div>
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/egl.png" title="EGL" /></p>
+                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/EGL_RGB_June16.svg" title="EGL" /></p>
                 <h3>EGL<sup>TM</sup> Bindings</h3>
                 <p>An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native
                   platform window system. It handles graphics context management, surface/buffer binding and rendering
@@ -154,12 +159,12 @@ export default React.createClass({
 
             <div className="row">
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/oculus.png" title="Oculus VR SDK" /></p>
+                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/oculus.svg" title="Oculus VR SDK" /></p>
                 <h3>LibOVR Bindings <small>(beta)</small></h3>
                 <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
               </div>
               <div className="col-md-4 col-xs-12 p-t-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/xcode.png" title="Objective-C" /></p>
+                <p><i className="fa fa-4x fa-apple" /></p>
                 <h3>Objective-C Bindings</h3>
                 <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on Mac OS X.</p>
               </div>

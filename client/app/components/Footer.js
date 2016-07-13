@@ -37,7 +37,13 @@ export default class extends React.Component {
           </div>
           <div className="col-sm-3 col-xs-12">
             <h3>Sponsor</h3>
-            <a href="https://www.webhotelier.net/" title="WebHotelier"><img className="img-fluid" width={143} height={30} src="https://dloycpjzg76ow.cloudfront.net/images/brand/webhotelier-logo@x2.png" alt="WebHotelier" /></a>
+            <a href="https://www.webhotelier.net/" title="WebHotelier">
+              <img
+                className="img-fluid" width={140} height={29} alt="WebHotelier"
+                src="//d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo@x1.png"
+                srcSet="//d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo@x1.png 1x,//d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo@x2.png 2x,//d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo@x4.png 3x"
+              />
+            </a>
           </div>
         </nav>
       </footer>

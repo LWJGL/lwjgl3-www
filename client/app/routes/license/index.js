@@ -13,15 +13,11 @@ export default class extends React.Component {
           ]}
         />
         <section className="container">
-          <h1>License</h1>
+          <h1>Lightweight Java Gaming Library License</h1>
           <hr />
 
           <article className="row">
-            <div className="col-lg-6 col-xs-12 pull-lg-right">
-              <p><img className="img-fluid" src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-dark.png" alt="" /></p>
-              <p><small>Copyright &copy; 2012-2016 Lightweight Java Game Library. All rights reserved.</small></p>
-            </div>
-            <div className="col-lg-6 col-xs-12 pull-lg-left">
+            <div className="col-lg-6 col-xs-12">
               <p>Redistribution and use in source and binary forms, with or without
                 modification, are permitted provided that the following conditions are
                 met:</p>
@@ -39,7 +35,8 @@ export default class extends React.Component {
                   from this software without specific prior written permission.
                 </li>
               </ul>
-
+            </div>
+            <div className="col-lg-6 col-xs-12">
               <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
                 "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
                 TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
