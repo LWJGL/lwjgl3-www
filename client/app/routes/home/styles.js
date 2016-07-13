@@ -8,7 +8,7 @@ export default {
   },
   videoOverlay: {
     position: 'absolute',
-    background: 'rgba(0,0,0,.5) url(//d2g0ezo1t7nqa0.cloudfront.net/img/pattern.png)',
+    background: 'rgba(0,0,0,.5) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2NkYGA4w8DAYMLIAAUADV0BA91ra/8AAAAASUVORK5CYII=)',
     width: '100%',
     height: '100vh',
     top: 0,
