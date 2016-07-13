@@ -2,31 +2,42 @@
 
 The website for LWJGL 3.
 
+### Known Issues
+
+- react-transform-hmr is deprecated. Use [React Hot Loader 3](https://github.com/gaearon/react-hot-loader) instead
+- We should probably support Node.js LTS ( currently v4.x, requires additional babel plugins ) 
+- Document Let's Encrypt certificate issuing/update process 
+
 ### Production Requirements
 
 - [NGINX](http://nginx.org/)
 - [Node.js & NPM](https://nodejs.org/en/)
-- [PM2](https://github.com/Unitech/pm2) or Forever
+- [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
 - [Let's Encrypt CLI](https://letsencrypt.org/)
 
 ### Dependencies
 
 Static assets are loaded from LWJGL's CDN.
 
-Some libraries/files are loaded from other servers:
+SVG's are served from NGINX and gzip'd on the fly.
 
-- [highlight.js](https://highlightjs.org/)
-- [Google Analytics](http://www.google.com/analytics)
+We use [Google Analytics](http://www.google.com/analytics) for tracking.
 
-Build status icons are loaded from travis-ci.org.
+Build status icons are loaded directly from travis-ci.org.
 
 A username account to LWJGL's TeamCity server is required for loading Windows build statuses.
+Node proxies requests to (http://teamcity.lwjgl.org) to avoid SSL issues.
 
-The blog is [Ghost](https://ghost.org/), the forum is [SMF](http://www.simplemachines.org/), the old website can be found [here](https://github.com/LWJGL/lwjgl-www), and the old wiki is [MediaWiki](https://www.mediawiki.org/).
+Other LWJGL subdomains:
+
+- The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www).
+- The blog is [Ghost](https://ghost.org/).
+- The forum is [SMF](http://www.simplemachines.org/).
+- The wiki for LWJGL 2 is [MediaWiki](https://www.mediawiki.org/).
 
 ### App Configuration
 
-Place a .js file on the root directory named config.js
+Place a .js file in the root directory named config.js
 
 ```JavaScript
 export default {
@@ -39,6 +50,91 @@ export default {
   }
 }
 ```
+
+### Development Environment
+
+For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
+
+```bash
+npm -g i nodemon
+```
+
+For react-transform-hmr to work the following configuration needs to be added inside the NGINX's server section:
+
+```Nginx
+location = /__webpack_hmr {
+  proxy_pass http://127.0.0.1:7687;
+  proxy_set_header Connection '';
+  proxy_http_version 1.1;
+  chunked_transfer_encoding off;
+  proxy_buffering off;
+  proxy_cache off;
+}
+```
+
+A minimal NGINX configuration for development can look like this:
+
+```Nginx
+server {
+  listen 80;
+  server_name
+    www.lwjgl.org
+    dev.lwjgl.org
+    www.lwjgl.dev
+    www.lwjgl.local;
+
+  location = /__webpack_hmr {
+    proxy_pass http://127.0.0.1:7687;
+    proxy_set_header Connection '';
+    proxy_http_version 1.1;
+    chunked_transfer_encoding off;
+    proxy_buffering off;
+    proxy_cache off;
+  }
+
+  location / {
+    proxy_buffering off;
+    proxy_redirect off;
+    proxy_intercept_errors off;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_pass http://127.0.0.1:7687;
+  }
+}
+```
+
+For avoiding issues with Strict-Transport-Security add the following rules in your host file or your proxy ( e.g. Fiddler )
+and use any of the following host names to test locally:
+
+```
+127.0.0.1 dev.lwjgl.org
+127.0.0.1 www.lwjgl.dev
+127.0.0.1 www.lwjgl.local
+```
+
+### Build/running in development
+
+```bash
+npm i
+npm styles
+npm start
+```
+
+Instead of just starting the server, we can monitor for changes and auto-restart with nodemon:
+
+```bash
+npm run watch
+```
+
+Styles can be monitored for changes and automatically re-compiled with:
+
+```bash
+npm styles-watch
+```
+
+# Production
 
 ### NGINX Configuration
 
@@ -142,99 +238,6 @@ server {
 }
 ```
 
-### Development Environment
-
-For watching and auto-reloading the server we use [nodemon](http://nodemon.io/). This is the only required
-global NPM package. Install with:
-
-```bash
-npm -g i nodemon
-```
-
-For react-transform-hmr to work the following configuration needs to be added inside the NGINX's server section:
-
-```Nginx
-location = /__webpack_hmr {
-  proxy_pass http://127.0.0.1:7687;
-  proxy_set_header Connection '';
-  proxy_http_version 1.1;
-  chunked_transfer_encoding off;
-  proxy_buffering off;
-  proxy_cache off;
-}
-```
-
-A minimal NGINX configuration for development can look like this:
-
-```Nginx
-server {
-  listen 80;
-  server_name
-    lwjgl.org
-    lwjgl.dev
-    lwjgl.local;
-  return 301 $scheme://www.lwjgl.local$request_uri;
-}
-
-server {
-  listen 80;
-  server_name
-    dev.lwjgl.org
-    www.lwjgl.org
-    www.lwjgl.dev
-    www.lwjgl.local;
-
-  location = /__webpack_hmr {
-    proxy_pass http://127.0.0.1:7687;
-    proxy_set_header Connection '';
-    proxy_http_version 1.1;
-    chunked_transfer_encoding off;
-    proxy_buffering off;
-    proxy_cache off;
-  }
-
-  location / {
-    proxy_buffering off;
-    proxy_redirect off;
-    proxy_intercept_errors off;
-    proxy_http_version 1.1;
-    proxy_set_header Connection "";
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_pass http://localhost:7687;
-  }
-}
-```
-
-For avoiding issues with Strict-Transport-Security add the following rules in your host file or your proxy ( e.g. Fiddler )
-and use any of the following host names to test locally:
-
-```
-127.0.0.1 dev.lwjgl.org
-127.0.0.1 www.lwjgl.dev
-127.0.0.1 www.lwjgl.local
-```
-
-### Build/running in development
-
-```bash
-npm i
-npm styles
-npm start
-```
-
-Instead of just starting the server, we can monitor for changes with nodemon:
-
-```bash
-npm run watch
-```
-
-Styles can be monitored for changes and automatically re-compiled with:
-
-```bash
-npm styles-watch
-```
-
 ### Build for production
 
 ```bash
@@ -245,13 +248,13 @@ npm run production
 To run the production build
 
 ```bash
-node server --production
+NODE_ENV=production node server
 ```
 
 or
 
 ```bash
-NODE_ENV=production node server
+node server --production
 ```
 
 ### Run in production with PM2
@@ -264,7 +267,7 @@ pm2 save
 
 ### Run in production with forever
 
-Place a JSON file named forever.json on the root folder with the following contents:
+Place a JSON file named forever.json in the root folder with the following contents:
 
 ```json
 {
@@ -283,8 +286,3 @@ and then run:
 ```bash
 forever start forever.json
 ```
-
-### Known Issues
-
-- react-transform-hmr is deprecated. Use React Hot Reload 3
-- Add support for Node.js LTS
