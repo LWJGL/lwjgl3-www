@@ -2,8 +2,6 @@ import React from 'react'
 import {Link, IndexLink} from 'react-router/es6'
 import Sidebar from './Sidebar'
 
-let getScroll;
-
 export default class Header extends React.Component {
 
   prev = 0;
@@ -16,14 +14,12 @@ export default class Header extends React.Component {
   el;
 
   componentDidMount() {
-    getScroll = typeof window.pageYOffset === 'number' ? ()=>window.pageYOffset : ()=>document.documentElement.scrollTop;
-
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
     this.offsetHeight = this.el.offsetHeight;
 
     // Initial scroll values
-    this.current = getScroll();
+    this.current = window.pageYOffset;
     this.prev = this.current;
 
     if ( this.current > 0 ) {
@@ -39,7 +35,7 @@ export default class Header extends React.Component {
 
   onScroll() {
     this.prev = this.current;
-    this.current = getScroll();
+    this.current = window.pageYOffset;
 
     if ( !this.ticking ) {
       requestAnimationFrame(this.update.bind(this));
