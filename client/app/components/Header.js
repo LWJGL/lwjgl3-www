@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link, IndexLink} from 'react-router/es6'
 import Sidebar from './Sidebar'
+import supportsPassive from '../utils/supports-passive'
 
 export default class Header extends React.Component {
 
@@ -26,11 +27,11 @@ export default class Header extends React.Component {
       this.el.classList.remove('top');
     }
 
-    window.addEventListener('scroll', this.onScroll.bind(this));
+    window.addEventListener('scroll', this.onScroll.bind(this), supportsPassive ? { passive: true } : false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll.bind(this));
+    window.removeEventListener('scroll', this.onScroll.bind(this), supportsPassive ? { passive: true } : false);
   }
 
   onScroll() {
@@ -39,11 +40,13 @@ export default class Header extends React.Component {
 
     if ( !this.ticking ) {
       requestAnimationFrame(this.update.bind(this));
-      this.ticking = true;
     }
+    this.ticking = true;
   }
 
   update() {
+    this.ticking = false;
+
     if ( this.prev - this.current < 0 ) {
       // We are scrolling down
       if ( this.direction >= 0 ) {
@@ -78,8 +81,6 @@ export default class Header extends React.Component {
     } else if ( this.current <= this.offsetHeight && this.prev > this.offsetHeight ) {
       this.el.classList.add('top');
     }
-
-    this.ticking = false;
   }
 
   render() {
