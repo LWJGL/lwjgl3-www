@@ -5,6 +5,7 @@
 
 # Node
 node_modules
+npm-debug.log
 
 # Configuration files
 /config.js
