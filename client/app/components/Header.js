@@ -2,15 +2,34 @@ import React from 'react'
 import {Link, IndexLink} from 'react-router/es6'
 import Sidebar from './Sidebar'
 
+let getScroll;
+
 export default class Header extends React.Component {
 
-  previousY = 0;
-  currentY = 0;
-  dynamicMenu = false;
+  prev = 0;
+  current = 0;
+  flip = 0;
+  fixed = false;
+  direction = 0;
+  ticking = false;
+  offsetHeight = 0;
+  el;
 
   componentDidMount() {
-    this.currentY = this.getScroll();
-    this.dynamicMenu = this.props.isHome;
+    getScroll = typeof window.pageYOffset === 'number' ? ()=>window.pageYOffset : ()=>document.documentElement.scrollTop;
+
+    // Cache menu height to avoid touching the DOM on every tick
+    // WARNING: Do this on update() if menu changes in height dynamically
+    this.offsetHeight = this.el.offsetHeight;
+
+    // Initial scroll values
+    this.current = getScroll();
+    this.prev = this.current;
+
+    if ( this.current > 0 ) {
+      this.el.classList.remove('top');
+    }
+
     window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
@@ -18,47 +37,63 @@ export default class Header extends React.Component {
     window.removeEventListener('scroll', this.onScroll.bind(this));
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.dynamicMenu = nextProps.isHome;
-  }
-
-  getScroll() {
-    return window.pageYOffset || document.documentElement.scrollTop;
-  }
-
   onScroll() {
-    this.previousY = this.currentY;
-    this.currentY = this.getScroll();
-    this.nextTick();
-  }
+    this.prev = this.current;
+    this.current = getScroll();
 
-  nextTick() {
     if ( !this.ticking ) {
       requestAnimationFrame(this.update.bind(this));
+      this.ticking = true;
     }
-    this.ticking = true;
   }
 
   update() {
-    const offsetY = this.previousY - this.currentY;
-    if ( offsetY < 0 && this.currentY > 52 ) {
-      this.refs.header.classList.add('hidden');
+    if ( this.prev - this.current < 0 ) {
+      // We are scrolling down
+      if ( this.direction >= 0 ) {
+        // We just started scroll down
+        this.direction = -1;
+        if ( this.fixed ) {
+          // Release menu from the top of the viewport
+          this.fixed = false;
+          this.el.classList.remove('fixed');
+          this.el.style.top = `${this.prev}px`;
+        }
+      }
     } else {
-      this.refs.header.classList.remove('hidden');
-    }
-    if ( this.dynamicMenu )  {
-      if ( this.currentY > 52 ) {
-        this.refs.header.classList.remove('home');
-      } else {
-        this.refs.header.classList.add('home');
+      // We are scrolling up
+      if ( this.direction <= 0 ) {
+        // We just started scrolling up
+        this.direction = 1;
+        // Remember started scrolling up
+        this.flip = this.prev;
+        // Place menu from that position upwards so it gets revealed naturally
+        this.el.style.top = `${this.flip - this.offsetHeight}px`;
+      } else if ( !this.fixed && this.current < this.flip - this.offsetHeight ) {
+        // The entire menu has been revealed, fix it to the viewport
+        this.el.classList.add('fixed');
+        this.el.style.top = 0;
+        this.fixed = true;
       }
     }
+
+    if ( this.current > this.offsetHeight && this.prev <= this.offsetHeight ) {
+      this.el.classList.remove('top');
+    } else if ( this.current <= this.offsetHeight && this.prev > this.offsetHeight ) {
+      this.el.classList.add('top');
+    }
+
     this.ticking = false;
   }
 
   render() {
+    let headerClass = ['top'];
+    if ( this.props.isHome ) {
+      headerClass.push('nobg');
+    }
+
     return (
-      <header ref="header" role="navigation" className={this.props.isHome ? 'home' : 'other'}>
+      <header ref={ (el) => this.el = el} role="navigation" className={headerClass.join(' ')}>
         <nav className="container-fluid">
           <div className="row">
             <div className="col-lg-2 col-xs-8"><IndexLink to="/">LW<b>JGL</b> 3</IndexLink></div>

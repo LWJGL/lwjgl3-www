@@ -6,7 +6,7 @@ header {
   $header-color: #fff;
 
   background: $brand-primary;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
@@ -14,22 +14,19 @@ header {
   color: $header-color;
   line-height: 3rem;
   font-size: 1.2rem;
-  // This improves performance but creates a layer that cuts of the sliding menu
-  // Maybe we should split the two as separate?
-  //will-change: transform;
-  transition: transform 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s cubic-bezier(0,0,0.3,1);
+  will-change: top;
 
-  &.home {
-    background-color: transparent;
+  &.fixed {
+    position: fixed;
   }
 
-  &.other {
-    transition: transform 0.3s cubic-bezier(0,0,0.3,1);
-  }
+  &.nobg {
+    will-change: background-color, top;
+    transition: background-color 0.5s ease-out;
 
-  &.hidden {
-    transform: translateY(-4rem);
-    pointer-events: none;
+    &.top {
+      background-color: transparentize($header-color, 1.0);
+    }
   }
 
   a {
