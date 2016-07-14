@@ -1,7 +1,6 @@
 import React from 'react'
 import {Link, IndexLink} from 'react-router/es6'
 import Sidebar from './Sidebar'
-import supportsPassive from '../utils/supports-passive'
 
 export default class Header extends React.Component {
 
@@ -27,11 +26,11 @@ export default class Header extends React.Component {
       this.el.classList.remove('top');
     }
 
-    window.addEventListener('scroll', this.onScroll.bind(this), supportsPassive ? { passive: true } : false);
+    window.addEventListener('scroll', this.onScroll.bind(this));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll.bind(this), supportsPassive ? { passive: true } : false);
+    window.removeEventListener('scroll', this.onScroll.bind(this));
   }
 
   componentDidUpdate() {
@@ -46,6 +45,15 @@ export default class Header extends React.Component {
       requestAnimationFrame(this.update.bind(this));
     }
     this.ticking = true;
+  }
+
+  checkOffset() {
+    if ( !this.fixed && this.current < this.flip - this.offsetHeight ) {
+      // The entire menu has been revealed, fix it to the viewport
+      this.el.classList.add('fixed');
+      this.el.style.top = 0;
+      this.fixed = true;
+    }
   }
 
   update() {
@@ -68,15 +76,15 @@ export default class Header extends React.Component {
       if ( this.direction <= 0 ) {
         // We just started scrolling up
         this.direction = 1;
-        // Remember started scrolling up
+        // Remember where we started scrolling up
         this.flip = this.prev;
-        // Place menu from that position upwards so it gets revealed naturally
-        this.el.style.top = `${this.flip - this.offsetHeight}px`;
-      } else if ( !this.fixed && this.current < this.flip - this.offsetHeight ) {
-        // The entire menu has been revealed, fix it to the viewport
-        this.el.classList.add('fixed');
-        this.el.style.top = 0;
-        this.fixed = true;
+        this.checkOffset();
+        if ( !this.fixed ) {
+          // Place menu from that position upwards so it gets revealed naturally
+          this.el.style.top = `${Math.max(0, this.flip - this.offsetHeight)}px`;
+        }
+      } else {
+        this.checkOffset();
       }
     }
 
