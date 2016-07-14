@@ -63,7 +63,7 @@ export default class Header extends React.Component {
           <div className="row">
             <div className="col-lg-2 col-xs-8"><IndexLink to="/">LW<b>JGL</b> 3</IndexLink></div>
 
-            <ul className="list-unstyled col-lg-10 hidden-md-down">
+            <ul className="list-unstyled col-lg-10 hidden-md-down" role="menu">
               <li><IndexLink to="/">HOME</IndexLink></li>
               <li><Link to="/guide">GET STARTED</Link></li>
               <li><Link to="/download">DOWNLOAD</Link></li>

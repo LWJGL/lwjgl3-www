@@ -91,6 +91,8 @@ export default class Sidebar extends React.Component {
         <div
           ref="sideContainer"
           className="sliding-menu-container"
+          role="menu"
+          aria-hidden={!isOpen}
           onTouchStart={this.onTouchStart}
           onTouchMove={this.onTouchMove}
           onTouchEnd={this.onTouchEnd}
