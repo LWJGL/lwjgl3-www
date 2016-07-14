@@ -43,14 +43,8 @@ export default class Sidebar extends React.Component {
   }
 
   onTouchMove(evt) {
-    if ( !this.touchingSideNav ) {
-      return;
-    }
-
-    this.currentX = evt.touches[0].pageX;
-    const translateX = this.currentX - this.startX;
-
-    if ( translateX < 0 ) {
+    if ( this.touchingSideNav ) {
+      this.currentX = evt.touches[0].pageX;
       evt.preventDefault();
     }
   }
