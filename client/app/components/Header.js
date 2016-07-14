@@ -34,6 +34,10 @@ export default class Header extends React.Component {
     window.removeEventListener('scroll', this.onScroll.bind(this), supportsPassive ? { passive: true } : false);
   }
 
+  componentDidUpdate() {
+    requestAnimationFrame(this.update.bind(this));
+  }
+
   onScroll() {
     this.prev = this.current;
     this.current = window.pageYOffset;
