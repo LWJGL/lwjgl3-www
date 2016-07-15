@@ -29,6 +29,17 @@ header {
     }
   }
 
+  &.alt {
+    position: fixed;
+    will-change: background-color, top, opacity;
+    transition: transform 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s ease-out, opacity 0.5s ease-out;
+    &.hidden {
+      opacity: 0;
+      transform: translateY(-48px);
+      pointer-events: none;
+    }
+  }
+
   a {
     font-weight: 300;
     color: $header-color;
@@ -60,9 +71,16 @@ header {
   }
 
   .sliding-menu-icon {
+    display: inline-block;
+    line-height: 44px;
     padding: 0 15px;
     margin: 0 -15px 0 0;
     color: white;
+
+    svg {
+      margin-bottom: 5px;
+    }
+
     &:hover, &:active {
       color: yellow;
     }

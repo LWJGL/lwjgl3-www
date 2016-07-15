@@ -86,7 +86,7 @@ export default class Sidebar extends React.Component {
 
     return (
       <div ref="slidingMenu" className={['sliding-menu', isOpen ? 'open' : null].join(' ')}>
-        <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} aria-hidden={isOpen} title="Open navigation menu"><FaBars /></button>
+        <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} aria-hidden={isOpen} title="Open navigation menu"><FaBars size={24} /></button>
         <div className="sliding-menu-overlay" onClick={this.onToggle}></div>
         <div
           ref="sideContainer"

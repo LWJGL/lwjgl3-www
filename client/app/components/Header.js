@@ -2,6 +2,10 @@ import React from 'react'
 import {Link, IndexLink} from 'react-router/es6'
 import Sidebar from './Sidebar'
 
+// Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels
+// from the top of the screen ( the point under the browser's address bar! )
+const ios = process.browser ? /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream : false;
+
 export default class Header extends React.Component {
 
   prev = 0;
@@ -38,13 +42,19 @@ export default class Header extends React.Component {
   }
 
   onScroll() {
+    let offsetY = window.pageYOffset;
+
+    if ( offsetY < 0 || this.prev === offsetY ) {  // e.g. iOS inertial scrolling reports negative offsets
+      return;
+    }
+
     this.prev = this.current;
-    this.current = window.pageYOffset;
+    this.current = offsetY;
 
     if ( !this.ticking ) {
       requestAnimationFrame(this.update.bind(this));
+      this.ticking = true;
     }
-    this.ticking = true;
   }
 
   checkOffset() {
@@ -61,37 +71,47 @@ export default class Header extends React.Component {
 
     if ( this.prev - this.current < 0 ) {
       // We are scrolling down
-      if ( this.direction >= 0 ) {
-        // We just started scroll down
-        this.direction = -1;
-        if ( this.fixed ) {
-          // Release menu from the top of the viewport
-          this.fixed = false;
-          this.el.classList.remove('fixed');
-          this.el.style.top = `${this.prev}px`;
+      if ( ios ) {
+        this.el.classList.add('hidden');
+      } else {
+        if ( this.direction >= 0 ) {
+          // We just started scroll down
+          this.direction = -1;
+          if ( this.fixed ) {
+            // Release menu from the top of the viewport
+            this.fixed = false;
+            this.el.classList.remove('fixed');
+            this.el.style.top = `${this.prev}px`;
+          }
         }
+      }
+
+      if ( this.current > this.offsetHeight/* && this.prev <= this.offsetHeight*/ ) {
+        this.el.classList.remove('top');
       }
     } else {
       // We are scrolling up
-      if ( this.direction <= 0 ) {
-        // We just started scrolling up
-        this.direction = 1;
-        // Remember where we started scrolling up
-        this.flip = this.prev;
-        this.checkOffset();
-        if ( !this.fixed ) {
-          // Place menu from that position upwards so it gets revealed naturally
-          this.el.style.top = `${Math.max(0, this.flip - this.offsetHeight)}px`;
-        }
+      if ( ios ) {
+        this.el.classList.remove('hidden');
       } else {
-        this.checkOffset();
+        if ( this.direction <= 0 ) {
+          // We just started scrolling up
+          this.direction = 1;
+          // Remember where we started scrolling up
+          this.flip = this.prev;
+          this.checkOffset();
+          if ( !this.fixed ) {
+            // Place menu from that position upwards so it gets revealed naturally
+            this.el.style.top = `${Math.max(0, this.flip - this.offsetHeight)}px`;
+          }
+        } else {
+          this.checkOffset();
+        }
       }
-    }
 
-    if ( this.current > this.offsetHeight && this.prev <= this.offsetHeight ) {
-      this.el.classList.remove('top');
-    } else if ( this.current <= this.offsetHeight && this.prev > this.offsetHeight ) {
-      this.el.classList.add('top');
+      if ( this.current <= this.offsetHeight/* && this.prev >= this.offsetHeight*/ ) {
+        this.el.classList.add('top');
+      }
     }
   }
 
@@ -99,6 +119,9 @@ export default class Header extends React.Component {
     let headerClass = ['top'];
     if ( this.props.isHome ) {
       headerClass.push('nobg');
+    }
+    if ( ios ) {
+      headerClass.push('alt');
     }
 
     return (
