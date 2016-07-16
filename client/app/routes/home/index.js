@@ -21,14 +21,19 @@ const styles = StyleSheet.create(stylesDefinition);
 
 export default class HomeRoute extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.resizeVideoContainer = this.resizeVideoContainer.bind(this);
+  }
+
   componentDidMount() {
     this.container.className = css(styles.videoContainer);
     this.resizeVideoContainer();
-    window.addEventListener('resize', this.resizeVideoContainer.bind(this));
+    window.addEventListener('resize', this.resizeVideoContainer);
   }
 
-  compocomponentWillUnmount() {
-    window.removeEventListener('resize', this.resizeVideoContainer.bind(this));
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeVideoContainer);
   }
 
   resizeVideoContainer() {
