@@ -1,0 +1,38 @@
+{
+  "name": "Lightweight Java Gaming Library",
+  "description": "LWJGL is a Java library that enables cross-platform access to popular native APIs useful in the development of graphics (OpenGL), audio (OpenAL) and parallel computing (OpenCL) applications.",
+  "lang": "en",
+  "dir": "ltr",
+  "short_name": "LWJGL",
+  "icons": [
+    {
+      "src": "https://d2g0ezo1t7nqa0.cloudfront.net/img/lwjgl-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2g0ezo1t7nqa0.cloudfront.net/img/lwjgl-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2g0ezo1t7nqa0.cloudfront.net/img/lwjgl-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2g0ezo1t7nqa0.cloudfront.net/img/lwjgl-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://d2g0ezo1t7nqa0.cloudfront.net/img/lwjgl-256x256.png",
+      "sizes": "256x256",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#1b2426",
+  "theme_color": "#1b2426"
+}

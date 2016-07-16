@@ -11,7 +11,15 @@ html(lang="en-US")
     link(rel="preload" as="script" href=`/js/${bundle}`)
     meta(name="viewport" content="width=device-width,initial-scale=1")
     meta(name="theme-color" content="#1b2426")
+    //-
+      meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style" content="black")
+    meta(name="apple-mobile-web-app-title" content="LWJGL")
+    meta(name="msapplication-TileImage" content="https://d2g0ezo1t7nqa0.cloudfront.net/pwa/lwjgl-144.png")
+    meta(name="msapplication-TileColor" content="#1b2426")
+    link(rel="apple-touch-icon" href="https://d2g0ezo1t7nqa0.cloudfront.net/pwa/lwjgl-152.png")
     link(rel="shortcut icon" href="https://d2g0ezo1t7nqa0.cloudfront.net/fav.ico")
+    link(rel="manifest" href="/manifest.json")
 
     if ( head && head.title )
       !=head.title
