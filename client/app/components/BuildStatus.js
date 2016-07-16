@@ -1,5 +1,6 @@
 import React from 'react'
 import {StyleSheet, css} from 'aphrodite'
+import LoaderSpinner from './LoaderSpinner'
 
 const styles = StyleSheet.create({
   container: {
@@ -86,7 +87,10 @@ export default class BuildStatus extends React.Component {
     return (
       <div className={css(styles.container)}>
         <span className={css(styles.common, styles.build)}>build</span>
-        <span className={css(styles.common, styles.status, styles[this.state.status])}>{this.state.status}</span>
+        <span className={css(styles.common, styles.status, styles[this.state.status])}>
+          {this.state.status}
+          {this.state.status === 'loading' ? <LoaderSpinner size={14} style={{marginLeft:4,stroke:'white'}} /> : null }
+        </span>
       </div>
     )
   }

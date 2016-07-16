@@ -1,0 +1,33 @@
+.loader-spinner {
+  box-sizing: border-box;
+  stroke: $brand-primary;
+  stroke-width: 4px;
+  transform-origin: 50%;
+  vertical-align: middle;
+  animation: spinner-line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, spinner-rotate 1.6s linear infinite;
+}
+
+@keyframes spinner-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(450deg);
+  }
+}
+
+@keyframes spinner-line {
+  0% {
+    stroke-dasharray: 2, 85.964;
+    transform: rotate(0deg);
+  }
+  50% {
+    stroke-dasharray: 65.973, 21.9911;
+    stroke-dashoffset: 0;
+  }
+  100% {
+    stroke-dasharray: 2, 85.964;
+    stroke-dashoffset: -65.973;
+    transform: rotate(90deg);
+  }
+}
