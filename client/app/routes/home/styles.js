@@ -3,8 +3,10 @@ export default {
     position: 'relative',
     backgroundColor: '#1b2426',
     width: '100%',
-    height: '100vh',
     overflow: 'hidden'
+  },
+  fullHeight: {
+    height: '100vh'
   },
   videoOverlay: {
     position: 'absolute',

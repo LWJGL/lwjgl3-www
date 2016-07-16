@@ -20,6 +20,20 @@ const styles = StyleSheet.create(stylesDefinition);
 
 export default class HomeRoute extends React.Component {
 
+  componentDidMount() {
+    this.container.className = css(styles.videoContainer);
+    this.resizeVideoContainer();
+    window.addEventListener('resize', this.resizeVideoContainer.bind(this));
+  }
+
+  compocomponentWillUnmount() {
+    window.removeEventListener('resize', this.resizeVideoContainer.bind(this));
+  }
+
+  resizeVideoContainer() {
+    this.container.setAttribute('style', `height:${window.innerHeight}px`);
+  }
+
   render() {
     return (
       <main>
@@ -32,7 +46,7 @@ export default class HomeRoute extends React.Component {
           ]}
         />
 
-        <section className={css(styles.videoContainer)}>
+        <section ref={(el) => this.container = el} className={css(styles.videoContainer, styles.fullHeight)}>
           {
             process.browser ?
               <video className={css(styles.video)} poster="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" preload="auto" muted={true} loop={true} autoPlay={true} aria-hidden={true} role="presentation">
