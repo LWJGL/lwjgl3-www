@@ -60,9 +60,11 @@ export default class HomeRoute extends React.Component {
           <Logo className={css(styles.logo)} />
           <div className={css(styles.intro)}>
             <h1 className={css(styles.introTitle)}>Lightweight Java Game Library 3</h1>
-            <p className={css(styles.introText)}>LEARN MORE<br /><FaAngleDown size={20} /></p>
+            <p className={css(styles.introText)}><a href="#learn-more" style={{color:'white'}}>LEARN MORE<br /><FaAngleDown size={20} /></a></p>
           </div>
         </section>
+
+        <a id="learn-more"></a>
 
         <section className="container p-y-2">
           <h1 className="text-xs-center">What is LW<b>JGL</b> 3?</h1>
