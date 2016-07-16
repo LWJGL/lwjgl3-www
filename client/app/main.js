@@ -12,9 +12,6 @@ nprogress.configure({
   showSpinner: false
 });
 
-const {pathname, search, hash} = window.location;
-const location = `${pathname}${search}${hash}`;
-
 // Re-hydrate Aphrodite from server-generated class names
 if ( process.browser ) {
   let rehydrateFrom = document.getElementById('aphro-hydrate');
@@ -22,6 +19,9 @@ if ( process.browser ) {
     StyleSheet.rehydrate(JSON.parse(rehydrateFrom.innerHTML));
   }
 }
+
+const {pathname, search, hash} = window.location;
+const location = `${pathname}${search}${hash}`;
 
 // calling `match` is simply for side effects of
 // loading route/component code for the initial location

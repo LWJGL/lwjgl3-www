@@ -3,28 +3,27 @@ export default {
     position: 'relative',
     backgroundColor: '#1b2426',
     width: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   fullHeight: {
     height: '100vh'
   },
-  videoOverlay: {
+  full: {
     position: 'absolute',
-    background: 'rgba(0,0,0,.5) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2NkYGA4w8DAYMLIAAUADV0BA91ra/8AAAAASUVORK5CYII=)',
     width: '100%',
     height: '100%',
-    top: 0,
-    left: 0
-  },
-  video: {
-    display: 'block',
-    position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
-    height: '100%',
+  },
+  videoOverlay: {
+    background: 'rgba(0,0,0,.5) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2NkYGA4w8DAYMLIAAUADV0BA91ra/8AAAAASUVORK5CYII=)',
+  },
+  video: {
+    backgroundSize: 'cover',
+    backgroundColor: '#1b2426',
+    display: 'block',
+    objectFit: 'cover',
     zIndex: 0,
-    objectFit: 'cover'
   },
   logo: {
     position: 'absolute',

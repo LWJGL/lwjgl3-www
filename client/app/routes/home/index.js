@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 import { Link } from 'react-router/es6'
 import {StyleSheet, css} from 'aphrodite'
 import stylesDefinition from './styles'
+import Logo from './Logo'
 
 // Icons
 import FaPuzzlePiece from '../../icons/puzzle-piece'
@@ -49,19 +50,14 @@ export default class HomeRoute extends React.Component {
         <section ref={(el) => this.container = el} className={css(styles.videoContainer, styles.fullHeight)}>
           {
             process.browser ?
-              <video className={css(styles.video)} poster="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" preload="auto" muted={true} loop={true} autoPlay={true} aria-hidden={true} role="presentation">
+              <video className={css(styles.video, styles.full)} poster="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps-720.jpg" preload="auto" muted loop autoPlay aria-hidden={true} role="presentation">
                 <source type="video/webm" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.webm" />
                 <source type="video/mp4" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.mp4" />
               </video>
-              : <img className={css(styles.video)} src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.jpg" alt="" role="presentation" />
+              : null
           }
-          <div className={css(styles.videoOverlay)}></div>
-          <img
-            className={css(styles.logo)}
-            src="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light@x1.png"
-            srcSet="//d2g0ezo1t7nqa0.cloudfront.net/logo/lwjgl3-light@x2.png 2x"
-            alt="LWJGL 3"
-          />
+          <div className={css(styles.videoOverlay, styles.full)}></div>
+          <Logo className={css(styles.logo)} />
           <div className={css(styles.intro)}>
             <h1 className={css(styles.introTitle)}>Lightweight Java Game Library 3</h1>
             <p className={css(styles.introText)}>LEARN MORE<br /><FaAngleDown size={20} /></p>
