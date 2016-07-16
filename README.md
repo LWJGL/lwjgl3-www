@@ -135,9 +135,9 @@ server {
   listen 80;
   server_name
     lwjgl.org
-    www.lwjgl.org
+    *.lwjgl.org
     lwjgl.com
-    www.lwjgl.com;
+    *.lwjgl.com;
 
   location ~ ^/\.well-known\/acme-challenge/ {
     root /srv/acme-challenge;
