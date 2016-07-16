@@ -4,12 +4,12 @@
 *.iml
 
 # Node
-node_modules
-npm-debug.log
+/node_modules
+/npm-debug*
 
 # Configuration files
 /config.js
-forever.json
+/forever.json
 
 # Generated files
 /manifest-js.json

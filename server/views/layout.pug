@@ -37,4 +37,6 @@ html(lang="en-US")
     block content
 
     if ( renderApp )
+      if ( aphrodite )
+        script(id="aphro-hydrate" type="application/json")!=JSON.stringify(aphrodite.renderedClassNames)
       script(src=`/js/${bundle}` async defer)

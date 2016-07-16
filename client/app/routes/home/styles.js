@@ -10,7 +10,7 @@ export default {
     position: 'absolute',
     background: 'rgba(0,0,0,.5) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2NkYGA4w8DAYMLIAAUADV0BA91ra/8AAAAASUVORK5CYII=)',
     width: '100%',
-    height: '100vh',
+    height: '100%',
     top: 0,
     left: 0
   },
@@ -20,7 +20,7 @@ export default {
     top: 0,
     left: 0,
     width: '100%',
-    height: '100vh',
+    height: '100%',
     zIndex: 0,
     objectFit: 'cover'
   },
