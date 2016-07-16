@@ -22,13 +22,17 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 3,
   },
   status: {
-    backgroundColor: 'silver',
+    backgroundColor: 'gray',
+    transition: 'background-color 1s ease-out',
     borderTopRightRadius: 3,
     borderBottomRightRadius: 3,
   },
+  loading: {
+    backgroundColor: 'gray',
+  },
   unknown: {
-    backgroundColor: '#f99',
-    color: 'black',
+    backgroundColor: '#fff',
+    color: '#555',
   },
   passing: {
     backgroundColor: '#4c1',
