@@ -47,7 +47,12 @@ export default class BuildStatus extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.loadData();
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   async loadData() {
@@ -66,11 +71,15 @@ export default class BuildStatus extends React.Component {
         throw 1;
       }
     } catch(e) {
-      this.setState({status: 'unknown'});
+      if ( this._isMounted ) {
+        this.setState({status: 'unknown'});
+      }
       return;
     }
 
-    this.setState({status: result.count === 1 && result.build[0].status === 'SUCCESS' ? 'passing' : 'failing'});
+    if ( this._isMounted ) {
+      this.setState({status: result.count === 1 && result.build[0].status === 'SUCCESS' ? 'passing' : 'failing'});
+    }
   }
 
   render() {
