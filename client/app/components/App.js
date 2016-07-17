@@ -11,7 +11,7 @@ export default class App extends React.Component {
 
     return (
       <div className={!isHomepage ? 'menu-pad' : null}>
-        <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Gaming Library" />
+        <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
         <Header isHome={isHomepage} />
         {this.props.children}
         <hr />

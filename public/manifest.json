@@ -1,5 +1,5 @@
 {
-  "name": "Lightweight Java Gaming Library",
+  "name": "Lightweight Java Game Library",
   "description": "LWJGL is a Java library that enables cross-platform access to popular native APIs useful in the development of graphics (OpenGL), audio (OpenAL) and parallel computing (OpenCL) applications.",
   "lang": "en",
   "dir": "ltr",

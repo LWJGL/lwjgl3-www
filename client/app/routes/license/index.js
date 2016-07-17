@@ -13,7 +13,7 @@ export default class LicenseRoute extends React.Component {
           ]}
         />
         <section className="container">
-          <h1>Lightweight Java Gaming Library License</h1>
+          <h1>Lightweight Java Game Library License</h1>
           <hr />
 
           <article className="row">
