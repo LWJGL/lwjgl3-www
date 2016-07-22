@@ -21,36 +21,6 @@ const styles = StyleSheet.create(stylesDefinition);
 
 export default class HomeRoute extends React.Component {
 
-  orientationChanged = true;
-
-  constructor(props) {
-    super(props);
-    this.resizeVideoContainer = this.resizeVideoContainer.bind(this);
-    this.orientationChange = this.orientationChange.bind(this);
-  }
-
-  componentDidMount() {
-    this.resizeVideoContainer();
-    window.addEventListener('orientationchange', this.orientationChange);
-    window.addEventListener('resize', this.resizeVideoContainer);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('orientationchange', this.orientationChange);
-    window.removeEventListener('resize', this.resizeVideoContainer);
-  }
-
-  orientationChange() {
-    this.orientationChanged = true;
-  }
-
-  resizeVideoContainer() {
-    if ( this.orientationChanged ) {
-      this.container.style.height = `${window.innerHeight}px`;
-      this.orientationChanged = false;
-    }
-  }
-
   render() {
     return (
       <main>
