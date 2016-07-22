@@ -248,8 +248,8 @@ node server --production
 ### Run in production with PM2
 
 ```bash
-cd /path/to/lwjgl3-www/server
-NODE_ENV=production pm2 start index.js --name lwjgl
+cd /path/to/lwjgl3-www
+NODE_ENV=production pm2 start server/index.js --name lwjgl
 pm2 save
 ```
 
@@ -262,8 +262,8 @@ Place a JSON file named forever.json in the root folder with the following conte
     "uid": "lwjgl",
     "append": true,
     "watch": false,
-    "script": "index.js",
-    "sourceDir": "/path/to/lwjgl3-www/server",
+    "script": "server",
+    "sourceDir": "/path/to/lwjgl3-www",
     "args": ["--production"],
     "command": "node"
 }
