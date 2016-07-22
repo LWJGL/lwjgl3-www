@@ -14,12 +14,7 @@ if ( argv.production ) {
 require('babel-core/register')({
   highlightCode: false,
   extensions: ['.js'],
-  ignore: function(filename) {
-    return (
-      filename.indexOf('node_modules') > -1
-      && filename.indexOf('node_modules/react-router') === -1
-    );
-  },
+  ignore: filename => filename.indexOf('node_modules') > -1,
   plugins: [
      ['system-import-transformer', { modules: 'common' }], // Polyfill System.import for Node.js
     'syntax-object-rest-spread',  // V8
@@ -34,6 +29,7 @@ require('babel-core/register')({
     'transform-es2015-parameters',  // V8
     'transform-react-jsx',  // For server-side rendering
     'syntax-jsx',  // For server-side rendering
+    ['module-rewrite', { 'replaceFunc': "./server/rewriteModule.js" }]  // Uses UMD NPM modules instead of */es6
   ]
 });
 
