@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, css} from 'aphrodite'
+import {StyleSheet, css} from 'aphrodite/no-important'
 import LoaderSpinner from './LoaderSpinner'
 
 const styles = StyleSheet.create({

@@ -1,7 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router/es6'
-import {StyleSheet, css} from 'aphrodite'
+import {StyleSheet, css} from 'aphrodite/no-important'
 import stylesDefinition from './styles'
 import Logo from './Logo'
 
@@ -27,7 +27,6 @@ export default class HomeRoute extends React.Component {
   }
 
   componentDidMount() {
-    this.container.className = css(styles.videoContainer);
     this.resizeVideoContainer();
     window.addEventListener('resize', this.resizeVideoContainer);
   }
@@ -52,7 +51,7 @@ export default class HomeRoute extends React.Component {
           ]}
         />
 
-        <section ref={(el) => this.container = el} className={css(styles.videoContainer, styles.fullHeight)}>
+        <section ref={(el) => this.container = el} className={css(styles.videoContainer)}>
           {
             process.browser ?
               <video className={css(styles.video, styles.full)} poster="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps-720.jpg" preload="auto" muted loop autoPlay aria-hidden={true} role="presentation">

@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aphrodite": "0.4.1",
+    "aphrodite": "0.5.0",
     "babel-core": "6.11.4",
     "babel-loader": "6.2.4",
     "babel-plugin-check-es2015-constants": "6.8.0",

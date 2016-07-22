@@ -14,7 +14,7 @@ import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import Routes from '../client/app/routes/Routes'
 import Helmet from 'react-helmet'
-import { StyleSheetServer } from 'aphrodite'
+import { StyleSheetServer } from 'aphrodite/no-important'
 
 // For proxying requests to TeamCity
 import request from 'request';
