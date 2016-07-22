@@ -83,7 +83,11 @@ export default class BuildStatus extends React.Component {
     }
 
     if ( this._isMounted ) {
-      this.setState({status: result.count === 1 && result.build[0].status === 'SUCCESS' ? 'passing' : 'failing'});
+      if ( result.count === 1 && result.build[0].status === 'SUCCESS' ) {
+        this.setState({status: 'passing', build: result.build[0].number});
+      } else {
+        this.setState({status: 'failing'});
+      }
     }
   }
 
@@ -95,6 +99,7 @@ export default class BuildStatus extends React.Component {
           {this.state.status}
           {this.state.status === 'loading' ? <LoaderSpinner size={14} style={{marginLeft:4,stroke:'white'}} /> : null }
         </span>
+        {this.state.build !== undefined ? (<small style={{color:'gray'}}> #{this.state.build}</small>) : null }
       </div>
     )
   }
