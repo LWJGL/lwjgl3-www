@@ -44,9 +44,14 @@ header {
     font-weight: 300;
     color: $header-color;
     text-decoration: none;
+
     &:focus, &:hover {
       color: lightblue;
       text-decoration: none;
+    }
+
+    &.active {
+      color: yellow;
     }
   }
 

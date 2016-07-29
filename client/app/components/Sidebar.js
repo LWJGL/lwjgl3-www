@@ -102,10 +102,10 @@ export default class Sidebar extends React.Component {
             <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
           </div>
           <ul className="list-unstyled">
-            <li><IndexLink to="/" onClick={this.onToggle}>HOME</IndexLink></li>
-            <li><Link to="/guide" onClick={this.onToggle}>GET STARTED</Link></li>
-            <li><Link to="/download" onClick={this.onToggle}>DOWNLOAD</Link></li>
-            <li><Link to="/source" onClick={this.onToggle}>SOURCE</Link></li>
+            <li><IndexLink to="/" activeClassName="active" onClick={this.onToggle}>HOME</IndexLink></li>
+            <li><Link to="/guide" activeClassName="active" onClick={this.onToggle}>GET STARTED</Link></li>
+            <li><Link to="/download" activeClassName="active" onClick={this.onToggle}>DOWNLOAD</Link></li>
+            <li><Link to="/source" activeClassName="active" onClick={this.onToggle}>SOURCE</Link></li>
             <li><a href="http://forum.lwjgl.org/">FORUM</a></li>
             <li><a href="http://blog.lwjgl.org/">BLOG</a></li>
           </ul>
