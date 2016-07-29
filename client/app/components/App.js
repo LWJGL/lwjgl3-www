@@ -4,7 +4,7 @@ import Header from './Header'
 import Footer from './Footer'
 import Copyright from './Copyright'
 
-export default class App extends React.Component {
+export default class App extends React.PureComponent {
 
   render() {
     const isHomepage = this.props.location.pathname === '/';

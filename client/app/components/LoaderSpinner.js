@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class LoaderSpinner extends React.Component {
+export default class LoaderSpinner extends React.PureComponent {
 
   render() {
     return (

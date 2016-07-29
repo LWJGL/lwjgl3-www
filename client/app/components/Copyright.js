@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class Copyright extends React.Component {
+export default class Copyright extends React.PureComponent {
 
   render() {
     return (

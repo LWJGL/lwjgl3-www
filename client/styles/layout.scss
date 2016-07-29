@@ -15,9 +15,9 @@
 // Mixins
 @import "../../node_modules/bootstrap/scss/mixins";
 
-// // Reset and dependencies
+// Reset and dependencies
 @import "../../node_modules/bootstrap/scss/normalize";
-@import "../../node_modules/bootstrap/scss/print";
+//@import "../../node_modules/bootstrap/scss/print";
 
 // Core CSS
 @import "../../node_modules/bootstrap/scss/reboot";
@@ -25,8 +25,8 @@
 @import "../../node_modules/bootstrap/scss/images";
 @import "../../node_modules/bootstrap/scss/code";
 @import "../../node_modules/bootstrap/scss/grid";
-@import "../../node_modules/bootstrap/scss/tables";
-@import "../../node_modules/bootstrap/scss/forms";
+//@import "../../node_modules/bootstrap/scss/tables";
+//@import "../../node_modules/bootstrap/scss/forms";
 @import "../../node_modules/bootstrap/scss/buttons";
 
 // // Components

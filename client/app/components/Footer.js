@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, IndexLink } from 'react-router/es6'
 
-export default class Footer extends React.Component {
+export default class Footer extends React.PureComponent {
   render() {
     return (
       <footer className="container p-y-2">

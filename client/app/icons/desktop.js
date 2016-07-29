@@ -1,7 +1,7 @@
 import React from 'react'
 import IconBase from './react-icon-base'
 
-export default class FaDesktop extends React.Component {
+export default class FaDesktop extends React.PureComponent {
   render() {
     return (
       <IconBase viewBox="0 0 40 40" {...this.props}>
