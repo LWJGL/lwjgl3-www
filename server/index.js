@@ -16,7 +16,7 @@ require('babel-core/register')({
   extensions: ['.js'],
   ignore: filename => filename.indexOf('node_modules') > -1,
   plugins: [
-     ['system-import-transformer', { modules: 'common' }], // Polyfill System.import for Node.js
+    ['system-import-transformer', {modules: 'common'}], // Polyfill System.import for Node.js ( V8 )
     'syntax-object-rest-spread',  // V8
     'transform-async-to-generator',  // V8
     'transform-flow-strip-types',  // V8
@@ -29,7 +29,6 @@ require('babel-core/register')({
     'transform-es2015-parameters',  // V8
     'transform-react-jsx',  // For server-side rendering
     'syntax-jsx',  // For server-side rendering
-    ['module-rewrite', { 'replaceFunc': "./server/rewriteModule.js" }]  // Uses UMD NPM modules instead of */es6
   ]
 });
 

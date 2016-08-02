@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { match, Router, browserHistory, applyRouterMiddleware } from 'react-router/es6'
+import { match, Router, browserHistory, applyRouterMiddleware } from 'react-router'
 import useScroll from 'react-router-scroll';
 import routes from './routes/Routes'
 import {StyleSheet} from 'aphrodite/no-important'

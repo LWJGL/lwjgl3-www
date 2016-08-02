@@ -1,7 +1,7 @@
 import React from 'react'
 import * as focusTrap from '../utils/focus-trap'
 import * as noscroll from '../utils/noscroll'
-import {Link, IndexLink} from 'react-router/es6'
+import {Link, IndexLink} from 'react-router'
 import FaBars from '../icons/bars'
 import FaClose from '../icons/close'
 

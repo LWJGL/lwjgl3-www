@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link, IndexLink} from 'react-router/es6'
+import {Link, IndexLink} from 'react-router'
 import Sidebar from './Sidebar'
 
 // Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels

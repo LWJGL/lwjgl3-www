@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, IndexLink } from 'react-router/es6'
+import { Link, IndexLink } from 'react-router'
 
 export default class Footer extends React.PureComponent {
   render() {
