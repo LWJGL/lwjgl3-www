@@ -135,21 +135,41 @@ server {
   listen 80;
   server_name
     lwjgl.org
-    *.lwjgl.org
+    www.lwjgl.org
     lwjgl.com
-    *.lwjgl.com;
+    www.lwjgl.com;
 
   location ~ ^/\.well-known\/acme-challenge/ {
     root /srv/acme-challenge;
     try_files $uri /$1;
   }
 
-  location /webstart/ {
-    rewrite ^/(.*)$ http://legacy.lwjgl.org/$1 redirect;
+  location = /projects.php {
+    return 301 http://legacy.lwjgl.org/projects.php;
   }
 
-  location = /projects.php {
-    rewrite ^/(.*)$ http://legacy.lwjgl.org/$1 redirect;
+  location = /license.php {
+    return 301 https://www.lwjgl.org/license;
+  }
+
+  location /webstart/ {
+    rewrite ^/webstart/(.*)$ http://legacy.lwjgl.org/webstart/$1 redirect;
+  }
+
+  location = /wiki {
+    return 301 http://wiki.lwjgl.org/;
+  }
+
+  location ^~ /wiki/ {
+    rewrite ^/wiki/(.*) http://wiki.lwjgl.org/$1 permanent;
+  }
+
+  location = /forum {
+    return 301 http://forum.lwjgl.org/;
+  }
+
+  location ^~ /forum/ {
+    rewrite ^/forum/(.*) http://forum.lwjgl.org/$1 permanent;
   }
 
   location / {
@@ -185,32 +205,6 @@ server {
   ssl_stapling_verify on;
 
   add_header Strict-Transport-Security "max-age=31536000; preload";
-
-  location = /wiki {
-    return 301 http://wiki.lwjgl.org/;
-  }
-
-  location ^~ /wiki/ {
-    rewrite
-      ^/wiki/(.*)
-      http://wiki.lwjgl.org/$1
-      permanent;
-  }
-
-  location = /forum {
-    return 301 http://forum.lwjgl.org/;
-  }
-
-  location ^~ /forum/ {
-    rewrite
-      ^/forum/(.*)
-      http://forum.lwjgl.org/$1
-      permanent;
-  }
-
-  location = /projects.php {
-    rewrite ^/(.*)$ http://legacy.lwjgl.org/$1 permanent;
-  }
 
   location / {
     proxy_buffering off;
