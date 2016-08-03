@@ -2,11 +2,28 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router'
 import codeSample from './sample'
-import { highlight } from 'highlight.js'
+import loadJS from 'fg-loadjs'
+import { loadCSS } from 'fg-loadcss'
 
-const codeSampleHtml = highlight('java', codeSample);
+let _INIT = true;
+let codeSampleHtml = codeSample;
 
 export default class GuideRoute extends React.Component {
+
+  state = {
+    sample: codeSampleHtml
+  };
+
+  componentDidMount() {
+    if ( _INIT ) {
+      loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/darkula.min.css');
+      loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js', () => {
+        codeSampleHtml = hljs.highlight('java', codeSampleHtml).value;
+        this.setState({sample: codeSampleHtml});
+      });
+      _INIT = false;
+    }
+  }
 
   render() {
     return (
@@ -43,7 +60,7 @@ export default class GuideRoute extends React.Component {
           <p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
         </section>
 
-        <section className="p-y-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:codeSampleHtml.value}}></code></pre></section>
+        <section className="p-y-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:this.state.sample}}></code></pre></section>
 
         <section className="container p-t-2">
           <p>
