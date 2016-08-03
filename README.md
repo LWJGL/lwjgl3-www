@@ -144,12 +144,44 @@ server {
     try_files $uri /$1;
   }
 
+  location / {
+    return 301 https://www.lwjgl.org$request_uri;
+  }
+}
+
+server {
+  listen 443 ssl http2;
+  server_name lwjgl.org;
+
+  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  add_header Strict-Transport-Security "max-age=31536000; preload";
+
+  return 301 https://www.lwjgl.org$request_uri;
+}
+
+server {
+  listen 443 ssl http2;
+  server_name www.lwjgl.org;
+
+  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
+  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
+  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+  ssl_stapling on;
+  ssl_stapling_verify on;
+  add_header Strict-Transport-Security "max-age=31536000; preload";
+
   location = /projects.php {
     return 301 http://legacy.lwjgl.org/projects.php;
   }
 
   location = /license.php {
-    return 301 https://www.lwjgl.org/license;
+    return 301 /license;
   }
 
   location /webstart/ {
@@ -173,40 +205,6 @@ server {
   }
 
   location / {
-    return 301 https://www.lwjgl.org$request_uri;
-  }
-}
-
-server {
-  listen 443 ssl http2;
-  server_name lwjgl.org;
-
-  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
-  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_stapling on;
-  ssl_stapling_verify on;
-
-  add_header Strict-Transport-Security "max-age=31536000; preload";
-
-  return 301 https://www.lwjgl.org$request_uri;
-}
-
-server {
-  listen 443 ssl http2;
-  server_name www.lwjgl.org;
-
-  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
-  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_stapling on;
-  ssl_stapling_verify on;
-
-  add_header Strict-Transport-Security "max-age=31536000; preload";
-
-  location / {
     proxy_buffering off;
     proxy_redirect off;
     proxy_intercept_errors off;
@@ -216,7 +214,6 @@ server {
     proxy_set_header X-Real-IP $remote_addr;
     proxy_pass http://localhost:7687;
   }
-
 }
 ```
 
