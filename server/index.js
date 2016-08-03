@@ -20,7 +20,6 @@ require('babel-core/register')({
     'syntax-object-rest-spread',  // V8
     'transform-async-to-generator',  // V8
     'transform-flow-strip-types',  // V8
-    'transform-strict-mode',  // Force strict mode
     'transform-object-rest-spread',  // V8
     'transform-class-properties',  // V8
     'transform-es2015-modules-commonjs',  // ES6 modules
