@@ -9,7 +9,7 @@ export default class LicenseRoute extends React.Component {
         <Helmet
           title="License"
           meta={[
-            {"name": "description", "content": "LWJGL is licensed under GPL"}
+            {"name": "description", "content": "LWJGL is licensed under BSD"}
           ]}
         />
         <section className="container">
@@ -18,7 +18,7 @@ export default class LicenseRoute extends React.Component {
 
           <article className="row">
             <div className="col-lg-6 col-xs-12">
-              <p>Copyright &copy; 2012-{new Date().getFullYear()} Lightweight Java Game Library
+              <p>Copyright &copy; 2012-present Lightweight Java Game Library
               <br/>All rights reserved.</p>
 
               <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
@@ -26,7 +26,7 @@ export default class LicenseRoute extends React.Component {
               <ol>
                 <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
                 <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
-                <li>Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
+                <li>Neither the name Lightweight Java Game Library nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
               </ol>
             </div>
             <div className="col-lg-6 col-xs-12">
