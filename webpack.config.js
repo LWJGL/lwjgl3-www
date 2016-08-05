@@ -11,30 +11,37 @@ const babelLoader = {
   query: {
     cacheDirectory: true,
     plugins: [
+      // ES5
+      //'transform-es5-property-mutators',  // http://babeljs.io/docs/plugins/transform-es5-property-mutators/
+
       // Stage-0
       // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-0
-      'transform-do-expressions',
-      'transform-function-bind',
+      // 'transform-do-expressions', // http://babeljs.io/docs/plugins/transform-do-expressions/
+      // 'transform-function-bind',  // http://babeljs.io/docs/plugins/transform-function-bind/
 
       // Stage-1
       // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-1
-      'transform-class-constructor-call',
-      'transform-class-properties',
-      'transform-decorators',
-      'transform-export-extensions',
+      // 'transform-class-constructor-call',  // DEPRECATED: http://babeljs.io/docs/plugins/transform-class-constructor-call/
+      // 'transform-export-extensions',  // http://babeljs.io/docs/plugins/transform-export-extensions/
 
       // Stage-2
       // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-2
-      'syntax-trailing-function-commas',
+      // 'transform-decorators',
+      // 'transform-decorators-legacy',
+      'transform-class-properties',
       'transform-object-rest-spread',
 
       // Stage-3
       // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-3
+      'syntax-trailing-function-commas',
       'transform-async-to-generator',
+
+      //ES2016
+      //https://github.com/babel/babel/blob/master/packages/babel-preset-es2016/index.js
       'transform-exponentiation-operator',
 
       // ES2015
-      // https://github.com/babel/babel/tree/master/packages/babel-preset-es2015
+      // https://github.com/babel/babel/blob/master/packages/babel-preset-es2015/src/index.js
       ['transform-es2015-template-literals', {'loose': true}],
       'transform-es2015-literals',
       'transform-es2015-function-name',
@@ -58,7 +65,7 @@ const babelLoader = {
       ['transform-regenerator', {async: false, asyncGenerators: false}],
 
       // React
-      // https://github.com/babel/babel/tree/master/packages/babel-preset-react
+      // https://github.com/babel/babel/blob/master/packages/babel-preset-react/index.js
       'transform-react-jsx',
       'transform-flow-strip-types',
       'syntax-flow',
