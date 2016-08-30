@@ -24,7 +24,7 @@ export default class DownloadRoute extends React.Component {
               <h3>Release</h3>
               <p>Latest official release.</p>
               <p><a className="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip">DOWNLOAD RELEASE</a></p>
-              <BuildStatus name="LwjglReleases_StableToRelease" />
+              <BuildStatus name="lwjgl_Release" />
             </div>
             <div className="col-md-4 col-xs-12 p-y-1">
               <h3>Stable (newer)</h3>
