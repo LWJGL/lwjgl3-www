@@ -1,6 +1,6 @@
 import React from 'react'
-import * as focusTrap from '../utils/focus-trap'
-import * as noscroll from '../utils/noscroll'
+import createFocusTrap from 'focus-trap'
+import noscroll from '../utils/noscroll'
 import {Link, IndexLink} from 'react-router'
 import FaBars from '../icons/bars'
 import FaClose from '../icons/close'
@@ -19,15 +19,22 @@ export default class Sidebar extends React.Component {
     };
   }
 
-  onToggle() {
+  componentDidMount() {
+    this.focusTrap = createFocusTrap(this.refs.slidingMenu, {
+      onDeactivate: this.onToggle.bind(this, [true]),
+      initialFocus: this.refs.closeButton
+    });
+  }
+
+  onToggle(skipFocusTrap) {
     if ( this.state.open ) {
       noscroll.off();
-      focusTrap.deactivate();
+      if ( !skipFocusTrap ) {
+        this.focusTrap.deactivate();
+      }
     } else {
       noscroll.on();
-      focusTrap.activate(this.refs.slidingMenu, {
-        onClose: this.onToggle
-      });
+      this.focusTrap.activate();
     }
 
     this.setState({open: !this.state.open});
@@ -50,18 +57,16 @@ export default class Sidebar extends React.Component {
   }
 
   onTouchEnd(evt) {
-    if ( !this.touchingSideNav ) {
-      return;
-    }
+    if ( this.touchingSideNav ) {
+      this.touchingSideNav = false;
 
-    this.touchingSideNav = false;
-
-    const translateX = this.currentX - this.startX;
-    this.refs.sideContainer.style.transform = '';
-
-    if ( translateX > 0 ) {
+      const translateX = this.currentX - this.startX;
+      this.refs.sideContainer.style.transform = '';
       this.refs.sideContainer.classList.remove('touching');
-      this.onToggle();
+
+      if ( translateX > 0 ) {
+        this.onToggle();
+      }
     }
   }
 
@@ -99,7 +104,7 @@ export default class Sidebar extends React.Component {
           onTouchEnd={this.onTouchEnd}
         >
           <div className="text-xs-right">
-            <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
+            <button ref="closeButton" type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
           </div>
           <ul className="list-unstyled">
             <li><IndexLink to="/" activeClassName="active" onClick={this.onToggle}>HOME</IndexLink></li>

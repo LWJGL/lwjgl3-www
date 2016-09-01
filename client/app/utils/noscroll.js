@@ -17,16 +17,20 @@ function hasScrollbar() {
   return document.body.scrollHeight > window.innerHeight;
 }
 
-export function on() {
-  if ( hasScrollbar() ) {
-    document.body.style.paddingRight = getScrollbarSize() + 'px';
-    document.getElementsByTagName('header')[0].style.paddingRight = getScrollbarSize() + 'px';
-  }
-  document.body.style.overflow = 'hidden';
-}
+export default {
 
-export function off() {
-  document.body.style.paddingRight = 0;
-  document.getElementsByTagName('header')[0].style.paddingRight = 0;
-  document.body.style.overflow = 'auto';
-}
+  on: function() {
+    if ( hasScrollbar() ) {
+      document.body.style.paddingRight = getScrollbarSize() + 'px';
+      document.getElementsByTagName('header')[0].style.paddingRight = getScrollbarSize() + 'px';
+    }
+    document.body.style.overflow = 'hidden';
+  },
+
+  off: function() {
+    document.body.style.paddingRight = 0;
+    document.getElementsByTagName('header')[0].style.paddingRight = 0;
+    document.body.style.overflow = 'auto';
+  }
+
+};
