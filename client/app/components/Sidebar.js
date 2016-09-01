@@ -21,17 +21,16 @@ export default class Sidebar extends React.Component {
 
   componentDidMount() {
     this.focusTrap = createFocusTrap(this.refs.slidingMenu, {
-      onDeactivate: this.onToggle.bind(this, [true]),
-      initialFocus: this.refs.closeButton
+      onDeactivate: this.onToggle,
+      initialFocus: this.refs.closeButton,
+      // clickOutsideDeactivates: true
     });
   }
 
-  onToggle(skipFocusTrap) {
+  onToggle() {
     if ( this.state.open ) {
       noscroll.off();
-      if ( !skipFocusTrap ) {
-        this.focusTrap.deactivate();
-      }
+      this.focusTrap.deactivate({onDeactivate:false});
     } else {
       noscroll.on();
       this.focusTrap.activate();
@@ -56,7 +55,7 @@ export default class Sidebar extends React.Component {
     }
   }
 
-  onTouchEnd(evt) {
+  onTouchEnd() {
     if ( this.touchingSideNav ) {
       this.touchingSideNav = false;
 
