@@ -67,8 +67,8 @@ const babelLoader = {
       // React
       // https://github.com/babel/babel/blob/master/packages/babel-preset-react/index.js
       'transform-react-jsx',
-      'transform-flow-strip-types',
-      'syntax-flow',
+      // 'transform-flow-strip-types',
+      // 'syntax-flow',
       'syntax-jsx',
       'transform-react-display-name'
     ]
