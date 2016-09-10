@@ -44,6 +44,10 @@ const styles = StyleSheet.create({
 
 export default class BuildStatus extends React.Component {
 
+  static propTypes = {
+    name: React.PropTypes.string.isRequired
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -104,8 +108,4 @@ export default class BuildStatus extends React.Component {
     )
   }
 
-};
-
-BuildStatus.propTypes = {
-  name: React.PropTypes.string.isRequired
 };
