@@ -65,7 +65,7 @@ export default class BuildStatus extends React.Component {
     let result;
 
     try {
-      response = await fetch(`teamcity?build=${this.props.name}`);
+      response = await fetch(`/teamcity?build=${this.props.name}`);
       if ( response.status !== 200 ) {
         throw 1;
       }
@@ -104,4 +104,8 @@ export default class BuildStatus extends React.Component {
     )
   }
 
+};
+
+BuildStatus.propTypes = {
+  name: React.PropTypes.string.isRequired
 };

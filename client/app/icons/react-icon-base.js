@@ -1,5 +1,5 @@
 import React from 'react'
-import { PropTypes } from 'react'
+import IconPropTypes from './react-icon-propTypes'
 
 const IconBase = ({ children, color, size, style, ...props }) => {
   const computedSize = size || '1em';
@@ -20,13 +20,5 @@ const IconBase = ({ children, color, size, style, ...props }) => {
   )
 };
 
-IconBase.propTypes = {
-  color: PropTypes.string,
-  size: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
-  style: PropTypes.object
-};
-
+IconBase.propTypes = IconPropTypes;
 export default IconBase

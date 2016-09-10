@@ -1,5 +1,6 @@
 import React from 'react'
 import IconBase from './react-icon-base'
+import IconPropTypes from './react-icon-propTypes'
 
 const FaBars = (props) => (
   <IconBase viewBox="0 0 40 40" {...props}>
@@ -10,4 +11,5 @@ const FaBars = (props) => (
   </IconBase>
 );
 
+FaBars.propTypes = IconPropTypes;
 export default FaBars
