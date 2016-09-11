@@ -75,6 +75,7 @@ export default class GuideRoute extends React.Component {
             the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>.
           </p>
 
+          <a id="build-instructions"></a>
           <h3>Building from source</h3>
 
           <p>

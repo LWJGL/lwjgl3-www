@@ -22,7 +22,7 @@ export default class Footer extends React.PureComponent {
               <li><a href="http://blog.lwjgl.org/">Blog</a></li>
               <li><a href="http://forum.lwjgl.org/">Forum</a></li>
               <li><a href="https://twitter.com/lwjgl" rel="external nofollow">Twitter</a></li>
-              <li><a href="https://github.com/LWJGL/lwjgl3/commits/master">ChangeLog</a></li>
+              <li><a href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a></li>
               <li><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a></li>
             </ul>
           </div>
