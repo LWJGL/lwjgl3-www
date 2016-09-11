@@ -4,7 +4,8 @@ import LoaderSpinner from './LoaderSpinner'
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: '2rem'
+    minHeight: '2rem',
+    marginBottom: '1rem'
   },
   common: {
     display: 'inline-block',

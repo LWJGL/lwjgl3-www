@@ -19,26 +19,30 @@ export default class DownloadRoute extends React.Component {
         />
         <section className="container">
           <h1>Download LW<b>JGL</b> 3</h1>
+          <p>The following zip bundles include LWJGL core plus all available bindings.</p>
           <div className="row">
-            <div className="col-md-4 col-xs-12 p-y-1">
-              <h3>Release</h3>
-              <p>Latest official release.</p>
-              <p><a className="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip">DOWNLOAD RELEASE</a></p>
+            <div className="col-md-4 col-xs-12">
+              <h2>Release</h2>
+              <hr />
               <BuildStatus name="lwjgl_Release" />
-              <p><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a></p>
+              <p><a className="btn btn-outline-primary" href="http://build.lwjgl.org/release/latest/lwjgl.zip">DOWNLOAD RELEASE</a></p>
+              <p>Latest official release.
+              <br /><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a></p>
             </div>
-            <div className="col-md-4 col-xs-12 p-y-1">
-              <h3>Stable (newer)</h3>
-              <p>Latest build that has been verified to work.</p>
-              <p><a className="btn btn-warning" href="http://build.lwjgl.org/stable/lwjgl.zip">DOWNLOAD STABLE</a></p>
+            <div className="col-md-4 col-xs-12">
+              <h2>Stable (newer)</h2>
+              <hr />
               <BuildStatus name="LwjglReleases_NightlyToStable" />
+              <p><a className="btn btn-outline-primary" href="http://build.lwjgl.org/stable/lwjgl.zip">DOWNLOAD STABLE</a></p>
+              <p>Latest build that has been verified to work.</p>
             </div>
-            <div className="col-md-4 col-xs-12 p-y-1">
-              <h3>Nightly (newest)</h3>
-              <p>Bleeding edge, possibly broken.</p>
-              <p><a className="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip">DOWNLOAD NIGHTLY</a></p>
+            <div className="col-md-4 col-xs-12">
+              <h2>Nightly (newest)</h2>
+              <hr />
               <BuildStatus name="lwjgl_Bundle" />
-              <p><a href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a></p>
+              <p><a className="btn btn-outline-primary" href="http://build.lwjgl.org/nightly/lwjgl.zip">DOWNLOAD NIGHTLY</a></p>
+              <p>Bleeding edge, possibly broken.
+              <br /><a href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a></p>
             </div>
           </div>
         </section>
