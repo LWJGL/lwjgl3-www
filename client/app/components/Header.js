@@ -141,8 +141,8 @@ export default class Header extends React.Component {
               <li><Link to="/guide" activeClassName="active">GET STARTED</Link></li>
               <li><Link to="/download" activeClassName="active">DOWNLOAD</Link></li>
               <li><Link to="/source" activeClassName="active">SOURCE</Link></li>
-              <li><a href="http://forum.lwjgl.org/">FORUM</a></li>
-              <li><a href="http://blog.lwjgl.org/">BLOG</a></li>
+              <li><a href="http://forum.lwjgl.org/" target="_blank">FORUM</a></li>
+              <li><a href="http://blog.lwjgl.org/" target="_blank">BLOG</a></li>
             </ul>
 
             <div className="col-xs-4 hidden-lg-up text-xs-right">

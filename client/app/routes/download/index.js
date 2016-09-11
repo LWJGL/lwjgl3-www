@@ -25,6 +25,7 @@ export default class DownloadRoute extends React.Component {
               <p>Latest official release.</p>
               <p><a className="btn btn-success" href="http://build.lwjgl.org/release/latest/lwjgl.zip">DOWNLOAD RELEASE</a></p>
               <BuildStatus name="lwjgl_Release" />
+              <p><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a></p>
             </div>
             <div className="col-md-4 col-xs-12 p-y-1">
               <h3>Stable (newer)</h3>
@@ -37,13 +38,9 @@ export default class DownloadRoute extends React.Component {
               <p>Bleeding edge, possibly broken.</p>
               <p><a className="btn btn-danger" href="http://build.lwjgl.org/nightly/lwjgl.zip">DOWNLOAD NIGHTLY</a></p>
               <BuildStatus name="lwjgl_Bundle" />
+              <p><a href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a></p>
             </div>
           </div>
-          <hr />
-          <p>
-            <a href="https://github.com/LWJGL/lwjgl3/commits/master">ChangeLog</a>
-            <br /><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
-          </p>
         </section>
 
         <div className="area-dark p-y-2">
