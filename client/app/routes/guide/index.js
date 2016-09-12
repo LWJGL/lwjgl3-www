@@ -16,8 +16,8 @@ export default class GuideRoute extends React.Component {
 
   componentDidMount() {
     if ( _INIT ) {
-      loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/darkula.min.css');
-      loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/highlight.min.js', () => {
+      loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/darkula.min.css');
+      loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js', () => {
         codeSampleHtml = hljs.highlight('java', codeSampleHtml).value;
         this.setState({sample: codeSampleHtml});
       });
