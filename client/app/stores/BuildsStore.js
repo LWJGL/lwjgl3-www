@@ -64,6 +64,12 @@ class BuildsStore {
       if ( this.build === 'stable' ) {
         this.selectMode('zip');
       }
+
+      if ( this.build === 'nightly' ) {
+        this.selectVersion(config.versions[0].join('.'));
+      } else {
+        this.selectVersion(config.versions[1].join('.'));
+      }
     } else {
       throw `${build} is not a valid build name`;
     }
