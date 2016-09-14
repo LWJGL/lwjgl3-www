@@ -27,7 +27,7 @@ const babelLoader = {
       // Stage-2
       // https://github.com/babel/babel/tree/master/packages/babel-preset-stage-2
       // 'transform-decorators',
-      // 'transform-decorators-legacy',
+      'transform-decorators-legacy',
       'transform-class-properties',
       'transform-object-rest-spread',
 

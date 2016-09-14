@@ -18,7 +18,11 @@ export default class SourceRoute extends React.Component {
           <h1>LW<b>JGL</b> Source</h1>
 
           <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
-          <p><a className="btn btn-success" href="https://github.com/LWJGL/lwjgl3">Github Repository</a></p>
+          <p>
+            <a className="btn btn-success" href="https://github.com/LWJGL/lwjgl3">Github Repository</a>
+            {' '}<a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
+            {' '}<a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a>
+          </p>
 
           <p>LWJGL's issue tracker is also hosted on Github.</p>
           <p><a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a></p>

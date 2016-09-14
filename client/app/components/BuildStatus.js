@@ -4,8 +4,7 @@ import LoaderSpinner from './LoaderSpinner'
 
 const styles = StyleSheet.create({
   container: {
-    minHeight: '2rem',
-    marginBottom: '1rem'
+    minHeight: '2rem'
   },
   common: {
     display: 'inline-block',
@@ -49,12 +48,9 @@ export default class BuildStatus extends React.Component {
     name: React.PropTypes.string.isRequired
   };
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      status: 'loading'
-    };
-  }
+  state = {
+    status: 'loading'
+  };
 
   componentDidMount() {
     this._isMounted = true;

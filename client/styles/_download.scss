@@ -1,0 +1,94 @@
+$buildBorderRadius: 4px;
+
+span[type=button] {
+  appearance: none;
+}
+
+.build {
+  border: 2px solid black;
+  padding: 1rem;
+  border-radius: $buildBorderRadius;
+  text-align: center;
+  cursor: pointer;
+  will-change: transform, background-color;
+  transition: background-color .5s ease-out;
+  user-select: none;
+  position: relative;
+
+  h2 {
+    font-weight: normal;
+  }
+
+  p {
+    color: #333;
+  }
+
+  &.release {
+    background-color: #fafffa;
+    border-color: green;
+    color: green;
+  }
+  &.stable {
+    background-color: #fffcfa;
+    border-color: orange;
+    color: orange;
+  }
+  &.nightly {
+    background-color: #fffafa;
+    border-color: red;
+    color: red;
+  }
+
+  &.selected, &:hover {
+    border-color: black;
+    color: black;
+    background-color: #f6f6f6;
+  }
+
+  @include media-breakpoint-down(md) {
+    & {
+      margin-bottom: 1rem;
+    }
+
+    &.active {
+      display: none;
+    }
+    &.selected {
+      display: block;
+      background-color: white;
+      border-width: 0 0 2px 0 !important;
+      border-radius: 0 !important;
+    }
+  }
+
+  @include media-breakpoint-up(lg) {
+    &.selected {
+      display: block;
+      transform: translateY(20px);
+      border-bottom: 0;
+      border-radius: $buildBorderRadius $buildBorderRadius 0 0;
+      z-index: 1;
+    }
+  }
+
+}
+
+.build-config {
+  @include media-breakpoint-up(lg) {
+    background-color: #f6f6f6;
+    margin-top: 16px;
+    border: 2px solid black;
+    padding: 1rem;
+    border-radius: 0 $buildBorderRadius $buildBorderRadius $buildBorderRadius;
+  }
+
+  .script {
+    width: 100%;
+    font-size: 12px;
+    background-color: #2b2b2b;
+    color: white;
+    padding: 1rem;
+    will-change: height;
+    transition: height .5s ease-out;
+  }
+}

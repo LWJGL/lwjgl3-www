@@ -18,6 +18,7 @@ require('babel-core/register')({
   plugins: [
     ['system-import-transformer', {modules: 'common'}], // Polyfill System.import for Node.js ( V8 )
     'syntax-object-rest-spread',  // V8
+    'transform-decorators-legacy',
     'transform-async-to-generator',  // V8
     'transform-flow-strip-types',  // V8
     'transform-object-rest-spread',  // V8

@@ -1,7 +1,8 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router'
-import BuildStatus from '../../components/BuildStatus'
+import BuildConfigurator from '../../components/BuildConfigurator'
+import BuildsStore from '../../stores/BuildsStore'
 
 export default class DownloadRoute extends React.Component {
 
@@ -17,34 +18,11 @@ export default class DownloadRoute extends React.Component {
             }
           ]}
         />
-        <section className="container">
+        <section className="container p-b-2">
           <h1>Download LW<b>JGL</b> 3</h1>
-          <p>The following zip bundles include LWJGL core plus all available bindings.</p>
-          <div className="row">
-            <div className="col-md-4 col-xs-12">
-              <h2>Release</h2>
-              <hr />
-              <BuildStatus name="lwjgl_Release" />
-              <p><a className="btn btn-outline-primary" href="http://build.lwjgl.org/release/latest/lwjgl.zip">DOWNLOAD RELEASE</a></p>
-              <p>Latest official release.
-              <br /><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a></p>
-            </div>
-            <div className="col-md-4 col-xs-12">
-              <h2>Stable (newer)</h2>
-              <hr />
-              <BuildStatus name="LwjglReleases_NightlyToStable" />
-              <p><a className="btn btn-outline-primary" href="http://build.lwjgl.org/stable/lwjgl.zip">DOWNLOAD STABLE</a></p>
-              <p>Latest build that has been verified to work.</p>
-            </div>
-            <div className="col-md-4 col-xs-12">
-              <h2>Nightly (newest)</h2>
-              <hr />
-              <BuildStatus name="lwjgl_Bundle" />
-              <p><a className="btn btn-outline-primary" href="http://build.lwjgl.org/nightly/lwjgl.zip">DOWNLOAD NIGHTLY</a></p>
-              <p>Bleeding edge, possibly broken.
-              <br /><a href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a></p>
-            </div>
-          </div>
+
+          <p>Select a build to begin configuring your download:</p>
+          <BuildConfigurator store={BuildsStore} />
         </section>
 
         <div className="area-dark p-y-2">
