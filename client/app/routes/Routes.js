@@ -16,7 +16,7 @@ function route(name, getComponentWrap) {
   return {
     path: name === '/' ? undefined : name,
     getComponent(nextState, cb) {
-      getComponentWrap(nextState, (err, module) => {
+      getComponentWrap(nextState, componentModule => {
         if ( !firstRoute ) {
           if ( process.browser && process.env.NODE_ENV === 'production' ) {
             ga('send', 'pageview', `${nextState.location.pathname}${nextState.location.search}`);
@@ -33,7 +33,7 @@ function route(name, getComponentWrap) {
           }
         }
 
-        cb(null, module.default);
+        cb(null, componentModule.default);
       });
     },
     onEnter() {
@@ -48,12 +48,12 @@ export default {
   childRoutes: [{
     path: '/',
     component: App,
-    indexRoute: route('/', (s, cb) => System.import('./home').then(m => cb(null, m))),
+    indexRoute: route('/', (s, cb) => System.import('./home').then(m => cb(m))),
     childRoutes: [
-      route('download', (s, cb) => System.import('./download').then(m => cb(null, m))),
-      route('guide', (s, cb) => System.import('./guide').then(m => cb(null, m))),
-      route('source', (s, cb) => System.import('./source').then(m => cb(null, m))),
-      route('license', (s, cb) => System.import('./license').then(m => cb(null, m))),
+      route('download', (s, cb) => System.import('./download').then(m => cb(m))),
+      route('guide', (s, cb) => System.import('./guide').then(m => cb(m))),
+      route('source', (s, cb) => System.import('./source').then(m => cb(m))),
+      route('license', (s, cb) => System.import('./license').then(m => cb(m))),
     ]
   }]
 };
