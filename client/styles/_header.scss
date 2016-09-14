@@ -31,11 +31,11 @@ header {
 
   &.alt {
     position: fixed;
-    will-change: background-color, top, opacity;
-    transition: transform 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s ease-out, opacity 0.5s ease-out;
+    will-change: top, background-color, opacity;
+    transition: top 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s ease-out, opacity 0.5s ease-out;
     &.hidden {
       opacity: 0;
-      transform: translateY(-48px);
+      top: -48px;
       pointer-events: none;
     }
   }
