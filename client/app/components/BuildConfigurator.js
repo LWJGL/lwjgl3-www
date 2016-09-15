@@ -222,16 +222,15 @@ class BuildConfigurator extends React.Component {
                     <div className="col-xs-12 col-lg-4">
                       <h2 className="m-b-2 m-t-1">Bundle</h2>
                       {/*<a className="btn btn-primary btn-lg" download={`lwjgl-${store.build}.zip`} href={store.download} target="_blank">DOWNLOAD ZIP</a>*/}
-                      <a className="btn btn-primary btn-lg" href={store.download} target="_blank">DOWNLOAD ZIP</a>
+                      <a className="btn btn-xs-block btn-primary btn-lg" href={store.download} target="_blank">DOWNLOAD ZIP</a>
                     </div>
                   )
                     : (
                     <div className="col-xs-12 col-lg-6">
                       <h2 className="m-b-2 m-t-1">Snippet</h2>
                       <textarea ref="script" className="script" readOnly={true} value={store.script} wrap="off"/>
-                      <a className="btn btn-primary" download={store.filename} href={`data:${store.mime};base64,${btoa(store.script)}`}>DOWNLOAD SNIPPET</a>
-                      {' '}
-                      <button className="btn btn-primary" onClick={this.copyToClipboard}>COPY TO CLIPBOARD</button>
+                      <a className="btn btn-xs-block btn-primary" download={store.filename} href={`data:${store.mime};base64,${btoa(store.script)}`}>DOWNLOAD SNIPPET</a>
+                      <button className="btn btn-xs-block btn-primary" onClick={this.copyToClipboard}>COPY TO CLIPBOARD</button>
                     </div>
                   )
                 }
