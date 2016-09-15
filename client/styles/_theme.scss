@@ -11,18 +11,12 @@ b, strong {
   font-weight: 700;
 }
 
-// Text where links should be underlined
-.copy {
-  a {
-    text-decoration: underline;
-    &.btn {
-      text-decoration: none;
-    }
-  }
+.area-dark-secondary {
+  color: white;
 }
 
-.area-dark {
-  background-color: $brand-primary;
+.area-dark-secondary, .area-dark {
+  background-color: $body-color;
   color: white;
 
   :last-child {

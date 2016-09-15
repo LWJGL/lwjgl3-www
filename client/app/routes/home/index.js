@@ -50,7 +50,7 @@ export default class HomeRoute extends React.Component {
           </div>
         </section>
 
-        <a id="learn-more"></a>
+        <a id="learn-more" />
 
         <section className="container p-y-2">
           <h1 className="text-xs-center">What is LW<b>JGL</b> 3?</h1>
@@ -68,11 +68,10 @@ export default class HomeRoute extends React.Component {
 
               <p>LW<b>JGL</b> is open source software and freely available at no charge.</p>
 
-              <p className="text-xs-center">
-                <Link className="btn btn-lg btn-outline-primary m-y-1" to="/download">DOWNLOAD</Link>
-                <br className="hidden-sm-up" />
-                {' '}<Link className="btn btn-lg btn-outline-success" to="/guide">GET STARTED</Link>
-                {' '}<Link className="btn btn-lg btn-outline-info" to="/source">SOURCE</Link>
+              <p className="text-xs-center p-t-1">
+                <Link className="btn btn-xs-block btn-lg btn-outline-primary" to="/download">DOWNLOAD</Link>
+                <Link className="btn btn-xs-block btn-lg btn-outline-success" to="/guide">GET STARTED</Link>
+                <Link className="btn btn-xs-block btn-lg btn-outline-info" to="/source">SOURCE</Link>
               </p>
             </div>
           </div>
@@ -216,7 +215,7 @@ export default class HomeRoute extends React.Component {
 
         <section className="container p-t-2">
           <div className="row">
-            <div className="col-md-8 push-md-2 col-xs-12">
+            <div className="col-md-10 push-md-1 col-xs-12">
               <h1 className="text-xs-center">Looking for LWJGL 2?</h1>
 
               <p>
@@ -228,9 +227,8 @@ export default class HomeRoute extends React.Component {
               </p>
 
               <p className="text-xs-center">
-                <a className="btn btn-outline-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
-                &nbsp;
-                <a className="btn btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
+                <a className="btn btn-xs-block btn-outline-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
+                <a className="btn btn-xs-block btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
               </p>
 
               <p className="text-xs-center">

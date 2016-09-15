@@ -19,22 +19,19 @@ export default class SourceRoute extends React.Component {
 
           <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
           <p>
-            <a className="btn btn-success" href="https://github.com/LWJGL/lwjgl3">Github Repository</a>
-            {' '}<a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
-            {' '}<a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a>
+            <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3">Github Repository</a>
+            <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
+            <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a>
           </p>
 
           <p>LWJGL's issue tracker is also hosted on Github.</p>
-          <p><a className="btn btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a></p>
+          <p><a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a></p>
         </section>
-
-        <hr />
 
         <section className="container p-t-2">
           <h1>Build Status</h1>
           <div className="row">
             <div className="col-md-3 col-xs-12 p-y-2">
-              <hr className="hidden-md-up" />
               <h2>LW<b>JGL</b> 3</h2>
               <br />
               <h4>Linux x64</h4>
@@ -50,7 +47,6 @@ export default class SourceRoute extends React.Component {
               <BuildStatus name="lwjgl_Win32" />
             </div>
             <div className="col-md-3 col-xs-12 p-y-2">
-              <hr className="hidden-md-up" />
               <h2>GLFW</h2>
               <br />
               <h4>Linux x64</h4>
@@ -66,7 +62,6 @@ export default class SourceRoute extends React.Component {
               <BuildStatus name="glfw_Win32" />
             </div>
             <div className="col-md-3 col-xs-12 p-y-2">
-              <hr className="hidden-md-up" />
               <h2>OpenAL Soft</h2>
               <br />
               <h4>Linux x64</h4>
@@ -83,7 +78,6 @@ export default class SourceRoute extends React.Component {
             </div>
 
             <div className="col-md-3 col-xs-12 p-y-2">
-              <hr className="hidden-md-up" />
               <h2>dyncall</h2>
               <br />
               <h4>Linux x64</h4>

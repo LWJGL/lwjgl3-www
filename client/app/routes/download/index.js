@@ -30,9 +30,8 @@ export default class DownloadRoute extends React.Component {
               <h3>Build from source?</h3>
               <p>Click below if you prefer to build from source:</p>
               <p>
-                <Link className="btn btn-outline-info" to="/source">Source</Link>
-                &nbsp;
-                <a className="btn btn-outline-info" href="/guide#build-instructions">Build instructions</a>
+                <Link className="btn btn-xs-block btn-outline-info" to="/source">Source</Link>
+                <a className="btn btn-xs-block btn-outline-info" href="/guide#build-instructions">Build instructions</a>
               </p>
             </section>
         </div>
@@ -44,9 +43,8 @@ export default class DownloadRoute extends React.Component {
 
           <p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
           <p>
-            <a className="btn btn-outline-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
-            &nbsp;
-            <a className="btn btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
+            <a className="btn btn-xs-block btn-outline-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
+            <a className="btn btn-xs-block btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
           </p>
         </section>
       </main>

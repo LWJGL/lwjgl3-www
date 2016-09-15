@@ -1,0 +1,36 @@
+// Text where links should be underlined
+.copy {
+  a {
+    text-decoration: underline;
+    &.btn {
+      text-decoration: none;
+    }
+  }
+}
+
+// Expand certain elements to full-width below some breakpoints
+@mixin make-fullwidth-blocks($breakpoints: $grid-breakpoints) {
+
+  $breakpoint-counter: 0;
+  @each $breakpoint in map-keys($breakpoints) {
+    $breakpoint-counter: ($breakpoint-counter + 1);
+
+    .btn-#{$breakpoint}-block + .btn-#{$breakpoint}-block {
+      margin-left: .5rem;
+    }
+
+    @include media-breakpoint-down($breakpoint, $breakpoints) {
+      @if $breakpoint != 'xl' {
+        .btn-#{$breakpoint}-block {
+          display: block;
+        }
+        .btn-#{$breakpoint}-block + .btn-#{$breakpoint}-block {
+          margin-top: .5rem;
+          margin-left: 0;
+        }
+      }
+    }
+  }
+}
+
+@include make-fullwidth-blocks();

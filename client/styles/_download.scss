@@ -5,7 +5,7 @@ span[type=button] {
 }
 
 .build {
-  border: 2px solid black;
+  border: 2px solid $body-color;
   padding: 1rem;
   border-radius: $buildBorderRadius;
   text-align: center;
@@ -40,8 +40,8 @@ span[type=button] {
   }
 
   &.selected, &:hover {
-    border-color: black;
-    color: black;
+    border-color: $body-color;
+    color: $body-color;
     background-color: #f6f6f6;
   }
 
@@ -77,7 +77,7 @@ span[type=button] {
   @include media-breakpoint-up(lg) {
     background-color: #f6f6f6;
     margin-top: 16px;
-    border: 2px solid black;
+    border: 2px solid $body-color;
     padding: 1rem;
     border-radius: 0 $buildBorderRadius $buildBorderRadius $buildBorderRadius;
   }

@@ -19,7 +19,13 @@ export default class GuideRoute extends React.Component {
       loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/darkula.min.css');
       loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js', () => {
         codeSampleHtml = hljs.highlight('java', codeSampleHtml).value;
-        this.setState({sample: codeSampleHtml});
+        this.setState({sample: codeSampleHtml}, ()=>{
+          if ( window.location.hash === '#build-instructions' ) {
+            try {
+              document.getElementById('build-instructions').scrollIntoView();
+            } catch(err) {}
+          }
+        });
       });
       _INIT = false;
     }
@@ -75,7 +81,7 @@ export default class GuideRoute extends React.Component {
             the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>.
           </p>
 
-          <a id="build-instructions"></a>
+          <a id="build-instructions" />
           <h3>Building from source</h3>
 
           <p>
@@ -130,19 +136,13 @@ export default class GuideRoute extends React.Component {
           <p>GLFW is the preferred windowing system for LWJGL 3 applications. If you're familiar with LWJGL 2, GLFW is a replacement for the Display class and everything in the input package.</p>
           <p>Learning GLFW is easy. It has a simple, yet powerful, API and comprehensive <a href="http://www.glfw.org/docs/latest/">documentation</a>.</p>
 
-          <hr />
-
           <h2>OpenGL</h2>
           <p><a href="https://www.opengl.org/about/">OpenGL</a> is the premier environment for developing portable, interactive 2D and 3D graphics applications.</p>
           <p>OpenGL is a massive API with long history and hundreds of extensions. Learning it from scratch is no easy undertaking, but you can start from its <a href="https://www.opengl.org/documentation/">documentation</a>. The <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.</p>
 
-          <hr />
-
           <h2>OpenCL</h2>
           <p><a href="https://www.khronos.org/opencl/">OpenCL</a> is the first open, royalty-free standard for cross-platform, parallel programming of modern processors found in personal computers, servers and handheld/embedded devices. OpenCL (Open Computing Language) greatly improves speed and responsiveness for a wide spectrum of applications in numerous market categories from gaming and entertainment to scientific and medical software.</p>
           <p>Specifications for OpenCL and its extensions can be found at the <a href="https://www.khronos.org/registry/cl/">Khronos OpenCL registry</a>.</p>
-
-          <hr />
 
           <h2>OpenAL</h2>
           <p><a href="http://www.openal.org/">OpenAL</a> (for "Open Audio Library") is a software interface to audio hardware. The interface consists of a number of functions that allow a programmer to specify the objects and operations in producing high-quality audio output, specifically multichannel output of 3D arrangements of sound sources around a listener.</p>

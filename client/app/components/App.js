@@ -15,7 +15,6 @@ export default class App extends React.PureComponent {
         <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library"/>
         <Header isHome={isHomepage}/>
         {this.props.children}
-        <hr />
         <Footer />
         <Copyright />
         {/*<DevTools position={{bottom: 0, right: 20}}/>*/}
