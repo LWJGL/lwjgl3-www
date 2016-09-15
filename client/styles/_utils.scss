@@ -23,6 +23,7 @@
       @if $breakpoint != 'xl' {
         .btn-#{$breakpoint}-block {
           display: block;
+          width: 100%;
         }
         .btn-#{$breakpoint}-block + .btn-#{$breakpoint}-block {
           margin-top: .5rem;
