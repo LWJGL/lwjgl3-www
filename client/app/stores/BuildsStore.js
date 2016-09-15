@@ -61,14 +61,13 @@ class BuildsStore {
     if ( build === null || config.builds.indexOf(build) > -1 ) {
       this.build = build;
 
-      if ( this.build === 'stable' ) {
-        this.selectMode('zip');
-      }
-
-      if ( this.build === 'nightly' ) {
-        this.selectVersion(config.versions[0].join('.'));
-      } else {
-        this.selectVersion(config.versions[1].join('.'));
+      if ( build !== null ) {
+        if ( this.build === 'nightly' ) {
+          this.selectVersion(config.versions[0].join('.'));
+        } else {
+          this.selectMode('zip');
+          this.selectVersion(config.versions[1].join('.'));
+        }
       }
     } else {
       throw `${build} is not a valid build name`;
