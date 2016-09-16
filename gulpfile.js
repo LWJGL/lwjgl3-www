@@ -14,7 +14,12 @@ const production = process.env.NODE_ENV === 'production' || argv.production;
 
 function sassCompile(path) {
   return gulp.src('client/styles/' + path + '.scss')
-    .pipe(sass({sourceMap: false, outputStyle: 'compact'}).on('error', sass.logError))
+    .pipe(sass({
+      sourceMap: false,
+      outputStyle: 'compact',
+      precision: 6
+    })
+    .on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: [
         'Android 2.3',

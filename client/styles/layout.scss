@@ -15,6 +15,9 @@
 // Mixins
 @import "../../node_modules/bootstrap/scss/mixins";
 
+// Overwrite Bootstrap 4 mixins to use calc() for grids
+@import "mixins";
+
 // Reset and dependencies
 @import "../../node_modules/bootstrap/scss/normalize";
 //@import "../../node_modules/bootstrap/scss/print";

@@ -11,7 +11,6 @@ span[type=button] {
   text-align: center;
   cursor: pointer;
   will-change: transform, background-color;
-  transition: background-color .5s ease-out;
   user-select: none;
   position: relative;
 
@@ -62,6 +61,11 @@ span[type=button] {
   }
 
   @include media-breakpoint-up(lg) {
+
+    & {
+      transition: transform .083s ease-out;
+    }
+
     &.selected {
       display: block;
       transform: translateY(20px);
@@ -79,7 +83,6 @@ span[type=button] {
     margin-top: 16px;
     border: 2px solid $body-color;
     padding: 1rem;
-    border-radius: 0 $buildBorderRadius $buildBorderRadius $buildBorderRadius;
   }
 
   .script {
