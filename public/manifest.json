@@ -6,32 +6,32 @@
   "short_name": "LWJGL",
   "icons": [
     {
-      "src": "/img/ico/128x128.png",
+      "src": "/img/fav/128x128.png",
       "sizes": "128x128",
       "type": "image/png"
     },
     {
-      "src": "/img/ico/144x144.png",
+      "src": "/img/fav/144x144.png",
       "sizes": "144x144",
       "type": "image/png"
     },
     {
-      "src": "/img/ico/152x152.png",
+      "src": "/img/fav/152x152.png",
       "sizes": "152x152",
       "type": "image/png"
     },
     {
-      "src": "/img/ico/192x192.png",
+      "src": "/img/fav/192x192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "/img/ico/256x256.png",
+      "src": "/img/fav/256x256.png",
       "sizes": "256x256",
       "type": "image/png"
     },
     {
-        "src": "/img/ico/512x512.png",
+        "src": "/img/fav/512x512.png",
         "sizes": "512x512",
         "type": "image/png"
     }
