@@ -57,8 +57,12 @@ class BuildsStore {
     this.selectNatives(getDefaultNative());
   }
 
+  get config() {
+    return config;
+  }
+
   @action selectBuild(build) {
-    if ( build === null || config.builds.indexOf(build) > -1 ) {
+    if ( build === null || config.builds[build] !== undefined ) {
       this.build = build;
 
       if ( build !== null ) {

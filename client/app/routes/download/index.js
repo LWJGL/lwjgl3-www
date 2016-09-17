@@ -2,7 +2,6 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router'
 import BuildConfigurator from '../../components/BuildConfigurator'
-import BuildsStore from '../../stores/BuildsStore'
 
 export default class DownloadRoute extends React.Component {
 
@@ -22,7 +21,7 @@ export default class DownloadRoute extends React.Component {
           <h1>Download LW<b>JGL</b> 3</h1>
 
           <p>Select a build to begin configuring your download:</p>
-          <BuildConfigurator store={BuildsStore} />
+          <BuildConfigurator />
         </section>
 
         <div className="area-dark p-y-2">

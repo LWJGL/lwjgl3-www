@@ -1,27 +1,24 @@
 import React from 'react'
-import classnames from 'classnames'
-import {observer} from 'mobx-react';
-import RadioGroup from './RadioGroup'
-import Radio from './Radio'
-import Checkbox from './Checkbox'
+// import classnames from 'classnames'
+// import RadioGroup from './RadioGroup'
+// import Radio from './Radio'
+// import Checkbox from './Checkbox'
 
-import BuildStatus from './BuildStatus'
-import config from '../../../common/BuildConfig'
+import BuildsStore from '../stores/BuildsStore'
+import BuildType from './BuildType'
 
-@observer
+// import config from '../../../common/BuildConfig'
+// import {observer} from 'mobx-react';
+
+// @observer
 class BuildConfigurator extends React.Component {
 
-  static propTypes = {
-    store: React.PropTypes.object.isRequired
-  };
-
-  state = {
-    store: null
-  };
+  // static propTypes = {
+  //   store: React.PropTypes.object.isRequired
+  // };
 
   constructor(props) {
     super(props);
-    this.selectBuild = this.selectBuild.bind(this);
     this.selectMode = this.selectMode.bind(this);
     this.selectVersion = this.selectVersion.bind(this);
     this.selectPreset = this.selectPreset.bind(this);
@@ -29,14 +26,6 @@ class BuildConfigurator extends React.Component {
     this.selectNatives = this.selectNatives.bind(this);
     this.toggleArtifact = this.toggleArtifact.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
-  }
-
-  selectBuild(e) {
-    let build = e.currentTarget.getAttribute('data-build');
-    if ( this.props.store.build === build ) {
-      build = null;
-    }
-    this.props.store.selectBuild(build);
   }
 
   selectMode(value) {
@@ -70,11 +59,43 @@ class BuildConfigurator extends React.Component {
   }
 
   render() {
-    const store = this.props.store;
-    const ZIPDISABLE = store.mode === 'zip';
-    const MODEDISABLE = store.build !== 'nightly';
-    const ACTIVE = store.build !== null;
+    // const store = this.props.store;
+    // const ZIPDISABLE = store.mode === 'zip';
+    // const MODEDISABLE = store.build !== 'nightly';
+    // const ACTIVE = store.build !== null;
 
+    return (
+      <div>
+        <div className="row">
+          <div className="col-lg-4 col-xs-12">
+            <BuildType build="release" store={BuildsStore} />
+          </div>
+          <div className="col-lg-4 col-xs-12">
+            <BuildType build="stable" store={BuildsStore} />
+          </div>
+          <div className="col-lg-4 col-xs-12">
+            <BuildType build="nightly" store={BuildsStore} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-xs-12">
+            <div className="build-config">
+              <div className="row">
+                <div className="col-xs-12 col-lg-3">
+                  <h2 className="m-y-1">Mode</h2>
+
+                  <h2 className="m-b-1">Presets</h2>
+
+                  <h2 className="m-b-1">Options</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+
+    /*
     return (
       <div>
         <div className="row">
@@ -221,7 +242,6 @@ class BuildConfigurator extends React.Component {
                     ? (
                     <div className="col-xs-12 col-lg-4">
                       <h2 className="m-b-2 m-t-1">Bundle</h2>
-                      {/*<a className="btn btn-primary btn-lg" download={`lwjgl-${store.build}.zip`} href={store.download} target="_blank">DOWNLOAD ZIP</a>*/}
                       <a className="btn btn-xs-block btn-primary btn-lg" href={store.download} target="_blank">DOWNLOAD ZIP</a>
                     </div>
                   )
@@ -242,6 +262,8 @@ class BuildConfigurator extends React.Component {
         </div>
       </div>
     );
+
+    */
   }
 
 }

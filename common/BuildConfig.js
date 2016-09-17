@@ -10,14 +10,30 @@ const NATIVE_ALL = [NATIVE_MAC, NATIVE_WIN, NATIVE_LINUX];
 
 const config = {
 
-  "builds": BUILD_ALL,
-
   "natives": NATIVE_ALL,
 
   "versions": [
     [3, 0, 1],
     [3, 0, 0],
   ],
+
+  "builds": {
+    [BUILD_RELEASE]: {
+      title: 'Release',
+      description: 'Latest official release',
+      job: 'lwjgl_Release',
+    },
+    [BUILD_STABLE]: {
+      title: 'Stable',
+      description: 'Beta quality, verified to work',
+      job: 'LwjglReleases_NightlyToStable',
+    },
+    [BUILD_NIGHTLY]: {
+      title: 'Nightly',
+      description: 'Bleeding edge, possibly broken',
+      job: 'lwjgl_Bundle',
+    },
+  },
 
   "artifacts": [
     {
