@@ -41,8 +41,8 @@ export default class Footer extends React.PureComponent {
               <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external">
                 <img
                   className="m-y-1" width={143} height={30} alt="WebHotelier"
-                  src="https://d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo-inv@x1.png"
-                  srcSet="https://d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo-inv@x1.png 1x,https://d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo-inv@x2.png 2x,https://d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo-inv@x3.png 3x,https://d2g0ezo1t7nqa0.cloudfront.net/img/webhotelier-logo-inv@x4.png 4x"
+                  src="/img/webhotelier-logo-inv@x1.png"
+                  srcSet="/img/webhotelier-logo-inv@x1.png 1x,/img/webhotelier-logo-inv@x2.png 2x,/img/webhotelier-logo-inv@x3.png 3x,/img/webhotelier-logo-inv@x4.png 4x"
                 />
               </a>
             </div>

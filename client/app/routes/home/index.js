@@ -36,9 +36,9 @@ export default class HomeRoute extends React.Component {
         <section ref={(el) => this.container = el} className={css(styles.videoContainer)}>
           {
             process.browser ?
-              <video className={css(styles.video, styles.full)} poster="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps-720.jpg" preload="auto" muted loop autoPlay aria-hidden={true} role="presentation">
-                <source type="video/webm" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.webm" />
-                <source type="video/mp4" src="https://d2g0ezo1t7nqa0.cloudfront.net/video/manfps.mp4" />
+              <video className={css(styles.video, styles.full)} poster="/img/manfps-720.jpg" preload="auto" muted loop autoPlay aria-hidden={true} role="presentation">
+                <source type="video/webm" src="/img/manfps.webm" />
+                <source type="video/mp4" src="/img/manfps.mp4" />
               </video>
               : null
           }
@@ -132,7 +132,7 @@ export default class HomeRoute extends React.Component {
                   GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.</p>
               </div>
               <div className="col-md-4 col-xs-12 p-y-1">
-                <p><img height={60} src="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x1.png" srcSet="//d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x1.png 1x, //d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x2.png 2x, //d2g0ezo1t7nqa0.cloudfront.net/img/opencl@x4.png 4x" alt="OpenCL" /></p>
+                <p><img height={60} src="/img/opencl@x1.png" srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x" alt="OpenCL" /></p>
                 <h3>OpenCL<sup>TM</sup> Bindings</h3>
                 <p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
                   OpenCL versions (including the latest 2.1 specification) and many useful extensions.</p>
