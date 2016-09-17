@@ -6,6 +6,7 @@ html(lang="en-US")
   head
     meta(charset="utf-8")
     link(rel="dns-prefetch" href="//fonts.googleapis.com")
+    link(rel="preload" as="style" href=`/css/${css}`)
     link(rel="preload" as="script" href=`/js/${bundle}`)
     meta(name="viewport" content="width=device-width,initial-scale=1,user-scalable=no")
     meta(name="theme-color" content="#1b2426")
@@ -30,14 +31,9 @@ html(lang="en-US")
 
     if ( head )
       !=head.meta
-
       !=head.link
 
-    if ( production )
-      style
-        !=css
-    else
-      link(rel="stylesheet" href="/css/layout.css")
+    link(rel="stylesheet" href=`/css/${css}`)
 
     if ( aphrodite && aphrodite.content.length )
       style(data-aphrodite="")!=aphrodite.content

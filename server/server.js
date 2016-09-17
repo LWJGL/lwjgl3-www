@@ -71,12 +71,12 @@ if ( app.locals.development ) {
   app.use(require('webpack-hot-middleware')(webpackCompiler));
 
   app.locals.bundle = 'bundle.js';
-  app.locals.css = '';
+  app.locals.css = 'layout.css';
 
 } else {
 
   app.locals.bundle = require('../manifest-js.json').assetsByChunkName.main;
-  app.locals.css = fs.readFileSync(path.join(__dirname, '../public/css/' + require('../manifest-css.json')['layout.css']), {encoding: 'utf8'})
+  app.locals.css = require('../manifest-css.json')['layout.css'];
 
 }
 
