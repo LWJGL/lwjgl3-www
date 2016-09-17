@@ -1,11 +1,11 @@
-const track = function() {
-  track.q.push(arguments);
-};
-
-track.q = [];
-track.l = 1 * new Date();
-
 if ( process.browser && process.env.NODE_ENV === 'production' ) {
+  const track = function() {
+    track.q.push(arguments);
+  };
+
+  track.q = [];
+  track.l = 1 * new Date();
+
   window.ga = track;
   window.GoogleAnalyticsObject = 'ga';
 
@@ -18,5 +18,8 @@ if ( process.browser && process.env.NODE_ENV === 'production' ) {
   script.async = true;
   script.src ='https://www.google-analytics.com/analytics.js';
 
-  (document.head||document.body).appendChild(script);
+  setTimeout(function(){
+    // delay execution so that route JS is scheduled for download first
+    (document.head||document.body).appendChild(script);
+  }, 1);
 }

@@ -5,9 +5,13 @@ html(lang="en-US")
 
   head
     meta(charset="utf-8")
+    if ( head && head.title )
+      !=head.title
+    else
+      title LWJGL - Lightweight Java Game Library
     link(rel="dns-prefetch" href="//fonts.googleapis.com")
-    link(rel="preload" as="style" href=`/css/${css}`)
     link(rel="preload" as="script" href=`/js/${bundle}`)
+    link(rel="stylesheet" href=`/css/${css}`)
     meta(name="viewport" content="width=device-width,initial-scale=1,user-scalable=no")
     meta(name="theme-color" content="#1b2426")
     meta(name="application-name" content="LWJGL")
@@ -24,16 +28,9 @@ html(lang="en-US")
     link(rel="icon" type="image/png" href="/img/fav/favicon-32x32.png" sizes="32x32")
     link(rel="manifest" href="/manifest.json")
 
-    if ( head && head.title )
-      !=head.title
-    else
-      title LWJGL - Lightweight Java Game Library
-
     if ( head )
       !=head.meta
       !=head.link
-
-    link(rel="stylesheet" href=`/css/${css}`)
 
     if ( aphrodite && aphrodite.content.length )
       style(data-aphrodite="")!=aphrodite.content
