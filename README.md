@@ -2,32 +2,23 @@
 
 The website for LWJGL 3.
 
-### Known Issues
-
-- react-transform-hmr is being deprecated. Use [React Hot Loader 3](https://github.com/gaearon/react-hot-loader)
-  instead. Currently it is not possible to HMR lazy routes that are code split by webpack. Waiting for a solution.
-- We should probably support Node.js LTS ( currently v4.x, requires additional babel plugins ).
-- Document Let's Encrypt certificate issuing/update process.
-
 ### Production Requirements
 
 - [NGINX](http://nginx.org/)
 - [Node.js & NPM](https://nodejs.org/en/)
 - [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
-- [Let's Encrypt CLI](https://letsencrypt.org/)
 
 ### Dependencies
 
-Static assets are loaded from LWJGL's CDN.
-
-SVG's are served from NGINX and gzip'd on the fly.
+Static assets are loaded from LWJGL's CDN ( AWS CloudFront ).
 
 We use [Google Analytics](http://www.google.com/analytics) for tracking.
 
 Build status icons are loaded directly from travis-ci.org.
 
-A username account to LWJGL's TeamCity server is required for loading Windows build statuses.
-Node proxies requests to (http://teamcity.lwjgl.org) to avoid SSL issues.
+A username account to LWJGL's TeamCity server is required for loading
+Windows build statuses. Node proxies requests to
+[teamcity.lwjgl.org](http://teamcity.lwjgl.org) to avoid SSL issues.
 
 Other LWJGL subdomains:
 
@@ -60,7 +51,8 @@ For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
 npm -g i nodemon
 ```
 
-A minimal NGINX configuration for development ( w/ Hot Module Reloading ) can look like this:
+A minimal NGINX configuration for development ( w/ Hot Module Reloading )
+can look like this:
 
 ```Nginx
 server {
@@ -79,6 +71,28 @@ server {
     proxy_buffering off;
     proxy_cache off;
   }
+  
+  location /img {
+    proxy_buffering off;
+    proxy_redirect off;
+    proxy_intercept_errors off;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host cdn.lwjgl.org.s3.amazonaws.com;
+    proxy_pass http://cdn.lwjgl.org.s3.amazonaws.com;
+    proxy_pass_request_body off;
+  }
+
+  location /svg {
+    proxy_buffering off;
+    proxy_redirect off;
+    proxy_intercept_errors off;
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+    proxy_set_header Host cdn.lwjgl.org.s3.amazonaws.com;
+    proxy_pass http://cdn.lwjgl.org.s3.amazonaws.com;
+    proxy_pass_request_body off;
+  }
 
   location / {
     proxy_buffering off;
@@ -93,14 +107,18 @@ server {
 }
 ```
 
-For avoiding issues with Strict-Transport-Security add the following rules in your host file or your proxy ( e.g. Fiddler )
-and use any of the following host names to test locally:
+For avoiding issues with Strict-Transport-Security add the following
+rules in your host file or your proxy ( e.g. Fiddler ) and use any of the
+following host names to test locally:
 
 ```
 127.0.0.1 dev.lwjgl.org
 127.0.0.1 www.lwjgl.dev
 127.0.0.1 www.lwjgl.local
 ```
+
+Alternatively a custom SSL certificate may be issued and installed on your
+local NGINX.
 
 ### Build/running in development
 
@@ -110,7 +128,8 @@ npm styles
 npm start
 ```
 
-Instead of just starting the server, we can monitor for changes and auto-restart with nodemon:
+Instead of just starting the server, we can monitor for changes and
+auto-restart with nodemon:
 
 ```bash
 npm run watch
@@ -128,52 +147,24 @@ npm styles-watch
 
 Make sure you have [gzip compression](http://nginx.org/en/docs/http/ngx_http_gzip_module.html) enabled.
 
-Below you will find our current server configuration. Some rewrites ensure we don't break links for the old site.
+Below you will find our current server configuration. Some rewrites ensure
+we don't break links for the old site.
 
 ```Nginx
 server {
   listen 80;
   server_name
     lwjgl.org
-    www.lwjgl.org
     lwjgl.com
     www.lwjgl.com;
-
-  location ~ ^/\.well-known\/acme-challenge/ {
-    root /srv/acme-challenge;
-    try_files $uri /$1;
-  }
-
-  location / {
-    return 301 https://www.lwjgl.org$request_uri;
-  }
-}
-
-server {
-  listen 443 ssl http2;
-  server_name lwjgl.org;
-
-  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
-  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_stapling on;
-  ssl_stapling_verify on;
-  add_header Strict-Transport-Security "max-age=31536000; preload";
 
   return 301 https://www.lwjgl.org$request_uri;
 }
 
 server {
-  listen 443 ssl http2;
+  listen 80;
   server_name www.lwjgl.org;
 
-  ssl_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_certificate_key /etc/letsencrypt/live/www.lwjgl.org/privkey.pem;
-  ssl_trusted_certificate /etc/letsencrypt/live/www.lwjgl.org/fullchain.pem;
-  ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
-  ssl_stapling on;
-  ssl_stapling_verify on;
   add_header Strict-Transport-Security "max-age=31536000; preload";
 
   location = /projects.php {
@@ -246,7 +237,8 @@ pm2 save
 
 ### Run in production with forever
 
-Place a JSON file named forever.json in the root folder with the following contents:
+Place a JSON file named forever.json in the root folder with the
+following contents:
 
 ```json
 {
