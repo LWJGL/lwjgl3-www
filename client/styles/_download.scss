@@ -68,7 +68,7 @@ span[type=button] {
 
     &.selected {
       display: block;
-      transform: translateY(20px);
+      transform: translateY(1.25rem);
       border-bottom: 0;
       border-radius: $buildBorderRadius $buildBorderRadius 0 0;
       z-index: 1;
@@ -80,13 +80,14 @@ span[type=button] {
 .build-config {
   @include media-breakpoint-up(lg) {
     background-color: #f6f6f6;
-    margin-top: 16px;
+    margin-top: 1rem;
     border: 2px solid $body-color;
     padding: 1rem;
   }
 
   .script {
     width: 100%;
+    resize: none;
     font-size: 12px;
     background-color: #2b2b2b;
     color: white;

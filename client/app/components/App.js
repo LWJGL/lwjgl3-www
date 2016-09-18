@@ -17,7 +17,7 @@ export default class App extends React.PureComponent {
         {this.props.children}
         <Footer />
         <Copyright />
-        {/*<DevTools position={{bottom: 0, right: 20}}/>*/}
+        {/*<DevTools position={{bottom: 0, right: 20}} highlightTimeout={1000} />*/}
       </div>
     )
   }
