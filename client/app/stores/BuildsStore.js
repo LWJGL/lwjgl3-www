@@ -32,12 +32,10 @@ function getDefaultNative() {
 
 class BuildsStore {
   @observable build = null;
-  // @observable build = 'release';
   @observable visible = {...presets.all};
   @observable checked = {...presets.all};
   @observable version = config.versions[1].join('.');
   @observable mode = 'zip';
-  // @observable mode = 'gradle';
   @observable preset = 'all';
   @observable language = 'groovy';
   @observable natives = 'windows';
@@ -48,12 +46,6 @@ class BuildsStore {
   @observable descriptions = false;
 
   constructor() {
-    this.toggleDescriptions = this.toggleDescriptions.bind(this);
-    this.toggleSource = this.toggleSource.bind(this);
-    this.toggleJavadoc = this.toggleJavadoc.bind(this);
-    this.toggleCompact = this.toggleCompact.bind(this);
-    this.toggleHardcoded = this.toggleHardcoded.bind(this);
-
     this.selectNatives(getDefaultNative());
   }
 
@@ -62,20 +54,106 @@ class BuildsStore {
   }
 
   @action selectBuild(build) {
-    if ( build === null || config.builds[build] !== undefined ) {
-      this.build = build;
+    this.build = build;
 
-      if ( build !== null ) {
-        if ( this.build === 'nightly' ) {
-          this.selectVersion(config.versions[0].join('.'));
-        } else {
-          this.selectMode('zip');
-          this.selectVersion(config.versions[1].join('.'));
-        }
+    if ( build !== null ) {
+      if ( this.build === 'nightly' ) {
+        this.selectVersion(config.versions[0].join('.'));
+      } else {
+        this.selectMode('zip');
+        this.selectVersion(config.versions[1].join('.'));
       }
-    } else {
-      throw `${build} is not a valid build name`;
     }
+  }
+
+  @action setOption(field, value) {
+    switch (field) {
+      case 'mode':
+        this.selectMode(value);
+        break;
+      case 'preset':
+        this.selectPreset(value);
+        break;
+      case 'language':
+        this.selectLanguage(value);
+        break;
+      case 'natives':
+        this.selectNatives(value);
+        break;
+      case 'descriptions':
+      case 'source':
+      case 'javadoc':
+      case 'compact':
+      case 'hardcoded':
+        this[field] = !this[field];
+        break;
+    }
+  }
+
+  getOptions(field) {
+    switch (field) {
+      case 'mode':
+        return this.getOptionsMode();
+      case 'preset':
+        return this.getOptionsPreset();
+      case 'language':
+        return this.getOptionsLanguage();
+      case 'natives':
+        return this.getOptionsNatives();
+      case 'version':
+        return this.getOptionsVersion();
+      case 'descriptions':
+        return {
+          label: 'Show descriptions',
+          hidden: false,
+          disabled: false,
+        };
+      case 'source':
+        return {
+          label: 'Include source',
+          hidden: this.mode !== 'zip',
+          disabled: true,
+        };
+      case 'javadoc':
+        return {
+          label: 'Show descriptions',
+          hidden: this.mode !== 'zip',
+          disabled: true,
+        };
+      case 'compact':
+        return {
+          label: 'Compact Mode',
+          hidden: this.mode !== 'maven',
+          disabled: false,
+        };
+      case 'hardcoded':
+        return {
+          label: 'Do not use variables',
+          hidden: this.mode === 'zip',
+          disabled: false,
+        };
+    }
+  }
+
+  getOptionsMode() {
+    let notNightly = this.build !== 'nightly';
+    return [
+      {
+        value: 'zip',
+        label: 'ZIP Bundle',
+        disabled: false,
+      },
+      {
+        value: 'maven',
+        label: 'Maven',
+        disabled: notNightly,
+      },
+      {
+        value: 'gradle',
+        label: 'Gradle',
+        disabled: notNightly,
+      },
+    ];
   }
 
   @action selectMode(mode) {
@@ -85,9 +163,45 @@ class BuildsStore {
     }
   }
 
-  @action selectVersion(version) {
-    // TODO: Re-enable or hide deprecated artifacts
-    this.version = version;
+  getOptionsPreset() {
+    let ZIPMODE = this.mode === 'zip';
+    return [
+      {
+        value: 'none',
+        label: 'None',
+        disabled: ZIPMODE,
+      },
+      {
+        value: 'all',
+        label: 'Everything',
+        disabled: ZIPMODE,
+      },
+      {
+        value: 'getting-started',
+        label: 'Getting Started',
+        disabled: ZIPMODE,
+      },
+      {
+        value: 'minimal-opengl',
+        label: 'Minimal OpenGL',
+        disabled: ZIPMODE,
+      },
+      {
+        value: 'minimal-opengles',
+        label: 'Minimal OpenGL ES',
+        disabled: ZIPMODE,
+      },
+      {
+        value: 'minimal-vulkan',
+        label: 'Minimal Vulkan',
+        disabled: ZIPMODE,
+      },
+      {
+        value: 'custom',
+        label: 'Custom',
+        disabled: ZIPMODE,
+      },
+    ]
   }
 
   @action selectPreset(preset) {
@@ -105,6 +219,32 @@ class BuildsStore {
     }
   }
 
+  getOptionsVersion() {
+    return config.versions.map(version => {
+      let vs = version.join('.');
+      return {
+        value: vs,
+        label: vs,
+        disabled: version[2] > 0 || this.build === 'nightly',
+      };
+    });
+  }
+
+  @action selectVersion(version) {
+    // TODO: Re-enable or hide deprecated artifacts
+    this.version = version;
+  }
+
+  getArtifactOptions(name) {
+    const artifact = config.artifacts[config.index[name]];
+
+    return {
+      label: artifact.name,
+      value: artifact.id,
+      disabled: this.mode === 'zip' || this.visible[artifact.id] === false
+    };
+  }
+
   @action toggleArtifact(item) {
     if ( item === 'lwjgl' ) {
       return;
@@ -115,8 +255,43 @@ class BuildsStore {
     this.checked[item] = !this.checked[item];
   }
 
+  getOptionsLanguage() {
+    return [
+      {
+        value: 'groovy',
+        label: 'Groovy',
+        disabled: false,
+      },
+      {
+        value: 'kotlin',
+        label: 'Kotlin',
+        disabled: true,
+      },
+    ]
+  }
+
   @action selectLanguage(language) {
     this.language = language;
+  }
+
+  getOptionsNatives() {
+    return [
+      {
+        value: 'windows',
+        label: 'Windows',
+        disabled: false,
+      },
+      {
+        value: 'macos',
+        label: 'Mac OS',
+        disabled: false,
+      },
+      {
+        value: 'linux',
+        label: 'Linux',
+        disabled: false,
+      },
+    ];
   }
 
   @action selectNatives(natives) {
@@ -130,26 +305,6 @@ class BuildsStore {
         this.visible[artifact.id] = true;
       }
     });
-  }
-
-  @action toggleDescriptions() {
-    this.descriptions = !this.descriptions;
-  }
-
-  @action toggleSource() {
-    this.source = !this.source;
-  }
-
-  @action toggleJavadoc() {
-    this.javadoc = !this.javadoc;
-  }
-
-  @action toggleCompact() {
-    this.compact = !this.compact;
-  }
-
-  @action toggleHardcoded() {
-    this.hardcoded = !this.hardcoded;
   }
 
   @computed get download() {
@@ -196,7 +351,7 @@ class BuildsStore {
       }
 
       if ( this.build !== "release" ) {
-      script += `<repositories>
+        script += `<repositories>
 \t<!-- Add this repository to your Maven script -->
 \t<repository>
 \t\t<id>sonatype-snapshots</id>
@@ -211,7 +366,7 @@ class BuildsStore {
       script += `<dependencies>
 \t<!-- LWJGL Dependencies START -->`;
 
-      for ( let binding in this.checked ) {
+      for (let binding in this.checked) {
         if ( this.checked[binding] ) {
           script += `\n\t<dependency>${nl}<groupId>org.lwjgl</groupId>${nl}<artifactId>${binding}</artifactId>${nl}<version>${v}</version>${nle}</dependency>`
         }
@@ -219,7 +374,7 @@ class BuildsStore {
 
       script += '\n';
 
-      for ( let binding in this.checked ) {
+      for (let binding in this.checked) {
         if ( this.checked[binding] && config.artifacts[config.index[binding]].natives !== undefined ) {
           script += `\n\t<dependency>${nl}<groupId>org.lwjgl</groupId>${nl}<artifactId>${binding}</artifactId>${nl}<version>${v}</version>${nl}<classifier>${n}</classifier>${nl}<scope>runtime</scope>${nle}</dependency>`
         }
@@ -250,7 +405,7 @@ project.ext.lwjglNatives = "natives-${this.natives}"
       script += `dependencies {
 \t// LWJGL dependencies START`;
 
-      for ( let binding in this.checked ) {
+      for (let binding in this.checked) {
         if ( this.checked[binding] ) {
           script += `\n\tcompile "org.lwjgl:${binding}:${v}"`
         }
@@ -258,7 +413,7 @@ project.ext.lwjglNatives = "natives-${this.natives}"
 
       script += '\n';
 
-      for ( let binding in this.checked ) {
+      for (let binding in this.checked) {
         if ( this.checked[binding] && config.artifacts[config.index[binding]].natives !== undefined ) {
           script += `\n\truntime "org.lwjgl:${binding}:${v}:${n}"`;
         }
@@ -268,13 +423,6 @@ project.ext.lwjglNatives = "natives-${this.natives}"
 \t// LWJGL dependencies END
 }`;
     }
-
-    setTimeout(function(){
-      const textarea = document.querySelector('textarea');
-      if ( textarea ) {
-        textarea.style.height = `${Math.min((textarea.value.match(/\n/g).length + 1) * 20, 700)}px`;
-      }
-    }, 100);
 
     return script;
   }
