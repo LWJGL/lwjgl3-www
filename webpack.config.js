@@ -79,6 +79,7 @@ const config = {
   entry: {
     main: [
       'babel-polyfill',
+      'whatwg-fetch',
       path.resolve(__dirname, 'client/app/main.js')
     ]
   },
@@ -96,11 +97,6 @@ const config = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
-    }),
-
-    // Fetch Polyfill
-    new webpack.ProvidePlugin({
-      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
     }),
   ]
 };

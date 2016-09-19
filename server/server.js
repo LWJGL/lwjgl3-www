@@ -1,19 +1,18 @@
-
 // Server
 import path from 'path'
 import express from 'express'
 import favicon from 'serve-favicon'
 import config from '../config'
-import { argv } from 'yargs'
+import {argv} from 'yargs'
 import chalk from 'chalk'
 
 // Server-side rendering
 import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
+import {renderToString} from 'react-dom/server'
+import {match, RouterContext} from 'react-router'
 import Routes from '../client/app/routes/Routes'
 import Helmet from 'react-helmet'
-import { StyleSheetServer } from 'aphrodite/no-important'
+import {StyleSheetServer} from 'aphrodite/no-important'
 
 // For proxying requests to TeamCity
 import request from 'request';
@@ -113,12 +112,12 @@ app.get('/teamcity', (req, res, next) => {
     },
     (error, response, data) => {
       if ( error ) {
-        res.status(500).json({error:error.message});
+        res.status(500).json({error: error.message});
         return;
       }
 
       if ( response.statusCode !== 200 ) {
-        res.status(response.statusCode).json({error:'Invalid response'});
+        res.status(response.statusCode).json({error: 'Invalid response'});
         return;
       }
 
@@ -128,21 +127,25 @@ app.get('/teamcity', (req, res, next) => {
 });
 
 app.get('*', (req, res, next) => {
-  match({ routes: Routes, location: req.url }, (error, redirectLocation, renderProps) => {
-    if (error) {
+  match({routes: Routes, location: req.url}, (error, redirectLocation, renderProps) => {
+    if ( error ) {
 
       res.status(500).render('500', {
         errorMsg: error.message
       });
 
-    } else if (redirectLocation) {
+    } else if ( redirectLocation ) {
 
       res.redirect(302, redirectLocation.pathname + redirectLocation.search)
 
-    } else if (renderProps) {
+    } else if ( renderProps ) {
 
       // https://github.com/Khan/aphrodite
-      const {html, css} = StyleSheetServer.renderStatic(() => renderToString(React.createElement(RouterContext, renderProps)));
+      const {html, css} = StyleSheetServer.renderStatic(() =>
+        renderToString(
+          <RouterContext {...renderProps} />
+        )
+      );
 
       // https://github.com/nfl/react-helmet#server-usage
       const head = Helmet.rewind();
@@ -164,8 +167,8 @@ app.get('*', (req, res, next) => {
 
 app.use((req, res, next) => {
   res.status(404);
-  if (req.accepts('html')) return res.render('404');
-  if (req.accepts('json')) return res.send({error: 'Not found'});
+  if ( req.accepts('html') ) return res.render('404');
+  if ( req.accepts('json') ) return res.send({error: 'Not found'});
   res.type('txt').send('Not found');
 });
 
@@ -174,7 +177,7 @@ app.use((err, req, res, next) => {
 
   // HTML
   if ( req.accepts('html') ) {
-    return res.render('500', {error:err});
+    return res.render('500', {error: err});
   }
 
   // JSON
@@ -187,13 +190,13 @@ app.use((err, req, res, next) => {
           errorResponse[key] = err[key];
         });
 
-        return res.json({error:errorResponse});
+        return res.json({error: errorResponse});
       } else {
         // Only keep message in production because Error() may contain sensitive information
-        return res.json({error:{message:err.message}});
+        return res.json({error: {message: err.message}});
       }
     } else {
-      return res.send({error:err});
+      return res.send({error: err});
     }
   }
 
@@ -232,7 +235,7 @@ function shutdown(code) {
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
 
-process.on('uncaughtException', function(err) {
+process.on('uncaughtException', function (err) {
   console.error(err.stack);
   shutdown(1);
 });
