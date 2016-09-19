@@ -4,7 +4,6 @@ import path from 'path'
 import express from 'express'
 import favicon from 'serve-favicon'
 import config from '../config'
-import fs from 'fs'
 import { argv } from 'yargs'
 import chalk from 'chalk'
 
@@ -55,20 +54,23 @@ app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 if ( app.locals.development ) {
 
-  const logger = require('morgan');
-
-  app.use(logger('dev'));
-
   const webpack = require('webpack');
   const webpackConfig = require('../webpack.config');
   const webpackCompiler = webpack(webpackConfig);
 
   app.use(require('webpack-dev-middleware')(webpackCompiler, {
     noInfo: true,
-    publicPath: webpackConfig.output.publicPath
+    publicPath: webpackConfig.output.publicPath,
+    stats: {
+      colors: true,
+      reasons: false,
+    }
   }));
 
-  app.use(require('webpack-hot-middleware')(webpackCompiler));
+  app.use(require('webpack-hot-middleware')(webpackCompiler, {
+    path: '/__webpack_hmr',
+    heartbeat: 10 * 1000,
+  }));
 
   app.locals.bundle = 'bundle.js';
   app.locals.css = 'layout.css';

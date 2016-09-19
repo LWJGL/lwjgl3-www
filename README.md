@@ -62,15 +62,6 @@ server {
     dev.lwjgl.org
     www.lwjgl.dev
     www.lwjgl.local;
-
-  location = /__webpack_hmr {
-    proxy_pass http://127.0.0.1:8080;
-    proxy_set_header Connection '';
-    proxy_http_version 1.1;
-    chunked_transfer_encoding off;
-    proxy_buffering off;
-    proxy_cache off;
-  }
   
   location /img {
     proxy_buffering off;
