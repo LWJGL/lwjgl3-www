@@ -21,7 +21,9 @@ class ControlledPanel extends React.Component {
     const { visible, children, store, getClassName, ...rest } = this.props;
 
     if ( !visible(store) ) {
-      return null;
+      rest.style = {
+        display: 'none'
+      };
     }
 
     if ( typeof getClassName === 'function' ) {
