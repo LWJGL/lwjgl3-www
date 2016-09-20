@@ -2,7 +2,6 @@
 import path from 'path'
 import express from 'express'
 import favicon from 'serve-favicon'
-import config from '../config'
 import {argv} from 'yargs'
 import chalk from 'chalk'
 
@@ -23,6 +22,7 @@ import request from 'request';
 
 const PRODUCT = 'lwjgl.org';
 const app = module.exports = express();
+const config = require('../config.json');
 
 app.set('port', config.server.port);
 app.set('case sensitive routing', true);
@@ -76,8 +76,8 @@ if ( app.locals.development ) {
 
 } else {
 
-  app.locals.bundle = require('../manifest-js.json').assetsByChunkName.main;
-  app.locals.css = require('../manifest-css.json')['layout.css'];
+  app.locals.bundle = config.manifest.js;
+  app.locals.css = config.manifest.css;
 
 }
 

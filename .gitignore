@@ -8,7 +8,7 @@
 /npm-debug*
 
 # Configuration files
-/config.js
+/config.json
 /forever.json
 
 # Generated files

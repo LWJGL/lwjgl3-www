@@ -29,10 +29,10 @@ Other LWJGL subdomains:
 
 ### App Configuration
 
-Place a .js file in the root directory named config.js
+Place a JSON file in the root directory named config.json
 
-```JavaScript
-export default {
+```json
+{
   "server": {
     "port": 8080
   },

@@ -88,6 +88,7 @@
     "mobx-react-devtools": "4.2.6",
     "moment": "2.15.0",
     "nprogress": "0.2.0",
+    "optimize-js": "1.0.1",
     "pug": "2.0.0-beta6",
     "react": "15.3.2",
     "react-dom": "15.3.2",
@@ -114,7 +115,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "watch": "nodemon --watch server --exec npm -s start",
+    "watch": "nodemon --watch server --exec node server",
+    "process-manifest": "node ./server/process-manifest.js",
     "js-build": "cross-env NODE_ENV=development webpack --progress --color",
     "js-production": "cross-env NODE_ENV=production webpack --progress --color --json > manifest-js.json",
     "gulp": "gulp",
@@ -122,7 +124,7 @@
     "styles-watch": "gulp styles styles-watch",
     "styles-production": "gulp styles --production && gulp styles-manifest",
     "build": "npm -s run styles && npm -s run js-build",
-    "production": "npm -s run styles-production && npm -s run js-production",
+    "production": "npm -s run styles-production && npm -s run js-production && npm -s run process-manifest",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   }
