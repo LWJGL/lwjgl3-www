@@ -14,21 +14,30 @@ if ( argv.production ) {
 require('babel-core/register')({
   highlightCode: false,
   extensions: ['.js'],
-  ignore: filename => filename.indexOf('node_modules') > -1,
+  babelrc: false,
+  compact: true,
+  comments: false,
   plugins: [
-    ['system-import-transformer', {modules: 'common'}], // Polyfill System.import for Node.js ( V8 )
-    'syntax-object-rest-spread',  // V8
+    // Polyfill System.import for Node.js ( V8 )
+    ['system-import-transformer', {modules: 'common'}],
+
+    // React
+    'transform-react-jsx',
+    'transform-flow-strip-types',
+    'syntax-flow',
+    'syntax-jsx',
+    'transform-react-display-name',
+
+    // Stage
     'transform-decorators-legacy',
-    'transform-async-to-generator',  // V8
-    'transform-flow-strip-types',  // V8
-    'transform-object-rest-spread',  // V8
-    'transform-class-properties',  // V8
-    'transform-es2015-modules-commonjs',  // ES6 modules
-    // ['transform-es2015-spread', {'loose': true}],  // V8
-    ['transform-es2015-destructuring', {'loose': true}],  // V8
-    'transform-es2015-parameters',  // V8
-    'transform-react-jsx',  // For server-side rendering
-    'syntax-jsx',  // For server-side rendering
+    'transform-class-properties',
+    'transform-object-rest-spread',
+
+    // ES2015+
+    'transform-async-to-generator',
+    'transform-es2015-parameters',
+    ['transform-es2015-destructuring', {'loose': true}],
+    'transform-es2015-modules-commonjs',
   ]
 });
 

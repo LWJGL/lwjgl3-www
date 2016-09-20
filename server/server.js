@@ -153,7 +153,8 @@ app.get('*', (req, res, next) => {
 
       // Add route chunk to preload
       let chunk = null;
-      if ( routeChunk.name !== null && config.routes[routeChunk.name] !== undefined ) {
+
+      if ( app.locals.production && routeChunk.name !== null && config.routes[routeChunk.name] !== undefined ) {
         chunk = config.routes[routeChunk.name];
       }
 
