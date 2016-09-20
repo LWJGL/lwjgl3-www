@@ -4,16 +4,15 @@
 *.iml
 
 # Node
-/node_modules
-/npm-debug*
+node_modules
+npm-debug*
 
 # Configuration files
-/config.json
-/forever.json
+config.json
+forever.json
 
 # Generated files
-/manifest-js.json
-/manifest-css.json
-/public/css/*
-/public/js/*
-
+manifest-js.json
+manifest-css.json
+public/css/*
+public/js/*

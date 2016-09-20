@@ -6,20 +6,41 @@ const manifestCss = require('../manifest-css.json');
  *  config.json
  *
  *  Update config.json with entry points for JS & CSS
+ *  Update config.json with chunk paths for preloading
  */
 const config = require('../config.json');
 const configUpdated = Object.assign({}, config);
 
 // Update config.js by populating entry points for JS & CSS
+console.log('Updating JS & CSS entry points');
+
 configUpdated.manifest = {
   js: manifestJs.assetsByChunkName.main,
   css: manifestCss['layout.css'],
 };
 
+configUpdated.routes = {};
+
+manifestJs.chunks.forEach(chunk => {
+  if ( chunk.entry === true ) {
+    return;
+  }
+
+  const route = chunk.modules[0].name.match(/routes[/]([a-z][a-z-_/]+)[/]index.js$/);
+
+  if ( route !== null ) {
+    if ( route[1] === 'home' ) {
+      console.log(`Found route /   ${chunk.files[0]}`);
+      configUpdated.routes['/'] = chunk.files[0];
+    } else {
+      console.log(`Found route /${route[1]}   ${chunk.files[0]}`);
+      configUpdated.routes[`/${route[1]}`] = chunk.files[0];
+    }
+  }
+});
+
 // Update file
-if ( !config.manifest || config.manifest.js !== configUpdated.manifest.js || config.manifest.css !== configUpdated.manifest.css ) {
-  fs.writeFileSync('./config.json', JSON.stringify(config, null, 2));
-}
+fs.writeFileSync('./config.json', JSON.stringify(configUpdated, null, 2));
 
 /**
  * optimize-js
@@ -30,8 +51,8 @@ if ( !config.manifest || config.manifest.js !== configUpdated.manifest.js || con
 
 const optimizeJs = require('optimize-js');
 
-manifestJs.assets.map(asset => asset.name).forEach(asset => {
-  const filename = `./public/js/${asset}`;
+manifestJs.assets.forEach(asset => {
+  const filename = `./public/js/${asset.name}`;
 
   console.log(`Optimizing ${filename}`);
   fs.writeFileSync(filename, optimizeJs(fs.readFileSync(filename, {encoding:'utf-8'})));

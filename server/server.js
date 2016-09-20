@@ -12,6 +12,7 @@ import {match, RouterContext} from 'react-router'
 import Routes from '../client/app/routes/Routes'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
+import routeChunk from './routeChunk'
 
 // For proxying requests to TeamCity
 import request from 'request';
@@ -150,9 +151,16 @@ app.get('*', (req, res, next) => {
       // https://github.com/nfl/react-helmet#server-usage
       const head = Helmet.rewind();
 
+      // Add route chunk to preload
+      let chunk = null;
+      if ( routeChunk.name !== null && config.routes[routeChunk.name] !== undefined ) {
+        chunk = config.routes[routeChunk.name];
+      }
+
       res.render('index', {
         html,
         head,
+        chunk,
         aphrodite: css
       });
 

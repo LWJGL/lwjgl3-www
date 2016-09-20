@@ -17,28 +17,34 @@ function route(name, getComponentWrap) {
     path: name === '/' ? undefined : name,
     getComponent(nextState, cb) {
       getComponentWrap(nextState, componentModule => {
-        if ( !firstRoute ) {
-          if ( process.browser && process.env.NODE_ENV === 'production' ) {
-            ga('send', 'pageview', `${nextState.location.pathname}${nextState.location.search}`);
+        if ( process.browser ) {
+          if ( process.env.NODE_ENV === 'production' ) {
+            if ( !firstRoute ) {
+              ga('send', 'pageview', `${nextState.location.pathname}${nextState.location.search}`);
+            }
           }
-        }
 
-        if ( routes[name] === false ) {
-          routes[name] = true;
+          if ( routes[name] === false ) {
+            routes[name] = true;
 
-          if ( firstRoute ) {
-            firstRoute = false;
-          } else {
-            nprogress.done();
+            if ( firstRoute ) {
+              firstRoute = false;
+            } else {
+              nprogress.done();
+            }
           }
+        } else {
+          require('../../../server/routeChunk').setName(name);
         }
 
         cb(null, componentModule.default);
       });
     },
     onEnter() {
-      if ( !firstRoute && !routes[name] && process.browser ) {
-        nprogress.start();
+      if ( process.browser ) {
+        if ( !firstRoute && !routes[name] ) {
+          nprogress.start();
+        }
       }
     }
   }

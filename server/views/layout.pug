@@ -11,6 +11,8 @@ html(lang="en-US")
       title LWJGL - Lightweight Java Game Library
     link(rel="dns-prefetch" href="//fonts.googleapis.com")
     link(rel="preload" as="script" href=`/js/${bundle}`)
+    if ( chunk )
+      link(rel="preload" as="script" href=`/js/${chunk}`)
     link(rel="stylesheet" href=`/css/${css}`)
     meta(name="viewport" content="width=device-width,initial-scale=1,user-scalable=no")
     meta(name="theme-color" content="#1b2426")
