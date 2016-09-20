@@ -10,14 +10,9 @@ class ControlledRadio extends React.Component {
     name: React.PropTypes.string.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.select = this.select.bind(this);
-  }
-
-  select(value) {
+  select = (value) => {
     this.props.store.setOption(this.props.name, value);
-  }
+  };
 
   render() {
     const radios = this.props.store.getOptions(this.props.name);

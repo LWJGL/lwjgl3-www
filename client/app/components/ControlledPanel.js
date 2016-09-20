@@ -13,10 +13,6 @@ class ControlledPanel extends React.Component {
     visible: () => true
   };
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { visible, children, store, getClassName, ...rest } = this.props;
 

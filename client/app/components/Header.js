@@ -17,12 +17,6 @@ export default class Header extends React.Component {
   offsetHeight = 0;
   el;
 
-  constructor(props) {
-    super(props);
-    this.onScroll = this.onScroll.bind(this);
-    this.update = this.update.bind(this);
-  }
-
   componentDidMount() {
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
@@ -44,10 +38,11 @@ export default class Header extends React.Component {
   }
 
   componentDidUpdate() {
+    // Fired when route changes
     requestAnimationFrame(this.update);
   }
 
-  onScroll() {
+  onScroll = () => {
     let offsetY = window.pageYOffset;
 
     if ( offsetY < 0 || this.prev === offsetY ) {  // e.g. iOS inertial scrolling reports negative offsets
@@ -61,7 +56,7 @@ export default class Header extends React.Component {
       requestAnimationFrame(this.update);
       this.ticking = true;
     }
-  }
+  };
 
   checkOffset() {
     if ( !this.fixed && this.current < this.flip - this.offsetHeight ) {
@@ -72,7 +67,7 @@ export default class Header extends React.Component {
     }
   }
 
-  update() {
+  update = () => {
     this.ticking = false;
 
     if ( this.prev - this.current < 0 ) {
@@ -119,7 +114,7 @@ export default class Header extends React.Component {
         this.el.classList.add('top');
       }
     }
-  }
+  };
 
   render() {
     let headerClass = ['top'];

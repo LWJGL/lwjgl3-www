@@ -4,21 +4,15 @@ import {observer} from 'mobx-react'
 @observer(['store'])
 class BuildScript extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.copyToClipboard = this.copyToClipboard.bind(this);
-    this.autoHeight = this.autoHeight.bind(this);
-  }
-
-  copyToClipboard() {
+  copyToClipboard = () => {
     this.refs.script.select();
     document.execCommand('copy');
     this.refs.script.blur();
-  }
+  };
 
-  autoHeight() {
+  autoHeight = () => {
     this.refs.script.style.height = `${Math.min((this.refs.script.value.match(/\n/g).length + 1) * 20, 700)}px`;
-  }
+  };
 
   render() {
     const store = this.props.store;

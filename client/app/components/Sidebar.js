@@ -7,17 +7,9 @@ import FaClose from '../icons/close'
 
 export default class Sidebar extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    for ( let fn of ['onToggle','update','onTouchStart','onTouchMove','onTouchEnd'] )  {
-      this[fn] = this[fn].bind(this);
-    }
-
-    this.state = {
-      open: false
-    };
-  }
+  state = {
+    open: false,
+  };
 
   componentDidMount() {
     this.focusTrap = createFocusTrap(this.refs.slidingMenu, {
@@ -27,7 +19,7 @@ export default class Sidebar extends React.Component {
     });
   }
 
-  onToggle() {
+  onToggle = () => {
     if ( this.state.open ) {
       noscroll.off();
       this.focusTrap.deactivate({onDeactivate:false});
@@ -37,25 +29,25 @@ export default class Sidebar extends React.Component {
     }
 
     this.setState({open: !this.state.open});
-  }
+  };
 
-  onTouchStart(evt) {
+  onTouchStart = (evt) => {
     this.startX = evt.touches[0].pageX;
     this.currentX = this.startX;
 
     this.touchingSideNav = true;
     this.refs.sideContainer.classList.add('touching');
     requestAnimationFrame(this.update);
-  }
+  };
 
-  onTouchMove(evt) {
+  onTouchMove = (evt) => {
     if ( this.touchingSideNav ) {
       this.currentX = evt.touches[0].pageX;
       evt.preventDefault();
     }
-  }
+  };
 
-  onTouchEnd() {
+  onTouchEnd = () => {
     if ( this.touchingSideNav ) {
       this.touchingSideNav = false;
 
@@ -67,9 +59,9 @@ export default class Sidebar extends React.Component {
         this.onToggle();
       }
     }
-  }
+  };
 
-  update() {
+  update = () => {
     if ( !this.touchingSideNav ) {
       return;
     }
@@ -83,7 +75,7 @@ export default class Sidebar extends React.Component {
     }
 
     this.refs.sideContainer.style.transform = `translateX(${translateX}px)`;
-  }
+  };
 
   render() {
     let isOpen = this.state.open;

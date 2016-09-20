@@ -9,14 +9,9 @@ class ControlledCheckbox extends React.Component {
     name: React.PropTypes.string.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle() {
+  toggle = () => {
     this.props.store.setOption(this.props.name);
-  }
+  };
 
   render() {
     const option = this.props.store.getOptions(this.props.name);

@@ -10,16 +10,11 @@ class BuildType extends React.Component {
     build: React.PropTypes.string.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.select = this.select.bind(this);
-  }
-
-  select() {
+  select = () => {
     const store = this.props.store;
     const build = this.props.build;
     store.selectBuild(store.build !== build ? build : null);
-  }
+  };
 
   render() {
     const selectedBuild = this.props.store.build;

@@ -1,17 +1,17 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 
 export default class RadioGroup extends React.PureComponent {
 
   static propTypes = {
-    name: React.PropTypes.string,
-    value: React.PropTypes.any,
-    onChange: React.PropTypes.func,
+    name: PropTypes.string,
+    value: PropTypes.any,
+    onChange: PropTypes.func,
   };
 
   static childContextTypes = {
-    name: React.PropTypes.string,
-    onChange: React.PropTypes.func,
-    value: React.PropTypes.any,
+    name: PropTypes.string,
+    onChange: PropTypes.func,
+    value: PropTypes.any,
   };
 
   getChildContext() {
@@ -22,16 +22,11 @@ export default class RadioGroup extends React.PureComponent {
     }
   }
 
-  constructor(props) {
-    super(props);
-    this.change = this.change.bind(this);
-  }
-
-  change(value) {
+  change = value => {
     if ( value !== this.props.value && this.props.onChange ) {
       this.props.onChange(value);
     }
-  }
+  };
 
   render() {
     return (
