@@ -7,23 +7,14 @@ class Env {
   constructor() {
     if ( process.browser ) {
       if ( document.body.classList.contains('tablet') ) {
-        this.setTablet();
+        this.mobile = true;
+        this.tablet = true;
+        this.desktop = false;
       } else if ( document.body.classList.contains('mobile') ) {
-        this.setMobile();
+        this.mobile = true;
+        this.desktop = false;
       }
     }
-  }
-
-  setMobile() {
-    this.mobile = true;
-    this.tablet = false;
-    this.desktop = false;
-  }
-
-  setTablet() {
-    this.mobile = true;
-    this.tablet = true;
-    this.desktop = false;
   }
 
 }

@@ -140,9 +140,12 @@ export default class Header extends React.Component {
               <li><a href="http://blog.lwjgl.org/" target="_blank">BLOG</a></li>
             </ul>
 
-            <div className="col-xs-4 hidden-lg-up text-xs-right">
-              <Sidebar />
-            </div>
+            {
+              !process.browser ? null :
+                <div className="col-xs-4 hidden-lg-up text-xs-right">
+                  <Sidebar />
+                </div>
+            }
           </div>
         </nav>
       </header>

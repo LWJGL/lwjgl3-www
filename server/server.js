@@ -12,7 +12,7 @@ import {match, RouterContext} from 'react-router'
 import Routes from '../client/app/routes/Routes'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
-import env from '../client/app/utils/env'
+const reactCache = {};
 
 // For proxying requests to TeamCity
 import request from 'request';
@@ -167,10 +167,8 @@ app.get('*', (req, res, next) => {
         const isTablet = req.get('cloudfront-is-tablet-viewer');
 
         if ( isTablet === 'true' ) {
-          env.setTablet();
           bodyClass = "tablet mobile";
         } else if ( isMobile === 'true' ) {
-          env.setMobile();
           bodyClass = "mobile";
         }
 
@@ -179,27 +177,37 @@ app.get('*', (req, res, next) => {
         // Device detection
         switch ( req.device.type ) {
           case "phone":
-            env.setMobile();
             bodyClass = "mobile";
             break;
           case "tablet":
           case "car":
-            env.setTablet();
             bodyClass = "tablet mobile";
             break;
         }
 
       }
 
-      // https://github.com/Khan/aphrodite
-      const {html, css} = StyleSheetServer.renderStatic(() =>
-        renderToString(
-          <RouterContext {...renderProps} />
-        )
-      );
+      let html, css, head;
 
-      // https://github.com/nfl/react-helmet#server-usage
-      const head = Helmet.rewind();
+      if ( typeof reactCache[renderProps.location.pathname] === 'undefined' ) {
+        // https://github.com/Khan/aphrodite
+        ({html, css} = StyleSheetServer.renderStatic(() =>
+          renderToString(
+            <RouterContext {...renderProps} />
+          )
+        ));
+
+        // https://github.com/nfl/react-helmet#server-usage
+        head = Helmet.rewind();
+
+        reactCache[renderProps.location.pathname] = {
+          html,
+          css,
+          head
+        }
+      } else {
+        ({html, css, head} = reactCache[renderProps.location.pathname]);
+      }
 
       res.render('index', {
         html,
