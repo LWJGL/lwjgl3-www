@@ -33,8 +33,6 @@ function route(name, getComponentWrap) {
               nprogress.done();
             }
           }
-        } else {
-          require('../../../server/routeChunk').setName(name);
         }
 
         cb(null, componentModule.default);

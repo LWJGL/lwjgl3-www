@@ -12,7 +12,6 @@ import {match, RouterContext} from 'react-router'
 import Routes from '../client/app/routes/Routes'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
-import routeChunk from './routeChunk'
 
 // For proxying requests to TeamCity
 import request from 'request';
@@ -159,8 +158,8 @@ app.get('*', (req, res, next) => {
       // Add route chunk to preload
       let chunk = null;
 
-      if ( app.locals.production && routeChunk.name !== null && config.routes[routeChunk.name] !== undefined ) {
-        chunk = config.routes[routeChunk.name];
+      if ( app.locals.production && config.routes[renderProps.location.pathname] !== undefined ) {
+        chunk = config.routes[renderProps.location.pathname];
       }
 
       res.render('index', {
