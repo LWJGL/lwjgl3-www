@@ -12,6 +12,7 @@ import {match, RouterContext} from 'react-router'
 import Routes from '../client/app/routes/Routes'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
+import env from '../client/app/utils/env'
 
 // For proxying requests to TeamCity
 import request from 'request';
@@ -73,6 +74,11 @@ if ( app.locals.development ) {
 
   app.locals.bundle = 'bundle.js';
   app.locals.css = 'layout.css';
+
+  // Device type detection
+  // On production we rely on Cloudfront to get this information for free
+  const device = require('express-device');
+  app.use(device.capture());
 
 } else {
 
@@ -145,6 +151,46 @@ app.get('*', (req, res, next) => {
 
     } else if ( renderProps ) {
 
+      let chunk = null;
+      let bodyClass = "desktop";
+
+      if ( app.locals.production ) {
+
+        // Add route chunk to preload
+        if ( config.routes[renderProps.location.pathname] !== undefined ) {
+          chunk = config.routes[renderProps.location.pathname];
+        }
+
+        // Device detection
+
+        const isMobile = req.get('cloudfront-is-mobile-viewer');
+        const isTablet = req.get('cloudfront-is-tablet-viewer');
+
+        if ( isTablet === 'true' ) {
+          env.setTablet();
+          bodyClass = "tablet mobile";
+        } else if ( isMobile === 'true' ) {
+          env.setMobile();
+          bodyClass = "mobile";
+        }
+
+      } else {
+
+        // Device detection
+        switch ( req.device.type ) {
+          case "phone":
+            env.setMobile();
+            bodyClass = "mobile";
+            break;
+          case "tablet":
+          case "car":
+            env.setTablet();
+            bodyClass = "tablet mobile";
+            break;
+        }
+
+      }
+
       // https://github.com/Khan/aphrodite
       const {html, css} = StyleSheetServer.renderStatic(() =>
         renderToString(
@@ -155,17 +201,11 @@ app.get('*', (req, res, next) => {
       // https://github.com/nfl/react-helmet#server-usage
       const head = Helmet.rewind();
 
-      // Add route chunk to preload
-      let chunk = null;
-
-      if ( app.locals.production && config.routes[renderProps.location.pathname] !== undefined ) {
-        chunk = config.routes[renderProps.location.pathname];
-      }
-
       res.render('index', {
         html,
         head,
         chunk,
+        bodyClass,
         aphrodite: css
       });
 

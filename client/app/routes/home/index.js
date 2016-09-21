@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 import {StyleSheet, css} from 'aphrodite/no-important'
 import stylesDefinition from './styles'
 import Logo from './Logo'
+import env from '../../utils/env'
 
 // Icons
 import FaPuzzlePiece from '../../icons/puzzle-piece'
@@ -33,14 +34,13 @@ export default class HomeRoute extends React.Component {
           ]}
         />
 
-        <section ref={(el) => this.container = el} className={css(styles.videoContainer)}>
+        <section ref={(el) => this.container = el} className={css(styles.videoContainer)} style={{backgroundImage:env.desktop?null:'url(/img/manfps-720.jpg)'}}>
           {
-            process.browser ?
-              <video className={css(styles.video, styles.full)} poster="/img/manfps-720.jpg" preload="auto" muted loop autoPlay aria-hidden={true} role="presentation">
+            !env.desktop ? null :
+              <video className={css(styles.video, styles.full)} muted loop autoPlay aria-hidden={true} role="presentation">
                 <source type="video/webm" src="/img/manfps.webm" />
                 <source type="video/mp4" src="/img/manfps.mp4" />
               </video>
-              : null
           }
           <div className={css(styles.videoOverlay, styles.full)}></div>
           <Logo className={css(styles.logo)} />

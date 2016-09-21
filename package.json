@@ -73,6 +73,7 @@
     "cross-env": "2.0.1",
     "exports-loader": "0.6.3",
     "express": "5.0.0-alpha.2",
+    "express-device": "0.4.2",
     "fg-loadcss": "1.2.0",
     "fg-loadjs": "1.0.0",
     "focus-trap": "2.0.1",

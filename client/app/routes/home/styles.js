@@ -1,6 +1,8 @@
 export default {
   videoContainer: {
     position: 'relative',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
     backgroundColor: '#1b2426',
     width: '100%',
     height: '100vh',
@@ -17,7 +19,6 @@ export default {
     background: 'rgba(0,0,0,.5) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2NkYGA4w8DAYMLIAAUADV0BA91ra/8AAAAASUVORK5CYII=)',
   },
   video: {
-    backgroundSize: 'cover',
     backgroundColor: '#1b2426',
     display: 'block',
     objectFit: 'cover',
