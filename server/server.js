@@ -82,15 +82,20 @@ if ( app.locals.development ) {
 
 }
 
-// Static Assets
-app.use(express.static(path.join(__dirname, '../public'), {
-  maxage: '365 days'
-}));
-
 // ------------------------------------------------------------------------------
 // Routing
 // ------------------------------------------------------------------------------
 
+// Static Assets
+app.use(express.static(path.join(__dirname, '../public'), {
+  maxage: '365 days',
+  index: false,
+  setHeaders: res => {
+    res.set('Cache-Control', 'public,max-age=31536000,s-maxage=2592000,immutable');
+  }
+}));
+
+// Teamcity proxy
 app.get('/teamcity', (req, res, next) => {
   request(
     {
@@ -176,9 +181,14 @@ app.get('*', (req, res, next) => {
 
 app.use((req, res, next) => {
   res.status(404);
-  if ( req.accepts('html') ) return res.render('404');
-  if ( req.accepts('json') ) return res.send({error: 'Not found'});
-  res.type('txt').send('Not found');
+  if ( req.accepts('html','*/*') === 'html' ) {
+    return res.render('404');
+  }
+  if ( req.accepts('json', '*/*') === 'json' ) {
+    return res.send({error: 'Not found'});
+  }
+
+  res.type('txt').send();
 });
 
 app.use((err, req, res, next) => {
