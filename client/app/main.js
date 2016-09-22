@@ -1,10 +1,12 @@
 import React from 'react'
-import { render } from 'react-dom'
-import { match, Router, browserHistory, applyRouterMiddleware } from 'react-router'
-import useScroll from 'react-router-scroll/lib/useScroll';
-import routes from './routes/Routes'
+import {render} from 'react-dom'
+import {AppContainer} from 'react-hot-loader'
+// import useScroll from 'react-router-scroll/lib/useScroll';
 import {StyleSheet} from 'aphrodite/no-important'
 import nprogress from 'nprogress'
+
+import App from './ui/App'
+import preserver from './routes/Preserver'
 import './utils/ga'
 
 // Hide spinner from nprogress
@@ -20,17 +22,23 @@ if ( process.browser ) {
   }
 }
 
-const {pathname, search, hash} = window.location;
-const location = `${pathname}${search}${hash}`;
+const rootEl = document.getElementById('lwjgl-app');
 
-// calling `match` is simply for side effects of
-// loading route/component code for the initial location
-match({routes, location}, () => {
-  render((
-    <Router
-      history={browserHistory}
-      routes={routes}
-      render={applyRouterMiddleware(useScroll())}
-    />
-  ), document.getElementById('lwjgl-app'));
-});
+preserver.store(document.getElementById('lwjgl-routes').innerHTML);
+
+render((
+  <AppContainer>
+    <App />
+  </AppContainer>
+), rootEl);
+
+if ( module.hot ) {
+  module.hot.accept('./ui/App', () => {
+    render(
+      <AppContainer>
+        <App />
+      </AppContainer>,
+      rootEl
+    );
+  });
+}

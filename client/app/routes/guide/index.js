@@ -5,21 +5,27 @@ import codeSample from './sample'
 import loadJS from 'fg-loadjs'
 import { loadCSS } from 'fg-loadcss'
 
-let _INIT = true;
-let codeSampleHtml = codeSample;
+class GuideRoute extends React.Component {
 
-export default class GuideRoute extends React.Component {
+  static init = true;
+  static sample = codeSample;
+  mounted = false;
 
   state = {
-    sample: codeSampleHtml
+    sample: GuideRoute.sample
   };
 
   componentDidMount() {
-    if ( _INIT ) {
+    this.mounted = true;
+    if ( GuideRoute.init ) {
+      GuideRoute.init = false;
       loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/darkula.min.css');
       loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js', () => {
-        codeSampleHtml = hljs.highlight('java', codeSampleHtml).value;
-        this.setState({sample: codeSampleHtml}, ()=>{
+        GuideRoute.sample = window.hljs.highlight('java', codeSample).value;
+        if ( !this.mounted ) {
+          return;
+        }
+        this.setState({sample: GuideRoute.sample}, () => {
           if ( window.location.hash === '#build-instructions' ) {
             try {
               document.getElementById('build-instructions').scrollIntoView();
@@ -27,8 +33,11 @@ export default class GuideRoute extends React.Component {
           }
         });
       });
-      _INIT = false;
     }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   render() {
@@ -66,7 +75,7 @@ export default class GuideRoute extends React.Component {
           <p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
         </section>
 
-        <section className="p-y-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:this.state.sample}}></code></pre></section>
+        <section className="p-y-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:this.state.sample}} /></pre></section>
 
         <section className="container p-t-2">
           <p>
@@ -153,4 +162,6 @@ export default class GuideRoute extends React.Component {
     )
   }
 
-};
+}
+
+export default GuideRoute

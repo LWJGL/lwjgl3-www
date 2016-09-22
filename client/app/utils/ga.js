@@ -10,16 +10,7 @@ if ( process.browser && process.env.NODE_ENV === 'production' ) {
   window.GoogleAnalyticsObject = 'ga';
 
   track('create', 'UA-83518-1', 'auto');
-  track('require', 'displayfeatures');
+  // track('require', 'displayfeatures');
   // Do not track view here because it will happen in the router
   // track('send', 'pageview');
-
-  const script = document.createElement('script');
-  script.async = true;
-  script.src ='https://www.google-analytics.com/analytics.js';
-
-  setImmediate(function(){
-    // delay execution so that route JS is scheduled for download first
-    (document.head||document.body).appendChild(script);
-  });
 }

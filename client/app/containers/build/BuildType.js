@@ -1,5 +1,5 @@
 import React from 'react'
-import BuildStatus from './BuildStatus'
+import BuildStatus from '../../components/BuildStatus'
 import {observer} from 'mobx-react'
 import classnames from 'classnames'
 

@@ -29,7 +29,7 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      'process.env.NODE_ENV': process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : JSON.stringify('development')
     })
   ]
 };
@@ -41,6 +41,7 @@ if ( process.env.NODE_ENV !== 'production' ) {
   // config.devtool = 'eval-source-map';
 
   // WebPack Hot Middleware client & HMR plugins
+  config.entry.main.unshift('react-hot-loader/patch');
   config.entry.main.unshift('webpack-hot-middleware/client');
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
   config.plugins.push(new webpack.NoErrorsPlugin());
@@ -48,16 +49,25 @@ if ( process.env.NODE_ENV !== 'production' ) {
   // Avoid having to parse a manifest in dev mode
   config.output.filename = 'bundle.js';
 
+  // Uncomment me to test async routes
+  // WARNING: Breaks routes hot reloading!
+  // config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
+
 } else {
 
+  config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
+
   // Put loaders in minification mode
-  config.plugins.push(new webpack.LoaderOptionsPlugin({
-    minimize: true,
-    debug: false
-  }));
+  config.plugins.push(
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    })
+  );
 
   // minify
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+  config.plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       mangle: {
         screw_ie8: true,

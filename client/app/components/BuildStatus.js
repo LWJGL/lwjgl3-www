@@ -54,7 +54,11 @@ export default class BuildStatus extends React.Component {
 
   componentDidMount() {
     this._isMounted = true;
-    this.loadData();
+    if ( process.env.NODE_ENV === 'production' ) {
+      this.loadData();
+    } else {
+      this.setState({status: 'unknown'});
+    }
   }
 
   componentWillUnmount() {

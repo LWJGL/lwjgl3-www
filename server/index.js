@@ -18,9 +18,6 @@ require('babel-core/register')({
   compact: true,
   comments: false,
   plugins: [
-    // Polyfill System.import for Node.js ( V8 )
-    ['system-import-transformer', {modules: 'common'}],
-
     // React
     'transform-react-jsx',
     'transform-flow-strip-types',

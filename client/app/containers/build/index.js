@@ -4,9 +4,9 @@ import BuildType from './BuildType'
 import BuildArtifacts from './BuildArtifacts'
 import BuildDownload from './BuildDownload'
 import BuildScript from './BuildScript'
-import ControlledPanel from './ControlledPanel'
-import ControlledRadio from './ControlledRadio'
-import ControlledCheckbox from './ControlledCheckbox'
+import ControlledPanel from '../../components/ControlledPanel'
+import ControlledRadio from '../../components/ControlledRadio'
+import ControlledCheckbox from '../../components/ControlledCheckbox'
 import classnames from 'classnames'
 
 const panelConfig = store => store.build !== null;
@@ -18,7 +18,7 @@ const panelContentsClassName = store => classnames("col-xs-12", {
   "col-lg-5": store.mode === 'zip'
 });
 
-const BuildConfigurator = () => (
+const BuildContainer = () => (
   <div>
     <div className="row">
       <div className="col-lg-4 col-xs-12">
@@ -81,4 +81,4 @@ const BuildConfigurator = () => (
   </div>
 );
 
-export default BuildConfigurator
+export default BuildContainer

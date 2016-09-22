@@ -8,14 +8,15 @@ import chalk from 'chalk'
 // Server-side rendering
 import React from 'react'
 import {renderToString} from 'react-dom/server'
-import {match, RouterContext} from 'react-router'
-import Routes from '../client/app/routes/Routes'
+import { ServerRouter, createServerRenderContext } from 'react-router'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
 const reactCache = {};
+import Layout from '../client/app/ui/Layout'
 
-// For proxying requests to TeamCity
-import request from 'request';
+// Routes & helpers
+import teamcity from './teamcity';  // For proxying requests to TeamCity
+import getDevice from './getDevice';
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
@@ -93,161 +94,140 @@ if ( app.locals.development ) {
 
 // Static Assets
 app.use(express.static(path.join(__dirname, '../public'), {
-  maxage: '365 days',
   index: false,
   setHeaders: res => {
+    // Send immutable Cache-Control flag
+    // Set s-maxage to 1 month because JS/CSS are updated often, no reason to keep them in CloudFront
+    // https://bitsup.blogspot.com/2016/05/cache-control-immutable.html
     res.set('Cache-Control', 'public,max-age=31536000,s-maxage=2592000,immutable');
   }
 }));
 
 // Teamcity proxy
-app.get('/teamcity', (req, res, next) => {
-  request(
-    {
-      method: 'GET',
-      baseUrl: 'http://teamcity.lwjgl.org',
-      url: '/httpAuth/app/rest/builds/',
-      qs: {
-        locator: `running:false,count:1,buildType:${req.query.build}`
-      },
-      headers: {
-        'Accept': 'application/json'
-      },
-      auth: {
-        'user': config.teamcity.username,
-        'pass': config.teamcity.password
-      },
-      gzip: true,
-      followRedirect: false,
-      timeout: 5000
-    },
-    (error, response, data) => {
-      if ( error ) {
-        res.status(500).json({error: error.message});
-        return;
-      }
+app.get('/teamcity', teamcity);
 
-      if ( response.statusCode !== 200 ) {
-        res.status(response.statusCode).json({error: 'Invalid response'});
-        return;
-      }
-
-      res.json(JSON.parse(data));
-    }
-  );
-});
-
+// React server-side rendering
 app.get('*', (req, res, next) => {
-  match({routes: Routes, location: req.url}, (error, redirectLocation, renderProps) => {
-    if ( error ) {
 
-      res.status(500).render('500', {
-        errorMsg: error.message
-      });
+  if ( req.accepts('html','*/*') !== 'html' ) {
+    // Return 404 to avoid rendering React for invalid requests
+    next(null);
+    return;
+  }
 
-    } else if ( redirectLocation ) {
+  // The only reason we need this is to avoid rendering the homepage video in mobile devices
+  let bodyClass = getDevice(req);
 
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+  let html, css, head, chunk;
 
-    } else if ( renderProps ) {
+  if ( reactCache[req.path] !== undefined ) {
+    // We have already server-side rendered, get data from the cache
+    ({html, css, head, chunk} = reactCache[req.path]);
 
-      let chunk = null;
-      let bodyClass = "desktop";
+    // We're done, render the view
+    res.render('index', {
+      html,
+      head,
+      chunk,
+      bodyClass,
+      aphrodite: css,
+      ie: req.get('user-agent').indexOf('MSIE') > -1,
+    });
+    return;
+  }
 
-      if ( app.locals.production ) {
+  const context = createServerRenderContext();
+  ({html, css} = StyleSheetServer.renderStatic( // https://github.com/Khan/aphrodite
+    () => renderToString( // https://react-router.now.sh/ServerRouter
+      <ServerRouter
+        location={req.url}
+        context={context}
+      >
+        {({ /*history, action,*/ location }) => <Layout location={location} />}
+      </ServerRouter>
+    )
+  ));
+  const result = context.getResult();
 
-        // Add route chunk to preload
-        if ( config.routes[renderProps.location.pathname] !== undefined ) {
-          chunk = config.routes[renderProps.location.pathname];
-        }
+  if ( result.redirect ) {
+    res.redirect(302, result.redirect.pathname);
+    return;
+  }
 
-        // Device detection
-
-        const isMobile = req.get('cloudfront-is-mobile-viewer');
-        const isTablet = req.get('cloudfront-is-tablet-viewer');
-
-        if ( isTablet === 'true' ) {
-          bodyClass = "tablet mobile";
-        } else if ( isMobile === 'true' ) {
-          bodyClass = "mobile";
-        }
-
-      } else {
-
-        // Device detection
-        switch ( req.device.type ) {
-          case "phone":
-            bodyClass = "mobile";
-            break;
-          case "tablet":
-          case "car":
-            bodyClass = "tablet mobile";
-            break;
-        }
-
+  if ( result.missed ) {
+    // We could re-render here, for the Miss component to pickup the 404.
+    // Instead, let the client do the hard work
+    // NOTE: It is unfortunate that we have to server-side render for invalid URLs
+    res.status(404).render('index', {
+      head: {
+        title: '<title>Page not found</title>'
       }
+    });
+    return;
+  }
 
-      let html, css, head;
+  // https://github.com/nfl/react-helmet#server-usage
+  head = Helmet.rewind();
 
-      if ( typeof reactCache[renderProps.location.pathname] === 'undefined' ) {
-        // https://github.com/Khan/aphrodite
-        ({html, css} = StyleSheetServer.renderStatic(() =>
-          renderToString(
-            <RouterContext {...renderProps} />
-          )
-        ));
-
-        // https://github.com/nfl/react-helmet#server-usage
-        head = Helmet.rewind();
-
-        reactCache[renderProps.location.pathname] = {
-          html,
-          css,
-          head
-        }
-      } else {
-        ({html, css, head} = reactCache[renderProps.location.pathname]);
-      }
-
-      res.render('index', {
-        html,
-        head,
-        chunk,
-        bodyClass,
-        aphrodite: css
-      });
-
-    } else {
-
-      // 404
-      next(null);
-
+  if ( app.locals.production ) {
+    // Get code-split chunk's relative path for this path
+    // @see ./process-manifest.js to see how we populate config -- not clean, but it works
+    if ( config.routes[req.path] !== undefined ) {
+      chunk = config.routes[req.path];
     }
-  })
+  }
+
+  // OK, cache view data
+  reactCache[req.path] = {
+    html,
+    css,
+    head,
+    chunk,
+  };
+
+  // We're done, render the view
+  res.render('index', {
+    html,
+    head,
+    chunk,
+    bodyClass,
+    aphrodite: css,
+    ie: req.get('user-agent').indexOf('MSIE') > -1,
+  });
+
 });
+
+// Page not found
 
 app.use((req, res, next) => {
   res.status(404);
+
   if ( req.accepts('html','*/*') === 'html' ) {
-    return res.render('404');
+    res.render('404');
+    return;
   }
+
   if ( req.accepts('json', '*/*') === 'json' ) {
-    return res.send({error: 'Not found'});
+    res.send({error: 'Not found'});
+    return;
   }
 
   res.type('txt').send();
 });
 
+// Error page
+
 app.use((err, req, res, next) => {
   res.status(500);
 
   // HTML
-  if ( req.accepts('html') ) {
-    return res.render('500', {error: err});
+  if ( req.accepts('html','*/*') === 'html' ) {
+    res.render('500', {error: err});
+    return;
   }
 
   // JSON
-  if ( req.accepts('json') ) {
+  if ( req.accepts('json', '*/*') === 'json' ) {
     if ( err instanceof Error ) {
       if ( req.app.locals.development ) {
         const errorResponse = {};

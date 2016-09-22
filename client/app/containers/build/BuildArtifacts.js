@@ -1,6 +1,6 @@
 import React from 'react'
 import {observer} from 'mobx-react'
-import ControlledArtifact from './ControlledArtifact'
+import ControlledArtifact from '../../components/ControlledArtifact'
 
 @observer(['store'])
 class BuildArtifacts extends React.Component {

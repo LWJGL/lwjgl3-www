@@ -1,7 +1,7 @@
 import React from 'react'
 import createFocusTrap from 'focus-trap'
 import noscroll from '../utils/noscroll'
-import {Link, IndexLink} from 'react-router'
+import {Link} from 'react-router'
 import FaBars from '../icons/bars'
 import FaClose from '../icons/close'
 
@@ -98,7 +98,7 @@ export default class Sidebar extends React.Component {
             <button ref="closeButton" type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
           </div>
           <ul className="list-unstyled">
-            <li><IndexLink to="/" activeClassName="active" onClick={this.onToggle}>HOME</IndexLink></li>
+            <li><Link to="/" activeClassName="active" onClick={this.onToggle} activeOnlyWhenExact={true}>HOME</Link></li>
             <li><Link to="/guide" activeClassName="active" onClick={this.onToggle}>GET STARTED</Link></li>
             <li><Link to="/download" activeClassName="active" onClick={this.onToggle}>DOWNLOAD</Link></li>
             <li><Link to="/source" activeClassName="active" onClick={this.onToggle}>SOURCE</Link></li>

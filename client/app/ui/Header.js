@@ -1,10 +1,9 @@
 import React from 'react'
-import {Link, IndexLink} from 'react-router'
+import {Link} from 'react-router'
 import Sidebar from './Sidebar'
+import env from '../utils/env'
 
-// Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels
-// from the top of the screen ( the point under the browser's address bar! )
-const ios = process.browser ? /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream : false;
+let ios = false;
 
 export default class Header extends React.Component {
 
@@ -18,6 +17,10 @@ export default class Header extends React.Component {
   el;
 
   componentDidMount() {
+    // Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels
+    // from the top of the screen ( the point under the browser's address bar! )
+    ios = env.mobile && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
     this.offsetHeight = this.el.offsetHeight;
@@ -129,10 +132,10 @@ export default class Header extends React.Component {
       <header ref={ (el) => this.el = el} role="navigation" className={headerClass.join(' ')}>
         <nav className="container-fluid">
           <div className="row">
-            <div className="col-lg-2 col-xs-8"><IndexLink to="/">LW<b>JGL</b> 3</IndexLink></div>
+            <div className="col-lg-2 col-xs-8"><Link to="/">LW<b>JGL</b> 3</Link></div>
 
             <ul className="list-unstyled col-lg-10 hidden-md-down" role="menu">
-              <li><IndexLink to="/" activeClassName="active">HOME</IndexLink></li>
+              <li><Link to="/" activeClassName="active" activeOnlyWhenExact={true}>HOME</Link></li>
               <li><Link to="/guide" activeClassName="active">GET STARTED</Link></li>
               <li><Link to="/download" activeClassName="active">DOWNLOAD</Link></li>
               <li><Link to="/source" activeClassName="active">SOURCE</Link></li>
@@ -140,12 +143,9 @@ export default class Header extends React.Component {
               <li><a href="http://blog.lwjgl.org/" target="_blank">BLOG</a></li>
             </ul>
 
-            {
-              !process.browser ? null :
-                <div className="col-xs-4 hidden-lg-up text-xs-right">
-                  <Sidebar />
-                </div>
-            }
+            <div className="col-xs-4 hidden-lg-up text-xs-right">
+              <Sidebar />
+            </div>
           </div>
         </nav>
       </header>
