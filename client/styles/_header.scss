@@ -46,12 +46,21 @@ header {
     text-decoration: none;
 
     &:focus, &:hover {
-      color: lightblue;
       text-decoration: none;
+      color: lightblue;
     }
-
     &.active {
       color: yellow;
+    }
+
+    @include media-breakpoint-up(lg) {
+      background: linear-gradient(currentColor, currentColor) bottom / 0 2px no-repeat;
+      transition: .5s background-size, 0.75s color ease-out;
+
+      &:hover {
+        background-size: 100% 2px;
+      }
+
     }
   }
 
