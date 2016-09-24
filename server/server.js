@@ -143,7 +143,7 @@ app.get('*', (req, res, next) => {
         location={req.url}
         context={context}
       >
-        {({ /*history, action,*/ location }) => <Layout location={location} />}
+        {({ location }) => <Layout location={location} />}
       </ServerRouter>
     )
   ));

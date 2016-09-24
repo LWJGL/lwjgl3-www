@@ -1,0 +1,40 @@
+{
+  "root": true,
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "jsx": true,
+      "impliedStrict": true,
+      "experimentalObjectRestSpread": true
+    },
+    "sourceType": "module"
+  },
+  "rules": {
+  },
+  "plugins": [
+    "flowtype",
+    "react"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:flowtype/recommended",
+    "plugin:react/recommended"
+  ],
+  "settings": {
+    "react": {
+      "createClass": "createClass",
+      "pragma": "React",
+      "version": "15.0"
+    },
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": false
+    }
+  }
+}

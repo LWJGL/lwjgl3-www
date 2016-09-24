@@ -4,6 +4,10 @@ import {observer} from 'mobx-react'
 @observer(['store'])
 class BuildScript extends React.Component {
 
+  static propTypes = {
+    store: React.PropTypes.object.isRequired
+  };
+
   copyToClipboard = () => {
     this.refs.script.select();
     document.execCommand('copy');

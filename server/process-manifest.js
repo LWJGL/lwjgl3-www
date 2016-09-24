@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const fs = require('fs');
 const manifestJs = require('../manifest-js.json');
 const manifestCss = require('../manifest-css.json');

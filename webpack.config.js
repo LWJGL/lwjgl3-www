@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const config = {
+  target: 'web',
   entry: {
     main: [
       'babel-polyfill',

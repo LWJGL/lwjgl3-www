@@ -4,6 +4,10 @@ import {observer} from 'mobx-react'
 @observer(['store'])
 class BuildDownload extends React.Component {
 
+  static propTypes = {
+    store: React.PropTypes.object.isRequired
+  }
+
   render() {
     const store = this.props.store;
 

@@ -34,4 +34,8 @@ const Layout = props => {
   )
 };
 
+Layout.propTypes = {
+  location: React.PropTypes.object.isRequired
+};
+
 export default Layout

@@ -1,3 +1,5 @@
+/* @flow weak */
+
 import React from 'react'
 import {Link} from 'react-router'
 import Sidebar from './Sidebar'
@@ -7,18 +9,23 @@ let ios = false;
 
 export default class Header extends React.Component {
 
-  prev = 0;
-  current = 0;
-  flip = 0;
-  fixed = false;
-  direction = 0;
-  ticking = false;
-  offsetHeight = 0;
-  el;
+  prev: number = 0;
+  current: number = 0;
+  flip: number = 0;
+  fixed: boolean = false;
+  direction: number = 0;
+  ticking: boolean = false;
+  offsetHeight: number = 0;
+  el: HTMLElement;
+
+  static propTypes = {
+    isHome: React.PropTypes.bool.isRequired
+  };
 
   componentDidMount() {
     // Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels
     // from the top of the screen ( the point under the browser's address bar! )
+    // eslint-disable-next-line
     ios = env.mobile && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
 
     // Cache menu height to avoid touching the DOM on every tick
@@ -65,7 +72,7 @@ export default class Header extends React.Component {
     if ( !this.fixed && this.current < this.flip - this.offsetHeight ) {
       // The entire menu has been revealed, fix it to the viewport
       this.el.classList.add('fixed');
-      this.el.style.top = 0;
+      this.el.style.top = '0';
       this.fixed = true;
     }
   }

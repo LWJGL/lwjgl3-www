@@ -5,6 +5,10 @@ import ControlledArtifact from '../../components/ControlledArtifact'
 @observer(['store'])
 class BuildArtifacts extends React.Component {
 
+  static propTypes = {
+    store: React.PropTypes.object.isRequired
+  }
+
   render() {
     const store = this.props.store;
 

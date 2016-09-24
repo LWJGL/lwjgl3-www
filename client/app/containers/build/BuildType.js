@@ -8,6 +8,7 @@ class BuildType extends React.Component {
 
   static propTypes = {
     build: React.PropTypes.string.isRequired,
+    store: React.PropTypes.object.isRequired,
   };
 
   select = () => {
