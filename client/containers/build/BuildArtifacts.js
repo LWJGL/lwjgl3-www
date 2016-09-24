@@ -6,8 +6,8 @@ import ControlledArtifact from '../../components/ControlledArtifact'
 class BuildArtifacts extends React.Component {
 
   static propTypes = {
-    store: React.PropTypes.object.isRequired
-  }
+    store: React.PropTypes.object
+  };
 
   render() {
     const store = this.props.store;

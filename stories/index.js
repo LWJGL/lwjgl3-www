@@ -5,25 +5,25 @@ import '../public/css/layout.css'
 import '../.storybook/storybook.css'
 
 // LWJGL
-import BuildStatus from '../client/app/components/BuildStatus';
-import Copyright from '../client/app/components/Copyright';
+import BuildStatus from '../client/components/BuildStatus';
+import Copyright from '../client/ui/Copyright';
 
 // UI
-import LoaderSpinner from '../client/app/components/LoaderSpinner';
+import LoaderSpinner from '../client/components/LoaderSpinner';
 
 // SVG Icons
-import FaApple from '../client/app/icons/apple';
-import FaAngleDown from '../client/app/icons/angle-down';
-import FaBars from '../client/app/icons/bars';
-import FaBook from '../client/app/icons/book';
-import FaClose from '../client/app/icons/close';
-import FaCogs from '../client/app/icons/cogs';
-import FaComments from '../client/app/icons/comments';
-import FaDesktop from '../client/app/icons/desktop';
-import FaGamepad from '../client/app/icons/gamepad';
-import FaGithub from '../client/app/icons/github';
-import FaPuzzlePiece from '../client/app/icons/puzzle-piece';
-import FaQuestionCircle from '../client/app/icons/question-circle';
+import FaApple from '../client/icons/apple';
+import FaAngleDown from '../client/icons/angle-down';
+import FaBars from '../client/icons/bars';
+import FaBook from '../client/icons/book';
+import FaClose from '../client/icons/close';
+import FaCogs from '../client/icons/cogs';
+import FaComments from '../client/icons/comments';
+import FaDesktop from '../client/icons/desktop';
+import FaGamepad from '../client/icons/gamepad';
+import FaGithub from '../client/icons/github';
+import FaPuzzlePiece from '../client/icons/puzzle-piece';
+import FaQuestionCircle from '../client/icons/question-circle';
 
 const storiesLWJGL = storiesOf('lwjgl.org', module);
 storiesLWJGL.addDecorator(withKnobs);

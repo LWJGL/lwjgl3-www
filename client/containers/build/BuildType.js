@@ -7,8 +7,8 @@ import classnames from 'classnames'
 class BuildType extends React.Component {
 
   static propTypes = {
+    store: React.PropTypes.object,
     build: React.PropTypes.string.isRequired,
-    store: React.PropTypes.object.isRequired,
   };
 
   select = () => {

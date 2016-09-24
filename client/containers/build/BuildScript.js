@@ -5,7 +5,7 @@ import {observer} from 'mobx-react'
 class BuildScript extends React.Component {
 
   static propTypes = {
-    store: React.PropTypes.object.isRequired
+    store: React.PropTypes.object
   };
 
   copyToClipboard = () => {

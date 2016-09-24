@@ -7,7 +7,7 @@ const config = {
     main: [
       'babel-polyfill',
       'whatwg-fetch',
-      path.resolve(__dirname, 'client/app/main.js')
+      path.resolve(__dirname, 'client/main.js')
     ]
   },
   output: {

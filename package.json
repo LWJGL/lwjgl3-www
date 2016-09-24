@@ -118,6 +118,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
+    "start-production": "cross-env NODE_ENV=production node server",
     "watch": "nodemon --watch server --exec node server",
     "js-build": "cross-env NODE_ENV=development webpack --progress --color",
     "js-production": "cross-env NODE_ENV=production webpack --progress --color --json > manifest-js.json",

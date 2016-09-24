@@ -71,8 +71,8 @@ function asyncRoute(getComponent) {
   }
 }
 
-export const Home = asyncRoute(() => System.import('./home'));
-export const Download = asyncRoute(() => System.import('./download'));
-export const Guide = asyncRoute(() => System.import('./guide'));
-export const Source = asyncRoute(() => System.import('./source'));
-export const License = asyncRoute(() => System.import('./license'));
+export const Home = asyncRoute(() => System.import('./home/index'));
+export const Download = asyncRoute(() => System.import('./download/index'));
+export const Guide = asyncRoute(() => System.import('./guide/index'));
+export const Source = asyncRoute(() => System.import('./source/index'));
+export const License = asyncRoute(() => System.import('./license/index'));

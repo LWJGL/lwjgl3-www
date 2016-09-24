@@ -1,7 +1,6 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {AppContainer} from 'react-hot-loader'
-// import useScroll from 'react-router-scroll/lib/useScroll';
 import {StyleSheet} from 'aphrodite/no-important'
 import nprogress from 'nprogress'
 

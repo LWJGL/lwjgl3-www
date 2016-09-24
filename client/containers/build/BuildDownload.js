@@ -5,8 +5,8 @@ import {observer} from 'mobx-react'
 class BuildDownload extends React.Component {
 
   static propTypes = {
-    store: React.PropTypes.object.isRequired
-  }
+    store: React.PropTypes.object
+  };
 
   render() {
     const store = this.props.store;
