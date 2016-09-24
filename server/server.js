@@ -1,4 +1,7 @@
+/* eslint-disable no-console */
+
 // Server
+import fs from 'fs'
 import path from 'path'
 import express from 'express'
 import favicon from 'serve-favicon'
@@ -11,8 +14,9 @@ import {renderToString} from 'react-dom/server'
 import { ServerRouter, createServerRenderContext } from 'react-router'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
-const reactCache = {};
 import Layout from '../client/app/ui/Layout'
+const reactCache = {};
+let chunks = '{}';
 
 // Routes & helpers
 import teamcity from './teamcity';  // For proxying requests to TeamCity
@@ -73,7 +77,7 @@ if ( app.locals.development ) {
     heartbeat: 10 * 1000,
   }));
 
-  app.locals.bundle = 'bundle.js';
+  app.locals.bundle = 'main.js';
   app.locals.css = 'layout.css';
 
   // Device type detection
@@ -83,6 +87,7 @@ if ( app.locals.development ) {
 
 } else {
 
+  chunks = fs.readFileSync(path.join(__dirname, '../public/js', 'manifest.json'));
   app.locals.bundle = config.manifest.js;
   app.locals.css = config.manifest.css;
 
@@ -128,6 +133,7 @@ app.get('*', (req, res, next) => {
     res.render('index', {
       html,
       head,
+      chunks,
       chunk,
       bodyClass,
       aphrodite: css,
@@ -189,6 +195,7 @@ app.get('*', (req, res, next) => {
   res.render('index', {
     html,
     head,
+    chunks,
     chunk,
     bodyClass,
     aphrodite: css,
@@ -199,6 +206,7 @@ app.get('*', (req, res, next) => {
 
 // Page not found
 
+// eslint-disable-next-line
 app.use((req, res, next) => {
   res.status(404);
 
@@ -216,7 +224,7 @@ app.use((req, res, next) => {
 });
 
 // Error page
-
+// eslint-disable-next-line
 app.use((err, req, res, next) => {
   res.status(500);
 

@@ -12,8 +12,8 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'public/js'),
-    filename: '[chunkhash].js',
-    chunkFilename: '[chunkhash].js',
+    filename: '[name].js',
+    chunkFilename: '[name].[id].js',
     publicPath: '/js/'
   },
   module: {
@@ -28,11 +28,7 @@ const config = {
       }
     ]
   },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': process.env.NODE_ENV ? JSON.stringify(process.env.NODE_ENV) : JSON.stringify('development')
-    })
-  ]
+  plugins: []
 };
 
 if ( process.env.NODE_ENV !== 'production' ) {
@@ -42,13 +38,18 @@ if ( process.env.NODE_ENV !== 'production' ) {
   // config.devtool = 'eval-source-map';
 
   // WebPack Hot Middleware client & HMR plugins
-  config.entry.main.unshift('react-hot-loader/patch');
-  config.entry.main.unshift('webpack-hot-middleware/client');
-  config.plugins.push(new webpack.HotModuleReplacementPlugin());
-  config.plugins.push(new webpack.NoErrorsPlugin());
+  config.entry.main.unshift(
+    'webpack-hot-middleware/client',
+    'react-hot-loader/patch'
+  );
 
-  // Avoid having to parse a manifest in dev mode
-  config.output.filename = 'bundle.js';
+  config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development')
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin()
+  );
 
   // Uncomment me to test async routes
   // WARNING: Breaks routes hot reloading!
@@ -56,18 +57,35 @@ if ( process.env.NODE_ENV !== 'production' ) {
 
 } else {
 
-  config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
+  config.output.filename = '[name].[chunkhash].js';
+  config.output.chunkFilename = '[name].[chunkhash].js';
 
-  // Put loaders in minification mode
+  const WebpackMd5Hash = require('webpack-md5-hash');
+  const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+
   config.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
-    })
-  );
-
-  // minify
-  config.plugins.push(
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
+    new webpack.NormalModuleReplacementPlugin(
+      /^\.\.\/routes\/Routes$/,
+      '../routes/RoutesAsync'
+    ),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "main",
+      minChunks: Infinity,
+    }),
+    new WebpackMd5Hash(),
+    new ChunkManifestPlugin({
+      filename: 'manifest.json',
+      manifestVariable: "manifest",
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       mangle: {

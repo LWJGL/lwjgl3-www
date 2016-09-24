@@ -11,6 +11,7 @@ const manifestCss = require('../manifest-css.json');
  *  Update config.json with chunk paths for preloading
  */
 const config = require('../config.json');
+const chunkManifest = require('../public/js/manifest.json');
 const configUpdated = Object.assign({}, config);
 
 // Update config.js by populating entry points for JS & CSS
@@ -19,6 +20,7 @@ console.log('Updating JS & CSS entry points');
 configUpdated.manifest = {
   js: manifestJs.assetsByChunkName.main,
   css: manifestCss['layout.css'],
+  chunks: chunkManifest,
 };
 
 configUpdated.routes = {};
@@ -53,7 +55,7 @@ fs.writeFileSync('./config.json', JSON.stringify(configUpdated, null, 2));
 
 const optimizeJs = require('optimize-js');
 
-manifestJs.assets.forEach(asset => {
+manifestJs.assets.filter(asset => asset.chunks.length > 0).forEach(asset => {
   const filename = `./public/js/${asset.name}`;
 
   console.log(`Optimizing ${filename}`);

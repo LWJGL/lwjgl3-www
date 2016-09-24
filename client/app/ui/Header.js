@@ -9,14 +9,14 @@ let ios = false;
 
 export default class Header extends React.Component {
 
-  prev: number = 0;
-  current: number = 0;
-  flip: number = 0;
-  fixed: boolean = false;
-  direction: number = 0;
-  ticking: boolean = false;
-  offsetHeight: number = 0;
-  el: HTMLElement;
+  prev = 0;
+  current = 0;
+  flip = 0;
+  fixed = false;
+  direction = 0;
+  ticking = false;
+  offsetHeight = 0;
+  el;
 
   static propTypes = {
     isHome: React.PropTypes.bool.isRequired
