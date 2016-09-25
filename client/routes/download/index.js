@@ -2,9 +2,7 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router'
 
-import { Provider } from 'mobx-react'
 import BuildContainer from '../../containers/build'
-import buildsStore from '../../containers/build/BuildsStore'
 
 const DownloadRoute = () => (
   <main>
@@ -21,9 +19,7 @@ const DownloadRoute = () => (
       <h1>Download LW<b>JGL</b> 3</h1>
 
       <p>Select a build to begin configuring your download:</p>
-      <Provider store={buildsStore}>
-        <BuildContainer />
-      </Provider>
+      <BuildContainer />
     </section>
 
     <div className="area-dark p-y-2">

@@ -14,7 +14,7 @@ import {renderToString} from 'react-dom/server'
 import { ServerRouter, createServerRenderContext } from 'react-router'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
-import Layout from '../client/ui/Layout'
+import Layout from '../client/containers/Root'
 const reactCache = {};
 let chunks = '{}';
 

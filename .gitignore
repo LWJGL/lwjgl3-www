@@ -1,3 +1,5 @@
+.DS_Store
+*.log
 
 # WebStorm/IntelliJ project files
 .idea
@@ -5,7 +7,6 @@
 
 # Node
 node_modules
-npm-debug*
 
 # Configuration files
 config.json

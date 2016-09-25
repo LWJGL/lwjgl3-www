@@ -1,11 +1,11 @@
 import React from 'react'
 import {BrowserRouter} from 'react-router'
-import Layout from './Layout'
+import Root from './Root'
 
 const App = () => (
   <BrowserRouter>
     {
-      ({ location/*, router*/ }) => <Layout location={location} />
+      ({ location/*, router*/ }) => <Root location={location} />
     }
   </BrowserRouter>
 );

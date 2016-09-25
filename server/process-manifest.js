@@ -59,5 +59,9 @@ manifestJs.assets.filter(asset => asset.chunks.length > 0).forEach(asset => {
   const filename = `./public/js/${asset.name}`;
 
   console.log(`Optimizing ${filename}`);
-  fs.writeFileSync(filename, optimizeJs(fs.readFileSync(filename, {encoding:'utf-8'})));
+  fs.writeFileSync(
+    filename,
+    // `"use strict";${optimizeJs(fs.readFileSync(filename, {encoding:'utf-8'})).replace(/["]use strict["][;]/g, '')}`
+    optimizeJs(fs.readFileSync(filename, {encoding:'utf-8'}))
+  );
 });
