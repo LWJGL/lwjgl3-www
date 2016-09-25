@@ -1,0 +1,2 @@
+export const SELECT_TYPE = 'BUILD/SELECT_TYPE';
+export const SELECT_MODE = 'BUILD/SELECT_MODE';

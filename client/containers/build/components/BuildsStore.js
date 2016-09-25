@@ -1,5 +1,5 @@
 import {observable, action, computed} from 'mobx';
-import config from '../../../common/BuildConfig'
+import config from '../../../../common/BuildConfig'
 
 function buildCollection(presetArr) {
   const obj = {};

@@ -1,3 +1,12 @@
 [ignore]
-.*/node_modules/fbjs/.*
-.*/node_modules/react-side-effect/.*
+.*/node_modules/fbjs
+.*/node_modules/react-side-effect
+.*/public
+.*/stories
+.*/.storybook
+
+[include]
+
+[libs]
+
+[options]

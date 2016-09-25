@@ -6,7 +6,7 @@ import '../.storybook/storybook.css'
 
 // LWJGL
 import BuildStatus from '../client/components/BuildStatus';
-import Copyright from '../client/ui/Copyright';
+import Copyright from '../client/components/Copyright';
 
 // UI
 import LoaderSpinner from '../client/components/LoaderSpinner';

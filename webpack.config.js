@@ -37,6 +37,8 @@ if ( process.env.NODE_ENV !== 'production' ) {
   // config.devtool = 'cheap-module-eval-source-map';
   // config.devtool = 'eval-source-map';
 
+  config.entry.main[config.entry.main.length-1] = path.resolve(__dirname, 'client/main.dev.js');
+
   // WebPack Hot Middleware client & HMR plugins
   config.entry.main.unshift(
     'webpack-hot-middleware/client',
@@ -47,6 +49,10 @@ if ( process.env.NODE_ENV !== 'production' ) {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development')
     }),
+    new webpack.NormalModuleReplacementPlugin(
+      /^\.\.\/store\/configureStore$/,
+      '../store/configureStore.dev'
+    ),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
   );
@@ -64,12 +70,12 @@ if ( process.env.NODE_ENV !== 'production' ) {
   const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 
   config.plugins.push(
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('production')
+    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
-    }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
     }),
     new webpack.NormalModuleReplacementPlugin(
       /^\.\.\/routes\/Routes$/,

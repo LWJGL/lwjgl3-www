@@ -1,5 +1,6 @@
 import React from 'react'
 import {render} from 'react-dom'
+import {AppContainer} from 'react-hot-loader'
 import {StyleSheet} from 'aphrodite/no-important'
 import nprogress from 'nprogress'
 
@@ -24,4 +25,19 @@ const rootEl = document.getElementById('lwjgl-app');
 
 preserver.store(document.getElementById('lwjgl-routes').innerHTML);
 
-render(<App />, rootEl);
+render((
+  <AppContainer>
+    <App />
+  </AppContainer>
+), rootEl);
+
+if ( module.hot ) {
+  module.hot.accept('./containers/App', () => {
+    render(
+      <AppContainer>
+        <App />
+      </AppContainer>,
+      rootEl
+    );
+  });
+}
