@@ -75,7 +75,7 @@
     "express-device": "0.4.2",
     "fg-loadcss": "1.2.0",
     "fg-loadjs": "1.0.0",
-    "focus-trap": "2.0.1",
+    "focus-trap": "2.0.2",
     "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "3.1.1",
     "gulp-cssmin": "0.1.7",
@@ -112,7 +112,7 @@
     "flow-bin": "0.32.0",
     "react-hot-loader": "3.0.0-beta.5",
     "redux-logger": "2.6.1",
-    "webpack-dev-middleware": "1.8.2",
+    "webpack-dev-middleware": "1.8.3",
     "webpack-hot-middleware": "2.12.2"
   },
   "scripts": {

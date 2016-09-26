@@ -10,18 +10,16 @@ import Panel from '../../components/Panel'
 // import ControlledRadio from '../../components/ControlledRadio'
 // import ControlledCheckbox from '../../components/ControlledCheckbox'
 
-const panels = {
-  type: state => state.build.buildType !== null,
-  language: state => state.build.mode === 'gradle',
-  natives: state => state.build.mode !== 'zip',
-  version: state => state.build.buildType === 'release',
-  contentsClass: state => classnames("col-xs-12", {
+const isBuildSelected = state => state.build.build !== null;
+const isModeGradle = state => state.build.mode === 'gradle';
+const isModeNotZip = state => state.build.mode !== 'zip';
+const isBuildRelease = state => state.build.buildType === 'release';
+const getContentsClass = state => classnames("col-xs-12", {
     "col-lg-3": state.build.mode !== 'zip',
     "col-lg-5": state.build.mode === 'zip'
-  })
-};
+  });
 
-const BuildContainer = (props) => (
+const BuildContainer = props => (
   <div>
     <div className="row">
       <div className="col-lg-4 col-xs-12">
@@ -34,13 +32,13 @@ const BuildContainer = (props) => (
         <BuildType build="nightly"/>
       </div>
     </div>
-    <Panel className="row" predicate={panels.type}>
+    <Panel className="row" predicate={isBuildSelected}>
       <div className="col-xs-12">
         <div className="build-config">
           <div className="row">
             <div className="col-xs-12 col-lg-3">
               <h2 className="m-y-1">Mode</h2>
-              {/*<ControlledRadio name="mode"/>*/}
+              {/*<ControlledRadio name="mode" />*/}
 
               <h2 className="m-b-1">Presets</h2>
               {/*<ControlledRadio name="preset"/>*/}
@@ -52,23 +50,23 @@ const BuildContainer = (props) => (
               {/*<ControlledCheckbox name="compact"/>*/}
               {/*<ControlledCheckbox name="hardcoded"/>*/}
 
-              <Panel predicate={panels.language}>
+              <Panel predicate={isModeGradle}>
                 <h2 className="m-b-1">Language</h2>
                 {/*<ControlledRadio name="language"/>*/}
               </Panel>
 
-              <Panel predicate={panels.natives}>
+              <Panel predicate={isModeNotZip}>
                 <h2 className="m-b-1">Natives</h2>
                 {/*<ControlledRadio name="natives"/>*/}
               </Panel>
 
-              <Panel predicate={panels.version}>
+              <Panel predicate={isBuildRelease}>
                 <h2 className="m-b-1">Version</h2>
                 {/*<ControlledRadio name="version"/>*/}
               </Panel>
             </div>
 
-            <Panel getClassName={panels.contentsClass}>
+            <Panel getClassName={getContentsClass}>
               <h2 className="m-y-1">Contents</h2>
               {/*<BuildArtifacts />*/}
             </Panel>

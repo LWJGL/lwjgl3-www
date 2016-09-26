@@ -2,15 +2,14 @@ import React, { PropTypes } from 'react'
 import BuildStatus from '../../../components/BuildStatus'
 import classnames from 'classnames'
 
-import config from '../../../../common/BuildConfig'
-
 import { connect } from 'react-redux'
 import { changeType } from '../actions'
 
 @connect(
   (state, ownProps) => ({
-    isSelected: state.build.buildType === ownProps.build,
-    isActive: state.browser.lessThan.lg && state.build.buildType !== null,
+    isSelected: state.build.build === ownProps.build,
+    isActive: state.browser.lessThan.lg && state.build.build !== null,
+    spec: state.build.builds[ownProps.build]
   }),
   dispatch => ({
     changeType: buildType => dispatch(changeType(buildType))
@@ -24,14 +23,17 @@ class BuildType extends React.Component {
     changeType: PropTypes.func,
   };
 
+  static contextTypes = {
+    store: React.PropTypes.object.isRequired
+  };
+
   select = () => {
     const { isSelected, build, changeType } = this.props;
     changeType(!isSelected ? build : null);
   };
 
   render() {
-    const { isSelected, isActive, build } = this.props;
-    const spec = config.builds[build];
+    const { isSelected, isActive, build, spec } = this.props;
 
     return (
       <div onClick={this.select} className={classnames('build', build, {'selected': isSelected, 'active': isActive})}>

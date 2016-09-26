@@ -1,9 +1,7 @@
 import React from 'react'
-import {observer} from 'mobx-react'
 import RadioGroup from './RadioGroup'
 import Radio from './Radio'
 
-@observer(['store'])
 class ControlledRadio extends React.Component {
 
   static propTypes = {
