@@ -1,5 +1,10 @@
 const webpack = require('webpack');
 const path = require('path');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+
+const PRODUCTION = process.env.NODE_ENV === 'production';
+const DEV = !PRODUCTION;
 
 const config = {
   target: 'web',
@@ -7,13 +12,15 @@ const config = {
     main: [
       'babel-polyfill',
       'whatwg-fetch',
-      path.resolve(__dirname, 'client/main.js')
+      DEV ? path.resolve(__dirname, 'client/main.dev.js') : path.resolve(__dirname, 'client/main.js')
     ]
   },
+  // devtool: DEV ? 'eval' : undefined,
+  // devtool: '#inline-source-map',
   output: {
     path: path.resolve(__dirname, 'public/js'),
-    filename: '[name].js',
-    chunkFilename: '[name].[id].js',
+    filename: DEV ? '[name].js' : '[name].[chunkhash].js',
+    chunkFilename: DEV ? '[name].[id].js' : '[name].[chunkhash].js',
     publicPath: '/js/'
   },
   module: {
@@ -28,16 +35,14 @@ const config = {
       }
     ]
   },
-  plugins: []
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production')
+    })
+  ]
 };
 
-if ( process.env.NODE_ENV !== 'production' ) {
-
-  config.devtool = 'eval';
-  // config.devtool = 'cheap-module-eval-source-map';
-  // config.devtool = 'eval-source-map';
-
-  config.entry.main[config.entry.main.length-1] = path.resolve(__dirname, 'client/main.dev.js');
+if ( DEV ) {
 
   // WebPack Hot Middleware client & HMR plugins
   config.entry.main.unshift(
@@ -46,9 +51,6 @@ if ( process.env.NODE_ENV !== 'production' ) {
   );
 
   config.plugins.push(
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
-    }),
     new webpack.NormalModuleReplacementPlugin(
       /^\.\.\/store\/configureStore$/,
       '../store/configureStore.dev'
@@ -63,16 +65,10 @@ if ( process.env.NODE_ENV !== 'production' ) {
 
 } else {
 
-  config.output.filename = '[name].[chunkhash].js';
-  config.output.chunkFilename = '[name].[chunkhash].js';
-
   const WebpackMd5Hash = require('webpack-md5-hash');
   const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 
   config.plugins.push(
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
-    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
@@ -130,4 +126,76 @@ if ( process.env.NODE_ENV !== 'production' ) {
 
 }
 
-module.exports = config;
+const sassConfig = {
+  target: 'web',
+  entry: {
+    bundle: [
+      path.resolve(__dirname, 'client/styles/layout.scss')
+    ]
+  },
+  output: {
+    path: path.resolve(__dirname, 'public/css'),
+    filename: '[name].css',
+    chunkFilename: '[name].[id].js',
+    publicPath: '/css/'
+  },
+  devtool: DEV ? 'inline-source-map' : undefined,
+  module: {
+    rules: [
+      {
+        test: /\.scss?$/,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: "style-loader",
+          loader: [
+            {
+              loader: "css-loader",
+              query: {
+                sourceMap: DEV,
+                safe: true,
+                discardComments: {
+                 removeAll: true
+                }
+              }
+            },
+            {
+              loader: 'postcss-loader'
+            },
+            {
+              loader: 'sass-loader',
+              query: {
+                sourceMap: DEV,
+                outputStyle: 'compact',
+                precision: 6
+              }
+            }
+          ]
+        })
+      }
+    ]
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production')
+    }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: PRODUCTION,
+      debug: false,
+      options: {
+        context: __dirname,
+        postcss: [
+          autoprefixer({
+            remove: false,
+            browsers: [
+              '> 4%'
+            ]
+          })
+        ]
+      }
+    }),
+    new ExtractTextPlugin({
+      filename: DEV ? 'styles.css' : '[chunkhash].css'
+    })
+  ]
+};
+
+module.exports = [config, sassConfig];

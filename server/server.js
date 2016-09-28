@@ -65,7 +65,6 @@ if ( app.locals.development ) {
 
   app.use(require('webpack-dev-middleware')(webpackCompiler, {
     noInfo: true,
-    publicPath: webpackConfig.output.publicPath,
     stats: {
       colors: true,
       reasons: false,
@@ -78,7 +77,7 @@ if ( app.locals.development ) {
   }));
 
   app.locals.bundle = 'main.js';
-  app.locals.css = 'layout.css';
+  app.locals.css = 'styles.css';
 
   // Device type detection
   // On production we rely on Cloudfront to get this information for free
