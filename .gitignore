@@ -13,7 +13,6 @@ config.json
 forever.json
 
 # Generated files
-manifest-js.json
-manifest-css.json
+manifest.json
 public/css/*
 public/js/*

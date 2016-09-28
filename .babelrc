@@ -42,8 +42,6 @@
         "loose": true
       }
     ],
-    "transform-es2015-sticky-regex",
-    "transform-es2015-unicode-regex",
     "check-es2015-constants",
     [
       "transform-es2015-spread",

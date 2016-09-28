@@ -115,7 +115,6 @@ local NGINX.
 
 ```bash
 npm i
-npm styles
 npm start
 ```
 
@@ -124,12 +123,6 @@ auto-restart with nodemon:
 
 ```bash
 npm run watch
-```
-
-Styles can be monitored for changes and automatically re-compiled with:
-
-```bash
-npm styles-watch
 ```
 
 # Production
@@ -206,7 +199,7 @@ npm i
 npm run production
 ```
 
-To run the production build
+To run the production build ( in *nix )
 
 ```bash
 NODE_ENV=production node server
@@ -216,6 +209,10 @@ or
 
 ```bash
 node server --production
+```
+
+```bash
+npm run start-production
 ```
 
 ### Run in production with PM2

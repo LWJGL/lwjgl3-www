@@ -1,7 +1,7 @@
 import React from 'react';
 import { storiesOf, action, linkTo } from '@kadira/storybook';
 import { withKnobs, text, boolean, number } from '@kadira/storybook-addon-knobs';
-import '../public/css/layout.css'
+import '../public/css/styles.css'
 import '../.storybook/storybook.css'
 
 // LWJGL
