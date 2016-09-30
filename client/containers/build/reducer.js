@@ -1,62 +1,19 @@
 import * as $ from './actionTypes'
+import config from './config'
 
-const BUILD_RELEASE = 'release';
-const BUILD_STABLE = 'stable';
-const BUILD_NIGHTLY = 'nightly';
-const BUILD_ALL = [BUILD_RELEASE, BUILD_STABLE, BUILD_NIGHTLY];
+import {
+  BUILD_RELEASE,
+  BUILD_STABLE,
+  BUILD_NIGHTLY,
+  NATIVE_MAC,
+  NATIVE_WIN,
+  NATIVE_LINUX,
+  MODE_ZIP,
+  MODE_MAVEN,
+  MODE_GRADLE,
+} from './constants'
 
-const NATIVE_MAC = 'macos';
-const NATIVE_WIN = 'windows';
-const NATIVE_LINUX = 'linux';
-const NATIVE_ALL = [NATIVE_MAC, NATIVE_WIN, NATIVE_LINUX];
-
-const MODE_ZIP = 'zip';
-const MODE_MAVEN = 'maven';
-const MODE_GRADLE = 'gradle';
-
-const config = {
-
-  // Domain State
-
-  builds: {
-    [BUILD_RELEASE]: {
-      title: 'Release',
-      description: 'Latest official release',
-      job: 'lwjgl_Release',
-    },
-    [BUILD_STABLE]: {
-      title: 'Stable',
-      description: 'Beta quality, verified to work',
-      job: 'LwjglReleases_NightlyToStable',
-    },
-    [BUILD_NIGHTLY]: {
-      title: 'Nightly',
-      description: 'Bleeding edge, possibly broken',
-      job: 'lwjgl_Bundle',
-    },
-  },
-  modes: {
-    [MODE_ZIP]: "ZIP",
-    [MODE_MAVEN]: "Maven",
-    [MODE_GRADLE]: "Gradle",
-  },
-
-  // UI State
-
-  error: null,
-  // build: null,
-  build: BUILD_NIGHTLY,
-  mode: MODE_ZIP,
-  // mode: MODE_MAVEN,
-  descriptions: false,
-  compact: false,
-  hardcoded: false,
-  javadoc: false,
-  source: false,
-
-};
-
-const getError = (state, message, severity = "danger") => ({...state, error: {message, severity,}});
+// const getError = (state, message, severity = "danger") => ({...state, error: {message, severity,}});
 
 export default function buildConfigurator(state = config, action) {
   const {type, ...data} = action;
@@ -79,8 +36,8 @@ export default function buildConfigurator(state = config, action) {
 
     case $.TOGGLE_JAVADOC:
       if ( state.mode !== MODE_ZIP ) {
-        // return { ...state, error: getError('Javadoc not available') }
-        return getError(state, 'Javadoc not available');
+        // return getError(state, 'Javadoc not available');
+        return state;
       }
       return {...state, ...data};
 
@@ -90,6 +47,27 @@ export default function buildConfigurator(state = config, action) {
     case $.ERROR_SET:
       return {...state, ...data};
 
+    case $.SELECT_PRESET:
+      return {...state, ...data};
+
+    case $.SELECT_LANGUAGE:
+      if ( data.language !== 'groovy' ) {
+        // not implemented
+        return state;
+      }
+      return {...state, ...data};
+
+    case $.SELECT_PLATFORM:
+      return {...state, ...data};
+
+    case $.SELECT_VERSION:
+      return {...state, ...data};
+
+    case $.TOGGLE_ARTIFACT:
+      if ( data.artifact === 'lwjgl' ) {
+        return state;
+      }
+      return {...state, contents: { ...state.contents, [data.artifact]: true }};
   }
 
   return state;

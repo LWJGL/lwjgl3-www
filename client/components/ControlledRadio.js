@@ -1,25 +1,46 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
 import RadioGroup from './RadioGroup'
 import Radio from './Radio'
 
+@connect(
+  (state, ownProps) => {
+    const spec = ownProps.spec;
+
+    return {
+      name: spec.name,
+      value: spec.value(state, ownProps),
+      hidden: spec.hidden ? spec.hidden(state, ownProps) : false,
+      options: spec.options(state, ownProps)
+    }
+  },
+  (dispatch, ownProps) => ({
+    handleChange: value => dispatch(ownProps.spec.action(value))
+  })
+)
 class ControlledRadio extends React.Component {
 
   static propTypes = {
-    name: React.PropTypes.string.isRequired,
+    spec: PropTypes.shape({
+      name: PropTypes.string,
+      value: PropTypes.func,
+      hidden: PropTypes.func,
+      options: PropTypes.func,
+    })
   };
 
   select = (value) => {
-    this.props.store.setOption(this.props.name, value);
+    this.props.handleChange(value);
   };
 
   render() {
-    const radios = this.props.store.getOptions(this.props.name);
+    const props = this.props;
 
     return (
-      <RadioGroup name={this.props.name} value={this.props.store[this.props.name]} onChange={this.select}>
+      <RadioGroup name={props.name} value={props.value} onChange={this.select}>
         {
-          radios.map(
-            (radio, i) => <Radio key={`${this.props.name}${i}`} value={radio.value} label={radio.label} disabled={radio.disabled} />
+          props.options.map(
+            (radio, i) => <Radio key={`${props.name}${i}`} value={radio.value} label={radio.label} disabled={radio.disabled} />
           )
         }
       </RadioGroup>

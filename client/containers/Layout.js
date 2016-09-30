@@ -10,12 +10,12 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Copyright from '../components/Copyright'
 
-const Layout = ({location, store}) => {
+const Layout = props => {
 
-  const isHomepage = location.pathname === '/';
+  const isHomepage = props.location.pathname === '/';
 
   return (
-    <Provider store={store}>
+    <Provider store={props.store}>
       <div className={!isHomepage ? 'menu-pad' : null}>
         <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
         <Header isHome={isHomepage} />

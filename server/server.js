@@ -14,7 +14,10 @@ import {renderToString} from 'react-dom/server'
 import { ServerRouter, createServerRenderContext } from 'react-router'
 import Helmet from 'react-helmet'
 import {StyleSheetServer} from 'aphrodite/no-important'
-import Layout from '../client/containers/Root'
+import configureStore from '../client/store/configureStore'
+import Layout from '../client/containers/Layout'
+
+const store = configureStore();
 const reactCache = {};
 let chunks = '{}';
 
@@ -60,11 +63,12 @@ app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 if ( app.locals.development ) {
 
   const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config');
+  const webpackConfig = require('../webpack.js.config');
   const webpackCompiler = webpack(webpackConfig);
 
   app.use(require('webpack-dev-middleware')(webpackCompiler, {
     noInfo: true,
+    publicPath: webpackConfig.output.publicPath,
     stats: {
       colors: true,
       reasons: false,
@@ -122,6 +126,13 @@ app.get('*', (req, res, next) => {
   // The only reason we need this is to avoid rendering the homepage video in mobile devices
   let bodyClass = getDevice(req);
 
+  // Uncomment to skip server-side rendering
+  // res.render('index', {
+  //   bodyClass,
+  //   ie: req.get('user-agent').indexOf('MSIE') > -1,
+  // });
+  // return;
+
   let html, css, head, chunk;
 
   if ( reactCache[req.path] !== undefined ) {
@@ -148,7 +159,7 @@ app.get('*', (req, res, next) => {
         location={req.url}
         context={context}
       >
-        {({ location }) => <Layout location={location} />}
+        {({ location }) => <Layout location={location} store={store} />}
       </ServerRouter>
     )
   ));
