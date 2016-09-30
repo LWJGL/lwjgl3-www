@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react'
+import React from 'react'
 import BuildStatus from '../../../components/BuildStatus'
 import classnames from 'classnames'
 
@@ -9,7 +9,7 @@ import { changeType } from '../actions'
   (state, ownProps) => ({
     isSelected: state.build.build === ownProps.build,
     isActive: state.browser.lessThan.lg && state.build.build !== null,
-    spec: state.build.builds[ownProps.build]
+    spec: state.build.builds.byId[ownProps.build]
   }),
   dispatch => ({
     changeType: buildType => dispatch(changeType(buildType))
@@ -18,15 +18,7 @@ import { changeType } from '../actions'
 class BuildType extends React.Component {
 
   static propTypes = {
-    build: PropTypes.string.isRequired,
-    isSelected: PropTypes.bool,
-    changeType: PropTypes.func,
-    isActive: PropTypes.bool,
-    spec: PropTypes.object,
-  };
-
-  static contextTypes = {
-    store: React.PropTypes.object.isRequired
+    build: React.PropTypes.string.isRequired
   };
 
   select = () => {

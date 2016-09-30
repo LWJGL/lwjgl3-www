@@ -1,13 +1,17 @@
 import React from 'react'
 import {BrowserRouter} from 'react-router'
-import Root from './Root'
+import Layout from './Layout'
 
-const App = () => (
+const App = props => (
   <BrowserRouter>
     {
-      ({ location/*, router*/ }) => <Root location={location} />
+      ({ location/*, router*/ }) => <Layout location={location} store={props.store} />
     }
   </BrowserRouter>
 );
+
+App.propTypes = {
+  store: React.PropTypes.object.isRequired
+};
 
 export default App;

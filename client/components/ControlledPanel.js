@@ -1,38 +1,41 @@
-import React from 'react'
-import {observer} from 'mobx-react'
+import React, {PropTypes} from 'react'
+import {connect} from 'react-redux'
 
-@observer(['store'])
-class ControlledPanel extends React.Component {
+@connect(
+  (state, props) => {
+    const map = {};
+
+    if ( props.predicate && !props.predicate(state) ) {
+      map.style = { ...props.style, display: 'none'};
+    }
+
+    if ( props.getClassName ) {
+      map.className = props.getClassName(state);
+    }
+
+    return map;
+  },
+  () => ({})
+)
+class Panel extends React.Component {
 
   static propTypes = {
-    visible: React.PropTypes.func.isRequired,
-    getClassName: React.PropTypes.func,
-  };
-
-  static defaultProps = {
-    visible: () => true
+    predicate: PropTypes.func,
+    getClassName: PropTypes.func,
+    className: PropTypes.string,
+    style: PropTypes.object,
   };
 
   render() {
-    const { visible, children, store, getClassName, ...rest } = this.props;
-
-    if ( !visible(store) ) {
-      rest.style = {
-        display: 'none'
-      };
-    }
-
-    if ( typeof getClassName === 'function' ) {
-      rest.className = getClassName(store);
-    }
+    const { children, predicate, getClassName, ...rest } = this.props;
 
     return (
       <div {...rest}>
         {children}
       </div>
-    )
+    );
   }
 
 }
 
-export default ControlledPanel
+export default Panel

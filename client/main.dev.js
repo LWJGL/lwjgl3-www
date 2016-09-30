@@ -3,9 +3,10 @@ import {render} from 'react-dom'
 import {AppContainer} from 'react-hot-loader'
 import {StyleSheet} from 'aphrodite/no-important'
 import nprogress from 'nprogress'
+import {calculateResponsiveState} from 'redux-responsive'
 
+import configureStore from './store/configureStore'
 import App from './containers/App'
-import preserver from './routes/Preserver'
 import './utils/ga'
 
 // Hide spinner from nprogress
@@ -14,28 +15,29 @@ nprogress.configure({
 });
 
 // Re-hydrate Aphrodite from server-generated class names
-if ( process.browser ) {
-  let rehydrateFrom = document.getElementById('aphro-hydrate');
-  if ( rehydrateFrom ) {
-    StyleSheet.rehydrate(JSON.parse(rehydrateFrom.innerHTML));
-  }
+const rehydrateFrom = document.getElementById('aphro-hydrate');
+if ( rehydrateFrom ) {
+  StyleSheet.rehydrate(JSON.parse(rehydrateFrom.innerHTML));
 }
 
+// Configure Redux store
+const store = configureStore();
+store.dispatch(calculateResponsiveState(window));
+
+// Render React
 const rootEl = document.getElementById('lwjgl-app');
-
-preserver.store(document.getElementById('lwjgl-routes').innerHTML);
-
 render((
   <AppContainer>
-    <App />
+    <App store={store} />
   </AppContainer>
 ), rootEl);
 
+// Hot Reloading
 if ( module.hot ) {
   module.hot.accept('./containers/App', () => {
     render(
       <AppContainer>
-        <App />
+        <App store={store} />
       </AppContainer>,
       rootEl
     );

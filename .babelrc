@@ -61,8 +61,7 @@
     [
       "transform-regenerator",
       {
-        "async": false,
-        "asyncGenerators": false
+        "async": false
       }
     ]
   ],
