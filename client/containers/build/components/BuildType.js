@@ -21,6 +21,8 @@ class BuildType extends React.Component {
     build: PropTypes.string.isRequired,
     isSelected: PropTypes.bool,
     changeType: PropTypes.func,
+    isActive: PropTypes.bool,
+    spec: PropTypes.object,
   };
 
   static contextTypes = {
