@@ -99,14 +99,14 @@
     "webpack": "2.1.0-beta.25",
     "webpack-md5-hash": "0.0.5",
     "whatwg-fetch": "1.0.0",
-    "yargs": "6.0.0-alpha.1"
+    "yargs": "6.0.0"
   },
   "devDependencies": {
     "@kadira/react-storybook-addon-info": "3.2.1",
     "@kadira/storybook": "2.20.1",
     "@kadira/storybook-addon-knobs": "1.2.3",
     "babel-eslint": "7.0.0",
-    "eslint": "3.6.1",
+    "eslint": "3.7.0",
     "eslint-plugin-flowtype": "2.19.0",
     "eslint-plugin-react": "6.3.0",
     "flow-bin": "0.33.0",
