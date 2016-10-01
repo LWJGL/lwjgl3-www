@@ -7,10 +7,11 @@
     "transform-react-display-name",
     "transform-decorators-legacy",
     "transform-class-properties",
-    "transform-object-rest-spread",
     "syntax-trailing-function-commas",
     "transform-async-to-generator",
     "transform-exponentiation-operator",
+    "transform-async-generator-functions",
+    "transform-object-rest-spread",
     [
       "transform-es2015-template-literals",
       {
