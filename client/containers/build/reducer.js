@@ -3,14 +3,9 @@ import config from './config'
 
 import {
   BUILD_RELEASE,
-  BUILD_STABLE,
   BUILD_NIGHTLY,
-  NATIVE_MAC,
-  NATIVE_WIN,
-  NATIVE_LINUX,
   MODE_ZIP,
   MODE_MAVEN,
-  MODE_GRADLE,
 } from './constants'
 
 // const getError = (state, message, severity = "danger") => ({...state, error: {message, severity,}});
@@ -19,75 +14,150 @@ const selectBuild = (state, build) => {
   state.build = build;
   if ( build !== null ) {
     state.version = state.builds.byId[build].latest.join('.');
+
     if ( build !== BUILD_NIGHTLY ) {
-      state.mode = MODE_ZIP;
+      selectMode(state, MODE_ZIP);
     }
   }
 
   return state;
 };
 
-const toggleArtifact = (state, artifact) => {
-  state.contents[artifact] = !state.contents[artifact];
+const selectMode = (state, mode) => {
+  state.mode = mode;
+  if ( mode === MODE_ZIP && state.preset !== 'all' ) {
+    selectPreset(state, 'all');
+  }
+  return state;
+};
+
+const selectPreset = (state, preset) => {
+  state.preset = preset;
+
+  if ( preset !== 'custom' ) {
+    state.contents = {...state.contents};
+
+    Object.keys(state.contents).forEach(artifact => {
+      if ( artifact !== 'lwjgl' ) {
+        state.contents[artifact] = false;
+      }
+    });
+
+    state.presets.byId[preset].artifacts.forEach(artifact => {
+      state.contents[artifact] = true;
+    });
+  }
+
+  return state;
+};
+
+const toggleArtifact = (state, artifact, enabled) => {
+  state.contents = {...state.contents, [artifact]: enabled};
+
+  // MATCH PRESET
+  // collect selected artifacts in an Array
+  const selected = Object.keys(state.contents).filter(artifact => state.contents[artifact]);
+  // match selected artifacts with a preset
+  const presetFoundMatch = state.presets.allIds.some(preset => {
+    // ignore custom preset
+    if ( preset === 'custom' ) {
+      return false;
+    }
+    const artifacts = state.presets.byId[preset].artifacts;
+    // first check length for speed, then do deep comparison
+    if ( artifacts.length === selected.length && artifacts.every((item, i) => item === selected[i]) ) {
+      state.preset = preset;
+      return true;
+    }
+    return false;
+  });
+  // if we didn't get a match, set it to custom preset
+  if ( !presetFoundMatch ) {
+    state.preset = 'custom';
+  }
+
   return state;
 };
 
 export default function buildConfigurator(state = config, action) {
-  const {type, ...data} = action;
 
-  switch (type) {
+  switch (action.type) {
     case $.SELECT_TYPE:
-      if ( data.build !== state.build ) {
-        return selectBuild({...state}, data.build);
+      if ( action.build !== state.build ) {
+        return selectBuild({...state}, action.build);
       }
       break;
 
     case $.SELECT_MODE:
-      return {...state, ...data};
+      if ( state.build === BUILD_NIGHTLY && state.mode !== action.mode ) {
+        // For now, only allow nightly builds to select mode
+        return selectMode({...state}, action.mode);
+      }
+      break;
 
     case $.TOGGLE_DESCRIPTIONS:
-      return {...state, ...data};
+      return {...state, descriptions: action.descriptions};
 
     case $.TOGGLE_COMPACT:
-      return {...state, ...data};
+      if ( state.mode === MODE_MAVEN ) {
+        return {...state, compact: action.compact};
+      }
+      break;
 
     case $.TOGGLE_HARDCODED:
-      return {...state, ...data};
+      if ( state.mode !== MODE_ZIP ) {
+        return {...state, hardcoded: action.hardcoded};
+      }
+      break;
 
     case $.TOGGLE_JAVADOC:
-      if ( state.mode !== MODE_ZIP ) {
-        // return getError(state, 'Javadoc not available');
-        return state;
+      if ( state.mode === MODE_ZIP ) {
+        return {...state, javadoc: action.javadoc};
       }
-      return {...state, ...data};
+      break;
 
     case $.TOGGLE_SOURCE:
-      return {...state, ...data};
-
-    // case $.ERROR_SET:
-    //   return {...state, ...data};
+      if ( state.mode === MODE_ZIP ) {
+        return {...state, source: action.source};
+      }
+      break;
 
     case $.SELECT_PRESET:
-      return {...state, ...data};
+      if ( state.preset !== action.preset ) {
+        return selectPreset({...state}, action.preset);
+      }
+      break;
 
     case $.SELECT_LANGUAGE:
-      if ( data.language !== 'groovy' ) {
-        // not implemented
-        return state;
-      }
-      return {...state, ...data};
+      // not implemented
+      break;
+    // if ( state.language !== action.language) {
+    //   return {...state, language: action.language};
+    // }
+    // break;
 
     case $.SELECT_PLATFORM:
-      return {...state, ...data};
+      if ( state.mode !== MODE_ZIP && state.platform !== action.platform ) {
+        return {...state, platform: action.platform};
+      }
+      break;
 
     case $.SELECT_VERSION:
-      // build === BUILD_RELEASE && ( semver[0]*100+semver[1]*10+semver[2] > 300 )
-      return {...state, ...data};
+      if ( state.build === BUILD_RELEASE ) {
+        const latest = state.builds.byId[state.build].latest;
+        const semver = state.versions.byId[action.version].semver;
+
+        if ( semver[0] < latest[0] || semver[1] < latest[1] || semver[2] <= latest[2] ) {
+          return {...state, version: action.version};
+        }
+      }
+      break;
 
     case $.TOGGLE_ARTIFACT:
-      if ( data.artifact !== 'lwjgl' ) {
-        return toggleArtifact({...state}, data.artifact);
+      if ( action.artifact !== 'lwjgl' ) {
+        return toggleArtifact({...state}, action.artifact, action.enabled);
       }
+      break;
   }
 
   return state;

@@ -1,5 +1,4 @@
 import React from 'react'
-import classnames from 'classnames'
 import {createSelector} from 'reselect'
 
 import * as $$ from './actions'
@@ -12,15 +11,14 @@ import {
   MODE_GRADLE,
 } from './constants'
 
-import BuildType from './components/BuildType'
-import ControlledPanel from '../../components/ControlledPanel'
-import BuildArtifacts from './components/BuildArtifacts'
-// import BuildDownload from './BuildDownload'
-// import BuildScript from './BuildScript'
-// import ControlledPanel from '../../components/ControlledPanel'
-import ControlledRadio from '../../components/ControlledRadio'
 // import ControlledAlert from '../../components/ControlledAlert'
+import ControlledPanel from '../../components/ControlledPanel'
+import ControlledRadio from '../../components/ControlledRadio'
 import ControlledCheckbox from '../../components/ControlledCheckbox'
+import BuildType from './components/BuildType'
+import BuildArtifacts from './components/BuildArtifacts'
+import BuildDownload from './components/BuildDownload'
+import BuildScript from './components/BuildScript'
 
 const getMode = state => state.build.mode;
 const getBuild = state => state.build.build;
@@ -34,16 +32,6 @@ const isModeMaven = state => getMode(state) === MODE_MAVEN;
 const isModeZip = state => getMode(state) === MODE_ZIP;
 const isModeNotZip = state => getMode(state) !== MODE_ZIP;
 const isBuildRelease = state => getBuild(state) === BUILD_RELEASE;
-const getContentsClass = state => {
-  const isZip = isModeZip(state);
-  return classnames(
-    "col-xs-12",
-    {
-      "col-lg-3": !isZip,
-      "col-lg-5": isZip
-    }
-  )
-};
 
 const fields = {
   mode: {
@@ -52,12 +40,12 @@ const fields = {
     action: $$.changeMode,
     options: createSelector(
       state => state.build.modes,
-      state => state.build.build,
-      (modes, build) => modes.allIds.map(
+      state => state.build.build === BUILD_NIGHTLY,
+      (modes, isNightly) => modes.allIds.map(
         mode => ({
           value: mode,
           label: modes.byId[mode].title,
-          disabled: mode !== MODE_ZIP && build !== BUILD_NIGHTLY
+          disabled: mode !== MODE_ZIP && !isNightly,
         })
       )
     ),
@@ -68,10 +56,12 @@ const fields = {
     action: $$.changePreset,
     options: createSelector(
       state => state.build.presets,
-      presets => presets.allIds.map(
+      state => state.build.mode,
+      (presets, mode) => presets.allIds.map(
         preset => ({
           value: preset,
-          label: presets.byId[preset].title
+          label: presets.byId[preset].title,
+          disabled: mode === MODE_ZIP,
         })
       )
     ),
@@ -86,7 +76,7 @@ const fields = {
         lang => ({
           value: lang,
           label: languages.byId[lang].title,
-          disabled: lang !== 'groovy'
+          disabled: lang !== 'groovy',
         })
       )
     ),
@@ -119,7 +109,7 @@ const fields = {
           return {
             value: version,
             label: version,
-            disabled: !(semver[0] <= latest[0] && semver[1] <= latest[1] && semver[2] <= latest[2])
+            disabled: !(semver[0] < latest[0] || semver[1] < latest[1] || semver[2] <= latest[2])
           };
         }
       )
@@ -135,12 +125,14 @@ const fields = {
     checked: state => state.build.source,
     action: $$.toggleSource,
     hidden: isModeNotZip,
+    disabled: () => true,
   },
   javadoc: {
     label: "Include JavaDoc",
     checked: state => state.build.javadoc,
     action: $$.toggleJavadoc,
     hidden: isModeNotZip,
+    disabled: () => true,
   },
   compact: {
     label: "Compact Mode",
@@ -204,14 +196,9 @@ const BuildContainer = props => (
               </ControlledPanel>
             </div>
 
-            <ControlledPanel getClassName={getContentsClass}>
-              <h2 className="m-y-1">Contents</h2>
-              <BuildArtifacts />
-            </ControlledPanel>
-
-            {/*<BuildDownload />*/}
-
-            {/*<BuildScript />*/}
+            <BuildArtifacts />
+            <BuildDownload />
+            <BuildScript />
 
           </div>
         </div>

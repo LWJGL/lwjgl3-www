@@ -44,14 +44,6 @@ const config = {
   },
   versions: {
     byId: {
-      "3.0.2": {
-        id: "3.0.2",
-        semver: [3, 0, 2]
-      },
-      "3.0.2": {
-        id: "3.0.2",
-        semver: [3, 0, 2]
-      },
       "3.0.1": {
         id: "3.0.1",
         semver: [3, 0, 1]
@@ -59,14 +51,14 @@ const config = {
       "3.0.0": {
         id: "3.0.0",
         semver: [3, 0, 0]
-      },
+      }
     },
   },
   modes: {
     byId: {
       [MODE_ZIP]: {
         id: MODE_ZIP,
-        title: "ZIP",
+        title: "ZIP Bundle",
       },
       [MODE_MAVEN]: {
         id: MODE_MAVEN,
@@ -275,6 +267,14 @@ const config = {
           'lwjgl'
         ]
       },
+      "custom": {
+        id: "custom",
+        title: "Custom",
+      },
+      "all": {
+        id: "all",
+        title: "Everything",
+      },
       "getting-started": {
         id: "getting-started",
         title: "Getting Started",
@@ -337,9 +337,7 @@ const config = {
 
   // error: null,
   build: null,
-  // build: BUILD_NIGHTLY,
   mode: MODE_ZIP,
-  // mode: MODE_MAVEN,
   preset: 'all',
   descriptions: false,
   compact: false,
@@ -365,11 +363,7 @@ config.versions.allIds = Object.keys(config.versions.byId);
 config.artifacts.allIds = Object.keys(config.artifacts.byId);
 config.languages.allIds = Object.keys(config.languages.byId);
 
-config.presets.byId.all = {
-  id: "all",
-  title: "All",
-  artifacts: config.artifacts.allIds.filter(artifact => config.artifacts.byId[artifact].until === undefined).map(artifact => artifact)
-};
+config.presets.byId.all.artifacts = config.artifacts.allIds.filter(artifact => config.artifacts.byId[artifact].until === undefined).map(artifact => artifact);
 config.presets.allIds = Object.keys(config.presets.byId);
 
 config.language = config.languages.allIds[0];

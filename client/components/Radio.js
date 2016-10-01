@@ -25,7 +25,7 @@ export default class Radio extends React.Component {
     const props = this.props;
 
     return (
-      <label className="custom-control custom-radio">
+      <label className={`custom-control custom-radio${props.disabled ? ' custom-control-disabled' : ''}`}>
         <input type="radio" className="custom-control-input" disabled={props.disabled} checked={this.context.value === props.value} onChange={this.change} />
         <span className="custom-control-indicator" />
         <span className="custom-control-description">{props.label}</span>

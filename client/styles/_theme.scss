@@ -11,6 +11,13 @@ b, strong {
   font-weight: 700;
 }
 
+.custom-control.custom-control-disabled {
+  cursor: not-allowed;
+}
+.custom-control-input:disabled:checked ~ .custom-control-indicator {
+  background-color: #aaa;
+}
+
 .area-dark-secondary {
   color: white;
 }

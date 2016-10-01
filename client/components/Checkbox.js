@@ -28,7 +28,7 @@ export default class Checkbox extends React.PureComponent {
 
     return props.hidden ? null : (
       <div className="form-group">
-        <label className="custom-control custom-checkbox">
+        <label className={`custom-control custom-checkbox${props.disabled ? ' custom-control-disabled' : ''}`}>
           <input type="checkbox"
                  className="custom-control-input"
                  disabled={props.disabled}

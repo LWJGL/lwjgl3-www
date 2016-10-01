@@ -1,20 +1,35 @@
 import React from 'react'
-import {observer} from 'mobx-react'
+import { connect } from 'react-redux'
 
-@observer(['store'])
+@connect(
+  state => ({
+    build: state.build.build,
+    mode: state.build.mode,
+    version: state.build.version,
+  })
+)
 class BuildDownload extends React.Component {
 
-  static propTypes = {
-    store: React.PropTypes.object
-  };
-
   render() {
-    const store = this.props.store;
+    const props = this.props;
 
-    return store.mode !== 'zip' ? null : (
+    if ( props.mode !== 'zip' ) {
+      return null;
+    }
+
+    let downloadUrl;
+    switch (props.build) {
+      case 'release':
+        downloadUrl = `http://build.lwjgl.org/${props.build}/${props.version}/lwjgl-${props.version}.zip`;
+        break;
+      default:
+        downloadUrl = `http://build.lwjgl.org/${props.build}/lwjgl.zip`;
+    }
+
+    return (
       <div className="col-xs-12 col-lg-4">
         <h2 className="m-b-2 m-t-1">Bundle</h2>
-        <a className="btn btn-xs-block btn-primary btn-lg" href={store.download} target="_blank">DOWNLOAD ZIP</a>
+        <a className="btn btn-xs-block btn-primary btn-lg" href={downloadUrl} target="_blank">DOWNLOAD ZIP</a>
       </div>
     )
   }

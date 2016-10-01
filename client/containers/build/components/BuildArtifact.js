@@ -1,17 +1,26 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Checkbox from '../../../components/Checkbox'
-import { toggleArtifact } from '../actions'
+import {toggleArtifact} from '../actions'
+
+const descriptionStyle = {
+  marginTop: '-1rem',
+};
 
 @connect(
-  (state, ownProps) => ({
-    artifact: state.build.artifacts.byId[ownProps.id],
-    checked: state.build.contents[ownProps.id] === true,
-    descriptions: state.build.descriptions,
-    // disabled: state.build.platform !==
-  }),
+  (state, ownProps) => {
+    const artifact = state.build.artifacts.byId[ownProps.id];
+    const available = !artifact.natives || artifact.natives.indexOf(state.build.platform) > -1;
+
+    return {
+      artifact,
+      checked: available && state.build.contents[ownProps.id] === true,
+      showDescriptions: state.build.descriptions,
+      disabled: !available || state.build.mode === 'zip' || ownProps.id === 'lwjgl',
+    }
+  },
   dispatch => ({
-    toggleArtifact: value => dispatch(toggleArtifact(value))
+    toggleArtifact: (artifact, checked) => dispatch(toggleArtifact(artifact, checked))
   })
 )
 class ControlledArtifact extends React.Component {
@@ -21,31 +30,37 @@ class ControlledArtifact extends React.Component {
   };
 
   toggle = () => {
-    this.props.toggleArtifact(this.props.id);
+    const props = this.props;
+    props.toggleArtifact(props.id, !props.checked);
   };
 
   render() {
-    // const option = this.props.store.getArtifactOptions(this.props.name);
-    const { artifact, checked, descriptions } = this.props;
+    const {artifact, checked, disabled, showDescriptions} = this.props;
 
-    return (
-      <div>
+    if ( !showDescriptions ) {
+      return (
         <Checkbox
           label={artifact.title}
-          disabled={false}
+          disabled={disabled}
           checked={checked}
           onChange={this.toggle}
         />
-        {
-          descriptions
-            ?
-            <p className="m-b-2" style={{marginTop: '-1rem'}}>
-              <small>{artifact.description}</small>
-            </p>
-            : null
-        }
-      </div>
-    )
+      )
+    } else {
+      return (
+        <div>
+          <Checkbox
+            label={artifact.title}
+            disabled={disabled}
+            checked={checked}
+            onChange={this.toggle}
+          />
+          <p className="m-b-2" style={descriptionStyle}>
+            <small>{artifact.description}</small>
+          </p>
+        </div>
+      )
+    }
   }
 
 }
