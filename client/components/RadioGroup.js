@@ -3,20 +3,17 @@ import React, {PropTypes} from 'react'
 export default class RadioGroup extends React.PureComponent {
 
   static propTypes = {
-    name: PropTypes.string,
     value: PropTypes.any,
     onChange: PropTypes.func,
   };
 
   static childContextTypes = {
-    name: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.any,
   };
 
   getChildContext() {
     return {
-      name: this.props.name,
       onChange: this.change,
       value: this.props.value
     }

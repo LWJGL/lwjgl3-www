@@ -23,21 +23,44 @@ const config = {
         title: 'Release',
         description: 'Latest official release',
         job: 'lwjgl_Release',
+        latest: [3, 0, 0],
       },
       [BUILD_STABLE]: {
         id: BUILD_STABLE,
         title: 'Stable',
         description: 'Beta quality, verified to work',
         job: 'LwjglReleases_NightlyToStable',
+        latest: [3, 0, 0],
       },
       [BUILD_NIGHTLY]: {
         id: BUILD_NIGHTLY,
         title: 'Nightly',
         description: 'Bleeding edge, possibly broken',
         job: 'lwjgl_Bundle',
+        latest: [3, 0, 1],
       },
     },
     allIds: BUILD_ALL,
+  },
+  versions: {
+    byId: {
+      "3.0.2": {
+        id: "3.0.2",
+        semver: [3, 0, 2]
+      },
+      "3.0.2": {
+        id: "3.0.2",
+        semver: [3, 0, 2]
+      },
+      "3.0.1": {
+        id: "3.0.1",
+        semver: [3, 0, 1]
+      },
+      "3.0.0": {
+        id: "3.0.0",
+        semver: [3, 0, 0]
+      },
+    },
   },
   modes: {
     byId: {
@@ -52,18 +75,6 @@ const config = {
       [MODE_GRADLE]: {
         id: MODE_GRADLE,
         title: "Gradle",
-      },
-    },
-  },
-  versions: {
-    byId: {
-      "3.0.1": {
-        id: "3.0.1",
-        semver: [3, 0, 1]
-      },
-      "3.0.0": {
-        id: "3.0.0",
-        semver: [3, 0, 0]
       },
     },
   },

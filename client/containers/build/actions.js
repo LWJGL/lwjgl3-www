@@ -14,5 +14,5 @@ export const toggleCompact = enabled => ({type: $.TOGGLE_COMPACT, compact: enabl
 export const toggleHardcoded = enabled => ({type: $.TOGGLE_HARDCODED, hardcoded: enabled});
 export const toggleArtifact = artifact => ({type: $.TOGGLE_ARTIFACT, artifact});
 
-export const errorSet = (message, severity="danger") => ({type: $.ERROR_SET, error: { message, severity }});
-export const errorReset = () => ({type: $.ERROR_SET, error: null});
+// export const errorSet = (message, severity="danger") => ({type: $.ERROR_SET, error: { message, severity }});
+// export const errorReset = () => ({type: $.ERROR_SET, error: null});

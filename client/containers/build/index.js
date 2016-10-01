@@ -3,6 +3,7 @@ import classnames from 'classnames'
 import {createSelector} from 'reselect'
 
 import * as $$ from './actions'
+
 import {
   BUILD_RELEASE,
   BUILD_NIGHTLY,
@@ -110,11 +111,17 @@ const fields = {
     action: $$.changeVersion,
     options: createSelector(
       state => state.build.versions,
-      versions => versions.allIds.map(
-        version => ({
-          value: version,
-          label: version
-        })
+      state => state.build.builds.byId[state.build.build].latest,
+      (versions, latest) => versions.allIds.map(
+        version => {
+          const semver = versions.byId[version].semver;
+
+          return {
+            value: version,
+            label: version,
+            disabled: !(semver[0] <= latest[0] && semver[1] <= latest[1] && semver[2] <= latest[2])
+          };
+        }
       )
     ),
   },

@@ -5,17 +5,14 @@ import {connect} from 'react-redux'
   (state, props) => {
     const map = {};
 
-    if ( props.predicate && !props.predicate(state) ) {
-      map.style = { ...props.style, display: 'none'};
-    }
+    map.hidden = props.predicate && !props.predicate(state);
 
     if ( props.getClassName ) {
       map.className = props.getClassName(state);
     }
 
     return map;
-  },
-  () => ({})
+  }
 )
 class Panel extends React.Component {
 
@@ -27,10 +24,14 @@ class Panel extends React.Component {
   };
 
   render() {
-    const { children, predicate, getClassName, ...rest } = this.props;
+    const { children, hidden, style, className } = this.props;
+
+    if ( hidden ) {
+      return null;
+    }
 
     return (
-      <div {...rest}>
+      <div style={style} className={className}>
         {children}
       </div>
     );

@@ -13,7 +13,6 @@ export default class Radio extends React.Component {
   };
 
   static contextTypes = {
-    name: PropTypes.string,
     onChange: PropTypes.func,
     value: PropTypes.any,
   };
@@ -23,12 +22,11 @@ export default class Radio extends React.Component {
   };
 
   render() {
-    const ctx = this.context;
     const props = this.props;
 
     return (
       <label className="custom-control custom-radio">
-        <input name={ctx.name} type="radio" className="custom-control-input" value={props.value} disabled={props.disabled} checked={ctx.value === props.value} onChange={this.change} />
+        <input type="radio" className="custom-control-input" disabled={props.disabled} checked={this.context.value === props.value} onChange={this.change} />
         <span className="custom-control-indicator" />
         <span className="custom-control-description">{props.label}</span>
       </label>
