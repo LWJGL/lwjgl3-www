@@ -13,8 +13,6 @@ const config = {
       DEV ? path.resolve(__dirname, 'client/main.dev.js') : path.resolve(__dirname, 'client/main.js')
     ]
   },
-  // devtool: DEV ? 'eval' : undefined,
-  // devtool: '#inline-source-map',
   output: {
     path: path.resolve(__dirname, 'public/js'),
     filename: DEV ? '[name].js' : '[name].[chunkhash].js',
@@ -54,7 +52,10 @@ if ( DEV ) {
       './store/configureStore.dev'
     ),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    // new webpack.SourceMapDevToolPlugin({
+    //   columns: false
+    // })
   );
 
   // Uncomment me to test async routes
