@@ -17,11 +17,11 @@ import {
 
 const selectBuild = (state, build) => {
   state.build = build;
-  if ( build === BUILD_NIGHTLY ) {
-    state.version = state.versions.allIds[0];
-  } else {
-    state.mode = MODE_ZIP;
-    state.version = state.versions.allIds[1];
+  if ( build !== null ) {
+    state.version = state.builds.byId[build].latest.join('.');
+    if ( build !== BUILD_NIGHTLY ) {
+      state.mode = MODE_ZIP;
+    }
   }
 
   return state;
@@ -64,8 +64,8 @@ export default function buildConfigurator(state = config, action) {
     case $.TOGGLE_SOURCE:
       return {...state, ...data};
 
-    case $.ERROR_SET:
-      return {...state, ...data};
+    // case $.ERROR_SET:
+    //   return {...state, ...data};
 
     case $.SELECT_PRESET:
       return {...state, ...data};
@@ -81,6 +81,7 @@ export default function buildConfigurator(state = config, action) {
       return {...state, ...data};
 
     case $.SELECT_VERSION:
+      // build === BUILD_RELEASE && ( semver[0]*100+semver[1]*10+semver[2] > 300 )
       return {...state, ...data};
 
     case $.TOGGLE_ARTIFACT:
