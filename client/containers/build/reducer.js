@@ -15,12 +15,32 @@ import {
 
 // const getError = (state, message, severity = "danger") => ({...state, error: {message, severity,}});
 
+const selectBuild = (state, build) => {
+  state.build = build;
+  if ( build === BUILD_NIGHTLY ) {
+    state.version = state.versions.allIds[0];
+  } else {
+    state.mode = MODE_ZIP;
+    state.version = state.versions.allIds[1];
+  }
+
+  return state;
+};
+
+const toggleArtifact = (state, artifact) => {
+  state.contents[artifact] = !state.contents[artifact];
+  return state;
+};
+
 export default function buildConfigurator(state = config, action) {
   const {type, ...data} = action;
 
   switch (type) {
     case $.SELECT_TYPE:
-      return {...state, ...data};
+      if ( data.build !== state.build ) {
+        return selectBuild({...state}, data.build);
+      }
+      break;
 
     case $.SELECT_MODE:
       return {...state, ...data};
@@ -64,10 +84,9 @@ export default function buildConfigurator(state = config, action) {
       return {...state, ...data};
 
     case $.TOGGLE_ARTIFACT:
-      if ( data.artifact === 'lwjgl' ) {
-        return state;
+      if ( data.artifact !== 'lwjgl' ) {
+        return toggleArtifact({...state}, data.artifact);
       }
-      return {...state, contents: { ...state.contents, [data.artifact]: true }};
   }
 
   return state;

@@ -21,19 +21,19 @@ class ControlledArtifact extends React.Component {
   };
 
   toggle = () => {
-    this.props.toggleArtifact(this.props.artifact.id);
+    this.props.toggleArtifact(this.props.id);
   };
 
   render() {
     // const option = this.props.store.getArtifactOptions(this.props.name);
-    const { artifact, descriptions } = this.props;
+    const { artifact, checked, descriptions } = this.props;
 
     return (
       <div>
         <Checkbox
           label={artifact.title}
           disabled={false}
-          checked={artifact.checked}
+          checked={checked}
           onChange={this.toggle}
         />
         {

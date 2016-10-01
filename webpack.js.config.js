@@ -50,8 +50,8 @@ if ( DEV ) {
 
   config.plugins.push(
     new webpack.NormalModuleReplacementPlugin(
-      /^\.\.\/store\/configureStore$/,
-      '../store/configureStore.dev'
+      /^\.\/store\/configureStore$/,
+      './store/configureStore.dev'
     ),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin()
@@ -74,6 +74,10 @@ if ( DEV ) {
     new webpack.NormalModuleReplacementPlugin(
       /^\.\.\/routes\/Routes$/,
       '../routes/RoutesAsync'
+    ),
+    new webpack.NormalModuleReplacementPlugin(
+      /^\.\/store\/configureStore$/,
+      './store/configureStore.prod'
     ),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
