@@ -344,6 +344,9 @@ const config = {
   hardcoded: false,
   javadoc: false,
   source: false,
+  language: null,
+  platform: {},
+  version: null,
 };
 
 function getDefaultPlatform() {
@@ -367,8 +370,12 @@ config.presets.byId.all.artifacts = config.artifacts.allIds.filter(artifact => c
 config.presets.allIds = Object.keys(config.presets.byId);
 
 config.language = config.languages.allIds[0];
-config.platform = getDefaultPlatform();
 config.version = config.versions.allIds[0];
+
+config.natives.allIds.forEach(platform => {
+  config.platform[platform] = false;
+});
+config.platform[getDefaultPlatform()] = true;
 
 config.contents = {};
 
