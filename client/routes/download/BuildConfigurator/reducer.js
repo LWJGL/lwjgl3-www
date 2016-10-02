@@ -79,7 +79,7 @@ const toggleArtifact = (state, artifact, enabled) => {
   return state;
 };
 
-export default function buildConfigurator(state = config, action) {
+export default function(state = config, action) {
 
   switch (action.type) {
     case $.SELECT_TYPE:

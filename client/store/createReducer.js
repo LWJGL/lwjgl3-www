@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import { createResponsiveStateReducer } from 'redux-responsive'
+import buildStatus from '../components/BuildStatus/reducer'
 
 export default function createReducer(asyncReducers) {
   // const appReducer = combineReducers({
@@ -15,6 +16,7 @@ export default function createReducer(asyncReducers) {
       // lg: 992,
       // xl: 1200,
     }),
+    buildStatus,
     ...asyncReducers
   });
 
