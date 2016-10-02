@@ -16,7 +16,7 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'public/js'),
     filename: DEV ? '[name].js' : '[name].[chunkhash].js',
-    chunkFilename: DEV ? '[name].[id].js' : '[name].[chunkhash].js',
+    chunkFilename: DEV ? '[name].js' : '[name].[chunkhash].js',
     publicPath: '/js/'
   },
   module: {
@@ -52,7 +52,7 @@ if ( DEV ) {
       './store/configureStore.dev'
     ),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoErrorsPlugin()
     // new webpack.SourceMapDevToolPlugin({
     //   columns: false
     // })
@@ -60,7 +60,7 @@ if ( DEV ) {
 
   // Uncomment me to test async routes
   // WARNING: Breaks routes hot reloading!
-  // config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
+  config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
 
 } else {
 

@@ -1,8 +1,12 @@
 import { createStore } from 'redux'
-import rootReducer from './rootReducer'
+import createReducer from './createReducer'
 
-const configureStore = initialState => createStore(
-  rootReducer
-);
+function configureStore() {
+  const store = createStore(
+    createReducer()
+  );
+  store.asyncReducers = {};
+  return store;
+}
 
 export default configureStore

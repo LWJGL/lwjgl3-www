@@ -5,15 +5,15 @@ import fs from 'fs'
 import path from 'path'
 import express from 'express'
 import favicon from 'serve-favicon'
-import {argv} from 'yargs'
+import { argv } from 'yargs'
 import chalk from 'chalk'
 
 // Server-side rendering
 import React from 'react'
-import {renderToString} from 'react-dom/server'
+import { renderToString } from 'react-dom/server'
 import { ServerRouter, createServerRenderContext } from 'react-router'
 import Helmet from 'react-helmet'
-import {StyleSheetServer} from 'aphrodite/no-important'
+import { StyleSheetServer } from 'aphrodite/no-important'
 import configureStore from '../client/store/configureStore'
 import Layout from '../client/containers/Layout'
 
@@ -117,7 +117,7 @@ app.get('/teamcity', teamcity);
 // React server-side rendering
 app.get('*', (req, res, next) => {
 
-  if ( req.accepts('html','*/*') !== 'html' ) {
+  if ( req.accepts('html', '*/*') !== 'html' ) {
     // Return 404 to avoid rendering React for invalid requests
     next(null);
     return;
@@ -159,7 +159,7 @@ app.get('*', (req, res, next) => {
         location={req.url}
         context={context}
       >
-        {({ location }) => <Layout location={location} store={store} />}
+        {({location}) => <Layout location={location} store={store} />}
       </ServerRouter>
     )
   ));
@@ -220,7 +220,7 @@ app.get('*', (req, res, next) => {
 app.use((req, res, next) => {
   res.status(404);
 
-  if ( req.accepts('html','*/*') === 'html' ) {
+  if ( req.accepts('html', '*/*') === 'html' ) {
     res.render('404');
     return;
   }
@@ -239,7 +239,7 @@ app.use((err, req, res, next) => {
   res.status(500);
 
   // HTML
-  if ( req.accepts('html','*/*') === 'html' ) {
+  if ( req.accepts('html', '*/*') === 'html' ) {
     res.render('500', {error: err});
     return;
   }
