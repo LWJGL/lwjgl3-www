@@ -1,13 +1,16 @@
 import { createStore, compose } from 'redux'
-import {createResponsiveStoreEnhancer} from 'redux-responsive'
-import rootReducer from './rootReducer'
+import { createResponsiveStoreEnhancer } from 'redux-responsive'
+import createReducer from './createReducer'
 
-const configureStore = () => createStore(
-  rootReducer,
-  compose(
-    createResponsiveStoreEnhancer({calculateStateInitially: false, performanceMode: true}),
-  )
-
-);
+function configureStore() {
+  const store = createStore(
+    createReducer(),
+    compose(
+      createResponsiveStoreEnhancer({calculateStateInitially: false, performanceMode: true}),
+    )
+  );
+  store.asyncReducers = {};
+  return store;
+}
 
 export default configureStore

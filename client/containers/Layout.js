@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Provider } from 'react-redux'
-import {Match, Miss} from 'react-router'
+import { Match, Miss } from 'react-router'
 import Helmet from 'react-helmet'
 
 import * as Routes from '../routes/Routes'

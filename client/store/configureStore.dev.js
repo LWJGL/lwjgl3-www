@@ -1,11 +1,12 @@
 import { createStore, compose, applyMiddleware } from 'redux'
-import {createResponsiveStoreEnhancer} from 'redux-responsive'
+import { createResponsiveStoreEnhancer } from 'redux-responsive'
 import createLogger from 'redux-logger'
-import rootReducer from './rootReducer'
 
-export default function() {
+import createReducer from './createReducer'
+
+function configureStore() {
   const store = createStore(
-    rootReducer,
+    createReducer(),
     compose(
       createResponsiveStoreEnhancer({calculateStateInitially: false, performanceMode: true}),
       applyMiddleware(createLogger({
@@ -23,14 +24,17 @@ export default function() {
       window.devToolsExtension ? window.devToolsExtension() : f => f
     )
   );
+  store.asyncReducers = {};
 
   if ( module.hot ) {
     // Enable Webpack hot module replacement for reducers
-    module.hot.accept('./rootReducer', () => {
-      const nextRootReducer = require('./rootReducer').default;
-      store.replaceReducer(nextRootReducer)
+    module.hot.accept('./createReducer', () => {
+      // const nextRootReducer = require('./createReducer').default;
+      store.replaceReducer(createReducer())
     })
   }
 
   return store;
 }
+
+export default configureStore

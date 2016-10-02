@@ -32,4 +32,4 @@ store.dispatch(calculateResponsiveState(window));
 
 // Render React
 const rootEl = document.getElementById('lwjgl-app');
-render(<App />, rootEl);
+render(<App store={store} />, rootEl);
