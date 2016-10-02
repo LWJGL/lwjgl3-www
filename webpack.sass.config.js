@@ -31,7 +31,9 @@ const config = {
               loader: "css-loader",
               query: {
                 sourceMap: DEV,
-                safe: true,
+                // safe: true,
+                calc: false,
+                zindex: false,
                 discardComments: {
                  removeAll: true
                 }
