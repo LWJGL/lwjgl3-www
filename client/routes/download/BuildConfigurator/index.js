@@ -16,6 +16,7 @@ import ControlledPanel from '../../../components/ControlledPanel'
 import ControlledRadio from '../../../components/ControlledRadio'
 import ControlledCheckbox from '../../../components/ControlledCheckbox'
 import BuildType from './components/BuildType'
+import BuildPlatform from './components/BuildPlatform'
 import BuildArtifacts from './components/BuildArtifacts'
 import BuildDownload from './components/BuildDownload'
 import BuildScript from './components/BuildScript'
@@ -25,7 +26,6 @@ const getBuild = state => state.build.build;
 const getPreset = state => state.build.preset;
 const getLanguage = state => state.build.language;
 const getVersion = state => state.build.version;
-const getPlatform = state => state.build.platform;
 const isBuildSelected = state => getBuild(state) !== null;
 const isModeGradle = state => getMode(state) === MODE_GRADLE;
 const isModeMaven = state => getMode(state) === MODE_MAVEN;
@@ -77,20 +77,6 @@ const fields = {
           value: lang,
           label: languages.byId[lang].title,
           disabled: lang !== 'groovy',
-        })
-      )
-    ),
-  },
-  natives: {
-    name: "natives",
-    value: getPlatform,
-    action: $$.changePlatform,
-    options: createSelector(
-      state => state.build.natives,
-      natives => natives.allIds.map(
-        platform => ({
-          value: platform,
-          label: natives.byId[platform].title
         })
       )
     ),
@@ -185,10 +171,7 @@ const BuildContainer = props => (
                 <ControlledRadio spec={fields.language} />
               </ControlledPanel>
 
-              <ControlledPanel predicate={isModeNotZip}>
-                <h2 className="m-b-1">Natives</h2>
-                <ControlledRadio spec={fields.natives} />
-              </ControlledPanel>
+              <BuildPlatform />
 
               <ControlledPanel predicate={isBuildRelease}>
                 <h2 className="m-b-1">Version</h2>
