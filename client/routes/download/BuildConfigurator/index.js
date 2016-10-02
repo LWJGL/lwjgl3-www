@@ -1,6 +1,6 @@
 import React from 'react'
 import {createSelector} from 'reselect'
-
+import reducer from './reducer'
 import * as $$ from './actions'
 
 import {
@@ -12,9 +12,9 @@ import {
 } from './constants'
 
 // import ControlledAlert from '../../components/ControlledAlert'
-import ControlledPanel from '../../components/ControlledPanel'
-import ControlledRadio from '../../components/ControlledRadio'
-import ControlledCheckbox from '../../components/ControlledCheckbox'
+import ControlledPanel from '../../../components/ControlledPanel'
+import ControlledRadio from '../../../components/ControlledRadio'
+import ControlledCheckbox from '../../../components/ControlledCheckbox'
 import BuildType from './components/BuildType'
 import BuildArtifacts from './components/BuildArtifacts'
 import BuildDownload from './components/BuildDownload'
@@ -206,5 +206,7 @@ const BuildContainer = props => (
     </ControlledPanel>
   </div>
 );
+
+BuildContainer.reducer = reducer;
 
 export default BuildContainer

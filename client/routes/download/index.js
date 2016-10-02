@@ -2,36 +2,15 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router'
 
-import BuildContainer from '../../containers/build'
-import reducer from '../../containers/build/reducer'
-import injectReducer from '../../store/injectReducer'
-import ejectReducer from '../../store/ejectReducer'
+import asyncReducer from '../../store/asyncReducer'
+import BuildContainer from './BuildConfigurator'
 
+@asyncReducer(
+  'build',
+  BuildContainer.reducer,
+  './BuildConfigurator/reducer'
+)
 class DownloadRoute extends React.PureComponent {
-
-  static contextTypes = {
-    store: React.PropTypes.object
-  };
-
-  componentWillMount() {
-    injectReducer(this.context.store, 'build', reducer);
-
-    if ( process.env.NODE_ENV !== 'production' ) {
-      if ( !DownloadRoute._init ) {
-        DownloadRoute._init = true;
-
-        if ( module.hot ) {
-          module.hot.accept('../../containers/build/reducer', () => {
-            injectReducer(this.context.store, 'build', reducer);
-          })
-        }
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    ejectReducer(this.context.store, 'build');
-  }
 
   render() {
     return (
