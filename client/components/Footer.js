@@ -32,6 +32,7 @@ const Footer = () => (
             <li><a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">Wiki</a></li>
             <li><a href="https://github.com/LWJGL/lwjgl3/issues">Issues</a></li>
             <li><a href="http://javadoc.lwjgl.org/">JavaDoc</a></li>
+            <li><a href="https://slack.lwjgl.org/">Slack</a></li>
           </ul>
         </div>
         <div className="col-sm-3 col-xs-12">

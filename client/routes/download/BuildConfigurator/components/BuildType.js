@@ -1,5 +1,5 @@
 import React from 'react'
-import BuildStatus from '../../../components/BuildStatus'
+import BuildStatus from '../../../../components/BuildStatus'
 import classnames from 'classnames'
 
 import { connect } from 'react-redux'
