@@ -2,6 +2,7 @@ import { combineReducers } from 'redux'
 import { createResponsiveStateReducer } from 'redux-responsive'
 
 export default function createReducer(asyncReducers) {
+  // const appReducer = combineReducers({
   return combineReducers({
     browser: createResponsiveStateReducer({
       xs: 544,
@@ -16,4 +17,12 @@ export default function createReducer(asyncReducers) {
     }),
     ...asyncReducers
   });
+
+  // return function rootReducer(state, action) {
+  //   if ( action.type === 'SYSTEM/EJECT_REDUCER' ) {
+  //     delete state[action.name];
+  //   }
+  //
+  //   return appReducer(state, action);
+  // }
 }
