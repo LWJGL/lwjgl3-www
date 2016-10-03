@@ -137,7 +137,7 @@ export default function(state = config, action) {
     // break;
 
     case $.TOGGLE_PLATFORM:
-      if ( state.mode !== MODE_ZIP ) {
+      if ( state.mode === MODE_ZIP ) {
         const selections = state.natives.allIds.reduce((previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0), 0);
         if ( selections > 1 || state.platform[action.platform] === false ) {
           return {...state, platform: {...state.platform, [action.platform]: !state.platform[action.platform]}};

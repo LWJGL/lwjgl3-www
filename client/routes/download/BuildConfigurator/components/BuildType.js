@@ -8,7 +8,7 @@ import { changeType } from '../actions'
 @connect(
   (state, ownProps) => ({
     isSelected: state.build.build === ownProps.build,
-    isActive: state.browser.lessThan.lg && state.build.build !== null,
+    isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
     spec: state.build.builds.byId[ownProps.build]
   }),
   dispatch => ({

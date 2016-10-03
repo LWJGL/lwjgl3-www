@@ -156,6 +156,8 @@ const BuildContainer = props => (
               <h2 className="m-y-1">Mode</h2>
               <ControlledRadio spec={fields.mode} />
 
+              <BuildPlatform />
+
               <h2 className="m-b-1">Presets</h2>
               <ControlledRadio spec={fields.preset} />
 
@@ -170,8 +172,6 @@ const BuildContainer = props => (
                 <h2 className="m-b-1">Language</h2>
                 <ControlledRadio spec={fields.language} />
               </ControlledPanel>
-
-              <BuildPlatform />
 
               <ControlledPanel predicate={isBuildRelease}>
                 <h2 className="m-b-1">Version</h2>

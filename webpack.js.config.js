@@ -1,4 +1,18 @@
 const webpack = require('webpack');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
+const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+const NoErrorsPlugin = require("webpack/lib/NoErrorsPlugin");
+const IgnorePlugin = require("webpack/lib/IgnorePlugin");
+const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
+const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
+const OccurrenceOrderPlugin = require('webpack/lib/optimize/OccurrenceOrderPlugin');
+const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
+const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
+const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+
+const WebpackMd5Hash = require('webpack-md5-hash');
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+
 const path = require('path');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -32,7 +46,7 @@ const config = {
     ]
   },
   plugins: [
-    new webpack.DefinePlugin({
+    new DefinePlugin({
       'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production')
     })
   ]
@@ -47,12 +61,8 @@ if ( DEV ) {
   );
 
   config.plugins.push(
-    new webpack.NormalModuleReplacementPlugin(
-      /^\.\/store\/configureStore$/,
-      './store/configureStore.dev'
-    ),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new HotModuleReplacementPlugin(),
+    new NoErrorsPlugin()
     // new webpack.SourceMapDevToolPlugin({
     //   columns: false
     // })
@@ -64,25 +74,19 @@ if ( DEV ) {
 
 } else {
 
-  const WebpackMd5Hash = require('webpack-md5-hash');
-  const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-
   config.plugins.push(
-    new webpack.LoaderOptionsPlugin({
+    new LoaderOptionsPlugin({
       minimize: true,
       debug: false
     }),
-    new webpack.NormalModuleReplacementPlugin(
+    new IgnorePlugin(/redux-logger/),
+    new NormalModuleReplacementPlugin(
       /^\.\.\/routes\/Routes$/,
       '../routes/RoutesAsync'
     ),
-    new webpack.NormalModuleReplacementPlugin(
-      /^\.\/store\/configureStore$/,
-      './store/configureStore.prod'
-    ),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
+    new OccurrenceOrderPlugin(),
+    new DedupePlugin(),
+    new CommonsChunkPlugin({
       name: "main",
       minChunks: Infinity,
     }),
@@ -91,7 +95,7 @@ if ( DEV ) {
       filename: 'manifest.json',
       manifestVariable: "manifest",
     }),
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJsPlugin({
       sourceMap: false,
       mangle: {
         screw_ie8: true,
