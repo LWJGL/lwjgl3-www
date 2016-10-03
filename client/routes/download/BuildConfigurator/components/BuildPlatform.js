@@ -8,7 +8,7 @@ import { togglePlatform } from '../actions'
     platforms: state.build.natives.allIds,
     natives: state.build.natives.byId,
     selected: state.build.platform,
-    isZip: state.build.mode === 'zip',
+    hide: state.build.mode !== 'zip',
   }),
   dispatch => ({
     togglePlatform: platform => dispatch(togglePlatform(platform))
@@ -23,7 +23,7 @@ class BuildPlatform extends React.Component {
   render() {
     const props = this.props;
 
-    if ( props.isZip ) {
+    if ( props.hide ) {
       return null;
     }
 
@@ -38,6 +38,7 @@ class BuildPlatform extends React.Component {
               <Checkbox
                 key={platform}
                 label={native.title}
+                disabled={true}
                 checked={props.selected[platform]}
                 value={platform}
                 onChange={this.toggle}

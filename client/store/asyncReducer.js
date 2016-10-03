@@ -1,6 +1,19 @@
 import React from 'react'
-import injectReducer from './injectReducer'
-import ejectReducer from './ejectReducer'
+import createReducer from './createReducer'
+
+function injectReducer(store, name, asyncReducer) {
+  store.asyncReducers[name] = asyncReducer;
+  store.replaceReducer(createReducer(store.asyncReducers));
+}
+
+function ejectReducer(store, name) {
+  // store.dispatch({
+  //   type: 'SYSTEM/EJECT_REDUCER',
+  //   name: name
+  // });
+  delete store.asyncReducers[name];
+  store.replaceReducer(createReducer(store.asyncReducers));
+}
 
 const asyncReducer = (name, reducer, modulePath) => ReduxComponent => class ReducerManager extends React.Component {
 

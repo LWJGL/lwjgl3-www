@@ -373,9 +373,10 @@ config.language = config.languages.allIds[0];
 config.version = config.versions.allIds[0];
 
 config.natives.allIds.forEach(platform => {
-  config.platform[platform] = false;
+  // config.platform[platform] = false;
+  config.platform[platform] = true;
 });
-config.platform[getDefaultPlatform()] = true;
+// config.platform[getDefaultPlatform()] = true;
 
 config.contents = {};
 
