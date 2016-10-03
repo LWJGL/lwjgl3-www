@@ -24,7 +24,7 @@ const config = {
     main: [
       'babel-polyfill',
       'whatwg-fetch',
-      DEV ? path.resolve(__dirname, 'client/main.dev.js') : path.resolve(__dirname, 'client/main.js')
+      path.resolve(__dirname, 'client/main.js')
     ]
   },
   output: {
@@ -79,7 +79,7 @@ if ( DEV ) {
       minimize: true,
       debug: false
     }),
-    new IgnorePlugin(/redux-logger/),
+    new IgnorePlugin(/(redux-logger|react-hot-loader)/),
     new NormalModuleReplacementPlugin(
       /^\.\.\/routes\/Routes$/,
       '../routes/RoutesAsync'
