@@ -35,9 +35,12 @@ if ( process.env.NODE_ENV === 'production' ) {
   render(<App store={store} />, rootEl);
 } else {
   const AppContainer = require('react-hot-loader');
+  // Trick babel to avoid hoisting <AppContainer />
+  // transform-react-constant-elements
+  const noHoist = {};
 
   render((
-    <AppContainer>
+    <AppContainer {...noHoist}>
       <App store={store} />
     </AppContainer>
   ), rootEl);
@@ -46,7 +49,7 @@ if ( process.env.NODE_ENV === 'production' ) {
   if ( module.hot ) {
     module.hot.accept('./containers/App', () => {
       render(
-        <AppContainer>
+        <AppContainer {...noHoist}>
           <App store={store} />
         </AppContainer>,
         rootEl
