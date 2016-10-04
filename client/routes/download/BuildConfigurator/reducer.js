@@ -82,8 +82,9 @@ const toggleArtifact = (state, artifact, enabled) => {
 export default function(state = config, action) {
 
   switch (action.type) {
+
     case $.SELECT_TYPE:
-      if ( action.build !== state.build ) {
+      if ( action.build !== state.build && !state.downloading ) {
         return selectBuild({...state}, action.build);
       }
       break;
@@ -161,6 +162,22 @@ export default function(state = config, action) {
         return toggleArtifact({...state}, action.artifact, action.enabled);
       }
       break;
+
+    case $.DOWNLOAD_INIT:
+      if ( state.build === BUILD_NIGHTLY && !state.downloading ) {
+        return {...state, downloading: true, progress: []}
+      }
+      break;
+
+    case $.DOWNLOAD_LOG:
+      return {...state, progress: [...state.progress, action.payload]};
+
+    case $.DOWNLOAD_COMPLETE:
+      if ( action.error && process.browser ) {
+        alert(action.error);
+      }
+      return {...state, downloading: false};
+
   }
 
   return state;

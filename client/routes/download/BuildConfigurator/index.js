@@ -20,6 +20,7 @@ import BuildPlatform from './components/BuildPlatform'
 import BuildArtifacts from './components/BuildArtifacts'
 import BuildDownload from './components/BuildDownload'
 import BuildScript from './components/BuildScript'
+import BuildBundler from './components/BuildBundler'
 
 const getMode = state => state.build.mode;
 const getBuild = state => state.build.build;
@@ -32,6 +33,8 @@ const isModeMaven = state => getMode(state) === MODE_MAVEN;
 const isModeZip = state => getMode(state) === MODE_ZIP;
 const isModeNotZip = state => getMode(state) !== MODE_ZIP;
 const isBuildRelease = state => getBuild(state) === BUILD_RELEASE;
+const isDownloading = state => state.build.downloading;
+const isNotDownloading = state => !state.build.downloading;
 
 const fields = {
   mode: {
@@ -57,11 +60,12 @@ const fields = {
     options: createSelector(
       state => state.build.presets,
       state => state.build.mode,
-      (presets, mode) => presets.allIds.map(
+      state => state.build.build,
+      (presets, mode, build) => presets.allIds.map(
         preset => ({
           value: preset,
           label: presets.byId[preset].title,
-          disabled: mode === MODE_ZIP,
+          disabled: mode === MODE_ZIP && build !== BUILD_NIGHTLY,
         })
       )
     ),
@@ -108,17 +112,17 @@ const fields = {
   },
   source: {
     label: "Include source",
-    checked: state => state.build.source,
+    checked: state => state.build.source || state.build.build !== BUILD_NIGHTLY,
     action: $$.toggleSource,
     hidden: isModeNotZip,
-    disabled: () => true,
+    disabled: state => state.build.build !== BUILD_NIGHTLY,
   },
   javadoc: {
     label: "Include JavaDoc",
-    checked: state => state.build.javadoc,
+    checked: state => state.build.javadoc || state.build.build !== BUILD_NIGHTLY,
     action: $$.toggleJavadoc,
     hidden: isModeNotZip,
-    disabled: () => true,
+    disabled: state => state.build.build !== BUILD_NIGHTLY,
   },
   compact: {
     label: "Compact Mode",
@@ -151,7 +155,7 @@ const BuildContainer = props => (
     <ControlledPanel className="row" predicate={isBuildSelected}>
       <div className="col-xs-12">
         <div className="build-config">
-          <div className="row">
+          <ControlledPanel className="row" predicate={isNotDownloading}>
             <div className="col-xs-12 col-lg-3">
               <h2 className="m-y-1">Mode</h2>
               <ControlledRadio spec={fields.mode} />
@@ -183,7 +187,10 @@ const BuildContainer = props => (
             <BuildDownload />
             <BuildScript />
 
-          </div>
+          </ControlledPanel>
+          <ControlledPanel className="row" predicate={isDownloading}>
+            <BuildBundler />
+          </ControlledPanel>
         </div>
       </div>
     </ControlledPanel>

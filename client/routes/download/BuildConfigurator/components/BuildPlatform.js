@@ -7,7 +7,8 @@ import { togglePlatform } from '../actions'
   state => ({
     platforms: state.build.natives.allIds,
     natives: state.build.natives.byId,
-    selected: state.build.platform,
+    selected: state.build.build === 'nightly' ? state.build.platform : {"windows":true,"macos":true,"linux":true},
+    disabled: state.build.build !== 'nightly',
     hide: state.build.mode !== 'zip',
   }),
   dispatch => ({
@@ -38,7 +39,7 @@ class BuildPlatform extends React.Component {
               <Checkbox
                 key={platform}
                 label={native.title}
-                disabled={true}
+                disabled={props.disabled}
                 checked={props.selected[platform]}
                 value={platform}
                 onChange={this.toggle}
