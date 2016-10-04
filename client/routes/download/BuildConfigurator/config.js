@@ -342,11 +342,13 @@ const config = {
   descriptions: false,
   compact: false,
   hardcoded: false,
-  javadoc: false,
-  source: false,
+  javadoc: true,
+  source: true,
   language: null,
   platform: {},
   version: null,
+  downloading: false,
+  progress: []
 };
 
 function getDefaultPlatform() {
@@ -373,10 +375,9 @@ config.language = config.languages.allIds[0];
 config.version = config.versions.allIds[0];
 
 config.natives.allIds.forEach(platform => {
-  // config.platform[platform] = false;
-  config.platform[platform] = true;
+  config.platform[platform] = false;
 });
-// config.platform[getDefaultPlatform()] = true;
+config.platform[getDefaultPlatform()] = true;
 
 config.contents = {};
 
@@ -386,7 +387,7 @@ config.artifacts.allIds.forEach(artifact => {
 });
 
 // Toggle preset artifacts on
-config.presets.byId.all.artifacts.forEach(artifact => {
+config.presets.byId[config.preset].artifacts.forEach(artifact => {
   config.contents[artifact] = true;
 });
 

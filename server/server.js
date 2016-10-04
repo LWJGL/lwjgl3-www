@@ -23,6 +23,7 @@ let chunks = '{}';
 
 // Routes & helpers
 import teamcity from './teamcity';  // For proxying requests to TeamCity
+import bin from './bin';  // For returning S3 {build}/bin folder structure
 import getDevice from './getDevice';
 
 // ------------------------------------------------------------------------------
@@ -113,6 +114,9 @@ app.use(express.static(path.join(__dirname, '../public'), {
 
 // Teamcity proxy
 app.get('/teamcity', teamcity);
+
+app.get('/bin/:build', bin);
+app.get('/bin/:build/:version', bin);
 
 // React server-side rendering
 app.get('*', (req, res, next) => {

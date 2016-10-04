@@ -16,3 +16,6 @@ export const togglePlatform = platform => ({type: $.TOGGLE_PLATFORM, platform});
 
 // export const errorSet = (message, severity="danger") => ({type: $.ERROR_SET, error: { message, severity }});
 // export const errorReset = () => ({type: $.ERROR_SET, error: null});
+
+export const downloadInit = () => ({type: $.DOWNLOAD_INIT});
+export const downloadLog = payload => ({type: $.DOWNLOAD_LOG, payload});
