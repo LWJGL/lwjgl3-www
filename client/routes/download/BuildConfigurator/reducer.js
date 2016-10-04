@@ -173,6 +173,9 @@ export default function(state = config, action) {
       return {...state, progress: [...state.progress, action.payload]};
 
     case $.DOWNLOAD_COMPLETE:
+      if ( action.error && process.browser ) {
+        alert(action.error);
+      }
       return {...state, downloading: false};
 
   }

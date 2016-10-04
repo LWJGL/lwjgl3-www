@@ -7,6 +7,13 @@ import { downloadInit } from '../actions'
     build: state.build.build,
     mode: state.build.mode,
     version: state.build.version,
+    fullZip:
+      state.build.build !== 'nightly' || (
+           state.build.preset === 'all'
+        && state.build.source === true
+        && state.build.javadoc === true
+       && state.build.natives.allIds.every(platform => state.build.platform[platform])
+      )
   }),
   dispatch => ({
     downloadInit: () => dispatch(downloadInit())
@@ -21,7 +28,7 @@ class BuildDownload extends React.Component {
       return null;
     }
 
-    if ( props.build !== 'nightly' ) {
+    if ( props.fullZip ) {
       let downloadUrl;
       switch (props.build) {
         case 'release':
@@ -41,8 +48,8 @@ class BuildDownload extends React.Component {
 
       return (
         <div className="col-xs-12 col-lg-4">
-          <h2 className="m-b-2 m-t-1">Bundle</h2>
-          <button className="btn btn-xs-block btn-primary btn-lg" onClick={this.props.downloadInit}>DOWNLOAD ZIP</button>
+          <h2 className="m-b-2 m-t-1">Custom Bundle</h2>
+          <button className="btn btn-xs-block btn-primary btn-lg" onClick={this.props.downloadInit}>GENERATE BUNDLE</button>
         </div>
       )
 
