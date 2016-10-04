@@ -84,13 +84,12 @@ if ( DEV ) {
       /^\.\.\/routes\/Routes$/,
       '../routes/RoutesAsync'
     ),
-    new OccurrenceOrderPlugin(),
-    new DedupePlugin(),
-    new CommonsChunkPlugin({
-      name: "main",
-      minChunks: Infinity,
-    }),
-    new WebpackMd5Hash(),
+    // new DedupePlugin(),
+    // new CommonsChunkPlugin({
+    //   name: "main",
+    //   minChunks: Infinity,
+    // }),
+    // new WebpackMd5Hash(),
     new ChunkManifestPlugin({
       filename: 'manifest.json',
       manifestVariable: "manifest",

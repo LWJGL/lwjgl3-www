@@ -34,7 +34,7 @@ const rootEl = document.getElementById('lwjgl-app');
 if ( process.env.NODE_ENV === 'production' ) {
   render(<App store={store} />, rootEl);
 } else {
-  const AppContainer = require('react-hot-loader');
+  const AppContainer = require('react-hot-loader').AppContainer;
   // Trick babel to avoid hoisting <AppContainer />
   // transform-react-constant-elements
   const noHoist = {};

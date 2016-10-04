@@ -1,6 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+const SUPPORTS_BTOA = process.browser ? !!window.btoa : false;
+const SUPPORTS_CLIPBOARD = process.browser ? !!document.execCommand : false;
+
 @connect(
   state => {
     if ( state.build.mode === 'zip' ) {
@@ -50,14 +53,22 @@ class BuildScript extends React.Component {
       <div className="col-xs-12 col-lg-6">
         <h2 className="m-b-2 m-t-1">Snippet</h2>
         <textarea ref={el => this.script = el} className="script" readOnly={true} value={script} wrap="off" />
-        <a
-          className="btn btn-xs-block btn-primary"
-          download={filename(mode)}
-          href={`data:${mime(mode)};base64,${btoa(script)}`}
-        >
-          DOWNLOAD SNIPPET
-        </a>
-        <button className="btn btn-xs-block btn-primary" onClick={this.copyToClipboard}>COPY TO CLIPBOARD</button>
+        {
+          SUPPORTS_BTOA ?
+            <a
+              className="btn btn-xs-block btn-primary"
+              download={filename(mode)}
+              href={`data:${mime(mode)};base64,${btoa(script)}`}
+            >
+              DOWNLOAD SNIPPET
+            </a>
+            : null
+        }
+        {
+          SUPPORTS_CLIPBOARD ?
+            <button className="btn btn-xs-block btn-primary" onClick={this.copyToClipboard}>COPY TO CLIPBOARD</button>
+            : null
+        }
       </div>
     )
   }
