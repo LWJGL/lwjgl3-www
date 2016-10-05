@@ -1,6 +1,7 @@
-import { takeLatest, delay } from 'redux-saga'
-import { call, apply, put, select } from 'redux-saga/effects'
+import { delay } from 'redux-saga'
+import { take, fork, cancel, call, apply, put, select } from 'redux-saga/effects'
 
+import { PAGE_LEAVE } from '../../../store/reducers/redirect'
 import { DOWNLOAD_INIT } from './actionTypes'
 import { downloadLog as log, downloadComplete } from './actions'
 
@@ -53,6 +54,7 @@ const getBuild = state => {
     platforms: selectedPlatforms,
     source: state.build.source,
     javadoc: state.build.javadoc,
+    version: state.build.version,
   };
 };
 
@@ -141,7 +143,7 @@ function* init() {
     return;
   }
 
-  const {path, selected, platforms, source, javadoc} = yield select(getBuild);
+  const {path, selected, platforms, source, javadoc, version} = yield select(getBuild);
 
   yield put(log('Downloading file manifest'));
   const manifest = yield call(fetchManifest, `${path}`);
@@ -156,25 +158,38 @@ function* init() {
   yield call(delay, 250);
   yield put(log(`Downloading ${files.length} files`));
 
-  const data = [];
+  const zip = new JSZip();
+  const PARALLEL_DOWNLOADS = 4;
+  let i = 0;
+  let len = files.length;
 
-  for ( let i = 0, len = files.length; i < len; i += 1 ) {
-    const download = yield call(fetchFile, manifest.payload[0], files[i]);
-    if ( download.error ) {
-      yield put(downloadComplete(download.error));
-      return;
+  while ( i < len ) {
+    const parallel = [];
+    const log_parts = [];
+    let limit = i + PARALLEL_DOWNLOADS;
+
+    if ( limit >= len ) {
+      limit = len;
     }
-    data.push(download);
-    yield put(log(`${i+1}/${len} - ${files[i]}`));
+
+    for ( ; i < limit; i+=1 ) {
+      log_parts.push(`${i+1}/${len} - ${files[i]}`);
+      parallel.push(call(fetchFile, manifest.payload[0], files[i]));
+    }
+
+    yield put(log(log_parts.reverse().join('\n')));
+
+    const downloads = yield parallel;
+    for ( let s=0; s < downloads.length; s+=1 ) {
+      if ( downloads[s].error ) {
+        yield put(downloadComplete(downloads[s].error));
+        return;
+      }
+      zip.file(downloads[s].filename, downloads[s].payload, {binary:true});
+    }
   }
 
   yield put(log(`Compressing files`));
-  const zip = new JSZip();
-
-  data.forEach(item => {
-    zip.file(item.filename, item.payload, {binary:true});
-  });
-
 
   const zipOptions = {
     type:'blob',
@@ -183,7 +198,7 @@ function* init() {
   };
 
   const blob = yield apply(zip, zip.generateAsync, [zipOptions]);
-  saveAs(blob, "lwjgl-custom.zip");
+  saveAs(blob, `lwjgl-${version}-custom.zip`);
 
   yield put(log(`Done!`));
   yield call(delay, 500);
@@ -191,5 +206,11 @@ function* init() {
 }
 
 export default function*() {
-  yield* takeLatest(DOWNLOAD_INIT, init);
+  while ( yield take(DOWNLOAD_INIT) ) {
+    const downloadJob = yield fork(init);
+
+    yield take(PAGE_LEAVE);
+    yield cancel(downloadJob);
+    yield put(downloadComplete());
+  }
 }

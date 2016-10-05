@@ -40,6 +40,7 @@ function configureStore() {
   );
 
   store.asyncReducers = {};
+  store.runSaga = sagaMiddleware.run;
 
   if ( process.browser ) {
     sagaMiddleware.run(saga);
@@ -50,9 +51,9 @@ function configureStore() {
         store.replaceReducer(createReducer())
       });
       // Enable Webpack hot module replacement for sagas
-      module.hot.accept('./saga', () => {
-        sagaMiddleware.run(saga);
-      });
+      // module.hot.accept('./saga', () => {
+      //   sagaMiddleware.run(saga);
+      // });
     }
   }
 

@@ -1,6 +1,8 @@
 import React from 'react'
 import {createSelector} from 'reselect'
 import reducer from './reducer'
+import saga from './saga'
+
 import * as $$ from './actions'
 
 import {
@@ -198,5 +200,6 @@ const BuildContainer = props => (
 );
 
 BuildContainer.reducer = reducer;
+BuildContainer.saga = saga;
 
 export default BuildContainer

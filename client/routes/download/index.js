@@ -2,14 +2,15 @@ import React from 'react'
 import Helmet from 'react-helmet'
 import { Link } from 'react-router'
 
-import asyncReducer from '../../store/asyncReducer'
+import asyncStore from '../../store/asyncStore'
 import BuildContainer from './BuildConfigurator'
 
-@asyncReducer(
-  'build',
-  BuildContainer.reducer,
-  './BuildConfigurator/reducer'
-)
+@asyncStore({
+  scope: 'build',
+  reducer: BuildContainer.reducer,
+  saga: BuildContainer.saga,
+  module: './BuildConfigurator',
+})
 class DownloadRoute extends React.PureComponent {
 
   render() {
