@@ -2,7 +2,7 @@ import { delay } from 'redux-saga'
 import { take, fork, cancel, call, apply, put, select } from 'redux-saga/effects'
 
 import { PAGE_LEAVE } from '../../../store/reducers/redirect'
-import { DOWNLOAD_INIT } from './actionTypes'
+import { DOWNLOAD_INIT, DOWNLOAD_COMPLETE } from './actionTypes'
 import { downloadLog as log, downloadComplete } from './actions'
 
 import JSZip from 'jszip'
@@ -136,6 +136,18 @@ async function fetchFile(root, path) {
   }
 }
 
+function* downloadThread(queueSize, root, queue) {
+  return yield fork(function* () {
+    const downloads = [];
+    while ( queue.length > 0 ) {
+      const file = queue.pop();
+      yield put(log(`${queueSize-queue.length}/${queueSize} - ${file}`));
+      downloads.push(yield call(fetchFile, root, file));
+    }
+    return downloads;
+  });
+}
+
 function* init() {
 
   if ( !JSZip.support.blob ) {
@@ -159,34 +171,33 @@ function* init() {
   yield put(log(`Downloading ${files.length} files`));
 
   const zip = new JSZip();
-  const PARALLEL_DOWNLOADS = 4;
-  let i = 0;
-  let len = files.length;
+  const queueSize = files.length;
 
-  while ( i < len ) {
-    const parallel = [];
-    const log_parts = [];
-    let limit = i + PARALLEL_DOWNLOADS;
+  files.reverse();
 
-    if ( limit >= len ) {
-      limit = len;
+  const downloadThreads = yield [
+    downloadThread(queueSize, manifest.payload[0], files),
+    downloadThread(queueSize, manifest.payload[0], files),
+    downloadThread(queueSize, manifest.payload[0], files),
+    downloadThread(queueSize, manifest.payload[0], files),
+  ];
+
+  const downloads = [
+    ...downloadThreads[0].result(),
+    ...downloadThreads[1].result(),
+    ...downloadThreads[2].result(),
+    ...downloadThreads[3].result(),
+  ];
+
+  if ( !downloads.every(download => {
+    if ( download.error ) {
+      return false;
     }
-
-    for ( ; i < limit; i+=1 ) {
-      log_parts.push(`${i+1}/${len} - ${files[i]}`);
-      parallel.push(call(fetchFile, manifest.payload[0], files[i]));
-    }
-
-    yield put(log(log_parts.reverse().join('\n')));
-
-    const downloads = yield parallel;
-    for ( let s=0; s < downloads.length; s+=1 ) {
-      if ( downloads[s].error ) {
-        yield put(downloadComplete(downloads[s].error));
-        return;
-      }
-      zip.file(downloads[s].filename, downloads[s].payload, {binary:true});
-    }
+    zip.file(download.filename, download.payload, {binary:true});
+    return true;
+  }) ) {
+    yield put(downloadComplete("Artifact download failed. Please try again"));
+    return;
   }
 
   yield put(log(`Compressing files`));
@@ -206,11 +217,15 @@ function* init() {
 }
 
 export default function*() {
-  while ( yield take(DOWNLOAD_INIT) ) {
+  while ( true ) {
+    yield take(DOWNLOAD_INIT);
     const downloadJob = yield fork(init);
 
-    yield take(PAGE_LEAVE);
-    yield cancel(downloadJob);
-    yield put(downloadComplete());
+    yield take([PAGE_LEAVE, DOWNLOAD_COMPLETE]);
+
+    if ( downloadJob.isRunning() ) {
+      yield cancel(downloadJob);
+      yield put(downloadComplete());
+    }
   }
 }
