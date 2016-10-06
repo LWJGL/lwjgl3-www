@@ -113,7 +113,7 @@ function getFiles(manifest, selected, platforms, source, javadoc) {
 }
 
 async function fetchFile(root, path) {
-  const url = `https://s3.amazonaws.com/build.lwjgl.org/${root}${path}`;
+  const url = `https://build.lwjgl.org/${root}${path}`;
   let response;
 
   try {

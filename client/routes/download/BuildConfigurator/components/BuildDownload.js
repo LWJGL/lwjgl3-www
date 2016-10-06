@@ -32,10 +32,10 @@ class BuildDownload extends React.Component {
       let downloadUrl;
       switch (props.build) {
         case 'release':
-          downloadUrl = `http://build.lwjgl.org/${props.build}/${props.version}/lwjgl-${props.version}.zip`;
+          downloadUrl = `https://build.lwjgl.org/${props.build}/${props.version}/lwjgl-${props.version}.zip`;
           break;
         default:
-          downloadUrl = `http://build.lwjgl.org/${props.build}/lwjgl.zip`;
+          downloadUrl = `https://build.lwjgl.org/${props.build}/lwjgl.zip`;
       }
 
       return (
