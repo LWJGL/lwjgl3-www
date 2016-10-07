@@ -136,16 +136,36 @@ async function fetchFile(root, path) {
   }
 }
 
-function* downloadThread(queueSize, root, queue) {
-  return yield fork(function* () {
+function* downloadWorker(queueSize, root, queue) {
+  return yield fork(function*() {
     const downloads = [];
     while ( queue.length > 0 ) {
       const file = queue.pop();
-      yield put(log(`${queueSize-queue.length}/${queueSize} - ${file}`));
+      yield put(log(`${queueSize - queue.length}/${queueSize} - ${file}`));
       downloads.push(yield call(fetchFile, root, file));
     }
     return downloads;
   });
+}
+
+function* downloadFiles(files, root) {
+  const PARALLEL_DOWNLOADS = 4;
+  const workers = [];
+  const queue = [...files].reverse();
+  const queueSize = queue.length;
+
+  for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
+    workers.push(downloadWorker(queueSize, root, queue));
+  }
+
+  const downloadThreads = yield workers;
+  const downloads = [];
+
+  for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
+    downloads.push(...downloadThreads[i].result());
+  }
+
+  return downloads;
 }
 
 function* init() {
@@ -170,32 +190,18 @@ function* init() {
   yield call(delay, 250);
   yield put(log(`Downloading ${files.length} files`));
 
+  const downloads = yield downloadFiles(files, manifest.payload[0]);
   const zip = new JSZip();
-  const queueSize = files.length;
 
-  files.reverse();
-
-  const downloadThreads = yield [
-    downloadThread(queueSize, manifest.payload[0], files),
-    downloadThread(queueSize, manifest.payload[0], files),
-    downloadThread(queueSize, manifest.payload[0], files),
-    downloadThread(queueSize, manifest.payload[0], files),
-  ];
-
-  const downloads = [
-    ...downloadThreads[0].result(),
-    ...downloadThreads[1].result(),
-    ...downloadThreads[2].result(),
-    ...downloadThreads[3].result(),
-  ];
-
-  if ( !downloads.every(download => {
-    if ( download.error ) {
-      return false;
-    }
-    zip.file(download.filename, download.payload, {binary:true});
-    return true;
-  }) ) {
+  if (
+    !downloads.every(download => {
+      if ( download.error ) {
+        return false;
+      }
+      zip.file(download.filename, download.payload, {binary: true});
+      return true;
+    })
+  ) {
     yield put(downloadComplete("Artifact download failed. Please try again"));
     return;
   }
@@ -203,7 +209,7 @@ function* init() {
   yield put(log(`Compressing files`));
 
   const zipOptions = {
-    type:'blob',
+    type: 'blob',
     // compression:'DEFLATE',
     // compressionOptions: {level:6},
   };
@@ -219,12 +225,12 @@ function* init() {
 export default function*() {
   while ( true ) {
     yield take(DOWNLOAD_INIT);
-    const downloadJob = yield fork(init);
+    const downloadTask = yield fork(init);
 
-    yield take([PAGE_LEAVE, DOWNLOAD_COMPLETE]);
+    const action = yield take([PAGE_LEAVE, DOWNLOAD_COMPLETE]);
 
-    if ( downloadJob.isRunning() ) {
-      yield cancel(downloadJob);
+    if ( action.type === PAGE_LEAVE ) {
+      yield cancel(downloadTask);
       yield put(downloadComplete());
     }
   }
