@@ -3,9 +3,8 @@
 import React from 'react'
 import {Link} from 'react-router'
 import Sidebar from './Sidebar'
-import env from '../utils/env'
 
-let ios = false;
+import { IS_IOS } from '../services/globals'
 
 export default class Header extends React.Component {
 
@@ -23,11 +22,6 @@ export default class Header extends React.Component {
   };
 
   componentDidMount() {
-    // Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels
-    // from the top of the screen ( the point under the browser's address bar! )
-    // eslint-disable-next-line
-    ios = env.mobile && /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
     this.offsetHeight = this.el.offsetHeight;
@@ -82,7 +76,7 @@ export default class Header extends React.Component {
 
     if ( this.prev - this.current < 0 ) {
       // We are scrolling down
-      if ( ios ) {
+      if ( IS_IOS ) {
         this.el.classList.add('hidden');
       } else {
         if ( this.direction >= 0 ) {
@@ -102,7 +96,7 @@ export default class Header extends React.Component {
       }
     } else {
       // We are scrolling up
-      if ( ios ) {
+      if ( IS_IOS ) {
         this.el.classList.remove('hidden');
       } else {
         if ( this.direction <= 0 ) {
@@ -131,7 +125,7 @@ export default class Header extends React.Component {
     if ( this.props.isHome ) {
       headerClass.push('nobg');
     }
-    if ( ios ) {
+    if ( IS_IOS ) {
       headerClass.push('alt');
     }
 

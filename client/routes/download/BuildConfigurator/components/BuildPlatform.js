@@ -2,13 +2,14 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import { togglePlatform } from '../actions'
+import { IS_SAFARI } from '../../../../services/globals'
 
 @connect(
   state => ({
     platforms: state.build.natives.allIds,
     natives: state.build.natives.byId,
-    selected: state.build.build === 'nightly' ? state.build.platform : {"windows":true,"macos":true,"linux":true},
-    disabled: state.build.build !== 'nightly',
+    selected: state.build.build === 'nightly' && !IS_SAFARI ? state.build.platform : {"windows":true,"macos":true,"linux":true},
+    disabled: state.build.build !== 'nightly' || IS_SAFARI,
     hide: state.build.mode !== 'zip',
   }),
   dispatch => ({

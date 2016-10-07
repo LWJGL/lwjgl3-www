@@ -92,13 +92,13 @@ function getFiles(manifest, selected, platforms, source, javadoc) {
     }
 
     // Check if javadoc
-    if ( filepath.match(javaDocRegExp) !== null && !javadoc ) {
+    if ( javaDocRegExp.test(filepath) && !javadoc ) {
       return;
       // Check if sources are included
-    } else if ( filepath.match(sourcesRegExp) !== null && !source ) {
+    } else if ( sourcesRegExp.test(filepath) && !source ) {
       return;
       // Check if platform is selected
-    } else if ( filepath.match(nativeRegExp) ) {
+    } else if ( nativeRegExp.test(filepath) ) {
       const platform = filepath.match(platformRegExp);
       if ( platform === null || platforms[platform[1]] === false ) {
         return;

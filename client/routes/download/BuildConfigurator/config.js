@@ -348,7 +348,7 @@ const config = {
   platform: {},
   version: null,
   downloading: false,
-  progress: []
+  progress: [],
 };
 
 function getDefaultPlatform() {

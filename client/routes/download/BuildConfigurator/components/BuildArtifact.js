@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import {toggleArtifact} from '../actions'
+import { IS_SAFARI } from '../../../../services/globals'
 
 const descriptionStyle = {
   marginTop: '-1rem',
@@ -19,7 +20,7 @@ const descriptionStyle = {
       artifact,
       checked: available && state.build.contents[ownProps.id] === true,
       showDescriptions: state.build.descriptions,
-      disabled: !available || ( state.build.mode === 'zip' && state.build.build !== 'nightly' ) || ownProps.id === 'lwjgl',
+      disabled: IS_SAFARI || !available || ( state.build.mode === 'zip' && state.build.build !== 'nightly' ) || ownProps.id === 'lwjgl',
     }
   },
   dispatch => ({

@@ -10,7 +10,7 @@ const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
 const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
-const WebpackMd5Hash = require('webpack-md5-hash');
+// const WebpackMd5Hash = require('webpack-md5-hash');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 
 const path = require('path');

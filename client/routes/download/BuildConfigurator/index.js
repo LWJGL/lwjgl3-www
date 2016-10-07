@@ -13,6 +13,8 @@ import {
   MODE_GRADLE,
 } from './constants'
 
+import { IS_SAFARI } from '../../../services/globals'
+
 // import ControlledAlert from '../../components/ControlledAlert'
 import ControlledPanel from '../../../components/ControlledPanel'
 import ControlledRadio from '../../../components/ControlledRadio'
@@ -67,7 +69,7 @@ const fields = {
         preset => ({
           value: preset,
           label: presets.byId[preset].title,
-          disabled: mode === MODE_ZIP && build !== BUILD_NIGHTLY,
+          disabled: mode === MODE_ZIP && ( build !== BUILD_NIGHTLY || IS_SAFARI ),
         })
       )
     ),
@@ -117,14 +119,14 @@ const fields = {
     checked: state => state.build.source || state.build.build !== BUILD_NIGHTLY,
     action: $$.toggleSource,
     hidden: isModeNotZip,
-    disabled: state => state.build.build !== BUILD_NIGHTLY,
+    disabled: state => state.build.build !== BUILD_NIGHTLY || IS_SAFARI,
   },
   javadoc: {
     label: "Include JavaDoc",
     checked: state => state.build.javadoc || state.build.build !== BUILD_NIGHTLY,
     action: $$.toggleJavadoc,
     hidden: isModeNotZip,
-    disabled: state => state.build.build !== BUILD_NIGHTLY,
+    disabled: state => state.build.build !== BUILD_NIGHTLY || IS_SAFARI,
   },
   compact: {
     label: "Compact Mode",

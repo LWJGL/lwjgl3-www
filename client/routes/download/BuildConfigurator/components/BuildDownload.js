@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { downloadInit } from '../actions'
+import { IS_SAFARI } from '../../../../services/globals'
 
 @connect(
   state => ({
@@ -8,7 +9,8 @@ import { downloadInit } from '../actions'
     mode: state.build.mode,
     version: state.build.version,
     fullZip:
-      state.build.build !== 'nightly' || (
+      state.build.build !== 'nightly' ||
+      IS_SAFARI || (
            state.build.preset === 'all'
         && state.build.source === true
         && state.build.javadoc === true
