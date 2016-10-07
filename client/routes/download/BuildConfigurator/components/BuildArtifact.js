@@ -20,7 +20,7 @@ const descriptionStyle = {
       artifact,
       checked: available && state.build.contents[ownProps.id] === true,
       showDescriptions: state.build.descriptions,
-      disabled: IS_SAFARI || !available || ( state.build.mode === 'zip' && state.build.build !== 'nightly' ) || ownProps.id === 'lwjgl',
+      disabled: !available || ( state.build.mode === 'zip' && ( state.build.build !== 'nightly' || IS_SAFARI ) ) || ownProps.id === 'lwjgl',
     }
   },
   dispatch => ({
