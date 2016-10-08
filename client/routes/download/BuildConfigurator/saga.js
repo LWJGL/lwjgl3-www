@@ -1,5 +1,5 @@
 import { delay, channel, buffers } from 'redux-saga'
-import { take, fork, cancel, call, apply, put, select } from 'redux-saga/effects'
+import { race, take, fork, call, apply, put, select } from 'redux-saga/effects'
 
 import { PAGE_LEAVE } from '../../../store/reducers/redirect'
 import { DOWNLOAD_INIT, DOWNLOAD_COMPLETE } from './actionTypes'
@@ -225,12 +225,13 @@ export default function* BuildDownloadSaga() {
   //noinspection InfiniteLoopJS
   while ( true ) {
     yield take(DOWNLOAD_INIT);
-    const downloadTask = yield fork(init);
 
-    const action = yield take([PAGE_LEAVE, DOWNLOAD_COMPLETE]);
+    const { left } = yield race({
+      download: call(init),
+      left: take(PAGE_LEAVE),
+    });
 
-    if ( action.type === PAGE_LEAVE ) {
-      yield cancel(downloadTask);
+    if ( left ) {
       yield put(downloadComplete());
     }
   }
