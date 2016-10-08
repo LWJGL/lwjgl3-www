@@ -1,4 +1,4 @@
-import { delay } from 'redux-saga'
+import { delay, channel, buffers } from 'redux-saga'
 import { take, fork, cancel, call, apply, put, select } from 'redux-saga/effects'
 
 import { PAGE_LEAVE } from '../../../store/reducers/redirect'
@@ -116,56 +116,58 @@ async function fetchFile(root, path) {
   const url = `https://build.lwjgl.org/${root}${path}`;
   let response;
 
-  try {
-    response = await fetch(
-      url,
-      {
-        method: 'GET',
-        mode: 'cors',
-      }
-    );
-    if ( response.status !== 200 ) {
-      return {error: response.statusText};
+  response = await fetch(
+    url,
+    {
+      method: 'GET',
+      mode: 'cors',
     }
-    return {
-      payload: await response.blob(),
-      filename: path.split('/').pop(),
-    };
-  } catch (e) {
-    return {error: e.message};
+  );
+
+  if ( response.status !== 200 ) {
+    throw(response.statusText);
   }
+
+  return {
+    payload: await response.blob(),
+    filename: path.split('/').pop(),
+  };
 }
 
-function* downloadWorker(queueSize, root, queue) {
-  return yield fork(function*() {
-    const downloads = [];
-    while ( queue.length > 0 ) {
-      const file = queue.pop();
-      yield put(log(`${queueSize - queue.length}/${queueSize} - ${file}`));
-      downloads.push(yield call(fetchFile, root, file));
+function* downloadWorker(input, output, latch, root, files) {
+  try {
+    //noinspection InfiniteLoopJS
+    while ( true ) {
+      const index = yield take(input);
+      yield put(log(`${index + 1}/${files.length} - ${files[index]}`));
+      output.push(yield call(fetchFile, root, files[index]));
     }
-    return downloads;
-  });
+  } finally {
+    yield put(latch, 1);
+  }
 }
 
 function* downloadFiles(files, root) {
-  const PARALLEL_DOWNLOADS = 4;
-  const workers = [];
-  const queue = [...files].reverse();
-  const queueSize = queue.length;
+  const PARALLEL_DOWNLOADS = Math.min(4, files.length);
+  const output = [];
+  const input = yield call(channel, buffers.fixed(files.length));
+  const latch = yield call(channel, buffers.fixed(PARALLEL_DOWNLOADS));
 
-  for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
-    workers.push(downloadWorker(queueSize, root, queue));
+  for ( let i = 0; i < PARALLEL_DOWNLOADS; i += 1 ) {
+    yield fork(downloadWorker, input, output, latch, root, files);
   }
 
-  const downloadThreads = yield workers;
-  const downloads = [];
-
-  for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
-    downloads.push(...downloadThreads[i].result());
+  for ( const i of files.keys() ) {
+    yield put(input, i);
   }
+  input.close();
 
-  return downloads;
+  for ( let i = 0; i < PARALLEL_DOWNLOADS; i += 1 ) {
+    yield take(latch);
+  }
+  latch.close();
+
+  return output;
 }
 
 function* init() {
@@ -190,30 +192,27 @@ function* init() {
   yield call(delay, 250);
   yield put(log(`Downloading ${files.length} files`));
 
-  const downloads = yield downloadFiles(files, manifest.payload[0]);
   const zip = new JSZip();
+  try {
+    const downloads = yield downloadFiles(files, manifest.payload[0]);
 
-  if (
-    !downloads.every(download => {
-      if ( download.error ) {
-        return false;
-      }
+    downloads.forEach(download => {
+      //noinspection JSUnresolvedFunction
       zip.file(download.filename, download.payload, {binary: true});
-      return true;
-    })
-  ) {
+    });
+  } catch (e) {
     yield put(downloadComplete("Artifact download failed. Please try again"));
     return;
   }
 
   yield put(log(`Compressing files`));
-
   const zipOptions = {
     type: 'blob',
-    // compression:'DEFLATE',
+    // compression: 'DEFLATE',
     // compressionOptions: {level:6},
   };
 
+  //noinspection JSUnresolvedVariable
   const blob = yield apply(zip, zip.generateAsync, [zipOptions]);
   saveAs(blob, `lwjgl-${version}-custom.zip`);
 
@@ -222,7 +221,8 @@ function* init() {
   yield put(downloadComplete());
 }
 
-export default function*() {
+export default function* BuildDownloadSaga() {
+  //noinspection InfiniteLoopJS
   while ( true ) {
     yield take(DOWNLOAD_INIT);
     const downloadTask = yield fork(init);

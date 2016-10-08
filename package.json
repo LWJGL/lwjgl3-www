@@ -73,7 +73,7 @@
     "chunk-manifest-webpack-plugin": "github:apostolos/chunk-manifest-webpack-plugin",
     "classnames": "2.2.5",
     "cli-table": "0.3.1",
-    "cross-env": "3.1.1",
+    "cross-env": "3.1.2",
     "exports-loader": "0.6.3",
     "express": "5.0.0-alpha.2",
     "express-device": "0.4.2",
@@ -116,7 +116,7 @@
     "flow-bin": "0.33.0",
     "react-hot-loader": "3.0.0-beta.5",
     "redux-logger": "2.7.0",
-    "webpack-dev-middleware": "1.8.3",
+    "webpack-dev-middleware": "1.8.4",
     "webpack-hot-middleware": "2.12.2"
   },
   "scripts": {
