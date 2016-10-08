@@ -2,7 +2,7 @@ import { delay, channel, buffers } from 'redux-saga'
 import { race, take, fork, call, apply, put, select } from 'redux-saga/effects'
 
 import { PAGE_LEAVE } from '../../../store/reducers/redirect'
-import { DOWNLOAD_INIT, DOWNLOAD_COMPLETE } from './actionTypes'
+import { DOWNLOAD_INIT } from './actionTypes'
 import { downloadLog as log, downloadComplete } from './actions'
 
 import JSZip from 'jszip'
