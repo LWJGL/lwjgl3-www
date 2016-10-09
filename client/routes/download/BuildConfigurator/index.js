@@ -142,6 +142,8 @@ const fields = {
   },
 };
 
+const SCOPE = 'build';
+
 class BuildContainer extends React.Component {
 
   //noinspection JSUnusedGlobalSymbols
@@ -150,20 +152,17 @@ class BuildContainer extends React.Component {
   };
 
   saga = null;
-  scope = 'build';
 
   componentWillMount() {
     const store = this.context.store;
-    store.injectReducer(this.scope, reducer);
+    store.injectReducer(SCOPE, reducer);
 
-    if ( process.env.NODE_ENV !== 'production' ) {
-      if ( module.hot ) {
-        module.hot.accept('./reducer', () => {
-          if ( store.asyncReducers[this.scope] ) {
-            store.injectReducer(this.scope, reducer);
-          }
-        })
-      }
+    if ( process.env.NODE_ENV !== 'production' && module.hot ) {
+      module.hot.accept('./reducer', () => {
+        if ( store.asyncReducers[SCOPE] ) {
+          store.injectReducer(SCOPE, reducer);
+        }
+      })
     }
 
     this.saga = store.runSaga(saga);
@@ -175,12 +174,12 @@ class BuildContainer extends React.Component {
       this.saga.cancel();
     }
     store.dispatch($$.reset());
-    store.ejectReducer(this.scope);
+    store.ejectReducer(SCOPE);
   }
 
   render() {
     return (
-      <div>
+      <div className="m-b-2">
         {/*<ControlledAlert selector={state => state.build.error} reset={$$.errorReset} />*/}
         <div className="row">
           <div className="col-lg-4 col-xs-12">

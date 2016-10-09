@@ -24,6 +24,7 @@ let chunks = '{}';
 // Routes & helpers
 import teamcity from './teamcity';  // For proxying requests to TeamCity
 import bin from './bin';  // For returning S3 {build}/bin folder structure
+import browse from './browse';  // For browsing S3 bucket
 import getDevice from './getDevice';
 
 // ------------------------------------------------------------------------------
@@ -31,7 +32,7 @@ import getDevice from './getDevice';
 // ------------------------------------------------------------------------------
 
 const PRODUCT = 'lwjgl.org';
-const app = module.exports = express();
+const app = express();
 const config = require('../config.json');
 
 app.set('port', config.server.port);
@@ -117,6 +118,8 @@ app.get('/teamcity', teamcity);
 
 app.get('/bin/:build', bin);
 app.get('/bin/:build/:version', bin);
+
+app.get('/browse', browse);
 
 // React server-side rendering
 app.get('*', (req, res, next) => {

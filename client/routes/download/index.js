@@ -3,6 +3,7 @@ import Helmet from 'react-helmet'
 import { Link } from 'react-router'
 
 import BuildContainer from './BuildConfigurator'
+import FileBrowser from './FileBrowser'
 
 const DownloadRoute = () => (
   <main>
@@ -20,6 +21,9 @@ const DownloadRoute = () => (
 
       <p>Select a build to begin configuring your download:</p>
       <BuildContainer />
+
+      <p>Or browse and download files directly:</p>
+      <FileBrowser />
     </section>
 
     <div className="area-dark p-y-2">

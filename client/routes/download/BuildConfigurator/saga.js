@@ -8,7 +8,6 @@ import { downloadLog as log, downloadComplete } from './actions'
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 
-
 async function fetchManifest(path) {
   const response = await fetch(`/bin/${path}`);
   if ( response.status !== HTTP_OK ) {
@@ -216,6 +215,6 @@ function* init() {
   yield put(downloadComplete());
 }
 
-export default function* BuildDownloadSaga() {
+export default function* buildDownloadSaga() {
   yield takeLatest(DOWNLOAD_INIT, init);
 }
