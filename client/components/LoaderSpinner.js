@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 
 const LoaderSpinner = ({size, style, delay}) => (
   <svg className={`loader-spinner${delay ? ' delay':''}`} viewBox="0 0 32 32" width={size} height={size} style={style}>
-    <circle cx={16} cy={16} r={14} fill="none"></circle>
+    <circle cx={16} cy={16} r={14} fill="none" />
   </svg>
 );
 

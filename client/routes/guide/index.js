@@ -29,7 +29,8 @@ class GuideRoute extends React.Component {
           if ( window.location.hash === '#build-instructions' ) {
             try {
               document.getElementById('build-instructions').scrollIntoView();
-            } catch(err) {}
+            } catch(ignore) {
+            }
           }
         });
       });

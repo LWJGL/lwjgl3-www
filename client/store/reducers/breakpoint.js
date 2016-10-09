@@ -17,6 +17,7 @@ export const getCurrent = () => {
   let i = breakpoint.limits.length - 1;
   while ( i > 0 ) {
     if ( w >= breakpoint.limits[i] ) {
+      //noinspection BreakStatementJS
       break;
     }
     i -= 1;

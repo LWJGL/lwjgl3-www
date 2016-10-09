@@ -1,27 +1,20 @@
-import { delay, channel, buffers } from 'redux-saga'
-import { race, take, fork, call, apply, put, select } from 'redux-saga/effects'
+import { takeLatest, channel, buffers } from 'redux-saga'
+import { take, fork, call, apply, put, select } from 'redux-saga/effects'
 
-import { PAGE_LEAVE } from '../../../store/reducers/redirect'
+import { HTTP_OK } from '../../../services/http_status_codes'
 import { DOWNLOAD_INIT } from './actionTypes'
 import { downloadLog as log, downloadComplete } from './actions'
 
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
 
-async function fetchManifest(path) {
-  let response;
 
-  try {
-    response = await fetch(`/bin/${path}`);
-    if ( response.status !== 200 ) {
-      return {error: response.statusText};
-    }
-    return {
-      payload: await response.json()
-    };
-  } catch (e) {
-    return {error: e.message};
+async function fetchManifest(path) {
+  const response = await fetch(`/bin/${path}`);
+  if ( response.status !== HTTP_OK ) {
+    throw(response.statusText);
   }
+  return await response.json();
 }
 
 const getBuild = state => {
@@ -69,7 +62,7 @@ function getFiles(manifest, selected, platforms, source, javadoc) {
 
   const selectedMap = {};
 
-  selected.forEach(key => selectedMap[key] = true);
+  selected.forEach(key => {selectedMap[key] = true});
 
   manifest.forEach(file => {
     const filepath = file.replace(rootRegExp, '');
@@ -92,10 +85,10 @@ function getFiles(manifest, selected, platforms, source, javadoc) {
     }
 
     // Check if javadoc
-    if ( javaDocRegExp.test(filepath) && !javadoc ) {
+    if ( javaDocRegExp.test(filepath) && javadoc === false ) {
       return;
       // Check if sources are included
-    } else if ( sourcesRegExp.test(filepath) && !source ) {
+    } else if ( sourcesRegExp.test(filepath) && source === false ) {
       return;
       // Check if platform is selected
     } else if ( nativeRegExp.test(filepath) ) {
@@ -124,7 +117,7 @@ async function fetchFile(root, path) {
     }
   );
 
-  if ( response.status !== 200 ) {
+  if ( response.status !== HTTP_OK ) {
     throw(response.statusText);
   }
 
@@ -147,6 +140,7 @@ function* downloadWorker(input, output, latch, root, files) {
   }
 }
 
+//noinspection FunctionWithMultipleLoopsJS
 function* downloadFiles(files, root) {
   const PARALLEL_DOWNLOADS = Math.min(4, files.length);
   const output = [];
@@ -180,27 +174,29 @@ function* init() {
   const {path, selected, platforms, source, javadoc, version} = yield select(getBuild);
 
   yield put(log('Downloading file manifest'));
-  const manifest = yield call(fetchManifest, `${path}`);
-  if ( manifest.error ) {
-    yield put(downloadComplete(manifest.error));
+
+  let manifest;
+  try {
+    manifest = yield call(fetchManifest, `${path}`);
+  } catch(e) {
+    yield put(downloadComplete(e.message));
     return;
   }
 
   yield put(log('Building file list'));
-  const files = yield getFiles(manifest.payload, selected, platforms, source, javadoc);
+  const files = yield getFiles(manifest, selected, platforms, source, javadoc);
 
-  yield call(delay, 250);
   yield put(log(`Downloading ${files.length} files`));
 
   const zip = new JSZip();
   try {
-    const downloads = yield downloadFiles(files, manifest.payload[0]);
+    const downloads = yield downloadFiles(files, manifest[0]);
 
     downloads.forEach(download => {
       //noinspection JSUnresolvedFunction
       zip.file(download.filename, download.payload, {binary: true});
     });
-  } catch (e) {
+  } catch (ignore) {
     yield put(downloadComplete("Artifact download failed. Please try again"));
     return;
   }
@@ -217,22 +213,9 @@ function* init() {
   saveAs(blob, `lwjgl-${version}-custom.zip`);
 
   yield put(log(`Done!`));
-  yield call(delay, 500);
   yield put(downloadComplete());
 }
 
 export default function* BuildDownloadSaga() {
-  //noinspection InfiniteLoopJS
-  while ( true ) {
-    yield take(DOWNLOAD_INIT);
-
-    const { left } = yield race({
-      download: call(init),
-      left: take(PAGE_LEAVE),
-    });
-
-    if ( left ) {
-      yield put(downloadComplete());
-    }
-  }
+  yield takeLatest(DOWNLOAD_INIT, init);
 }

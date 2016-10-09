@@ -35,7 +35,7 @@ class BuildStatus extends React.Component {
           {status}
           {status === 'loading' ? <LoaderSpinner size={14} style={{marginLeft: 4, stroke: 'white'}} /> : null }
         </span>
-        {build !== undefined ? (<small style={{color: 'gray'}}> #{build}</small>) : null }
+        {build === undefined ? null : (<small style={{color: 'gray'}}> #{build}</small>) }
       </div>
     )
   }

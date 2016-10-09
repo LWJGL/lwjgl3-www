@@ -28,6 +28,7 @@ function asyncRoute(getComponent) {
               loadJS('https://www.google-analytics.com/analytics.js');
             }
           } else {
+            //noinspection JSUnresolvedFunction
             nprogress.done();
           }
           AsyncComponent.Component = Component;

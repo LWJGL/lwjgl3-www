@@ -8,13 +8,13 @@ import { resizeEvent, getCurrent } from '../reducers/breakpoint'
 export default function breakpointMiddleware({dispatch, getState}) {
 
   function resizeHandle(i) {
-    if ( i !== undefined ) {
-      dispatch(resizeEvent(i));
-    } else {
+    if ( i === undefined ) {
       const current = getCurrent();
       if ( getState().breakpoint.current !== current ) {
         dispatch(resizeEvent(current));
       }
+    } else {
+      dispatch(resizeEvent(i));
     }
   }
 

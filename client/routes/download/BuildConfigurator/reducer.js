@@ -1,6 +1,8 @@
 import * as $ from './actionTypes'
 import config from './config'
 
+import { PAGE_LEAVE } from '../../../store/reducers/redirect'
+
 import {
   BUILD_RELEASE,
   BUILD_NIGHTLY,
@@ -84,7 +86,7 @@ export default function(state = config, action) {
   switch (action.type) {
 
     case $.SELECT_TYPE:
-      if ( action.build !== state.build && !state.downloading ) {
+      if ( action.build !== state.build && state.downloading === false ) {
         return selectBuild({...state}, action.build);
       }
       break;
@@ -164,7 +166,7 @@ export default function(state = config, action) {
       break;
 
     case $.DOWNLOAD_INIT:
-      if ( state.build === BUILD_NIGHTLY && !state.downloading ) {
+      if ( state.build === BUILD_NIGHTLY && state.downloading === false ) {
         return {...state, downloading: true, progress: []}
       }
       break;
@@ -177,6 +179,12 @@ export default function(state = config, action) {
         alert(action.error);
       }
       return {...state, downloading: false};
+
+    case PAGE_LEAVE:
+      if ( state.downloading ) {
+        return {...state, downloading: false};
+      }
+      break;
 
   }
 

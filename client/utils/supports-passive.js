@@ -7,8 +7,10 @@ if ( process.browser ) {
         supportsPassive = true;
       }
     });
+    //noinspection JSCheckFunctionSignatures
     window.addEventListener('test', null, opts);
-  } catch (e) {}
+  } catch (ignore) {
+  }
 }
 
 export default supportsPassive;

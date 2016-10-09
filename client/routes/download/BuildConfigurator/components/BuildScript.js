@@ -35,7 +35,7 @@ class BuildScript extends React.Component {
 
   autoHeight = () => {
     const newlines = this.script.value.match(/\n/g);
-    this.script.style.height = newlines !== null ? `${Math.min((newlines.length + 1) * 20, 700)}px` : '20px';
+    this.script.style.height = newlines === null ? '20px' : `${Math.min((newlines.length + 1) * 20, 700)}px`;
   };
 
   render() {
@@ -52,7 +52,7 @@ class BuildScript extends React.Component {
     return (
       <div className="col-xs-12 col-lg-6">
         <h2 className="m-b-2 m-t-1">Snippet</h2>
-        <textarea ref={el => this.script = el} className="script" readOnly={true} value={script} wrap="off" />
+        <textarea ref={el => {this.script = el}} className="script" readOnly={true} value={script} wrap="off" />
         {
           SUPPORTS_BTOA ?
             <a

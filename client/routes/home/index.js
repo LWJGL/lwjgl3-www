@@ -31,7 +31,7 @@ const HomeRoute = () => (
       ]}
     />
 
-    <section ref={el => this.container = el} className={css(styles.videoContainer)} style={{backgroundImage:env.desktop?null:'url(/img/manfps-720.jpg)'}}>
+    <section ref={el => {this.container = el}} className={css(styles.videoContainer)} style={{backgroundImage:env.desktop?null:'url(/img/manfps-720.jpg)'}}>
       {
         !process.browser || !env.desktop ? null :
           <video className={css(styles.video, styles.full)} muted loop autoPlay aria-hidden={true} role="presentation">

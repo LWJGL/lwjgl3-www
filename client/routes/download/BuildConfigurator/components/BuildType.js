@@ -23,7 +23,7 @@ class BuildType extends React.Component {
 
   select = () => {
     const { isSelected, build, changeType } = this.props;
-    changeType(!isSelected ? build : null);
+    changeType(isSelected ? null : build);
   };
 
   render() {

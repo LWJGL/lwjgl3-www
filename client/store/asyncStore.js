@@ -1,6 +1,6 @@
 import React from 'react'
 import createReducer from './createReducer'
-import { pageEnter, pageLeave } from './reducers/redirect'
+import { pageLeave } from './reducers/redirect'
 
 function injectReducer(store, name, asyncReducer) {
   store.asyncReducers[name] = asyncReducer;
@@ -18,6 +18,7 @@ function ejectReducer(store, name) {
 
 const asyncStore = ({scope, reducer, saga, module}) => ReduxComponent => class ReducerManager extends React.Component {
 
+  //noinspection JSUnusedGlobalSymbols
   static contextTypes = {
     store: React.PropTypes.object
   };
@@ -48,11 +49,11 @@ const asyncStore = ({scope, reducer, saga, module}) => ReduxComponent => class R
 
   componentWillUnmount() {
     this.context.store.dispatch(pageLeave());
+    if ( this.sagaTask !== null && this.sagaTask.isRunning() ) {
+      this.sagaTask.cancel();
+    }
     if ( reducer ) {
       ejectReducer(this.context.store, scope);
-    }
-    if ( this.sagaTask !== null ) {
-      this.sagaTask.cancel();
     }
   }
 

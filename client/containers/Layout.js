@@ -16,7 +16,7 @@ const Layout = props => {
 
   return (
     <Provider store={props.store}>
-      <div className={!isHomepage ? 'menu-pad' : null}>
+      <div className={isHomepage ? null : 'menu-pad'}>
         <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
         <Header isHome={isHomepage} />
 

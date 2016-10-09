@@ -38,7 +38,7 @@ const isModeZip = state => getMode(state) === MODE_ZIP;
 const isModeNotZip = state => getMode(state) !== MODE_ZIP;
 const isBuildRelease = state => getBuild(state) === BUILD_RELEASE;
 const isDownloading = state => state.build.downloading;
-const isNotDownloading = state => !state.build.downloading;
+const isCustomizing = state => !state.build.downloading;
 
 const fields = {
   mode: {
@@ -159,7 +159,7 @@ const BuildContainer = props => (
     <ControlledPanel className="row" predicate={isBuildSelected}>
       <div className="col-xs-12">
         <div className="build-config">
-          <ControlledPanel className="row" predicate={isNotDownloading}>
+          <ControlledPanel className="row" predicate={isCustomizing}>
             <div className="col-xs-12 col-lg-3">
               <h2 className="m-y-1">Mode</h2>
               <ControlledRadio spec={fields.mode} />

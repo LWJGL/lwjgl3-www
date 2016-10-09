@@ -1,7 +1,7 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
-import {toggleArtifact} from '../actions'
+import { toggleArtifact } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
 
 const descriptionStyle = {
@@ -41,30 +41,26 @@ class ControlledArtifact extends React.Component {
   render() {
     const {artifact, checked, disabled, showDescriptions} = this.props;
 
-    if ( !showDescriptions ) {
-      return (
+    return showDescriptions ? (
+      <div>
         <Checkbox
           label={artifact.title}
           disabled={disabled}
           checked={checked}
           onChange={this.toggle}
         />
-      )
-    } else {
-      return (
-        <div>
-          <Checkbox
-            label={artifact.title}
-            disabled={disabled}
-            checked={checked}
-            onChange={this.toggle}
-          />
-          <p className="m-b-2" style={descriptionStyle}>
-            <small>{artifact.description}</small>
-          </p>
-        </div>
-      )
-    }
+        <p className="m-b-2" style={descriptionStyle}>
+          <small>{artifact.description}</small>
+        </p>
+      </div>
+    ) : (
+      <Checkbox
+        label={artifact.title}
+        disabled={disabled}
+        checked={checked}
+        onChange={this.toggle}
+      />
+    );
   }
 
 }

@@ -48,8 +48,10 @@ class DownloadRoute extends React.PureComponent {
 
           <h2>Looking for LWJGL 2?</h2>
 
-          <p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking
-            for:</p>
+          <p>
+            LWJGL 2 has moved but is still available.
+            Please follow the links below to find what you're looking for:
+          </p>
           <p>
             <a className="btn btn-xs-block btn-outline-primary" href="http://legacy.lwjgl.org/">LWJGL 2 WEBSITE</a>
             <a className="btn btn-xs-block btn-outline-primary" href="http://wiki.lwjgl.org/">LWJGL 2 WIKI</a>
