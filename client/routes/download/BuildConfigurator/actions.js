@@ -20,3 +20,5 @@ export const togglePlatform = platform => ({type: $.TOGGLE_PLATFORM, platform});
 export const downloadInit = () => ({type: $.DOWNLOAD_INIT});
 export const downloadComplete = error => ({type: $.DOWNLOAD_COMPLETE, error});
 export const downloadLog = payload => ({type: $.DOWNLOAD_LOG, payload});
+
+export const reset = () => ({type: $.RESET});

@@ -1,8 +1,6 @@
 import * as $ from './actionTypes'
 import config from './config'
 
-import { PAGE_LEAVE } from '../../../store/reducers/redirect'
-
 import {
   BUILD_RELEASE,
   BUILD_NIGHTLY,
@@ -180,7 +178,7 @@ export default function(state = config, action) {
       }
       return {...state, downloading: false};
 
-    case PAGE_LEAVE:
+    case $.RESET:
       if ( state.downloading ) {
         return {...state, downloading: false};
       }

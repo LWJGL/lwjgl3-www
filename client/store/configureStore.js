@@ -42,6 +42,16 @@ function configureStore() {
   store.asyncReducers = {};
   store.runSaga = sagaMiddleware.run;
 
+  store.injectReducer = (name, asyncReducer) => {
+    store.asyncReducers[name] = asyncReducer;
+    store.replaceReducer(createReducer(store.asyncReducers));
+  };
+
+  store.ejectReducer = name => {
+    delete store.asyncReducers[name];
+    store.replaceReducer(createReducer(store.asyncReducers));
+  };
+
   if ( process.browser ) {
     sagaMiddleware.run(saga);
 

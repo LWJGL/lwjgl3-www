@@ -1,5 +1,5 @@
 import React from 'react'
-import {createSelector} from 'reselect'
+import { createSelector } from 'reselect'
 import reducer from './reducer'
 import saga from './saga'
 
@@ -142,66 +142,103 @@ const fields = {
   },
 };
 
-const BuildContainer = props => (
-  <div>
-    {/*<ControlledAlert selector={state => state.build.error} reset={$$.errorReset} />*/}
-    <div className="row">
-      <div className="col-lg-4 col-xs-12">
-        <BuildType build="release" />
-      </div>
-      <div className="col-lg-4 col-xs-12">
-        <BuildType build="stable" />
-      </div>
-      <div className="col-lg-4 col-xs-12">
-        <BuildType build="nightly" />
-      </div>
-    </div>
-    <ControlledPanel className="row" predicate={isBuildSelected}>
-      <div className="col-xs-12">
-        <div className="build-config">
-          <ControlledPanel className="row" predicate={isCustomizing}>
-            <div className="col-xs-12 col-lg-3">
-              <h2 className="m-y-1">Mode</h2>
-              <ControlledRadio spec={fields.mode} />
+class BuildContainer extends React.Component {
 
-              <BuildPlatform />
+  //noinspection JSUnusedGlobalSymbols
+  static contextTypes = {
+    store: React.PropTypes.object
+  };
 
-              <h2 className="m-b-1">Presets</h2>
-              <ControlledRadio spec={fields.preset} />
+  saga = null;
+  scope = 'build';
 
-              <h2 className="m-b-1">Options</h2>
-              <ControlledCheckbox spec={fields.descriptions} />
-              <ControlledCheckbox spec={fields.source} />
-              <ControlledCheckbox spec={fields.javadoc} />
-              <ControlledCheckbox spec={fields.compact} />
-              <ControlledCheckbox spec={fields.hardcoded} />
+  componentWillMount() {
+    const store = this.context.store;
+    store.injectReducer(this.scope, reducer);
 
-              <ControlledPanel predicate={isModeGradle}>
-                <h2 className="m-b-1">Language</h2>
-                <ControlledRadio spec={fields.language} />
+    if ( process.env.NODE_ENV !== 'production' ) {
+      if ( module.hot ) {
+        module.hot.accept('./reducer', () => {
+          if ( store.asyncReducers[this.scope] ) {
+            store.injectReducer(this.scope, reducer);
+          }
+        })
+      }
+    }
+
+    this.saga = store.runSaga(saga);
+  }
+
+  componentWillUnmount() {
+    const store = this.context.store;
+    if ( this.saga.isRunning() ) {
+      this.saga.cancel();
+    }
+    store.dispatch($$.reset());
+    store.ejectReducer(this.scope);
+  }
+
+  render() {
+    return (
+      <div>
+        {/*<ControlledAlert selector={state => state.build.error} reset={$$.errorReset} />*/}
+        <div className="row">
+          <div className="col-lg-4 col-xs-12">
+            <BuildType build="release" />
+          </div>
+          <div className="col-lg-4 col-xs-12">
+            <BuildType build="stable" />
+          </div>
+          <div className="col-lg-4 col-xs-12">
+            <BuildType build="nightly" />
+          </div>
+        </div>
+        <ControlledPanel className="row" predicate={isBuildSelected}>
+          <div className="col-xs-12">
+            <div className="build-config">
+              <ControlledPanel className="row" predicate={isCustomizing}>
+                <div className="col-xs-12 col-lg-3">
+                  <h2 className="m-y-1">Mode</h2>
+                  <ControlledRadio spec={fields.mode} />
+
+                  <BuildPlatform />
+
+                  <h2 className="m-b-1">Presets</h2>
+                  <ControlledRadio spec={fields.preset} />
+
+                  <h2 className="m-b-1">Options</h2>
+                  <ControlledCheckbox spec={fields.descriptions} />
+                  <ControlledCheckbox spec={fields.source} />
+                  <ControlledCheckbox spec={fields.javadoc} />
+                  <ControlledCheckbox spec={fields.compact} />
+                  <ControlledCheckbox spec={fields.hardcoded} />
+
+                  <ControlledPanel predicate={isModeGradle}>
+                    <h2 className="m-b-1">Language</h2>
+                    <ControlledRadio spec={fields.language} />
+                  </ControlledPanel>
+
+                  <ControlledPanel predicate={isBuildRelease}>
+                    <h2 className="m-b-1">Version</h2>
+                    <ControlledRadio spec={fields.version} />
+                  </ControlledPanel>
+                </div>
+
+                <BuildArtifacts />
+                <BuildDownload />
+                <BuildScript />
+
               </ControlledPanel>
-
-              <ControlledPanel predicate={isBuildRelease}>
-                <h2 className="m-b-1">Version</h2>
-                <ControlledRadio spec={fields.version} />
+              <ControlledPanel className="row" predicate={isDownloading}>
+                <BuildBundler />
               </ControlledPanel>
             </div>
-
-            <BuildArtifacts />
-            <BuildDownload />
-            <BuildScript />
-
-          </ControlledPanel>
-          <ControlledPanel className="row" predicate={isDownloading}>
-            <BuildBundler />
-          </ControlledPanel>
-        </div>
+          </div>
+        </ControlledPanel>
       </div>
-    </ControlledPanel>
-  </div>
-);
+    );
+  }
 
-BuildContainer.reducer = reducer;
-BuildContainer.saga = saga;
+}
 
 export default BuildContainer
