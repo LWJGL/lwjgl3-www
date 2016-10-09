@@ -75,7 +75,7 @@ const config = {
       }
     }),
     new ExtractTextPlugin({
-      filename: DEV ? 'styles.css' : '[chunkhash].css'
+      filename: DEV ? 'styles.css' : '[contenthash].css'
     })
   ]
 };
