@@ -51,8 +51,8 @@ const selectPreset = (state, preset) => {
   return state;
 };
 
-const toggleArtifact = (state, artifact, enabled) => {
-  state.contents = {...state.contents, [artifact]: enabled};
+const toggleArtifact = (state, artifact) => {
+  state.contents = {...state.contents, [artifact]: !state.contents[artifact]};
 
   // MATCH PRESET
   // collect selected artifacts in an Array
@@ -132,10 +132,6 @@ export default function(state = config, action) {
     case $.SELECT_LANGUAGE:
       // not implemented
       break;
-    // if ( state.language !== action.language) {
-    //   return {...state, language: action.language};
-    // }
-    // break;
 
     case $.TOGGLE_PLATFORM:
       if ( state.mode === MODE_ZIP ) {
@@ -159,7 +155,7 @@ export default function(state = config, action) {
 
     case $.TOGGLE_ARTIFACT:
       if ( action.artifact !== 'lwjgl' ) {
-        return toggleArtifact({...state}, action.artifact, action.enabled);
+        return toggleArtifact({...state}, action.artifact);
       }
       break;
 

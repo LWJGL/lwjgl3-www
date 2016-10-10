@@ -23,9 +23,9 @@ const descriptionStyle = {
       disabled: !available || ( state.build.mode === 'zip' && ( state.build.build !== 'nightly' || IS_SAFARI ) ) || ownProps.id === 'lwjgl',
     }
   },
-  dispatch => ({
-    toggleArtifact: (artifact, checked) => dispatch(toggleArtifact(artifact, checked))
-  })
+  {
+    toggleArtifact
+  }
 )
 class ControlledArtifact extends React.Component {
 
@@ -35,7 +35,7 @@ class ControlledArtifact extends React.Component {
 
   toggle = () => {
     const props = this.props;
-    props.toggleArtifact(props.id, !props.checked);
+    props.toggleArtifact(props.id);
   };
 
   render() {

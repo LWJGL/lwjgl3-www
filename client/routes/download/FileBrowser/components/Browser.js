@@ -14,9 +14,9 @@ import styles from '../styles'
       path: state.browser.path,
     }
   },
-  dispatch => ({
-    loadPath: path => dispatch($$.loadPath(path)),
-  })
+  {
+    loadPath: $$.loadPath,
+  }
 )
 class Browser extends React.Component {
 

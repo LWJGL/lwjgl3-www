@@ -6,10 +6,10 @@ import styles from '../styles'
 import FaFolder from '../../../../icons/folder'
 
 @connect(
-  state => ({}),
-  dispatch => ({
-    loadPath: path => dispatch($$.loadPath(path)),
-  })
+  null,
+  {
+    loadPath: $$.loadPath
+  }
 )
 class Folder extends React.PureComponent {
 

@@ -9,7 +9,10 @@ import { loadStatus } from './reducer'
   (state, props) => ({
     status: 'loading',
     ...state.buildStatus[props.name]
-  })
+  }),
+  {
+    loadStatus
+  }
 )
 class BuildStatus extends React.Component {
 
@@ -18,10 +21,10 @@ class BuildStatus extends React.Component {
   };
 
   componentDidMount() {
-    const { status, dispatch, name } = this.props;
+    const { status, loadStatus, name } = this.props;
 
     if ( status === 'loading' ) {
-      dispatch(loadStatus(name));
+      loadStatus(name);
     }
   }
 

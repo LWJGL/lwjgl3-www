@@ -12,9 +12,9 @@ import { IS_SAFARI } from '../../../../services/globals'
     disabled: state.build.build !== 'nightly' || IS_SAFARI,
     hide: state.build.mode !== 'zip',
   }),
-  dispatch => ({
-    togglePlatform: platform => dispatch(togglePlatform(platform))
-  })
+  {
+    togglePlatform
+  }
 )
 class BuildPlatform extends React.Component {
 

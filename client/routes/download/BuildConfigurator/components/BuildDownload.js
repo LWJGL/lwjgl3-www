@@ -17,9 +17,9 @@ import { IS_SAFARI } from '../../../../services/globals'
        && state.build.natives.allIds.every(platform => state.build.platform[platform])
       )
   }),
-  dispatch => ({
-    downloadInit: () => dispatch(downloadInit())
-  })
+  {
+    downloadInit
+  }
 )
 class BuildDownload extends React.Component {
 

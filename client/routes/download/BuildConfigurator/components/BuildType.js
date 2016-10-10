@@ -11,9 +11,9 @@ import { changeType } from '../actions'
     isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
     spec: state.build.builds.byId[ownProps.build]
   }),
-  dispatch => ({
-    changeType: buildType => dispatch(changeType(buildType))
-  })
+  {
+    changeType
+  }
 )
 class BuildType extends React.Component {
 
