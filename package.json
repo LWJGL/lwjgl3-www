@@ -112,12 +112,12 @@
     "babel-eslint": "7.0.0",
     "eslint": "3.7.1",
     "eslint-plugin-flowtype": "2.20.0",
-    "eslint-plugin-react": "6.4.0",
+    "eslint-plugin-react": "6.4.1",
     "flow-bin": "0.33.0",
     "react-hot-loader": "3.0.0-beta.5",
     "redux-logger": "2.7.0",
     "webpack-dev-middleware": "1.8.4",
-    "webpack-hot-middleware": "2.12.2"
+    "webpack-hot-middleware": "2.13.0"
   },
   "scripts": {
     "start": "node server",
