@@ -11,6 +11,8 @@ import {
 } from './constants'
 
 const BUILD_ALL = [BUILD_RELEASE, BUILD_STABLE, BUILD_NIGHTLY];
+const BUILD_NEXT = [BUILD_NIGHTLY];
+
 const NATIVE_ALL = [NATIVE_WIN, NATIVE_MAC, NATIVE_LINUX];
 
 const config = {
@@ -110,6 +112,14 @@ const config = {
         required: true,
         since: "3.0.1",
       },
+      "lwjgl-bgfx": {
+        id: "lwjgl-bgfx",
+        title: "bgfx bindings",
+        description: "A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.",
+        builds: BUILD_NEXT,
+        natives: NATIVE_ALL,
+        since: "3.0.1"
+      },
       "lwjgl-egl": {
         id: "lwjgl-egl",
         title: "EGL bindings",
@@ -144,7 +154,7 @@ const config = {
         id: "lwjgl-lmdb",
         title: "LMDB bindings",
         description: "A compact, fast, powerful, and robust database that implements a simplified variant of the BerkeleyDB (BDB) API",
-        builds: BUILD_ALL,
+        builds: BUILD_NEXT,
         natives: NATIVE_ALL,
         since: "3.0.1",
       },
@@ -168,7 +178,7 @@ const config = {
         id: "lwjgl-nuklear",
         title: "Nuklear bindings",
         description: "A minimal state immediate mode graphical user interface toolkit",
-        builds: BUILD_ALL,
+        builds: BUILD_NEXT,
         natives: NATIVE_ALL,
         since: "3.0.1",
       },
@@ -237,7 +247,7 @@ const config = {
         id: "lwjgl-tinyfd",
         title: "Tiny File Dialogs bindings",
         description: "Provides basic modal dialogs.",
-        builds: BUILD_ALL,
+        builds: BUILD_NEXT,
         natives: NATIVE_ALL,
         since: "3.0.1",
       },
