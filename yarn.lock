@@ -20,9 +20,9 @@
     json-stringify-safe "^5.0.1"
     react-inspector "^1.1.0"
 
-"@kadira/storybook-addon-knobs@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@kadira/storybook-addon-knobs/-/storybook-addon-knobs-1.3.0.tgz#ff30f5678bfb9450b301dd48ccde9c1782c52c58"
+"@kadira/storybook-addon-knobs@1.3.3":
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/@kadira/storybook-addon-knobs/-/storybook-addon-knobs-1.3.3.tgz#0f52c40f182e41ca21728ff9d2e870d37a87322f"
   dependencies:
     babel-runtime "^6.5.0"
     deep-equal "^1.0.1"
@@ -363,7 +363,7 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-autoprefixer@^6.3.1, autoprefixer@^6.3.7, autoprefixer@6.5.0:
+autoprefixer@^6.3.1, autoprefixer@^6.3.7:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.5.0.tgz#910de0aa0f22af4c7d50367cbc9d4d412945162f"
   dependencies:
@@ -374,9 +374,20 @@ autoprefixer@^6.3.1, autoprefixer@^6.3.7, autoprefixer@6.5.0:
     postcss "^5.2.2"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.6.7:
-  version "2.6.7"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.6.7.tgz#d14930dbab17841c26ceb278ad08415adeff195f"
+autoprefixer@6.5.1:
+  version "6.5.1"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.5.1.tgz#ae759a5221e709f3da17c2d656230e67c43cbb75"
+  dependencies:
+    browserslist "~1.4.0"
+    caniuse-db "^1.0.30000554"
+    normalize-range "^0.1.2"
+    num2fraction "^1.2.2"
+    postcss "^5.2.4"
+    postcss-value-parser "^3.2.3"
+
+aws-sdk@2.6.9:
+  version "2.6.9"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.6.9.tgz#4e9403a4ad57dbc915a109c0a68ed4777911286b"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -1321,6 +1332,10 @@ camelcase@^3.0.0:
 caniuse-db@^1.0.30000539, caniuse-db@^1.0.30000540:
   version "1.0.30000553"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000553.tgz#e7e908f43b788e6ac78fc161fedc4626d6a39f24"
+
+caniuse-db@^1.0.30000554:
+  version "1.0.30000555"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000555.tgz#12572c4e0111781c49b01e1fdcc455e7456b8ed4"
 
 case-sensitive-paths-webpack-plugin@^1.1.2:
   version "1.1.4"
@@ -2445,9 +2460,9 @@ flow-bin@0.33.0:
   version "0.33.0"
   resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.33.0.tgz#ef011eace7a6100f1ae08b852db78279032b8750"
 
-focus-trap@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-2.0.2.tgz#29d6b3d8a051cf8357a5520b2f05af7fdc3a9180"
+focus-trap@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/focus-trap/-/focus-trap-2.1.0.tgz#00e20dea96be9346897208860bd19136da87516a"
   dependencies:
     tabbable "^1.0.3"
 
@@ -4290,7 +4305,7 @@ postcss-zindex@^2.0.1:
     postcss "^5.0.4"
     uniqs "^2.0.0"
 
-postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.0, postcss@^5.2.2:
+postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.0, postcss@^5.2.2, postcss@^5.2.4:
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.4.tgz#8eb4bee3e5c4e091585b116df32d8db24a535f21"
   dependencies:
