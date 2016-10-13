@@ -11,10 +11,18 @@ const descriptionStyle = {
 @connect(
   (state, ownProps) => {
     const artifact = state.build.artifacts.byId[ownProps.id];
-    const available = state.build.mode !== 'zip'
-      || artifact.natives === undefined
-      || artifact.natives.length === state.build.natives.allIds.length
-      || artifact.natives.some(platform => state.build.platform[platform]);
+    const available =
+      (
+        artifact.builds.length === state.build.builds.allIds.length
+        || artifact.builds.some(build => build === state.build.build)
+      )
+      &&
+      (
+           state.build.mode === 'zip'
+        || artifact.natives === undefined
+        || artifact.natives.length === state.build.natives.allIds.length
+        || artifact.natives.some(platform => state.build.platform[platform])
+      );
 
     return {
       artifact,
