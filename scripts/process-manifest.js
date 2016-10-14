@@ -47,7 +47,7 @@ const formatSize = (size, isGzip, isRoot, isCss) => {
   }
 
   return prettyBytes(size);
-}
+};
 
 /*
  * ------------------------------------------------------------------------------------------------------------------------
@@ -208,7 +208,7 @@ function reportFiles(type) {
       formatSize(file.size, false, isRoot, isCss),
       formatSize(file.gzip, true, isRoot, isCss)
     ]);
-  })
+  });
 
   if ( files.length > 1 ) {
     tbl.push(['', chalk.cyan('TOTAL'), prettyBytes(sum), prettyBytes(sumGzip)])
