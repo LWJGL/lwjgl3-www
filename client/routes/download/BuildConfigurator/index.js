@@ -179,7 +179,7 @@ class BuildContainer extends React.Component {
 
   render() {
     return (
-      <div className="m-b-2">
+      <div className="mb-2">
         {/*<ControlledAlert selector={state => state.build.error} reset={$$.errorReset} />*/}
         <div className="row">
           <div className="col-lg-4 col-xs-12">
@@ -197,28 +197,30 @@ class BuildContainer extends React.Component {
             <div className="build-config">
               <ControlledPanel className="row" predicate={isCustomizing}>
                 <div className="col-xs-12 col-lg-3">
-                  <h2 className="m-y-1">Mode</h2>
+                  <h2 className="my-1">Mode</h2>
                   <ControlledRadio spec={fields.mode} />
 
                   <BuildPlatform />
 
-                  <h2 className="m-b-1">Presets</h2>
+                  <h2 className="mb-1">Presets</h2>
                   <ControlledRadio spec={fields.preset} />
 
-                  <h2 className="m-b-1">Options</h2>
-                  <ControlledCheckbox spec={fields.descriptions} />
-                  <ControlledCheckbox spec={fields.source} />
-                  <ControlledCheckbox spec={fields.javadoc} />
-                  <ControlledCheckbox spec={fields.compact} />
-                  <ControlledCheckbox spec={fields.hardcoded} />
+                  <h2 className="mb-1">Options</h2>
+                  <div className="custom-controls-stacked clearfix mb-1">
+                    <ControlledCheckbox spec={fields.descriptions} />
+                    <ControlledCheckbox spec={fields.source} />
+                    <ControlledCheckbox spec={fields.javadoc} />
+                    <ControlledCheckbox spec={fields.compact} />
+                    <ControlledCheckbox spec={fields.hardcoded} />
+                  </div>
 
                   <ControlledPanel predicate={isModeGradle}>
-                    <h2 className="m-b-1">Language</h2>
+                    <h2 className="mb-1">Language</h2>
                     <ControlledRadio spec={fields.language} />
                   </ControlledPanel>
 
                   <ControlledPanel predicate={isBuildRelease}>
-                    <h2 className="m-b-1">Version</h2>
+                    <h2 className="mb-1">Version</h2>
                     <ControlledRadio spec={fields.version} />
                   </ControlledPanel>
                 </div>

@@ -49,7 +49,7 @@ const HomeRoute = () => (
 
     <a id="learn-more" />
 
-    <section className="container p-y-2">
+    <section className="container py-2">
       <h1 className="text-xs-center">What is LW<b>JGL</b> 3?</h1>
       <div className="row">
         <div className="col-md-10 push-md-1 col-xs-12">
@@ -65,7 +65,7 @@ const HomeRoute = () => (
 
           <p>LW<b>JGL</b> is open source software and freely available at no charge.</p>
 
-          <p className="text-xs-center p-t-1">
+          <p className="text-xs-center pt-1">
             <Link className="btn btn-xs-block btn-lg btn-outline-primary" to="/download">DOWNLOAD</Link>
             <Link className="btn btn-xs-block btn-lg btn-outline-success" to="/guide">GET STARTED</Link>
             <Link className="btn btn-xs-block btn-lg btn-outline-info" to="/source">SOURCE</Link>
@@ -76,24 +76,24 @@ const HomeRoute = () => (
     </section>
 
     <div className="area-dark">
-      <section className="container p-y-2 text-xs-center features">
+      <section className="container py-2 text-xs-center features">
         <h1>Main Features</h1>
 
         <div className="row">
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaPuzzlePiece size={60} />
             <h3>Low-level Bindings</h3>
             <p>Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance
               and a Java-friendly binding layer.</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaGitHub size={60} />
             <h3>Open Source</h3>
             <p>LWJGL is available under a <Link to="/license">BSD license</Link>. Visit
               our <a href="https://github.com/LWJGL/lwjgl3">GitHub repository</a> to monitor progress, report issues
               and even contribute with your own code!</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaBook size={60} />
             <h3>Built-in Documentation</h3>
             <p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
@@ -101,18 +101,18 @@ const HomeRoute = () => (
         </div>
 
         <div className="row">
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaDesktop size={60} />
             <h3>Cross-platform</h3>
             <p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaComments size={60} />
             <h3>Community</h3>
             <p>Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up
               for a chat? Drop by our <a href="irc://irc.freenode.net/lwjgl">IRC channel</a><br />(#LWJGL on freenode).</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaGamepad size={60} />
             <h3>GLFW Bindings</h3>
             <p>Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts.
@@ -122,19 +122,19 @@ const HomeRoute = () => (
         </div>
 
         <div className="row">
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <p><img height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" /></p>
             <h3>Vulkan<sup>TM</sup> Bindings</h3>
             <p>A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
               GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <p><img height={60} src="/img/opencl@x1.png" srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x" alt="OpenCL" /></p>
             <h3>OpenCL<sup>TM</sup> Bindings</h3>
             <p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
               OpenCL versions (including the latest 2.1 specification) and many useful extensions.</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <p><img height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" /></p>
             <h3>OpenAL Bindings</h3>
             <p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
@@ -143,7 +143,7 @@ const HomeRoute = () => (
         </div>
 
         <div className="row">
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <p><img height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" /></p>
             <h3>OpenGL<sup>&reg;</sup> Bindings</h3>
             <p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
@@ -151,14 +151,14 @@ const HomeRoute = () => (
               and dozens of popular vendor-specific extensions. If your favorite extension is
               missing, <a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <p><img height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" /></p>
             <h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
             <p>A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
               consoles, phones, appliances and vehicles. It consists of well-defined subsets of desktop OpenGL, creating
               a flexible and powerful low-level interface between software and graphics acceleration.</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <p><img height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" /></p>
             <h3>EGL<sup>TM</sup> Bindings</h3>
             <p>An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native
@@ -169,17 +169,17 @@ const HomeRoute = () => (
         </div>
 
         <div className="row">
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <p><img height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" /></p>
             <h3>LibOVR Bindings <small>(beta)</small></h3>
             <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaApple size={60} />
             <h3>Objective-C Bindings</h3>
             <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on Mac OS X.</p>
           </div>
-          <div className="col-md-4 col-xs-12 p-y-1">
+          <div className="col-md-4 col-xs-12 py-1">
             <FaCogs size={60} />
             <h3>Customization &amp; Utilities</h3>
             <p>Use <a href="https://sourceware.org/libffi/">libffi</a> to call functions from any native library,
@@ -190,8 +190,8 @@ const HomeRoute = () => (
         </div>
 
         <div className="row">
-          <div className="col-xs-12 p-t-1">
-            <div className="m-b-1"><FaQuestionCircle size={60} color="yellow" /></div>
+          <div className="col-xs-12 pt-1">
+            <div className="mb-1"><FaQuestionCircle size={60} color="yellow" /></div>
             <h3>Your favorite API here!</h3>
             <p>Think LWJGL should have bindings to your favorite API? Let us know
               or <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.5.-The-Generator">contribute it</a> yourself!</p>
@@ -210,7 +210,7 @@ const HomeRoute = () => (
       </section>
     </div>
 
-    <section className="container p-t-2">
+    <section className="container pt-2">
       <div className="row">
         <div className="col-md-10 push-md-1 col-xs-12">
           <h1 className="text-xs-center">Looking for LWJGL 2?</h1>

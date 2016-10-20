@@ -4,10 +4,6 @@ import Checkbox from '../../../../components/Checkbox'
 import { toggleArtifact } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
 
-const descriptionStyle = {
-  marginTop: '-1rem',
-};
-
 @connect(
   (state, ownProps) => {
     const artifact = state.build.artifacts.byId[ownProps.id];
@@ -57,9 +53,7 @@ class ControlledArtifact extends React.Component {
           checked={checked}
           onChange={this.toggle}
         />
-        <p className="m-b-2" style={descriptionStyle}>
-          <small>{artifact.description}</small>
-        </p>
+        <p><small>{artifact.description}</small></p>
       </div>
     ) : (
       <Checkbox

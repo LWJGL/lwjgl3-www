@@ -76,9 +76,9 @@ class GuideRoute extends React.Component {
           <p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
         </section>
 
-        <section className="p-y-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:this.state.sample}} /></pre></section>
+        <section className="py-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:this.state.sample}} /></pre></section>
 
-        <section className="container p-t-2">
+        <section className="container pt-2">
           <p>
             LWJGL is fully documented, you can explore the javadoc documentation
             online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design
@@ -130,7 +130,7 @@ class GuideRoute extends React.Component {
           <p>The LWJGL build process creates thousands of tiny files. If you wish to redirect output to another directory or storage device, you may set the LWJGL_BUILD_OUTPUT environment variable.</p>
         </section>
 
-        <div className="area-dark p-y-2">
+        <div className="area-dark py-2">
           <section className="container">
             <h1>Is LW<b>JGL</b> for me?</h1>
 
@@ -140,7 +140,7 @@ class GuideRoute extends React.Component {
           </section>
         </div>
 
-        <section className="container p-t-2">
+        <section className="container pt-2">
           <h2>GLFW</h2>
           <p><a href="http://www.glfw.org/">GLFW</a> is an Open Source, multi-platform library for creating windows with OpenGL contexts and receiving input and events. It is easy to integrate into existing applications and does not lay claim to the main loop.</p>
           <p>GLFW is the preferred windowing system for LWJGL 3 applications. If you're familiar with LWJGL 2, GLFW is a replacement for the Display class and everything in the input package.</p>

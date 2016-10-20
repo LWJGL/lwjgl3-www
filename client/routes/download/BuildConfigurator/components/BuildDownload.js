@@ -42,7 +42,7 @@ class BuildDownload extends React.Component {
 
       return (
         <div className="col-xs-12 col-lg-4">
-          <h2 className="m-b-2 m-t-1">Bundle</h2>
+          <h2 className="mb-2 mt-1">Bundle</h2>
           <a className="btn btn-xs-block btn-primary btn-lg" href={downloadUrl} target="_blank">DOWNLOAD ZIP</a>
         </div>
       )
@@ -50,7 +50,7 @@ class BuildDownload extends React.Component {
 
       return (
         <div className="col-xs-12 col-lg-4">
-          <h2 className="m-b-2 m-t-1">Custom Bundle</h2>
+          <h2 className="mb-2 mt-1">Custom Bundle</h2>
           <button className="btn btn-xs-block btn-primary btn-lg" onClick={this.props.downloadInit}>GENERATE BUNDLE</button>
         </div>
       )

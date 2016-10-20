@@ -16,7 +16,7 @@ const DownloadRoute = () => (
         }
       ]}
     />
-    <section className="container p-b-2">
+    <section className="container pb-2">
       <h1>Download LW<b>JGL</b> 3</h1>
 
       <p>Select a build to begin configuring your download:</p>
@@ -26,7 +26,7 @@ const DownloadRoute = () => (
       <FileBrowser />
     </section>
 
-    <div className="area-dark p-y-2">
+    <div className="area-dark py-2">
       <section className="container">
         <h3>Build from source?</h3>
         <p>Click below if you prefer to build from source:</p>
@@ -37,7 +37,7 @@ const DownloadRoute = () => (
       </section>
     </div>
 
-    <section className="container p-t-2">
+    <section className="container pt-2">
       <p>Broken download? Let us know at the <a href="http://forum.lwjgl.org/">forums</a>.</p>
 
       <h2>Looking for LWJGL 2?</h2>

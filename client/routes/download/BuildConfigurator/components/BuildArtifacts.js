@@ -22,12 +22,12 @@ class BuildArtifacts extends React.Component {
           "col-lg-5": props.isZip
         }
       )}>
-        <h2 className="m-y-1">Contents</h2>
+        <h2 className="my-1">Contents</h2>
+        <div className="custom-controls-stacked">
         {
-          props.artifacts.map(artifact => (
-            <BuildArtifact key={artifact} id={artifact} />
-          ))
+          props.artifacts.map(artifact => <BuildArtifact key={artifact} id={artifact} />)
         }
+        </div>
       </div>
     )
   }

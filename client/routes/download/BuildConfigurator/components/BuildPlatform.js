@@ -31,7 +31,8 @@ class BuildPlatform extends React.Component {
 
     return (
       <div>
-        <h2 className="m-b-1">Natives</h2>
+        <h2 className="mb-1">Natives</h2>
+        <div className="custom-controls-stacked mb-1">
         {
           props.platforms.map(platform => {
             const native = props.natives[platform];
@@ -48,6 +49,7 @@ class BuildPlatform extends React.Component {
             )
           })
         }
+        </div>
       </div>
     )
   }
