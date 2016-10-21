@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "0.6.0",
     "autoprefixer": "6.5.1",
-    "aws-sdk": "2.6.10",
+    "aws-sdk": "2.6.11",
     "babel-core": "6.17.0",
     "babel-loader": "6.2.5",
     "babel-plugin-check-es2015-constants": "6.8.0",
@@ -101,7 +101,7 @@
     "serve-favicon": "2.3.0",
     "webpack": "2.1.0-beta.25",
     "whatwg-fetch": "1.0.0",
-    "yargs": "6.3.0-candidate"
+    "yargs": "6.3.0"
   },
   "devDependencies": {
     "@kadira/react-storybook-addon-info": "3.2.4",

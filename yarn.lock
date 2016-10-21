@@ -1179,10 +1179,6 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bloody-strip-proptypes@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/bloody-strip-proptypes/-/bloody-strip-proptypes-1.0.0.tgz#318cf31b6681ed1b8f820c2c804274010b3a5241"
-
 bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.4.0:
   version "4.11.6"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.6.tgz#53344adb14617a13f6e8dd2ce28905d1c0ba3215"
