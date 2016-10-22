@@ -1,4 +1,4 @@
-import env from '../utils/env'
+import env from './env'
 
 export const IS_CHROME = process.browser && /Chrome/.test(navigator.userAgent);
 export const IS_SAFARI = process.browser && !IS_CHROME && /Safari/.test(navigator.userAgent);

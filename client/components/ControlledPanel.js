@@ -20,18 +20,13 @@ class Panel extends React.Component {
     predicate: PropTypes.func,
     getClassName: PropTypes.func,
     className: PropTypes.string,
-    style: PropTypes.object,
   };
 
   render() {
-    const { children, hidden, style, className } = this.props;
+    const { children, hidden, className } = this.props;
 
-    if ( hidden ) {
-      return null;
-    }
-
-    return (
-      <div style={style} className={className}>
+    return hidden ? null : (
+      <div className={className}>
         {children}
       </div>
     );

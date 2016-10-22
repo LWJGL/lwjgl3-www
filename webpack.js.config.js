@@ -75,7 +75,7 @@ if ( DEV ) {
 
   // Uncomment me to test async routes
   // WARNING: Breaks routes hot reloading!
-  // config.plugins.push(new webpack.NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
+  // config.plugins.push(new NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
 
 } else {
 

@@ -126,6 +126,29 @@ async function fetchFile(root, path) {
   };
 }
 
+class CountDownLatch {
+
+  channel;
+  count;
+
+  constructor(count) {
+    this.channel = channel(buffers.fixed(1));
+    this.count = count;
+  }
+
+  countDown = function* () {
+    yield put(this.channel, 1);
+  };
+
+  await = function* () {
+    for ( let i = 0; i < this.count; i += 1 ) {
+      yield take(this.channel);
+    }
+    this.channel.close();
+  }
+
+}
+
 function* downloadWorker(input, output, latch, root, files) {
   try {
     //noinspection InfiniteLoopJS
@@ -135,7 +158,7 @@ function* downloadWorker(input, output, latch, root, files) {
       output.push(yield call(fetchFile, root, files[index]));
     }
   } finally {
-    yield put(latch, 1);
+    yield latch.countDown();
   }
 }
 
@@ -143,8 +166,8 @@ function* downloadWorker(input, output, latch, root, files) {
 function* downloadFiles(files, root) {
   const PARALLEL_DOWNLOADS = Math.min(8, files.length);
   const output = [];
-  const input = yield call(channel, buffers.fixed(files.length));
-  const latch = yield call(channel, buffers.fixed(PARALLEL_DOWNLOADS));
+  const input = channel(buffers.fixed(files.length));
+  const latch = new CountDownLatch(PARALLEL_DOWNLOADS);
 
   for ( let i = 0; i < PARALLEL_DOWNLOADS; i += 1 ) {
     yield fork(downloadWorker, input, output, latch, root, files);
@@ -155,10 +178,7 @@ function* downloadFiles(files, root) {
   }
   input.close();
 
-  for ( let i = 0; i < PARALLEL_DOWNLOADS; i += 1 ) {
-    yield take(latch);
-  }
-  latch.close();
+  yield latch.await();
 
   return output;
 }

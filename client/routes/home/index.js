@@ -4,7 +4,7 @@ import Link from 'react-router/Link'
 import {StyleSheet, css} from 'aphrodite/no-important'
 import stylesDefinition from './styles'
 import Logo from './Logo'
-import env from '../../utils/env'
+import env from '../../services/env'
 
 // Icons
 import FaPuzzlePiece from '../../icons/puzzle-piece'

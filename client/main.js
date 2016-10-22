@@ -5,7 +5,7 @@ import nprogress from 'nprogress'
 
 import configureStore from './store/configureStore'
 import App from './containers/App'
-import './utils/ga'
+import './services/ga'
 import preserver from './routes/Preserver'
 
 // Hide spinner from nprogress
