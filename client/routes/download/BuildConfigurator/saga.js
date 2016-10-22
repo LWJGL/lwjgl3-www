@@ -141,7 +141,7 @@ function* downloadWorker(input, output, latch, root, files) {
 
 //noinspection FunctionWithMultipleLoopsJS
 function* downloadFiles(files, root) {
-  const PARALLEL_DOWNLOADS = Math.min(4, files.length);
+  const PARALLEL_DOWNLOADS = Math.min(8, files.length);
   const output = [];
   const input = yield call(channel, buffers.fixed(files.length));
   const latch = yield call(channel, buffers.fixed(PARALLEL_DOWNLOADS));
@@ -176,14 +176,14 @@ function* init() {
 
   let manifest;
   try {
-    manifest = yield call(fetchManifest, `${path}`);
+    manifest = yield call(fetchManifest, path);
   } catch(e) {
     yield put(downloadComplete(e.message));
     return;
   }
 
   yield put(log('Building file list'));
-  const files = yield getFiles(manifest, selected, platforms, source, javadoc);
+  const files = getFiles(manifest, selected, platforms, source, javadoc);
 
   yield put(log(`Downloading ${files.length} files`));
 
