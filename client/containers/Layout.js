@@ -33,9 +33,10 @@ class Layout extends React.PureComponent {
   scrollPositions = {};
 
   componentWillUpdate(nextProps) {
+    const props = this.props;
+    this.scrollPositions[props.router.createHref(props.location)] = [window.pageXOffset, window.pageYOffset];
+
     if ( nextProps.action === 'PUSH' ) {
-      const props = this.props;
-      this.scrollPositions[props.router.createHref(props.location)] = [window.pageXOffset, window.pageYOffset];
       window.scroll(0,0);
     }
   }
