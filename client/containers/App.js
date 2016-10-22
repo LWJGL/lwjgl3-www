@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter} from 'react-router'
+import BrowserRouter from 'react-router/BrowserRouter'
 import Layout from './Layout'
 
 const App = props => (

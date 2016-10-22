@@ -1,7 +1,5 @@
-/* @flow weak */
-
 import React from 'react'
-import {Link} from 'react-router'
+import Link from 'react-router/Link'
 import Sidebar from './Sidebar'
 
 import { IS_IOS } from '../services/globals'

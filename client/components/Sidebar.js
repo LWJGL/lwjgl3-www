@@ -1,7 +1,7 @@
 import React from 'react'
 import createFocusTrap from 'focus-trap'
 import noscroll from '../utils/noscroll'
-import {Link} from 'react-router'
+import Link from 'react-router/Link'
 import FaBars from '../icons/bars'
 import FaClose from '../icons/close'
 

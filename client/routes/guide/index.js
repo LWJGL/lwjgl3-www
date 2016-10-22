@@ -1,6 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import { Link } from 'react-router'
+import Link from 'react-router/Link'
 import codeSample from './sample'
 import loadJS from 'fg-loadjs'
 import { loadCSS } from 'fg-loadcss'

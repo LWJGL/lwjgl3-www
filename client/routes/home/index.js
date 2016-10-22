@@ -1,6 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import { Link } from 'react-router'
+import Link from 'react-router/Link'
 import {StyleSheet, css} from 'aphrodite/no-important'
 import stylesDefinition from './styles'
 import Logo from './Logo'
