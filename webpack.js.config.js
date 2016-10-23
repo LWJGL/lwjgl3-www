@@ -68,9 +68,6 @@ if ( DEV ) {
   config.plugins.push(
     new HotModuleReplacementPlugin(),
     new NoErrorsPlugin()
-    // new webpack.SourceMapDevToolPlugin({
-    //   columns: false
-    // })
   );
 
   // Uncomment me to test async routes
@@ -89,11 +86,6 @@ if ( DEV ) {
       /^\.\.\/routes\/Routes$/,
       '../routes/RoutesAsync'
     ),
-    // new DedupePlugin(),
-    // new CommonsChunkPlugin({
-    //   name: "main",
-    //   minChunks: Infinity,
-    // }),
     new ChunkManifestPlugin({
       filename: 'manifest.json',
       manifestVariable: "manifest",

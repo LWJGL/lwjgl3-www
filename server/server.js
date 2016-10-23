@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 
 // Server
-import fs from 'fs'
 import path from 'path'
 import express from 'express'
 import favicon from 'serve-favicon'
@@ -92,7 +91,7 @@ if ( app.locals.development ) {
 
 } else {
 
-  chunks = fs.readFileSync(path.join(__dirname, '../public/js', 'manifest.json'));
+  chunks = JSON.stringify(config.manifest.chunks);
   app.locals.bundle = config.manifest.js;
   app.locals.css = config.manifest.css;
 
@@ -166,7 +165,7 @@ app.get('*', (req, res, next) => {
         location={req.url}
         context={context}
       >
-        {({location}) => <Layout location={location} store={store} />}
+        {({ action, location, router }) => <Layout router={router} action={action} location={location} store={store} />}
       </ServerRouter>
     )
   ));

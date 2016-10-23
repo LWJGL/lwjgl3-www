@@ -44,9 +44,11 @@ html(lang="en-US")
     if ( renderApp )
       if ( aphrodite )
         script(id="aphro-hydrate" type="application/json")!=JSON.stringify(aphrodite.renderedClassNames)
+      if ( chunks )
+        script!=`manifest=${chunks};`
       if ( ie )
         //- https://polyfill.io/v2/docs/features/
         script(src="https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=requestAnimationFrame,Element.prototype.classList")
-      if ( chunks )
-        script!=`manifest=${chunks};`
+        script.
+          for ( var i in manifest ) if ( manifest.hasOwnProperty(i) ) manifest[i] += '?v=' + new Date().getTime();
       script(src=`/js/${bundle}` async defer)
