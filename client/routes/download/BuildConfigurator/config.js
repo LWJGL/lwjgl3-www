@@ -80,7 +80,7 @@ const config = {
       },
       [NATIVE_MAC]: {
         id: NATIVE_MAC,
-        title: "Mac OS",
+        title: "macOS",
       },
       [NATIVE_LINUX]: {
         id: NATIVE_LINUX,

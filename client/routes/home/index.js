@@ -177,7 +177,7 @@ const HomeRoute = () => (
           <div className="col-md-4 col-xs-12 py-1">
             <FaApple size={60} />
             <h3>Objective-C Bindings</h3>
-            <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on Mac OS X.</p>
+            <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on macOS.</p>
           </div>
           <div className="col-md-4 col-xs-12 py-1">
             <FaCogs size={60} />
