@@ -60,7 +60,7 @@ const SourceRoute = () => (
             <tbody>
             <tr>
               <th>Linux x64</th>
-              <td><a href="https://travis-ci.org/LWJGL-CI/bgfx/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-linux64" alt="" /></a></td>
+              <td><a href="https://travis-ci.org/LWJGL-CI/bgfx/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-linux" alt="" /></a></td>
             </tr>
             <tr>
               <th>macOS</th>
