@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 // Server
 import path from 'path'
 import express from 'express'
@@ -240,7 +238,6 @@ app.use((req, res, next) => {
 });
 
 // Error page
-// eslint-disable-next-line
 app.use((err, req, res, next) => {
   res.status(500);
 
