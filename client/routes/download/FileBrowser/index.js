@@ -1,8 +1,10 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import reducer, { actions as $$ } from './reducer'
 import saga from './saga'
 import ControlledPanel from '../../../components/ControlledPanel'
 import Browser from './components/Browser'
+import subscribe from '../../../store/subscribe'
 
 const SCOPE = 'browser';
 
@@ -14,44 +16,30 @@ function isBrowsing(state) {
   return state[SCOPE].open;
 }
 
+@subscribe
+@connect(null, {browserOpen: $$.browserOpen})
 class FileBrowser extends React.Component {
 
-  //noinspection JSUnusedGlobalSymbols
-  static contextTypes = {
-    store: React.PropTypes.object
+  static reducers = {
+    [SCOPE]: reducer
   };
 
-  saga = null;
+  static sagas = [saga];
 
-  componentWillMount() {
-    const store = this.context.store;
-    store.injectReducer(SCOPE, reducer);
-
-    if ( process.env.NODE_ENV !== 'production' && module.hot ) {
-      module.hot.accept('./reducer', () => {
-        if ( store.asyncReducers[SCOPE] ) {
-          store.injectReducer(SCOPE, reducer);
-        }
-      })
-    }
-
-    this.saga = store.runSaga(saga);
-  }
-
-  componentWillUnmount() {
-    const store = this.context.store;
-    if ( this.saga.isRunning() ) {
-      this.saga.cancel();
-    }
-    store.ejectReducer(this.scope);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   if ( process.env.NODE_ENV !== 'production' && module.hot ) {
+  //     module.hot.accept('./reducer', () => {
+  //       props.reload(SCOPE, reducer);
+  //     });
+  //   }
+  // }
 
   browse = () => {
-    this.context.store.dispatch($$.browserOpen());
+    this.props.browserOpen();
   };
 
   render() {
-
     return (
       <div>
         <ControlledPanel predicate={isClosed}>

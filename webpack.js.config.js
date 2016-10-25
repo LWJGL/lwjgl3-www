@@ -71,7 +71,7 @@ if ( DEV ) {
   );
 
   // Uncomment me to test async routes
-  // WARNING: Breaks routes hot reloading!
+  // WARNING: Breaks routes hot loading!
   // config.plugins.push(new NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
 
 } else {

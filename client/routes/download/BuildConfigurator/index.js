@@ -1,9 +1,10 @@
 import React from 'react'
 import { createSelector } from 'reselect'
+import { connect } from 'react-redux'
 import reducer from './reducer'
-import saga from './saga'
-
 import * as $$ from './actions'
+import saga from './saga'
+import subscribe from '../../../store/subscribe'
 
 import {
   BUILD_RELEASE,
@@ -15,7 +16,6 @@ import {
 
 import { IS_SAFARI } from '../../../services/globals'
 
-// import ControlledAlert from '../../components/ControlledAlert'
 import ControlledPanel from '../../../components/ControlledPanel'
 import ControlledRadio from '../../../components/ControlledRadio'
 import ControlledCheckbox from '../../../components/ControlledCheckbox'
@@ -142,45 +142,32 @@ const fields = {
   },
 };
 
-const SCOPE = 'build';
-
+@subscribe
+@connect(null, {reset: $$.reset})
 class BuildContainer extends React.Component {
 
-  //noinspection JSUnusedGlobalSymbols
-  static contextTypes = {
-    store: React.PropTypes.object
+  static reducers = {
+    'build': reducer
   };
 
-  saga = null;
+  static sagas = [saga];
 
-  componentWillMount() {
-    const store = this.context.store;
-    store.injectReducer(SCOPE, reducer);
-
-    if ( process.env.NODE_ENV !== 'production' && module.hot ) {
-      module.hot.accept('./reducer', () => {
-        if ( store.asyncReducers[SCOPE] ) {
-          store.injectReducer(SCOPE, reducer);
-        }
-      })
-    }
-
-    this.saga = store.runSaga(saga);
-  }
+  // constructor(props) {
+  //   super(props);
+  //   if ( process.env.NODE_ENV !== 'production' && module.hot ) {
+  //     module.hot.accept('./reducer', () => {
+  //       props.reload('build', reducer);
+  //     });
+  //   }
+  // }
 
   componentWillUnmount() {
-    const store = this.context.store;
-    if ( this.saga.isRunning() ) {
-      this.saga.cancel();
-    }
-    store.dispatch($$.reset());
-    store.ejectReducer(SCOPE);
+    this.props.reset();
   }
 
   render() {
     return (
       <div className="mb-2">
-        {/*<ControlledAlert selector={state => state.build.error} reset={$$.errorReset} />*/}
         <div className="row">
           <div className="col-lg-4 col-xs-12">
             <BuildType build="release" />
