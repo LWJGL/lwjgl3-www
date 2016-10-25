@@ -99,11 +99,10 @@ const fields = {
       (versions, latest) => versions.allIds.map(
         version => {
           const semver = versions.byId[version].semver;
-
           return {
             value: version,
             label: version,
-            disabled: !(semver[0] < latest[0] || semver[1] < latest[1] || semver[2] <= latest[2])
+            disabled: !(semver[2] * 100 + semver[1] * 10 + semver[0] <= latest[2] * 100 + latest[1] * 10 + latest[0])
           };
         }
       )
