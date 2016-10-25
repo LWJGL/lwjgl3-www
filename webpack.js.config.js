@@ -44,6 +44,12 @@ const config = {
       }
     ]
   },
+  resolve: {
+    alias: {
+      'react': 'react/dist/react',
+      'react-dom': 'react-dom/dist/react-dom',
+    },
+  },
   plugins: [
     new DefinePlugin({
       'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production')
