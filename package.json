@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "1.0.0",
     "autoprefixer": "6.5.1",
-    "aws-sdk": "2.6.11",
+    "aws-sdk": "2.6.12",
     "babel-core": "6.18.0",
     "babel-loader": "6.2.5",
     "babel-plugin-check-es2015-constants": "6.8.0",
@@ -66,13 +66,14 @@
     "babel-plugin-transform-regenerator": "6.16.1",
     "babel-plugin-transform-runtime": "6.15.0",
     "babel-polyfill": "6.16.0",
-    "babel-runtime": "6.11.6",
+    "babel-runtime": "6.18.0",
     "bootstrap": "4.0.0-alpha.5",
     "chalk": "1.1.3",
     "chunk-manifest-webpack-plugin": "github:apostolos/chunk-manifest-webpack-plugin",
     "classnames": "2.2.5",
     "cli-table": "0.3.1",
     "cross-env": "3.1.3",
+    "css-loader": "0.25.0",
     "exports-loader": "0.6.3",
     "express": "5.0.0-alpha.2",
     "express-device": "0.4.2",
@@ -87,6 +88,7 @@
     "node-sass": "3.10.1",
     "nprogress": "0.2.0",
     "optimize-js": "1.0.1",
+    "postcss-loader": "1.0.0",
     "pug": "2.0.0-beta6",
     "react": "15.4.0-rc.4",
     "react-dom": "15.4.0-rc.4",
@@ -99,6 +101,7 @@
     "reselect": "2.5.4",
     "sass-loader": "4.0.2",
     "serve-favicon": "2.3.0",
+    "style-loader": "0.13.1",
     "webpack": "2.1.0-beta.25",
     "whatwg-fetch": "1.0.0",
     "yargs": "6.3.0"
@@ -121,7 +124,6 @@
     "build": "cross-env NODE_ENV=development webpack --progress --color",
     "build-production": "cross-env NODE_ENV=production webpack --progress --json > manifest.json",
     "process-manifest": "node ./scripts/process-manifest.js",
-    "production": "npm run build-production && npm run process-manifest",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "production": "npm run build-production && npm run process-manifest"
   }
 }

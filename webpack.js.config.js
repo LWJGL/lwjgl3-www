@@ -44,12 +44,6 @@ const config = {
       }
     ]
   },
-  resolve: {
-    alias: {
-      react: DEV ? 'react/dist/react' : 'react/dist/react.min',
-      'react-dom': DEV ? 'react-dom/dist/react-dom' : 'react-dom/dist/react-dom.min',
-    },
-  },
   plugins: [
     new DefinePlugin({
       'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production')
