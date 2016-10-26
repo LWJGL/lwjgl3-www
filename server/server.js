@@ -1,6 +1,7 @@
 // Server
 import path from 'path'
 import express from 'express'
+import helmet from 'helmet'
 import favicon from 'serve-favicon'
 import { argv } from 'yargs'
 import chalk from 'chalk'
@@ -9,7 +10,7 @@ import chalk from 'chalk'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { ServerRouter, createServerRenderContext } from 'react-router'
-import Helmet from 'react-helmet'
+import ReactHelmet from 'react-helmet'
 import { StyleSheetServer } from 'aphrodite/no-important'
 import configureStore from '../client/store/configureStore'
 import Layout from '../client/containers/Layout'
@@ -33,12 +34,39 @@ const app = express();
 const config = require('../config.json');
 
 app.set('port', config.server.port);
-app.set('case sensitive routing', true);
-app.set('strict routing', true);
-app.set('x-powered-by', false);
-app.set('trust proxy', 'loopback');
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
+
+app.enable('case sensitive routing');
+app.enable('strict routing');
+app.disable('x-powered-by');
+
+app.set('trust proxy', [
+  'loopback',
+  'linklocal',
+  'uniquelocal',
+  // Cloudfront subnets
+  '13.32.0.0/15',
+  '52.46.0.0/18',
+  '52.84.0.0/15',
+  '52.222.128.0/17',
+  '54.182.0.0/16',
+  '54.192.0.0/16',
+  '54.230.0.0/16',
+  '54.239.128.0/18',
+  '54.239.192.0/19',
+  '54.240.128.0/18',
+  '204.246.164.0/22',
+  '204.246.168.0/22',
+  '204.246.174.0/23',
+  '204.246.176.0/20',
+  '205.251.192.0/19',
+  '205.251.249.0/24',
+  '205.251.250.0/23',
+  '205.251.252.0/23',
+  '205.251.254.0/24',
+  '216.137.32.0/19'
+]);
 
 app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
@@ -56,6 +84,54 @@ if ( app.locals.development ) {
 // ------------------------------------------------------------------------------
 // Middleware
 // ------------------------------------------------------------------------------
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        'build.lwjgl.org',
+        '*.google-analytics.com',
+        'cdnjs.cloudflare.com',
+        'travis-ci.org',
+        'api.travis-ci.org'
+      ],
+      imgSrc: ["'self'", 'data:', '*.google-analytics.com', 'api.travis-ci.org', 'travis-ci.org'],
+      objectSrc: [],
+      reflectedXss: ['block']
+    }
+  },
+  dnsPrefetchControl: {
+    allow: false
+  },
+  frameguard: {
+    action: 'sameorigin'
+  },
+  hidePoweredBy: false,
+  hpkp: {
+    maxAge: 7776000,
+    sha256s: [
+      '2b071c59a0a0ae76b0eadb2bad23bad4580b69c3601b630c2eaf0613afa83f92',
+      'f7ecded5c66047d28ed6466b543c40e0743abe81d109254dcf845d4c2c7853c5',
+      '36abc32656acfc645c61b71613c4bf21c787f5cabbee48348d58597803d7abc9',
+      '7f4296fc5b6a4e3b35d3c369623e364ab1af381d8fa7121533c9d6c633ea2461',
+      'fbe3018031f9586bcbf41727e417b7d1c45c2f47f93be372a17b96b50757d5a2',
+    ],
+    reportUri: 'https://www.amazontrust.com/#abuseContact',
+    reportOnly: true,
+    setIf: (req, res) => app.locals.production && req.hostname === 'www.lwjgl.org' && req.query.hpkp
+  },
+  hsts: {
+    maxAge: 31536000,
+    includeSubDomains: false,
+    preload: true,  // includeSubDomains must be true for preloading to be approved
+    setIf: (req, res) => app.locals.production && req.hostname === 'www.lwjgl.org' && req.query.hsts
+  },
+  ieNoOpen: false,
+  noSniff: true,
+  referrerPolicy: false,
+  xssFilter: true
+}));
 
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
@@ -121,12 +197,6 @@ app.get('/browse', browse);
 // React server-side rendering
 app.get('*', (req, res, next) => {
 
-  if ( req.accepts('html', '*/*') !== 'html' ) {
-    // Return 404 to avoid rendering React for invalid requests
-    next(null);
-    return;
-  }
-
   // The only reason we need this is to avoid rendering the homepage video in mobile devices
   let bodyClass = getDevice(req);
 
@@ -163,7 +233,7 @@ app.get('*', (req, res, next) => {
         location={req.url}
         context={context}
       >
-        {({ action, location, router }) => <Layout router={router} action={action} location={location} store={store} />}
+        {({action, location, router}) => <Layout router={router} action={action} location={location} store={store} />}
       </ServerRouter>
     )
   ));
@@ -187,7 +257,7 @@ app.get('*', (req, res, next) => {
   }
 
   // https://github.com/nfl/react-helmet#server-usage
-  head = Helmet.rewind();
+  head = ReactHelmet.rewind();
 
   if ( app.locals.production ) {
     // Get code-split chunk's relative path for this path
@@ -302,7 +372,7 @@ function shutdown(code) {
 process.on('SIGTERM', shutdown);
 process.on('SIGINT', shutdown);
 
-process.on('uncaughtException', function (err) {
+process.on('uncaughtException', function(err) {
   console.error(err.stack);
   shutdown(1);
 });
