@@ -192,10 +192,17 @@ app.use(express.static(path.join(__dirname, '../public'), {
 // Teamcity proxy
 app.get('/teamcity', teamcity);
 
+// Retrieval of artifacts dir/file structure
 app.get('/bin/:build', bin);
 app.get('/bin/:build/:version', bin);
 
+// S3 bucket browsing
 app.get('/browse', browse);
+
+// Legacy re-directs
+app.get('/license.php', (req, res, next) => {
+  res.redirect(301, '/license');
+});
 
 // React server-side rendering
 app.get('*', (req, res, next) => {
