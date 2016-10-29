@@ -110,7 +110,7 @@ app.use(helmet({
   hidePoweredBy: false,
   /*
   hpkp: {
-    maxAge: 7776000,
+    maxAge: 7 * 24 * 60 * 60,
     sha256s: [
       // https://www.amazontrust.com/repository/
       new Buffer('2b071c59a0a0ae76b0eadb2bad23bad4580b69c3601b630c2eaf0613afa83f92').toString('base64'),
@@ -124,7 +124,7 @@ app.use(helmet({
   },
   */
   hsts: {
-    maxAge: 31536000,
+    maxAge: 365 * 24 * 60 * 60,
     includeSubDomains: false,
     // TODO: includeSubDomains must be true for preloading to be approved
     preload: true,
