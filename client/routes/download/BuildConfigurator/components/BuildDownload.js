@@ -12,6 +12,7 @@ import { BUILD_STABLE, MODE_ZIP } from '../constants'
     fullZip:
          build.build === BUILD_STABLE
       || build.mode !== MODE_ZIP
+      || build.version === '3.0.0'
       || IS_SAFARI
       || (
            build.preset === 'all'
