@@ -78,7 +78,7 @@ const fields = {
         preset => ({
           value: preset,
           label: presets.byId[preset].title,
-          disabled: mode === MODE_ZIP && ( build === BUILD_STABLE || version === '3.0.0' || IS_SAFARI ),
+          disabled: mode === MODE_ZIP && ( version === '3.0.0' || IS_SAFARI ),
         })
       )
     ),
@@ -124,17 +124,17 @@ const fields = {
   },
   source: {
     label: "Include source",
-    checked: state => state.build.source || state.build.build !== BUILD_NIGHTLY,
+    checked: state => state.build.source || state.build.version === '3.0.0' || IS_SAFARI,
     action: $$.toggleSource,
     hidden: isModeNotZip,
-    disabled: state => state.build.build !== BUILD_NIGHTLY || IS_SAFARI,
+    disabled: state => state.build.version === '3.0.0' || IS_SAFARI,
   },
   javadoc: {
     label: "Include JavaDoc",
-    checked: state => state.build.javadoc || state.build.build !== BUILD_NIGHTLY,
+    checked: state => state.build.javadoc || state.build.version === '3.0.0' || IS_SAFARI,
     action: $$.toggleJavadoc,
     hidden: isModeNotZip,
-    disabled: state => state.build.build !== BUILD_NIGHTLY || IS_SAFARI,
+    disabled: state => state.build.version === '3.0.0' || IS_SAFARI,
   },
   compact: {
     label: "Compact Mode",

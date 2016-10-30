@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import { toggleArtifact } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
-import { BUILD_STABLE, MODE_ZIP } from '../constants'
+import { MODE_ZIP } from '../constants'
 
 @connect(
   ({build}, ownProps) => {
@@ -34,7 +34,6 @@ import { BUILD_STABLE, MODE_ZIP } from '../constants'
       showDescriptions: build.descriptions,
       disabled: !available
         || IS_SAFARI
-        || build.build === BUILD_STABLE
         || build.version === '3.0.0'
         || ownProps.id === 'lwjgl',
     }

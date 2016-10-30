@@ -1,14 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-
+import { MODE_ZIP } from '../constants'
 const SUPPORTS_BTOA = process.browser ? !!window.btoa : false;
 const SUPPORTS_CLIPBOARD = process.browser ? !!document.execCommand : false;
 
 @connect(
   state => {
-    if ( state.build.mode === 'zip' ) {
+    if ( state.build.mode === MODE_ZIP ) {
       return {
-        mode: 'zip'
+        mode: MODE_ZIP
       }
     }
 
@@ -39,7 +39,7 @@ class BuildScript extends React.Component {
   };
 
   render() {
-    if ( this.props.mode === 'zip' ) {
+    if ( this.props.mode === MODE_ZIP ) {
       return null;
     }
 

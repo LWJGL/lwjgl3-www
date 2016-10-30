@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { downloadInit } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
-import { BUILD_STABLE, MODE_ZIP } from '../constants'
+import { MODE_ZIP } from '../constants'
 
 @connect(
   ({build}) => ({
@@ -10,8 +10,7 @@ import { BUILD_STABLE, MODE_ZIP } from '../constants'
     mode: build.mode,
     version: build.version,
     fullZip:
-         build.build === BUILD_STABLE
-      || build.mode !== MODE_ZIP
+         build.mode !== MODE_ZIP
       || build.version === '3.0.0'
       || IS_SAFARI
       || (

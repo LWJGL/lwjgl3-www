@@ -3,14 +3,13 @@ import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import { togglePlatform } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
-import { BUILD_STABLE } from '../constants'
 
 @connect(
   state => ({
     platforms: state.build.natives.allIds,
     natives: state.build.natives.byId,
-    selected: state.build.build !== BUILD_STABLE && state.build.version !== '3.0.0' && !IS_SAFARI ? state.build.platform : {"windows":true,"macos":true,"linux":true},
-    disabled: state.build.build === BUILD_STABLE || state.build.version === '3.0.0' || IS_SAFARI,
+    selected: state.build.version !== '3.0.0' && !IS_SAFARI ? state.build.platform : {"windows":true,"macos":true,"linux":true},
+    disabled: state.build.version === '3.0.0' || IS_SAFARI,
     hide: state.build.mode !== 'zip',
   }),
   {
