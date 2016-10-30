@@ -2,11 +2,12 @@ import React from 'react'
 import {connect} from 'react-redux'
 import classnames from 'classnames'
 import BuildArtifact from './BuildArtifact'
+import { MODE_ZIP } from '../constants'
 
 @connect(
   state => ({
     artifacts: state.build.artifacts.allIds,
-    isZip: state.build.mode === 'zip',
+    isZip: state.build.mode === MODE_ZIP,
   })
 )
 class BuildArtifacts extends React.Component {

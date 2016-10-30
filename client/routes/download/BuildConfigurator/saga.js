@@ -16,24 +16,23 @@ async function fetchManifest(path) {
   return await response.json();
 }
 
-const getBuild = state => {
+const getBuild = ({build}) => {
   let path;
-  const build = state.build.build;
-  const platformCount = state.build.natives.allIds.length;
-  const selectedPlatforms = state.build.platform;
+  const platformCount = build.natives.allIds.length;
+  const selectedPlatforms = build.platform;
 
-  if ( build === 'release' ) {
-    path = `release/${state.build.version}`;
+  if ( build.build === 'release' ) {
+    path = `release/${build.version}`;
   } else {
-    path = build;
+    path = build.build;
   }
 
-  const selected = state.build.artifacts.allIds.filter(artifact => {
-    if ( state.build.contents[artifact] === false ) {
+  const selected = build.artifacts.allIds.filter(artifact => {
+    if ( build.contents[artifact] === false ) {
       return false;
     }
 
-    const spec = state.build.artifacts.byId[artifact];
+    const spec = build.artifacts.byId[artifact];
 
     return spec.natives === undefined
       || spec.natives.length === platformCount
@@ -43,17 +42,17 @@ const getBuild = state => {
   return {
     path,
     selected,
+    build: build.build,
     platforms: selectedPlatforms,
-    source: state.build.source,
-    javadoc: state.build.javadoc,
-    version: state.build.version,
+    source: build.source,
+    javadoc: build.javadoc,
+    version: build.version,
   };
 };
 
-function getFiles(manifest, selected, platforms, source, javadoc) {
+function getFiles(path, manifest, selected, platforms, source, javadoc) {
   const files = [];
-  const root = manifest[0];  // first entry is root dir
-  const rootRegExp = new RegExp(`^${root}`);
+  const rootRegExp = new RegExp(`^${path}/bin/`);
   const javaDocRegExp = new RegExp('-javadoc.jar$');
   const sourcesRegExp = new RegExp('-sources.jar$');
   const nativeRegExp = new RegExp('-natives-');
@@ -190,7 +189,7 @@ function* init() {
     return;
   }
 
-  const {path, selected, platforms, source, javadoc, version} = yield select(getBuild);
+  const {build, path, selected, platforms, source, javadoc, version} = yield select(getBuild);
 
   yield put(log('Downloading file manifest'));
 
@@ -203,13 +202,13 @@ function* init() {
   }
 
   yield put(log('Building file list'));
-  const files = getFiles(manifest, selected, platforms, source, javadoc);
+  const files = getFiles(path, manifest, selected, platforms, source, javadoc);
 
   yield put(log(`Downloading ${files.length} files`));
 
   const zip = new JSZip();
   try {
-    const downloads = yield downloadFiles(files, manifest[0]);
+    const downloads = yield downloadFiles(files, `${path}/bin/`);
 
     downloads.forEach(download => {
       //noinspection JSUnresolvedFunction
@@ -229,7 +228,7 @@ function* init() {
 
   //noinspection JSUnresolvedVariable
   const blob = yield apply(zip, zip.generateAsync, [zipOptions]);
-  saveAs(blob, `lwjgl-${version}-custom.zip`);
+  saveAs(blob, `lwjgl-${build}-${version}-custom.zip`);
 
   yield put(log(`Done!`));
   yield put(downloadComplete());

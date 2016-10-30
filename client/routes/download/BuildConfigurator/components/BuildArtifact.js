@@ -3,28 +3,40 @@ import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import { toggleArtifact } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
+import { BUILD_STABLE, MODE_ZIP } from '../constants'
 
 @connect(
-  (state, ownProps) => {
-    const artifact = state.build.artifacts.byId[ownProps.id];
+  ({build}, ownProps) => {
+    const artifact = build.artifacts.byId[ownProps.id];
+    const since = build.versions.byId[artifact.since].semver;
+    const semver = build.versions.byId[build.version].semver;
+
     const available =
       (
-        artifact.builds.length === state.build.builds.allIds.length
-        || artifact.builds.some(build => build === state.build.build)
+           artifact.builds.length === build.builds.allIds.length
+        || artifact.builds.some(build => build === build.build)
       )
       &&
       (
-           state.build.mode === 'zip'
+           build.mode === MODE_ZIP
         || artifact.natives === undefined
-        || artifact.natives.length === state.build.natives.allIds.length
-        || artifact.natives.some(platform => state.build.platform[platform])
+        || artifact.natives.length === build.natives.allIds.length
+        || artifact.natives.some(platform => build.platform[platform])
+      )
+      &&
+      (
+        semver[2] * 100 + semver[1] * 10 + semver[0] >= since[2] * 100 + since[1] * 10 + since[0]
       );
 
     return {
       artifact,
-      checked: available && state.build.contents[ownProps.id] === true,
-      showDescriptions: state.build.descriptions,
-      disabled: !available || ( state.build.mode === 'zip' && ( state.build.build !== 'nightly' || IS_SAFARI ) ) || ownProps.id === 'lwjgl',
+      checked: available && build.contents[ownProps.id] === true,
+      showDescriptions: build.descriptions,
+      disabled: !available
+        || IS_SAFARI
+        || build.build === BUILD_STABLE
+        || build.version === '3.0.0'
+        || ownProps.id === 'lwjgl',
     }
   },
   {

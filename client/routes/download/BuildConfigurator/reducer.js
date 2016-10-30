@@ -3,7 +3,7 @@ import config from './config'
 
 import {
   BUILD_RELEASE,
-  BUILD_NIGHTLY,
+  BUILD_STABLE,
   MODE_ZIP,
   MODE_MAVEN,
 } from './constants'
@@ -15,19 +15,33 @@ const selectBuild = (state, build) => {
   if ( build !== null ) {
     state.version = state.builds.byId[build].latest.join('.');
 
-    if ( build !== BUILD_NIGHTLY ) {
-      selectMode(state, MODE_ZIP);
+    if ( build === BUILD_STABLE ) {
+      lockDown(state);
     }
   }
 
   return state;
 };
 
-const selectMode = (state, mode) => {
-  state.mode = mode;
-  if ( mode === MODE_ZIP && state.preset !== 'all' ) {
+const lockDown = (state) => {
+  if ( state.mode !== MODE_ZIP ) {
+    selectMode(state, MODE_ZIP);
+  }
+  if ( state.preset !== 'all' ) {
     selectPreset(state, 'all');
   }
+};
+
+const selectVersion = (state, version) => {
+  state.version = version;
+  if ( version === '3.0.0' ) {
+    lockDown(state);
+  }
+  return state;
+};
+
+const selectMode = (state, mode) => {
+  state.mode = mode;
   return state;
 };
 
@@ -90,7 +104,7 @@ export default function(state = config, action) {
       break;
 
     case $.SELECT_MODE:
-      if ( state.build === BUILD_NIGHTLY && state.mode !== action.mode ) {
+      if ( state.build !== BUILD_STABLE && state.mode !== action.mode ) {
         // For now, only allow nightly builds to select mode
         return selectMode({...state}, action.mode);
       }
@@ -148,7 +162,7 @@ export default function(state = config, action) {
         const semver = state.versions.byId[action.version].semver;
 
         if ( semver[0] < latest[0] || semver[1] < latest[1] || semver[2] <= latest[2] ) {
-          return {...state, version: action.version};
+          return selectVersion({...state}, action.version);
         }
       }
       break;
@@ -160,7 +174,7 @@ export default function(state = config, action) {
       break;
 
     case $.DOWNLOAD_INIT:
-      if ( state.build === BUILD_NIGHTLY && state.downloading === false ) {
+      if ( state.mode === MODE_ZIP && state.downloading === false ) {
         return {...state, downloading: true, progress: []}
       }
       break;

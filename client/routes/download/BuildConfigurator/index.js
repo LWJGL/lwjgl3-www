@@ -8,6 +8,7 @@ import subscribe from '../../../store/subscribe'
 
 import {
   BUILD_RELEASE,
+  BUILD_STABLE,
   BUILD_NIGHTLY,
   MODE_ZIP,
   MODE_MAVEN,
@@ -46,15 +47,20 @@ const fields = {
     value: getMode,
     action: $$.changeMode,
     options: createSelector(
-      state => state.build.modes,
-      state => state.build.build === BUILD_NIGHTLY,
-      (modes, isNightly) => modes.allIds.map(
-        mode => ({
-          value: mode,
-          label: modes.byId[mode].title,
-          disabled: mode !== MODE_ZIP && !isNightly,
-        })
-      )
+      state => ({
+        modes: state.build.modes,
+        build: state.build.build,
+        version: state.build.version
+      }),
+      ({modes, build, version}) => {
+        return modes.allIds.map(
+          mode => ({
+            value: mode,
+            label: modes.byId[mode].title,
+            disabled: mode !== MODE_ZIP && ( build === BUILD_STABLE || version === '3.0.0' ),
+          })
+        );
+      }
     ),
   },
   preset: {
@@ -62,14 +68,17 @@ const fields = {
     value: getPreset,
     action: $$.changePreset,
     options: createSelector(
-      state => state.build.presets,
-      state => state.build.mode,
-      state => state.build.build,
-      (presets, mode, build) => presets.allIds.map(
+      state => ({
+        presets: state.build.presets,
+        mode: state.build.mode,
+        build: state.build.build,
+        version: state.build.version
+      }),
+      ({presets, mode, build, version}) => presets.allIds.map(
         preset => ({
           value: preset,
           label: presets.byId[preset].title,
-          disabled: mode === MODE_ZIP && ( build !== BUILD_NIGHTLY || IS_SAFARI ),
+          disabled: mode === MODE_ZIP && ( build === BUILD_STABLE || version === '3.0.0' || IS_SAFARI ),
         })
       )
     ),

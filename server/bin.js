@@ -30,7 +30,7 @@ export default (req, res, next) => {
     Bucket: 'build.lwjgl.org',
     FetchOwner: false,
     MaxKeys: 500,
-    Prefix: `${req.params.build}/bin/`,
+    Prefix: req.params.build === 'release' ? `${req.params.build}/${req.params.version}/bin/` : `${req.params.build}/bin/`,
   };
 
   s3.listObjectsV2(params, function(err, data) {
