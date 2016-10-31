@@ -114,7 +114,6 @@ function generateMaven(build, _version, hardcoded, compact, artifacts, selected)
 
   if ( build !== "release" ) {
     script += `<repositories>
-\t<!-- Add this repository to your Maven script -->
 \t<repository>
 \t\t<id>sonatype-snapshots</id>
 \t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
@@ -148,37 +147,32 @@ function generateGradle(build, _version, hardcoded, artifacts, selected) {
   const v = hardcoded ? _version : '\${lwjglVersion}';
 
   script += `import org.gradle.internal.os.OperatingSystem
-      
-  switch ( OperatingSystem.current() ) {
-    case OperatingSystem.WINDOWS:
-      project.ext.lwjglNatives = "natives-windows"
-      break
-    case OperatingSystem.LINUX:
-      project.ext.lwjglNatives = "natives-linux"
-      break
-    case OperatingSystem.MAC_OS:
-      project.ext.lwjglNatives = "natives-macos"
-      break
-  }\n\n`;
+
+switch ( OperatingSystem.current() ) {
+\tcase OperatingSystem.WINDOWS:
+\t\tproject.ext.lwjglNatives = "natives-windows"
+\t\tbreak
+\tcase OperatingSystem.LINUX:
+\t\tproject.ext.lwjglNatives = "natives-linux"
+\tbreak
+\tcase OperatingSystem.MAC_OS:
+\t\tproject.ext.lwjglNatives = "natives-macos"
+\t\tbreak
+}\n\n`;
 
   if ( !hardcoded ) {
-    script += `// Add these properties to your Gradle script
-  project.ext.lwjglVersion = "${_version}"
-  
-  `;
+    script += `project.ext.lwjglVersion = "${_version}"\n\n`;
   }
 
-  if ( build !== "release" ) {
-    script += `repositories {
-  \t// Add this repository to your Gradle script
-  \tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+  script += `repositories {
+\t${build === "release"
+    ? `mavenCentral()`
+    : `maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`
   }
-  
-  `;
-  }
+}\n\n`;
 
   script += `dependencies {
-  \t// LWJGL dependencies START`;
+\t// LWJGL dependencies START`;
 
   artifacts.allIds.forEach(artifact => {
     if ( selected[artifact] ) {
@@ -190,7 +184,7 @@ function generateGradle(build, _version, hardcoded, artifacts, selected) {
   });
 
   script += `\n\t// LWJGL natives${nativesBundle}\n\t// LWJGL dependencies END
-  }`;
+}`;
 
   return script;
 }
