@@ -46,6 +46,10 @@ const config = {
   },
   versions: {
     byId: {
+      "3.1.1": {
+        id: "3.1.1",
+        semver: [3, 1, 1]
+      },
       "3.1.0": {
         id: "3.1.0",
         semver: [3, 1, 0]
