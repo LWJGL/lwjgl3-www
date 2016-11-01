@@ -4,8 +4,8 @@ The website for LWJGL 3.
 
 ### Production Requirements
 
-- [NGINX](http://nginx.org/)
-- [Node.js & NPM](https://nodejs.org/en/)
+- [Node.js](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/)
 - [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
 
 ### Dependencies
@@ -23,13 +23,16 @@ Windows build statuses. Node proxies requests to
 Other LWJGL subdomains:
 
 - The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www).
+A static copy of the old LWJGL website is now hosted directly from S3 
 - The blog is [Ghost](https://ghost.org/).
 - The forum is [SMF](http://www.simplemachines.org/).
-- The wiki for LWJGL 2 is [MediaWiki](https://www.mediawiki.org/).
+- The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/).
+A static copy of the old LWJGL wiki is now hosted directly from S3.
 
 ### App Configuration
 
-Place a JSON file in the root directory named config.json
+Place a JSON file in the root directory named config.json with the following contents.
+Additional settings are automatically populated when the project is built for production.
 
 ```json
 {
@@ -51,23 +54,19 @@ For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
 npm -g i nodemon
 ```
 
-A minimal NGINX configuration for development ( w/ Hot Module Reloading )
-can look like this:
+A minimal NGINX configuration for development can look like this:
 
 ```Nginx
 server {
   listen 80;
-  server_name
-    www.lwjgl.org
-    dev.lwjgl.org
-    www.lwjgl.dev
-    www.lwjgl.local;
+  server_name dev.lwjgl.org;
+
+  proxy_buffering off;
+  proxy_redirect off;
+  proxy_intercept_errors off;
+  proxy_http_version 1.1;
   
   location /img {
-    proxy_buffering off;
-    proxy_redirect off;
-    proxy_intercept_errors off;
-    proxy_http_version 1.1;
     proxy_set_header Connection "";
     proxy_set_header Host cdn.lwjgl.org.s3.amazonaws.com;
     proxy_pass http://cdn.lwjgl.org.s3.amazonaws.com;
@@ -75,10 +74,6 @@ server {
   }
 
   location /svg {
-    proxy_buffering off;
-    proxy_redirect off;
-    proxy_intercept_errors off;
-    proxy_http_version 1.1;
     proxy_set_header Connection "";
     proxy_set_header Host cdn.lwjgl.org.s3.amazonaws.com;
     proxy_pass http://cdn.lwjgl.org.s3.amazonaws.com;
@@ -86,10 +81,6 @@ server {
   }
 
   location / {
-    proxy_buffering off;
-    proxy_redirect off;
-    proxy_intercept_errors off;
-    proxy_http_version 1.1;
     proxy_set_header Connection "";
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
@@ -104,8 +95,6 @@ following host names to test locally:
 
 ```
 127.0.0.1 dev.lwjgl.org
-127.0.0.1 www.lwjgl.dev
-127.0.0.1 www.lwjgl.local
 ```
 
 Alternatively a custom SSL certificate may be issued and installed on your
@@ -114,7 +103,7 @@ local NGINX.
 ### Build/running in development
 
 ```bash
-npm i
+yarn
 npm start
 ```
 
@@ -129,73 +118,13 @@ npm run watch
 
 ### NGINX Configuration
 
-Make sure you have [gzip compression](http://nginx.org/en/docs/http/ngx_http_gzip_module.html) enabled.
-
-Below you will find our current server configuration. Some rewrites ensure
-we don't break links for the old site.
-
-```Nginx
-server {
-  listen 80;
-  server_name
-    lwjgl.org
-    lwjgl.com
-    www.lwjgl.com;
-
-  return 301 https://www.lwjgl.org$request_uri;
-}
-
-server {
-  listen 80;
-  server_name www.lwjgl.org;
-
-  add_header Strict-Transport-Security "max-age=31536000; preload";
-
-  location = /projects.php {
-    return 301 http://legacy.lwjgl.org/projects.php;
-  }
-
-  location = /license.php {
-    return 301 /license;
-  }
-
-  location /webstart/ {
-    rewrite ^/webstart/(.*)$ http://legacy.lwjgl.org/webstart/$1 redirect;
-  }
-
-  location = /wiki {
-    return 301 http://wiki.lwjgl.org/;
-  }
-
-  location ^~ /wiki/ {
-    rewrite ^/wiki/(.*) http://wiki.lwjgl.org/$1 permanent;
-  }
-
-  location = /forum {
-    return 301 http://forum.lwjgl.org/;
-  }
-
-  location ^~ /forum/ {
-    rewrite ^/forum/(.*) http://forum.lwjgl.org/$1 permanent;
-  }
-
-  location / {
-    proxy_buffering off;
-    proxy_redirect off;
-    proxy_intercept_errors off;
-    proxy_http_version 1.1;
-    proxy_set_header Connection "";
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_pass http://localhost:7687;
-  }
-}
-```
+NGINX is no longer required in production. We serve the website via Amazon CloudFront using
+the server's hostname & port as origin.
 
 ### Build for production
 
 ```bash
-npm i
+yarn
 npm run production
 ```
 
@@ -222,6 +151,31 @@ cd /path/to/lwjgl3-www
 NODE_ENV=production pm2 start server/index.js --name lwjgl
 pm2 save
 ```
+
+or place a process.json file anywhere with the following contents: 
+
+```js
+{
+  apps: [
+    {
+      name: "lwjgl-site",
+      cwd: "/path/to/lwjgl3-www",
+      script: "./server/index.js",
+      env: {
+        "NODE_ENV": "production",
+      }
+    }
+  ]
+}
+```
+
+and then run:
+
+```bash
+pm2 start process.json --only lwjgl-site
+pm2 save
+```
+
 
 ### Run in production with forever
 
