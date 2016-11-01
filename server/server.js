@@ -90,6 +90,7 @@ app.use(helmet({
       defaultSrc: [
         "'self'",
         "'unsafe-inline'",
+        "'unsafe-eval'",
         'build.lwjgl.org',
         '*.google-analytics.com',
         'cdnjs.cloudflare.com',
@@ -97,8 +98,7 @@ app.use(helmet({
         'api.travis-ci.org'
       ],
       imgSrc: ["'self'", 'data:', '*.google-analytics.com', 'api.travis-ci.org', 'travis-ci.org'],
-      objectSrc: [],
-      reflectedXss: ['block']
+      objectSrc: []
     }
   },
   dnsPrefetchControl: {
