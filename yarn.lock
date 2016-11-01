@@ -1705,6 +1705,10 @@ esprima@^2.6.0:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
 
+estree-walker@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/estree-walker/-/estree-walker-0.3.0.tgz#f67ca8f57b9ed66d886af816c099c779b315d4db"
+
 esutils@^2.0.0, esutils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/esutils/-/esutils-2.0.2.tgz#0abf4f1caa5bcb1f7a9d8acc6dea4faaa04bac9b"
@@ -3077,14 +3081,14 @@ once@~1.3.3:
   dependencies:
     wrappy "1"
 
-optimize-js@1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/optimize-js/-/optimize-js-1.0.1.tgz#aeab577b80ee3b140d832517971b3cd04f0a7740"
+optimize-js@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/optimize-js/-/optimize-js-1.0.2.tgz#1c5b8fd33ea9bd7fa3e4ecc0a9efa7e95f372907"
   dependencies:
     acorn "^3.3.0"
     concat-stream "^1.5.1"
+    estree-walker "^0.3.0"
     magic-string "^0.16.0"
-    walk-ast "^0.0.2"
     yargs "^4.8.1"
 
 os-browserify@~0.2.0:
@@ -4512,10 +4516,6 @@ vm-browserify@0.0.4:
 void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
-
-walk-ast@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/walk-ast/-/walk-ast-0.0.2.tgz#841c40b2d741753c0a089ac1b15665b3bcb6bcc0"
 
 warning@^3.0.0:
   version "3.0.0"
