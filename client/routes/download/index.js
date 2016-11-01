@@ -32,7 +32,7 @@ const DownloadRoute = () => (
         <p>Click below if you prefer to build from source:</p>
         <p>
           <Link className="btn btn-xs-block btn-outline-info" to="/source">Source</Link>
-          <a className="btn btn-xs-block btn-outline-info" href="/guide#build-instructions">Build instructions</a>
+          <Link className="btn btn-xs-block btn-outline-info" to="/guide#build-instructions">Build instructions</Link>
         </p>
       </section>
     </div>

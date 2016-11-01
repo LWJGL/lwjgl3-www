@@ -5,6 +5,15 @@ import codeSample from './sample'
 import loadJS from 'fg-loadjs'
 import { loadCSS } from 'fg-loadcss'
 
+const checkLocation = () => {
+  if ( window.location.hash === '#build-instructions' ) {
+    try {
+      document.getElementById('build-instructions').scrollIntoView();
+    } catch (ignore) {
+    }
+  }
+};
+
 class GuideRoute extends React.Component {
 
   static init = true;
@@ -25,15 +34,10 @@ class GuideRoute extends React.Component {
         if ( !this.mounted ) {
           return;
         }
-        this.setState({sample: GuideRoute.sample}, () => {
-          if ( window.location.hash === '#build-instructions' ) {
-            try {
-              document.getElementById('build-instructions').scrollIntoView();
-            } catch(ignore) {
-            }
-          }
-        });
+        this.setState({sample: GuideRoute.sample}, checkLocation);
       });
+    } else {
+      checkLocation();
     }
   }
 
@@ -76,7 +80,9 @@ class GuideRoute extends React.Component {
           <p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
         </section>
 
-        <section className="py-1" style={{backgroundColor:'#2b2b2b'}}><pre className="container" style={{color:'white'}}><code dangerouslySetInnerHTML={{__html:this.state.sample}} /></pre></section>
+        <section className="py-1" style={{backgroundColor: '#2b2b2b'}}>
+          <pre className="container" style={{color: 'white'}}><code dangerouslySetInnerHTML={{__html: this.state.sample}} /></pre>
+        </section>
 
         <section className="container pt-2">
           <p>
@@ -142,20 +148,27 @@ class GuideRoute extends React.Component {
 
         <section className="container pt-2">
           <h2>GLFW</h2>
-          <p><a href="http://www.glfw.org/">GLFW</a> is an Open Source, multi-platform library for creating windows with OpenGL contexts and receiving input and events. It is easy to integrate into existing applications and does not lay claim to the main loop.</p>
+          <p>
+            <a href="http://www.glfw.org/">GLFW</a> is an Open Source, multi-platform library for creating windows with OpenGL contexts and receiving input and events. It is easy to integrate into existing applications and does not lay claim to the main loop.
+          </p>
           <p>GLFW is the preferred windowing system for LWJGL 3 applications. If you're familiar with LWJGL 2, GLFW is a replacement for the Display class and everything in the input package.</p>
           <p>Learning GLFW is easy. It has a simple, yet powerful, API and comprehensive <a href="http://www.glfw.org/docs/latest/">documentation</a>.</p>
 
           <h2>OpenGL</h2>
           <p><a href="https://www.opengl.org/about/">OpenGL</a> is the premier environment for developing portable, interactive 2D and 3D graphics applications.</p>
-          <p>OpenGL is a massive API with long history and hundreds of extensions. Learning it from scratch is no easy undertaking, but you can start from its <a href="https://www.opengl.org/documentation/">documentation</a>. The <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.</p>
+          <p>OpenGL is a massive API with long history and hundreds of extensions. Learning it from scratch is no easy undertaking, but you can start from its <a href="https://www.opengl.org/documentation/">documentation</a>. The
+            <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.</p>
 
           <h2>OpenCL</h2>
-          <p><a href="https://www.khronos.org/opencl/">OpenCL</a> is the first open, royalty-free standard for cross-platform, parallel programming of modern processors found in personal computers, servers and handheld/embedded devices. OpenCL (Open Computing Language) greatly improves speed and responsiveness for a wide spectrum of applications in numerous market categories from gaming and entertainment to scientific and medical software.</p>
+          <p>
+            <a href="https://www.khronos.org/opencl/">OpenCL</a> is the first open, royalty-free standard for cross-platform, parallel programming of modern processors found in personal computers, servers and handheld/embedded devices. OpenCL (Open Computing Language) greatly improves speed and responsiveness for a wide spectrum of applications in numerous market categories from gaming and entertainment to scientific and medical software.
+          </p>
           <p>Specifications for OpenCL and its extensions can be found at the <a href="https://www.khronos.org/registry/cl/">Khronos OpenCL registry</a>.</p>
 
           <h2>OpenAL</h2>
-          <p><a href="http://www.openal.org/">OpenAL</a> (for "Open Audio Library") is a software interface to audio hardware. The interface consists of a number of functions that allow a programmer to specify the objects and operations in producing high-quality audio output, specifically multichannel output of 3D arrangements of sound sources around a listener.</p>
+          <p>
+            <a href="http://www.openal.org/">OpenAL</a> (for "Open Audio Library") is a software interface to audio hardware. The interface consists of a number of functions that allow a programmer to specify the objects and operations in producing high-quality audio output, specifically multichannel output of 3D arrangements of sound sources around a listener.
+          </p>
           <p>LWJGL is bundled with <a href="http://kcat.strangesoft.net/openal.html">OpenAL Soft</a>, an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API.</p>
         </section>
 

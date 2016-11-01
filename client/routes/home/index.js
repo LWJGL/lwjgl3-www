@@ -20,6 +20,15 @@ import FaQuestionCircle from '../../icons/question-circle'
 
 const styles = StyleSheet.create(stylesDefinition);
 
+const learnMoreSmooth = (e) => {
+  e.preventDefault();
+  try {
+    document.getElementById('learn-more').scrollIntoView({behavior:'smooth'});
+  } catch (ignore) {
+  }
+  return false;
+};
+
 const HomeRoute = () => (
   <main>
     <Helmet
@@ -43,7 +52,7 @@ const HomeRoute = () => (
       <Logo className={css(styles.logo)} />
       <div className={css(styles.intro)}>
         <h1 className={css(styles.introTitle)}>Lightweight Java Game Library 3</h1>
-        <p className={css(styles.introText)}><a href="#learn-more" style={{color:'white'}}>LEARN MORE<br /><FaAngleDown size={20} /></a></p>
+        <p className={css(styles.introText)}><a href="#learn-more" style={{color:'white'}} onClick={learnMoreSmooth}>LEARN MORE<br /><FaAngleDown size={20} /></a></p>
       </div>
     </section>
 
