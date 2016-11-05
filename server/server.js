@@ -89,23 +89,38 @@ app.use(helmet({
     directives: {
       defaultSrc: [
         "'self'",
+        "build.lwjgl.org",
+        '*.google-analytics.com',
+      ],
+      scriptSrc: [
+        "'self'",
         "'unsafe-inline'",
         "'unsafe-eval'",
-        'build.lwjgl.org',
         '*.google-analytics.com',
         'cdnjs.cloudflare.com',
-        'travis-ci.org',
-        'api.travis-ci.org'
       ],
-      imgSrc: ["'self'", 'data:', '*.google-analytics.com', 'api.travis-ci.org', 'travis-ci.org'],
-      objectSrc: []
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        '*.google-analytics.com',
+        'cdnjs.cloudflare.com',
+      ],
+      imgSrc: [
+        "'self'",
+        'data:',
+        '*.google-analytics.com',
+        'api.travis-ci.org',
+        'travis-ci.org'
+      ],
+      frameAncestors: ["'none'"],
+      objectSrc: ["'none'"]
     }
   },
   dnsPrefetchControl: {
     allow: false
   },
   frameguard: {
-    action: 'sameorigin'
+    action: 'deny'
   },
   hidePoweredBy: false,
   /*
