@@ -2985,9 +2985,9 @@ node-pre-gyp@^0.6.29:
     tar "~2.2.0"
     tar-pack "~3.1.0"
 
-node-sass@3.11.1:
-  version "3.11.1"
-  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-3.11.1.tgz#0b25699663cc9d616e8c6fb874e7d9b25e5a8e20"
+node-sass@3.11.2:
+  version "3.11.2"
+  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-3.11.2.tgz#ba3bef8cd46bd1698c2bdb2b6d2af1f9e7d7878f"
   dependencies:
     async-foreach "^0.1.3"
     chalk "^1.1.1"
@@ -3763,9 +3763,9 @@ react-dom@15.4.0-rc.4:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-react-helmet@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.2.0.tgz#3646e92bf1e1adb31b1c91087c3a40287b0c0dca"
+react-helmet@3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.2.1.tgz#d325e2f9f63b6a926dea7e2332142e39503f869e"
   dependencies:
     deep-equal "1.0.1"
     object-assign "^4.0.1"
