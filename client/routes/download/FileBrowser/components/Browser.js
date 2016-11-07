@@ -20,7 +20,7 @@ import styles from '../styles'
 )
 class Browser extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.loadPath(this.props.path);
   }
 
