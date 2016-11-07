@@ -46,7 +46,7 @@ class BuildDownload extends React.Component {
       return (
         <div className="col-xs-12 col-lg-4">
           <h2 className="mb-2 mt-1">Bundle</h2>
-          <a className="btn btn-xs-block btn-primary btn-lg" href={downloadUrl} target="_blank">DOWNLOAD ZIP</a>
+          <a className="btn btn-xs-block btn-primary btn-lg" download={`lwjgl-${props.build}-${props.version}.zip`} href={downloadUrl}>DOWNLOAD ZIP</a>
         </div>
       )
     } else {

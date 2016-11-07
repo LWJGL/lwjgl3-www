@@ -190,7 +190,7 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-autoprefixer@^6.3.1, autoprefixer@6.5.1:
+autoprefixer@^6.3.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.5.1.tgz#ae759a5221e709f3da17c2d656230e67c43cbb75"
   dependencies:
@@ -199,6 +199,17 @@ autoprefixer@^6.3.1, autoprefixer@6.5.1:
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
     postcss "^5.2.4"
+    postcss-value-parser "^3.2.3"
+
+autoprefixer@6.5.2:
+  version "6.5.2"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-6.5.2.tgz#37cc910c5e1139ad341a006d5f6d441a380b742b"
+  dependencies:
+    browserslist "~1.4.0"
+    caniuse-db "^1.0.30000576"
+    normalize-range "^0.1.2"
+    num2fraction "^1.2.2"
+    postcss "^5.2.5"
     postcss-value-parser "^3.2.3"
 
 aws-sdk@2.6.15:
@@ -1096,6 +1107,10 @@ caniuse-db@^1.0.30000539:
 caniuse-db@^1.0.30000554:
   version "1.0.30000555"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000555.tgz#12572c4e0111781c49b01e1fdcc455e7456b8ed4"
+
+caniuse-db@^1.0.30000576:
+  version "1.0.30000578"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000578.tgz#fc4106bda3ca19df4bd9f35e491063f3d498ff31"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -3508,7 +3523,7 @@ postcss-zindex@^2.0.1:
     postcss "^5.0.4"
     uniqs "^2.0.0"
 
-postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8:
+postcss@^5.0.10, postcss@^5.0.11, postcss@^5.0.12, postcss@^5.0.13, postcss@^5.0.14, postcss@^5.0.16, postcss@^5.0.2, postcss@^5.0.4, postcss@^5.0.5, postcss@^5.0.6, postcss@^5.0.8, postcss@^5.2.5:
   version "5.2.5"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-5.2.5.tgz#ec428c27dffc7fac65961340a9b022fa4af5f056"
   dependencies:
