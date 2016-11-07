@@ -1,4 +1,5 @@
-const AWS = require('aws-sdk');
+import AWS from 'aws-sdk'
+
 const s3 = new AWS.S3();
 AWS.config.credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
 AWS.config.update({region: 'us-east-1'});

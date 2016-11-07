@@ -1,4 +1,5 @@
-import request from 'request';
+import request from 'request'
+
 const config = require('../config.json');
 
 export default (req, res, next) => {
