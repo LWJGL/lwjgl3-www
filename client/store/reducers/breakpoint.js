@@ -1,5 +1,5 @@
 export const BREAKPOINTS_RESIZE = 'BREAKPOINTS/RESIZE_EVENT';
-export const resizeEvent = payload => ({type: BREAKPOINTS_RESIZE, payload});
+export const resizeEvent = (payload) => ({type: BREAKPOINTS_RESIZE, payload});
 
 const breakpoint = {
   limits: [0, 576, 768, 992, 1200],

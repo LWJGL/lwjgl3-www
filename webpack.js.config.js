@@ -1,18 +1,6 @@
-const webpack = require('webpack');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
-const NoErrorsPlugin = require("webpack/lib/NoErrorsPlugin");
-const IgnorePlugin = require("webpack/lib/IgnorePlugin");
-const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
-const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
-const OccurrenceOrderPlugin = require('webpack/lib/optimize/OccurrenceOrderPlugin');
-const DedupePlugin = require('webpack/lib/optimize/DedupePlugin');
-const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
-const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-
-const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-
 const path = require('path');
+const DefinePlugin = require('webpack/lib/DefinePlugin');
+const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
@@ -59,6 +47,9 @@ const config = {
 
 if ( DEV ) {
 
+  const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+  const NoErrorsPlugin = require("webpack/lib/NoErrorsPlugin");
+
   // WebPack Hot Middleware client & HMR plugins
   config.entry.main.unshift(
     'webpack-hot-middleware/client',
@@ -75,6 +66,11 @@ if ( DEV ) {
   // config.plugins.push(new NormalModuleReplacementPlugin(/^\.\.\/routes\/Routes$/, '../routes/RoutesAsync'));
 
 } else {
+
+  const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
+  const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+  const IgnorePlugin = require("webpack/lib/IgnorePlugin");
+  const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 
   config.plugins.push(
     new LoaderOptionsPlugin({
