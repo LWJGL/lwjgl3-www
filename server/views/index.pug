@@ -2,8 +2,9 @@ extends layout
 
 block content
   #lwjgl-app
-    div(style="display:flex;align-items:center;justify-content:center;height:100vh;background-color:#1b2426;color:#20282a")
-      h1(style="font-size:96px") !{`LW<b>JGL</b>`}
+    div(style="display:flex;align-items:center;justify-content:center;height:100vh")
+      svg(class="loader-spinner delay" viewBox="0 0 32 32" width=96 height=96)
+        circle(cx=16 cy=16 r=14 fill="none")
 
   if ( ie )
     //- https://polyfill.io/v2/docs/features/
