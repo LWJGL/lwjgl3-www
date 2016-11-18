@@ -24,27 +24,25 @@ export default function breakpointMiddleware({dispatch, getState}) {
     }
   }
 
-  if ( process.browser ) {
-    if ( window.matchMedia ) {
-      const limits = getState().breakpoint.limits;
-      const last = limits.length - 1;
+  if ( window.matchMedia ) {
+    const limits = getState().breakpoint.limits;
+    const last = limits.length - 1;
 
-      limits.forEach((limit, i) => {
-        let mediaQuery;
-        if ( i === 0 ) {
-          mediaQuery = `(max-width:${limits[1]-1}px)`;
-        } else if ( i === last ) {
-          mediaQuery = `(min-width:${limit}px)`;
-        } else {
-          mediaQuery = `(min-width:${limit}px) and (max-width:${limits[i+1]-1}px)`;
-        }
+    limits.forEach((limit, i) => {
+      let mediaQuery;
+      if ( i === 0 ) {
+        mediaQuery = `(max-width:${limits[1]-1}px)`;
+      } else if ( i === last ) {
+        mediaQuery = `(min-width:${limit}px)`;
+      } else {
+        mediaQuery = `(min-width:${limit}px) and (max-width:${limits[i+1]-1}px)`;
+      }
 
-        const mqr = window.matchMedia(mediaQuery);
-        mqr.addListener(mediaQueryHandle.bind(mqr, i));
-      });
-    } else {
-      window.addEventListener('resize', resizeHandle);
-    }
+      const mqr = window.matchMedia(mediaQuery);
+      mqr.addListener(mediaQueryHandle.bind(mqr, i));
+    });
+  } else {
+    window.addEventListener('resize', resizeHandle);
   }
 
   return next => action => {

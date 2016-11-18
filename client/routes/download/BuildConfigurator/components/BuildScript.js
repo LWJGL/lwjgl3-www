@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { MODE_ZIP } from '../constants'
-const SUPPORTS_BTOA = process.browser ? !!window.btoa : false;
-const SUPPORTS_CLIPBOARD = process.browser ? !!document.execCommand : false;
+const SUPPORTS_BTOA = !!window.btoa;
+const SUPPORTS_CLIPBOARD = !!document.execCommand;
 
 @connect(
   state => {

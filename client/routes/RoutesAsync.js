@@ -2,7 +2,6 @@ import React from 'react'
 import nprogress from 'nprogress'
 import loadJS from 'fg-loadjs'
 import LoaderSpinner from '../components/LoaderSpinner'
-import preserver from './Preserver'
 
 let firstRoute = true;
 
@@ -53,10 +52,6 @@ const asyncRoute = getComponent => class AsyncComponent extends React.Component 
       }
 
       return <Component {...this.props} />
-    }
-
-    if ( preserver.has() ) {
-      return preserver.render();
     } else {
       return (
         <div className="container text-xs-center" style={{padding:'25vh 0'}}>

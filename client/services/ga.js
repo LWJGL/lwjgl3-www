@@ -1,4 +1,4 @@
-if ( process.browser && process.env.NODE_ENV === 'production' ) {
+if ( process.env.NODE_ENV === 'production' ) {
   const track = function() {
     track.q.push(arguments);
   };

@@ -64,7 +64,6 @@ if ( DEV ) {
   const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
   const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
   const IgnorePlugin = require("webpack/lib/IgnorePlugin");
-  const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 
   config.plugins.push(
     new LoaderOptionsPlugin({
@@ -76,10 +75,6 @@ if ( DEV ) {
       /^\.\.\/routes\/Routes$/,
       '../routes/RoutesAsync'
     ),
-    new ChunkManifestPlugin({
-      filename: 'manifest.json',
-      manifestVariable: "manifest",
-    }),
     new UglifyJsPlugin({
       sourceMap: false,
       mangle: {

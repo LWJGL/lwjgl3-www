@@ -1,11 +1,15 @@
 extends layout
 
-block vars
-  - renderApp = true
-
 block content
-  if ( html )
-    #lwjgl-app
-      div!= html
+  #lwjgl-app
+    div.area-dark(style="display:flex;align-items:center;justify-content:center;height:100vh")
+      h1 !{`LW<b>JGL</b>`}
+
+  if ( ie )
+    //- https://polyfill.io/v2/docs/features/
+    script(src="https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=requestAnimationFrame,Element.prototype.classList")
+
+  if ( inline )
+    script !{bundle}
   else
-    #lwjgl-app
+    script(src=`/js/${bundle}`)
