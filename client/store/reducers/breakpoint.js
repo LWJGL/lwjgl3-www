@@ -26,9 +26,7 @@ export const getCurrent = () => {
   return i;
 };
 
-if ( process.browser ) {
-  breakpoint.current = getCurrent();
-}
+breakpoint.current = getCurrent();
 
 export default function(state = breakpoint, action) {
   if ( action.type === BREAKPOINTS_RESIZE ) {

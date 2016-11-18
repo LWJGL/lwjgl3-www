@@ -9,7 +9,6 @@ const gzipSize = require('gzip-size');
 
 const manifest = require('../manifest.json');
 const config = require('../config.json');
-const chunkManifest = require('../public/js/manifest.json');
 
 const headStyle = {head: ['cyan']};
 
@@ -68,8 +67,7 @@ function updateConfig() {
 
   configUpdated.manifest = {
     js: manifest.children[0].assetsByChunkName.main,
-    css: manifest.children[1].assetsByChunkName.bundle[1],
-    chunks: chunkManifest,
+    css: manifest.children[1].assetsByChunkName.bundle[1]
   };
 
   // Detect routes from chunk paths

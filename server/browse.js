@@ -1,10 +1,11 @@
-import AWS from 'aws-sdk'
+"use strict";
 
+const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 AWS.config.credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
 AWS.config.update({region: 'us-east-1'});
 
-export default (req, res, next) => {
+module.exports = (req, res, next) => {
 
   let isRoot = true;
   let replacer = null;
@@ -58,4 +59,4 @@ export default (req, res, next) => {
     }
   });
 
-}
+};

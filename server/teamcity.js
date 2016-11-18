@@ -1,8 +1,9 @@
-import request from 'request'
+"use strict";
 
+const request = require('request');
 const config = require('../config.json');
 
-export default (req, res, next) => {
+module.exports = (req, res) => {
   request(
     {
       method: 'GET',
@@ -36,4 +37,4 @@ export default (req, res, next) => {
       res.json(JSON.parse(data));
     }
   );
-}
+};

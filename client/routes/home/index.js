@@ -42,11 +42,14 @@ const HomeRoute = () => (
 
     <section ref={el => {this.container = el}} className={css(styles.videoContainer)} style={{backgroundImage:env.desktop?null:'url(/img/manfps-720.jpg)'}}>
       {
-        !process.browser || !env.desktop ? null :
-          <video className={css(styles.video, styles.full)} muted loop autoPlay aria-hidden={true} role="presentation">
-            <source type="video/webm" src="/img/manfps.webm" />
-            <source type="video/mp4" src="/img/manfps.mp4" />
-          </video>
+        env.desktop
+          ?
+            <video className={css(styles.video, styles.full)} muted loop autoPlay aria-hidden={true} role="presentation">
+              <source type="video/webm" src="/img/manfps.webm" />
+              <source type="video/mp4" src="/img/manfps.mp4" />
+            </video>
+          :
+            null
       }
       <div className={css(styles.videoOverlay, styles.full)}></div>
       <Logo className={css(styles.logo)} />
@@ -132,19 +135,19 @@ const HomeRoute = () => (
 
         <div className="row">
           <div className="col-md-4 col-xs-12 py-1">
-            <p><img height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" /></p>
+            <p><img width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" /></p>
             <h3>Vulkan<sup>TM</sup> Bindings</h3>
             <p>A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
               GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.</p>
           </div>
           <div className="col-md-4 col-xs-12 py-1">
-            <p><img height={60} src="/img/opencl@x1.png" srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x" alt="OpenCL" /></p>
+            <p><img width={60} height={60} src="/img/opencl@x1.png" srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x" alt="OpenCL" /></p>
             <h3>OpenCL<sup>TM</sup> Bindings</h3>
             <p>The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all
               OpenCL versions (including the latest 2.1 specification) and many useful extensions.</p>
           </div>
           <div className="col-md-4 col-xs-12 py-1">
-            <p><img height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" /></p>
+            <p><img width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" /></p>
             <h3>OpenAL Bindings</h3>
             <p>Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback
               and audio effects. ALC and many extensions are also supported.</p>
@@ -153,7 +156,7 @@ const HomeRoute = () => (
 
         <div className="row">
           <div className="col-md-4 col-xs-12 py-1">
-            <p><img height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" /></p>
+            <p><img width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" /></p>
             <h3>OpenGL<sup>&reg;</sup> Bindings</h3>
             <p>Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions
               (including the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released
@@ -161,14 +164,14 @@ const HomeRoute = () => (
               missing, <a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!</p>
           </div>
           <div className="col-md-4 col-xs-12 py-1">
-            <p><img height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" /></p>
+            <p><img width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" /></p>
             <h3>OpenGL<sup>&reg;</sup> ES Bindings</h3>
             <p>A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
               consoles, phones, appliances and vehicles. It consists of well-defined subsets of desktop OpenGL, creating
               a flexible and powerful low-level interface between software and graphics acceleration.</p>
           </div>
           <div className="col-md-4 col-xs-12 py-1">
-            <p><img height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" /></p>
+            <p><img width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" /></p>
             <h3>EGL<sup>TM</sup> Bindings</h3>
             <p>An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native
               platform window system. It handles graphics context management, surface/buffer binding and rendering
@@ -179,7 +182,7 @@ const HomeRoute = () => (
 
         <div className="row">
           <div className="col-md-4 col-xs-12 py-1">
-            <p><img height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" /></p>
+            <p><img width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" /></p>
             <h3>LibOVR Bindings <small>(beta)</small></h3>
             <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
           </div>
@@ -207,7 +210,7 @@ const HomeRoute = () => (
 
             <hr />
 
-            <p className="text-xs-center" style={{}}>
+            <p className="text-xs-center">
               <small>OpenGL® and the oval logo are trademarks or registered trademarks of Silicon Graphics, Inc. in the United States and/or other countries worldwide.</small>
               <br /><small>OpenCL and the OpenCL logo are trademarks of Apple Inc. used by permission by Khronos.</small>
               <br /><small>OpenGL ES logo is a trademark of Silicon Graphics Inc. used by permission by Khronos.</small>

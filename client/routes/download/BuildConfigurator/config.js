@@ -366,12 +366,10 @@ const config = {
 };
 
 function getDefaultPlatform() {
-  if ( process.browser ) {
-    if ( navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1 ) {
-      return 'macos';
-    } else if ( navigator.platform.indexOf('Linux') > -1 ) {
-      return 'linux';
-    }
+  if ( navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1 ) {
+    return 'macos';
+  } else if ( navigator.platform.indexOf('Linux') > -1 ) {
+    return 'linux';
   }
 
   return 'windows';

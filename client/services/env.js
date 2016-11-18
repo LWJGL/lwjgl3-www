@@ -5,15 +5,13 @@ class Env {
   desktop = true;
 
   constructor() {
-    if ( process.browser ) {
-      if ( document.body.classList.contains('tablet') ) {
-        this.mobile = true;
-        this.tablet = true;
-        this.desktop = false;
-      } else if ( document.body.classList.contains('mobile') ) {
-        this.mobile = true;
-        this.desktop = false;
-      }
+    if ( document.body.classList.contains('tablet') ) {
+      this.mobile = true;
+      this.tablet = true;
+      this.desktop = false;
+    } else if ( document.body.classList.contains('mobile') ) {
+      this.mobile = true;
+      this.desktop = false;
     }
   }
 

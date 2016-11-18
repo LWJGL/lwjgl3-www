@@ -9,7 +9,7 @@ function configureStore() {
   const middleware = [sagaMiddleware, breakpointMiddeware];
   const composed = [];
 
-  if ( process.browser && process.env.NODE_ENV !== 'production' ) {
+  if ( process.env.NODE_ENV !== 'production' ) {
     // https://github.com/evgenyrodionov/redux-logger
     const createLogger = require('redux-logger');
     middleware.push(
@@ -52,19 +52,17 @@ function configureStore() {
     store.replaceReducer(createReducer(store.asyncReducers));
   };
 
-  if ( process.browser ) {
-    sagaMiddleware.run(saga);
+  sagaMiddleware.run(saga);
 
-    if ( process.env.NODE_ENV !== 'production' ) {
-      // Enable Webpack hot module replacement for reducers
-      module.hot.accept('./createReducer', () => {
-        store.replaceReducer(createReducer())
-      });
-      // Enable Webpack hot module replacement for sagas
-      // module.hot.accept('./saga', () => {
-      //   sagaMiddleware.run(saga);
-      // });
-    }
+  if ( process.env.NODE_ENV !== 'production' ) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./createReducer', () => {
+      store.replaceReducer(createReducer())
+    });
+    // Enable Webpack hot module replacement for sagas
+    // module.hot.accept('./saga', () => {
+    //   sagaMiddleware.run(saga);
+    // });
   }
 
   return store;

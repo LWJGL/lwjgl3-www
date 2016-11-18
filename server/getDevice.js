@@ -1,4 +1,6 @@
-export default function getDevice(req) {
+"use strict";
+
+module.exports = (req) => {
   let bodyClass = 'desktop';
 
   if ( req.app.locals.production ) {
@@ -31,4 +33,4 @@ export default function getDevice(req) {
   }
 
   return bodyClass;
-}
+};
