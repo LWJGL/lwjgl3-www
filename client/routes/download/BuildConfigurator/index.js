@@ -9,7 +9,6 @@ import subscribe from '../../../store/subscribe'
 import {
   BUILD_RELEASE,
   BUILD_STABLE,
-  BUILD_NIGHTLY,
   MODE_ZIP,
   MODE_MAVEN,
   MODE_GRADLE,

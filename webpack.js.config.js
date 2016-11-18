@@ -28,15 +28,9 @@ const config = {
           path.resolve(__dirname, 'node_modules')
         ],
         include: __dirname,
-        loader: 'babel?cacheDirectory'
+        loader: 'babel-loader?cacheDirectory'
       }
     ]
-  },
-  resolve: {
-    alias: {
-      'react': 'react/dist/react',
-      'react-dom': 'react-dom/dist/react-dom',
-    },
   },
   plugins: [
     new DefinePlugin({
