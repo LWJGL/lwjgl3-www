@@ -211,9 +211,9 @@ autoprefixer@6.5.3, autoprefixer@^6.3.1:
     postcss "^5.2.5"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.7.4:
-  version "2.7.4"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.7.4.tgz#7beac8a49d326e7d970bb11194200d90bbab5aa7"
+aws-sdk@2.7.5:
+  version "2.7.5"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.7.5.tgz#dac87896459bd4ca3f593fa65478ff43ee1843af"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -727,9 +727,9 @@ babel-plugin-transform-react-jsx@6.8.0:
     babel-plugin-syntax-jsx "^6.8.0"
     babel-runtime "^6.0.0"
 
-babel-plugin-transform-react-remove-prop-types@0.2.10:
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.2.10.tgz#eefd083057cccb0f9a85cb15f3a64227daf64609"
+babel-plugin-transform-react-remove-prop-types@0.2.11:
+  version "0.2.11"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.2.11.tgz#05eb7cc4670d6506d801680576589c7abcd51b00"
 
 babel-plugin-transform-regenerator@6.16.1:
   version "6.16.1"
@@ -3611,7 +3611,7 @@ rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-react-broadcast@^0.1.1:
+react-broadcast@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/react-broadcast/-/react-broadcast-0.1.2.tgz#950de63578a2af399a396067a617af7402182330"
   dependencies:
@@ -3638,12 +3638,6 @@ react-helmet@3.2.2:
     react-side-effect "1.0.2"
     shallowequal "0.2.2"
     warning "3.0.0"
-
-react-history@^0.14.0:
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/react-history/-/react-history-0.14.1.tgz#0b97763c1bc96aee6bb59ed9702b86f731869369"
-  dependencies:
-    history "^4.3.0"
 
 react-hot-loader@3.0.0-beta.6:
   version "3.0.0-beta.6"
@@ -3672,14 +3666,14 @@ react-redux@5.0.0-beta.3:
     lodash-es "^4.2.0"
     loose-envify "^1.1.0"
 
-react-router@4.0.0-alpha.4:
-  version "4.0.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.0.0-alpha.4.tgz#5f19e97b8df497e6f77f68bb1bd9441f56103335"
+react-router@4.0.0-alpha.6:
+  version "4.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.0.0-alpha.6.tgz#239fcf9a6ba7997021022c9b51d72d370f7b6bf4"
   dependencies:
+    history "^4.3.0"
     path-to-regexp "^1.5.3"
     query-string "4.2.3"
-    react-broadcast "^0.1.1"
-    react-history "^0.14.0"
+    react-broadcast "^0.1.2"
 
 react-side-effect@1.0.2:
   version "1.0.2"
