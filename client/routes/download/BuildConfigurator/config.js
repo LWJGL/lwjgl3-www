@@ -116,6 +116,14 @@ const config = {
         required: true,
         since: "3.0.0",
       },
+      "lwjgl-assimp": {
+          id: "lwjgl-assimp",
+          title: "Assimp bindings",
+          description: "A portable Open Source library to import various well-known 3D model formats in a uniform manner.",
+          builds: [BUILD_NIGHTLY],
+          natives: NATIVE_ALL,
+          since: "3.1.1",
+      },
       "lwjgl-bgfx": {
         id: "lwjgl-bgfx",
         title: "bgfx bindings",
