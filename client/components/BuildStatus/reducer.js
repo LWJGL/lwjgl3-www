@@ -1,15 +1,14 @@
 import { takeEvery } from 'redux-saga'
-import { call, put } from 'redux-saga/effects'
+import { call, put, select } from 'redux-saga/effects'
 
 const LOAD_STATUS = 'BUILD_STATUS/LOAD';
 const STORE_STATUS = 'BUILD_STATUS/STORE';
 
 export const loadStatus = name => ({type: LOAD_STATUS, name});
-export const storeStatus = (name, status, build) => ({type: STORE_STATUS, name, state: {status, build}});
+export const storeStatus = (name, state) => ({type: STORE_STATUS, name, state});
 
 async function fetchStatus(url) {
   let response;
-  let result;
 
   try {
     response = await fetch(url);
@@ -18,34 +17,21 @@ async function fetchStatus(url) {
       return {error: response.statusText};
     }
 
-    result = await response.json();
+    return await response.json();
   } catch (e) {
     return {error: e.message};
   }
-
-  if ( result.error ) {
-    return result;
-  }
-
-  return result.count === 1 && result.build[0].status === 'SUCCESS' ? {
-    status: 'passing',
-    build: result.build[0].number
-  } : {
-    status: 'failing'
-  };
 }
 
 function* getStatus(action) {
-  const {name} = action;
-
-  const response = yield call(fetchStatus, `/teamcity?build=${name}`);
-
-  if ( response.error ) {
-    yield put(storeStatus(name, 'error'));
-    return;
+  const { name } = action;
+  let url = `/build/${name}`;
+  if ( name === 'release' ) {
+    const version = yield select(({build}) => build.builds.byId.release.latest.join('.'));
+    url += `/${version}`;
   }
-
-  yield put(storeStatus(name, response.status, response.build));
+  const response = yield call(fetchStatus, url);
+  yield put(storeStatus(name, response));
 }
 
 export function* saga() {
@@ -55,6 +41,10 @@ export function* saga() {
 export default function(state = {}, action) {
   switch (action.type) {
     case STORE_STATUS:
+      if ( action.state.version ) {
+        action.state.version = action.state.version.replace(/^LWJGL\s+/, '');
+      }
+
       return {...state, [action.name]: action.state};
   }
 

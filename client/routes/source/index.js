@@ -1,6 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import BuildStatus from '../../components/BuildStatus'
+import TeamcityStatus from '../../components/TeamcityStatus'
 
 const SourceRoute = () => (
   <main>
@@ -21,8 +21,12 @@ const SourceRoute = () => (
         <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a>
       </p>
 
-      <p>LWJGL's issue tracker is also hosted on Github.</p>
-      <p><a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a></p>
+      <p>
+        LWJGL's issue tracker is also hosted on Github.
+      </p>
+      <p>
+        <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a>
+      </p>
     </section>
 
     <hr/>
@@ -44,11 +48,11 @@ const SourceRoute = () => (
           </tr>
           <tr>
             <th>Windows x64</th>
-            <td><BuildStatus name="lwjgl_Win64" /></td>
+            <td><TeamcityStatus name="lwjgl_Win64" /></td>
           </tr>
             <tr>
               <th>Windows x86</th>
-              <td><BuildStatus name="lwjgl_Win32" /></td>
+              <td><TeamcityStatus name="lwjgl_Win32" /></td>
             </tr>
           </tbody>
           </table>
@@ -68,11 +72,11 @@ const SourceRoute = () => (
             </tr>
             <tr>
               <th>Windows x64</th>
-              <td><BuildStatus name="Bgfx_Win64" /></td>
+              <td><TeamcityStatus name="Bgfx_Win64" /></td>
             </tr>
               <tr>
                 <th>Windows x86</th>
-                <td><BuildStatus name="Bgfx_Win32" /></td>
+                <td><TeamcityStatus name="Bgfx_Win32" /></td>
               </tr>
             </tbody>
           </table>
@@ -92,11 +96,11 @@ const SourceRoute = () => (
             </tr>
             <tr>
               <th>Windows x64</th>
-              <td><BuildStatus name="dyncall_Win64" /></td>
+              <td><TeamcityStatus name="dyncall_Win64" /></td>
             </tr>
               <tr>
                 <th>Windows x86</th>
-                <td><BuildStatus name="dyncall_Win32" /></td>
+                <td><TeamcityStatus name="dyncall_Win32" /></td>
               </tr>
             </tbody>
           </table>
@@ -116,11 +120,11 @@ const SourceRoute = () => (
             </tr>
             <tr>
               <th>Windows x64</th>
-              <td><BuildStatus name="glfw_Win64" /></td>
+              <td><TeamcityStatus name="glfw_Win64" /></td>
             </tr>
               <tr>
                 <th>Windows x86</th>
-                <td><BuildStatus name="glfw_Win32" /></td>
+                <td><TeamcityStatus name="glfw_Win32" /></td>
               </tr>
             </tbody>
           </table>
@@ -140,11 +144,11 @@ const SourceRoute = () => (
             </tr>
             <tr>
               <th>Windows x64</th>
-              <td><BuildStatus name="Jemalloc_Win64" /></td>
+              <td><TeamcityStatus name="Jemalloc_Win64" /></td>
             </tr>
               <tr>
                 <th>Windows x86</th>
-                <td><BuildStatus name="Jemalloc_Win32" /></td>
+                <td><TeamcityStatus name="Jemalloc_Win32" /></td>
               </tr>
             </tbody>
           </table>
@@ -164,11 +168,11 @@ const SourceRoute = () => (
             </tr>
             <tr>
               <th>Windows x64</th>
-              <td><BuildStatus name="OpenALSoft_Win64" /></td>
+              <td><TeamcityStatus name="OpenALSoft_Win64" /></td>
             </tr>
               <tr>
                 <th>Windows x86</th>
-                <td><BuildStatus name="OpenALSoft_Win32" /></td>
+                <td><TeamcityStatus name="OpenALSoft_Win32" /></td>
               </tr>
             </tbody>
           </table>

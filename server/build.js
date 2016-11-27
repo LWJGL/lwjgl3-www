@@ -12,20 +12,17 @@ module.exports = (req, res, next) => {
 
   const params = {
     Bucket: 'build.lwjgl.org',
-    FetchOwner: false,
-    MaxKeys: 500,
-    Prefix: req.params.build === 'release' ? `${req.params.build}/${req.params.version}/bin/` : `${req.params.build}/bin/`,
+    Key: req.params.build === 'release' ? `${req.params.build}/${req.params.version}/bin/build.txt` : `${req.params.build}/bin/build.txt`
   };
 
-  s3.listObjectsV2(params, function(err, data) {
+  s3.getObject(params, function(err, data) {
     if ( err ) {
       next(err);
     } else {
-      const result = data.Contents.map(item => {
-        return item.Key;
+      res.send({
+        version: data.Body.toString(),
+        lastModified: data.LastModified
       });
-
-      res.send(result);
     }
   });
 

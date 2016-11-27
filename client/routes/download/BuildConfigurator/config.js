@@ -11,34 +11,30 @@ import {
 } from './constants'
 
 const BUILD_ALL = [BUILD_RELEASE, BUILD_STABLE, BUILD_NIGHTLY];
-// const BUILD_NEXT = [BUILD_NIGHTLY];
+const BUILD_NEXT = [BUILD_NIGHTLY];
 
 const NATIVE_ALL = [NATIVE_WIN, NATIVE_MAC, NATIVE_LINUX];
 
 const config = {
 
-  // Domain State
   builds: {
     byId: {
       [BUILD_RELEASE]: {
         id: BUILD_RELEASE,
         title: 'Release',
         description: 'Latest official release',
-        job: 'lwjgl_Release',
         latest: [3, 1, 0],
       },
       [BUILD_STABLE]: {
         id: BUILD_STABLE,
         title: 'Stable',
         description: 'Beta quality, verified to work',
-        job: 'LwjglReleases_NightlyToStable',
         latest: [3, 1, 1],
       },
       [BUILD_NIGHTLY]: {
         id: BUILD_NIGHTLY,
         title: 'Nightly',
         description: 'Bleeding edge, possibly broken',
-        job: 'lwjgl_Bundle',
         latest: [3, 1, 1],
       },
     },
@@ -120,7 +116,7 @@ const config = {
           id: "lwjgl-assimp",
           title: "Assimp bindings",
           description: "A portable Open Source library to import various well-known 3D model formats in a uniform manner.",
-          builds: [BUILD_NIGHTLY],
+          builds: BUILD_NEXT,
           natives: NATIVE_ALL,
           since: "3.1.1",
       },

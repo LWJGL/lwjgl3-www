@@ -32,8 +32,8 @@ class BuildType extends React.Component {
     return (
       <div onClick={this.select} className={classnames('build', build, {'selected': isSelected, 'active': isActive})}>
         <h2>{spec.title}</h2>
-        <p>{spec.description}</p>
-        <BuildStatus name={spec.job} />
+        <p className="my-0">{spec.description}</p>
+        <BuildStatus name={spec.id} />
       </div>
     )
   }

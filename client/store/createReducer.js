@@ -1,20 +1,13 @@
 import { combineReducers } from 'redux'
 import breakpoint from './reducers/breakpoint'
 import buildStatus from '../components/BuildStatus/reducer'
+import teamcityStatus from '../components/TeamcityStatus/reducer'
 
 export default function createReducer(asyncReducers) {
-  // const appReducer = combineReducers({
   return combineReducers({
     breakpoint,
     buildStatus,
+    teamcityStatus,
     ...asyncReducers
   });
-
-  // return function rootReducer(state, action) {
-  //   if ( action.type === 'SYSTEM/EJECT_REDUCER' ) {
-  //     delete state[action.name];
-  //   }
-  //
-  //   return appReducer(state, action);
-  // }
 }

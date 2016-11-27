@@ -9,6 +9,11 @@ const favicon = require('serve-favicon');
 const { argv } = require('yargs');
 const chalk = require('chalk');
 
+// AWS
+const AWS = require('aws-sdk');
+AWS.config.credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
+AWS.config.update({region: 'us-east-1'});
+
 // Lib
 const getDevice = require('./getDevice');
 
@@ -198,6 +203,11 @@ app.get('/bin/:build/:version', routeBin);
 
 // S3 bucket browsing
 app.get('/browse', require('./browse'));
+
+// S3 build information
+const routeBuild = require('./build');
+app.get('/build/:build', routeBuild);
+app.get('/build/:build/:version', routeBuild);
 
 // Legacy re-directs
 app.get('/license.php', (req, res) => res.redirect(301, '/license'));
