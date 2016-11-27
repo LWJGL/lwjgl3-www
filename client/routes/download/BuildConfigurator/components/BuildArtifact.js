@@ -14,14 +14,14 @@ import { MODE_ZIP } from '../constants'
     const available =
       (
            artifact.builds.length === build.builds.allIds.length
-        || artifact.builds.some(build => build === build.build)
+        || artifact.builds.some(it => it === build.build)
       )
       &&
       (
-           build.mode === MODE_ZIP
+           build.mode !== MODE_ZIP
         || artifact.natives === undefined
         || artifact.natives.length === build.natives.allIds.length
-        || artifact.natives.some(platform => build.platform[platform])
+        || artifact.natives.some(platform => !!build.platform[platform])
       )
       &&
       (
