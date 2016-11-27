@@ -57,6 +57,31 @@ const SourceRoute = () => (
           </tbody>
           </table>
         </div>
+      </div>
+      <div className="row">
+        <div className="col-lg-4 col-xs-12">
+          <h2>Assimp</h2>
+          <table className="table table-bordered table-inverse">
+            <tbody>
+            <tr>
+              <th>Linux x64</th>
+              <td><a href="https://travis-ci.org/LWJGL-CI/assimp/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master" alt="" /></a></td>
+            </tr>
+            <tr>
+              <th>macOS</th>
+              <td><a href="https://travis-ci.org/LWJGL-CI/assimp/branches"><img width={90} height={20} src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master-macos" alt="" /></a></td>
+            </tr>
+            <tr>
+              <th>Windows x64</th>
+              <td><TeamcityStatus name="Assimp_Win64" /></td>
+            </tr>
+              <tr>
+                <th>Windows x86</th>
+                <td><TeamcityStatus name="Assimp_Win32" /></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
         <div className="col-lg-4 col-xs-12">
           <h2>bgfx</h2>
