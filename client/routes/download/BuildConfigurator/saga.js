@@ -39,6 +39,12 @@ const getBuild = ({build}) => {
       || spec.natives.some(platform => selectedPlatforms[platform]);
   });
 
+  const addons = Object.keys(build.selectedAddons).map(addon => ({
+      id: addon,
+      version: build.addons.byId[addon].maven.version,
+    })
+  );
+
   return {
     path,
     selected,
@@ -47,6 +53,7 @@ const getBuild = ({build}) => {
     source: build.source,
     javadoc: build.javadoc,
     version: build.version,
+    addons,
   };
 };
 
@@ -60,7 +67,9 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
 
   const selectedMap = {};
 
-  selected.forEach(key => {selectedMap[key] = true});
+  selected.forEach(key => {
+    selectedMap[key] = true
+  });
 
   manifest.forEach(file => {
     const filepath = file.replace(rootRegExp, '');
@@ -100,11 +109,30 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
     files.push(filepath);
   });
 
+  return files.map(filepath => `${path}/bin/${filepath}`);
+}
+
+function getAddons(addons, source, javadoc) {
+  const files = [];
+
+  addons.forEach(addon => {
+    const { id, version } = addon;
+
+    files.push(`addons/${id}/${id}-${version}.jar`);
+    files.push(`addons/${id}/${id}_license.txt`);
+    if ( javadoc )  {
+      files.push(`addons/${id}/${id}-${version}-javadoc.jar`);
+    }
+    if ( source )  {
+      files.push(`addons/${id}/${id}-${version}-sources.jar`);
+    }
+  });
+
   return files;
 }
 
-async function fetchFile(root, path) {
-  const url = `https://build.lwjgl.org/${root}${path}`;
+async function fetchFile(path) {
+  const url = `https://build.lwjgl.org/${path}`;
   let response;
 
   response = await fetch(
@@ -135,12 +163,12 @@ class CountDownLatch {
     this.count = count;
   }
 
-  countDown = function* () {
+  countDown = function*() {
     yield put(this.channel, 1);
   };
 
-  await = function* () {
-    for ( let i = 0; i < this.count; i += 1 ) {
+  await = function*() {
+    for (let i = 0; i < this.count; i += 1) {
       yield take(this.channel);
     }
     this.channel.close();
@@ -148,13 +176,13 @@ class CountDownLatch {
 
 }
 
-function* downloadWorker(input, output, latch, root, files) {
+function* downloadWorker(input, output, latch, files) {
   try {
     //noinspection InfiniteLoopJS
     while ( true ) {
       const index = yield take(input);
       yield put(log(`${index + 1}/${files.length} - ${files[index]}`));
-      output.push(yield call(fetchFile, root, files[index]));
+      output.push(yield call(fetchFile, files[index]));
     }
   } finally {
     yield latch.countDown();
@@ -162,17 +190,17 @@ function* downloadWorker(input, output, latch, root, files) {
 }
 
 //noinspection FunctionWithMultipleLoopsJS
-function* downloadFiles(files, root) {
+function* downloadFiles(files) {
   const PARALLEL_DOWNLOADS = Math.min(8, files.length);
   const output = [];
   const input = channel(buffers.fixed(files.length));
   const latch = new CountDownLatch(PARALLEL_DOWNLOADS);
 
-  for ( let i = 0; i < PARALLEL_DOWNLOADS; i += 1 ) {
-    yield fork(downloadWorker, input, output, latch, root, files);
+  for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
+    yield fork(downloadWorker, input, output, latch, files);
   }
 
-  for ( const i of files.keys() ) {
+  for (const i of files.keys()) {
     yield put(input, i);
   }
   input.close();
@@ -189,26 +217,30 @@ function* init() {
     return;
   }
 
-  const {build, path, selected, platforms, source, javadoc, version} = yield select(getBuild);
+  const {build, path, selected, platforms, source, javadoc, version, addons} = yield select(getBuild);
 
   yield put(log('Downloading file manifest'));
 
   let manifest;
   try {
     manifest = yield call(fetchManifest, path);
-  } catch(e) {
+  } catch (e) {
     yield put(downloadComplete(e.message));
     return;
   }
 
   yield put(log('Building file list'));
-  const files = getFiles(path, manifest, selected, platforms, source, javadoc);
+  let files = getFiles(path, manifest, selected, platforms, source, javadoc);
+
+  if ( addons.length ) {
+    files = files.concat(getAddons(addons, source, javadoc));
+  }
 
   yield put(log(`Downloading ${files.length} files`));
 
   const zip = new JSZip();
   try {
-    const downloads = yield downloadFiles(files, `${path}/bin/`);
+    const downloads = yield downloadFiles(files);
 
     downloads.forEach(download => {
       //noinspection JSUnresolvedFunction

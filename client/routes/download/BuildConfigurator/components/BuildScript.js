@@ -21,7 +21,9 @@ const SUPPORTS_CLIPBOARD = !!document.execCommand;
       hardcoded: build.hardcoded,
       compact: build.compact,
       artifacts: build.artifacts,
+      addons: build.addons,
       selected: build.contents,
+      selectedAddons: Object.keys(build.selectedAddons)
     };
   }
 )
@@ -43,11 +45,9 @@ class BuildScript extends React.Component {
       return null;
     }
 
-    const {build, mode, version, hardcoded, compact, artifacts, selected} = this.props;
-
+    const {mode} = this.props;
+    const script = generateScript(this.props);
     setImmediate(this.autoHeight);
-
-    const script = generateScript(build, mode, version, hardcoded, compact, artifacts, selected);
 
     return (
       <div className="col-xs-12 col-lg-6">
@@ -77,21 +77,22 @@ class BuildScript extends React.Component {
 
 const filename = mode => mode === 'maven' ? 'pom.xml' : 'build.gradle';
 const mime = mode => mode === 'maven' ? 'text/xml' : 'text/plain';
+const getVersion = (version, build) => build === "release" ? version : `${version}-SNAPSHOT`;
 
-function generateScript(build, mode, version, hardcoded, compact, artifacts, selected) {
-  const _version = build === "release" ? version : `${version}-SNAPSHOT`;
-
-  if ( mode === 'maven' ) {
-    return generateMaven(build, _version, hardcoded, compact, artifacts, selected);
+function generateScript(props) {
+  if ( props.mode === 'maven' ) {
+    return generateMaven(props);
   } else {
-    return generateGradle(build, _version, hardcoded, artifacts, selected);
+    return generateGradle(props);
   }
 }
 
-function generateMaven(build, _version, hardcoded, compact, artifacts, selected) {
+function generateMaven(props) {
+  const { build, hardcoded, compact, artifacts, selected, addons, selectedAddons } = props;
+  const version = getVersion(props.version);
   let script = '';
   let nativesBundle = '';
-  const v = hardcoded ? _version : '\${lwjgl.version}';
+  const v = hardcoded ? version : '\${lwjgl.version}';
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
@@ -100,9 +101,13 @@ function generateMaven(build, _version, hardcoded, compact, artifacts, selected)
     script += `<properties>
 \t<maven.compiler.source>1.8</maven.compiler.source>
 \t<maven.compiler.target>1.8</maven.compiler.target>
-\t<lwjgl.version>${_version}</lwjgl.version>
-</properties>
-`;
+\t<lwjgl.version>${version}</lwjgl.version>`;
+
+    selectedAddons.forEach(addon => {
+      script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}<${addon}.version>`;
+    });
+
+    script += `\n</properties>\n`;
   }
 
   script += `<profiles>
@@ -124,8 +129,7 @@ function generateMaven(build, _version, hardcoded, compact, artifacts, selected)
 `;
   }
 
-  script += `<dependencies>
-\t<!-- LWJGL dependencies START -->`;
+  script += `<dependencies>`;
 
   artifacts.allIds.forEach(artifact => {
     if ( selected[artifact] ) {
@@ -136,15 +140,24 @@ function generateMaven(build, _version, hardcoded, compact, artifacts, selected)
     }
   });
 
-  script += `\n${nativesBundle}\n\t<!-- LWJGL dependencies END -->\n</dependencies>`;
+  script += nativesBundle;
+
+  selectedAddons.forEach(addon => {
+    const maven = addons.byId[addon].maven;
+    script += `\n\t<dependency>${nl2}<groupId>${maven.groupId}</groupId>${nl2}<artifactId>${maven.artifactId}</artifactId>${nl2}<version>${hardcoded ? maven.version : `\${${addon}.version}`}</version>${nl1}</dependency>`;
+  });
+
+  script += `\n</dependencies>`;
 
   return script;
 }
 
-function generateGradle(build, _version, hardcoded, artifacts, selected) {
+function generateGradle(props) {
+  const { build, hardcoded, artifacts, selected, addons, selectedAddons } = props;
+  const version = getVersion(props.version);
   let script = '';
   let nativesBundle = '';
-  const v = hardcoded ? _version : '\${lwjglVersion}';
+  const v = hardcoded ? version : '\${lwjglVersion}';
 
   script += `import org.gradle.internal.os.OperatingSystem
 
@@ -161,18 +174,25 @@ switch ( OperatingSystem.current() ) {
 }\n\n`;
 
   if ( !hardcoded ) {
-    script += `project.ext.lwjglVersion = "${_version}"\n\n`;
+    script += `project.ext.lwjglVersion = "${version}"\n`;
+    selectedAddons.forEach(addon => {
+      const maven = addons.byId[addon].maven;
+      script += `project.ext.${addon}Version = "${maven.version}"\n`;
+    });
+    script += `\n`;
   }
 
-  script += `repositories {
-\t${build === "release"
-    ? `mavenCentral()`
-    : `maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`
-  }
-}\n\n`;
+  script += `repositories {`;
 
-  script += `dependencies {
-\t// LWJGL dependencies START`;
+  if ( build === 'release' || selectedAddons.length ) {
+    script += `\n\tmavenCentral()`;
+  }
+  if ( build !== 'release' ) {
+    script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
+  }
+  script += `\n}\n\n`;
+
+  script += `dependencies {`;
 
   artifacts.allIds.forEach(artifact => {
     if ( selected[artifact] ) {
@@ -183,8 +203,15 @@ switch ( OperatingSystem.current() ) {
     }
   });
 
-  script += `\n\t// LWJGL natives${nativesBundle}\n\t// LWJGL dependencies END
-}`;
+  script += nativesBundle;
+
+  selectedAddons.forEach(addon => {
+    const maven = addons.byId[addon].maven;
+    script += `\n\tcompile "${maven.groupId}:${maven.artifactId}:${hardcoded ? maven.version : `\${${addon}Version}`}"`;
+  });
+
+  script += `\n}`;
+
 
   return script;
 }

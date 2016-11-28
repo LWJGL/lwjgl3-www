@@ -42,15 +42,14 @@ import { MODE_ZIP } from '../constants'
     toggleArtifact
   }
 )
-class ControlledArtifact extends React.Component {
+class BuildArtifact extends React.Component {
 
   static propTypes = {
     id: React.PropTypes.string.isRequired,
   };
 
   toggle = () => {
-    const props = this.props;
-    props.toggleArtifact(props.id);
+    this.props.toggleArtifact(this.props.id);
   };
 
   render() {
@@ -78,4 +77,4 @@ class ControlledArtifact extends React.Component {
 
 }
 
-export default ControlledArtifact
+export default BuildArtifact

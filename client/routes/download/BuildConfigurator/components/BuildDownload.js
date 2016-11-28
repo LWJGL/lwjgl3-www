@@ -18,6 +18,7 @@ import { MODE_ZIP } from '../constants'
         && build.source === true
         && build.javadoc === true
         && build.natives.allIds.every(platform => build.platform[platform])
+        && Object.keys(build.selectedAddons).length === 0
       )
   }),
   {
@@ -44,14 +45,14 @@ class BuildDownload extends React.Component {
       }
 
       return (
-        <div className="col-xs-12 col-lg-4">
+        <div className="col-xs-12 col-md-4">
           <h2 className="mb-2 mt-1">Bundle</h2>
           <a className="btn btn-xs-block btn-primary btn-lg" download={`lwjgl-${props.build}-${props.version}.zip`} href={downloadUrl}>DOWNLOAD ZIP</a>
         </div>
       )
     } else {
       return (
-        <div className="col-xs-12 col-lg-4">
+        <div className="col-xs-12 col-md-4">
           <h2 className="mb-2 mt-1">Custom Bundle</h2>
           <button className="btn btn-xs-block btn-primary btn-lg" onClick={this.props.downloadInit}>GENERATE BUNDLE</button>
         </div>

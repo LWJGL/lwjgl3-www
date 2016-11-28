@@ -13,9 +13,7 @@ export const toggleCompact = enabled => ({type: $.TOGGLE_COMPACT, compact: enabl
 export const toggleHardcoded = enabled => ({type: $.TOGGLE_HARDCODED, hardcoded: enabled});
 export const toggleArtifact = artifact => ({type: $.TOGGLE_ARTIFACT, artifact});
 export const togglePlatform = platform => ({type: $.TOGGLE_PLATFORM, platform});
-
-// export const errorSet = (message, severity="danger") => ({type: $.ERROR_SET, error: { message, severity }});
-// export const errorReset = () => ({type: $.ERROR_SET, error: null});
+export const toggleAddon = addon => ({type: $.TOGGLE_ADDON, addon});
 
 export const downloadInit = () => ({type: $.DOWNLOAD_INIT});
 export const downloadComplete = error => ({type: $.DOWNLOAD_COMPLETE, error});

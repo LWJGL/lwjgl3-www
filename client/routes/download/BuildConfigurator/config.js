@@ -42,16 +42,16 @@ const config = {
   },
   versions: {
     byId: {
-      "3.1.1": {
-        id: "3.1.1",
+      '3.1.1': {
+        id: '3.1.1',
         semver: [3, 1, 1]
       },
-      "3.1.0": {
-        id: "3.1.0",
+      '3.1.0': {
+        id: '3.1.0',
         semver: [3, 1, 0]
       },
-      "3.0.0": {
-        id: "3.0.0",
+      '3.0.0': {
+        id: '3.0.0',
         semver: [3, 0, 0]
       }
     },
@@ -60,15 +60,15 @@ const config = {
     byId: {
       [MODE_ZIP]: {
         id: MODE_ZIP,
-        title: "ZIP Bundle",
+        title: 'ZIP Bundle',
       },
       [MODE_MAVEN]: {
         id: MODE_MAVEN,
-        title: "Maven",
+        title: 'Maven',
       },
       [MODE_GRADLE]: {
         id: MODE_GRADLE,
-        title: "Gradle",
+        title: 'Gradle',
       },
     },
   },
@@ -76,15 +76,15 @@ const config = {
     byId: {
       [NATIVE_WIN]: {
         id: NATIVE_WIN,
-        title: "Windows",
+        title: 'Windows',
       },
       [NATIVE_MAC]: {
         id: NATIVE_MAC,
-        title: "macOS",
+        title: 'macOS',
       },
       [NATIVE_LINUX]: {
         id: NATIVE_LINUX,
-        title: "Linux",
+        title: 'Linux',
       },
     },
     allIds: NATIVE_ALL
@@ -103,199 +103,199 @@ const config = {
   },
   artifacts: {
     byId: {
-      "lwjgl": {
-        id: "lwjgl",
-        title: "LWJGL core",
-        description: "The LWJGL core library.",
+      'lwjgl': {
+        id: 'lwjgl',
+        title: 'LWJGL core',
+        description: 'The LWJGL core library.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
         required: true,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-assimp": {
-          id: "lwjgl-assimp",
-          title: "Assimp bindings",
-          description: "A portable Open Source library to import various well-known 3D model formats in a uniform manner.",
+      'lwjgl-assimp': {
+          id: 'lwjgl-assimp',
+          title: 'Assimp bindings',
+          description: 'A portable Open Source library to import various well-known 3D model formats in a uniform manner.',
           builds: BUILD_NEXT,
           natives: NATIVE_ALL,
-          since: "3.1.1",
+          since: '3.1.1',
       },
-      "lwjgl-bgfx": {
-        id: "lwjgl-bgfx",
-        title: "bgfx bindings",
-        description: "A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.",
+      'lwjgl-bgfx': {
+        id: 'lwjgl-bgfx',
+        title: 'bgfx bindings',
+        description: 'A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.1.0",
+        since: '3.1.0',
       },
-      "lwjgl-egl": {
-        id: "lwjgl-egl",
-        title: "EGL bindings",
-        description: "An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native platform window system",
+      'lwjgl-egl': {
+        id: 'lwjgl-egl',
+        title: 'EGL bindings',
+        description: 'An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native platform window system.',
         builds: BUILD_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-glfw": {
-        id: "lwjgl-glfw",
-        title: "GLFW bindings",
-        description: "An multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.",
-        builds: BUILD_ALL,
-        natives: NATIVE_ALL,
-        since: "3.0.0",
-      },
-      "lwjgl-jawt": {
-        id: "lwjgl-jawt",
-        title: "JAWT bindings",
-        description: "The AWT native interface",
-        builds: BUILD_ALL,
-        since: "3.0.0",
-      },
-      "lwjgl-jemalloc": {
-        id: "lwjgl-jemalloc",
-        title: "jemalloc bindings",
-        description: "A general purpose malloc implementation that emphasizes fragmentation avoidance and scalable concurrency support",
+      'lwjgl-glfw': {
+        id: 'lwjgl-glfw',
+        title: 'GLFW bindings',
+        description: 'An multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-lmdb": {
-        id: "lwjgl-lmdb",
-        title: "LMDB bindings",
-        description: "A compact, fast, powerful, and robust database that implements a simplified variant of the BerkeleyDB (BDB) API",
+      'lwjgl-jawt': {
+        id: 'lwjgl-jawt',
+        title: 'JAWT bindings',
+        description: 'The AWT native interface.',
+        builds: BUILD_ALL,
+        since: '3.0.0',
+      },
+      'lwjgl-jemalloc': {
+        id: 'lwjgl-jemalloc',
+        title: 'jemalloc bindings',
+        description: 'A general purpose malloc implementation that emphasizes fragmentation avoidance and scalable concurrency support.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.1.0",
+        since: '3.0.0',
       },
-      "lwjgl-nanovg": {
-        id: "lwjgl-nanovg",
-        title: "NanoVG bindings",
-        description: "A small antialiased vector graphics rendering library for OpenGL",
+      'lwjgl-lmdb': {
+        id: 'lwjgl-lmdb',
+        title: 'LMDB bindings',
+        description: 'A compact, fast, powerful, and robust database that implements a simplified variant of the BerkeleyDB (BDB) API.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.1.0',
       },
-      "lwjgl-nfd": {
-        id: "lwjgl-nfd",
-        title: "Native File Dialog bindings",
-        description: "A tiny, neat C library that portably invokes native file open and save dialogs",
+      'lwjgl-nanovg': {
+        id: 'lwjgl-nanovg',
+        title: 'NanoVG bindings',
+        description: 'A small antialiased vector graphics rendering library for OpenGL.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-nuklear": {
-        id: "lwjgl-nuklear",
-        title: "Nuklear bindings",
-        description: "A minimal state immediate mode graphical user interface toolkit",
+      'lwjgl-nfd': {
+        id: 'lwjgl-nfd',
+        title: 'Native File Dialog bindings',
+        description: 'A tiny, neat C library that portably invokes native file open and save dialogs.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.1.0",
+        since: '3.0.0',
       },
-      "lwjgl-openal": {
-        id: "lwjgl-openal",
-        title: "OpenAL bindings",
-        description: "A cross-platform 3D audio API appropriate for use with gaming applications and many other types of audio applications",
+      'lwjgl-nuklear': {
+        id: 'lwjgl-nuklear',
+        title: 'Nuklear bindings',
+        description: 'A minimal state immediate mode graphical user interface toolkit.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.1.0',
       },
-      "lwjgl-opencl": {
-        id: "lwjgl-opencl",
-        title: "OpenCL bindings",
-        description: "An open, royalty-free standard for cross-platform, parallel programming of diverse processors found in personal computers, servers, mobile devices and embedded platforms",
+      'lwjgl-openal': {
+        id: 'lwjgl-openal',
+        title: 'OpenAL bindings',
+        description: 'A cross-platform 3D audio API appropriate for use with gaming applications and many other types of audio applications.',
         builds: BUILD_ALL,
-        since: "3.0.0",
+        natives: NATIVE_ALL,
+        since: '3.0.0',
       },
-      "lwjgl-opengl": {
-        id: "lwjgl-opengl",
-        title: "OpenGL bindings",
-        description: "The most widely adopted 2D and 3D graphics API in the industry, bringing thousands of applications to a wide variety of computer platforms",
+      'lwjgl-opencl': {
+        id: 'lwjgl-opencl',
+        title: 'OpenCL bindings',
+        description: 'An open, royalty-free standard for cross-platform, parallel programming of diverse processors found in personal computers, servers, mobile devices and embedded platforms.',
         builds: BUILD_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-opengles": {
-        id: "lwjgl-opengles",
-        title: "OpenGL ES bindings",
-        description: "A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including consoles, phones, appliances and vehicles",
+      'lwjgl-opengl': {
+        id: 'lwjgl-opengl',
+        title: 'OpenGL bindings',
+        description: 'The most widely adopted 2D and 3D graphics API in the industry, bringing thousands of applications to a wide variety of computer platforms.',
         builds: BUILD_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-ovr": {
-        id: "lwjgl-ovr",
-        title: "OVR bindings",
-        description: "The API of the Oculus SDK",
+      'lwjgl-opengles': {
+        id: 'lwjgl-opengles',
+        title: 'OpenGL ES bindings',
+        description: 'A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including consoles, phones, appliances and vehicles.',
+        builds: BUILD_ALL,
+        since: '3.0.0',
+      },
+      'lwjgl-ovr': {
+        id: 'lwjgl-ovr',
+        title: 'OVR bindings',
+        description: 'The API of the Oculus SDK.',
         builds: BUILD_ALL,
         natives: [NATIVE_WIN],
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-par": {
-        id: "lwjgl-par",
-        title: "par_shapes bindings",
-        description: "Generate parametric surfaces and other simple shapes",
+      'lwjgl-par': {
+        id: 'lwjgl-par',
+        title: 'par_shapes bindings',
+        description: 'Generate parametric surfaces and other simple shapes.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-sse": {
-        id: "lwjgl-sse",
-        title: "SSE bindings",
-        description: "Simple SSE intrinsics",
+      'lwjgl-sse': {
+        id: 'lwjgl-sse',
+        title: 'SSE bindings',
+        description: 'Simple SSE intrinsics.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-stb": {
-        id: "lwjgl-stb",
-        title: "stb bindings",
-        description: "Single-file public domain libraries for fonts, images, ogg vorbis files and more.",
+      'lwjgl-stb': {
+        id: 'lwjgl-stb',
+        title: 'stb bindings',
+        description: 'Single-file public domain libraries for fonts, images, ogg vorbis files and more.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-tinyfd": {
-        id: "lwjgl-tinyfd",
-        title: "Tiny File Dialogs bindings",
-        description: "Provides basic modal dialogs.",
+      'lwjgl-tinyfd': {
+        id: 'lwjgl-tinyfd',
+        title: 'Tiny File Dialogs bindings',
+        description: 'Provides basic modal dialogs.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.1.0",
+        since: '3.1.0',
       },
-      "lwjgl-vulkan": {
-        id: "lwjgl-vulkan",
-        title: "Vulkan bindings",
-        description: "A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.",
+      'lwjgl-vulkan': {
+        id: 'lwjgl-vulkan',
+        title: 'Vulkan bindings',
+        description: 'A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.',
         builds: BUILD_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
-      "lwjgl-xxhash": {
-        id: "lwjgl-xxhash",
-        title: "xxHash bindings",
-        description: "An Extremely fast Hash algorithm, running at RAM speed limits.",
+      'lwjgl-xxhash': {
+        id: 'lwjgl-xxhash',
+        title: 'xxHash bindings',
+        description: 'An Extremely fast Hash algorithm, running at RAM speed limits.',
         builds: BUILD_ALL,
         natives: NATIVE_ALL,
-        since: "3.0.0",
+        since: '3.0.0',
       },
     },
   },
   presets: {
     byId: {
-      "none": {
-        id: "none",
-        title: "None",
+      'none': {
+        id: 'none',
+        title: 'None',
         artifacts: [
           'lwjgl'
         ]
       },
-      "custom": {
-        id: "custom",
-        title: "Custom",
+      'custom': {
+        id: 'custom',
+        title: 'Custom',
       },
-      "all": {
-        id: "all",
-        title: "Everything",
+      'all': {
+        id: 'all',
+        title: 'Everything',
       },
-      "getting-started": {
-        id: "getting-started",
-        title: "Getting Started",
+      'getting-started': {
+        id: 'getting-started',
+        title: 'Getting Started',
         artifacts: [
           'lwjgl',
           'lwjgl-glfw',
@@ -311,9 +311,9 @@ const config = {
           'lwjgl-vulkan',
         ]
       },
-      "minimal-opengl": {
-        id: "minimal-opengl",
-        title: "Minimal OpenGL",
+      'minimal-opengl': {
+        id: 'minimal-opengl',
+        title: 'Minimal OpenGL',
         artifacts: [
           'lwjgl',
           'lwjgl-glfw',
@@ -323,9 +323,9 @@ const config = {
           'lwjgl-stb',
         ]
       },
-      "minimal-opengles": {
-        id: "minimal-opengles",
-        title: "Minimal OpenGL ES",
+      'minimal-opengles': {
+        id: 'minimal-opengles',
+        title: 'Minimal OpenGL ES',
         artifacts: [
           'lwjgl',
           'lwjgl-egl',
@@ -336,9 +336,9 @@ const config = {
           'lwjgl-stb',
         ]
       },
-      "minimal-vulkan": {
-        id: "",
-        title: "Minimal Vulkan",
+      'minimal-vulkan': {
+        id: '',
+        title: 'Minimal Vulkan',
         artifacts: [
           'lwjgl',
           'lwjgl-glfw',
@@ -349,6 +349,22 @@ const config = {
         ]
       },
     },
+  },
+  addons: {
+    byId: {
+      'joml': {
+        id: 'joml',
+        title: 'JOML',
+        description: 'A Java math library for OpenGL rendering calculations.',
+        about: 'http://joml-ci.github.io/JOML/',
+        maven: {
+          groupId: 'org.joml',
+          artifactId: 'joml',
+          version: '1.9.0',
+        },
+      }
+    },
+    allIds: ['joml']
   },
 
   // UI State
@@ -367,6 +383,7 @@ const config = {
   version: null,
   downloading: false,
   progress: [],
+  selectedAddons: {},
 };
 
 function getDefaultPlatform() {

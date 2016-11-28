@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import classnames from 'classnames'
 import BuildArtifact from './BuildArtifact'
 import { MODE_ZIP } from '../constants'
@@ -13,21 +13,22 @@ import { MODE_ZIP } from '../constants'
 class BuildArtifacts extends React.Component {
 
   render() {
-    const props = this.props;
+    const {isZip, artifacts} = this.props;
 
     return (
       <div className={classnames(
         "col-xs-12",
+        "col-md-4",
         {
-          "col-lg-3": !props.isZip,
-          "col-lg-5": props.isZip
+          "col-lg-3": !isZip,
+          "col-lg-5": isZip
         }
       )}>
         <h2 className="my-1">Contents</h2>
         <div className="custom-controls-stacked">
-        {
-          props.artifacts.map(artifact => <BuildArtifact key={artifact} id={artifact} />)
-        }
+          {
+            artifacts.map(it => <BuildArtifact key={it} id={it} />)
+          }
         </div>
       </div>
     )

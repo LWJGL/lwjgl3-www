@@ -93,6 +93,16 @@ const toggleArtifact = (state, artifact) => {
   return state;
 };
 
+const toggleAddon = (state, addon) => {
+  if ( state.selectedAddons[addon] ) {
+    delete state.selectedAddons[addon];
+  } else {
+    state.selectedAddons[addon] = true;
+  }
+
+  return state;
+};
+
 export default function(state = config, action) {
 
   switch (action.type) {
@@ -172,6 +182,9 @@ export default function(state = config, action) {
         return toggleArtifact({...state}, action.artifact);
       }
       break;
+
+    case $.TOGGLE_ADDON:
+      return toggleAddon({...state}, action.addon);
 
     case $.DOWNLOAD_INIT:
       if ( state.mode === MODE_ZIP && state.downloading === false ) {

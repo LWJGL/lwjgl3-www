@@ -21,6 +21,7 @@ import ControlledRadio from '../../../components/ControlledRadio'
 import ControlledCheckbox from '../../../components/ControlledCheckbox'
 import BuildType from './components/BuildType'
 import BuildPlatform from './components/BuildPlatform'
+import BuildAddons from './components/BuildAddons'
 import BuildArtifacts from './components/BuildArtifacts'
 import BuildDownload from './components/BuildDownload'
 import BuildScript from './components/BuildScript'
@@ -190,7 +191,7 @@ class BuildContainer extends React.Component {
           <div className="col-xs-12">
             <div className="build-config">
               <ControlledPanel className="row" predicate={isCustomizing}>
-                <div className="col-xs-12 col-lg-3">
+                <div className="col-xs-12 col-md-4 col-lg-3">
                   <h2 className="my-1">Mode</h2>
                   <ControlledRadio spec={fields.mode} />
 
@@ -198,6 +199,9 @@ class BuildContainer extends React.Component {
 
                   <h2 className="mb-1">Presets</h2>
                   <ControlledRadio spec={fields.preset} />
+
+                  <h2 className="mb-1">Addons</h2>
+                  <BuildAddons />
 
                   <h2 className="mb-1">Options</h2>
                   <div className="custom-controls-stacked clearfix mb-1">
