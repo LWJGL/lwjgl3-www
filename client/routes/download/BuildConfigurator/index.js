@@ -200,9 +200,6 @@ class BuildContainer extends React.Component {
                   <h2 className="mb-1">Presets</h2>
                   <ControlledRadio spec={fields.preset} />
 
-                  <h2 className="mb-1">Addons</h2>
-                  <BuildAddons />
-
                   <h2 className="mb-1">Options</h2>
                   <div className="custom-controls-stacked clearfix mb-1">
                     <ControlledCheckbox spec={fields.descriptions} />
@@ -211,6 +208,9 @@ class BuildContainer extends React.Component {
                     <ControlledCheckbox spec={fields.compact} />
                     <ControlledCheckbox spec={fields.hardcoded} />
                   </div>
+
+                  <h2 className="mb-1">Addons</h2>
+                  <BuildAddons />
 
                   <ControlledPanel predicate={isModeGradle}>
                     <h2 className="mb-1">Language</h2>

@@ -362,9 +362,7 @@ const config = {
           artifactId: 'joml',
           version: '1.9.0',
         },
-      }
-    },
-    byId: {
+      },
       'steamworks4j': {
         id: 'steamworks4j',
         title: 'steamworks4j',
