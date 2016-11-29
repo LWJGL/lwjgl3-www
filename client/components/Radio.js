@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
-export default class Radio extends React.Component {
+class Radio extends React.Component {
 
   static propTypes = {
     value: PropTypes.any.isRequired,
@@ -34,3 +34,5 @@ export default class Radio extends React.Component {
   }
 
 }
+
+export default Radio;

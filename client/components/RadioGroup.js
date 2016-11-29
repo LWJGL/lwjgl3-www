@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
-export default class RadioGroup extends React.PureComponent {
+class RadioGroup extends React.PureComponent {
 
   static propTypes = {
     value: PropTypes.any,
@@ -32,3 +32,5 @@ export default class RadioGroup extends React.PureComponent {
   }
 
 }
+
+export default RadioGroup;

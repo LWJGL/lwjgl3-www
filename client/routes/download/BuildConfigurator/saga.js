@@ -39,7 +39,7 @@ const getBuild = ({build}) => {
       || spec.natives.some(platform => selectedPlatforms[platform]);
   });
 
-  const addons = Object.keys(build.selectedAddons).map(addon => ({
+  const addons = build.selectedAddons.map(addon => ({
       id: addon,
       version: build.addons.byId[addon].maven.version,
     })

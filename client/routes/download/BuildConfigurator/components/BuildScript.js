@@ -23,7 +23,7 @@ const SUPPORTS_CLIPBOARD = !!document.execCommand;
       artifacts: build.artifacts,
       addons: build.addons,
       selected: build.contents,
-      selectedAddons: Object.keys(build.selectedAddons)
+      selectedAddons: build.selectedAddons
     };
   }
 )

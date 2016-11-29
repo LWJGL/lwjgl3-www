@@ -62,13 +62,19 @@
 @import "../../node_modules/bootstrap/scss/utilities";
 
 // ----------------------------------------------------------------------------------------------------------------
+// COMPONENTS
+// ----------------------------------------------------------------------------------------------------------------
+
+@import "components/_custom-toggle.scss";
+
+// ----------------------------------------------------------------------------------------------------------------
 // LWJGL THEME
 // ----------------------------------------------------------------------------------------------------------------
 
-@import 'theme';
-@import 'utils';
-@import 'header';
-@import 'footer';
-@import 'loader';
-@import 'nprogress';
-@import 'download';
+@import "theme";
+@import "utils";
+@import "header";
+@import "footer";
+@import "loader";
+@import "nprogress";
+@import "download";

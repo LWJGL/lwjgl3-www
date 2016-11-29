@@ -94,10 +94,10 @@ const toggleArtifact = (state, artifact) => {
 };
 
 const toggleAddon = (state, addon) => {
-  if ( state.selectedAddons[addon] ) {
-    delete state.selectedAddons[addon];
+  if ( state.selectedAddons.includes(addon) ) {
+    state.selectedAddons = state.selectedAddons.filter(it => it === addon);
   } else {
-    state.selectedAddons[addon] = true;
+    state.selectedAddons = [...state.selectedAddons, addon];
   }
 
   return state;

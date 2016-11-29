@@ -383,7 +383,6 @@ const config = {
 
   // UI State
 
-  // error: null,
   build: null,
   mode: MODE_ZIP,
   preset: 'all',
@@ -397,7 +396,7 @@ const config = {
   version: null,
   downloading: false,
   progress: [],
-  selectedAddons: {},
+  selectedAddons: [],
 };
 
 function getDefaultPlatform() {

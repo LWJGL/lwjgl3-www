@@ -19,6 +19,7 @@ import { IS_SAFARI } from '../../../services/globals'
 import ControlledPanel from '../../../components/ControlledPanel'
 import ControlledRadio from '../../../components/ControlledRadio'
 import ControlledCheckbox from '../../../components/ControlledCheckbox'
+import ControlledToggle from '../../../components/ControlledToggle'
 import BuildType from './components/BuildType'
 import BuildPlatform from './components/BuildPlatform'
 import BuildAddons from './components/BuildAddons'
@@ -120,7 +121,7 @@ const fields = {
   descriptions: {
     label: "Show descriptions",
     checked: state => state.build.descriptions,
-    action: $$.toggleDescriptions,
+    action: $$.toggleDescriptions
   },
   source: {
     label: "Include source",
@@ -192,33 +193,38 @@ class BuildContainer extends React.Component {
             <div className="build-config">
               <ControlledPanel className="row" predicate={isCustomizing}>
                 <div className="col-xs-12 col-md-4 col-lg-3">
-                  <h2 className="my-1">Mode</h2>
+                  <h2 className="my-1">Settings</h2>
+
+                  <div className="custom-controls-stacked mb-1">
+                    <ControlledToggle spec={fields.descriptions} />
+                  </div>
+
+                  <h4>Mode</h4>
                   <ControlledRadio spec={fields.mode} />
 
-                  <BuildPlatform />
-
-                  <h2 className="mb-1">Presets</h2>
-                  <ControlledRadio spec={fields.preset} />
-
-                  <h2 className="mb-1">Options</h2>
+                  <h4 className="mb-1">Options</h4>
                   <div className="custom-controls-stacked clearfix mb-1">
-                    <ControlledCheckbox spec={fields.descriptions} />
                     <ControlledCheckbox spec={fields.source} />
                     <ControlledCheckbox spec={fields.javadoc} />
                     <ControlledCheckbox spec={fields.compact} />
                     <ControlledCheckbox spec={fields.hardcoded} />
                   </div>
 
-                  <h2 className="mb-1">Addons</h2>
-                  <BuildAddons />
+                  <BuildPlatform />
 
                   <ControlledPanel predicate={isModeGradle}>
-                    <h2 className="mb-1">Language</h2>
+                    <h4 className="mb-1">Language</h4>
                     <ControlledRadio spec={fields.language} />
                   </ControlledPanel>
 
+                  <h4 className="mb-1">Presets</h4>
+                  <ControlledRadio spec={fields.preset} />
+
+                  <h4 className="mb-1">Addons</h4>
+                  <BuildAddons />
+
                   <ControlledPanel predicate={isBuildRelease}>
-                    <h2 className="mb-1">Version</h2>
+                    <h4 className="mb-1">Version</h4>
                     <ControlledRadio spec={fields.version} />
                   </ControlledPanel>
                 </div>

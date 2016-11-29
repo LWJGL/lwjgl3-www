@@ -1,6 +1,6 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
-class Checkbox extends React.PureComponent {
+class Toggle extends React.PureComponent {
 
   static propTypes = {
     label: PropTypes.string.isRequired,
@@ -28,14 +28,14 @@ class Checkbox extends React.PureComponent {
 
     return props.hidden ? null : (
       <div className="form-group">
-        <label className={`custom-control custom-checkbox${props.disabled ? ' custom-control-disabled' : ''}`}>
+        <label className={`custom-control custom-toggle${props.disabled ? ' custom-control-disabled' : ''}`}>
           <input type="checkbox"
                  className="custom-control-input"
                  disabled={props.disabled}
                  checked={props.checked}
                  onChange={this.change}
           />
-          <span className="custom-control-indicator"/>
+          <span className="custom-control-indicator" />
           <span className="custom-control-description">{props.label}</span>
         </label>
       </div>
@@ -43,4 +43,4 @@ class Checkbox extends React.PureComponent {
   }
 }
 
-export default Checkbox;
+export default Toggle;

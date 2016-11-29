@@ -18,7 +18,7 @@ import { MODE_ZIP } from '../constants'
         && build.source === true
         && build.javadoc === true
         && build.natives.allIds.every(platform => build.platform[platform])
-        && Object.keys(build.selectedAddons).length === 0
+        && build.selectedAddons.length === 0
       )
   }),
   {

@@ -9,7 +9,7 @@ import { toggleAddon } from '../actions'
 
     return {
       addon,
-      checked: !!build.selectedAddons[ownProps.id],
+      checked: build.selectedAddons.includes(ownProps.id),
       showDescriptions: build.descriptions,
     }
   },

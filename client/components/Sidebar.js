@@ -22,7 +22,7 @@ export default class Sidebar extends React.Component {
   onToggle = () => {
     if ( this.state.open ) {
       noscroll.off();
-      this.focusTrap.deactivate({onDeactivate:false});
+      this.focusTrap.deactivate({onDeactivate: false});
     } else {
       noscroll.on();
       this.focusTrap.activate();
