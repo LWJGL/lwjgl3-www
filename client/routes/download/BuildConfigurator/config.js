@@ -364,7 +364,23 @@ const config = {
         },
       }
     },
-    allIds: ['joml']
+    byId: {
+      'steamworks4j': {
+        id: 'steamworks4j',
+        title: 'steamworks4j',
+        description: 'A library that allows Java applications to access the Steamworks C++ API.',
+        about: 'http://code-disaster.github.io/steamworks4j/',
+        maven: {
+          groupId: 'com.code-disaster.steamworks4j',
+          artifactId: 'steamworks4j',
+          version: '1.5.0',
+        },
+      }
+    },
+    allIds: [
+        'joml',
+        'steamworks4j',
+    ]
   },
 
   // UI State
