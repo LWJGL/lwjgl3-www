@@ -211,9 +211,9 @@ autoprefixer@6.5.3, autoprefixer@^6.3.1:
     postcss "^5.2.5"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.7.7:
-  version "2.7.7"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.7.7.tgz#3ee7faec55faed1d4f53f7006ef55c6ce5c756a6"
+aws-sdk@2.7.8:
+  version "2.7.8"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.7.8.tgz#bafb08f1f5fe088aeca35c9bd3bf139b0a8e276a"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -221,6 +221,7 @@ aws-sdk@2.7.7:
     querystring "0.2.0"
     sax "1.1.5"
     url "0.10.3"
+    uuid "3.0.0"
     xml2js "0.4.15"
     xmlbuilder "2.6.2"
 
@@ -4343,7 +4344,7 @@ utils-merge@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.0.tgz#0294fb922bb9375153541c4f7096231f287c8af8"
 
-uuid@^3.0.0:
+uuid@3.0.0, uuid@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.0.tgz#6728fc0459c450d796a99c31837569bdf672d728"
 
