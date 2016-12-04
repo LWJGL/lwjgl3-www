@@ -182,6 +182,16 @@ if ( app.locals.development ) {
 // Routing
 // ------------------------------------------------------------------------------
 
+app.use((req, res, next) =>
+{
+  if ( req.hostname === 'lwjgl.org' )
+  {
+    res.redirect(301, `https://www.lwjgl.org${req.originalUrl}`);
+    return;
+  }
+  next();
+});
+
 // Static Assets
 //noinspection JSUnusedGlobalSymbols
 app.use(express.static(path.join(__dirname, '../public'), {
