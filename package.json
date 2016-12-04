@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "1.1.0",
     "autoprefixer": "6.5.3",
-    "aws-sdk": "2.7.8",
+    "aws-sdk": "2.7.10",
     "babel-core": "6.18.2",
     "babel-loader": "6.2.8",
     "babel-plugin-check-es2015-constants": "6.8.0",
@@ -72,7 +72,7 @@
     "classnames": "2.2.5",
     "cli-table": "0.3.1",
     "cross-env": "3.1.3",
-    "css-loader": "0.26.0",
+    "css-loader": "0.26.1",
     "exports-loader": "0.6.3",
     "express": "5.0.0-alpha.2",
     "express-device": "0.4.2",
@@ -84,12 +84,12 @@
     "gzip-size": "3.0.0",
     "helmet": "3.1.0",
     "jszip": "3.1.3",
-    "moment": "2.17.0",
+    "moment": "2.17.1",
     "node-sass": "3.14.0-0",
     "node-uuid": "1.4.7",
     "nprogress": "0.2.0",
     "optimize-js": "1.0.2",
-    "postcss-loader": "1.1.1",
+    "postcss-loader": "1.2.0",
     "pug": "2.0.0-beta6",
     "react": "15.4.1",
     "react-dom": "15.4.1",
@@ -105,7 +105,7 @@
     "style-loader": "0.13.1",
     "webpack": "2.1.0-beta.27",
     "whatwg-fetch": "2.0.1",
-    "yargs": "6.4.0"
+    "yargs": "6.5.0"
   },
   "devDependencies": {
     "react-hot-loader": "3.0.0-beta.6",
