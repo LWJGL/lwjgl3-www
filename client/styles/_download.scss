@@ -85,6 +85,10 @@ span[type=button] {
     padding: 1rem;
   }
 
+  .custom-control-description {
+    user-select: none;
+  }
+
   p {
     line-height: 1.5rem;
   }
