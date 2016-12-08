@@ -5,14 +5,22 @@ const SUPPORTS_BTOA = !!window.btoa;
 const SUPPORTS_CLIPBOARD = !!document.execCommand;
 
 @connect(
-  state => {
-    if ( state.build.mode === MODE_ZIP ) {
+  ({build}) => {
+    if ( build.mode === MODE_ZIP ) {
       return {
         mode: MODE_ZIP
       }
     }
 
-    const build = state.build;
+    const selected = [];
+
+    build.artifacts.allIds.forEach(artifact => {
+      if ( build.contents[artifact] && build.availability[artifact] ) {
+        selected.push(artifact);
+      }
+    });
+
+    // build.contents
 
     return {
       build: build.build,
@@ -20,9 +28,9 @@ const SUPPORTS_CLIPBOARD = !!document.execCommand;
       version: build.version,
       hardcoded: build.hardcoded,
       compact: build.compact,
-      artifacts: build.artifacts,
+      artifacts: build.artifacts.byId,
       addons: build.addons,
-      selected: build.contents,
+      selected,
       selectedAddons: build.selectedAddons
     };
   }
@@ -88,7 +96,7 @@ function generateScript(props) {
 }
 
 function generateMaven(props) {
-  const { build, hardcoded, compact, artifacts, selected, addons, selectedAddons } = props;
+  const {build, hardcoded, compact, artifacts, selected, addons, selectedAddons} = props;
   const version = getVersion(props.version);
   let script = '';
   let nativesBundle = '';
@@ -131,12 +139,10 @@ function generateMaven(props) {
 
   script += `<dependencies>`;
 
-  artifacts.allIds.forEach(artifact => {
-    if ( selected[artifact] ) {
-      script += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`;
-      if ( artifacts.byId[artifact].natives !== undefined ) {
-        nativesBundle += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}<scope>runtime</scope>${nl1}</dependency>`;
-      }
+  selected.forEach(artifact => {
+    script += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`;
+    if ( artifacts[artifact].natives !== undefined ) {
+      nativesBundle += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}<scope>runtime</scope>${nl1}</dependency>`;
     }
   });
 
@@ -153,7 +159,7 @@ function generateMaven(props) {
 }
 
 function generateGradle(props) {
-  const { build, hardcoded, artifacts, selected, addons, selectedAddons } = props;
+  const {build, hardcoded, artifacts, selected, addons, selectedAddons} = props;
   const version = getVersion(props.version);
   let script = '';
   let nativesBundle = '';
@@ -194,12 +200,10 @@ switch ( OperatingSystem.current() ) {
 
   script += `dependencies {`;
 
-  artifacts.allIds.forEach(artifact => {
-    if ( selected[artifact] ) {
-      script += `\n\tcompile "org.lwjgl:${artifact}:${v}"`;
-      if ( artifacts.byId[artifact].natives !== undefined ) {
-        nativesBundle += `\n\truntime "org.lwjgl:${artifact}:${v}:\${lwjglNatives}"`;
-      }
+  selected.forEach(artifact => {
+    script += `\n\tcompile "org.lwjgl:${artifact}:${v}"`;
+    if ( artifacts[artifact].natives !== undefined ) {
+      nativesBundle += `\n\truntime "org.lwjgl:${artifact}:${v}:\${lwjglNatives}"`;
     }
   });
 
@@ -211,7 +215,6 @@ switch ( OperatingSystem.current() ) {
   });
 
   script += `\n}`;
-
 
   return script;
 }

@@ -397,6 +397,8 @@ const config = {
   downloading: false,
   progress: [],
   selectedAddons: [],
+  contents: {},
+  availability: {},
 };
 
 function getDefaultPlatform() {
@@ -425,11 +427,10 @@ config.natives.allIds.forEach(platform => {
 });
 config.platform[getDefaultPlatform()] = true;
 
-config.contents = {};
-
-// Fill content map with artifacts
+// Fill content & availability map with artifacts
 config.artifacts.allIds.forEach(artifact => {
   config.contents[artifact] = false;
+  config.availability[artifact] = false;
 });
 
 // Toggle preset artifacts on

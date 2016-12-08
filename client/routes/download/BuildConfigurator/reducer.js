@@ -49,17 +49,16 @@ const selectPreset = (state, preset) => {
   state.preset = preset;
 
   if ( preset !== 'custom' ) {
-    state.contents = {...state.contents};
-
-    Object.keys(state.contents).forEach(artifact => {
-      if ( artifact !== 'lwjgl' ) {
-        state.contents[artifact] = false;
-      }
+    const contents = {};
+    state.artifacts.allIds.forEach(artifact => {
+      contents[artifact] = false;
     });
 
     state.presets.byId[preset].artifacts.forEach(artifact => {
-      state.contents[artifact] = true;
+      contents[artifact] = true;
     });
+
+    state.contents = contents;
   }
 
   return state;
@@ -103,20 +102,52 @@ const toggleAddon = (state, addon) => {
   return state;
 };
 
+const computeAvailability = (state) => {
+  const availability = {};
+  const buildCnt = state.builds.allIds.length;
+  const nativeCnt = state.natives.allIds.length;
+
+  state.artifacts.allIds.forEach(id => {
+    const artifact = state.artifacts.byId[id];
+    const since = state.versions.byId[artifact.since].semver;
+    const semver = state.versions.byId[state.version].semver;
+
+    availability[id] =
+      (
+           artifact.builds.length === buildCnt
+        || artifact.builds.some(it => it === state.build)
+      )
+      &&
+      (
+           state.mode !== MODE_ZIP
+        || artifact.natives === undefined
+        || artifact.natives.length === nativeCnt
+        || artifact.natives.some(platform => !!state.platform[platform])
+      )
+      &&
+      (
+        semver[2] * 100 + semver[1] * 10 + semver[0] >= since[2] * 100 + since[1] * 10 + since[0]
+      );
+  });
+
+  state.availability = availability;
+  return state;
+};
+
 export default function(state = config, action) {
 
   switch (action.type) {
 
     case $.SELECT_TYPE:
       if ( action.build !== state.build && state.downloading === false ) {
-        return selectBuild({...state}, action.build);
+        return computeAvailability(selectBuild({...state}, action.build));
       }
       break;
 
     case $.SELECT_MODE:
       if ( state.build !== BUILD_STABLE && state.mode !== action.mode ) {
         // For now, only allow nightly builds to select mode
-        return selectMode({...state}, action.mode);
+        return computeAvailability(selectMode({...state}, action.mode));
       }
       break;
 
@@ -149,7 +180,7 @@ export default function(state = config, action) {
 
     case $.SELECT_PRESET:
       if ( state.preset !== action.preset ) {
-        return selectPreset({...state}, action.preset);
+        return computeAvailability(selectPreset({...state}, action.preset));
       }
       break;
 
@@ -161,7 +192,7 @@ export default function(state = config, action) {
       if ( state.mode === MODE_ZIP ) {
         const selections = state.natives.allIds.reduce((previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0), 0);
         if ( selections > 1 || state.platform[action.platform] === false ) {
-          return {...state, platform: {...state.platform, [action.platform]: !state.platform[action.platform]}};
+          return computeAvailability({...state, platform: {...state.platform, [action.platform]: !state.platform[action.platform]}});
         }
       }
       break;
@@ -172,7 +203,7 @@ export default function(state = config, action) {
         const semver = state.versions.byId[action.version].semver;
 
         if ( semver[0] < latest[0] || semver[1] < latest[1] || semver[2] <= latest[2] ) {
-          return selectVersion({...state}, action.version);
+          return computeAvailability(selectVersion({...state}, action.version));
         }
       }
       break;

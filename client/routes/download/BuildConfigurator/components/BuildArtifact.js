@@ -3,39 +3,19 @@ import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import { toggleArtifact } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
-import { MODE_ZIP } from '../constants'
 
 @connect(
   ({build}, ownProps) => {
     const artifact = build.artifacts.byId[ownProps.id];
-    const since = build.versions.byId[artifact.since].semver;
-    const semver = build.versions.byId[build.version].semver;
-
-    const available =
-      (
-           artifact.builds.length === build.builds.allIds.length
-        || artifact.builds.some(it => it === build.build)
-      )
-      &&
-      (
-           build.mode !== MODE_ZIP
-        || artifact.natives === undefined
-        || artifact.natives.length === build.natives.allIds.length
-        || artifact.natives.some(platform => !!build.platform[platform])
-      )
-      &&
-      (
-        semver[2] * 100 + semver[1] * 10 + semver[0] >= since[2] * 100 + since[1] * 10 + since[0]
-      );
 
     return {
       artifact,
-      checked: available && build.contents[ownProps.id] === true,
+      checked: build.availability[artifact.id] && build.contents[artifact.id],
       showDescriptions: build.descriptions,
-      disabled: !available
+      disabled: !build.availability[artifact.id]
         || IS_SAFARI
         || build.version === '3.0.0'
-        || ownProps.id === 'lwjgl',
+        || artifact.required
     }
   },
   {
