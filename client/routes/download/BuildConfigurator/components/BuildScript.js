@@ -45,7 +45,7 @@ class BuildScript extends React.Component {
 
   autoHeight = () => {
     const newlines = this.script.value.match(/\n/g);
-    this.script.style.height = newlines === null ? '20px' : `${Math.min((newlines.length + 1) * 20, 614)}px`;
+    this.script.style.height = newlines === null ? '20px' : `${Math.min((newlines.length + 2) * 20, 614)}px`;
   };
 
   render() {
