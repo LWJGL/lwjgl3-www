@@ -98,6 +98,7 @@ export default () => {
         title: 'SSE bindings',
         description: 'Simple SSE intrinsics.',
         natives: NATIVE_ALL,
+        website: 'https://software.intel.com/en-us/node/523328'
       },
       'lwjgl-stb': {
         id: 'lwjgl-stb',
