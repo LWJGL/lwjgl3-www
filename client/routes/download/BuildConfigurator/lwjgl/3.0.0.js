@@ -24,6 +24,7 @@ export default () => {
         title: 'GLFW bindings',
         description: 'An multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.',
         natives: NATIVE_ALL,
+        website: 'http://www.glfw.org/'
       },
       'lwjgl-jawt': {
         id: 'lwjgl-jawt',

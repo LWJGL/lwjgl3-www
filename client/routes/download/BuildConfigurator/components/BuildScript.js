@@ -59,7 +59,13 @@ class BuildScript extends React.Component {
 
     return (
       <div className="col-xs-12 col-lg-6">
-        <h2 className="mb-2 mt-1">Snippet</h2>
+        <h2 className="mb-2 mt-1">
+          {
+            mode === 'maven'
+            ? <img src="/svg/maven.svg" alt="Maven" style={{height:40,marginBottom:-10}} />
+            : <img src="/svg/gradle.svg" alt="Gradle" style={{height:60,marginTop:-10,marginBottom:-20}} />
+          }
+        </h2>
         <textarea ref={el => {this.script = el}} className="script" readOnly={true} value={script} wrap="off" />
         {
           SUPPORTS_BTOA ?

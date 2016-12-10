@@ -20,6 +20,7 @@ import ControlledPanel from '../../../components/ControlledPanel'
 import ControlledRadio from '../../../components/ControlledRadio'
 import ControlledCheckbox from '../../../components/ControlledCheckbox'
 import ControlledToggle from '../../../components/ControlledToggle'
+
 import BuildType from './components/BuildType'
 import BuildPlatform from './components/BuildPlatform'
 import BuildAddons from './components/BuildAddons'

@@ -4,14 +4,41 @@ import Checkbox from '../../../../components/Checkbox'
 import { togglePlatform } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
 
+import {
+  NATIVE_WIN,
+  NATIVE_LINUX,
+  NATIVE_MAC
+} from '../constants'
+
+import FaWindows from '../../../../icons/windows'
+import FaLinux from '../../../../icons/linux'
+import FaMacOS from '../../../../icons/macos'
+
+const getIcon = (platform) => {
+  switch ( platform ) {
+    case NATIVE_WIN:
+      return <FaWindows />;
+    case NATIVE_MAC:
+      return <FaMacOS />;
+    case NATIVE_LINUX:
+      return <FaLinux />;
+    default:
+      return null;
+  }
+};
+
 @connect(
-  state => ({
-    platforms: state.build.natives.allIds,
-    natives: state.build.natives.byId,
-    selected: state.build.version !== '3.0.0' && !IS_SAFARI ? state.build.platform : {"windows":true,"macos":true,"linux":true},
-    disabled: state.build.version === '3.0.0' || IS_SAFARI,
-    hide: state.build.mode !== 'zip',
-  }),
+  state => {
+    const disabled = state.build.version === '3.0.0' || IS_SAFARI;
+
+    return {
+      platforms: state.build.natives.allIds,
+      natives: state.build.natives.byId,
+      selected: disabled ? {[NATIVE_WIN]:true,[NATIVE_MAC]:true,[NATIVE_LINUX]:true} : state.build.platform,
+      disabled: disabled,
+      hide: state.build.mode !== 'zip',
+    };
+  },
   {
     togglePlatform
   }
@@ -40,6 +67,7 @@ class BuildPlatform extends React.Component {
             return (
               <Checkbox
                 key={platform}
+                icon={getIcon(platform)}
                 label={native.title}
                 disabled={props.disabled}
                 checked={props.selected[platform]}

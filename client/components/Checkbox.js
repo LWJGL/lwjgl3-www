@@ -9,6 +9,7 @@ class Checkbox extends React.PureComponent {
     onChange: PropTypes.func,
     disabled: PropTypes.bool,
     hidden: PropTypes.bool,
+    icon: PropTypes.element,
   };
 
   static defaultProps = {
@@ -36,7 +37,7 @@ class Checkbox extends React.PureComponent {
                  onChange={this.change}
           />
           <span className="custom-control-indicator"/>
-          <span className="custom-control-description">{props.label}</span>
+          <span className="custom-control-description">{props.icon ? props.icon : null}{props.icon ? ' ' : null}{props.label}</span>
         </label>
       </div>
     );
