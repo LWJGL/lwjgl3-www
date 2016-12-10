@@ -22,12 +22,12 @@ class BuildType extends React.Component {
   };
 
   select = () => {
-    const { isSelected, build, changeType } = this.props;
+    const {isSelected, build, changeType} = this.props;
     changeType(isSelected ? null : build);
   };
 
   render() {
-    const { isSelected, isActive, build, spec } = this.props;
+    const {isSelected, isActive, build, spec} = this.props;
 
     return (
       <div onClick={this.select} className={classnames('build', build, {'selected': isSelected, 'active': isActive})}>

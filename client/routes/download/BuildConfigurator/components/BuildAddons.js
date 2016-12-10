@@ -1,5 +1,5 @@
 import React from 'react'
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 import BuildAddon from './BuildAddon'
 
 @connect(
@@ -10,7 +10,7 @@ import BuildAddon from './BuildAddon'
 class BuildAddons extends React.Component {
 
   render() {
-    const { addons } = this.props;
+    const {addons} = this.props;
 
     return (
       <div className="custom-controls-stacked">

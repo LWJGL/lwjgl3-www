@@ -8,57 +8,85 @@ import {
   MODE_MAVEN,
 } from './constants'
 
-// const getError = (state, message, severity = "danger") => ({...state, error: {message, severity,}});
+const nativeCnt = config.natives.allIds.length;
 
-const selectBuild = (state, build) => {
-  state.build = build;
-  if ( build !== null ) {
-    state.version = state.builds.byId[build].latest.join('.');
+const computeArtifacts = (state) => {
+  if ( state.build === BUILD_RELEASE ) {
+    state.artifacts = state.lwjgl[state.version];
+  } else {
+    state.artifacts = state.lwjgl[state.build];
+    state.version = state.versions.allIds[0];
+  }
 
-    if ( build === BUILD_STABLE ) {
-      lockDown(state);
+  state.availability = {};
+
+  state.artifacts.allIds.forEach(it => {
+    const artifact = state.artifacts.byId[it];
+
+    state.availability[it] =
+      state.mode !== MODE_ZIP
+      || artifact.natives === undefined
+      || artifact.natives.length === nativeCnt
+      || artifact.natives.some(platform => !!state.platform[platform]);
+  });
+
+  if ( state.preset !== 'custom' ) {
+    selectPreset(state, state.preset);
+  }
+
+  if ( state.build === BUILD_STABLE ) {
+    if ( state.mode !== MODE_ZIP ) {
+      state.mode = MODE_ZIP;
+    }
+  } else if ( state.build === BUILD_RELEASE ) {
+    if ( state.version === '3.0.0' ) {
+      state.mode = MODE_ZIP;
+      if ( state.preset !== 'all' ) {
+        selectPreset(state, 'all');
+      }
     }
   }
 
   return state;
 };
 
-const lockDown = (state) => {
-  if ( state.mode !== MODE_ZIP ) {
-    selectMode(state, MODE_ZIP);
+const selectBuild = (state, build) => {
+  state.build = build;
+  if ( build !== null ) {
+    computeArtifacts(state);
   }
-  if ( state.preset !== 'all' ) {
-    selectPreset(state, 'all');
-  }
+
+  return state;
 };
 
 const selectVersion = (state, version) => {
   state.version = version;
-  if ( version === '3.0.0' ) {
-    lockDown(state);
-  }
+  computeArtifacts(state);
   return state;
 };
 
 const selectMode = (state, mode) => {
   state.mode = mode;
+  computeArtifacts(state);
   return state;
 };
 
 const selectPreset = (state, preset) => {
   state.preset = preset;
 
-  if ( preset !== 'custom' ) {
-    const contents = {};
+  if ( preset === 'all' ) {
+    state.contents = {...state.contents};
     state.artifacts.allIds.forEach(artifact => {
-      contents[artifact] = false;
+      state.contents[artifact] = true;
     });
-
+  } else if ( preset !== 'custom' ) {
+    state.contents = {...state.contents};
+    state.artifacts.allIds.forEach(artifact => {
+      state.contents[artifact] = false;
+    });
     state.presets.byId[preset].artifacts.forEach(artifact => {
-      contents[artifact] = true;
+      state.contents[artifact] = true;
     });
-
-    state.contents = contents;
   }
 
   return state;
@@ -69,21 +97,35 @@ const toggleArtifact = (state, artifact) => {
 
   // MATCH PRESET
   // collect selected artifacts in an Array
-  const selected = Object.keys(state.contents).filter(artifact => state.contents[artifact]);
+  const selected = state.artifacts.allIds.filter(artifact => state.contents[artifact]);
+
+  if ( selected.length === state.artifacts.allIds.length ) {
+    state.preset = 'all';
+    return state;
+  } else if ( selected.length === 1 ) {
+    state.preset = 'none';
+    return state;
+  }
+
   // match selected artifacts with a preset
   const presetFoundMatch = state.presets.allIds.some(preset => {
-    // ignore custom preset
-    if ( preset === 'custom' ) {
+    // only check predefined presets
+    if ( preset === 'custom' || preset === 'all' || preset === 'none' ) {
       return false;
     }
-    const artifacts = state.presets.byId[preset].artifacts;
+
+    // Get preset artifacts but keep only ones present in the current artifact collection
+    const artifacts = state.presets.byId[preset].artifacts.filter(it => !!state.artifacts.byId[it]);
+
     // first check length for speed, then do deep comparison
-    if ( artifacts.length === selected.length && artifacts.every((item, i) => item === selected[i]) ) {
+    if ( artifacts.length === selected.length && artifacts.every((it, i) => it === selected[i]) ) {
       state.preset = preset;
       return true;
     }
+
     return false;
   });
+
   // if we didn't get a match, set it to custom preset
   if ( !presetFoundMatch ) {
     state.preset = 'custom';
@@ -102,52 +144,19 @@ const toggleAddon = (state, addon) => {
   return state;
 };
 
-const computeAvailability = (state) => {
-  const availability = {};
-  const buildCnt = state.builds.allIds.length;
-  const nativeCnt = state.natives.allIds.length;
-
-  state.artifacts.allIds.forEach(id => {
-    const artifact = state.artifacts.byId[id];
-    const since = state.versions.byId[artifact.since].semver;
-    const semver = state.versions.byId[state.version].semver;
-
-    availability[id] =
-      (
-           artifact.builds.length === buildCnt
-        || artifact.builds.some(it => it === state.build)
-      )
-      &&
-      (
-           state.mode !== MODE_ZIP
-        || artifact.natives === undefined
-        || artifact.natives.length === nativeCnt
-        || artifact.natives.some(platform => !!state.platform[platform])
-      )
-      &&
-      (
-        semver[2] * 100 + semver[1] * 10 + semver[0] >= since[2] * 100 + since[1] * 10 + since[0]
-      );
-  });
-
-  state.availability = availability;
-  return state;
-};
-
 export default function(state = config, action) {
 
   switch (action.type) {
 
     case $.SELECT_TYPE:
       if ( action.build !== state.build && state.downloading === false ) {
-        return computeAvailability(selectBuild({...state}, action.build));
+        return selectBuild({...state}, action.build);
       }
       break;
 
     case $.SELECT_MODE:
       if ( state.build !== BUILD_STABLE && state.mode !== action.mode ) {
-        // For now, only allow nightly builds to select mode
-        return computeAvailability(selectMode({...state}, action.mode));
+        return selectMode({...state}, action.mode);
       }
       break;
 
@@ -180,7 +189,7 @@ export default function(state = config, action) {
 
     case $.SELECT_PRESET:
       if ( state.preset !== action.preset ) {
-        return computeAvailability(selectPreset({...state}, action.preset));
+        return selectPreset({...state}, action.preset);
       }
       break;
 
@@ -192,19 +201,14 @@ export default function(state = config, action) {
       if ( state.mode === MODE_ZIP ) {
         const selections = state.natives.allIds.reduce((previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0), 0);
         if ( selections > 1 || state.platform[action.platform] === false ) {
-          return computeAvailability({...state, platform: {...state.platform, [action.platform]: !state.platform[action.platform]}});
+          return computeArtifacts({...state, platform: {...state.platform, [action.platform]: !state.platform[action.platform]}});
         }
       }
       break;
 
     case $.SELECT_VERSION:
-      if ( state.build === BUILD_RELEASE ) {
-        const latest = state.builds.byId[state.build].latest;
-        const semver = state.versions.byId[action.version].semver;
-
-        if ( semver[0] < latest[0] || semver[1] < latest[1] || semver[2] <= latest[2] ) {
-          return computeAvailability(selectVersion({...state}, action.version));
-        }
+      if ( state.build === BUILD_RELEASE && state.version !== action.version ) {
+        return selectVersion({...state}, action.version);
       }
       break;
 

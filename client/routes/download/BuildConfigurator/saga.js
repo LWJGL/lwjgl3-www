@@ -28,7 +28,7 @@ const getBuild = ({build}) => {
   }
 
   const selected = build.artifacts.allIds.filter(artifact => {
-    if ( build.contents[artifact] === false ) {
+    if ( !build.contents[artifact] ) {
       return false;
     }
 

@@ -48,12 +48,10 @@ const fields = {
     value: getMode,
     action: $$.changeMode,
     options: createSelector(
-      state => ({
-        modes: state.build.modes,
-        build: state.build.build,
-        version: state.build.version
-      }),
-      ({modes, build, version}) => {
+      state => state.build.modes,
+      state => state.build.build,
+      state => state.build.version,
+      (modes, build, version) => {
         return modes.allIds.map(
           mode => ({
             value: mode,
@@ -69,13 +67,11 @@ const fields = {
     value: getPreset,
     action: $$.changePreset,
     options: createSelector(
-      state => ({
-        presets: state.build.presets,
-        mode: state.build.mode,
-        build: state.build.build,
-        version: state.build.version
-      }),
-      ({presets, mode, build, version}) => presets.allIds.map(
+      state => state.build.presets,
+      state => state.build.mode,
+      state => state.build.build,
+      state => state.build.version,
+      (presets, mode, build, version) => presets.allIds.map(
         preset => ({
           value: preset,
           label: presets.byId[preset].title,
@@ -105,14 +101,11 @@ const fields = {
     action: $$.changeVersion,
     options: createSelector(
       state => state.build.versions,
-      state => state.build.builds.byId[state.build.build].latest,
-      (versions, latest) => versions.allIds.map(
+      (versions) => versions.allIds.map(
         version => {
-          const semver = versions.byId[version].semver;
           return {
             value: version,
             label: version,
-            disabled: !(semver[2] * 100 + semver[1] * 10 + semver[0] <= latest[2] * 100 + latest[1] * 10 + latest[0])
           };
         }
       )

@@ -10,8 +10,7 @@ import { MODE_ZIP } from '../constants'
     mode: build.mode,
     version: build.version,
     fullZip:
-         build.mode !== MODE_ZIP
-      || build.version === '3.0.0'
+         build.version === '3.0.0'
       || IS_SAFARI
       || (
            build.preset === 'all'
@@ -32,9 +31,7 @@ class BuildDownload extends React.Component {
 
     if ( props.mode !== MODE_ZIP ) {
       return null;
-    }
-
-    if ( props.fullZip ) {
+    } else if ( props.fullZip ) {
       let downloadUrl;
       switch (props.build) {
         case 'release':

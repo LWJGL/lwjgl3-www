@@ -27,7 +27,7 @@ function* getStatus(action) {
   const { name } = action;
   let url = `/build/${name}`;
   if ( name === 'release' ) {
-    const version = yield select(({build}) => build.builds.byId.release.latest.join('.'));
+    const version = yield select(({build}) => build.versions.allIds[0]);
     url += `/${version}`;
   }
   const response = yield call(fetchStatus, url);
