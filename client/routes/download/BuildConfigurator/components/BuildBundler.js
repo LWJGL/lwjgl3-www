@@ -9,6 +9,10 @@ import LoaderSpinner from '../../../../components/LoaderSpinner'
 )
 class BuildBundler extends React.Component {
 
+  componentDidMount() {
+    document.getElementsByClassName('config-container')[0].scrollIntoView(true);
+  }
+
   render() {
     return (
       <div className="col-xs-12">

@@ -3,8 +3,9 @@ import Link from 'react-router/Link'
 import Sidebar from './Sidebar'
 
 import { IS_IOS } from '../services/globals'
+import supportsPassive from '../services/supports-passive'
 
-export default class Header extends React.Component {
+class Header extends React.Component {
 
   prev = 0;
   current = 0;
@@ -32,11 +33,11 @@ export default class Header extends React.Component {
       this.el.classList.remove('top');
     }
 
-    window.addEventListener('scroll', this.onScroll);
+    window.addEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
   }
 
   componentDidUpdate() {
@@ -45,7 +46,7 @@ export default class Header extends React.Component {
   }
 
   onScroll = () => {
-    let offsetY = window.pageYOffset;
+    const offsetY = window.pageYOffset;
 
     if ( offsetY < 0 || this.prev === offsetY ) {  // e.g. iOS inertial scrolling reports negative offsets
       return;
@@ -151,3 +152,5 @@ export default class Header extends React.Component {
     )
   }
 }
+
+export default Header

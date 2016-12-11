@@ -32,13 +32,14 @@ class BuildAddon extends React.Component {
     const label = `${addon.title} v${addon.maven.version}`;
 
     return showDescriptions ? (
-      <div>
+      <div className="artifact">
         <Checkbox
           label={label}
           checked={checked}
           onChange={this.toggle}
         />
-        <p><small>{addon.description} <a href={addon.about} target="_blank">learn more</a></small></p>
+        <p>{addon.description}</p>
+        { addon.website ? <p><a href={addon.website} target="_blank">{addon.website}</a></p> : null }
       </div>
     ) : (
       <Checkbox

@@ -4,6 +4,7 @@ import Link from 'react-router/Link'
 
 import BuildContainer from './BuildConfigurator'
 import FileBrowser from './FileBrowser'
+import FaGithub from '../../icons/github'
 
 const DownloadRoute = () => (
   <main>
@@ -18,8 +19,9 @@ const DownloadRoute = () => (
     />
     <section className="container pb-2">
       <h1>Download LW<b>JGL</b> 3</h1>
-
-      <p>Select a build to begin configuring your download:</p>
+      <p>All official releases are available for download from GitHub.</p>
+      <p><a className="btn btn-primary" href="https://github.com/LWJGL/lwjgl3/releases" target="_blank"><FaGithub size="2em" /> Download from Github</a></p>
+      <p>To customize your LWJGL build or use the latest stable &amp; nightly releases, use the download configurator:</p>
       <BuildContainer />
 
       <p>Or browse and download files directly:</p>

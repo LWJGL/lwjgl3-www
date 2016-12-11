@@ -20,8 +20,6 @@ const SUPPORTS_CLIPBOARD = !!document.execCommand;
       }
     });
 
-    // build.contents
-
     return {
       build: build.build,
       mode: build.mode,
@@ -38,51 +36,54 @@ const SUPPORTS_CLIPBOARD = !!document.execCommand;
 class BuildScript extends React.Component {
 
   copyToClipboard = () => {
-    this.script.select();
-    document.execCommand('copy');
-    this.script.blur();
-  };
-
-  autoHeight = () => {
-    const newlines = this.script.value.match(/\n/g);
-    this.script.style.height = newlines === null ? '20px' : `${Math.min((newlines.length + 2) * 20, 614)}px`;
+    const selection = window.getSelection();
+    if ( !selection ) {
+      alert('Copying to clipboard not supported!');
+      return;
+    }
+    if ( selection.rangeCount > 0) {
+      selection.removeAllRanges();
+    }
+    const range = document.createRange();
+    range.selectNode(this.script);
+    selection.addRange(range);
+    document.execCommand("copy");
+    selection.removeAllRanges();
+    alert('Script copied to clipboard.');
   };
 
   render() {
-    if ( this.props.mode === MODE_ZIP ) {
+    const {mode} = this.props;
+
+    if ( mode === MODE_ZIP ) {
       return null;
     }
 
-    const {mode} = this.props;
     const script = generateScript(this.props);
-    setImmediate(this.autoHeight);
 
     return (
-      <div className="col-xs-12 col-lg-6">
-        <h2 className="mb-2 mt-1">
+      <div>
+        <h2 className="mt-1">
           {
             mode === 'maven'
-            ? <img src="/svg/maven.svg" alt="Maven" style={{height:40,marginBottom:-10}} />
-            : <img src="/svg/gradle.svg" alt="Gradle" style={{height:60,marginTop:-10,marginBottom:-20}} />
+            ? <img src="/svg/maven.svg" alt="Maven" style={{height:60}} />
+            : <img src="/svg/gradle.svg" alt="Gradle" style={{height:60}} />
           }
         </h2>
-        <textarea ref={el => {this.script = el}} className="script" readOnly={true} value={script} wrap="off" />
-        {
-          SUPPORTS_BTOA ?
+        <pre ref={el => {this.script=el}}><code>{script}</code></pre>
+        <div className="download-toolbar">
             <a
-              className="btn btn-xs-block btn-primary"
+              className="btn btn-success"
               download={filename(mode)}
               href={`data:${mime(mode)};base64,${btoa(script)}`}
+              disabled={!SUPPORTS_BTOA}
             >
-              DOWNLOAD SNIPPET
+              DOWNLOAD SCRIPT
             </a>
-            : null
-        }
-        {
-          SUPPORTS_CLIPBOARD ?
-            <button className="btn btn-xs-block btn-primary" onClick={this.copyToClipboard}>COPY TO CLIPBOARD</button>
-            : null
-        }
+            <button className="btn btn-success" onClick={this.copyToClipboard} disabled={!SUPPORTS_CLIPBOARD}>
+              COPY TO CLIPBOARD
+            </button>
+        </div>
       </div>
     )
   }

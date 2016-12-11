@@ -21,6 +21,7 @@ import ControlledRadio from '../../../components/ControlledRadio'
 import ControlledCheckbox from '../../../components/ControlledCheckbox'
 import ControlledToggle from '../../../components/ControlledToggle'
 
+import BuildConfigArea from './components/BuildConfigArea'
 import BuildType from './components/BuildType'
 import BuildPlatform from './components/BuildPlatform'
 import BuildAddons from './components/BuildAddons'
@@ -170,7 +171,7 @@ class BuildContainer extends React.Component {
 
   render() {
     return (
-      <div className="mb-2">
+      <div className="mb-3 config-container">
         <div className="row">
           <div className="col-lg-4 col-xs-12">
             <BuildType build="release" />
@@ -184,54 +185,59 @@ class BuildContainer extends React.Component {
         </div>
         <ControlledPanel className="row" predicate={isBuildSelected}>
           <div className="col-xs-12">
-            <div className="build-config">
-              <ControlledPanel className="row" predicate={isCustomizing}>
-                <div className="col-xs-12 col-md-4 col-lg-3">
-                  <h2 className="my-1">Settings</h2>
+            <BuildConfigArea>
 
-                  <div className="custom-controls-stacked mb-1">
-                    <ControlledToggle spec={fields.descriptions} />
+              <ControlledPanel className="pt-1" predicate={isCustomizing}>
+                <div className="row">
+                  <div className="col-xs-12 col-md-3">
+                    <h4>Mode</h4>
+                    <ControlledRadio spec={fields.mode} />
+
+                    <h4 className="mb-1">Options</h4>
+                    <div className="custom-controls-stacked clearfix mb-1">
+                      <ControlledToggle spec={fields.descriptions} />
+                      <ControlledCheckbox spec={fields.source} />
+                      <ControlledCheckbox spec={fields.javadoc} />
+                      <ControlledToggle spec={fields.hardcoded} />
+                      <ControlledToggle spec={fields.compact} />
+                    </div>
+
+                    <BuildPlatform />
+
+                    <ControlledPanel predicate={isModeGradle}>
+                      <h4 className="mb-1">Language</h4>
+                      <ControlledRadio spec={fields.language} />
+                    </ControlledPanel>
+
+                  </div>
+                  <div className="col-xs-12 col-md-3">
+                    <h4>Presets</h4>
+                    <ControlledRadio spec={fields.preset} />
+
+                    <h4>Addons</h4>
+                    <BuildAddons />
+
+                    <ControlledPanel predicate={isBuildRelease}>
+                      <h4 className="mt-1">Version</h4>
+                      <ControlledRadio spec={fields.version} />
+                    </ControlledPanel>
                   </div>
 
-                  <h4>Mode</h4>
-                  <ControlledRadio spec={fields.mode} />
-
-                  <h4 className="mb-1">Options</h4>
-                  <div className="custom-controls-stacked clearfix mb-1">
-                    <ControlledCheckbox spec={fields.source} />
-                    <ControlledCheckbox spec={fields.javadoc} />
-                    <ControlledCheckbox spec={fields.compact} />
-                    <ControlledCheckbox spec={fields.hardcoded} />
+                  <div className="col-xs-12 col-md-6">
+                    <h4>Contents</h4>
+                    <BuildArtifacts />
                   </div>
-
-                  <BuildPlatform />
-
-                  <ControlledPanel predicate={isModeGradle}>
-                    <h4 className="mb-1">Language</h4>
-                    <ControlledRadio spec={fields.language} />
-                  </ControlledPanel>
-
-                  <h4 className="mb-1">Presets</h4>
-                  <ControlledRadio spec={fields.preset} />
-
-                  <h4 className="mb-1">Addons</h4>
-                  <BuildAddons />
-
-                  <ControlledPanel predicate={isBuildRelease}>
-                    <h4 className="mb-1">Version</h4>
-                    <ControlledRadio spec={fields.version} />
-                  </ControlledPanel>
                 </div>
 
-                <BuildArtifacts />
                 <BuildDownload />
                 <BuildScript />
-
               </ControlledPanel>
+
               <ControlledPanel className="row" predicate={isDownloading}>
                 <BuildBundler />
               </ControlledPanel>
-            </div>
+
+            </BuildConfigArea>
           </div>
         </ControlledPanel>
       </div>

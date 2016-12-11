@@ -42,16 +42,14 @@ class BuildDownload extends React.Component {
       }
 
       return (
-        <div className="col-xs-12 col-md-4">
-          <h2 className="mb-2 mt-1">Bundle</h2>
-          <a className="btn btn-xs-block btn-primary btn-lg" download={`lwjgl-${props.build}-${props.version}.zip`} href={downloadUrl}>DOWNLOAD ZIP</a>
+        <div className="download-toolbar">
+          <a className="btn btn-success" download={`lwjgl-${props.build}-${props.version}.zip`} href={downloadUrl}>DOWNLOAD ZIP</a>
         </div>
       )
     } else {
       return (
-        <div className="col-xs-12 col-md-4">
-          <h2 className="mb-2 mt-1">Custom Bundle</h2>
-          <button className="btn btn-xs-block btn-primary btn-lg" onClick={this.props.downloadInit}>GENERATE BUNDLE</button>
+        <div className="download-toolbar">
+          <button className="btn btn-success" onClick={this.props.downloadInit}>DOWNLOAD ZIP</button>
         </div>
       )
     }

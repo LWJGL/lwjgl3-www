@@ -171,7 +171,7 @@ const config = {
         id: 'joml',
         title: 'JOML',
         description: 'A Java math library for OpenGL rendering calculations.',
-        about: 'http://joml-ci.github.io/JOML/',
+        website: 'http://joml-ci.github.io/JOML/',
         maven: {
           groupId: 'org.joml',
           artifactId: 'joml',
@@ -182,7 +182,7 @@ const config = {
         id: 'steamworks4j',
         title: 'steamworks4j',
         description: 'A library that allows Java applications to access the Steamworks C++ API.',
-        about: 'http://code-disaster.github.io/steamworks4j/',
+        website: 'http://code-disaster.github.io/steamworks4j/',
         maven: {
           groupId: 'com.code-disaster.steamworks4j',
           artifactId: 'steamworks4j',

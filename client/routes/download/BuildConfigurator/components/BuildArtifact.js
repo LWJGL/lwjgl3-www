@@ -22,11 +22,11 @@ const getPlatformIcons = (platforms) => {
         platforms.map(platform => {
           switch ( platform ) {
             case NATIVE_WIN:
-              return <FaWindows />;
+              return <FaWindows key="fa-win" />;
             case NATIVE_MAC:
-              return <FaMacOS />;
+              return <FaMacOS key="fa-mac" />;
             case NATIVE_LINUX:
-              return <FaLinux />;
+              return <FaLinux key="fa-linux" />;
             default:
               return null;
           }

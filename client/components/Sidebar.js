@@ -5,6 +5,8 @@ import Link from 'react-router/Link'
 import FaBars from '../icons/bars'
 import FaClose from '../icons/close'
 
+import supportsPassive from '../services/supports-passive'
+
 export default class Sidebar extends React.Component {
 
   state = {
@@ -12,9 +14,9 @@ export default class Sidebar extends React.Component {
   };
 
   componentDidMount() {
-    this.focusTrap = createFocusTrap(this.refs.slidingMenu, {
+    this.focusTrap = createFocusTrap(this.slidingMenu, {
       onDeactivate: this.onToggle,
-      initialFocus: this.refs.closeButton,
+      initialFocus: this.closeButton,
       // clickOutsideDeactivates: true
     });
   }
@@ -23,9 +25,15 @@ export default class Sidebar extends React.Component {
     if ( this.state.open ) {
       noscroll.off();
       this.focusTrap.deactivate({onDeactivate: false});
+      this.sideContainer.removeEventListener('touchstart', this.onTouchStart, supportsPassive ? {passive: true} : false);
+      this.sideContainer.removeEventListener('touchmove', this.onTouchMove, supportsPassive ? {passive: true} : false);
+      this.sideContainer.removeEventListener('touchend', this.onTouchEnd, supportsPassive ? {passive: true} : false);
     } else {
       noscroll.on();
       this.focusTrap.activate();
+      this.sideContainer.addEventListener('touchstart', this.onTouchStart, supportsPassive ? {passive: true} : false);
+      this.sideContainer.addEventListener('touchmove', this.onTouchMove, supportsPassive ? {passive: true} : false);
+      this.sideContainer.addEventListener('touchend', this.onTouchEnd, supportsPassive ? {passive: true} : false);
     }
 
     this.setState({open: !this.state.open});
@@ -36,14 +44,14 @@ export default class Sidebar extends React.Component {
     this.currentX = this.startX;
 
     this.touchingSideNav = true;
-    this.refs.sideContainer.classList.add('touching');
+    this.sideContainer.classList.add('touching');
     requestAnimationFrame(this.update);
   };
 
   onTouchMove = (evt) => {
     if ( this.touchingSideNav ) {
       this.currentX = evt.touches[0].pageX;
-      evt.preventDefault();
+      // evt.preventDefault();
     }
   };
 
@@ -52,8 +60,8 @@ export default class Sidebar extends React.Component {
       this.touchingSideNav = false;
 
       const translateX = this.currentX - this.startX;
-      this.refs.sideContainer.style.transform = '';
-      this.refs.sideContainer.classList.remove('touching');
+      this.sideContainer.style.transform = '';
+      this.sideContainer.classList.remove('touching');
 
       if ( translateX > 0 ) {
         this.onToggle();
@@ -74,28 +82,25 @@ export default class Sidebar extends React.Component {
       translateX = 0;
     }
 
-    this.refs.sideContainer.style.transform = `translateX(${translateX}px)`;
+    this.sideContainer.style.transform = `translateX(${translateX}px)`;
   };
 
   render() {
     let isOpen = this.state.open;
 
     return (
-      <div ref="slidingMenu" className={['sliding-menu', isOpen ? 'open' : null].join(' ')}>
+      <div ref={el => {this.slidingMenu = el}} className={['sliding-menu', isOpen ? 'open' : null].join(' ')}>
         <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} aria-hidden={isOpen} title="Open navigation menu"><FaBars size={24} /></button>
         <div className="sliding-menu-overlay" onClick={this.onToggle}></div>
         <div
-          ref="sideContainer"
+          ref={el => {this.sideContainer = el}}
           className="sliding-menu-container"
           role="menu"
           aria-hidden={!isOpen}
           aria-expanded={isOpen}
-          onTouchStart={this.onTouchStart}
-          onTouchMove={this.onTouchMove}
-          onTouchEnd={this.onTouchEnd}
         >
           <div className="text-xs-right">
-            <button ref="closeButton" type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
+            <button ref={el => {this.closeButton = el}} type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
           </div>
           <ul className="list-unstyled">
             <li><Link to="/" activeClassName="active" onClick={this.onToggle} activeOnlyWhenExact={true}>HOME</Link></li>
