@@ -176,7 +176,7 @@ class BuildContainer extends React.Component {
   componentDidMount() {
     const restore = localStorage.getItem(STORAGE_KEY);
     if ( restore !== null ) {
-      this.props.configLoad(restore);
+      this.props.configLoad(JSON.parse(restore));
     }
   }
 

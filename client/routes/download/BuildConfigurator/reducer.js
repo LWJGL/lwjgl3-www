@@ -159,15 +159,25 @@ const loadConfig = (state, config) => {
     state.version = config.version;
   }
 
-  // if ( config.mode === MODE_ZIP ) {
-  //   state.platform = config.platform;
-  // }
-  //
-  // if ( config.preset ) {
-  //   state.preset = config.preset;
-  // } else {
-  //   // handle contents
-  // }
+  if ( config.mode === MODE_ZIP ) {
+    state.natives.allIds.forEach(platform => {
+      state.platform[platform] = false;
+    });
+    config.platform.forEach(platform => {
+      state.platform[platform] = true;
+    });
+  }
+
+  computeArtifacts(state);
+
+  if ( config.preset ) {
+    selectPreset(state, config.preset);
+  } else {
+    state.contents = {};
+    config.contents.forEach(binding => {
+      state.contents[binding] = true;
+    });
+  }
 
    return state;
 };
