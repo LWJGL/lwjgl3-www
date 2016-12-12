@@ -269,12 +269,18 @@ function* init() {
   yield put(downloadComplete());
 }
 
+const keepChecked = (src) => {
+  // Keep only checked items to avoid phantom selections
+  // when new items (bindings,addons,platforms) are added
+  return Object.keys(src).filter(key => src[key] === true);
+};
+
 const getConfig = ({build}) => {
   const save = {
     build: build.build,
     mode: build.mode,
     selectedAddons: build.selectedAddons,
-    platform: build.platform,
+    platform: keepChecked(build.platform),
     descriptions: build.descriptions,
     compact: build.compact,
     hardcoded: build.hardcoded,
@@ -284,7 +290,7 @@ const getConfig = ({build}) => {
   };
 
   if ( build.preset === 'custom' ) {
-    save.contents = build.contents;
+    save.contents = keepChecked(build.contents);
   } else {
     save.preset = build.preset;
   }
@@ -297,7 +303,7 @@ const getConfig = ({build}) => {
 
 function* saveConfig() {
   const save = yield select(getConfig);
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
 }
 
 export default function* buildDownloadSaga() {

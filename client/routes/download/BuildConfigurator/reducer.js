@@ -144,6 +144,34 @@ const toggleAddon = (state, addon) => {
   return state;
 };
 
+const loadConfig = (state, config) => {
+  state.build = config.build;
+  state.mode = config.mode;
+  state.selectedAddons = config.selectedAddons;
+  state.descriptions = config.descriptions;
+  state.compact = config.compact;
+  state.hardcoded = config.hardcoded;
+  state.javadoc = config.javadoc;
+  state.source = config.source;
+  state.language = config.language;
+
+  if ( config.build === BUILD_RELEASE ) {
+    state.version = config.version;
+  }
+
+  // if ( config.mode === MODE_ZIP ) {
+  //   state.platform = config.platform;
+  // }
+  //
+  // if ( config.preset ) {
+  //   state.preset = config.preset;
+  // } else {
+  //   // handle contents
+  // }
+
+   return state;
+};
+
 export default function(state = config, action) {
 
   switch (action.type) {
@@ -241,6 +269,9 @@ export default function(state = config, action) {
         return {...state, downloading: false};
       }
       break;
+
+    case $.CONFIG_LOAD:
+      return loadConfig({...state}, action.payload);
 
   }
 

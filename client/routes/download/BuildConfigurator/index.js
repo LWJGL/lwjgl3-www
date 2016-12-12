@@ -12,6 +12,7 @@ import {
   MODE_ZIP,
   MODE_MAVEN,
   MODE_GRADLE,
+  STORAGE_KEY,
 } from './constants'
 
 import { IS_SAFARI } from '../../../services/globals'
@@ -147,7 +148,14 @@ const fields = {
 };
 
 @subscribe
-@connect(null, {reset: $$.reset})
+@connect(
+  null,
+  {
+    reset: $$.reset,
+    configSave: $$.configSave,
+    configLoad: $$.configLoad
+  }
+)
 class BuildContainer extends React.Component {
 
   static reducers = {
@@ -164,6 +172,13 @@ class BuildContainer extends React.Component {
   //     });
   //   }
   // }
+
+  componentDidMount() {
+    const restore = localStorage.getItem(STORAGE_KEY);
+    if ( restore !== null ) {
+      this.props.configLoad(restore);
+    }
+  }
 
   componentWillUnmount() {
     this.props.reset();
