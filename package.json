@@ -15,7 +15,7 @@
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
     "aphrodite": "1.1.0",
-    "autoprefixer": "6.5.3",
+    "autoprefixer": "6.5.4",
     "aws-sdk": "2.7.13",
     "babel-core": "6.20.0",
     "babel-loader": "6.2.9",
@@ -89,7 +89,7 @@
     "node-uuid": "1.4.7",
     "nprogress": "0.2.0",
     "optimize-js": "1.0.2",
-    "postcss-loader": "1.2.0",
+    "postcss-loader": "1.2.1",
     "pug": "2.0.0-beta6",
     "react": "15.4.1",
     "react-dom": "15.4.1",
