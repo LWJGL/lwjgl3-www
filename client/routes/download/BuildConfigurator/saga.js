@@ -2,8 +2,9 @@ import { takeLatest, channel, buffers } from 'redux-saga'
 import { take, fork, call, apply, put, select } from 'redux-saga/effects'
 
 import { HTTP_OK } from '../../../services/http_status_codes'
-import { DOWNLOAD_INIT } from './actionTypes'
+import { DOWNLOAD_INIT, CONFIG_SAVE } from './actionTypes'
 import { downloadLog as log, downloadComplete } from './actions'
+import { BUILD_RELEASE, STORAGE_KEY } from './constants'
 
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver'
@@ -217,6 +218,8 @@ function* init() {
     return;
   }
 
+  yield saveConfig();
+
   const {build, path, selected, platforms, source, javadoc, version, addons} = yield select(getBuild);
 
   yield put(log('Downloading file manifest'));
@@ -266,6 +269,38 @@ function* init() {
   yield put(downloadComplete());
 }
 
+const getConfig = ({build}) => {
+  const save = {
+    build: build.build,
+    mode: build.mode,
+    selectedAddons: build.selectedAddons,
+    platform: build.platform,
+    descriptions: build.descriptions,
+    compact: build.compact,
+    hardcoded: build.hardcoded,
+    javadoc: build.javadoc,
+    source: build.source,
+    language: build.language,
+  };
+
+  if ( build.preset === 'custom' ) {
+    save.contents = build.contents;
+  } else {
+    save.preset = build.preset;
+  }
+  if ( build.build === BUILD_RELEASE ) {
+    save.version = build.version;
+  }
+
+  return save;
+};
+
+function* saveConfig() {
+  const save = yield select(getConfig);
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+}
+
 export default function* buildDownloadSaga() {
   yield takeLatest(DOWNLOAD_INIT, init);
+  yield takeLatest(CONFIG_SAVE, saveConfig);
 }

@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { MODE_ZIP } from '../constants'
-const SUPPORTS_BTOA = !!window.btoa;
-const SUPPORTS_CLIPBOARD = !!document.execCommand;
+
+import { configSave } from '../actions'
 
 @connect(
   ({build}) => {
@@ -31,6 +31,9 @@ const SUPPORTS_CLIPBOARD = !!document.execCommand;
       selected,
       selectedAddons: build.selectedAddons
     };
+  },
+  {
+    configSave
   }
 )
 class BuildScript extends React.Component {
@@ -50,6 +53,7 @@ class BuildScript extends React.Component {
     document.execCommand("copy");
     selection.removeAllRanges();
     alert('Script copied to clipboard.');
+    this.props.configSave();
   };
 
   render() {
@@ -76,11 +80,12 @@ class BuildScript extends React.Component {
               className="btn btn-success"
               download={filename(mode)}
               href={`data:${mime(mode)};base64,${btoa(script)}`}
-              disabled={!SUPPORTS_BTOA}
+              onClick={this.props.configSave}
+              disabled={!window.btoa}
             >
               DOWNLOAD SCRIPT
             </a>
-            <button className="btn btn-success" onClick={this.copyToClipboard} disabled={!SUPPORTS_CLIPBOARD}>
+            <button className="btn btn-success" onClick={this.copyToClipboard} disabled={!document.execCommand}>
               COPY TO CLIPBOARD
             </button>
         </div>

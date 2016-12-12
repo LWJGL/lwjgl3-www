@@ -10,3 +10,5 @@ export const NATIVE_ALL = [NATIVE_WIN, NATIVE_MAC, NATIVE_LINUX];
 export const MODE_ZIP = 'zip';
 export const MODE_MAVEN = 'maven';
 export const MODE_GRADLE = 'gradle';
+
+export const STORAGE_KEY = 'lwjgl-build-config';
