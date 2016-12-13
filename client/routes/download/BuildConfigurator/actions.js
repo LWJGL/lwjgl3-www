@@ -19,7 +19,6 @@ export const downloadInit = () => ({type: $.DOWNLOAD_INIT});
 export const downloadComplete = error => ({type: $.DOWNLOAD_COMPLETE, error});
 export const downloadLog = payload => ({type: $.DOWNLOAD_LOG, payload});
 
-export const configSave = () => ({type: $.CONFIG_SAVE});
 export const configLoad = payload => ({type: $.CONFIG_LOAD, payload});
 
 export const reset = () => ({type: $.RESET});

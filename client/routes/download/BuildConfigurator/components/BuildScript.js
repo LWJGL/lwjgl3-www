@@ -2,8 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { MODE_ZIP } from '../constants'
 
-import { configSave } from '../actions'
-
 @connect(
   ({build}) => {
     if ( build.mode === MODE_ZIP ) {
@@ -31,9 +29,6 @@ import { configSave } from '../actions'
       selected,
       selectedAddons: build.selectedAddons
     };
-  },
-  {
-    configSave
   }
 )
 class BuildScript extends React.Component {
@@ -53,7 +48,6 @@ class BuildScript extends React.Component {
     document.execCommand("copy");
     selection.removeAllRanges();
     alert('Script copied to clipboard.');
-    this.props.configSave();
   };
 
   render() {
@@ -80,7 +74,6 @@ class BuildScript extends React.Component {
               className="btn btn-success"
               download={filename(mode)}
               href={`data:${mime(mode)};base64,${btoa(script)}`}
-              onClick={this.props.configSave}
               disabled={!window.btoa}
             >
               DOWNLOAD SCRIPT

@@ -152,7 +152,6 @@ const fields = {
   null,
   {
     reset: $$.reset,
-    configSave: $$.configSave,
     configLoad: $$.configLoad
   }
 )

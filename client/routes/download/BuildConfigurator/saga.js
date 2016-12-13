@@ -1,8 +1,8 @@
-import { takeLatest, channel, buffers } from 'redux-saga'
+import { takeLatest, takeEvery, channel, buffers } from 'redux-saga'
 import { take, fork, call, apply, put, select } from 'redux-saga/effects'
 
 import { HTTP_OK } from '../../../services/http_status_codes'
-import { DOWNLOAD_INIT, CONFIG_SAVE } from './actionTypes'
+import * as $ from './actionTypes'
 import { downloadLog as log, downloadComplete } from './actions'
 import { BUILD_RELEASE, STORAGE_KEY } from './constants'
 
@@ -301,12 +301,31 @@ const getConfig = ({build}) => {
   return save;
 };
 
+// Used for debouncing
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 function* saveConfig() {
+  yield call(delay, 500);
+
   const save = yield select(getConfig);
   localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
 }
 
 export default function* buildDownloadSaga() {
-  yield takeLatest(DOWNLOAD_INIT, init);
-  yield takeLatest(CONFIG_SAVE, saveConfig);
+  yield takeLatest($.DOWNLOAD_INIT, init);
+  yield takeLatest([
+    $.SELECT_TYPE,
+    $.SELECT_MODE,
+    $.SELECT_PRESET,
+    $.SELECT_LANGUAGE,
+    $.SELECT_VERSION,
+    $.TOGGLE_DESCRIPTIONS,
+    $.TOGGLE_SOURCE,
+    $.TOGGLE_JAVADOC,
+    $.TOGGLE_COMPACT,
+    $.TOGGLE_HARDCODED,
+    $.TOGGLE_PLATFORM,
+    $.TOGGLE_ARTIFACT,
+    $.TOGGLE_ADDON,
+  ], saveConfig);
 }

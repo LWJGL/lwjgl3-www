@@ -173,9 +173,12 @@ const loadConfig = (state, config) => {
   if ( config.preset ) {
     selectPreset(state, config.preset);
   } else {
+    state.preset = 'custom';
     state.contents = {};
     config.contents.forEach(binding => {
-      state.contents[binding] = true;
+      if ( state.artifacts.byId[binding] ) {
+        state.contents[binding] = true;
+      }
     });
   }
 
