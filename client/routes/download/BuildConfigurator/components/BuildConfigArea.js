@@ -1,9 +1,16 @@
 import React from 'react'
 import supportsPassive from '../../../../services/supports-passive'
+import { connect } from 'react-redux'
 
+@connect(
+  ({build}) => ({
+    mode: build.mode,
+  })
+)
 class BuildConfigArea extends React.Component {
 
   ticking = false;
+  forceUpdate = false;
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
@@ -12,6 +19,16 @@ class BuildConfigArea extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
+  }
+
+  componentWillUpdate() {
+    this.forceUpdate = true;
+  }
+
+  componentDidUpdate() {
+    if ( this.forceUpdate ) {
+      setImmediate(this.update);
+    }
   }
 
   onScroll = () => {
