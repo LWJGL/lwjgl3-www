@@ -6,9 +6,7 @@ import configureStore from './store/configureStore'
 import App from './containers/App'
 import './services/ga'
 
-// TODO: Remove after upgrade to React v16+
 import { connect } from 'react-redux'
-connect.setDefaultReact15CompatibilityMode(false);
 
 // Hide spinner from nprogress
 nprogress.configure({

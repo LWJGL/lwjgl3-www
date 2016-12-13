@@ -7,6 +7,9 @@ const DEV = !PRODUCTION;
 
 const config = {
   target: 'web',
+  performance: {
+    hints: false
+  },
   entry: {
     main: [
       'babel-polyfill',

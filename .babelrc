@@ -4,6 +4,7 @@
     "transform-flow-strip-types",
     "syntax-flow",
     "syntax-jsx",
+    "syntax-dynamic-import",
     "transform-react-display-name",
     "transform-decorators-legacy",
     "transform-class-properties",

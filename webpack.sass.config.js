@@ -8,6 +8,9 @@ const DEV = !PRODUCTION;
 
 const config = {
   target: 'web',
+  performance: {
+    hints: false
+  },
   entry: {
     bundle: [
       path.resolve(__dirname, 'client/styles/layout.scss')

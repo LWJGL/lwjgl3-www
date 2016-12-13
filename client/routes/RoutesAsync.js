@@ -62,8 +62,8 @@ const asyncRoute = getComponent => class AsyncComponent extends React.Component 
   }
 };
 
-export const Home = asyncRoute(() => System.import('./home/index'));
-export const Download = asyncRoute(() => System.import('./download/index'));
-export const Guide = asyncRoute(() => System.import('./guide/index'));
-export const Source = asyncRoute(() => System.import('./source/index'));
-export const License = asyncRoute(() => System.import('./license/index'));
+export const Home = asyncRoute(() => import('./home'));
+export const Download = asyncRoute(() => import('./download'));
+export const Guide = asyncRoute(() => import('./guide'));
+export const Source = asyncRoute(() => import('./source'));
+export const License = asyncRoute(() => import('./license'));
