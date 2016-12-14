@@ -1,4 +1,4 @@
-import { takeLatest, takeEvery, channel, buffers } from 'redux-saga'
+import { takeLatest, channel, buffers } from 'redux-saga'
 import { take, fork, call, apply, put, select } from 'redux-saga/effects'
 
 import { HTTP_OK } from '../../../services/http_status_codes'
@@ -117,14 +117,14 @@ function getAddons(addons, source, javadoc) {
   const files = [];
 
   addons.forEach(addon => {
-    const { id, version } = addon;
+    const {id, version} = addon;
 
     files.push(`addons/${id}/${id}-${version}.jar`);
     files.push(`addons/${id}/${id}_license.txt`);
-    if ( javadoc )  {
+    if ( javadoc ) {
       files.push(`addons/${id}/${id}-${version}-javadoc.jar`);
     }
-    if ( source )  {
+    if ( source ) {
       files.push(`addons/${id}/${id}-${version}-sources.jar`);
     }
   });
@@ -169,7 +169,7 @@ class CountDownLatch {
   };
 
   await = function*() {
-    for (let i = 0; i < this.count; i += 1) {
+    for ( let i = 0; i < this.count; i += 1 ) {
       yield take(this.channel);
     }
     this.channel.close();
@@ -197,11 +197,11 @@ function* downloadFiles(files) {
   const input = channel(buffers.fixed(files.length));
   const latch = new CountDownLatch(PARALLEL_DOWNLOADS);
 
-  for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
+  for ( let i = 0; i < PARALLEL_DOWNLOADS; i += 1 ) {
     yield fork(downloadWorker, input, output, latch, files);
   }
 
-  for (const i of files.keys()) {
+  for ( const i of files.keys() ) {
     yield put(input, i);
   }
   input.close();
@@ -263,7 +263,7 @@ function* init() {
 
   //noinspection JSUnresolvedVariable
   const blob = yield apply(zip, zip.generateAsync, [zipOptions]);
-  saveAs(blob, `lwjgl-${build}-${version}-custom.zip`);
+  saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : (new Date()).toJSON().substr(0,10)}-custom.zip`);
 
   yield put(log(`Done!`));
   yield put(downloadComplete());
@@ -314,7 +314,7 @@ function* saveConfig() {
 function* downloadConfig() {
   const save = yield select(getConfig);
   const blob = new Blob([JSON.stringify(save, null, 2)], {type: 'application/json', endings: 'native'});
-  saveAs(blob, `lwjgl-${save.build}-${save.preset||'custom'}-${save.mode}.json`);
+  saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
 }
 
 export default function* buildDownloadSaga() {
