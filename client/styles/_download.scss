@@ -120,6 +120,14 @@ $buildBorderRadius: 4px;
     .btn + .btn {
       margin-left: .5rem;
     }
+
+    &.file {
+      .custom-file {
+        height: auto;
+        margin-right: 1rem;
+        text-align: left !important;
+      }
+    }
   }
 
   &.stick {
@@ -142,8 +150,6 @@ $buildBorderRadius: 4px;
         width: 1110px;
         margin-left: -555px;
       }
-
-
     }
   }
 

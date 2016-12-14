@@ -17,7 +17,7 @@ async function fetchManifest(path) {
   return await response.json();
 }
 
-const getBuild = ({build}) => {
+function getBuild({build}) {
   let path;
   const platformCount = build.natives.allIds.length;
   const selectedPlatforms = build.platform;
@@ -56,7 +56,7 @@ const getBuild = ({build}) => {
     version: build.version,
     addons,
   };
-};
+}
 
 function getFiles(path, manifest, selected, platforms, source, javadoc) {
   const files = [];
@@ -311,8 +311,15 @@ function* saveConfig() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
 }
 
+function* downloadConfig() {
+  const save = yield select(getConfig);
+  const blob = new Blob([JSON.stringify(save, null, 2)], {type: 'application/json', endings: 'native'});
+  saveAs(blob, `lwjgl-${save.build}-${save.preset||'custom'}-${save.mode}.json`);
+}
+
 export default function* buildDownloadSaga() {
   yield takeLatest($.DOWNLOAD_INIT, init);
+  yield takeLatest($.CONFIG_DOWNLOAD, downloadConfig);
   yield takeLatest([
     $.SELECT_TYPE,
     $.SELECT_MODE,
