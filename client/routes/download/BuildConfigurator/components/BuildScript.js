@@ -2,10 +2,15 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { MODE_ZIP } from '../constants'
 
+import BuildToolbar from './BuildToolbar'
+import FaCloudDownload from '../../../../icons/cloud-download'
+import FaClipboard from '../../../../icons/clipboard'
+
 @connect(
-  ({build}) => {
+  ({build, breakpoint}) => {
     if ( build.mode === MODE_ZIP ) {
       return {
+        breakpoint,
         mode: MODE_ZIP
       }
     }
@@ -19,6 +24,7 @@ import { MODE_ZIP } from '../constants'
     });
 
     return {
+      breakpoint,
       build: build.build,
       mode: build.mode,
       version: build.version,
@@ -39,7 +45,7 @@ class BuildScript extends React.Component {
       alert('Copying to clipboard not supported!');
       return;
     }
-    if ( selection.rangeCount > 0) {
+    if ( selection.rangeCount > 0 ) {
       selection.removeAllRanges();
     }
     const range = document.createRange();
@@ -57,6 +63,19 @@ class BuildScript extends React.Component {
       return null;
     }
 
+    const {current, sm, md} = this.props.breakpoint;
+    const labels = {
+      download: `DOWNLOAD ${mode.toUpperCase()}`,
+      copy: ' COPY TO CLIPBOARD'
+    };
+
+    if ( current < sm ) {
+      labels.download = 'DOWNLOAD';
+      labels.copy = null;
+    } else if ( current < md ) {
+      labels.copy = ' COPY';
+    }
+
     const script = generateScript(this.props);
 
     return (
@@ -69,19 +88,20 @@ class BuildScript extends React.Component {
           }
         </h2>
         <pre ref={el => {this.script=el}}><code>{script}</code></pre>
-        <div className="download-toolbar">
+        <BuildToolbar>
             <a
               className="btn btn-success"
               download={filename(mode)}
               href={`data:${mime(mode)};base64,${btoa(script)}`}
               disabled={!window.btoa}
+              title={`Download ${mode} code snippet`}
             >
-              DOWNLOAD SCRIPT
+              <FaCloudDownload /> {labels.download}
             </a>
-            <button className="btn btn-success" onClick={this.copyToClipboard} disabled={!document.execCommand}>
-              COPY TO CLIPBOARD
+            <button className="btn btn-success" onClick={this.copyToClipboard} disabled={!document.execCommand} title="Copy to clipboard">
+              <FaClipboard />{labels.copy}
             </button>
-        </div>
+        </BuildToolbar>
       </div>
     )
   }

@@ -4,21 +4,25 @@ import { downloadInit } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
 import { MODE_ZIP } from '../constants'
 
+import BuildToolbar from './BuildToolbar'
+import FaCloudDownload from '../../../../icons/cloud-download'
+
 @connect(
   ({build}) => ({
     build: build.build,
     mode: build.mode,
     version: build.version,
-    fullZip:
-         build.version === '3.0.0'
+    fullZip: (
+      build.version === '3.0.0'
       || IS_SAFARI
       || (
-           build.preset === 'all'
+        build.preset === 'all'
         && build.source === true
         && build.javadoc === true
         && build.natives.allIds.every(platform => build.platform[platform])
         && build.selectedAddons.length === 0
       )
+    )
   }),
   {
     downloadInit
@@ -27,32 +31,42 @@ import { MODE_ZIP } from '../constants'
 class BuildDownload extends React.Component {
 
   render() {
-    const props = this.props;
+    const {mode, fullZip, build, version} = this.props;
 
-    if ( props.mode !== MODE_ZIP ) {
+    if ( mode !== MODE_ZIP ) {
       return null;
-    } else if ( props.fullZip ) {
-      let downloadUrl;
-      switch (props.build) {
+    }
+
+    let attr;
+    let UIElement;
+
+    if ( fullZip ) {
+      UIElement = 'a';
+
+      attr = {
+        download: `lwjgl-${build}-${version}.zip`
+      };
+
+      switch (build) {
         case 'release':
-          downloadUrl = `https://build.lwjgl.org/${props.build}/${props.version}/lwjgl-${props.version}.zip`;
+          attr.href = `https://build.lwjgl.org/${build}/${version}/lwjgl-${version}.zip`;
           break;
         default:
-          downloadUrl = `https://build.lwjgl.org/${props.build}/lwjgl.zip`;
+          attr.href = `https://build.lwjgl.org/${build}/lwjgl.zip`;
       }
-
-      return (
-        <div className="download-toolbar">
-          <a className="btn btn-success" download={`lwjgl-${props.build}-${props.version}.zip`} href={downloadUrl}>DOWNLOAD ZIP</a>
-        </div>
-      )
     } else {
-      return (
-        <div className="download-toolbar">
-          <button className="btn btn-success" onClick={this.props.downloadInit}>DOWNLOAD ZIP</button>
-        </div>
-      )
+      UIElement = 'button';
+      attr = {
+        onClick: this.props.downloadInit
+      };
     }
+
+    return (
+      <BuildToolbar>
+        <UIElement className="btn btn-success" {...attr}><FaCloudDownload /> DOWNLOAD ZIP</UIElement>
+      </BuildToolbar>
+    )
+
   }
 
 }
