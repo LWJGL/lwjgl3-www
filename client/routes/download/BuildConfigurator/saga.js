@@ -22,7 +22,7 @@ function getBuild({build}) {
   const platformCount = build.natives.allIds.length;
   const selectedPlatforms = build.platform;
 
-  if ( build.build === 'release' ) {
+  if ( build.build === BUILD_RELEASE ) {
     path = `release/${build.version}`;
   } else {
     path = build.build;

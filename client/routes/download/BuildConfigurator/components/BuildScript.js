@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { MODE_ZIP } from '../constants'
+import { MODE_ZIP, BUILD_RELEASE } from '../constants'
 
 import BuildToolbar from './BuildToolbar'
 import FaCloudDownload from '../../../../icons/cloud-download'
@@ -110,7 +110,7 @@ class BuildScript extends React.Component {
 
 const filename = mode => mode === 'maven' ? 'pom.xml' : 'build.gradle';
 const mime = mode => mode === 'maven' ? 'text/xml' : 'text/plain';
-const getVersion = (version, build) => build === "release" ? version : `${version}-SNAPSHOT`;
+const getVersion = (version, build) => build === BUILD_RELEASE ? version : `${version}-SNAPSHOT`;
 
 function generateScript(props) {
   if ( props.mode === 'maven' ) {
@@ -150,7 +150,7 @@ function generateMaven(props) {
 </profiles>
 `;
 
-  if ( build !== "release" ) {
+  if ( build !== BUILD_RELEASE ) {
     script += `<repositories>
 \t<repository>
 \t\t<id>sonatype-snapshots</id>
@@ -215,10 +215,10 @@ switch ( OperatingSystem.current() ) {
 
   script += `repositories {`;
 
-  if ( build === 'release' || selectedAddons.length ) {
+  if ( build === BUILD_RELEASE || selectedAddons.length ) {
     script += `\n\tmavenCentral()`;
   }
-  if ( build !== 'release' ) {
+  if ( build !== BUILD_RELEASE ) {
     script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
   }
   script += `\n}\n\n`;

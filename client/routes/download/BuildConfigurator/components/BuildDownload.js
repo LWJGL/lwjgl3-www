@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { downloadInit } from '../actions'
 import { IS_SAFARI } from '../../../../services/globals'
-import { MODE_ZIP } from '../constants'
+import { MODE_ZIP, BUILD_RELEASE } from '../constants'
 
 import BuildToolbar from './BuildToolbar'
 import FaCloudDownload from '../../../../icons/cloud-download'
@@ -48,7 +48,7 @@ class BuildDownload extends React.Component {
       };
 
       switch (build) {
-        case 'release':
+        case BUILD_RELEASE:
           attr.href = `https://build.lwjgl.org/${build}/${version}/lwjgl-${version}.zip`;
           break;
         default:
