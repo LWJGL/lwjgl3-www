@@ -11,9 +11,9 @@ import FaCloudDownload from '../../../../icons/cloud-download'
   ({build}) => ({
     build: build.build,
     mode: build.mode,
-    version: build.version,
+    version: build.artifacts.version,
     fullZip: (
-      build.version === '3.0.0'
+      build.artifacts.version === '3.0.0'
       || IS_SAFARI
       || (
         build.preset === 'all'

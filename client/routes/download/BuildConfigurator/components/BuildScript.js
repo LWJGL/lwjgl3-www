@@ -27,7 +27,7 @@ import FaClipboard from '../../../../icons/clipboard'
       breakpoint,
       build: build.build,
       mode: build.mode,
-      version: build.version,
+      version: build.artifacts.version,
       hardcoded: build.hardcoded,
       compact: build.compact,
       artifacts: build.artifacts.byId,

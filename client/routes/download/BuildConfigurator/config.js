@@ -226,27 +226,21 @@ import lwjgl_nightly from './lwjgl/nightly'
   lwjgl_nightly
 ].reduce((previousBuild, nextBuildConfig) => {
   const build = nextBuildConfig(previousBuild);
-  build.version = build.semver.join('.')
   build.allIds = Object.keys(build.byId).sort();
-
-  return config.lwjgl[build.alias || build.version] = build;
+  config.lwjgl[build.alias || build.version] = build;
+  return build;
 }, null);
 
-config.versions = Object.values(config.lwjgl)
-    .filter(it => it['alias'] === undefined)
-    .map(it => it.version)
-    .reverse();
+config.versions = Object.values(config.lwjgl).filter(it => it['alias'] === undefined).map(it => it.version).reverse();
+config.version = config.versions[0];
 
 config.modes.allIds = Object.keys(config.modes.byId);
 config.languages.allIds = Object.keys(config.languages.byId);
 config.presets.allIds = Object.keys(config.presets.byId);
 
 config.language = config.languages.allIds[0];
-config.version = config.releaseVersion = config.versions[0];
 
-config.natives.allIds.forEach(platform => {
-  config.platform[platform] = false;
-});
+config.natives.allIds.forEach(platform => { config.platform[platform] = false });
 config.platform[getDefaultPlatform()] = true;
 
 export default config;

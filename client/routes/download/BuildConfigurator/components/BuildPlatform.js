@@ -29,7 +29,7 @@ const getIcon = (platform) => {
 
 @connect(
   state => {
-    const disabled = state.build.version === '3.0.0' || IS_SAFARI;
+    const disabled = state.build.artifacts.version === '3.0.0' || IS_SAFARI;
 
     return {
       platforms: state.build.natives.allIds,

@@ -46,7 +46,7 @@ const getPlatformIcons = (platforms) => {
       showDescriptions: build.descriptions,
       disabled: !build.availability[artifact.id]
         || IS_SAFARI
-        || build.version === '3.0.0'
+        || build.artifacts.version === '3.0.0'
         || artifact.required
     }
   },

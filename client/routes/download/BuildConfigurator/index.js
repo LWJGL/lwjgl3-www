@@ -53,7 +53,7 @@ const fields = {
     options: createSelector(
       state => state.build.modes,
       state => state.build.build,
-      state => state.build.version,
+      state => state.build.artifacts.version,
       (modes, build, version) => {
         return modes.allIds.map(
           mode => ({
@@ -73,7 +73,7 @@ const fields = {
       state => state.build.presets,
       state => state.build.mode,
       state => state.build.build,
-      state => state.build.version,
+      state => state.build.artifacts.version,
       (presets, mode, build, version) => presets.allIds.map(
         preset => ({
           value: preset,
@@ -121,17 +121,17 @@ const fields = {
   },
   source: {
     label: "Include source",
-    checked: state => state.build.source || state.build.version === '3.0.0' || IS_SAFARI,
+    checked: ({build}) => build.source || build.artifacts.version === '3.0.0' || IS_SAFARI,
     action: $$.toggleSource,
     hidden: isModeNotZip,
-    disabled: state => state.build.version === '3.0.0' || IS_SAFARI,
+    disabled: state => state.build.artifacts.version === '3.0.0' || IS_SAFARI,
   },
   javadoc: {
     label: "Include JavaDoc",
-    checked: state => state.build.javadoc || state.build.version === '3.0.0' || IS_SAFARI,
+    checked: ({build}) => build.javadoc || build.artifacts.version === '3.0.0' || IS_SAFARI,
     action: $$.toggleJavadoc,
     hidden: isModeNotZip,
-    disabled: state => state.build.version === '3.0.0' || IS_SAFARI,
+    disabled: state => state.build.artifacts.version === '3.0.0' || IS_SAFARI,
   },
   compact: {
     label: "Compact Mode",

@@ -11,11 +11,9 @@ import {
 const nativeCnt = config.natives.allIds.length;
 
 const computeArtifacts = (state) => {
-  state.artifacts = state.lwjgl[state.build === BUILD_RELEASE ? state.releaseVersion : state.build];
-  state.version = state.artifacts.version;
+  state.artifacts = state.lwjgl[state.build === BUILD_RELEASE ? state.version : state.build];
 
   state.availability = {};
-
   state.artifacts.allIds.forEach(it => {
     const artifact = state.artifacts.byId[it];
 
@@ -56,7 +54,7 @@ const selectBuild = (state, build) => {
 };
 
 const selectVersion = (state, version) => {
-  state.releaseVersion = version;
+  state.version = version;
   computeArtifacts(state);
   return state;
 };
@@ -152,7 +150,7 @@ const loadConfig = (state, config) => {
   state.language = config.language;
 
   if ( config.build === BUILD_RELEASE ) {
-    state.releaseVersion = config.version;
+    state.version = config.version;
   }
 
   if ( config.mode === MODE_ZIP ) {
