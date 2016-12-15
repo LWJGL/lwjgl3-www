@@ -122,7 +122,7 @@ function generateScript(props) {
 
 function generateMaven(props) {
   const {build, hardcoded, compact, artifacts, selected, addons, selectedAddons} = props;
-  const version = getVersion(props.version);
+  const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
   const v = hardcoded ? version : '\${lwjgl.version}';
@@ -185,7 +185,7 @@ function generateMaven(props) {
 
 function generateGradle(props) {
   const {build, hardcoded, artifacts, selected, addons, selectedAddons} = props;
-  const version = getVersion(props.version);
+  const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
   const v = hardcoded ? version : '\${lwjglVersion}';

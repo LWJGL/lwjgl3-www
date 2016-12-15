@@ -104,7 +104,7 @@ const fields = {
     action: $$.changeVersion,
     options: createSelector(
       state => state.build.versions,
-      (versions) => versions.allIds.map(
+      (versions) => versions.map(
         version => {
           return {
             value: version,

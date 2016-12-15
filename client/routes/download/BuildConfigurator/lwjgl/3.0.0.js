@@ -4,8 +4,8 @@ import {
 } from '../constants'
 
 export default () => {
-
-  const artifacts = {
+  return {
+    semver: [3, 0, 0],
     byId: {
       'lwjgl': {
         id: 'lwjgl',
@@ -122,8 +122,4 @@ export default () => {
       },
     }
   };
-
-  artifacts.allIds = Object.keys(artifacts.byId);
-
-  return artifacts;
 };

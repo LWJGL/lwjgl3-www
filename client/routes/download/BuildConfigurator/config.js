@@ -34,18 +34,6 @@ const config = {
     },
     allIds: [BUILD_RELEASE, BUILD_STABLE, BUILD_NIGHTLY],
   },
-  versions: {
-    byId: {
-      '3.1.0': {
-        id: '3.1.0',
-        semver: [3, 1, 0]
-      },
-      '3.0.0': {
-        id: '3.0.0',
-        semver: [3, 0, 0]
-      }
-    },
-  },
   modes: {
     byId: {
       [MODE_ZIP]: {
@@ -226,27 +214,39 @@ function getDefaultPlatform() {
   return 'windows';
 }
 
-config.modes.allIds = Object.keys(config.modes.byId);
-config.versions.allIds = Object.keys(config.versions.byId);
-config.languages.allIds = Object.keys(config.languages.byId);
-config.presets.allIds = Object.keys(config.presets.byId);
-
-config.language = config.languages.allIds[0];
-config.version = config.versions.allIds[0];
-
-config.natives.allIds.forEach(platform => {
-  config.platform[platform] = false;
-});
-config.platform[getDefaultPlatform()] = true;
-
 import lwjgl_300 from './lwjgl/3.0.0'
 import lwjgl_310 from './lwjgl/3.1.0'
 import lwjgl_stable from './lwjgl/stable'
 import lwjgl_nightly from './lwjgl/nightly'
 
-config.lwjgl['3.0.0'] = lwjgl_300();
-config.lwjgl['3.1.0'] = lwjgl_310(config.lwjgl['3.0.0']);
-config.lwjgl['stable'] = lwjgl_stable(config.lwjgl['3.1.0']);
-config.lwjgl['nightly'] = lwjgl_nightly(config.lwjgl['stable']);
+[
+  lwjgl_300,
+  lwjgl_310,
+  lwjgl_stable,
+  lwjgl_nightly
+].reduce((previousBuild, nextBuildConfig) => {
+  const build = nextBuildConfig(previousBuild);
+  build.version = build.semver.join('.')
+  build.allIds = Object.keys(build.byId).sort();
+
+  return config.lwjgl[build.alias || build.version] = build;
+}, null);
+
+config.versions = Object.values(config.lwjgl)
+    .filter(it => it['alias'] === undefined)
+    .map(it => it.version)
+    .reverse();
+
+config.modes.allIds = Object.keys(config.modes.byId);
+config.languages.allIds = Object.keys(config.languages.byId);
+config.presets.allIds = Object.keys(config.presets.byId);
+
+config.language = config.languages.allIds[0];
+config.version = config.releaseVersion = config.versions[0];
+
+config.natives.allIds.forEach(platform => {
+  config.platform[platform] = false;
+});
+config.platform[getDefaultPlatform()] = true;
 
 export default config;
