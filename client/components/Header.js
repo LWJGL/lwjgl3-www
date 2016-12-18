@@ -129,7 +129,7 @@ class Header extends React.Component {
     }
 
     return (
-      <header ref={el => {this.el = el}} role="navigation" className={headerClass.join(' ')}>
+      <header ref={(el) => {this.el = el}} role="navigation" className={headerClass.join(' ')}>
         <nav className="container-fluid">
           <div className="row">
             <div className="col-lg-2 col-xs-8"><Link to="/">LW<b>JGL</b> 3</Link></div>

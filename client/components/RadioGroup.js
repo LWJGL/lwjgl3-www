@@ -19,7 +19,7 @@ class RadioGroup extends React.PureComponent {
     }
   }
 
-  change = value => {
+  change = (value) => {
     if ( value !== this.props.value && this.props.onChange ) {
       this.props.onChange(value);
     }

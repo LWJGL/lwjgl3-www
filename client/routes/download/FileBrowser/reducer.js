@@ -6,7 +6,7 @@ const $ = {
 
 const $$ = {
   browserOpen: () => ({type: $.BROWSER_OPEN}),
-  loadPath: path => ({type: $.BROWSER_LOAD, path}),
+  loadPath: (path) => ({type: $.BROWSER_LOAD, path}),
   storeContents: (path, contents) => ({type: $.STORE_CONTENTS, path, contents}),
 };
 

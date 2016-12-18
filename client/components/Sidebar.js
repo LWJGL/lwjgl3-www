@@ -89,18 +89,18 @@ export default class Sidebar extends React.Component {
     let isOpen = this.state.open;
 
     return (
-      <div ref={el => {this.slidingMenu = el}} className={['sliding-menu', isOpen ? 'open' : null].join(' ')}>
+      <div ref={(el) => {this.slidingMenu = el}} className={['sliding-menu', isOpen ? 'open' : null].join(' ')}>
         <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} aria-hidden={isOpen} title="Open navigation menu"><FaBars size={24} /></button>
         <div className="sliding-menu-overlay" onClick={this.onToggle}></div>
         <div
-          ref={el => {this.sideContainer = el}}
+          ref={(el) => {this.sideContainer = el}}
           className="sliding-menu-container"
           role="menu"
           aria-hidden={!isOpen}
           aria-expanded={isOpen}
         >
           <div className="text-xs-right">
-            <button ref={el => {this.closeButton = el}} type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
+            <button ref={(el) => {this.closeButton = el}} type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
           </div>
           <ul className="list-unstyled">
             <li><Link to="/" activeClassName="active" onClick={this.onToggle} activeOnlyWhenExact={true}>HOME</Link></li>

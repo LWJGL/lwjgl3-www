@@ -3,7 +3,7 @@ import { select, call, put } from 'redux-saga/effects'
 import { types as $, actions as $$ } from './reducer'
 import { HTTP_OK } from '../../../services/http_status_codes'
 
-const getData = state => {
+const getData = (state) => {
   return {
     path: state.browser.path,
     ...state.browser.contents[state.browser.path],

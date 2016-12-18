@@ -1,28 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { downloadInit } from '../actions'
-import { IS_SAFARI } from '../../../../services/globals'
-import { MODE_ZIP, BUILD_RELEASE } from '../constants'
+import { MODE_ZIP } from '../constants'
 
 import BuildToolbar from './BuildToolbar'
 import FaCloudDownload from '../../../../icons/cloud-download'
 
 @connect(
-  ({build}) => ({
-    build: build.build,
-    mode: build.mode,
-    version: build.artifacts.version,
-    fullZip: (
-      build.artifacts.version === '3.0.0'
-      || IS_SAFARI
-      || (
-        build.preset === 'all'
-        && build.source === true
-        && build.javadoc === true
-        && build.natives.allIds.every(platform => build.platform[platform])
-        && build.selectedAddons.length === 0
-      )
-    )
+  (state) => ({
+    mode: state.build.mode,
   }),
   {
     downloadInit
@@ -31,42 +17,17 @@ import FaCloudDownload from '../../../../icons/cloud-download'
 class BuildDownload extends React.Component {
 
   render() {
-    const {mode, fullZip, build, version} = this.props;
+    const {mode} = this.props;
 
-    if ( mode !== MODE_ZIP ) {
+    if ( mode === MODE_ZIP ) {
+      return (
+        <BuildToolbar>
+          <button className="btn btn-success" onClick={this.props.downloadInit}><FaCloudDownload /> DOWNLOAD ZIP</button>
+        </BuildToolbar>
+      )
+    } else {
       return null;
     }
-
-    let attr;
-    let UIElement;
-
-    if ( fullZip ) {
-      UIElement = 'a';
-
-      attr = {
-        download: `lwjgl-${build}-${version}.zip`
-      };
-
-      switch (build) {
-        case BUILD_RELEASE:
-          attr.href = `https://build.lwjgl.org/${build}/${version}/lwjgl-${version}.zip`;
-          break;
-        default:
-          attr.href = `https://build.lwjgl.org/${build}/lwjgl.zip`;
-      }
-    } else {
-      UIElement = 'button';
-      attr = {
-        onClick: this.props.downloadInit
-      };
-    }
-
-    return (
-      <BuildToolbar>
-        <UIElement className="btn btn-success" {...attr}><FaCloudDownload /> DOWNLOAD ZIP</UIElement>
-      </BuildToolbar>
-    )
-
   }
 
 }

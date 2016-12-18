@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import LoaderSpinner from '../../../../components/LoaderSpinner'
 
 @connect(
-  state => ({
+  (state) => ({
     progress: state.build.progress
   })
 )

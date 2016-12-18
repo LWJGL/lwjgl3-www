@@ -14,14 +14,14 @@ const computeArtifacts = (state) => {
   state.artifacts = state.lwjgl[state.build === BUILD_RELEASE ? state.version : state.build];
 
   state.availability = {};
-  state.artifacts.allIds.forEach(it => {
+  state.artifacts.allIds.forEach((it) => {
     const artifact = state.artifacts.byId[it];
 
     state.availability[it] =
       state.mode !== MODE_ZIP
       || artifact.natives === undefined
       || artifact.natives.length === nativeCnt
-      || artifact.natives.some(platform => !!state.platform[platform]);
+      || artifact.natives.some((platform) => !!state.platform[platform]);
   });
 
   if ( state.preset !== 'custom' ) {
@@ -31,13 +31,6 @@ const computeArtifacts = (state) => {
   if ( state.build === BUILD_STABLE ) {
     if ( state.mode !== MODE_ZIP ) {
       state.mode = MODE_ZIP;
-    }
-  } else if ( state.build === BUILD_RELEASE ) {
-    if ( state.version === '3.0.0' ) {
-      state.mode = MODE_ZIP;
-      if ( state.preset !== 'all' ) {
-        selectPreset(state, 'all');
-      }
     }
   }
 
@@ -70,15 +63,15 @@ const selectPreset = (state, preset) => {
 
   if ( preset === 'all' ) {
     state.contents = {...state.contents};
-    state.artifacts.allIds.forEach(artifact => {
+    state.artifacts.allIds.forEach((artifact) => {
       state.contents[artifact] = true;
     });
   } else if ( preset !== 'custom' ) {
     state.contents = {...state.contents};
-    state.artifacts.allIds.forEach(artifact => {
+    state.artifacts.allIds.forEach((artifact) => {
       state.contents[artifact] = false;
     });
-    state.presets.byId[preset].artifacts.forEach(artifact => {
+    state.presets.byId[preset].artifacts.forEach((artifact) => {
       state.contents[artifact] = true;
     });
   }
@@ -91,7 +84,7 @@ const toggleArtifact = (state, artifact) => {
 
   // MATCH PRESET
   // collect selected artifacts in an Array
-  const selected = state.artifacts.allIds.filter(artifact => state.contents[artifact]);
+  const selected = state.artifacts.allIds.filter((artifact) => state.contents[artifact]);
 
   if ( selected.length === state.artifacts.allIds.length ) {
     state.preset = 'all';
@@ -102,14 +95,14 @@ const toggleArtifact = (state, artifact) => {
   }
 
   // match selected artifacts with a preset
-  const presetFoundMatch = state.presets.allIds.some(preset => {
+  const presetFoundMatch = state.presets.allIds.some((preset) => {
     // only check predefined presets
     if ( preset === 'custom' || preset === 'all' || preset === 'none' ) {
       return false;
     }
 
     // Get preset artifacts but keep only ones present in the current artifact collection
-    const artifacts = state.presets.byId[preset].artifacts.filter(it => !!state.artifacts.byId[it]);
+    const artifacts = state.presets.byId[preset].artifacts.filter((it) => !!state.artifacts.byId[it]);
 
     // first check length for speed, then do deep comparison
     if ( artifacts.length === selected.length && artifacts.every((it, i) => it === selected[i]) ) {
@@ -130,7 +123,7 @@ const toggleArtifact = (state, artifact) => {
 
 const toggleAddon = (state, addon) => {
   if ( state.selectedAddons.includes(addon) ) {
-    state.selectedAddons = state.selectedAddons.filter(it => it !== addon);
+    state.selectedAddons = state.selectedAddons.filter((it) => it !== addon);
   } else {
     state.selectedAddons = [...state.selectedAddons, addon];
   }
@@ -154,10 +147,10 @@ const loadConfig = (state, config) => {
   }
 
   if ( config.mode === MODE_ZIP ) {
-    state.natives.allIds.forEach(platform => {
+    state.natives.allIds.forEach((platform) => {
       state.platform[platform] = false;
     });
-    config.platform.forEach(platform => {
+    config.platform.forEach((platform) => {
       state.platform[platform] = true;
     });
   }
@@ -169,7 +162,7 @@ const loadConfig = (state, config) => {
   } else {
     state.preset = 'custom';
     state.contents = {};
-    config.contents.forEach(binding => {
+    config.contents.forEach((binding) => {
       if ( state.artifacts.byId[binding] ) {
         state.contents[binding] = true;
       }

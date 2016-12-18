@@ -28,7 +28,7 @@ function configureStore() {
     );
 
     // https://github.com/zalmoxisus/redux-devtools-extension
-    composed.push(window.devToolsExtension ? window.devToolsExtension() : f => f);
+    composed.push(window.devToolsExtension ? window.devToolsExtension() : (f) => f);
   }
 
   const store = createStore(
@@ -47,7 +47,7 @@ function configureStore() {
     store.replaceReducer(createReducer(store.asyncReducers));
   };
 
-  store.ejectReducer = name => {
+  store.ejectReducer = (name) => {
     delete store.asyncReducers[name];
     store.replaceReducer(createReducer(store.asyncReducers));
   };

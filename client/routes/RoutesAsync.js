@@ -5,7 +5,7 @@ import LoaderSpinner from '../components/LoaderSpinner'
 
 let firstRoute = true;
 
-const asyncRoute = getComponent => class AsyncComponent extends React.Component {
+const asyncRoute = (getComponent) => class AsyncComponent extends React.Component {
   static Component = null;
 
   mounted = false;
@@ -20,7 +20,7 @@ const asyncRoute = getComponent => class AsyncComponent extends React.Component 
       if ( !firstRoute ) {
         nprogress.start();
       }
-      getComponent().then(m => m.default).then(Component => {
+      getComponent().then((m) => m.default).then((Component) => {
         if ( firstRoute ) {
           firstRoute = false;
           if ( process.env.NODE_ENV === 'production' ) {

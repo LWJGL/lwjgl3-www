@@ -15,8 +15,6 @@ import {
   STORAGE_KEY,
 } from './constants'
 
-import { IS_SAFARI } from '../../../services/globals'
-
 import ControlledPanel from '../../../components/ControlledPanel'
 import ControlledRadio from '../../../components/ControlledRadio'
 import ControlledCheckbox from '../../../components/ControlledCheckbox'
@@ -31,19 +29,19 @@ import BuildDownload from './components/BuildDownload'
 import BuildScript from './components/BuildScript'
 import BuildBundler from './components/BuildBundler'
 
-const getMode = state => state.build.mode;
-const getBuild = state => state.build.build;
-const getPreset = state => state.build.preset;
-const getLanguage = state => state.build.language;
-const getVersion = state => state.build.version;
-const isBuildSelected = state => getBuild(state) !== null;
-const isModeGradle = state => getMode(state) === MODE_GRADLE;
-const isModeMaven = state => getMode(state) === MODE_MAVEN;
-const isModeZip = state => getMode(state) === MODE_ZIP;
-const isModeNotZip = state => getMode(state) !== MODE_ZIP;
-const isBuildRelease = state => getBuild(state) === BUILD_RELEASE;
-const isDownloading = state => state.build.downloading;
-const isCustomizing = state => !state.build.downloading;
+const getMode = (state) => state.build.mode;
+const getBuild = (state) => state.build.build;
+const getPreset = (state) => state.build.preset;
+const getLanguage = (state) => state.build.language;
+const getVersion = (state) => state.build.version;
+const isBuildSelected = (state) => getBuild(state) !== null;
+const isModeGradle = (state) => getMode(state) === MODE_GRADLE;
+const isModeMaven = (state) => getMode(state) === MODE_MAVEN;
+const isModeZip = (state) => getMode(state) === MODE_ZIP;
+const isModeNotZip = (state) => getMode(state) !== MODE_ZIP;
+const isBuildRelease = (state) => getBuild(state) === BUILD_RELEASE;
+const isDownloading = (state) => state.build.downloading;
+const isCustomizing = (state) => !state.build.downloading;
 
 const fields = {
   mode: {
@@ -51,15 +49,14 @@ const fields = {
     value: getMode,
     action: $$.changeMode,
     options: createSelector(
-      state => state.build.modes,
-      state => state.build.build,
-      state => state.build.artifacts.version,
-      (modes, build, version) => {
+      (state) => state.build.modes,
+      (state) => state.build.build,
+      (modes, build) => {
         return modes.allIds.map(
-          mode => ({
+          (mode) => ({
             value: mode,
             label: modes.byId[mode].title,
-            disabled: mode !== MODE_ZIP && ( build === BUILD_STABLE || version === '3.0.0' ),
+            disabled: build === BUILD_STABLE && mode !== MODE_ZIP,
           })
         );
       }
@@ -70,15 +67,11 @@ const fields = {
     value: getPreset,
     action: $$.changePreset,
     options: createSelector(
-      state => state.build.presets,
-      state => state.build.mode,
-      state => state.build.build,
-      state => state.build.artifacts.version,
-      (presets, mode, build, version) => presets.allIds.map(
-        preset => ({
+      (state) => state.build.presets,
+      (presets) => presets.allIds.map(
+        (preset) => ({
           value: preset,
           label: presets.byId[preset].title,
-          disabled: mode === MODE_ZIP && ( version === '3.0.0' || IS_SAFARI ),
         })
       )
     ),
@@ -88,9 +81,9 @@ const fields = {
     value: getLanguage,
     action: $$.changeLanguage,
     options: createSelector(
-      state => state.build.languages,
-      languages => languages.allIds.map(
-        lang => ({
+      (state) => state.build.languages,
+      (languages) => languages.allIds.map(
+        (lang) => ({
           value: lang,
           label: languages.byId[lang].title,
           disabled: lang !== 'groovy',
@@ -103,12 +96,13 @@ const fields = {
     value: getVersion,
     action: $$.changeVersion,
     options: createSelector(
-      state => state.build.versions,
+      (state) => state.build.versions,
       (versions) => versions.map(
-        version => {
+        (version) => {
           return {
             value: version,
             label: version,
+            disabled: version === '3.0.0'
           };
         }
       )
@@ -116,34 +110,32 @@ const fields = {
   },
   descriptions: {
     label: "Show descriptions",
-    checked: state => state.build.descriptions,
+    checked: (state) => state.build.descriptions,
     action: $$.toggleDescriptions
   },
   source: {
     label: "Include source",
-    checked: ({build}) => build.source || build.artifacts.version === '3.0.0' || IS_SAFARI,
+    checked: (state) => state.build.source,
     action: $$.toggleSource,
     hidden: isModeNotZip,
-    disabled: state => state.build.artifacts.version === '3.0.0' || IS_SAFARI,
   },
   javadoc: {
     label: "Include JavaDoc",
-    checked: ({build}) => build.javadoc || build.artifacts.version === '3.0.0' || IS_SAFARI,
+    checked: (state) => state.build.javadoc,
     action: $$.toggleJavadoc,
     hidden: isModeNotZip,
-    disabled: state => state.build.artifacts.version === '3.0.0' || IS_SAFARI,
   },
   compact: {
     label: "Compact Mode",
-    checked: state => state.build.compact,
+    checked: (state) => state.build.compact,
     action: $$.toggleCompact,
-    hidden: state => !isModeMaven(state),
+    hidden: (state) => !isModeMaven(state),
   },
   hardcoded: {
     label: "Do not use variables",
-    checked: state => state.build.hardcoded,
+    checked: (state) => state.build.hardcoded,
     action: $$.toggleHardcoded,
-    hidden: state => isModeZip(state),
+    hidden: (state) => isModeZip(state),
   },
 };
 

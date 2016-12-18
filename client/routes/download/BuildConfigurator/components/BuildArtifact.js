@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import { toggleArtifact } from '../actions'
-import { IS_SAFARI } from '../../../../services/globals'
 import classnames from 'classnames'
 import {
   NATIVE_WIN,
@@ -19,7 +18,7 @@ const getPlatformIcons = (platforms) => {
     <p>
       <em>Supported platforms: &nbsp;</em>
       {
-        platforms.map(platform => {
+        platforms.map((platform) => {
           switch ( platform ) {
             case NATIVE_WIN:
               return <FaWindows key="fa-win" />;
@@ -44,10 +43,7 @@ const getPlatformIcons = (platforms) => {
       artifact,
       checked: build.availability[artifact.id] && build.contents[artifact.id],
       showDescriptions: build.descriptions,
-      disabled: !build.availability[artifact.id]
-        || IS_SAFARI
-        || build.artifacts.version === '3.0.0'
-        || artifact.required
+      disabled: !build.availability[artifact.id] || artifact.required
     }
   },
   {

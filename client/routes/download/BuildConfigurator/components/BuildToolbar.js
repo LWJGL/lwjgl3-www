@@ -33,7 +33,7 @@ class BuildToolbar extends React.Component {
     }
 
     let reader = new FileReader();
-    reader.onload = event => {
+    reader.onload = (event) => {
       try {
         this.props.configLoad(JSON.parse(event.target.result));
         this.setState({fileUI: false});

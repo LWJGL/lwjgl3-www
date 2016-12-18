@@ -1,6 +1,6 @@
 import React from 'react'
 
-const subscribe = Component => class extends React.Component {
+const subscribe = (Component) => class extends React.Component {
 
   //noinspection JSUnusedGlobalSymbols
   static contextTypes = {
@@ -24,14 +24,14 @@ const subscribe = Component => class extends React.Component {
     const store = this.context.store;
 
     if ( Component.reducers ) {
-      Object.keys(Component.reducers).forEach(scope => {
+      Object.keys(Component.reducers).forEach((scope) => {
         store.injectReducer(scope, Component.reducers[scope]);
       })
     }
 
     if ( Component.sagas ) {
       this.sagas = [];
-      Component.sagas.forEach(saga => {
+      Component.sagas.forEach((saga) => {
         this.sagas.push(store.runSaga(saga));
       });
     }
@@ -44,7 +44,7 @@ const subscribe = Component => class extends React.Component {
     const store = this.context.store;
 
     if ( this.sagas ) {
-      this.sagas.forEach(saga => {
+      this.sagas.forEach((saga) => {
         if ( saga.isRunning() ) {
           saga.cancel();
         }
@@ -52,7 +52,7 @@ const subscribe = Component => class extends React.Component {
     }
 
     if ( Component.reducers ) {
-      Object.keys(Component.reducers).forEach(scope => {
+      Object.keys(Component.reducers).forEach((scope) => {
         store.ejectReducer(scope);
       })
     }

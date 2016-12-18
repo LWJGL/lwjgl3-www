@@ -45,7 +45,7 @@ export default function breakpointMiddleware({dispatch, getState}) {
     window.addEventListener('resize', resizeHandle);
   }
 
-  return next => action => {
+  return (next) => (action) => {
     next(action);
   }
 

@@ -10,7 +10,7 @@ import Radio from './Radio'
     return {
       value: spec.value(state, ownProps),
       options: spec.options(state, ownProps),
-      hidden: spec.hidden ? spec.hidden(state, ownProps) : false,
+      hidden: spec.hidden && spec.hidden(state, ownProps),
     }
   },
 )

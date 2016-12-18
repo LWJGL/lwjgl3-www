@@ -15,7 +15,7 @@ class BuildAddons extends React.Component {
     return (
       <div className="custom-controls-stacked">
         {
-          addons.map(it => <BuildAddon key={it} id={it} />)
+          addons.map((it) => <BuildAddon key={it} id={it} />)
         }
       </div>
     )

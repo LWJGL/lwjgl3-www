@@ -4,7 +4,7 @@ import { call, put, select } from 'redux-saga/effects'
 const LOAD_STATUS = 'BUILD_STATUS/LOAD';
 const STORE_STATUS = 'BUILD_STATUS/STORE';
 
-export const loadStatus = name => ({type: LOAD_STATUS, name});
+export const loadStatus = (name) => ({type: LOAD_STATUS, name});
 export const storeStatus = (name, state) => ({type: STORE_STATUS, name, state});
 
 async function fetchStatus(url) {

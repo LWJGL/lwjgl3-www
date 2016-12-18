@@ -17,7 +17,7 @@ import FaClipboard from '../../../../icons/clipboard'
 
     const selected = [];
 
-    build.artifacts.allIds.forEach(artifact => {
+    build.artifacts.allIds.forEach((artifact) => {
       if ( build.contents[artifact] && build.availability[artifact] ) {
         selected.push(artifact);
       }
@@ -87,7 +87,7 @@ class BuildScript extends React.Component {
             : <img src="/svg/gradle.svg" alt="Gradle" style={{height:60}} />
           }
         </h2>
-        <pre ref={el => {this.script=el}}><code>{script}</code></pre>
+        <pre ref={(el) => {this.script=el}}><code>{script}</code></pre>
         <BuildToolbar>
             <a
               className="btn btn-success"
@@ -108,8 +108,8 @@ class BuildScript extends React.Component {
 
 }
 
-const filename = mode => mode === 'maven' ? 'pom.xml' : 'build.gradle';
-const mime = mode => mode === 'maven' ? 'text/xml' : 'text/plain';
+const filename = (mode) => mode === 'maven' ? 'pom.xml' : 'build.gradle';
+const mime = (mode) => mode === 'maven' ? 'text/xml' : 'text/plain';
 const getVersion = (version, build) => build === BUILD_RELEASE ? version : `${version}-SNAPSHOT`;
 
 function generateScript(props) {
@@ -136,7 +136,7 @@ function generateMaven(props) {
 \t<maven.compiler.target>1.8</maven.compiler.target>
 \t<lwjgl.version>${version}</lwjgl.version>`;
 
-    selectedAddons.forEach(addon => {
+    selectedAddons.forEach((addon) => {
       script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}<${addon}.version>`;
     });
 
@@ -164,7 +164,7 @@ function generateMaven(props) {
 
   script += `<dependencies>`;
 
-  selected.forEach(artifact => {
+  selected.forEach((artifact) => {
     script += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`;
     if ( artifacts[artifact].natives !== undefined ) {
       nativesBundle += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}<scope>runtime</scope>${nl1}</dependency>`;
@@ -173,7 +173,7 @@ function generateMaven(props) {
 
   script += nativesBundle;
 
-  selectedAddons.forEach(addon => {
+  selectedAddons.forEach((addon) => {
     const maven = addons.byId[addon].maven;
     script += `\n\t<dependency>${nl2}<groupId>${maven.groupId}</groupId>${nl2}<artifactId>${maven.artifactId}</artifactId>${nl2}<version>${hardcoded ? maven.version : `\${${addon}.version}`}</version>${nl1}</dependency>`;
   });
@@ -206,7 +206,7 @@ switch ( OperatingSystem.current() ) {
 
   if ( !hardcoded ) {
     script += `project.ext.lwjglVersion = "${version}"\n`;
-    selectedAddons.forEach(addon => {
+    selectedAddons.forEach((addon) => {
       const maven = addons.byId[addon].maven;
       script += `project.ext.${addon}Version = "${maven.version}"\n`;
     });
@@ -225,7 +225,7 @@ switch ( OperatingSystem.current() ) {
 
   script += `dependencies {`;
 
-  selected.forEach(artifact => {
+  selected.forEach((artifact) => {
     script += `\n\tcompile "org.lwjgl:${artifact}:${v}"`;
     if ( artifacts[artifact].natives !== undefined ) {
       nativesBundle += `\n\truntime "org.lwjgl:${artifact}:${v}:\${lwjglNatives}"`;
@@ -234,7 +234,7 @@ switch ( OperatingSystem.current() ) {
 
   script += nativesBundle;
 
-  selectedAddons.forEach(addon => {
+  selectedAddons.forEach((addon) => {
     const maven = addons.byId[addon].maven;
     script += `\n\tcompile "${maven.groupId}:${maven.artifactId}:${hardcoded ? maven.version : `\${${addon}Version}`}"`;
   });

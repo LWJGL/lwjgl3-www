@@ -231,7 +231,7 @@ import lwjgl_nightly from './lwjgl/nightly'
   return build;
 }, null);
 
-config.versions = Object.values(config.lwjgl).filter(it => it['alias'] === undefined).map(it => it.version).reverse();
+config.versions = Object.values(config.lwjgl).filter((it) => it['alias'] === undefined).map((it) => it.version).reverse();
 config.version = config.versions[0];
 
 config.modes.allIds = Object.keys(config.modes.byId);
@@ -240,7 +240,7 @@ config.presets.allIds = Object.keys(config.presets.byId);
 
 config.language = config.languages.allIds[0];
 
-config.natives.allIds.forEach(platform => { config.platform[platform] = false });
+config.natives.allIds.forEach((platform) => { config.platform[platform] = false });
 config.platform[getDefaultPlatform()] = true;
 
 export default config;

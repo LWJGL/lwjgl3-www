@@ -40,7 +40,7 @@ const HomeRoute = () => (
       ]}
     />
 
-    <section ref={el => {this.container = el}} className={css(styles.videoContainer)} style={{backgroundImage:env.desktop?null:'url(/img/manfps-720.jpg)'}}>
+    <section ref={(el) => {this.container = el}} className={css(styles.videoContainer)} style={{backgroundImage:env.desktop?null:'url(/img/manfps-720.jpg)'}}>
       {
         env.desktop
           ?

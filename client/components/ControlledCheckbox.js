@@ -7,14 +7,14 @@ import Checkbox from './Checkbox'
     const spec = ownProps.spec;
 
     return {
-      checked: spec.checked ? spec.checked(state) : false,
-      disabled: spec.disabled ? spec.disabled(state) : false,
-      hidden: spec.hidden ? spec.hidden(state) : false,
+      checked: spec.checked && spec.checked(state),
+      disabled: spec.disabled && spec.disabled(state),
+      hidden: spec.hidden && spec.hidden(state),
       label: spec.label,
     }
   },
   (dispatch, ownProps) => ({
-    handleClick: value => dispatch(ownProps.spec.action(value))
+    handleClick: (value) => dispatch(ownProps.spec.action(value))
   })
 )
 class ControlledCheckbox extends React.Component {

@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Checkbox from '../../../../components/Checkbox'
 import { togglePlatform } from '../actions'
-import { IS_SAFARI } from '../../../../services/globals'
 
 import {
   NATIVE_WIN,
@@ -28,14 +27,11 @@ const getIcon = (platform) => {
 };
 
 @connect(
-  state => {
-    const disabled = state.build.artifacts.version === '3.0.0' || IS_SAFARI;
-
+  (state) => {
     return {
       platforms: state.build.natives.allIds,
       natives: state.build.natives.byId,
-      selected: disabled ? {[NATIVE_WIN]:true,[NATIVE_MAC]:true,[NATIVE_LINUX]:true} : state.build.platform,
-      disabled: disabled,
+      selected: state.build.platform,
       hide: state.build.mode !== 'zip',
     };
   },
@@ -50,36 +46,33 @@ class BuildPlatform extends React.Component {
   };
 
   render() {
-    const props = this.props;
+    const {hide, platforms, natives, selected} = this.props;
 
-    if ( props.hide ) {
+    if ( hide ) {
       return null;
-    }
-
-    return (
-      <div>
-        <h4>Natives</h4>
-        <div className="custom-controls-stacked mb-1">
-        {
-          props.platforms.map(platform => {
-            const native = props.natives[platform];
-
-            return (
-              <Checkbox
-                key={platform}
-                icon={getIcon(platform)}
-                label={native.title}
-                disabled={props.disabled}
-                checked={props.selected[platform]}
-                value={platform}
-                onChange={this.toggle}
-              />
+    } else {
+      return (
+        <div>
+          <h4>Natives</h4>
+          <div className="custom-controls-stacked mb-1">
+          {
+            platforms.map(
+              (platform) => (
+                  <Checkbox
+                    key={platform}
+                    icon={getIcon(platform)}
+                    label={natives[platform].title}
+                    checked={selected[platform]}
+                    value={platform}
+                    onChange={this.toggle}
+                  />
+              )
             )
-          })
-        }
+          }
+          </div>
         </div>
-      </div>
-    )
+      );
+    }
   }
 
 }

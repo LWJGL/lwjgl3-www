@@ -8,7 +8,7 @@ import { css } from 'aphrodite/no-important'
 import styles from '../styles'
 
 @connect(
-  state => {
+  (state) => {
     return {
       ...state.browser.contents[state.browser.path],
       path: state.browser.path,
@@ -48,10 +48,10 @@ class Browser extends React.Component {
           )
         }
         {
-          props.folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} />)
+          props.folders.map((folder) => <Folder key={`${path}${folder}`} path={`${path}${folder}`} />)
         }
         {
-          props.files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} />)
+          props.files.map((file) => <File key={`${path}${file}`} path={`${path}${file}`} />)
         }
         {
           props.loading ? (

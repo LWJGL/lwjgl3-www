@@ -28,7 +28,7 @@ function getBuild({build}) {
     path = build.build;
   }
 
-  const selected = build.artifacts.allIds.filter(artifact => {
+  const selected = build.artifacts.allIds.filter((artifact) => {
     if ( !build.contents[artifact] ) {
       return false;
     }
@@ -37,10 +37,10 @@ function getBuild({build}) {
 
     return spec.natives === undefined
       || spec.natives.length === platformCount
-      || spec.natives.some(platform => selectedPlatforms[platform]);
+      || spec.natives.some((platform) => selectedPlatforms[platform]);
   });
 
-  const addons = build.selectedAddons.map(addon => ({
+  const addons = build.selectedAddons.map((addon) => ({
       id: addon,
       version: build.addons.byId[addon].maven.version,
     })
@@ -68,11 +68,11 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
 
   const selectedMap = {};
 
-  selected.forEach(key => {
+  selected.forEach((key) => {
     selectedMap[key] = true
   });
 
-  manifest.forEach(file => {
+  manifest.forEach((file) => {
     const filepath = file.replace(rootRegExp, '');
 
     if ( filepath.endsWith('/') || !filepath.length ) {
@@ -110,13 +110,13 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
     files.push(filepath);
   });
 
-  return files.map(filepath => `${path}/bin/${filepath}`);
+  return files.map((filepath) => `${path}/bin/${filepath}`);
 }
 
 function getAddons(addons, source, javadoc) {
   const files = [];
 
-  addons.forEach(addon => {
+  addons.forEach((addon) => {
     const {id, version} = addon;
 
     files.push(`addons/${id}/${id}-${version}.jar`);
@@ -245,7 +245,7 @@ function* init() {
   try {
     const downloads = yield downloadFiles(files);
 
-    downloads.forEach(download => {
+    downloads.forEach((download) => {
       //noinspection JSUnresolvedFunction
       zip.file(download.filename, download.payload, {binary: true});
     });
@@ -272,7 +272,7 @@ function* init() {
 const keepChecked = (src) => {
   // Keep only checked items to avoid phantom selections
   // when new items (bindings,addons,platforms) are added
-  return Object.keys(src).filter(key => src[key] === true);
+  return Object.keys(src).filter((key) => src[key] === true);
 };
 
 const getConfig = ({build}) => {
@@ -302,7 +302,7 @@ const getConfig = ({build}) => {
 };
 
 // Used for debouncing
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function* saveConfig() {
   yield call(delay, 500);

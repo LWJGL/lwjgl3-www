@@ -4,7 +4,7 @@ import { call, put } from 'redux-saga/effects'
 const LOAD_STATUS = 'TEAMCITY_STATUS/LOAD';
 const STORE_STATUS = 'TEAMCITY_STATUS/STORE';
 
-export const loadStatus = name => ({type: LOAD_STATUS, name});
+export const loadStatus = (name) => ({type: LOAD_STATUS, name});
 export const storeStatus = (name, status, build) => ({type: STORE_STATUS, name, state: {status, build}});
 
 async function fetchStatus(url) {

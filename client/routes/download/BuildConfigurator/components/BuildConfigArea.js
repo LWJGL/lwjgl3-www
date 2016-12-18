@@ -1,12 +1,6 @@
 import React from 'react'
 import supportsPassive from '../../../../services/supports-passive'
-import { connect } from 'react-redux'
 
-@connect(
-  ({build}) => ({
-    mode: build.mode,
-  })
-)
 class BuildConfigArea extends React.Component {
 
   ticking = false;
@@ -51,7 +45,7 @@ class BuildConfigArea extends React.Component {
 
   render() {
     return (
-      <div className="build-config" ref={el => {this.container = el}}>
+      <div className="build-config" ref={(el) => {this.container = el}}>
         {this.props.children}
       </div>
     );
