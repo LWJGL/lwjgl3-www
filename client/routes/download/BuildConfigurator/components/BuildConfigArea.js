@@ -8,11 +8,13 @@ class BuildConfigArea extends React.Component {
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
+    window.addEventListener('resize', this.onScroll, supportsPassive ? {passive: true} : false);
     this.update();
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
+    window.removeEventListener('resize', this.onScroll, supportsPassive ? {passive: true} : false);
   }
 
   componentWillUpdate() {
