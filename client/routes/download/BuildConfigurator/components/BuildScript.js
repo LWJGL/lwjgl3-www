@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { MODE_ZIP, BUILD_RELEASE } from '../constants'
+import { MODE_ZIP, MODE_MAVEN, BUILD_RELEASE } from '../constants'
 
 import BuildToolbar from './BuildToolbar'
 import FaCloudDownload from '../../../../icons/cloud-download'
@@ -65,7 +65,7 @@ class BuildScript extends React.Component {
 
     const {current, sm, md} = this.props.breakpoint;
     const labels = {
-      download: `DOWNLOAD ${mode.toUpperCase()}`,
+      download: `DOWNLOAD ${mode === MODE_MAVEN ? 'POM.XML' : 'BUILD.GRADLE '}`,
       copy: ' COPY TO CLIPBOARD'
     };
 
