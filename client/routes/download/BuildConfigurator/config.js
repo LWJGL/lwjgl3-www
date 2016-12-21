@@ -9,6 +9,7 @@ import {
   MODE_ZIP,
   MODE_MAVEN,
   MODE_GRADLE,
+  MODE_IVY,
 } from './constants'
 
 const config = {
@@ -43,10 +44,20 @@ const config = {
       [MODE_MAVEN]: {
         id: MODE_MAVEN,
         title: 'Maven',
+        logo: '/svg/maven.svg',
+        file: 'pom.xml',
       },
       [MODE_GRADLE]: {
         id: MODE_GRADLE,
         title: 'Gradle',
+        logo: '/svg/gradle.svg',
+        file: 'build.gradle',
+      },
+      [MODE_IVY]: {
+        id: MODE_IVY,
+        title: 'Ivy',
+        logo: '/img/ivy.png',
+        file: 'ivy.xml',
       },
     },
   },

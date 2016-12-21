@@ -12,6 +12,7 @@ import {
   MODE_ZIP,
   MODE_MAVEN,
   MODE_GRADLE,
+  MODE_IVY,
   STORAGE_KEY,
 } from './constants'
 
@@ -35,8 +36,8 @@ const getPreset = (state) => state.build.preset;
 const getLanguage = (state) => state.build.language;
 const getVersion = (state) => state.build.version;
 const isBuildSelected = (state) => getBuild(state) !== null;
-const isModeGradle = (state) => getMode(state) === MODE_GRADLE;
-const isModeMaven = (state) => getMode(state) === MODE_MAVEN;
+const hasLanguageOption = (state) => getMode(state) === MODE_GRADLE;
+const hasCompactModeOption = (state) => getMode(state) === MODE_MAVEN || getMode(state) === MODE_IVY;
 const isModeZip = (state) => getMode(state) === MODE_ZIP;
 const isModeNotZip = (state) => getMode(state) !== MODE_ZIP;
 const isBuildRelease = (state) => getBuild(state) === BUILD_RELEASE;
@@ -129,7 +130,7 @@ const fields = {
     label: "Compact Mode",
     checked: (state) => state.build.compact,
     action: $$.toggleCompact,
-    hidden: (state) => !isModeMaven(state),
+    hidden: (state) => !hasCompactModeOption(state),
   },
   hardcoded: {
     label: "Do not use variables",
@@ -210,7 +211,7 @@ class BuildContainer extends React.Component {
 
                     <BuildPlatform />
 
-                    <ControlledPanel predicate={isModeGradle}>
+                    <ControlledPanel predicate={hasLanguageOption}>
                       <h4 className="mb-1">Language</h4>
                       <ControlledRadio spec={fields.language} />
                     </ControlledPanel>

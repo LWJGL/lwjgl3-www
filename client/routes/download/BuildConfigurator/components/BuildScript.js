@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { MODE_ZIP, MODE_MAVEN, BUILD_RELEASE } from '../constants'
+import { MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants'
 
 import BuildToolbar from './BuildToolbar'
 import FaCloudDownload from '../../../../icons/cloud-download'
@@ -26,7 +26,7 @@ import FaClipboard from '../../../../icons/clipboard'
     return {
       breakpoint,
       build: build.build,
-      mode: build.mode,
+      mode: build.modes.byId[build.mode],
       version: build.artifacts.version,
       hardcoded: build.hardcoded,
       compact: build.compact,
@@ -59,13 +59,13 @@ class BuildScript extends React.Component {
   render() {
     const {mode} = this.props;
 
-    if ( mode === MODE_ZIP ) {
+    if ( mode.id === MODE_ZIP ) {
       return null;
     }
 
     const {current, sm, md} = this.props.breakpoint;
     const labels = {
-      download: `DOWNLOAD ${mode === MODE_MAVEN ? 'POM.XML' : 'BUILD.GRADLE '}`,
+      download: `DOWNLOAD ${mode.file.toUpperCase()}`,
       copy: ' COPY TO CLIPBOARD'
     };
 
@@ -76,22 +76,18 @@ class BuildScript extends React.Component {
       labels.copy = ' COPY';
     }
 
-    const script = generateScript(this.props);
+    const script = generateScript(mode.id, this.props);
 
     return (
       <div>
         <h2 className="mt-1">
-          {
-            mode === 'maven'
-            ? <img src="/svg/maven.svg" alt="Maven" style={{height:60}} />
-            : <img src="/svg/gradle.svg" alt="Gradle" style={{height:60}} />
-          }
+          <img src={mode.logo} alt={mode.title} style={{height:60}} />
         </h2>
         <pre ref={(el) => {this.script=el}}><code>{script}</code></pre>
         <BuildToolbar>
             <a
               className="btn btn-success"
-              download={filename(mode)}
+              download={mode.file}
               href={`data:${mime(mode)};base64,${btoa(script)}`}
               disabled={!window.btoa}
               title={`Download ${mode} code snippet`}
@@ -108,15 +104,19 @@ class BuildScript extends React.Component {
 
 }
 
-const filename = (mode) => mode === 'maven' ? 'pom.xml' : 'build.gradle';
-const mime = (mode) => mode === 'maven' ? 'text/xml' : 'text/plain';
+const mime = (mode) => mode.file.endsWith('.xml') ? 'text/xml' : 'text/plain';
 const getVersion = (version, build) => build === BUILD_RELEASE ? version : `${version}-SNAPSHOT`;
 
-function generateScript(props) {
-  if ( props.mode === 'maven' ) {
-    return generateMaven(props);
-  } else {
-    return generateGradle(props);
+function generateScript(mode, props) {
+  switch (mode) {
+      case MODE_MAVEN:
+	      return generateMaven(props);
+      case MODE_GRADLE:
+	      return generateGradle(props);
+      case MODE_IVY:
+	      return generateIvy(props);
+      default:
+        throw("Unsupported script mode");
   }
 }
 
@@ -240,6 +240,63 @@ switch ( OperatingSystem.current() ) {
   });
 
   script += `\n}`;
+
+  return script;
+}
+
+function generateIvy(props) {
+  const {build, hardcoded, compact, artifacts, selected, addons, selectedAddons} = props;
+  const version = getVersion(props.version, build);
+  let script = '';
+  let nativesBundle = '';
+  const v = hardcoded ? version : '\${lwjgl.version}';
+  const nl1 = compact ? '' : '\n\t';
+  const nl2 = compact ? '' : '\n\t\t';
+  const nl3 = compact ? '' : '\n\t\t\t';
+
+  if (!hardcoded || build !== BUILD_RELEASE)
+    script += `\t<!-- Add to ivysettings.xml -->`;
+
+  if ( build !== BUILD_RELEASE ) {
+    script += `\n\t<settings defaultResolver="sonatype-snapshots"/>
+\t<resolvers>
+\t\t<ibiblio name="sonatype-snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>
+\t</resolvers>`;
+  }
+
+  if ( !hardcoded ) {
+    script += `\n\t<property name="lwjgl.version" value="${version}"/>`;
+
+    selectedAddons.forEach((addon) => {
+      script += `\n\t<property name="${addon}.version" value="${addons.byId[addon].maven.version}"/>`;
+    });
+  }
+
+  script += `\n\t<!-- Add to build.xml -->
+\t<condition property="lwjgl.natives" value="natives-windows">${nl2}<os family="Windows"/>${nl1}</condition>
+\t<condition property="lwjgl.natives" value="natives-linux">${nl2}<os name="Linux"/>${nl1}</condition>
+\t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
+
+  script += `\n\t<!-- Add to ivy.xml (xmlns:m="http://ant.apache.org/ivy/maven") -->
+\t<dependencies>`;
+
+  selected.forEach((artifact) => {
+    if ( artifacts[artifact].natives === undefined ) {
+      script += `\n\t\t<dependency org="org.lwjgl" name="${artifact}" rev="${v}"/>`;
+    } else {
+      script += `\n\t\t<dependency org="org.lwjgl" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="\${lwjgl.natives}"/>${nl2}</dependency>`;
+    }
+
+  });
+
+  script += nativesBundle;
+
+  selectedAddons.forEach((addon) => {
+    const maven = addons.byId[addon].maven;
+    script += `\n\t\t<dependency org="${maven.groupId}" name="${maven.artifactId}" rev="${hardcoded ? maven.version : `\${${addon}.version}`}"/>`;
+  });
+
+  script += `\n\t</dependencies>`;
 
   return script;
 }

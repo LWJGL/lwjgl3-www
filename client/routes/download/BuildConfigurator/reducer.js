@@ -6,6 +6,7 @@ import {
   BUILD_STABLE,
   MODE_ZIP,
   MODE_MAVEN,
+  MODE_IVY,
 } from './constants'
 
 const nativeCnt = config.natives.allIds.length;
@@ -192,7 +193,7 @@ export default function(state = config, action) {
       return {...state, descriptions: action.descriptions};
 
     case $.TOGGLE_COMPACT:
-      if ( state.mode === MODE_MAVEN ) {
+      if ( state.mode === MODE_MAVEN || state.mode === MODE_IVY ) {
         return {...state, compact: action.compact};
       }
       break;
