@@ -11,7 +11,7 @@ import FaClipboard from '../../../../icons/clipboard'
     if ( build.mode === MODE_ZIP ) {
       return {
         breakpoint,
-        mode: MODE_ZIP
+        mode: build.modes.byId[build.mode],
       }
     }
 
