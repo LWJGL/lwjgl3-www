@@ -137,7 +137,7 @@ function generateMaven(props) {
 \t<lwjgl.version>${version}</lwjgl.version>`;
 
     selectedAddons.forEach((addon) => {
-      script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}<${addon}.version>`;
+      script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}</${addon}.version>`;
     });
 
     script += `\n</properties>\n`;
