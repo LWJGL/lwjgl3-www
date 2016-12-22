@@ -258,9 +258,12 @@ function generateIvy(props) {
     script += `\t<!-- Add to ivysettings.xml -->`;
 
   if ( build !== BUILD_RELEASE ) {
-    script += `\n\t<settings defaultResolver="sonatype-snapshots"/>
+    script += `\n\t<settings defaultResolver="maven-with-snapshots"/>
 \t<resolvers>
-\t\t<ibiblio name="sonatype-snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>
+\t\t<chain name="maven-with-snapshots">
+\t\t\t<ibiblio name="sonatype-snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>
+\t\t\t<ibiblio name="maven-central" m2compatible="true"/>
+\t\t</chain>
 \t</resolvers>`;
   }
 
