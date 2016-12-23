@@ -42,14 +42,16 @@ const HomeRoute = () => (
 
     <section ref={(el) => {this.container = el}} className={css(styles.videoContainer)} style={{backgroundImage:env.desktop?null:'url(/img/manfps-720.jpg)'}}>
       {
-        env.desktop
-          ?
+        do {
+          if ( env.desktop ) {
             <video className={css(styles.video, styles.full)} muted loop autoPlay aria-hidden={true} role="presentation">
               <source type="video/webm" src="/img/manfps.webm" />
               <source type="video/mp4" src="/img/manfps.mp4" />
             </video>
-          :
+          } else {
             null
+          }
+        }
       }
       <div className={css(styles.videoOverlay, styles.full)}></div>
       <Logo className={css(styles.logo)} />

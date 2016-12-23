@@ -1,10 +1,12 @@
 {
   "plugins": [
-    "transform-react-jsx",
-    "transform-flow-strip-types",
     "syntax-flow",
     "syntax-jsx",
+    "syntax-do-expressions",
     "syntax-dynamic-import",
+    "transform-react-jsx",
+    "transform-flow-strip-types",
+    "transform-do-expressions",
     "transform-react-display-name",
     "transform-decorators-legacy",
     "transform-class-properties",
