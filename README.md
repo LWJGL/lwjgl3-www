@@ -102,9 +102,28 @@ local NGINX.
 
 ### Build/running in development
 
+To install all required npm packages:
+
 ```bash
 yarn
+```
+
+To build external CSS files run:
+
+```bash
+npm run styles
+```
+
+To start the server in dev mode:
+
+```bash
 npm start
+```
+
+or
+
+```bash
+node server
 ```
 
 Instead of just starting the server, we can monitor for changes and
