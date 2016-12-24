@@ -41,7 +41,7 @@ class Browser extends React.Component {
         </thead>
         <tbody>
         {
-          props.parent === null ? null : (
+          props.parent && (
             <tr>
               <th className={css(styles.folder)} scope="row" onClick={this.goBack} colSpan={2}>...</th>
             </tr>
@@ -54,11 +54,11 @@ class Browser extends React.Component {
           props.files.map((file) => <File key={`${path}${file}`} path={`${path}${file}`} />)
         }
         {
-          props.loading ? (
+          props.loading && (
             <tr>
               <th scope="row" colSpan={2}><LoaderSpinner /></th>
             </tr>
-          ) : null
+          )
         }
         </tbody>
       </table>

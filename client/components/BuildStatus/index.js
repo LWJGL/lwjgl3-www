@@ -31,9 +31,9 @@ class BuildStatus extends React.Component {
 
     return (
       <p className="my-0">
-        {loading ? <LoaderSpinner size={16} /> : null}
-        {version ? version : null}
-        {error ? error : null}
+        {loading && <LoaderSpinner size={16} />}
+        {version}
+        {error}
         <br />
         {lastModified || <br />}
       </p>
