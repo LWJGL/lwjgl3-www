@@ -48,16 +48,16 @@ class BuildPlatform extends React.Component {
   render() {
     const {hide, platforms, natives, selected} = this.props;
 
-    if ( hide ) {
-      return null;
-    } else {
-      return (
+    return do {
+      if ( hide ) {
+        null
+      } else {
         <div>
           <h4>Natives</h4>
           <div className="custom-controls-stacked mb-1">
-          {
-            platforms.map(
-              (platform) => (
+            {
+              platforms.map(
+                (platform) => (
                   <Checkbox
                     key={platform}
                     icon={getIcon(platform)}
@@ -66,13 +66,13 @@ class BuildPlatform extends React.Component {
                     value={platform}
                     onChange={this.toggle}
                   />
+                )
               )
-            )
-          }
+            }
           </div>
         </div>
-      );
-    }
+      }
+    };
   }
 
 }

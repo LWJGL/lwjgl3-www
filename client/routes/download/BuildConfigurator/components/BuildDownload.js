@@ -17,17 +17,15 @@ import FaCloudDownload from '../../../../icons/cloud-download'
 class BuildDownload extends React.Component {
 
   render() {
-    const {mode} = this.props;
-
-    if ( mode === MODE_ZIP ) {
-      return (
+    return do {
+      if ( this.props.mode === MODE_ZIP ) {
         <BuildToolbar>
           <button className="btn btn-success" onClick={this.props.downloadInit}><FaCloudDownload /> DOWNLOAD ZIP</button>
         </BuildToolbar>
-      )
-    } else {
-      return null;
-    }
+      } else {
+        null
+      }
+    };
   }
 
 }

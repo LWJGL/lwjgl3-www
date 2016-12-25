@@ -63,26 +63,28 @@ class BuildArtifact extends React.Component {
   render() {
     const {artifact, checked, disabled, showDescriptions} = this.props;
 
-    return showDescriptions ? (
-      <div className={classnames('artifact', {'text-muted':disabled})}>
+    return do {
+      if ( showDescriptions ) {
+        <div className={classnames('artifact', {'text-muted':disabled})}>
+          <Checkbox
+            label={artifact.title}
+            disabled={disabled}
+            checked={checked}
+            onChange={this.toggle}
+          />
+          {artifact.natives && getPlatformIcons(artifact.natives)}
+          <p>{artifact.description}</p>
+          {artifact.website && <p><a href={artifact.website} target="_blank">{artifact.website}</a></p>}
+        </div>
+      } else {
         <Checkbox
           label={artifact.title}
           disabled={disabled}
           checked={checked}
           onChange={this.toggle}
         />
-        { artifact.natives ? getPlatformIcons(artifact.natives) : null }
-        <p>{artifact.description}</p>
-        { artifact.website ? <p><a href={artifact.website} target="_blank">{artifact.website}</a></p> : null }
-      </div>
-    ) : (
-      <Checkbox
-        label={artifact.title}
-        disabled={disabled}
-        checked={checked}
-        onChange={this.toggle}
-      />
-    );
+      }
+    };
   }
 
 }
