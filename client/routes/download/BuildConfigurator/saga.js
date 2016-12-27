@@ -296,6 +296,7 @@ const getConfig = ({build}) => {
   }
   if ( build.build === BUILD_RELEASE ) {
     save.version = build.version;
+    save.versionLatest = build.versions[0];
   }
 
   return save;

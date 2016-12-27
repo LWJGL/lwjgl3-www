@@ -144,7 +144,11 @@ const loadConfig = (state, config) => {
   state.language = config.language;
 
   if ( config.build === BUILD_RELEASE ) {
-    state.version = config.version;
+    if ( !config.versionLatest || config.versionLatest === state.versions[1] ) {
+      state.version = state.versions[0];
+    } else {
+      state.version = config.version;
+    }
   }
 
   if ( config.mode === MODE_ZIP ) {
