@@ -1,5 +1,4 @@
-import { takeEvery } from 'redux-saga'
-import { call, put, select } from 'redux-saga/effects'
+import { takeEvery, call, put, select } from 'redux-saga/effects'
 
 const LOAD_STATUS = 'BUILD_STATUS/LOAD';
 const STORE_STATUS = 'BUILD_STATUS/STORE';
@@ -35,7 +34,7 @@ function* getStatus(action) {
 }
 
 export function* saga() {
-  yield* takeEvery(LOAD_STATUS, getStatus);
+  yield takeEvery(LOAD_STATUS, getStatus);
 }
 
 export default function(state = {}, action) {

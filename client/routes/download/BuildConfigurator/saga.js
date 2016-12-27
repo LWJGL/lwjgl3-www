@@ -1,5 +1,5 @@
-import { takeLatest, channel, buffers } from 'redux-saga'
-import { take, fork, call, apply, put, select } from 'redux-saga/effects'
+import { channel, buffers } from 'redux-saga'
+import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects'
 
 import { HTTP_OK } from '../../../services/http_status_codes'
 import * as $ from './actionTypes'
