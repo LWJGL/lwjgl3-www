@@ -227,12 +227,14 @@ function getDefaultPlatform() {
 
 import lwjgl_300 from './lwjgl/3.0.0'
 import lwjgl_310 from './lwjgl/3.1.0'
+import lwjgl_311 from './lwjgl/3.1.1'
 import lwjgl_stable from './lwjgl/stable'
 import lwjgl_nightly from './lwjgl/nightly'
 
 [
   lwjgl_300,
   lwjgl_310,
+  lwjgl_311,
   lwjgl_stable,
   lwjgl_nightly
 ].reduce((previousBuild, nextBuildConfig) => {
