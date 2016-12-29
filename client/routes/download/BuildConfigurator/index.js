@@ -29,6 +29,7 @@ import BuildArtifacts from './components/BuildArtifacts'
 import BuildDownload from './components/BuildDownload'
 import BuildScript from './components/BuildScript'
 import BuildBundler from './components/BuildBundler'
+import BuildReleaseNotes from './components/BuildReleaseNotes'
 
 const getMode = (state) => state.build.mode;
 const getBuild = (state) => state.build.build;
@@ -227,6 +228,7 @@ class BuildContainer extends React.Component {
                     <ControlledPanel predicate={isBuildRelease}>
                       <h4 className="mt-1">Version</h4>
                       <ControlledRadio spec={fields.version} />
+                      <BuildReleaseNotes />
                     </ControlledPanel>
                   </div>
 
