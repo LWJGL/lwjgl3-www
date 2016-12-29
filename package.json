@@ -105,9 +105,9 @@
     "sass-loader": "4.1.1",
     "serve-favicon": "2.3.2",
     "style-loader": "0.13.1",
-    "webpack": "2.2.0-rc.2",
+    "webpack": "2.2.0-rc.3",
     "whatwg-fetch": "2.0.1",
-    "yargs": "6.5.0"
+    "yargs": "6.6.0-candidate.0"
   },
   "devDependencies": {
     "react-hot-loader": "3.0.0-beta.6",
