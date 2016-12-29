@@ -1,6 +1,7 @@
 import React from 'react'
 import Helmet from 'react-helmet'
 import TeamcityStatus from '../../components/TeamcityStatus'
+import FaGithub from '../../icons/github'
 
 const SourceRoute = () => (
   <main>
@@ -16,8 +17,8 @@ const SourceRoute = () => (
 
       <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
       <p>
-        <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3">Github Repository</a>
-        <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
+        <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3"><FaGithub /> Github Repository</a>
+        <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/releases">Release notes</a>
         <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a>
       </p>
 
