@@ -214,9 +214,9 @@ autoprefixer@6.6.0, autoprefixer@^6.3.1:
     postcss "^5.2.6"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.7.19:
-  version "2.7.19"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.7.19.tgz#63a0dfae44e7aab182cad05d5e60277f755ad80e"
+aws-sdk@2.7.20:
+  version "2.7.20"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.7.20.tgz#ab41e74661a49cbf1b4211e8de7a86b94369d313"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -3596,9 +3596,9 @@ react-dom@15.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-react-helmet@3.2.3:
-  version "3.2.3"
-  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.2.3.tgz#ac81cf77e2b1075f57e1f5ef4ba281c9c9fa4c95"
+react-helmet@3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-3.3.0.tgz#419933e7ce5a75d04aab3fefe77169eed8e55646"
   dependencies:
     deep-equal "1.0.1"
     object-assign "^4.0.1"
@@ -3908,11 +3908,11 @@ sass-loader@4.1.1:
     loader-utils "^0.2.15"
     object-assign "^4.1.0"
 
-sax@1.1.5, sax@>=0.6.0:
+sax@1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.1.5.tgz#1da50a8d00cdecd59405659f5ff85349fe773743"
 
-sax@~1.2.1:
+sax@>=0.6.0, sax@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
 
@@ -4541,9 +4541,9 @@ yargs-parser@^4.2.0:
   dependencies:
     camelcase "^3.0.0"
 
-yargs@6.6.0-candidate.0:
-  version "6.6.0-candidate.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-6.6.0-candidate.0.tgz#2d02ea60dcd8034d42053033df6b6ebe766a7279"
+yargs@6.6.0:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-6.6.0.tgz#782ec21ef403345f830a808ca3d513af56065208"
   dependencies:
     camelcase "^3.0.0"
     cliui "^3.2.0"
