@@ -8,6 +8,13 @@ export default (prev) => ({
   alias: 'nightly',
   byId: {
     ...prev.byId,
+    'lwjgl-tinyexr': {
+      id: 'lwjgl-tinyexr',
+      title: 'Tiny OpenEXR bindings',
+      description: 'A small library to load and save OpenEXR(.exr) images.',
+      natives: NATIVE_ALL,
+      website: 'https://github.com/syoyo/tinyexr',
+    },
     'lwjgl-yoga': {
       id: 'lwjgl-yoga',
       title: 'Yoga bindings',
