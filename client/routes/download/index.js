@@ -17,10 +17,10 @@ const DownloadRoute = () => (
         }
       ]}
     />
-    <section className="container pb-2">
+    <section className="container pb-4">
       <h1>Download LW<b>JGL</b> 3</h1>
       <p>All official releases are available for download from GitHub.</p>
-      <p><a className="btn btn-primary" href="https://github.com/LWJGL/lwjgl3/releases" target="_blank"><FaGithub size="2em" /> Download from Github</a></p>
+      <p><a className="btn btn-xs-block btn-primary" href="https://github.com/LWJGL/lwjgl3/releases" target="_blank"><FaGithub size="2em" /> Download from Github</a></p>
       <p>To customize your LWJGL build or use the latest stable &amp; nightly releases, use the download configurator:</p>
       <BuildContainer />
 
@@ -28,7 +28,7 @@ const DownloadRoute = () => (
       <FileBrowser />
     </section>
 
-    <div className="area-dark py-2">
+    <div className="area-dark py-4">
       <section className="container">
         <h3>Build from source?</h3>
         <p>Click below if you prefer to build from source:</p>
@@ -39,7 +39,7 @@ const DownloadRoute = () => (
       </section>
     </div>
 
-    <section className="container pt-2">
+    <section className="container pt-4">
       <p>Broken download? Let us know at the <a href="http://forum.lwjgl.org/">forums</a>.</p>
 
       <h2>Looking for LWJGL 2?</h2>

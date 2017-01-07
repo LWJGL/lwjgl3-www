@@ -99,7 +99,7 @@ export default class Sidebar extends React.Component {
           aria-hidden={!isOpen}
           aria-expanded={isOpen}
         >
-          <div className="text-xs-right">
+          <div className="text-right">
             <button ref={(el) => {this.closeButton = el}} type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
           </div>
           <ul className="list-unstyled">

@@ -132,9 +132,9 @@ class Header extends React.Component {
       <header ref={(el) => {this.el = el}} role="navigation" className={headerClass.join(' ')}>
         <nav className="container-fluid">
           <div className="row">
-            <div className="col-lg-2 col-xs-8"><Link to="/">LW<b>JGL</b> 3</Link></div>
+            <div className="col col-auto"><Link to="/">LW<b>JGL</b> 3</Link></div>
 
-            <ul className="list-unstyled col-lg-10 hidden-md-down" role="menu">
+            <ul className="main-menu-horizontal list-unstyled col hidden-md-down" role="menu">
               <li><Link to="/" activeClassName="active" activeOnlyWhenExact={true}>HOME</Link></li>
               <li><Link to="/guide" activeClassName="active">GET STARTED</Link></li>
               <li><Link to="/download" activeClassName="active">DOWNLOAD</Link></li>
@@ -143,7 +143,7 @@ class Header extends React.Component {
               <li><a href="http://blog.lwjgl.org/" target="_blank">BLOG</a></li>
             </ul>
 
-            <div className="col-xs-4 hidden-lg-up text-xs-right">
+            <div className="col hidden-lg-up">
               <Sidebar />
             </div>
           </div>

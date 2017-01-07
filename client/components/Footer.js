@@ -5,7 +5,7 @@ const Footer = () => (
   <footer>
     <div className="container">
       <nav className="row">
-        <div className="col-sm-3 col-xs-12">
+        <div className="col-sm">
           <h3>About</h3>
           <ul className="list-unstyled">
             <li><Link to="/">Home</Link></li>
@@ -15,7 +15,7 @@ const Footer = () => (
             <li><Link to="/license">License</Link></li>
           </ul>
         </div>
-        <div className="col-sm-3 col-xs-12">
+        <div className="col-sm">
           <h3>News</h3>
           <ul className="list-unstyled">
             <li><a href="http://blog.lwjgl.org/">Blog</a></li>
@@ -25,7 +25,7 @@ const Footer = () => (
             <li><a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a></li>
           </ul>
         </div>
-        <div className="col-sm-3 col-xs-12">
+        <div className="col-sm">
           <h3>Developers</h3>
           <ul className="list-unstyled">
             <li><a href="https://github.com/LWJGL/lwjgl3">GitHub</a></li>
@@ -35,11 +35,11 @@ const Footer = () => (
             <li><a href="https://slack.lwjgl.org/">Slack</a></li>
           </ul>
         </div>
-        <div className="col-sm-3 col-xs-12">
+        <div className="col-sm">
           <h3>Sponsor</h3>
           <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external">
             <img
-              className="my-1" width={143} height={30} alt="WebHotelier"
+              className="my-2" width={143} height={30} alt="WebHotelier"
               src="/img/webhotelier-logo-inv@x1.png"
               srcSet="/img/webhotelier-logo-inv@x1.png 1x,/img/webhotelier-logo-inv@x2.png 2x,/img/webhotelier-logo-inv@x3.png 3x,/img/webhotelier-logo-inv@x4.png 4x"
             />

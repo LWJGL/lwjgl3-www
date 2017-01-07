@@ -53,8 +53,8 @@ class BuildPlatform extends React.Component {
         null
       } else {
         <div>
-          <h4>Natives</h4>
-          <div className="custom-controls-stacked mb-1">
+          <h4 className="mt-3">Natives</h4>
+          <div className="custom-controls-stacked">
             {
               platforms.map(
                 (platform) => (

@@ -28,18 +28,16 @@ class Checkbox extends React.PureComponent {
     const props = this.props;
 
     return props.hidden ? null : (
-      <div className="form-group">
-        <label className={`custom-control custom-checkbox${props.disabled ? ' custom-control-disabled' : ''}`}>
-          <input type="checkbox"
-                 className="custom-control-input"
-                 disabled={props.disabled}
-                 checked={props.checked}
-                 onChange={this.change}
-          />
-          <span className="custom-control-indicator"/>
-          <span className="custom-control-description">{props.icon ? props.icon : null}{props.icon ? ' ' : null}{props.label}</span>
-        </label>
-      </div>
+      <label className={`custom-control custom-checkbox${props.disabled ? ' custom-control-disabled' : ''}`}>
+        <input type="checkbox"
+               className="custom-control-input"
+               disabled={props.disabled}
+               checked={props.checked}
+               onChange={this.change}
+        />
+        <span className="custom-control-indicator"/>
+        <span className="custom-control-description">{props.icon ? props.icon : null}{props.icon ? ' ' : null}{props.label}</span>
+      </label>
     );
   }
 }

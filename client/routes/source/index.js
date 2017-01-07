@@ -25,17 +25,16 @@ const SourceRoute = () => (
       <p>
         LWJGL's issue tracker is also hosted on Github.
       </p>
-      <p>
-        <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a>
-      </p>
+      <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">Issue Tracker</a>
+      <br /><br />
     </section>
 
     <hr/>
 
-    <section className="container pt-2">
-      <h1 className="pb-2">Build Status</h1>
+    <section className="container pt-4">
+      <h1 className="pb-4">Build Status</h1>
       <div className="row">
-        <div className="col-lg-4 col-xs-12">
+        <div className="col-lg-4">
           <h2>LWJGL</h2>
           <table className="table table-bordered table-inverse">
           <tbody>
@@ -60,7 +59,7 @@ const SourceRoute = () => (
         </div>
       </div>
       <div className="row">
-        <div className="col-lg-4 col-xs-12">
+        <div className="col-lg-4">
           <h2>Assimp</h2>
           <table className="table table-bordered table-inverse">
             <tbody>
@@ -84,7 +83,7 @@ const SourceRoute = () => (
           </table>
         </div>
 
-        <div className="col-lg-4 col-xs-12">
+        <div className="col-lg-4">
           <h2>bgfx</h2>
           <table className="table table-bordered table-inverse">
             <tbody>
@@ -108,7 +107,7 @@ const SourceRoute = () => (
           </table>
         </div>
 
-        <div className="col-lg-4 col-xs-12">
+        <div className="col-lg-4">
           <h2>dyncall</h2>
           <table className="table table-bordered table-inverse">
             <tbody>
@@ -132,7 +131,7 @@ const SourceRoute = () => (
           </table>
         </div>
 
-        <div className="col-lg-4 col-xs-12">
+        <div className="col-lg-4">
           <h2>GLFW</h2>
           <table className="table table-bordered table-inverse">
             <tbody>
@@ -156,7 +155,7 @@ const SourceRoute = () => (
           </table>
         </div>
 
-        <div className="col-lg-4 col-xs-12">
+        <div className="col-lg-4">
           <h2>jemalloc</h2>
           <table className="table table-bordered table-inverse">
             <tbody>
@@ -180,7 +179,7 @@ const SourceRoute = () => (
           </table>
         </div>
 
-        <div className="col-lg-4 col-xs-12">
+        <div className="col-lg-4">
           <h2>OpenAL Soft</h2>
           <table className="table table-bordered table-inverse">
             <tbody>

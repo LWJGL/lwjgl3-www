@@ -6,8 +6,6 @@ import configureStore from './store/configureStore'
 import App from './containers/App'
 import './services/ga'
 
-import { connect } from 'react-redux'
-
 // Hide spinner from nprogress
 nprogress.configure({
   showSpinner: false

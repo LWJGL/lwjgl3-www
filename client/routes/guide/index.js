@@ -80,11 +80,11 @@ class GuideRoute extends React.Component {
           <p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
         </section>
 
-        <section className="py-1" style={{backgroundColor: '#2b2b2b'}}>
+        <section className="py-3" style={{backgroundColor: '#2b2b2b'}}>
           <pre className="container" style={{color: 'white'}}><code dangerouslySetInnerHTML={{__html: this.state.sample}} /></pre>
         </section>
 
-        <section className="container pt-2">
+        <section className="container pt-4">
           <p>
             LWJGL is fully documented, you can explore the javadoc documentation
             online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design
@@ -136,7 +136,7 @@ class GuideRoute extends React.Component {
           <p>The LWJGL build process creates thousands of tiny files. If you wish to redirect output to another directory or storage device, you may set the LWJGL_BUILD_OUTPUT environment variable.</p>
         </section>
 
-        <div className="area-dark py-2">
+        <div className="area-dark py-4">
           <section className="container">
             <h1>Is LW<b>JGL</b> for me?</h1>
 
@@ -146,7 +146,7 @@ class GuideRoute extends React.Component {
           </section>
         </div>
 
-        <section className="container pt-2">
+        <section className="container pt-4">
           <h2>GLFW</h2>
           <p>
             <a href="http://www.glfw.org/">GLFW</a> is an Open Source, multi-platform library for creating windows with OpenGL contexts and receiving input and events. It is easy to integrate into existing applications and does not lay claim to the main loop.

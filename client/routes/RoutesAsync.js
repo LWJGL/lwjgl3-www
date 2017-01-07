@@ -54,7 +54,7 @@ const asyncRoute = (getComponent) => class AsyncComponent extends React.Componen
       return <Component {...this.props} />
     } else {
       return (
-        <div className="container text-xs-center" style={{padding:'25vh 0'}}>
+        <div className="container text-center" style={{padding:'25vh 0'}}>
           <LoaderSpinner size={128} delay={true} />
         </div>
       )

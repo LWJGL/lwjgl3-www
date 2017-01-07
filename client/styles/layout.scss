@@ -2,21 +2,17 @@
 // VARIABLES
 // ----------------------------------------------------------------------------------------------------------------
 
-@import "variables";
 @import "../../node_modules/bootstrap/scss/variables";
-
-//$font-family-sans-serif: append($font-family-sans-serif, unquote('"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'));
-//$font-family-base: $font-family-sans-serif;
-
-// ----------------------------------------------------------------------------------------------------------------
-// BOOTSTRAP
-// ----------------------------------------------------------------------------------------------------------------
 
 // Mixins
 @import "../../node_modules/bootstrap/scss/mixins";
 
-// Overwrite Bootstrap 4 mixins to use calc() for grids
-@import "mixins";
+// Custom variables
+@import "variables";
+
+// ----------------------------------------------------------------------------------------------------------------
+// BOOTSTRAP
+// ----------------------------------------------------------------------------------------------------------------
 
 // Reset and dependencies
 @import "../../node_modules/bootstrap/scss/normalize";
@@ -33,7 +29,7 @@
 @import "../../node_modules/bootstrap/scss/buttons";
 
 // // Components
-//@import "../../node_modules/bootstrap/scss/animation";
+//@import "../../node_modules/bootstrap/scss/transitions";
 //@import "../../node_modules/bootstrap/scss/dropdown";
 //@import "../../node_modules/bootstrap/scss/button-group";
 //@import "../../node_modules/bootstrap/scss/input-group";
@@ -43,7 +39,7 @@
 //@import "../../node_modules/bootstrap/scss/card";
 //@import "../../node_modules/bootstrap/scss/breadcrumb";
 //@import "../../node_modules/bootstrap/scss/pagination";
-//@import "../../node_modules/bootstrap/scss/tags";
+//@import "../../node_modules/bootstrap/scss/badge";
 //@import "../../node_modules/bootstrap/scss/jumbotron";
 @import "../../node_modules/bootstrap/scss/alert";
 //@import "../../node_modules/bootstrap/scss/progress";

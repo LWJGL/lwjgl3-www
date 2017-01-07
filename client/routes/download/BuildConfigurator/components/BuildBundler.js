@@ -15,8 +15,8 @@ class BuildBundler extends React.Component {
 
   render() {
     return (
-      <div className="col-xs-12">
-        <div className="text-xs-center">
+      <div className="col">
+        <div className="text-center">
           <LoaderSpinner size={32} style={{marginBottom: '1rem'}} />
           <h4>Generating ZIP bundle. Please wait...</h4>
         </div>

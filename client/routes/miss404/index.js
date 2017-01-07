@@ -4,7 +4,7 @@ import Helmet from 'react-helmet'
 const Miss404 = () => (
   <main className="py-2">
     <Helmet title="Page not Found" />
-    <section className="container text-xs-center">
+    <section className="container text-center">
       <h1>404</h1>
       <h3>Page not found</h3>
     </section>

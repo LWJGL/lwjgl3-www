@@ -11,29 +11,26 @@ b, strong {
   font-weight: 700;
 }
 
+// Bootstrap 4 Beta 6 has invalid button colors when focused
+// TODO: Remove me
+a.btn {
+  &.btn-primary:focus,
+  &.btn-secondary:focus,
+  &.btn-success:focus,
+  &.btn-danger:focus,
+  &.btn-info:focus {
+    color: $white;
+  }
+}
+
+// Do not show pointer cursor on disabled controls
 .custom-control.custom-control-disabled {
   cursor: not-allowed;
 }
+// Make disabled controls more visibles
 .custom-control-input:disabled:checked ~ .custom-control-indicator {
   background-color: #aaa;
 }
-
-// Bootstrap 4 Beta 5 bugfix
-// TODO: check if fixed in future version
-.custom-controls-stacked {
-  .form-group {
-    margin-bottom: 0;
-  }
-  .custom-control {
-    float: none;
-    display: block;
-  }
-}
-
-
-//.custom-controls-stacked {
-//  @include clearfix();
-//}
 
 .area-dark-secondary {
   color: white;

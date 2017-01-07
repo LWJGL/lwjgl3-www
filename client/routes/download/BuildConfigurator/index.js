@@ -179,30 +179,30 @@ class BuildContainer extends React.Component {
 
   render() {
     return (
-      <div className="mb-3 config-container">
+      <div className="mb-5 config-container">
         <div className="row">
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg">
             <BuildType build="release" />
           </div>
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg">
             <BuildType build="stable" />
           </div>
-          <div className="col-lg-4 col-xs-12">
+          <div className="col-lg">
             <BuildType build="nightly" />
           </div>
         </div>
         <ControlledPanel className="row" predicate={isBuildSelected}>
-          <div className="col-xs-12">
+          <div className="col">
             <BuildConfigArea>
 
-              <ControlledPanel className="pt-1" predicate={isCustomizing}>
+              <ControlledPanel className="pt-3" predicate={isCustomizing}>
                 <div className="row">
-                  <div className="col-xs-12 col-md-3">
+                  <div className="col-md">
                     <h4>Mode</h4>
                     <ControlledRadio spec={fields.mode} />
 
-                    <h4 className="mb-1">Options</h4>
-                    <div className="custom-controls-stacked clearfix mb-1">
+                    <h4 className="mt-3">Options</h4>
+                    <div className="custom-controls-stacked">
                       <ControlledToggle spec={fields.descriptions} />
                       <ControlledCheckbox spec={fields.source} />
                       <ControlledCheckbox spec={fields.javadoc} />
@@ -213,26 +213,26 @@ class BuildContainer extends React.Component {
                     <BuildPlatform />
 
                     <ControlledPanel predicate={hasLanguageOption}>
-                      <h4 className="mb-1">Language</h4>
+                      <h4 className="mt-3">Language</h4>
                       <ControlledRadio spec={fields.language} />
                     </ControlledPanel>
 
                   </div>
-                  <div className="col-xs-12 col-md-3">
+                  <div className="col-md">
                     <h4>Presets</h4>
                     <ControlledRadio spec={fields.preset} />
 
-                    <h4>Addons</h4>
+                    <h4 className="mt-3">Addons</h4>
                     <BuildAddons />
 
                     <ControlledPanel predicate={isBuildRelease}>
-                      <h4 className="mt-1">Version</h4>
+                      <h4 className="mt-3">Version</h4>
                       <ControlledRadio spec={fields.version} />
                       <BuildReleaseNotes />
                     </ControlledPanel>
                   </div>
 
-                  <div className="col-xs-12 col-md-6">
+                  <div className="col-md-6">
                     <h4>Contents</h4>
                     <BuildArtifacts />
                   </div>
