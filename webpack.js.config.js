@@ -45,7 +45,7 @@ const config = {
 if ( DEV ) {
 
   const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
-  const NoErrorsPlugin = require("webpack/lib/NoErrorsPlugin");
+  const NoEmitOnErrorsPlugin = require("webpack/lib/NoEmitOnErrorsPlugin");
 
   // WebPack Hot Middleware client & HMR plugins
   config.entry.main.unshift(
@@ -55,7 +55,7 @@ if ( DEV ) {
 
   config.plugins.push(
     new HotModuleReplacementPlugin(),
-    new NoErrorsPlugin()
+    new NoEmitOnErrorsPlugin()
   );
 
   // Uncomment me to test async routes
