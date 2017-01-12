@@ -8,6 +8,13 @@ export default (prev) => ({
   alias: 'nightly',
   byId: {
     ...prev.byId,
+    'lwjgl-openvr': {
+      id: 'lwjgl-openvr',
+      title: 'OpenVR bindings',
+      description: 'OpenVR is an API and runtime that allows access to VR hardware from multiple vendors without requiring that applications have specific knowledge of the hardware they are targeting.',
+      natives: NATIVE_ALL,
+      website: 'https://github.com/ValveSoftware/openvr',
+    },
     'lwjgl-tinyexr': {
       id: 'lwjgl-tinyexr',
       title: 'Tiny OpenEXR bindings',
