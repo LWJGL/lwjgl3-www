@@ -185,7 +185,7 @@ const config = {
         maven: {
           groupId: 'com.code-disaster.steamworks4j',
           artifactId: 'steamworks4j',
-          version: '1.6.0',
+          version: '1.6.1',
         },
       }
     },
