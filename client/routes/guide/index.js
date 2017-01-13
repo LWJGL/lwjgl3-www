@@ -62,22 +62,12 @@ class GuideRoute extends React.Component {
           <h3>Getting Started</h3>
 
           <p>
-            Please use our <Link to="/download">download page</Link> to download an LWJGL release.
-            You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK),
-            LWJGL will work on version 8 or newer. Then proceed by setting up a project in your favorite IDE and
-            configuring it like so:
+            Please use the build configurator in our <Link to="/download">download page</Link> to configure and download an LWJGL release.
+            You will also need a <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK), LWJGL requires version 8 or higher.
+            Then proceed by setting up a project in your favorite IDE and configuring it as described in the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">Installation Guide</a>.
           </p>
-          <ul>
-            <li>Add the LWJGL jars to the classpath. This is usually done by setting up a library dependency for your project and attaching jars to it.</li>
-            <li>Set the <strong>-Djava.library.path</strong> system property (as a JVM launch argument) to the folder containing your native files</li>
-            <li>Attach the LWJGL javadoc and source archives to the LWJGL library (optional, but hightly recommended)</li>
-          </ul>
-
-          <p>Instructions for downloading LWJGL artifacts with Maven/Gradle/Ivy can be found in the <a href="https://github.com/LWJGL/lwjgl3">project repository</a>.</p>
 
           <p>You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes GLFW to create a window and clear the background color to red, using OpenGL.</p>
-
-          <p><b>WARNING</b>: The code below requires the latest nightly build to compile and run.</p>
         </section>
 
         <section className="py-3" style={{backgroundColor: '#2b2b2b'}}>
@@ -86,15 +76,14 @@ class GuideRoute extends React.Component {
 
         <section className="container pt-4">
           <p>
-            LWJGL is fully documented, you can explore the javadoc documentation
-            online <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information about LWJGL's design
-            choices and overall architecture, visit the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>.
-            The <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.5.-Bindings-FAQ">bindings FAQ</a> page is
-            especially useful. For more code examples, see
-            the <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/core/src/test">LWJGL tests suite</a> and
-            the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository.
-            For porting existing LWJGL 2 code to LWJGL 3, see
-            the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>.
+            LWJGL comes with rich documentation, you can browse the javadoc online <a href="http://javadoc.lwjgl.org/">starting here</a>.
+            For more information, FAQ, guides and tutorials visit the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>.
+            The <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.3.-Memory-FAQ">Memory FAQ</a>,
+            &nbsp;<a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.4.-Bindings-FAQ">Bindings FAQ</a>
+            &nbsp;and <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.5.-Troubleshooting">Troubleshooting</a> pages are especially useful.
+            For more code examples, see the <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/core/src/test">LWJGL tests suite</a> and
+            the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository (nightly build required).
+            For porting existing LWJGL 2 code to LWJGL 3, see the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>.
           </p>
 
           <a id="build-instructions" />
