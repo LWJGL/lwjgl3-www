@@ -18,7 +18,7 @@ module.exports = (req) => {
 
   } else {
 
-    // Device detection via expres-device
+    // Device detection via express-device
     // For development mode only
     switch ( req.device.type ) {
       case "phone":
