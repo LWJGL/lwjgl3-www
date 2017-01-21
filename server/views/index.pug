@@ -10,7 +10,7 @@ block content
     //- https://polyfill.io/v2/docs/features/
     script(src="https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=requestAnimationFrame,Element.prototype.classList")
 
-  if ( inline )
+  if ( production )
     script !{bundle}
   else
     script(src=`/js/${bundle}` defer)

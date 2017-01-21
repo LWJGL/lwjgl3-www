@@ -48,6 +48,7 @@ function configureStore() {
   };
 
   store.ejectReducer = (name) => {
+    // store.asyncReducers[name] = (state={}) => state;
     delete store.asyncReducers[name];
     store.replaceReducer(createReducer(store.asyncReducers));
   };
