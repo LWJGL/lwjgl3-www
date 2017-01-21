@@ -77,9 +77,7 @@ app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
 
 // View options
-app.locals.doctype = 'html';
 app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
-app.locals.compileDebug = false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
 
 if ( app.locals.development ) {
