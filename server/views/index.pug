@@ -13,4 +13,5 @@ block content
   if ( production )
     script !{bundle}
   else
-    script(src=`/js/${bundle}` defer)
+    script(src=`/js/vendor.js`)
+    script(src=`/js/${bundle}`)

@@ -12,8 +12,6 @@ const config = {
   },
   entry: {
     main: [
-      'babel-polyfill',
-      'whatwg-fetch',
       path.resolve(__dirname, 'client/main.js')
     ]
   },
@@ -46,6 +44,7 @@ if ( DEV ) {
 
   const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
   const NoEmitOnErrorsPlugin = require("webpack/lib/NoEmitOnErrorsPlugin");
+  const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
 
   // WebPack Hot Middleware client & HMR plugins
   config.entry.main.unshift(
@@ -55,7 +54,11 @@ if ( DEV ) {
 
   config.plugins.push(
     new HotModuleReplacementPlugin(),
-    new NoEmitOnErrorsPlugin()
+    new NoEmitOnErrorsPlugin(),
+    new DllReferencePlugin({
+      context: '.',
+      manifest: require('./public/js/vendor-manifest.json')
+    })
   );
 
   // Uncomment me to test async routes
