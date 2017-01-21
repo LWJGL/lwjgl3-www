@@ -102,19 +102,25 @@ local NGINX.
 
 ### Build/running in development
 
-To install all required npm packages:
+1. To install all required npm packages:
 
 ```bash
 yarn
 ```
 
-To build external CSS files run:
+2. To build external CSS files run:
 
 ```bash
 npm run styles
 ```
 
-To start the server in dev mode:
+3. To build vendor JS file run:
+
+```bash
+npm run vendor
+```
+
+4. To start the server in dev mode:
 
 ```bash
 npm start
