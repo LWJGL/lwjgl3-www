@@ -61,14 +61,12 @@ class Layout extends React.PureComponent {
           <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
           <Header isHome={isHomepage} />
 
-          <div id="lwjgl-routes">
-            <Match exactly={true} pattern="/" component={Routes.Home} />
-            <Match exactly={true} pattern="/download" component={Routes.Download} />
-            <Match exactly={true} pattern="/guide" component={Routes.Guide} />
-            <Match exactly={true} pattern="/source" component={Routes.Source} />
-            <Match exactly={true} pattern="/license" component={Routes.License} />
-            <Miss component={Miss404} />
-          </div>
+          <Match exactly={true} pattern="/" component={Routes.Home} />
+          <Match exactly={true} pattern="/download" component={Routes.Download} />
+          <Match exactly={true} pattern="/guide" component={Routes.Guide} />
+          <Match exactly={true} pattern="/source" component={Routes.Source} />
+          <Match exactly={true} pattern="/license" component={Routes.License} />
+          <Miss component={Miss404} />
 
           <Footer />
           <Copyright />

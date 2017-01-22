@@ -255,7 +255,6 @@ app.get('*', (req, res) => {
   res.render('index', {
     // Load polyfills (blocking) for IE
     ie: req.get('user-agent').indexOf('MSIE') > -1,
-    // The only reason we need this is to avoid rendering the homepage video in mobile devices
     bodyClass: getDevice(req),
     chunk
   });
