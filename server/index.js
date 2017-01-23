@@ -95,29 +95,29 @@ if ( app.locals.development ) {
         defaultSrc: [
           "'self'",
           "build.lwjgl.org",
-          '*.google-analytics.com',
+          "*.google-analytics.com",
         ],
         scriptSrc: [
           "'self'",
           "'unsafe-inline'",
           "'unsafe-eval'",
-          '*.google-analytics.com',
-          'cdnjs.cloudflare.com',
+          "*.google-analytics.com",
+          "cdnjs.cloudflare.com",
         ],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
-          '*.google-analytics.com',
-          'cdnjs.cloudflare.com',
+          "*.google-analytics.com",
+          "cdnjs.cloudflare.com",
         ],
         imgSrc: [
           "'self'",
-          'data:',
-          '*.google-analytics.com',
-          'api.travis-ci.org',
-          'travis-ci.org'
+          "data:",
+          "*.google-analytics.com",
+          "api.travis-ci.org",
+          "travis-ci.org"
         ],
-        frameAncestors: ["'none'"],
+        frameSrc: ["'none'"],
         objectSrc: ["'none'"]
       }
     },
@@ -125,7 +125,7 @@ if ( app.locals.development ) {
       allow: false
     },
     frameguard: {
-      action: 'deny'
+      action: "deny"
     },
     hidePoweredBy: false,
     /*
