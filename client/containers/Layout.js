@@ -7,9 +7,9 @@ import Helmet from 'react-helmet'
 import * as Routes from '../routes/Routes'
 import Miss404 from '../routes/miss404'
 
-import Header from '../components/Header'
-import Footer from '../components/Footer'
-import Copyright from '../components/Copyright'
+import Header from './Header'
+import Footer from './Footer'
+import Copyright from './Copyright'
 
 if ( 'scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';

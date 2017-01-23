@@ -89,7 +89,7 @@ export default class Sidebar extends React.Component {
     let isOpen = this.state.open;
 
     return (
-      <div ref={(el) => {this.slidingMenu = el}} className={['sliding-menu', isOpen ? 'open' : null].join(' ')}>
+      <div ref={(el) => {this.slidingMenu = el}} className={['col hidden-lg-up sliding-menu', isOpen ? 'open' : null].join(' ')}>
         <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} aria-hidden={isOpen} title="Open navigation menu"><FaBars size={24} /></button>
         <div className="sliding-menu-overlay" onClick={this.onToggle}></div>
         <div

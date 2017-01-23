@@ -143,9 +143,7 @@ class Header extends React.Component {
               <li><a href="http://blog.lwjgl.org/" target="_blank">BLOG</a></li>
             </ul>
 
-            <div className="col hidden-lg-up">
-              <Sidebar />
-            </div>
+            <Sidebar />
           </div>
         </nav>
       </header>

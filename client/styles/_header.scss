@@ -35,7 +35,7 @@ header {
     transition: top 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s ease-out, opacity 0.5s ease-out;
     &.hidden {
       opacity: 0;
-      top: -48px;
+      top: -4rem;
       pointer-events: none;
     }
   }
@@ -76,8 +76,7 @@ header {
 }
 
 .sliding-menu {
-
-  text-align: right;
+  $gutter: $grid-gutter-width-base / 2;
 
   a {
     &:hover {
@@ -86,10 +85,10 @@ header {
   }
 
   .sliding-menu-icon {
-    display: inline-block;
-    line-height: 44px;
-    padding: 0 15px;
-    margin: 0 -15px 0 0;
+    display: block;
+    border: none;
+    padding: 0 $gutter;
+    margin: 0 (-$gutter) 0 auto;
     color: white;
 
     svg {
@@ -118,10 +117,9 @@ header {
   .sliding-menu-container {
     background-color: #1b2426;
     position: fixed;
-    padding: 0 15px;
+    padding: 0 $gutter;
     right: 0;
     top: 0;
-    text-align: left;
     max-width: 320px;
     min-width: 260px;
     height: 100%;
