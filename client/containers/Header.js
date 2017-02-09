@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 
 const HEADER_CLASS = `site-header top${IS_IOS ? ' alt' : ''}`;
 
-@withRouter
+@withRouter // force re-rendering when route changes
 @connect(
   (state) => ({
     desktop: state.breakpoint.current > state.breakpoint.md,
@@ -39,12 +39,6 @@ class Header extends React.Component {
     // Initial scroll values
     this.current = window.pageYOffset;
     this.prev = this.current;
-
-    if ( this.props.location.pathname === '/' ) {
-      this.el.classList.add('nobg');
-    } else {
-      this.el.classList.remove('nobg');
-    }
 
     // this.el.classList.toggle('top', this.current === 0); // NOT SUPPORTED ON IE
     if ( this.current === 0 ) {

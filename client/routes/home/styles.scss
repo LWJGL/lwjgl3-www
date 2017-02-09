@@ -1,9 +1,20 @@
 @import '../../styles/lib';
 
+// Make header transparent and remove padding from body when we're in the homepage
 body {
   padding-top: 0;
 }
 
+.site-header {
+  will-change: background-color, top;
+  transition: background-color 0.5s ease-out;
+
+  &.top {
+    background-color: fade-out($lwjgl-primary, 1.0);
+  }
+}
+
+// Make bindings icons large
 .bindings {
   .svg-icon {
     font-size: 3rem;
@@ -11,6 +22,7 @@ body {
   }
 }
 
+// Intro video
 .video-container {
   position: relative;
   background: #1b2426 center;

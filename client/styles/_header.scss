@@ -1,4 +1,4 @@
-header {
+.site-header {
   background: $lwjgl-primary;
   position: absolute;
   top: 0;
@@ -12,15 +12,6 @@ header {
 
   &.fixed {
     position: fixed;
-  }
-
-  &.nobg {
-    will-change: background-color, top;
-    transition: background-color 0.5s ease-out;
-
-    &.top {
-      background-color: fade-out($lwjgl-primary, 1.0);
-    }
   }
 
   &.alt {
