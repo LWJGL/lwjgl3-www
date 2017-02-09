@@ -147,8 +147,10 @@ const buildConfiguration = () => {
     // WARNING: Breaks routes hot loading!
     // config.plugins.push(
     //   new NormalModuleReplacementPlugin(
-    //     /^\.\.\/routes\/RoutesDevelopment/,
-    //     '../routes/RoutesProduction'
+    //     /RoutesDevelopment/,
+    //     (result) => {
+    //       result.request = result.request.replace(/RoutesDevelopment/, 'RoutesProduction');
+    //     }
     //   )
     // );
 
