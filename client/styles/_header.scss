@@ -1,17 +1,11 @@
-.menu-pad {
-  padding-top: 4rem;
-}
-
 header {
-  $header-color: #fff;
-
-  background: $brand-primary;
+  background: $lwjgl-primary;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 10;
-  color: $header-color;
+  color: $white;
   line-height: 3rem;
   font-size: 1.2rem;
   will-change: top;
@@ -25,7 +19,7 @@ header {
     transition: background-color 0.5s ease-out;
 
     &.top {
-      background-color: transparentize($header-color, 1.0);
+      background-color: fade-out($lwjgl-primary, 1.0);
     }
   }
 
@@ -35,14 +29,14 @@ header {
     transition: top 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s ease-out, opacity 0.5s ease-out;
     &.hidden {
       opacity: 0;
-      top: -4rem;
+      top: -3rem;
       pointer-events: none;
     }
   }
 
   a {
     font-weight: 300;
-    color: $header-color;
+    color: $white;
     text-decoration: none;
 
     &:focus, &:hover {
@@ -57,10 +51,9 @@ header {
       background: linear-gradient(currentColor, currentColor) bottom / 0 2px no-repeat;
       transition: .5s background-size, 0.75s color ease-out;
 
-      &:hover {
+      &:hover, &.active {
         background-size: 100% 2px;
       }
-
     }
   }
 
@@ -73,77 +66,71 @@ header {
     }
   }
 
-}
+  .sliding-menu {
+    $gutter: $grid-gutter-width-base / 2;
 
-.sliding-menu {
-  $gutter: $grid-gutter-width-base / 2;
-
-  a {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  .sliding-menu-icon {
-    display: block;
-    border: none;
-    padding: 0 $gutter;
-    margin: 0 (-$gutter) 0 auto;
-    color: white;
-
-    svg {
-      margin-bottom: 5px;
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
     }
 
-    &:hover, &:active {
-      color: yellow;
+    .sliding-menu-icon {
+      display: block;
+      border: none;
+      padding: 0 $gutter;
+      margin: 0 (-$gutter) 0 auto;
+      color: $white;
+
+      &:hover, &:active {
+        color: yellow;
+      }
     }
-  }
 
-  .sliding-menu-overlay {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,.5);
-    pointer-events: none;
-    opacity: 0;
-    will-change: opacity;
-    transition: opacity 0.3s cubic-bezier(0,0,0.3,1);
-    //transform: translateX(102%);
-  }
-
-  .sliding-menu-container {
-    background-color: #1b2426;
-    position: fixed;
-    padding: 0 $gutter;
-    right: 0;
-    top: 0;
-    max-width: 320px;
-    min-width: 260px;
-    height: 100%;
-    overflow: auto;
-    will-change: transform;
-    transition: transform 0.3s cubic-bezier(0,0,0.3,1);
-    transform: translateX(102%);
-    pointer-events: none;
-    &.touching {
-      // Avoids resetting transform onTouchEnd
-      transition: none;
-    }
-  }
-
-  &.open {
     .sliding-menu-overlay {
-      pointer-events: auto;
-      opacity: 1;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, .5);
+      pointer-events: none;
+      opacity: 0;
+      will-change: opacity;
+      transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
     }
 
     .sliding-menu-container {
-      pointer-events: auto;
-      transform: none;
+      background-color: #1b2426;
+      position: fixed;
+      padding: 0 $gutter;
+      right: 0;
+      top: 0;
+      max-width: 320px;
+      min-width: 260px;
+      height: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      will-change: transform;
+      transform: translateX(102%) translate3d(0, 0, 0);
+      transition: transform 0.3s cubic-bezier(0, 0, .3, 1);
+      pointer-events: none;
+      &.touching {
+        // Avoids resetting transform onTouchEnd
+        transition: none;
+      }
     }
-  }
 
+    &.open {
+      .sliding-menu-overlay {
+        pointer-events: auto;
+        opacity: 1;
+      }
+      .sliding-menu-container {
+        pointer-events: auto;
+        transform: none;
+      }
+    }
+
+  }
 }

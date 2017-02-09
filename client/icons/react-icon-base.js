@@ -1,24 +1,14 @@
 import React from 'react'
-import IconPropTypes from './react-icon-propTypes'
 
-const IconBase = ({ children, color, size, style, ...props }) => {
-  const computedSize = size || '1em';
-  return (
+const IconBase = ({children, size, ...props}) => (
+  <span className="svg-icon" style={{fontSize:size}}>
     <svg
       children={children}
       fill='currentColor'
       preserveAspectRatio='xMidYMid meet'
-      height={computedSize}
-      width={computedSize}
       {...props}
-      style={{
-        verticalAlign: 'middle',
-        color,
-        ...style
-      }}
     />
-  )
-};
+  </span>
+);
 
-IconBase.propTypes = IconPropTypes;
 export default IconBase

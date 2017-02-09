@@ -6,17 +6,13 @@ $enable-transitions: true;
 //$enable-grid-classes: true;
 //$enable-print-styles: true;
 
-//$font-family-sans-serif: append($font-family-sans-serif, unquote('"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"'));
-//$font-family-base: $font-family-sans-serif;
-
-$brand-primary: #1b2426;
-$body-color: $brand-primary;
+$lwjgl-primary: #1b2426;
+$body-color: $lwjgl-primary;
 $body-color-dark-secondary: #6c8f91;
 
-$btn-primary-bg: $brand-primary;
-$btn-primary-border: $brand-primary;
+$btn-primary-bg: $lwjgl-primary;
+$btn-primary-border: $lwjgl-primary;
 
-//$link-hover-color: darken($brand-primary, 25%);
 $link-color-dark: #63aae7;
 
 $whitespace: 0.5rem;

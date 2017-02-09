@@ -2,13 +2,11 @@
 // VARIABLES
 // ----------------------------------------------------------------------------------------------------------------
 
+@import "variables";
 @import "../../node_modules/bootstrap/scss/variables";
 
 // Mixins
 @import "../../node_modules/bootstrap/scss/mixins";
-
-// Custom variables
-@import "variables";
 
 // ----------------------------------------------------------------------------------------------------------------
 // BOOTSTRAP
@@ -63,6 +61,7 @@
 
 @import "components/_custom-forms-common";
 @import "components/_custom-toggle";
+@import "components/_svg-icon";
 
 // ----------------------------------------------------------------------------------------------------------------
 // LWJGL THEME
@@ -74,4 +73,3 @@
 @import "footer";
 @import "loader";
 @import "nprogress";
-@import "download";

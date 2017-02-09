@@ -1,6 +1,6 @@
 import React from 'react'
 import Helmet from 'react-helmet'
-import Link from 'react-router/Link'
+import Link from 'react-router-dom/Link'
 import codeSample from './sample'
 import loadJS from 'fg-loadjs'
 import { loadCSS } from 'fg-loadcss'
@@ -8,7 +8,9 @@ import { loadCSS } from 'fg-loadcss'
 const checkLocation = () => {
   if ( window.location.hash === '#build-instructions' ) {
     try {
-      document.getElementById('build-instructions').scrollIntoView();
+      setImmediate(function(){
+        document.getElementById('build-instructions').scrollIntoView({behavior:'smooth'});
+      });
     } catch (ignore) {
     }
   }
@@ -29,7 +31,7 @@ class GuideRoute extends React.Component {
     if ( GuideRoute.init ) {
       GuideRoute.init = false;
       loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/darkula.min.css');
-      loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js', () => {
+      loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js', () => {
         GuideRoute.sample = window.hljs.highlight('java', codeSample).value;
         if ( !this.mounted ) {
           return;

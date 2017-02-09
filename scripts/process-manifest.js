@@ -6,101 +6,72 @@ const path = require('path');
 const chalk = require('chalk');
 const Table = require('cli-table');
 const gzipSize = require('gzip-size');
-
-const manifest = require('../manifest.json');
-const config = require('../config.json');
-
+const prettyBytes = require('./prettyBytes');
+const formatSize = require('./formatSize');
 const headStyle = {head: ['cyan']};
-
-const prettyBytes = num => `${(num / kB).toFixed(2)} kB`;
-const kB = 1000;
-const warnFileSizes = [10, 150, 250];
-const warnFileSizesGzipped = [5, 75, 150];
-const warnFileSizesRoot = [200, 400, 600];
-const warnFileSizesRootGzipped = [100, 150, 250];
-const warnFileSizesCSS = [25, 75, 100];
-const warnFileSizesCSSGzipped = [10, 30, 60];
-
-const formatSize = (size, isGzip, isRoot, isCss) => {
-  let limits;
-  if ( isGzip ) {
-    if ( isCss ) {
-      limits = warnFileSizesCSSGzipped;
-    } else {
-      limits = isRoot ? warnFileSizesRootGzipped : warnFileSizesGzipped;
-    }
-  } else {
-    if ( isCss ) {
-      limits = warnFileSizesCSS;
-    } else {
-      limits = isRoot ? warnFileSizesRoot : warnFileSizes;
-    }
-  }
-  if ( size >= limits[2] * kB ) {
-    return chalk.red(prettyBytes(size));
-  } else if ( size >= limits[1] * kB ) {
-    return chalk.yellow(prettyBytes(size));
-  } else if ( size <= limits[0] * kB ) {
-    return chalk.green(prettyBytes(size));
-  }
-
-  return prettyBytes(size);
-};
+const webpackManifest = require('../public/js/webpack.manifest.json');
 
 /*
  * ------------------------------------------------------------------------------------------------------------------------
- *  config.json
- *
- *  Update config.json with entry points for JS & CSS
- *  Update config.json with chunk paths for preloading
+ *  Generate production manifest.json from webpack's manifest
  *  ------------------------------------------------------------------------------------------------------------------------
  */
-const configUpdated = Object.assign({}, config);
 
-function updateConfig() {
-  // Update config.js by populating entry points for JS & CSS
-  console.log(chalk.yellow('\n Updating JS & CSS entry points:'));
-  const tbl = new Table({head: ['Type', 'File'], style: headStyle});
-  tbl.push(['JS', manifest.children[0].assetsByChunkName.main]);
-  tbl.push(['CSS', manifest.children[1].assetsByChunkName.bundle[1]]);
-  console.log(tbl.toString());
+let manifest = {};
 
-  configUpdated.manifest = {
-    js: manifest.children[0].assetsByChunkName.main,
-    css: manifest.children[1].assetsByChunkName.bundle[1]
-  };
+function buildManifest() {
+  console.log(chalk.yellow('\n Detecting entry point & chunks:'));
+
+  const tbl = new Table({head: ['Type', 'Bundle'], style: headStyle});
+
+  // We'll use this to boot the app
+  // "main" here is the name of the entry in webpack.config.js (config.entry.main)
+  manifest.entry = webpackManifest.assetsByChunkName.main;
+
+  // App needs this to know where to load the other chunks from
+  // We'll serialize it later and inject inline as JavaScript (webpackManifest={})
+  manifest.chunks = require(`../public/js/chunks.json`);
+
+  // Build a map of route paths->JS files in order to preload chunks as needed
+  manifest.routes = {};
 
   // Detect routes from chunk paths
   // ------------------------------
-  console.log(chalk.yellow('\n Detecting routes from chunk paths:'));
-  const tblRoutes = new Table({head: ['Route', 'Chunk'], style: headStyle});
-
-  configUpdated.routes = {};
-  manifest.children[0].chunks.forEach(chunk => {
+  webpackManifest.chunks.forEach((chunk) => {
     if ( chunk.entry === true ) {
+      // This is the entry chunk, ignore
       return;
     }
 
-    const route = chunk.modules[0].name.match(/routes[/]([a-z][a-z-_/]+)[/]index.js$/);
+    // We know that routes split points are all in RoutesProduction.js
+    // Therefore find the module which has that issuerName
 
-    if ( route !== null ) {
-      if ( route[1] === 'home' ) {
-        tblRoutes.push(['/', chunk.files[0]]);
-        configUpdated.routes['/'] = chunk.files[0];
-      } else {
-        tblRoutes.push([route[1], chunk.files[0]]);
-        configUpdated.routes[`/${route[1]}`] = chunk.files[0];
+    let routeModule = null;
+    for (let module of chunk.modules) {
+      if ( module.issuerName === './client/routes/RoutesProduction.js' ) {
+        routeModule = module.name;
+        break;
       }
     }
+    if ( routeModule === null ) {
+      // Not a route, ignore
+      return;
+    }
+
+    const route = routeModule.match(/^\.\/client\/routes\/([a-z][a-z-_/]+)\/index\.js$/);
+
+    if ( route !== null ) {
+      manifest.routes[route[1]] = chunk.files[0];
+    }
   });
-  console.log(tblRoutes.toString());
+
+  tbl.push(['JS', JSON.stringify(manifest, null, 2)]);
 
   // Update file
   // -----------
-  fs.writeFileSync('./config.json', JSON.stringify(configUpdated, null, 2));
+  fs.writeFileSync(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(manifest, null, 2));
+  console.log(tbl.toString());
 }
-
-updateConfig();
 
 /*
  * ------------------------------------------------------------------------------------------------------------------------
@@ -112,36 +83,30 @@ updateConfig();
  * https://github.com/nolanlawson/optimize-js
  * ------------------------------------------------------------------------------------------------------------------------
  */
-
-function optimize() {
+function optimizeJS() {
   console.log(chalk.yellow('\n Optimizing files:\n'));
-  // const tbl = new Table({head: ['Filename'], style: headStyle});
 
-  manifest.children[0].assets.filter(asset => asset.chunks.length > 0).forEach(asset => {
-    const filename = `./public/js/${asset.name}`;
-    // tbl.push([filename]);
+  webpackManifest.assets.forEach((asset) => {
+    if ( !asset.name.endsWith('.js') ) {
+      return;
+    }
+    const filename = path.resolve(__dirname, `../public/js/${asset.name}`);
     fs.writeFileSync(
       filename,
       optimizeJs(fs.readFileSync(filename, {encoding: 'utf-8'}))
     );
   });
 
-  // console.log(tbl.toString());
   console.log('  OK');
 }
 
-optimize();
-
 /*
  * ------------------------------------------------------------------------------------------------------------------------
- *
  * Report generated file size
- *
  * ------------------------------------------------------------------------------------------------------------------------
  */
 
-function reportFiles(type) {
-  const isCss = type === 'css';
+function filesReportBuild(files) {
   const tbl = new Table({
     head: [
       'Title',
@@ -153,50 +118,21 @@ function reportFiles(type) {
     style: headStyle
   });
 
-  const files = [];
-
-  if ( isCss ) {
-    console.log(chalk.yellow('\n CSS file size report:'));
-    files.push({
-      name: 'Root',
-      path: path.resolve(__dirname, '../public/css', configUpdated.manifest.css),
-      size: 0,
-      gzip: 0
-    });
-  } else {
-    console.log(chalk.yellow('\n JavaScript file size report:'));
-    files.push(
-      {
-        name: 'Root',
-        path: path.resolve(__dirname, '../public/js', configUpdated.manifest.js),
-        size: 0,
-        gzip: 0
-      },
-      ...(Object.keys(configUpdated.routes).map(route => ({
-        name: route,
-        path: path.resolve(__dirname, '../public/js', configUpdated.routes[route]),
-        size: 0,
-        gzip: 0
-      })))
-    );
-  }
-
   let sum = 0;
   let sumGzip = 0;
 
-  files.map(file => {
+  files.map((file) => {
     const stat = fs.statSync(file.path);
     if ( !stat.isFile() ) {
-      // Throw ?
-      return;
+      throw new Error(`${file.path} is not a file`);
     }
 
     file.size = stat.size;
     file.gzip = gzipSize.sync(fs.readFileSync(file.path));
     return file;
-  }).forEach(file => {
-    const isRoot = file.name === 'Root';
-    const isCss = type === 'css';
+  }).forEach((file) => {
+    const isRoot = file.name === 'entry';
+    const isCss = file.type === 'css';
     sum += file.size;
     sumGzip += file.gzip;
     tbl.push([
@@ -214,5 +150,32 @@ function reportFiles(type) {
   console.log(tbl.toString());
 }
 
-reportFiles('css');
-reportFiles('js');
+function filesReport(entry, routes) {
+  filesReportBuild([
+    {
+      name: "entry",
+      path: path.resolve(__dirname, '../public/js', entry),
+      size: 0,
+      gzip: 0,
+      type: 'js',
+    },
+    ...Object.keys(routes).map((route) => ({
+      name: route,
+      path: path.resolve(__dirname, '../public/js', routes[route]),
+      size: 0,
+      gzip: 0,
+      type: 'js',
+    }))
+  ]);
+}
+
+buildManifest();
+optimizeJS();
+
+if ( manifest.entry ) {
+  console.log(chalk.yellow('\n JavaScript file size report:'));
+  filesReport(
+    manifest.entry,
+    manifest.routes
+  );
+}

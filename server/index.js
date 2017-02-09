@@ -15,7 +15,9 @@ AWS.config.credentials = new AWS.SharedIniFileCredentials({profile: 'default'});
 AWS.config.update({region: 'us-east-1'});
 
 // Lib
+const cloudFrontSubnets = require('./cloudfront-subnets.json');
 const getDevice = require('./getDevice');
+const helmetConfig = require('./helmetConfig');
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
@@ -25,6 +27,22 @@ const PRODUCT = 'lwjgl.org';
 const app = express();
 const config = require('../config.json');
 
+app.locals.development = app.get('env') === 'development';
+app.locals.production = !app.locals.development;
+
+const manifest = app.locals.production ? require('../public/js/manifest.json') : {};
+
+if ( app.locals.production ) {
+  // Convert chunks object to JSON so we can inject it in the page as <script>
+  manifest.chunksSerialized = JSON.stringify(manifest.chunks);
+} else {
+  console.log(chalk.yellow(`Starting ${PRODUCT} in ${app.get('env')} mode`));
+}
+
+// View options
+app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
+app.locals.cache = app.locals.production && argv.nocache === undefined;
+
 app.set('port', config.server.port);
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
@@ -33,143 +51,17 @@ app.enable('case sensitive routing');
 app.enable('strict routing');
 app.disable('x-powered-by');
 
-app.set('trust proxy', [
-  'loopback',
-  'linklocal',
-  'uniquelocal',
-  // Cloudfront subnets
-  '13.32.0.0/15',
-  '13.54.63.128/26',
-  '34.195.252.0/24',
-  '35.162.63.192/26',
-  '52.15.127.128/26',
-  '52.46.0.0/18',
-  '52.52.191.128/26',
-  '52.56.127.0/25',
-  '52.57.254.0/24',
-  '52.66.194.128/26',
-  '52.78.247.128/26',
-  '52.84.0.0/15',
-  '52.199.127.192/26',
-  '52.212.248.0/26',
-  '52.220.191.0/26',
-  '52.222.128.0/17',
-  '54.182.0.0/16',
-  '54.192.0.0/16',
-  '54.230.0.0/16',
-  '54.233.255.128/26',
-  '54.239.128.0/18',
-  '54.239.192.0/19',
-  '54.240.128.0/18',
-  '204.246.164.0/22',
-  '204.246.168.0/22',
-  '204.246.174.0/23',
-  '204.246.176.0/20',
-  '205.251.192.0/19',
-  '205.251.249.0/24',
-  '205.251.250.0/23',
-  '205.251.252.0/23',
-  '205.251.254.0/24',
-  '216.137.32.0/19',
-]);
-
-app.locals.development = app.get('env') === 'development';
-app.locals.production = !app.locals.development;
-
-// View options
-app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
-app.locals.cache = app.locals.production && argv.nocache === undefined;
-
-if ( app.locals.development ) {
-  console.log(chalk.yellow(`Starting ${PRODUCT} in ${app.get('env')} mode`));
-}
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...cloudFrontSubnets]);
 
 // ------------------------------------------------------------------------------
 // Middleware
 // ------------------------------------------------------------------------------
-//noinspection JSUnusedGlobalSymbols
-{
-  let helmetConfig = {
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: [
-          "'self'",
-          "build.lwjgl.org",
-          "*.google-analytics.com",
-        ],
-        scriptSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "'unsafe-eval'",
-          "*.google-analytics.com",
-          "cdnjs.cloudflare.com",
-        ],
-        styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "*.google-analytics.com",
-          "cdnjs.cloudflare.com",
-        ],
-        imgSrc: [
-          "'self'",
-          "data:",
-          "*.google-analytics.com",
-          "api.travis-ci.org",
-          "travis-ci.org"
-        ],
-        frameSrc: ["'none'"],
-        objectSrc: ["'none'"]
-      }
-    },
-    dnsPrefetchControl: {
-      allow: false
-    },
-    frameguard: {
-      action: "deny"
-    },
-    hidePoweredBy: false,
-    /*
-    hpkp: {
-      maxAge: 7 * 24 * 60 * 60,
-      sha256s: [
-        // https://www.amazontrust.com/repository/
-        new Buffer('2b071c59a0a0ae76b0eadb2bad23bad4580b69c3601b630c2eaf0613afa83f92').toString('base64'),
-        new Buffer('f7ecded5c66047d28ed6466b543c40e0743abe81d109254dcf845d4c2c7853c5').toString('base64'),
-        new Buffer('36abc32656acfc645c61b71613c4bf21c787f5cabbee48348d58597803d7abc9').toString('base64'),
-        new Buffer('7f4296fc5b6a4e3b35d3c369623e364ab1af381d8fa7121533c9d6c633ea2461').toString('base64'),
-        new Buffer('fbe3018031f9586bcbf41727e417b7d1c45c2f47f93be372a17b96b50757d5a2').toString('base64'),
-      ],
-      includeSubDomains: false,
-      setIf: (req, res) => app.locals.production && req.hostname === 'www.lwjgl.org'
-    },
-    */
-    ieNoOpen: false,
-    noSniff: true,
-    referrerPolicy: false,
-    xssFilter: true
-  };
-
-  if ( app.locals.production ) {
-    helmetConfig.hsts = {
-      maxAge: 365 * 24 * 60 * 60,
-      includeSubDomains: false,
-      // TODO: includeSubDomains must be true for preloading to be approved
-      preload: true,
-      setIf: (req, res) => req.hostname === 'www.lwjgl.org'
-    };
-  // } else {
-  //   helmetConfig.contentSecurityPolicy.directives.scriptSrc.push('unpkg.com');
-  }
-
-  app.use(helmet(helmetConfig));
-}
-
-
+app.use(helmet(helmetConfig(app.locals.production)));
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 if ( app.locals.development ) {
   const webpack = require('webpack');
-  const webpackConfig = require('../webpack.js.config');
+  const webpackConfig = require('../webpack.config');
   const webpackCompiler = webpack(webpackConfig);
 
   app.use(require('webpack-dev-middleware')(webpackCompiler, {
@@ -186,16 +78,10 @@ if ( app.locals.development ) {
     heartbeat: 10 * 1000,
   }));
 
-  app.locals.bundle = 'main.js';
-  app.locals.css = 'styles.css';
-
   // Device type detection
   // On production we rely on Cloudfront to get this information for free
   const device = require('express-device');
   app.use(device.capture());
-} else {
-  app.locals.bundle = fs.readFileSync(`./public/js/${config.manifest.js}`);
-  app.locals.css = fs.readFileSync(`./public/css/${config.manifest.css}`);
 }
 
 // ------------------------------------------------------------------------------
@@ -213,10 +99,9 @@ app.use((req, res, next) =>
 });
 
 // Static Assets
-//noinspection JSUnusedGlobalSymbols
 app.use(express.static(path.join(__dirname, '../public'), {
   index: false,
-  setHeaders: res => {
+  setHeaders: (res) => {
     // Send immutable Cache-Control flag
     // https://bitsup.blogspot.com/2016/05/cache-control-immutable.html
     res.set('Cache-Control', 'public,max-age=31536000,immutable');
@@ -244,25 +129,58 @@ app.get('/license.php', (req, res) => res.redirect(301, '/license'));
 
 // React server-side rendering
 app.get('*', (req, res) => {
-  let chunk;
+  let preloadScripts;
+  let entry;
+  let webpackManifest;
 
   if ( app.locals.production ) {
-    // Get code-split chunk's relative path for this path
-    // @see ./process-manifest.js to see how we populate config -- not clean, but it works
-    chunk = config.routes[req.path];
+    // Set entry point
+    entry = manifest.entry;
+
+    // Webpack manifest (pre-generated script ready for injection, see above)
+    webpackManifest = manifest.chunksSerialized;
+
+    preloadScripts = [
+      // Push entry script first, we need to start loading as soon as possible
+      // because we need it immediately
+      entry,
+    ];
+
+    // Append chunk of important routes to the preload list
+    // Logic can be customized as needed. Can get complicated for recursive routes
+    // or routes deep in site's hierarchy, so not always worth it
+    if ( req.path === '/' ) {
+      preloadScripts.push(manifest.routes.home);
+    } else {
+      const route = req.path.substr(1);
+      if ( manifest.routes[route] ) {
+        preloadScripts.push(manifest.routes[route]);
+      }
+    }
+  } else {
+    entry = 'main.js';
+    preloadScripts = ['vendor.js', entry];
   }
 
+  // Asset preloading
+  // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
+  // To disable PUSH, append "; nopush"
+  // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
+  const linkHeaders = [...preloadScripts.map((script) => `\</js/${script}\>; rel=preload; as=script`)];
+
+  // Append Link headers
+  res.set('Link', linkHeaders);
+
   res.render('index', {
-    // Load polyfills (blocking) for IE
     ie: req.get('user-agent').indexOf('MSIE') > -1,
     bodyClass: getDevice(req),
-    chunk
+    webpackManifest,
+    entry,
   });
 });
 
 // Page not found
 
-// eslint-disable-next-line
 app.use((req, res) => {
   res.status(404);
 
@@ -280,7 +198,6 @@ app.use((req, res) => {
 });
 
 // Error handling
-//noinspection JSUnusedLocalSymbols
 app.use((err, req, res, next) => {
   res.status(500);
 

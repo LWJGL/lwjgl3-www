@@ -9,8 +9,7 @@ const config = {
   },
   entry: {
     vendor: [
-      'babel-polyfill',
-      'whatwg-fetch',
+      'regenerator-runtime',
       'react',
       'react-dom',
       'redux',
@@ -25,7 +24,10 @@ const config = {
       'nprogress',
       'react-helmet',
       'react-router',
+      'react-router-dom',
+      'react-redux',
       'reselect',
+      'redux-logger',
     ]
   },
   output: {

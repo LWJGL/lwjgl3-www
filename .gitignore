@@ -3,17 +3,12 @@
 
 # WebStorm/IntelliJ project files
 .idea
-*.iml
 
 # Node
 /node_modules
-.yarnclean
 
 # Configuration files
-config.json
-forever.json
+/config.json
 
 # Generated files
-/manifest.json
-public/css/*
-public/js/*
+/public/js/*.js*

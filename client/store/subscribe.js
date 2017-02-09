@@ -2,7 +2,6 @@ import React from 'react'
 
 const subscribe = (Component) => class extends React.Component {
 
-  //noinspection JSUnusedGlobalSymbols
   static contextTypes = {
     store: React.PropTypes.object
   };
@@ -24,16 +23,16 @@ const subscribe = (Component) => class extends React.Component {
     const store = this.context.store;
 
     if ( Component.reducers ) {
-      Object.keys(Component.reducers).forEach((scope) => {
-        store.injectReducer(scope, Component.reducers[scope]);
-      })
+      for ( let [scope, reducer] of Object.entries(Component.reducers) ) {
+        store.injectReducer(scope, reducer);
+      }
     }
 
     if ( Component.sagas ) {
       this.sagas = [];
-      Component.sagas.forEach((saga) => {
+      for ( let saga of Component.sagas ) {
         this.sagas.push(store.runSaga(saga));
-      });
+      }
     }
 
     this.setState({subscribed: true});
@@ -44,17 +43,17 @@ const subscribe = (Component) => class extends React.Component {
     const store = this.context.store;
 
     if ( this.sagas ) {
-      this.sagas.forEach((saga) => {
+      for ( let saga of this.sagas ) {
         if ( saga.isRunning() ) {
           saga.cancel();
         }
-      });
+      }
     }
 
     if ( Component.reducers ) {
-      Object.keys(Component.reducers).forEach((scope) => {
+      for ( let scope of Object.keys(Component.reducers) ) {
         store.ejectReducer(scope);
-      })
+      }
     }
   }
 

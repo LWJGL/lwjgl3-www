@@ -1,5 +1,0 @@
-export { default as Home } from './home'
-export { default as Download } from './download'
-export { default as Guide } from './guide'
-export { default as Source } from './source'
-export { default as License } from './license'

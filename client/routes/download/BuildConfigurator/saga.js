@@ -309,7 +309,9 @@ function* saveConfig() {
   yield call(delay, 500);
 
   const save = yield select(getConfig);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+  if ( save.build !== null ) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+  }
 }
 
 function* downloadConfig() {

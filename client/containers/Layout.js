@@ -1,80 +1,32 @@
-import React, { PropTypes } from 'react'
-import { Provider } from 'react-redux'
-import Match from 'react-router/Match'
-import Miss from 'react-router/Miss'
+import React from 'react'
+import Switch from 'react-router-dom/Switch'
+import Route from 'react-router-dom/Route'
 import Helmet from 'react-helmet'
-
-import * as Routes from '../routes/Routes'
-import Miss404 from '../routes/miss404'
-
 import Header from './Header'
 import Footer from './Footer'
 import Copyright from './Copyright'
 
-if ( 'scrollRestoration' in window.history) {
-  window.history.scrollRestoration = 'manual';
-}
+// Routes
+import { Home, Download, Guide, Source, License } from '../routes/RoutesDevelopment'
+import Miss404 from '../routes/miss404'
 
-class Layout extends React.PureComponent {
+const Layout = () => (
+  <div>
+    <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
+    <Header />
 
-  static propTypes = {
-    router: PropTypes.object.isRequired,
-    action: PropTypes.oneOf(['PUSH', 'REPLACE', 'POP']).isRequired,
-    location: PropTypes.shape({
-      pathname: PropTypes.string.isRequired,
-      search: PropTypes.string.isRequired,
-      hash: PropTypes.string.isRequired,
-      state: PropTypes.any,
-      key: PropTypes.string
-    }).isRequired,
-    store: PropTypes.object.isRequired
-  };
+    <Switch>
+      <Route path="/" component={Home} exact={true} />
+      <Route path="/download" component={Download} exact={true} />
+      <Route path="/guide" component={Guide} exact={true} />
+      <Route path="/source" component={Source} exact={true} />
+      <Route path="/license" component={License} exact={true} />
+      <Route component={Miss404} />
+    </Switch>
 
-  scrollPositions = {};
-
-  componentWillUpdate(nextProps) {
-    const props = this.props;
-    this.scrollPositions[props.router.createHref(props.location)] = [window.pageXOffset, window.pageYOffset];
-
-    if ( nextProps.action === 'PUSH' ) {
-      window.scroll(0,0);
-    }
-  }
-
-  componentDidUpdate() {
-    const props = this.props;
-    if ( props.action === 'POP' ) {
-      const href = props.router.createHref(props.location);
-      if ( this.scrollPositions[href] ) {
-        window.scroll.apply(window, this.scrollPositions[href]);
-      }
-    }
-  }
-
-  render() {
-    const props = this.props;
-    const isHomepage = props.location.pathname === '/';
-
-    return (
-      <Provider store={props.store}>
-        <div className={isHomepage ? null : 'menu-pad'}>
-          <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
-          <Header isHome={isHomepage} />
-
-          <Match exactly={true} pattern="/" component={Routes.Home} />
-          <Match exactly={true} pattern="/download" component={Routes.Download} />
-          <Match exactly={true} pattern="/guide" component={Routes.Guide} />
-          <Match exactly={true} pattern="/source" component={Routes.Source} />
-          <Match exactly={true} pattern="/license" component={Routes.License} />
-          <Miss component={Miss404} />
-
-          <Footer />
-          <Copyright />
-        </div>
-      </Provider>
-    );
-  }
-
-}
+    <Footer />
+    <Copyright />
+  </div>
+);
 
 export default Layout

@@ -108,27 +108,17 @@ local NGINX.
 yarn
 ```
 
-2. To build external CSS files run:
-
-```bash
-npm run styles
-```
-
-3. To build vendor JS file run:
+2. To build vendor JS file run:
 
 ```bash
 npm run vendor
 ```
 
-4. To start the server in dev mode:
+3. To start the server in dev mode:
 
 ```bash
 npm start
-```
-
-or
-
-```bash
+# or
 node server
 ```
 
@@ -150,7 +140,7 @@ the server's hostname & port as origin.
 
 ```bash
 yarn
-npm run production
+npm run release
 ```
 
 To run the production build ( in *nix )
@@ -159,13 +149,11 @@ To run the production build ( in *nix )
 NODE_ENV=production node server
 ```
 
-or
+or force production with (not recommended)
 
 ```bash
 node server --production
-```
-
-```bash
+# or
 npm run start-production
 ```
 

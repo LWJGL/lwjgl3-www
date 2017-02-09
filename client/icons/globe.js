@@ -1,6 +1,5 @@
 import React from 'react'
 import IconBase from './react-icon-base'
-import IconPropTypes from './react-icon-propTypes'
 
 const FaGlobe = (props) => (
   <IconBase viewBox="0 0 40 40" {...props}>
@@ -10,5 +9,4 @@ const FaGlobe = (props) => (
   </IconBase>
 );
 
-FaGlobe.propTypes = IconPropTypes;
 export default FaGlobe

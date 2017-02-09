@@ -1,24 +1,16 @@
 extends layout
 
-block vars
-  - head = {'title':'<title>An error has occured</title>'}
-
 block content
-  .container.text-xs-center.py-3
-    h1 500
-    p An error has occured
+  h1 500
+  p An error has occured
 
-    h4 Error Details
-    - var hasError = error.message && error.message.length;
-    if ( hasError )
-      .alert.alert-danger
-        pre= error.message
-    else if ( typeof error === 'string' )
-      .alert.alert-danger
-        pre= error
-    else if development
-      .alert.alert-danger
-        pre= JSON.stringify(error, null, '  ')
-    if error.stack && development
-      .alert.alert-danger
-        pre= error.stack
+  h4 Error Details
+  - var hasError = error.message && error.message.length;
+  if ( hasError )
+    pre= error.message
+  else if ( typeof error === 'string' )
+    pre= error
+  else if development
+    pre= JSON.stringify(error, null, '  ')
+  if error.stack && development
+    pre= error.stack

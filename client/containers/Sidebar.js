@@ -1,19 +1,24 @@
 import React from 'react'
 import createFocusTrap from 'focus-trap'
 import noscroll from '../services/noscroll'
-import Link from 'react-router/Link'
+import MainMenu from './MainMenu'
 import FaBars from '../icons/bars'
 import FaClose from '../icons/close'
-
 import supportsPassive from '../services/supports-passive'
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
 
   state = {
     open: false,
   };
 
+  mounted = false;
+  touchingSideNav = false;
+  startX = 0;
+  currentX = 0;
+
   componentDidMount() {
+    this.mounted = true;
     this.focusTrap = createFocusTrap(this.slidingMenu, {
       onDeactivate: this.onToggle,
       initialFocus: this.closeButton,
@@ -21,22 +26,33 @@ export default class Sidebar extends React.Component {
     });
   }
 
-  onToggle = () => {
+  componentWillUnmount() {
+    // Fired when resizing browser window (component unmounts)
+    this.mounted = false;
+    if ( this.state.open ) {
+      this.onToggle();
+    }
+  }
+
+  onToggle = (/*evt*/) => {
     if ( this.state.open ) {
       noscroll.off();
       this.focusTrap.deactivate({onDeactivate: false});
       this.sideContainer.removeEventListener('touchstart', this.onTouchStart, supportsPassive ? {passive: true} : false);
-      this.sideContainer.removeEventListener('touchmove', this.onTouchMove, supportsPassive ? {passive: true} : false);
+      this.sideContainer.removeEventListener('touchmove', this.onTouchMove, supportsPassive ? {passive: false} : false);
       this.sideContainer.removeEventListener('touchend', this.onTouchEnd, supportsPassive ? {passive: true} : false);
     } else {
       noscroll.on();
       this.focusTrap.activate();
       this.sideContainer.addEventListener('touchstart', this.onTouchStart, supportsPassive ? {passive: true} : false);
-      this.sideContainer.addEventListener('touchmove', this.onTouchMove, supportsPassive ? {passive: true} : false);
+      // Disable passive to avoid triggering gestures in some devices
+      this.sideContainer.addEventListener('touchmove', this.onTouchMove, supportsPassive ? {passive: false} : false);
       this.sideContainer.addEventListener('touchend', this.onTouchEnd, supportsPassive ? {passive: true} : false);
     }
 
-    this.setState({open: !this.state.open});
+    if ( this.mounted ) {
+      this.setState({open: !this.state.open});
+    }
   };
 
   onTouchStart = (evt) => {
@@ -51,7 +67,7 @@ export default class Sidebar extends React.Component {
   onTouchMove = (evt) => {
     if ( this.touchingSideNav ) {
       this.currentX = evt.touches[0].pageX;
-      // evt.preventDefault();
+      evt.preventDefault();
     }
   };
 
@@ -89,9 +105,11 @@ export default class Sidebar extends React.Component {
     let isOpen = this.state.open;
 
     return (
-      <div ref={(el) => {this.slidingMenu = el}} className={['col hidden-lg-up sliding-menu', isOpen ? 'open' : null].join(' ')}>
-        <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} aria-hidden={isOpen} title="Open navigation menu"><FaBars size={24} /></button>
-        <div className="sliding-menu-overlay" onClick={this.onToggle}></div>
+      <div ref={(el) => {this.slidingMenu = el}} className={`col sliding-menu${isOpen?' open':''}`}>
+        <button type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} aria-hidden={isOpen} title="Open navigation menu">
+          <FaBars size={24} />
+        </button>
+        <div className="sliding-menu-overlay" onClick={this.onToggle} />
         <div
           ref={(el) => {this.sideContainer = el}}
           className="sliding-menu-container"
@@ -100,19 +118,16 @@ export default class Sidebar extends React.Component {
           aria-expanded={isOpen}
         >
           <div className="text-right">
-            <button ref={(el) => {this.closeButton = el}} type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu"><FaClose /></button>
+            <button ref={(el) => {this.closeButton = el}} type="button" className="btn-link sliding-menu-icon" onClick={this.onToggle} title="Close navigation menu">
+              <FaClose />
+            </button>
           </div>
-          <ul className="list-unstyled">
-            <li><Link to="/" activeClassName="active" onClick={this.onToggle} activeOnlyWhenExact={true}>HOME</Link></li>
-            <li><Link to="/guide" activeClassName="active" onClick={this.onToggle}>GET STARTED</Link></li>
-            <li><Link to="/download" activeClassName="active" onClick={this.onToggle}>DOWNLOAD</Link></li>
-            <li><Link to="/source" activeClassName="active" onClick={this.onToggle}>SOURCE</Link></li>
-            <li><a href="http://forum.lwjgl.org/">FORUM</a></li>
-            <li><a href="http://blog.lwjgl.org/">BLOG</a></li>
-          </ul>
+          <MainMenu className="list-unstyled" onClick={this.onToggle} />
         </div>
       </div>
     )
   }
 
 }
+
+export default Sidebar

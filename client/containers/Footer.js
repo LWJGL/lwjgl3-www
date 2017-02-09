@@ -1,5 +1,5 @@
 import React from 'react'
-import Link from 'react-router/Link'
+import Link from 'react-router-dom/Link'
 
 const Footer = () => (
   <footer>
@@ -38,11 +38,7 @@ const Footer = () => (
         <div className="col-sm">
           <h3>Sponsor</h3>
           <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external">
-            <img
-              className="my-2" width={143} height={30} alt="WebHotelier"
-              src="/img/webhotelier-logo-inv@x1.png"
-              srcSet="/img/webhotelier-logo-inv@x1.png 1x,/img/webhotelier-logo-inv@x2.png 2x,/img/webhotelier-logo-inv@x3.png 3x,/img/webhotelier-logo-inv@x4.png 4x"
-            />
+            <img className="mb-2" alt="WebHotelier" src="/svg/webhotelier.svg" />
           </a>
         </div>
       </nav>

@@ -13,7 +13,6 @@ const nativeCnt = config.natives.allIds.length;
 
 const computeArtifacts = (state) => {
   state.artifacts = state.lwjgl[state.build === BUILD_RELEASE ? state.version : state.build];
-
   state.availability = {};
   state.artifacts.allIds.forEach((it) => {
     const artifact = state.artifacts.byId[it];
@@ -133,6 +132,10 @@ const toggleAddon = (state, addon) => {
 };
 
 const loadConfig = (state, config) => {
+  if ( config.build === null ) {
+    return state;
+  }
+
   state.build = config.build;
   state.mode = config.mode;
   state.selectedAddons = config.selectedAddons;
