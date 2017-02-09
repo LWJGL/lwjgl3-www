@@ -22,6 +22,7 @@ const helmetConfig = (production) => {
           "'self'",
           "www.google-analytics.com",
           "cdnjs.cloudflare.com",
+          "cdn.polyfill.io",
         ],
         styleSrc: [
           "'self'",
