@@ -1,12 +1,11 @@
 // Loosely based on "Polyfills: everything you ever wanted to know, or maybe a bit less" by David Gilbertson
 // https://hackernoon.com/polyfills-everything-you-ever-wanted-to-know-or-maybe-a-bit-less-7c8de164e423#.qtc0jwnhc
 
-// Promise polyfill is required for the entry to work
-import 'core-js/es6/promise';
+import 'babel-polyfill';
+import 'whatwg-fetch';
 
 // Used to load external polyfills
 import loadJS from 'fg-loadjs'
-
 // Mounts the app only after we are done polyfilling
 import mount from './mount'
 
@@ -22,24 +21,13 @@ Promise.all([
   new Promise((resolve) => {
     if (
          'requestAnimationFrame' in window
-      && 'classList' in Element.prototype
+      && 'classList' in HTMLElement.prototype
     ) {
       resolve();
     } else {
-      loadJS(`https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=requestAnimationFrame,Element.prototype.classList`, resolve);
+      loadJS('https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=requestAnimationFrame,Element.prototype.classList', resolve);
     }
   }),
   // Fetch polyfill
   'fetch' in window ? Promise.resolve() : import('whatwg-fetch'),
-  // Load entire core-JS ( we could also use babel-polyfill here ), it's not worth cherry-picking further
-  (
-       'startsWith' in String.prototype
-    && 'endsWith' in String.prototype
-    && 'includes' in Array.prototype
-    && 'assign' in Object
-    && 'keys' in Object
-    && 'entries' in Object // This should cover all the above, but let's keep them for safety
-  )
-    ? Promise.resolve()
-    : import('core-js'),
 ]).then(mount);
