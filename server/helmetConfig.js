@@ -8,27 +8,28 @@ const helmetConfig = (production) => {
         childSrc: ["'none'"],
         connectSrc: [
           "'self'",
-          "build.lwjgl.org",
-          "www.google-analytics.com",
+          "https://build.lwjgl.org",
+          "https://www.google-analytics.com",
         ],
         formAction: ["'self'"],
         frameAncestors: ["'none'"],
         imgSrc: [
           "'self'",
           "data:",
-          "api.travis-ci.org",
-          "travis-ci.org"
+          "https://api.travis-ci.org",
+          "https://travis-ci.org",
+          "https://www.google-analytics.com",
         ],
         scriptSrc: [
           "'self'",
-          "www.google-analytics.com",
-          "cdnjs.cloudflare.com",
-          "cdn.polyfill.io",
+          "https://www.google-analytics.com",
+          "https://cdnjs.cloudflare.com",
+          "https://cdn.polyfill.io",
         ],
         styleSrc: [
           "'self'",
           "'unsafe-inline'",
-          "cdnjs.cloudflare.com",
+          "https://cdnjs.cloudflare.com",
         ],
       }
     },
