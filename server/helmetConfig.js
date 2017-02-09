@@ -8,6 +8,7 @@ const helmetConfig = (production) => {
         childSrc: ["'none'"],
         connectSrc: [
           "'self'",
+          "build.lwjgl.org",
           "www.google-analytics.com",
         ],
         formAction: ["'self'"],
