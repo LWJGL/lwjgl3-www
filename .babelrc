@@ -60,7 +60,12 @@
         "loose": true
       }
     ],
-    "transform-es2015-block-scoping",
+    [
+      "transform-es2015-block-scoping",
+      {
+        "throwIfClosureRequired": true
+      }
+    ],
     "transform-es2015-typeof-symbol",
     [
       "transform-regenerator",
