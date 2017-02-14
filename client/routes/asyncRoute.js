@@ -14,7 +14,7 @@ export default (getComponent) => class AsyncComponent extends React.Component {
   static Component = null;
 
   // Remembers last scroll positions
-  // TODO: We shouldn't allow infinite keys here, implement a *shared*  LRU cache
+  // TODO: We shouldn't allow infinite keys here, implement a *shared* LRU cache
   static scrollPositions = {};
 
   /*
@@ -109,8 +109,8 @@ export default (getComponent) => class AsyncComponent extends React.Component {
   }
 
   analytics() {
-    const {location} = this.props;
-    ga('send', 'pageview', `${location.pathname}${location.search}`);
+    const {location:{pathname, search}} = this.props;
+    ga('send', 'pageview', `${pathname}${search}`);
   }
 
   componentWillUnmount() {
