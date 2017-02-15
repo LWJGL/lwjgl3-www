@@ -15,10 +15,10 @@
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
     "aphrodite": "1.1.0",
-    "autoprefixer": "6.7.2",
-    "aws-sdk": "2.12.0",
+    "autoprefixer": "6.7.3",
+    "aws-sdk": "2.13.0",
     "babel-core": "6.23.1",
-    "babel-loader": "6.3.0",
+    "babel-loader": "6.3.1",
     "babel-plugin-check-es2015-constants": "6.22.0",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-syntax-async-functions": "6.13.0",
@@ -113,7 +113,7 @@
     "react-hot-loader": "3.0.0-beta.6",
     "redux-logger": "2.8.1",
     "webpack-dev-middleware": "1.10.0",
-    "webpack-hot-middleware": "2.16.1"
+    "webpack-hot-middleware": "2.17.0"
   },
   "scripts": {
     "start": "node server",
