@@ -16,9 +16,9 @@
   "dependencies": {
     "aphrodite": "1.1.0",
     "autoprefixer": "6.7.3",
-    "aws-sdk": "2.13.0",
+    "aws-sdk": "2.15.0",
     "babel-core": "6.23.1",
-    "babel-loader": "6.3.1",
+    "babel-loader": "6.3.2",
     "babel-plugin-check-es2015-constants": "6.22.0",
     "babel-plugin-react-transform": "2.0.2",
     "babel-plugin-syntax-async-functions": "6.13.0",
