@@ -9,7 +9,8 @@ const config = {
   },
   entry: {
     vendor: [
-      'regenerator-runtime',
+      'babel-polyfill',
+      'whatwg-fetch',
       'react',
       'react-dom',
       'redux',
