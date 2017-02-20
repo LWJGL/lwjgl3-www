@@ -311,6 +311,8 @@ function* saveConfig() {
   const save = yield select(getConfig);
   if ( save.build !== null ) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+  } else if ( localStorage.getItem(STORAGE_KEY) !== null ) {
+    localStorage.removeItem(STORAGE_KEY);
   }
 }
 
