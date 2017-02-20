@@ -28,8 +28,6 @@ export default (getComponent) => class AsyncComponent extends React.Component {
     }
    */
   static propTypes = {
-    path: PropTypes.string.isRequired,
-    component: PropTypes.func.isRequired,
     block: PropTypes.func,
     computedMatch: PropTypes.object,
     createHref: PropTypes.func,
