@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "1.1.0",
     "autoprefixer": "6.7.4",
-    "aws-sdk": "2.16.0",
+    "aws-sdk": "2.17.0",
     "babel-core": "6.23.1",
     "babel-loader": "6.3.2",
     "babel-plugin-check-es2015-constants": "6.22.0",
@@ -100,13 +100,13 @@
     "redux-saga": "0.14.3",
     "request": "2.79.0",
     "reselect": "2.5.4",
-    "sass-loader": "6.0.1",
+    "sass-loader": "6.0.2",
     "serve-favicon": "2.4.0",
     "style-loader": "0.13.1",
     "webpack": "2.2.1",
     "webpack-chunk-hash": "0.4.0",
     "whatwg-fetch": "2.0.2",
-    "yargs": "6.6.1-candidate.4"
+    "yargs": "7.0.0-alpha.1"
   },
   "devDependencies": {
     "react-hot-loader": "3.0.0-beta.6",

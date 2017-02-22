@@ -32,7 +32,7 @@ class DownloadRoute extends React.Component {
               <FaGithub /> Download from Github
             </a>
           </p>
-          <p>To customize your LWJGL build or use the latest stable &amp; nightly releases, use the download configurator:</p>
+          <p>To customize your LWJGL build or use the latest stable & nightly releases, use the download configurator below.<br />For more information and IDE setup, see the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">installation instructions</a>.</p>
           <BuildContainer />
 
           <p>Or browse and download files directly:</p>
