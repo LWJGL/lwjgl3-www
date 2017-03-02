@@ -8,7 +8,7 @@
     "transform-flow-strip-types",
     "transform-do-expressions",
     "transform-react-display-name",
-    "transform-decorators-legacy",
+    "transform-decorators",
     "transform-class-properties",
     "syntax-trailing-function-commas",
     "transform-async-to-generator",
