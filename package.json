@@ -72,7 +72,7 @@
     "chunk-manifest-webpack-plugin": "1.0.0",
     "classnames": "2.2.5",
     "cli-table": "0.3.1",
-    "cross-env": "3.1.4",
+    "cross-env": "3.2.3",
     "css-loader": "0.26.2",
     "exports-loader": "0.6.4",
     "express": "5.0.0-alpha.4",
@@ -94,11 +94,11 @@
     "react-dom": "16.0.0-alpha.3",
     "react-helmet": "4.0.0",
     "react-redux": "5.0.3",
-    "react-router": "4.0.0-beta.6",
-    "react-router-dom": "4.0.0-beta.6",
+    "react-router": "4.0.0-beta.7",
+    "react-router-dom": "4.0.0-beta.7",
     "redux": "3.6.0",
     "redux-saga": "0.14.3",
-    "request": "2.79.0",
+    "request": "2.80.0",
     "reselect": "2.5.4",
     "sass-loader": "6.0.2",
     "serve-favicon": "2.4.1",
@@ -106,7 +106,7 @@
     "webpack": "2.2.1",
     "webpack-chunk-hash": "0.4.0",
     "whatwg-fetch": "2.0.3",
-    "yargs": "7.0.0"
+    "yargs": "7.0.1"
   },
   "devDependencies": {
     "react-hot-loader": "3.0.0-beta.6",
