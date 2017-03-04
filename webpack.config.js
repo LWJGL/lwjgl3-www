@@ -1,7 +1,6 @@
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
 
 // Development
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
@@ -143,27 +142,10 @@ const buildConfiguration = () => {
       })
     );
 
-    // Uncomment me to test async routes
-    // WARNING: Breaks routes hot loading!
-    // config.plugins.push(
-    //   new NormalModuleReplacementPlugin(
-    //     /RoutesDevelopment/,
-    //     (result) => {
-    //       result.request = result.request.replace(/RoutesDevelopment/, 'RoutesProduction');
-    //     }
-    //   )
-    // );
-
   } else {
 
     config.plugins.push(
       new IgnorePlugin(/(redux-logger|react-hot-loader)/),
-      new NormalModuleReplacementPlugin(
-        /RoutesDevelopment/,
-        (result) => {
-          result.request = result.request.replace(/RoutesDevelopment/, 'RoutesProduction');
-        }
-      ),
       new HashedModuleIdsPlugin(),
       new WebpackChunkHash(),
       new ChunkManifestPlugin({
