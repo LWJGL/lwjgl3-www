@@ -6,10 +6,12 @@ const path = require('path');
 const chalk = require('chalk');
 const Table = require('cli-table');
 const gzipSize = require('gzip-size');
+
+const webpackManifest = require('../public/js/webpack.manifest.json');
 const prettyBytes = require('./prettyBytes');
 const formatSize = require('./formatSize');
+
 const headStyle = {head: ['cyan']};
-const webpackManifest = require('../public/js/webpack.manifest.json');
 
 /*
  * ------------------------------------------------------------------------------------------------------------------------
@@ -48,7 +50,7 @@ function buildManifest() {
 
     let routeModule = null;
     for (let module of chunk.modules) {
-      if ( module.issuerName === './client/routes/RoutesProduction.js' ) {
+      if ( module.issuerName === './client/routes/index.js' ) {
         routeModule = module.name;
         break;
       }
