@@ -7,7 +7,7 @@ import Footer from './Footer'
 import Copyright from './Copyright'
 
 // Routes
-import { Home, Download, Guide, Source, License } from '../routes/RoutesDevelopment'
+import { Home, Download, Guide, Source, License } from '../routes'
 import Miss404 from '../routes/miss404'
 
 const Layout = () => (
