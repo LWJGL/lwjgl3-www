@@ -24,7 +24,6 @@ const config = {
       'jszip',
       'nprogress',
       'react-helmet',
-      'react-router',
       'react-router-dom',
       'react-redux',
       'reselect',
