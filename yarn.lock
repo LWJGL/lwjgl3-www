@@ -207,9 +207,9 @@ autoprefixer@6.7.6, autoprefixer@^6.3.1:
     postcss "^5.2.15"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.22.0:
-  version "2.22.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.22.0.tgz#f7b67d5ece7e67c36f9d3d55e137872572e5c998"
+aws-sdk@2.23.0:
+  version "2.23.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.23.0.tgz#f7739eec5d4f28cca2dedf788a36477153441fe7"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -376,9 +376,9 @@ babel-helpers@7.0.0-alpha.1:
   dependencies:
     babel-template "7.0.0-alpha.1"
 
-babel-loader@7.0.0-alpha.2:
-  version "7.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.0.0-alpha.2.tgz#6354497a45dbd63dfb2941590fbd4e67fee924fb"
+babel-loader@7.0.0-alpha.3:
+  version "7.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.0.0-alpha.3.tgz#0bfb75912790e80f7bc42aaf38d63fcd7f101aff"
   dependencies:
     find-cache-dir "^0.1.1"
     loader-utils "^1.0.2"
@@ -3972,11 +3972,11 @@ sass-loader@6.0.2:
     lodash.tail "^4.1.1"
     pify "^2.3.0"
 
-sax@1.1.5, sax@>=0.6.0:
+sax@1.1.5:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.1.5.tgz#1da50a8d00cdecd59405659f5ff85349fe773743"
 
-sax@~1.2.1:
+sax@>=0.6.0, sax@~1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
 
