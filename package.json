@@ -15,8 +15,8 @@
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
     "aphrodite": "1.2.0",
-    "autoprefixer": "6.7.6",
-    "aws-sdk": "2.25.0",
+    "autoprefixer": "6.7.7",
+    "aws-sdk": "2.27.0",
     "babel-core": "7.0.0-alpha.2",
     "babel-loader": "7.0.0-alpha.3",
     "babel-plugin-check-es2015-constants": "7.0.0-alpha.1",
@@ -73,7 +73,7 @@
     "classnames": "2.2.5",
     "cli-table": "0.3.1",
     "cross-env": "3.2.3",
-    "css-loader": "0.26.4",
+    "css-loader": "0.27.2",
     "exports-loader": "0.6.4",
     "express": "5.0.0-alpha.5",
     "express-device": "0.4.2",
@@ -94,7 +94,7 @@
     "react-dom": "16.0.0-alpha.3",
     "react-helmet": "4.0.0",
     "react-redux": "5.0.3",
-    "react-router-dom": "4.0.0-beta.8",
+    "react-router-dom": "4.0.0",
     "redux": "3.6.0",
     "redux-saga": "0.14.3",
     "request": "2.81.0",
@@ -105,7 +105,7 @@
     "webpack": "2.2.1",
     "webpack-chunk-hash": "0.4.0",
     "whatwg-fetch": "2.0.3",
-    "yargs": "7.0.2-candidate.1"
+    "yargs": "7.0.2"
   },
   "devDependencies": {
     "react-hot-loader": "3.0.0-beta.6",
