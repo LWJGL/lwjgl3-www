@@ -11,19 +11,13 @@ function configureStore() {
 
   if ( process.env.NODE_ENV !== 'production' ) {
     // https://github.com/evgenyrodionov/redux-logger
-    const createLogger = require('redux-logger');
+    const createLogger = require('redux-logger').default;
+
     middleware.push(
       createLogger({
         duration: true,
         // diff: true,
         collapsed: true,
-        colors: {
-          title: () => 'inherit',
-          prevState: () => '#9E9E9E',
-          action: () => '#03A9F4',
-          nextState: () => '#4CAF50',
-          error: () => '#F20404',
-        }
       })
     );
 
