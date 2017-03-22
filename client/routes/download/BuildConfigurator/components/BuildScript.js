@@ -40,7 +40,7 @@ import FaClipboard from '../../../../icons/clipboard'
 class BuildScript extends React.Component {
 
   copyToClipboard = () => {
-    const selection = window.getSelection();
+    const selection = window.getSelection && window.getSelection();
     if ( !selection ) {
       alert('Copying to clipboard not supported!');
       return;
