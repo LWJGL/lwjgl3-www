@@ -140,26 +140,7 @@ function generateMaven(props) {
       script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}</${addon}.version>`;
     });
 
-    script += `\n</properties>\n`;
-  }
-
-  script += `<profiles>
-\t<profile>${nl2}<id>lwjgl-natives-linux></id>${nl2}<activation>${nl3}<os><family>unix</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-linux</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-macos></id>${nl2}<activation>${nl3}<os><family>mac</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-macos</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-windows></id>${nl2}<activation>${nl3}<os><family>windows</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-windows</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-</profiles>
-`;
-
-  if ( build !== BUILD_RELEASE ) {
-    script += `<repositories>
-\t<repository>
-\t\t<id>sonatype-snapshots</id>
-\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-\t\t<releases><enabled>false</enabled></releases>
-\t\t<snapshots><enabled>true</enabled></snapshots>
-\t</repository>
-</repositories>
-`;
+    script += `\n</properties>\n\n`;
   }
 
   script += `<dependencies>`;
@@ -179,6 +160,24 @@ function generateMaven(props) {
   });
 
   script += `\n</dependencies>`;
+
+  if ( build !== BUILD_RELEASE ) {
+    script += `\n\n<repositories>
+\t<repository>
+\t\t<id>sonatype-snapshots</id>
+\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+\t\t<releases><enabled>false</enabled></releases>
+\t\t<snapshots><enabled>true</enabled></snapshots>
+\t</repository>
+</repositories>`;
+  }
+
+  script += `\n\n<profiles>
+\t<profile>${nl2}<id>lwjgl-natives-linux></id>${nl2}<activation>${nl3}<os><family>unix</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-linux</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+\t<profile>${nl2}<id>lwjgl-natives-macos></id>${nl2}<activation>${nl3}<os><family>mac</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-macos</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+\t<profile>${nl2}<id>lwjgl-natives-windows></id>${nl2}<activation>${nl3}<os><family>windows</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-windows</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+</profiles>
+`;
 
   return script;
 }
