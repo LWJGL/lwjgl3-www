@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react'
-import NavLink from '../components/NavLink'
+import NavLink from 'react-router-dom/NavLink'
 
 const MainMenu = ({ onClick, ...rest }) => (
   <ul {...rest}>
