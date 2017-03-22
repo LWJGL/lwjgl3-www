@@ -46,60 +46,6 @@ Additional settings are automatically populated when the project is built for pr
 }
 ```
 
-### Development Environment
-
-For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
-
-```bash
-npm -g i nodemon
-```
-
-A minimal NGINX configuration for development can look like this:
-
-```Nginx
-server {
-  listen 80;
-  server_name dev.lwjgl.org;
-
-  proxy_buffering off;
-  proxy_redirect off;
-  proxy_intercept_errors off;
-  proxy_http_version 1.1;
-  
-  location /img {
-    proxy_set_header Connection "";
-    proxy_set_header Host cdn.lwjgl.org.s3.amazonaws.com;
-    proxy_pass http://cdn.lwjgl.org.s3.amazonaws.com;
-    proxy_pass_request_body off;
-  }
-
-  location /svg {
-    proxy_set_header Connection "";
-    proxy_set_header Host cdn.lwjgl.org.s3.amazonaws.com;
-    proxy_pass http://cdn.lwjgl.org.s3.amazonaws.com;
-    proxy_pass_request_body off;
-  }
-
-  location / {
-    proxy_set_header Connection "";
-    proxy_set_header Host $host;
-    proxy_set_header X-Real-IP $remote_addr;
-    proxy_pass http://127.0.0.1:8080;
-  }
-}
-```
-
-For avoiding issues with Strict-Transport-Security add the following
-rules in your host file or your proxy ( e.g. Fiddler ) and use any of the
-following host names to test locally:
-
-```
-127.0.0.1 dev.lwjgl.org
-```
-
-Alternatively a custom SSL certificate may be issued and installed on your
-local NGINX.
-
 ### Build/running in development
 
 1. To install all required npm packages:
@@ -122,8 +68,15 @@ npm start
 node server
 ```
 
-Instead of just starting the server, we can monitor for changes and
-auto-restart with nodemon:
+For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
+
+First make sure you have it installed globally:
+
+```bash
+npm -g i nodemon
+```
+
+Monitor for /server changes and auto-restart with:
 
 ```bash
 npm run watch
@@ -131,10 +84,8 @@ npm run watch
 
 # Production
 
-### NGINX Configuration
-
-NGINX is no longer required in production. We serve the website via Amazon CloudFront using
-the server's hostname & port as origin.
+The website is served via Amazon CloudFront using the server's hostname & port as origin.
+SSL Termination happens on the CDN (using a certificate issued by AWS Certificate Manager).
 
 ### Build for production
 
@@ -188,7 +139,6 @@ and then run:
 pm2 start process.json --only lwjgl-site
 pm2 save
 ```
-
 
 ### Run in production with forever
 

@@ -8,6 +8,7 @@ const helmet = require('helmet');
 const favicon = require('serve-favicon');
 const { argv } = require('yargs');
 const chalk = require('chalk');
+const proxy = require('http-proxy-middleware');
 
 // AWS
 const AWS = require('aws-sdk');
@@ -82,6 +83,9 @@ if ( app.locals.development ) {
   // On production we rely on Cloudfront to get this information for free
   const device = require('express-device');
   app.use(device.capture());
+
+  app.use('/img', proxy({target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true}));
+  app.use('/svg', proxy({target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true}));
 }
 
 // ------------------------------------------------------------------------------
