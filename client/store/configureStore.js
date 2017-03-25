@@ -10,11 +10,9 @@ function configureStore() {
   const composed = [];
 
   if ( process.env.NODE_ENV !== 'production' ) {
-    // https://github.com/evgenyrodionov/redux-logger
-    const createLogger = require('redux-logger').default;
-
     middleware.push(
-      createLogger({
+      // https://github.com/evgenyrodionov/redux-logger
+      require('redux-logger').createLogger({
         duration: true,
         // diff: true,
         collapsed: true,
