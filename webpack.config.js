@@ -1,6 +1,7 @@
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+// const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 // Development
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
@@ -12,7 +13,7 @@ const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
 const WebpackChunkHash = require('webpack-chunk-hash');
-const ChunkManifestPlugin  = require('chunk-manifest-webpack-plugin');
+const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -22,40 +23,38 @@ const buildConfiguration = () => {
   const config = {
     target: 'web',
     performance: {
-      hints: false
+      hints: false,
     },
     entry: {
-      main: [
-        path.resolve(__dirname, 'client/main.js')
-      ]
+      main: [path.resolve(__dirname, 'client/main.js')],
     },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: DEV ? '[name].js' : '[name].[chunkhash].js',
       chunkFilename: DEV ? '[name].js' : '[name].[chunkhash].js',
-      publicPath: '/js/'
+      publicPath: '/js/',
     },
     module: {
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: [
-            path.resolve(__dirname, 'node_modules')
-          ],
+          exclude: [path.resolve(__dirname, 'node_modules')],
           include: __dirname,
-          use: [{
-            loader: 'babel-loader',
-            options: {
-              cacheDirectory: true
-            }
-          }]
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+              },
+            },
+          ],
         },
         {
           test: /\.scss?$/,
           use: [
-            "style-loader/useable",
+            'style-loader/useable',
             {
-              loader: "css-loader",
+              loader: 'css-loader',
               options: {
                 // This breaks HMR (CSS Modules change name because their hash changes)
                 modules: false,
@@ -73,24 +72,24 @@ const buildConfiguration = () => {
                   calc: false,
                   zindex: false,
                   discardComments: {
-                    removeAll: true
-                  }
+                    removeAll: true,
+                  },
                 },
               },
             },
-            "postcss-loader",
+            'postcss-loader',
             {
               loader: 'sass-loader',
               query: {
                 sourceMap: false,
                 sourceComments: false,
                 outputStyle: 'expanded',
-                precision: 6
-              }
-            }
-          ]
-        }
-      ]
+                precision: 6,
+              },
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       new DefinePlugin({
@@ -98,8 +97,13 @@ const buildConfiguration = () => {
       }),
       new LoaderOptionsPlugin({
         minimize: PRODUCTION,
-        debug: false
+        debug: false,
       }),
+      // new CommonsChunkPlugin({
+      //   async: true,
+      //   children: true,
+      //   minChunks: 2,
+      // }),
     ],
     // recordsPath: path.resolve(__dirname, `./scripts/recordsPath.js.json`),
     // recordsInputPath: path.resolve(__dirname, `./scripts/recordsInputPath.js.json`),
@@ -121,16 +125,12 @@ const buildConfiguration = () => {
       timings: false,
       version: false,
       warnings: false,
-    }
+    },
   };
 
-  if ( DEV ) {
-
+  if (DEV) {
     // WebPack Hot Middleware client & HMR plugins
-    config.entry.main.unshift(
-      'webpack-hot-middleware/client',
-      'react-hot-loader/patch'
-    );
+    config.entry.main.unshift('webpack-hot-middleware/client', 'react-hot-loader/patch');
 
     config.plugins.push(
       new HotModuleReplacementPlugin(),
@@ -138,25 +138,23 @@ const buildConfiguration = () => {
       new NamedModulesPlugin(),
       new DllReferencePlugin({
         context: '.',
-        manifest: require('./public/js/vendor-manifest.json')
+        manifest: require('./public/js/vendor-manifest.json'),
       })
     );
-
   } else {
-
     config.plugins.push(
       new IgnorePlugin(/(redux-logger|react-hot-loader)/),
       new HashedModuleIdsPlugin(),
       new WebpackChunkHash(),
       new ChunkManifestPlugin({
         filename: `chunks.json`,
-        manifestVariable: 'webpackManifest'
+        manifestVariable: 'webpackManifest',
       }),
       new UglifyJsPlugin({
         sourceMap: false,
         mangle: {
           screw_ie8: true,
-          except: []
+          except: [],
         },
         comments: false,
         compress: {
@@ -183,8 +181,8 @@ const buildConfiguration = () => {
           pure_funcs: null,
           drop_console: true,
           keep_fargs: false,
-          keep_fnames: false
-        }
+          keep_fnames: false,
+        },
       })
     );
   }
