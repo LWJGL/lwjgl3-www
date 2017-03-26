@@ -16,7 +16,7 @@ class ScrollToMe extends React.Component {
   }
 
   render() {
-    return <div ref={(n) =>{this.el = n}}/>
+    return <div ref={(n) => {this.el = n}} />
   }
 }
 

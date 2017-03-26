@@ -43,7 +43,7 @@ class Browser extends React.Component {
         {
           props.parent && (
             <tr>
-              <th className={css(styles.folder)} scope="row" onClick={this.goBack} colSpan={2}>...</th>
+              <th className={css(styles.folder)} scope="row" onClick={this.goBack} colSpan={2}>&hellip;</th>
             </tr>
           )
         }
