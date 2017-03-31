@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "1.2.0",
     "autoprefixer": "6.7.7",
-    "aws-sdk": "2.34.0",
+    "aws-sdk": "2.35.0",
     "babel-core": "7.0.0-alpha.6",
     "babel-loader": "7.0.0-beta.1",
     "babel-plugin-check-es2015-constants": "7.0.0-alpha.3",
@@ -72,7 +72,7 @@
     "chunk-manifest-webpack-plugin": "1.0.0",
     "classnames": "2.2.5",
     "cli-table": "0.3.1",
-    "cross-env": "4.0.0-beta.0",
+    "cross-env": "4.0.0",
     "css-loader": "0.28.0",
     "exports-loader": "0.6.4",
     "express": "5.0.0-alpha.5",
