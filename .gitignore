@@ -3,6 +3,7 @@
 
 # WebStorm/IntelliJ project files
 .idea
+.vscode
 
 # Node
 /node_modules
