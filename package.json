@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "1.2.0",
     "autoprefixer": "6.7.7",
-    "aws-sdk": "2.36.0",
+    "aws-sdk": "2.38.0",
     "babel-core": "7.0.0-alpha.6",
     "babel-loader": "7.0.0-beta.1",
     "babel-plugin-check-es2015-constants": "7.0.0-alpha.3",
