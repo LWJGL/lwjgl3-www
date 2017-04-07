@@ -34,12 +34,17 @@ const buildConfiguration = () => {
       chunkFilename: DEV ? '[name].js' : '[name].[chunkhash].js',
       publicPath: '/js/',
     },
+    resolve: {
+      alias: {
+        // Load our custom version of react-icon-base
+        'react-icon-base$': path.resolve(__dirname, 'client/components/Icon.js'),
+      },
+    },
     module: {
       rules: [
         {
           test: /\.jsx?$/,
-          exclude: [path.resolve(__dirname, 'node_modules')],
-          include: __dirname,
+          include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
           use: [
             {
               loader: 'babel-loader',

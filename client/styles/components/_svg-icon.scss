@@ -11,5 +11,8 @@
     width: 1em;
     bottom: -0.125em;
     position: absolute;
+    .align-items-center & {
+      bottom: auto;
+    }
   }
 }

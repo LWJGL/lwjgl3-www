@@ -67,11 +67,20 @@
     }
 
     .sliding-menu-icon {
-      display: block;
+      display: flex;
+      align-items: center;
       border: none;
       padding: 0 $gutter;
       margin: 0 (-$gutter) 0 auto;
       color: $white;
+      height: 3rem;
+
+      .svg-icon {
+        font-size: 2rem;
+        svg {
+          bottom: auto;
+        }
+      }
 
       &:hover, &:active {
         color: yellow;

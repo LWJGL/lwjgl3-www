@@ -1,33 +1,29 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import Checkbox from '../../../../components/Checkbox'
-import { togglePlatform } from '../actions'
+import React from 'react';
+import { connect } from 'react-redux';
+import Checkbox from '../../../../components/Checkbox';
+import { togglePlatform } from '../actions';
 
-import {
-  NATIVE_WIN,
-  NATIVE_LINUX,
-  NATIVE_MAC
-} from '../constants'
+import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 
-import FaWindows from '../../../../icons/windows'
-import FaLinux from '../../../../icons/linux'
-import FaMacOS from '../../../../icons/macos'
+import IconWindows from 'react-icons/fa/windows';
+import IconLinux from 'react-icons/fa/linux';
+import IconMacos from 'react-icons/fa/apple';
 
-const getIcon = (platform) => {
-  switch ( platform ) {
+const getIcon = platform => {
+  switch (platform) {
     case NATIVE_WIN:
-      return <FaWindows />;
+      return <IconWindows />;
     case NATIVE_MAC:
-      return <FaMacOS />;
+      return <IconMacos />;
     case NATIVE_LINUX:
-      return <FaLinux />;
+      return <IconLinux />;
     default:
       return null;
   }
 };
 
 @connect(
-  (state) => {
+  state => {
     return {
       platforms: state.build.natives.allIds,
       natives: state.build.natives.byId,
@@ -36,45 +32,39 @@ const getIcon = (platform) => {
     };
   },
   {
-    togglePlatform
+    togglePlatform,
   }
 )
 class BuildPlatform extends React.Component {
-
-  toggle = (platform) => {
+  toggle = platform => {
     this.props.togglePlatform(platform);
   };
 
   render() {
-    const {hide, platforms, natives, selected} = this.props;
+    const { hide, platforms, natives, selected } = this.props;
 
     return do {
-      if ( hide ) {
-        null
+      if (hide) {
+        null;
       } else {
         <div>
           <h4 className="mt-3">Natives</h4>
           <div className="custom-controls-stacked">
-            {
-              platforms.map(
-                (platform) => (
-                  <Checkbox
-                    key={platform}
-                    icon={getIcon(platform)}
-                    label={natives[platform].title}
-                    checked={selected[platform]}
-                    value={platform}
-                    onChange={this.toggle}
-                  />
-                )
-              )
-            }
+            {platforms.map(platform => (
+              <Checkbox
+                key={platform}
+                icon={getIcon(platform)}
+                label={natives[platform].title}
+                checked={selected[platform]}
+                value={platform}
+                onChange={this.toggle}
+              />
+            ))}
           </div>
-        </div>
+        </div>;
       }
     };
   }
-
 }
 
-export default BuildPlatform
+export default BuildPlatform;

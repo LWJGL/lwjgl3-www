@@ -1,17 +1,16 @@
-import React from 'react'
-import Helmet from 'react-helmet'
-import Link from 'react-router-dom/Link'
+import React from 'react';
+import Helmet from 'react-helmet';
+import Link from 'react-router-dom/Link';
 
-import BuildContainer from './BuildConfigurator'
-import FileBrowser from './FileBrowser'
-import FaGithub from '../../icons/github'
+import BuildContainer from './BuildConfigurator';
+import FileBrowser from './FileBrowser';
+import FaGithub from 'react-icons/fa/github';
 
-import styled from '../styled'
+import styled from '../styled';
 const styles = require('./styles.scss');
 
 @styled(styles)
 class DownloadRoute extends React.Component {
-
   render() {
     return (
       <main>
@@ -19,20 +18,31 @@ class DownloadRoute extends React.Component {
           title="Download"
           meta={[
             {
-              "name": "description",
-              "content": "Download release, stable, or nightly builds of LWJGL 3"
-            }
+              name: 'description',
+              content: 'Download release, stable, or nightly builds of LWJGL 3',
+            },
           ]}
         />
         <section className="container pb-4">
           <h1>Download LW<b>JGL</b> 3</h1>
           <p>All official releases are available for download from GitHub.</p>
           <p>
-            <a className="btn btn-xs-block btn-lg btn-primary" href="https://github.com/LWJGL/lwjgl3/releases" target="_blank">
+            <a
+              className="btn btn-xs-block btn-lg btn-primary"
+              href="https://github.com/LWJGL/lwjgl3/releases"
+              target="_blank"
+            >
               <FaGithub /> Download from Github
             </a>
           </p>
-          <p>To customize your LWJGL build or use the latest stable & nightly releases, use the download configurator below.<br />For more information and IDE setup, see the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">installation instructions</a>.</p>
+          <p>
+            To customize your LWJGL build or use the latest stable & nightly releases, use the download configurator below.
+            <br />
+            For more information and IDE setup, see the
+            {' '}
+            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">installation instructions</a>
+            .
+          </p>
           <BuildContainer />
 
           <p>Or browse and download files directly:</p>
@@ -45,7 +55,9 @@ class DownloadRoute extends React.Component {
             <p>Click below if you prefer to build from source:</p>
             <p>
               <Link className="btn btn-xs-block btn-outline-info" to="/source">Source</Link>
-              <Link className="btn btn-xs-block btn-outline-info" to="/guide#build-instructions">Build instructions</Link>
+              <Link className="btn btn-xs-block btn-outline-info" to="/guide#build-instructions">
+                Build instructions
+              </Link>
             </p>
           </section>
         </div>
@@ -69,4 +81,4 @@ class DownloadRoute extends React.Component {
   }
 }
 
-export default DownloadRoute
+export default DownloadRoute;
