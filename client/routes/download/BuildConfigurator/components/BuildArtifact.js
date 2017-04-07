@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Checkbox from '../../../../components/Checkbox';
 import { toggleArtifact } from '../actions';
@@ -46,7 +47,7 @@ const getPlatformIcons = platforms => {
 )
 class BuildArtifact extends React.Component {
   static propTypes = {
-    id: React.PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
   };
 
   toggle = () => {

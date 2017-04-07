@@ -1,21 +1,20 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const Html = ({tag, source, children, ...rest}) => {
+const Html = ({ tag, source, children, ...rest }) => {
   const Container = tag;
-  if ( source ) {
-    return <Container {...rest} dangerouslySetInnerHTML={{__html: source}} />;
+  if (source) {
+    return <Container {...rest} dangerouslySetInnerHTML={{ __html: source }} />;
   }
   return (
     <Container {...rest}>
-      {
-        React.Children.map(children, (child) => {
-          if ( typeof child === 'string' ) {
-            return <span dangerouslySetInnerHTML={{__html: child}} />;
-          } else {
-            return child;
-          }
-        })
-      }
+      {React.Children.map(children, child => {
+        if (typeof child === 'string') {
+          return <span dangerouslySetInnerHTML={{ __html: child }} />;
+        } else {
+          return child;
+        }
+      })}
     </Container>
   );
 };
@@ -26,7 +25,7 @@ Html.propTypes = {
 };
 
 Html.defaultProps = {
-  tag: "div"
+  tag: 'div',
 };
 
 export default Html;

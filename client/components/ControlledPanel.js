@@ -1,21 +1,19 @@
-import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-@connect(
-  (state, props) => {
-    const map = {};
+@connect((state, props) => {
+  const map = {};
 
-    map.hidden = props.predicate && !props.predicate(state);
+  map.hidden = props.predicate && !props.predicate(state);
 
-    if ( props.getClassName ) {
-      map.className = props.getClassName(state);
-    }
-
-    return map;
+  if (props.getClassName) {
+    map.className = props.getClassName(state);
   }
-)
-class Panel extends React.Component {
 
+  return map;
+})
+class Panel extends React.Component {
   static propTypes = {
     predicate: PropTypes.func,
     getClassName: PropTypes.func,
@@ -25,13 +23,12 @@ class Panel extends React.Component {
   render() {
     const { children, hidden, className } = this.props;
 
-    return hidden ? null : (
-      <div className={className}>
-        {children}
-      </div>
-    );
+    return hidden
+      ? null
+      : <div className={className}>
+          {children}
+        </div>;
   }
-
 }
 
-export default Panel
+export default Panel;

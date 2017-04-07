@@ -16,6 +16,7 @@ const config = {
       // Core
       'react',
       'react-dom',
+      'prop-types',
       'fg-loadjs',
       'fg-loadcss',
       'react-helmet',

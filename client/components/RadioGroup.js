@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class RadioGroup extends React.PureComponent {
-
   static propTypes = {
     value: PropTypes.any,
     onChange: PropTypes.func,
@@ -15,22 +15,19 @@ class RadioGroup extends React.PureComponent {
   getChildContext() {
     return {
       onChange: this.change,
-      value: this.props.value
-    }
+      value: this.props.value,
+    };
   }
 
-  change = (value) => {
-    if ( value !== this.props.value && this.props.onChange ) {
+  change = value => {
+    if (value !== this.props.value && this.props.onChange) {
       this.props.onChange(value);
     }
   };
 
   render() {
-    return (
-      <div className="custom-controls-stacked">{this.props.children}</div>
-    );
+    return <div className="custom-controls-stacked">{this.props.children}</div>;
   }
-
 }
 
 export default RadioGroup;

@@ -1,5 +1,6 @@
-import React, {PropTypes} from 'react'
-import NavLink from 'react-router-dom/NavLink'
+import React from 'react';
+import PropTypes from 'prop-types';
+import NavLink from 'react-router-dom/NavLink';
 
 const MainMenu = ({ onClick, ...rest }) => (
   <ul {...rest} role="navigation" aria-label="Main Menu">
@@ -13,7 +14,7 @@ const MainMenu = ({ onClick, ...rest }) => (
 );
 
 MainMenu.propTypes = {
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };
 
-export default MainMenu
+export default MainMenu;

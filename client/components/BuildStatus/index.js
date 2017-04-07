@@ -1,26 +1,26 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import LoaderSpinner from '../LoaderSpinner'
-import { loadStatus } from './reducer'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import LoaderSpinner from '../LoaderSpinner';
+import { loadStatus } from './reducer';
 
 @connect(
   (state, props) => ({
-    ...state.buildStatus[props.name]
+    ...state.buildStatus[props.name],
   }),
   {
-    loadStatus
+    loadStatus,
   }
 )
 class BuildStatus extends React.Component {
-
   static propTypes = {
-    name: React.PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
   };
 
   componentDidMount() {
     const { name, loadStatus, version, error } = this.props;
 
-    if ( version === undefined && error === undefined ) {
+    if (version === undefined && error === undefined) {
       loadStatus(name);
     }
   }
@@ -37,9 +37,8 @@ class BuildStatus extends React.Component {
         <br />
         {lastModified || <br />}
       </p>
-    )
+    );
   }
-
 }
 
-export default BuildStatus
+export default BuildStatus;

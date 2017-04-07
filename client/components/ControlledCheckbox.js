@@ -1,6 +1,7 @@
-import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import Checkbox from './Checkbox'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Checkbox from './Checkbox';
 
 @connect(
   (state, ownProps) => {
@@ -11,21 +12,20 @@ import Checkbox from './Checkbox'
       disabled: spec.disabled && spec.disabled(state),
       hidden: spec.hidden && spec.hidden(state),
       label: spec.label,
-    }
+    };
   },
   (dispatch, ownProps) => ({
-    handleClick: (value) => dispatch(ownProps.spec.action(value))
+    handleClick: value => dispatch(ownProps.spec.action(value)),
   })
 )
 class ControlledCheckbox extends React.Component {
-
   static propTypes = {
     spec: PropTypes.shape({
       label: PropTypes.string,
       checked: PropTypes.func,
       disabled: PropTypes.func,
       hidden: PropTypes.func,
-    })
+    }),
   };
 
   toggle = () => {
@@ -43,9 +43,8 @@ class ControlledCheckbox extends React.Component {
         checked={props.checked}
         onChange={this.toggle}
       />
-    )
+    );
   }
-
 }
 
-export default ControlledCheckbox
+export default ControlledCheckbox;

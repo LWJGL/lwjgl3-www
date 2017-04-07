@@ -1,7 +1,7 @@
-import React, { PropTypes } from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class Radio extends React.Component {
-
   static propTypes = {
     value: PropTypes.any.isRequired,
     label: PropTypes.string.isRequired,
@@ -9,7 +9,7 @@ class Radio extends React.Component {
   };
 
   static defaultProps = {
-    disabled: false
+    disabled: false,
   };
 
   static contextTypes = {
@@ -38,7 +38,6 @@ class Radio extends React.Component {
       </label>
     );
   }
-
 }
 
 export default Radio;

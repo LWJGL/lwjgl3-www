@@ -1,6 +1,7 @@
-import React, {PropTypes} from 'react'
-import {connect} from 'react-redux'
-import Toggle from './Toggle'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Toggle from './Toggle';
 
 @connect(
   (state, ownProps) => {
@@ -11,21 +12,20 @@ import Toggle from './Toggle'
       disabled: spec.disabled && spec.disabled(state),
       hidden: spec.hidden && spec.hidden(state),
       label: spec.label,
-    }
+    };
   },
   (dispatch, ownProps) => ({
-    handleClick: (value) => dispatch(ownProps.spec.action(value))
+    handleClick: value => dispatch(ownProps.spec.action(value)),
   })
 )
 class ControlledToggle extends React.Component {
-
   static propTypes = {
     spec: PropTypes.shape({
       label: PropTypes.string,
       checked: PropTypes.func,
       disabled: PropTypes.func,
       hidden: PropTypes.func,
-    })
+    }),
   };
 
   toggle = () => {
@@ -43,9 +43,8 @@ class ControlledToggle extends React.Component {
         checked={props.checked}
         onChange={this.toggle}
       />
-    )
+    );
   }
-
 }
 
-export default ControlledToggle
+export default ControlledToggle;

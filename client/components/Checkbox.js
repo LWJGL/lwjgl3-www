@@ -1,7 +1,7 @@
-import React, {PropTypes} from 'react'
+import React from 'react';
+import PropTypes from 'prop-types';
 
 class Checkbox extends React.PureComponent {
-
   static propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.any,
@@ -19,7 +19,7 @@ class Checkbox extends React.PureComponent {
   };
 
   change = () => {
-    if ( this.props.onChange ) {
+    if (this.props.onChange) {
       this.props.onChange(this.props.value);
     }
   };
@@ -27,18 +27,21 @@ class Checkbox extends React.PureComponent {
   render() {
     const props = this.props;
 
-    return props.hidden ? null : (
-      <label className={`custom-control custom-checkbox${props.disabled ? ' custom-control-disabled' : ''}`}>
-        <input type="checkbox"
-               className="custom-control-input"
-               disabled={props.disabled}
-               checked={props.checked}
-               onChange={this.change}
-        />
-        <span className="custom-control-indicator"/>
-        <span className="custom-control-description">{props.icon ? props.icon : null}{props.icon ? ' ' : null}{props.label}</span>
-      </label>
-    );
+    return props.hidden
+      ? null
+      : <label className={`custom-control custom-checkbox${props.disabled ? ' custom-control-disabled' : ''}`}>
+          <input
+            type="checkbox"
+            className="custom-control-input"
+            disabled={props.disabled}
+            checked={props.checked}
+            onChange={this.change}
+          />
+          <span className="custom-control-indicator" />
+          <span className="custom-control-description">
+            {props.icon ? props.icon : null}{props.icon ? ' ' : null}{props.label}
+          </span>
+        </label>;
   }
 }
 
