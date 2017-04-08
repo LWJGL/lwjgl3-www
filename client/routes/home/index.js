@@ -16,12 +16,14 @@ import IconGLFW from 'react-icons/md/videogame-asset';
 import IconGitHub from 'react-icons/fa/github';
 import IconMoreApi from 'react-icons/md/battery-unknown';
 
+const LEARN_MORE = 'learn-more';
+
 const learnMoreSmooth = e => {
   if (e) {
     e.preventDefault();
   }
   try {
-    document.getElementById('learn-more').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(LEARN_MORE).scrollIntoView({ behavior: 'smooth' });
   } catch (ignore) {}
   return false;
 };
@@ -32,7 +34,7 @@ const styles = require('./styles.scss');
 @styled(styles)
 class HomeRoute extends React.Component {
   componentDidMount() {
-    if (document.location.hash === '#learn-more') {
+    if (this.props.location.hash === `#${LEARN_MORE}`) {
       learnMoreSmooth();
     }
   }
