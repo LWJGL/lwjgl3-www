@@ -4,7 +4,6 @@ import Route from 'react-router-dom/Route';
 import Helmet from 'react-helmet';
 import Header from './Header';
 import Footer from './Footer';
-import Copyright from './Copyright';
 
 // Routes
 import { Home, Download, Guide, Source, License } from '../routes';
@@ -24,7 +23,6 @@ const Layout = () => [
   </Switch>,
 
   <Footer />,
-  <Copyright />,
 ];
 
 export default Layout;

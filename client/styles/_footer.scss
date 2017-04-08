@@ -3,10 +3,10 @@ footer {
   background-color: $body-color;
   background-image: radial-gradient(circle farthest-corner at center,$body-color 0,$body-color 50%,lighten($body-color, 15%) 100%);
   color: $body-color-dark-secondary;
-  padding-bottom: 2rem;
+  padding-bottom: 3rem;
 
   .col-sm {
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
 
   a, a:hover, a:active, a:focus {
@@ -19,8 +19,8 @@ footer {
 }
 
 .copyright {
-  padding: 2rem 0;
+  text-align: center;
+  padding-top: 3rem;
   font-size: 14px;
-  color: $body-color;
   p { margin: 0; }
 }
