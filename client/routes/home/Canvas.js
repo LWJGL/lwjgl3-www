@@ -3,6 +3,8 @@ import loadJS from 'fg-loadjs';
 
 let loadthree = true;
 let canvas = null;
+let io = null;
+let canvasInViewport = true;
 let rafId = null;
 let scene = null;
 let camera = null;
@@ -24,6 +26,15 @@ function resizeCanvas() {
 function init(el) {
   canvas = el;
   window.addEventListener('resize', resizeCanvas);
+  canvasInViewport = true;
+
+  if (window.IntersectionObserver !== void 0) {
+    io = new IntersectionObserver(entries => {
+      canvasInViewport = entries[0].isIntersecting;
+    });
+    io.observe(canvas);
+  }
+
   const winW = canvas.parentNode.offsetWidth;
   const winH = canvas.parentNode.offsetHeight;
 
@@ -63,6 +74,10 @@ function init(el) {
 function animate() {
   rafId = requestAnimationFrame(animate);
 
+  if (!canvasInViewport) {
+    return;
+  }
+
   let time = Date.now() * 0.001;
   let rx = Math.sin(time * 0.7) * 0.25;
   let ry = Math.sin(time * 0.3) * 0.25;
@@ -76,6 +91,10 @@ function animate() {
 
 function unload() {
   window.removeEventListener('resize', resizeCanvas);
+  if (io !== null) {
+    io.disconnect();
+    io = null;
+  }
   canvas = null;
 
   if (scene !== null) {
