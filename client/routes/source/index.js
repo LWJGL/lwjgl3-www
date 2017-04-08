@@ -6,7 +6,7 @@ import FaGithub from 'react-icons/fa/github';
 const SourceRoute = () => (
   <main>
     <Helmet
-      title="Source &amp; Build Status"
+      title={'Source & Build Status'}
       meta={[{ name: 'description', content: 'Links to LWJGL Github repository and build status matrix' }]}
     />
 
