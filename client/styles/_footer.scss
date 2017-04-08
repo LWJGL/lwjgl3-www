@@ -1,6 +1,7 @@
 footer {
   margin-top: 1rem;
   background-color: $body-color;
+  background-image: radial-gradient(circle farthest-corner at center,$body-color 0,$body-color 50%,lighten($body-color, 15%) 100%);
   color: $body-color-dark-secondary;
   padding-bottom: 2rem;
 

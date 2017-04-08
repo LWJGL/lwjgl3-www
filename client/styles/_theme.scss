@@ -42,6 +42,7 @@ a.btn {
 
 .area-dark-secondary, .area-dark {
   background-color: $body-color;
+  background-image: radial-gradient(circle farthest-corner at center,$body-color 0,$body-color 50%,lighten($body-color, 15%) 100%);
   color: white;
 
   :last-child {
