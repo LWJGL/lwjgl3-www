@@ -19,38 +19,45 @@ export default getComponent =>
     static scrollPositions = {};
 
     /*
-    All props are coming from react-router's <Route />:
-    {
-      path        -> the matched route
-      component   -> the wrapped component
-      ...history, -> https://reacttraining.com/react-router/#history
-                     https://github.com/mjackson/history
-      match       -> https://reacttraining.com/react-router/#match
-    }
-   */
+      Props are coming from react-router's <Route />:
+      https://reacttraining.com/react-router/web/api/Route/Route-props
+    */
     static propTypes = {
-      block: PropTypes.func,
-      computedMatch: PropTypes.object,
-      createHref: PropTypes.func,
-      exact: PropTypes.bool,
-      go: PropTypes.func,
-      goBack: PropTypes.func,
-      length: PropTypes.number,
-      listen: PropTypes.func,
+      // https://reacttraining.com/react-router/web/api/history
+      // https://github.com/ReactTraining/history
+      history: PropTypes.shape({
+        length: PropTypes.number,
+        action: PropTypes.string,
+        location: PropTypes.shape({
+          pathname: PropTypes.string.isRequired,
+          search: PropTypes.string,
+          hash: PropTypes.string,
+          state: PropTypes.object,
+        }).isRequired,
+        push: PropTypes.func,
+        replace: PropTypes.func,
+        go: PropTypes.func,
+        goBack: PropTypes.func,
+        goForward: PropTypes.func,
+        block: PropTypes.func,
+      }).isRequired,
+
+      // https://reacttraining.com/react-router/web/api/location
       location: PropTypes.shape({
+        key: PropTypes.string,
         pathname: PropTypes.string.isRequired,
         search: PropTypes.string,
         hash: PropTypes.string,
         state: PropTypes.object,
       }).isRequired,
+
+      // https://reacttraining.com/react-router/web/api/match
       match: PropTypes.shape({
         params: PropTypes.object,
         isExact: PropTypes.bool,
         path: PropTypes.string,
         url: PropTypes.string,
       }).isRequired,
-      push: PropTypes.func,
-      replace: PropTypes.func,
     };
 
     // Flag to check if we are still mounted after async stuff finishes
