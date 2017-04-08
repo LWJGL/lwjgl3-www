@@ -92,7 +92,7 @@ export default getComponent =>
         });
       } else {
         this.analytics();
-        const { action, location: { key = 'root' } } = this.props;
+        const { history: { action }, location: { key = 'root' } } = this.props;
         // POP means user is going forward or backward in history, restore previous scroll position
         if (action === 'POP') {
           const pos = AsyncComponent.scrollPositions[key];
