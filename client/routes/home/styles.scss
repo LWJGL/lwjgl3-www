@@ -25,7 +25,7 @@ body {
 // Intro video
 .video-container {
   position: relative;
-  background: #1b2426 center;
+  background: #1b2426 url(/img/manfps-720.jpg) center;
   background-size: cover;
   width: 100%;
   height: 100vh;
@@ -35,8 +35,6 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    top: 0;
-    left: 0;
   }
 
   video {
@@ -51,6 +49,7 @@ body {
   }
 
   .logo {
+    z-index: 1;
     position: absolute;
     width: 50%;
     left: 50%;

@@ -49,25 +49,7 @@ class HomeRoute extends React.Component {
           ]}
         />
 
-        <section
-          ref={el => {
-            this.container = el;
-          }}
-          className="video-container"
-          style={{ backgroundImage: env.desktop ? null : 'url(/img/manfps-720.jpg)' }}
-        >
-          {
-            do {
-              if (env.desktop) {
-                <video muted loop autoPlay aria-hidden={true} role="presentation">
-                  <source type="video/webm" src="/img/manfps.webm" />
-                  <source type="video/mp4" src="/img/manfps.mp4" />
-                </video>;
-              } else {
-                null;
-              }
-            }
-          }
+        <section className="video-container">
           <div className="videoOverlay" />
           <Logo className="logo" />
           <div className="intro">

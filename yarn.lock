@@ -3450,7 +3450,7 @@ promise@^7.0.1, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.1:
+prop-types@15.5.1:
   version "15.5.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.5.1.tgz#8cc590cc55b8afcd05dd66f18481890f8fe64281"
   dependencies:
