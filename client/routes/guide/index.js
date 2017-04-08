@@ -21,8 +21,8 @@ class GuideRoute extends React.Component {
 
     if (GuideRoute.init) {
       GuideRoute.init = false;
-      loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.5.0/styles/darkula.min.css');
-      loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js', () => {
+      loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/styles/dracula.min.css');
+      loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.10.0/highlight.min.js', () => {
         GuideRoute.sample = window.hljs.highlight('java', codeSample).value;
         if (!this.mounted) {
           return;
