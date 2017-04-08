@@ -4,7 +4,6 @@ import loadJS from 'fg-loadjs';
 let loadthree = true;
 let canvas = null;
 let io = null;
-let canvasInViewport = true;
 let rafId = null;
 let scene = null;
 let camera = null;
@@ -26,11 +25,16 @@ function resizeCanvas() {
 function init(el) {
   canvas = el;
   window.addEventListener('resize', resizeCanvas);
-  canvasInViewport = true;
 
   if (window.IntersectionObserver !== void 0) {
     io = new IntersectionObserver(entries => {
-      canvasInViewport = entries[0].intersectionRatio > 0;
+      if (entries[0].intersectionRatio > 0) {
+        if (rafId === null) {
+          animate();
+        }
+      } else if (rafId !== null) {
+        stop();
+      }
     });
     io.observe(canvas);
   }
@@ -39,13 +43,13 @@ function init(el) {
   const winH = canvas.parentNode.offsetHeight;
 
   camera = new THREE.PerspectiveCamera(60, winW / winH, 100, 10000);
-  camera.position.z = 1000;
+  camera.position.z = 1500;
 
   geometry = new THREE.BoxGeometry(60, 60, 60);
   material = new THREE.MeshNormalMaterial();
 
   group = new THREE.Group();
-  for (let i = 0; i < 100; i += 1) {
+  for (let i = 0; i < 300; i += 1) {
     let mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = Math.random() * 2000 - 1000;
     mesh.position.y = Math.random() * 2000 - 1000;
@@ -74,28 +78,24 @@ function init(el) {
 function animate() {
   rafId = requestAnimationFrame(animate);
 
-  if (!canvasInViewport) {
-    return;
-  }
-
-  let time = Date.now() * 0.001;
-  let rx = Math.sin(time * 0.7) * 0.25;
-  let ry = Math.sin(time * 0.3) * 0.25;
-  let rz = Math.sin(time * 0.2) * 0.25;
+  let time = Date.now() * 0.00001;
+  let rx = time;
+  let ry = time;
   group.rotation.x = rx;
   group.rotation.y = ry;
-  group.rotation.z = rz;
 
   renderer.render(scene, camera);
 }
 
 function unload() {
+  stop();
+  canvas = null;
   window.removeEventListener('resize', resizeCanvas);
+
   if (io !== null) {
     io.disconnect();
     io = null;
   }
-  canvas = null;
 
   if (scene !== null) {
     scene.remove(group);
@@ -108,11 +108,13 @@ function unload() {
     group = null;
     camera = null;
     renderer = null;
+  }
+}
 
-    if (rafId !== null) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-    }
+function stop() {
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId);
+    rafId = null;
   }
 }
 
