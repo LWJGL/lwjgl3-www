@@ -30,7 +30,7 @@ function init(el) {
 
   if (window.IntersectionObserver !== void 0) {
     io = new IntersectionObserver(entries => {
-      canvasInViewport = entries[0].isIntersecting;
+      canvasInViewport = entries[0].intersectionRatio > 0;
     });
     io.observe(canvas);
   }
@@ -39,13 +39,13 @@ function init(el) {
   const winH = canvas.parentNode.offsetHeight;
 
   camera = new THREE.PerspectiveCamera(60, winW / winH, 100, 10000);
-  camera.position.z = 1500;
+  camera.position.z = 1000;
 
   geometry = new THREE.BoxGeometry(60, 60, 60);
   material = new THREE.MeshNormalMaterial();
 
   group = new THREE.Group();
-  for (let i = 0; i < 1000; i += 1) {
+  for (let i = 0; i < 100; i += 1) {
     let mesh = new THREE.Mesh(geometry, material);
     mesh.position.x = Math.random() * 2000 - 1000;
     mesh.position.y = Math.random() * 2000 - 1000;
