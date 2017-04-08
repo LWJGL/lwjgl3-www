@@ -1,4 +1,4 @@
-const helmetConfig = (production) => {
+const helmetConfig = production => {
   const config = {
     contentSecurityPolicy: {
       directives: {
@@ -6,38 +6,31 @@ const helmetConfig = (production) => {
         baseUri: ["'self'"],
         blockAllMixedContent: true,
         childSrc: ["'none'"],
-        connectSrc: [
-          "'self'",
-          "https://build.lwjgl.org",
-          "https://www.google-analytics.com",
-        ],
+        connectSrc: ["'self'", 'https://build.lwjgl.org', 'https://www.google-analytics.com'],
         formAction: ["'self'"],
         frameAncestors: ["'none'"],
         imgSrc: [
           "'self'",
-          "data:",
-          "https://api.travis-ci.org",
-          "https://travis-ci.org",
-          "https://www.google-analytics.com",
+          'data:',
+          'https://api.travis-ci.org',
+          'https://travis-ci.org',
+          'https://www.google-analytics.com',
         ],
         scriptSrc: [
           "'self'",
-          "https://www.google-analytics.com",
-          "https://cdnjs.cloudflare.com",
-          "https://cdn.polyfill.io",
+          'https://www.google-analytics.com',
+          'https://cdnjs.cloudflare.com',
+          'https://cdn.polyfill.io',
+          'https://unpkg.com',
         ],
-        styleSrc: [
-          "'self'",
-          "'unsafe-inline'",
-          "https://cdnjs.cloudflare.com",
-        ],
-      }
+        styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com'],
+      },
     },
     dnsPrefetchControl: {
-      allow: false
+      allow: false,
     },
     frameguard: {
-      action: "deny"
+      action: 'deny',
     },
     hidePoweredBy: false,
     /*
@@ -58,19 +51,19 @@ const helmetConfig = (production) => {
     ieNoOpen: false,
     noSniff: true,
     referrerPolicy: false,
-    xssFilter: true
+    xssFilter: true,
   };
 
-  if ( production ) {
+  if (production) {
     config.hsts = {
       maxAge: 365 * 24 * 60 * 60,
       includeSubDomains: false,
       // TODO: includeSubDomains must be true for preloading to be approved
       preload: true,
-      setIf: (req, res) => req.hostname === 'www.lwjgl.org'
+      setIf: (req, res) => req.hostname === 'www.lwjgl.org',
     };
   } else {
-    config.contentSecurityPolicy.directives.styleSrc.push("blob:");
+    config.contentSecurityPolicy.directives.styleSrc.push('blob:');
   }
 
   return config;

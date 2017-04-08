@@ -17,7 +17,6 @@ AWS.config.update({ region: 'us-east-1' });
 
 // Lib
 const cloudFrontSubnets = require('./cloudfront-subnets.json');
-const getDevice = require('./getDevice');
 const helmetConfig = require('./helmetConfig');
 
 // ------------------------------------------------------------------------------
@@ -181,8 +180,6 @@ app.get('*', (req, res) => {
   res.set('Link', linkHeaders);
 
   res.render('index', {
-    ie: req.get('user-agent').indexOf('MSIE') > -1,
-    bodyClass: getDevice(req),
     webpackManifest,
     entry,
   });

@@ -2,7 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Link from 'react-router-dom/Link';
 import Logo from './Logo';
-import env from '../../services/env';
+import Canvas from './Canvas';
 
 // Icons
 import IconLowLevel from 'react-icons/md/settings-input-composite';
@@ -51,22 +51,22 @@ class HomeRoute extends React.Component {
           ]}
         />
 
-        <section className="video-container">
-          <div className="videoOverlay" />
-          <Logo className="logo" />
-          <div className="intro">
-            <h1>Lightweight Java Game Library 3</h1>
-            <p className="introText">
+        <section className="hero-container">
+          <Canvas />
+          <div className="d-flex flex-column justify-content-around align-items-center">
+            <Logo className="logo" />
+            <div className="intro">
+              <h1>Lightweight Java&nbsp;Game&nbsp;Library&nbsp;3</h1>
               <a href="#learn-more" onClick={learnMoreSmooth}>
-                LEARN MORE<br /><IconArrowDown size={'1.5rem'} />
+                LEARN MORE<br /><IconArrowDown />
               </a>
-            </p>
+            </div>
           </div>
         </section>
 
         <a id="learn-more" />
 
-        <section className="container py-4">
+        <section className="container py-5">
           <h1 className="text-center">What is LW<b>JGL</b> 3?</h1>
           <div className="row">
             <div className="col-md-10 push-md-1 col-xs-12">
@@ -98,11 +98,10 @@ class HomeRoute extends React.Component {
               </p>
             </div>
           </div>
-
         </section>
 
         <div className="area-dark bindings">
-          <section className="container py-4 text-center features">
+          <section className="container py-5 text-center features">
             <h1>Main Features</h1>
 
             <div className="row">
@@ -296,7 +295,7 @@ class HomeRoute extends React.Component {
           </section>
         </div>
 
-        <section className="container pt-4">
+        <section className="container pt-5 pb-3">
           <div className="row">
             <div className="col-md-10 offset-md-1">
               <h1 className="text-center">Looking for LWJGL 2?</h1>
