@@ -6,8 +6,9 @@ import Sidebar from './Sidebar';
 import { IS_IOS } from '../services/globals';
 import supportsPassive from '../services/supports-passive';
 import { connect } from 'react-redux';
+import classnames from 'classnames';
 
-const HEADER_CLASS = `site-header top${IS_IOS ? ' alt' : ''}`;
+const HEADER_CLASSNAME = 'site-header';
 
 // force re-rendering when route changes
 @withRouter
@@ -22,12 +23,19 @@ class Header extends React.Component {
   direction = 0;
   ticking = false;
   offsetHeight = 0;
-  el;
+
+  state = {
+    pos: 0,
+    top: true,
+    fixed: false,
+    hidden: false,
+  };
 
   componentDidMount() {
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
-    this.offsetHeight = this.el.offsetHeight;
+    // Better get a ref to avoid querying the DOM
+    this.offsetHeight = document.querySelector(`.${HEADER_CLASSNAME}`).offsetHeight;
 
     window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
   }
@@ -35,45 +43,45 @@ class Header extends React.Component {
   // This never runs, events are automatically cleaned up on window.unload
   /*componentWillUnmount() {
    window.removeEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
-   }*/
+  }*/
 
-  componentDidUpdate() {
-    // Fired when route changes
-    requestAnimationFrame(this.forceUpdate);
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this.prev = 0;
+      this.flip = 0;
+      this.fixed = false;
+      this.direction = 0;
+      requestAnimationFrame(this.forceUpdate);
+    }
   }
 
   forceUpdate = () => {
     this.current = window.pageYOffset;
-    this.update();
-    if (this.current === 0) {
-      this.el.classList.add('top');
-    } else {
-      this.el.classList.remove('top');
-    }
+    this.setState({
+      pos: 0,
+      top: this.current <= this.offsetHeight,
+      fixed: false,
+      hidden: this.current > 0,
+    });
   };
 
   onScroll = () => {
     const offsetY = window.pageYOffset;
 
-    if (offsetY < 0 || this.prev === offsetY) {
-      // e.g. iOS inertial scrolling reports negative offsets
-      return;
-    }
-
-    this.prev = this.current;
-    this.current = offsetY;
-
-    if (!this.ticking) {
-      requestAnimationFrame(this.update);
-      this.ticking = true;
+    if (offsetY >= 0) {
+      if (!this.ticking) {
+        this.prev = this.current;
+        requestAnimationFrame(this.update);
+        this.ticking = true;
+      }
+      this.current = offsetY;
     }
   };
 
   checkOffset() {
     if (!this.fixed && this.current < this.flip - this.offsetHeight) {
       // The entire menu has been revealed, fix it to the viewport
-      this.el.classList.add('fixed');
-      this.el.style.top = '0';
+      this.setState({ fixed: true, pos: 0 });
       this.fixed = true;
     }
   }
@@ -84,7 +92,7 @@ class Header extends React.Component {
     if (this.prev - this.current < 0) {
       // We are scrolling down
       if (IS_IOS) {
-        this.el.classList.add('hidden');
+        this.setState({ hidden: true });
       } else {
         if (this.direction >= 0) {
           // We just started scroll down
@@ -92,19 +100,18 @@ class Header extends React.Component {
           if (this.fixed) {
             // Release menu from the top of the viewport
             this.fixed = false;
-            this.el.classList.remove('fixed');
-            this.el.style.top = `${this.prev}px`;
+            this.setState({ fixed: false, pos: this.prev });
           }
         }
       }
 
       if (this.current > this.offsetHeight) {
-        this.el.classList.remove('top');
+        this.setState({ top: false });
       }
     } else {
       // We are scrolling up
       if (IS_IOS) {
-        this.el.classList.remove('hidden');
+        this.setState({ hidden: false });
       } else {
         if (this.direction <= 0) {
           // We just started scrolling up
@@ -114,7 +121,7 @@ class Header extends React.Component {
           this.checkOffset();
           if (!this.fixed) {
             // Place menu from that position upwards so it gets revealed naturally
-            this.el.style.top = `${Math.max(0, this.flip - this.offsetHeight)}px`;
+            this.setState({ pos: Math.max(0, this.flip - this.offsetHeight) });
           }
         } else {
           this.checkOffset();
@@ -122,19 +129,24 @@ class Header extends React.Component {
       }
 
       if (this.current <= this.offsetHeight) {
-        this.el.classList.add('top');
+        this.setState({ top: true });
       }
     }
   };
 
   render() {
+    const { pos, top, fixed, hidden } = this.state;
+
     return (
       <header
-        ref={el => {
-          this.el = el;
-        }}
-        className={HEADER_CLASS}
         role="navigation"
+        className={classnames(HEADER_CLASSNAME, {
+          alt: IS_IOS,
+          top,
+          fixed,
+          hidden,
+        })}
+        style={{ top: pos }}
       >
         <nav className="container-fluid">
           <div className="row">

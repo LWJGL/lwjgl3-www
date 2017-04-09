@@ -9,45 +9,40 @@
   line-height: 3rem;
   font-size: 1.2rem;
   will-change: top;
-
   &.fixed {
     position: fixed;
   }
-
   &.alt {
     position: fixed;
     will-change: top, background-color, opacity;
-    transition: top 0.3s cubic-bezier(0,0,0.3,1), background-color 0.5s ease-out, opacity 0.5s ease-out;
+    transition: top 0.3s cubic-bezier(0, 0, 0.3, 1), background-color 0.5s ease-out, opacity 0.5s ease-out;
     &.hidden {
       opacity: 0;
       top: -3rem;
       pointer-events: none;
     }
   }
-
   a {
     font-weight: 300;
     color: $white;
     text-decoration: none;
-
-    &:focus, &:hover {
+    &:focus,
+    &:hover {
       text-decoration: none;
       color: lightblue;
     }
     &.active {
       color: yellow;
     }
-
     @include media-breakpoint-up(lg) {
       background: linear-gradient(currentColor, currentColor) bottom / 0 2px no-repeat;
       transition: .5s background-size, 0.75s color ease-out;
-
-      &:hover, &.active {
+      &:hover,
+      &.active {
         background-size: 100% 2px;
       }
     }
   }
-
   .main-menu-horizontal {
     text-align: right;
     margin: 0;
@@ -56,16 +51,13 @@
       padding-left: 2rem;
     }
   }
-
   .sliding-menu {
     $gutter: $grid-gutter-width-base / 2;
-
     a {
       &:hover {
         text-decoration: underline;
       }
     }
-
     .sliding-menu-icon {
       display: flex;
       align-items: center;
@@ -74,19 +66,17 @@
       margin: 0 (-$gutter) 0 auto;
       color: $white;
       height: 3rem;
-
       .svg-icon {
         font-size: 2rem;
         svg {
           bottom: auto;
         }
       }
-
-      &:hover, &:active {
+      &:hover,
+      &:active {
         color: yellow;
       }
     }
-
     .sliding-menu-overlay {
       position: fixed;
       left: 0;
@@ -99,7 +89,6 @@
       will-change: opacity;
       transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
     }
-
     .sliding-menu-container {
       background-color: #1b2426;
       position: fixed;
@@ -120,7 +109,6 @@
         transition: none;
       }
     }
-
     &.open {
       .sliding-menu-overlay {
         pointer-events: auto;
@@ -131,6 +119,5 @@
         transform: none;
       }
     }
-
   }
 }
