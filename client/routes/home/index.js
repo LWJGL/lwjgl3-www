@@ -18,14 +18,10 @@ import IconMoreApi from 'react-icons/md/battery-unknown';
 
 const LEARN_MORE = 'learn-more';
 
-const learnMoreSmooth = e => {
-  if (e) {
-    e.preventDefault();
-  }
+const learnMoreSmooth = () => {
   try {
     document.getElementById(LEARN_MORE).scrollIntoView({ behavior: 'smooth' });
   } catch (ignore) {}
-  return false;
 };
 
 import styled from '../styled';
@@ -36,6 +32,14 @@ class HomeRoute extends React.Component {
   componentDidMount() {
     if (this.props.location.hash === `#${LEARN_MORE}`) {
       learnMoreSmooth();
+    }
+  }
+
+  componentWillReceiveProps(props) {
+    if (props.location.hash === `#${LEARN_MORE}`) {
+      learnMoreSmooth();
+    } else {
+      scroll(0, 0);
     }
   }
 
@@ -53,13 +57,13 @@ class HomeRoute extends React.Component {
 
         <section className="hero-container">
           <Canvas />
-          <div className="d-flex flex-column justify-content-around align-items-center">
+          <div className="d-flex flex-column justify-content-center align-items-center">
             <Logo className="logo" />
             <div className="intro">
               <h1>Lightweight Java&nbsp;Game&nbsp;Library&nbsp;3</h1>
-              <a href="#learn-more" onClick={learnMoreSmooth}>
+              <Link to="/#learn-more">
                 LEARN MORE<br /><IconArrowDown />
-              </a>
+              </Link>
             </div>
           </div>
         </section>

@@ -32,12 +32,14 @@ body {
   .logo {
     display: block;
     max-width: 700px;
-    margin: 0 2rem;
-    flex-grow: 1;
+    margin: 2rem;
+    @media (max-height: 420px) {
+      max-width: 75%;
+    }
   }
   .intro {
     text-align: center;
-    padding: 0 1rem;
+    padding: 0 2rem;
     color: white;
     font-weight: 300;
   }
@@ -45,7 +47,8 @@ body {
     @media (max-width: 600px) {
       font-size: 1.4rem;
     }
-    @media (max-width: 400px) {
+    @media (max-width: 400px),
+    (max-height: 420px) {
       font-size: 1.1rem;
       line-height: 1.5rem;
     }
