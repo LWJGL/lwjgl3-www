@@ -18,8 +18,6 @@ const HEADER_CLASSNAME = 'site-header';
 class Header extends React.Component {
   prev = 0;
   current = 0;
-  flip = 0;
-  fixed = false;
   direction = 0;
   ticking = false;
   offsetHeight = 0;
@@ -47,61 +45,39 @@ class Header extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps !== this.props) {
-      this.prev = 0;
-      this.flip = 0;
-      this.fixed = false;
       this.direction = 0;
-      requestAnimationFrame(this.forceUpdate);
+      this.current = 0;
+      this.setState({
+        pos: 0,
+        fixed: false,
+      });
+      // Force onScroll to handle the rest
+      this.onScroll();
     }
   }
-
-  forceUpdate = () => {
-    this.current = window.pageYOffset;
-    this.setState({
-      pos: 0,
-      top: this.current <= this.offsetHeight,
-      fixed: false,
-      hidden: this.current > 0,
-    });
-  };
 
   onScroll = () => {
-    const offsetY = window.pageYOffset;
-
-    if (offsetY >= 0) {
-      if (!this.ticking) {
-        this.prev = this.current;
-        requestAnimationFrame(this.update);
-        this.ticking = true;
-      }
-      this.current = offsetY;
+    if (!this.ticking) {
+      requestAnimationFrame(this.update);
+      this.ticking = true;
     }
   };
-
-  checkOffset() {
-    if (!this.fixed && this.current < this.flip - this.offsetHeight) {
-      // The entire menu has been revealed, fix it to the viewport
-      this.setState({ fixed: true, pos: 0 });
-      this.fixed = true;
-    }
-  }
 
   update = () => {
     this.ticking = false;
+    this.prev = this.current;
+    this.current = Math.max(0, window.pageYOffset);
 
     if (this.prev - this.current < 0) {
       // We are scrolling down
       if (IS_IOS) {
         this.setState({ hidden: true });
-      } else {
-        if (this.direction >= 0) {
-          // We just started scroll down
-          this.direction = -1;
-          if (this.fixed) {
-            // Release menu from the top of the viewport
-            this.fixed = false;
-            this.setState({ fixed: false, pos: this.prev });
-          }
+      } else if (this.direction >= 0) {
+        // We just started scroll down
+        this.direction = -1;
+        if (this.state.fixed) {
+          // Release menu from the top of the viewport
+          this.setState({ fixed: false, pos: this.prev });
         }
       }
 
@@ -116,15 +92,12 @@ class Header extends React.Component {
         if (this.direction <= 0) {
           // We just started scrolling up
           this.direction = 1;
-          // Remember where we started scrolling up
-          this.flip = this.prev;
-          this.checkOffset();
-          if (!this.fixed) {
-            // Place menu from that position upwards so it gets revealed naturally
-            this.setState({ pos: Math.max(0, this.flip - this.offsetHeight) });
+          if (this.state.pos + this.offsetHeight < this.prev) {
+            this.setState({ pos: Math.max(0, this.prev - this.offsetHeight) });
           }
-        } else {
-          this.checkOffset();
+        } else if (!this.state.fixed && this.current < this.state.pos) {
+          // The entire menu has been revealed, fix it to the viewport
+          this.setState({ fixed: true, pos: 0 });
         }
       }
 
