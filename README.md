@@ -23,7 +23,7 @@ Windows build statuses. Node proxies requests to
 Other LWJGL subdomains:
 
 - The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www).
-A static copy of the old LWJGL website is now hosted directly from S3 
+A static copy of the old LWJGL website is now hosted directly from S3
 - The blog is [Ghost](https://ghost.org/).
 - The forum is [SMF](http://www.simplemachines.org/).
 - The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/).
@@ -116,7 +116,7 @@ NODE_ENV=production pm2 start server/index.js --name lwjgl
 pm2 save
 ```
 
-or place a process.json file anywhere with the following contents: 
+or place a process.json file anywhere with the following contents:
 
 ```js
 {
