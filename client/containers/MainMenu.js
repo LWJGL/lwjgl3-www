@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { func } from 'prop-types';
 import NavLink from 'react-router-dom/NavLink';
 
 const MainMenu = ({ onClick, ...rest }) => (
@@ -14,7 +14,7 @@ const MainMenu = ({ onClick, ...rest }) => (
 );
 
 MainMenu.propTypes = {
-  onClick: PropTypes.func,
+  onClick: func,
 };
 
 export default MainMenu;

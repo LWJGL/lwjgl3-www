@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import withRouter from 'react-router-dom/withRouter';
 import Link from 'react-router-dom/Link';
 import MainMenu from './MainMenu';
@@ -26,25 +25,11 @@ class Header extends React.Component {
   el;
 
   componentDidMount() {
-    this.setup();
-    window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
-  }
-
-  setup() {
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
     this.offsetHeight = this.el.offsetHeight;
 
-    // Initial scroll values
-    this.current = window.pageYOffset;
-    this.prev = this.current;
-
-    // this.el.classList.toggle('top', this.current === 0); // NOT SUPPORTED ON IE
-    if (this.current === 0) {
-      this.el.classList.add('top');
-    } else {
-      this.el.classList.remove('top');
-    }
+    window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
   }
 
   // This never runs, events are automatically cleaned up on window.unload
@@ -54,8 +39,18 @@ class Header extends React.Component {
 
   componentDidUpdate() {
     // Fired when route changes
-    requestAnimationFrame(this.setup.bind(this));
+    requestAnimationFrame(this.forceUpdate);
   }
+
+  forceUpdate = () => {
+    this.current = window.pageYOffset;
+    this.update();
+    if (this.current === 0) {
+      this.el.classList.add('top');
+    } else {
+      this.el.classList.remove('top');
+    }
+  };
 
   onScroll = () => {
     const offsetY = window.pageYOffset;
