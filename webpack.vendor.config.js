@@ -22,7 +22,7 @@ const config = {
       'react-helmet',
       'react-router-dom',
 
-      // State-management
+      // State management
       'redux',
       'redux-saga',
       'react-redux',

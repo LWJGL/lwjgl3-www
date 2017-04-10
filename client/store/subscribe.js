@@ -1,10 +1,10 @@
 import React from 'react';
-import { object } from 'prop-types';
+import PropTypes from 'prop-types';
 
 const subscribe = Component =>
   class SubscribedCompoment extends React.Component {
     static contextTypes = {
-      store: object,
+      store: PropTypes.object,
     };
 
     static injected = false;

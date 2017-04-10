@@ -1,5 +1,5 @@
 import React from 'react';
-import { string } from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Html = ({ tag, source, children, ...rest }) => {
   const Container = tag;
@@ -20,8 +20,8 @@ const Html = ({ tag, source, children, ...rest }) => {
 };
 
 Html.propTypes = {
-  tag: string,
-  source: string,
+  tag: PropTypes.string,
+  source: PropTypes.string,
 };
 
 Html.defaultProps = {

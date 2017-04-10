@@ -1,10 +1,10 @@
 import React from 'react';
-import { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import withRouter from 'react-router-dom/withRouter';
 
 @withRouter class HashLinkTarget extends React.Component {
   static propTypes = {
-    id: string.isRequired,
+    id: PropTypes.string.isRequired,
   };
 
   componentDidMount() {

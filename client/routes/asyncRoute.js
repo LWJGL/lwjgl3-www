@@ -9,6 +9,7 @@ import LoaderSpinner from '../components/LoaderSpinner';
 let firstRoute = true;
 
 // Function that returns a High-Order Component (wrapped component) with common route logic
+// TODO: Port as simple component as soon as React adds support for promise-based component
 export default getComponent =>
   class AsyncComponent extends React.Component {
     // Store wrapped component here so next time we render it immediatelly
