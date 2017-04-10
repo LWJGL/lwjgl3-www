@@ -110,8 +110,10 @@ export default getComponent =>
         }
       }
 
-      // Scroll to top of viewport
-      scroll(0, 0);
+      if (this.props.location.hash.length === 0) {
+        // Scroll to top of viewport
+        scroll(0, 0);
+      }
     }
 
     analytics() {

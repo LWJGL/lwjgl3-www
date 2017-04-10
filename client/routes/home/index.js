@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import Link from 'react-router-dom/Link';
 import Logo from './Logo';
 import Canvas from './Canvas';
+import HashLinkTarget from '../../components/HashLinkTarget';
 
 // Icons
 import IconLowLevel from 'react-icons/md/settings-input-composite';
@@ -16,33 +17,11 @@ import IconGLFW from 'react-icons/md/videogame-asset';
 import IconGitHub from 'react-icons/fa/github';
 import IconMoreApi from 'react-icons/md/battery-unknown';
 
-const LEARN_MORE = 'learn-more';
-
-const learnMoreSmooth = () => {
-  try {
-    document.getElementById(LEARN_MORE).scrollIntoView({ behavior: 'smooth' });
-  } catch (ignore) {}
-};
-
 import styled from '../styled';
 const styles = require('./styles.scss');
 
 @styled(styles)
 class HomeRoute extends React.Component {
-  componentDidMount() {
-    if (this.props.location.hash === `#${LEARN_MORE}`) {
-      learnMoreSmooth();
-    }
-  }
-
-  componentWillReceiveProps(props) {
-    if (props.location.hash === `#${LEARN_MORE}`) {
-      learnMoreSmooth();
-    } else {
-      scroll(0, 0);
-    }
-  }
-
   render() {
     return (
       <main>
@@ -68,7 +47,7 @@ class HomeRoute extends React.Component {
           </div>
         </section>
 
-        <a id="learn-more" />
+        <HashLinkTarget id="learn-more" />
 
         <section className="container py-5">
           <h1 className="text-center">What is LW<b>JGL</b> 3?</h1>

@@ -4,8 +4,7 @@ import Link from 'react-router-dom/Link';
 import codeSample from './sample';
 import loadJS from 'fg-loadjs';
 import { loadCSS } from 'fg-loadcss';
-
-const BUILD_INSTRUCTIONS = 'build-instructions';
+import HashLinkTarget from '../../components/HashLinkTarget';
 
 class GuideRoute extends React.Component {
   static init = true;
@@ -29,14 +28,6 @@ class GuideRoute extends React.Component {
         }
         this.setState({ sample: GuideRoute.sample });
       });
-    }
-
-    if (this.props.location.hash === `#${BUILD_INSTRUCTIONS}`) {
-      try {
-        setImmediate(function() {
-          document.getElementById(BUILD_INSTRUCTIONS).scrollIntoView({ behavior: 'smooth' });
-        });
-      } catch (ignore) {}
     }
   }
 
@@ -115,7 +106,7 @@ class GuideRoute extends React.Component {
             .
           </p>
 
-          <a id="build-instructions" />
+          <HashLinkTarget id="build-instructions" />
           <h3>Building from source</h3>
 
           <p>
