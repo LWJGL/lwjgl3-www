@@ -92,7 +92,9 @@ class Header extends React.Component {
         if (this.direction <= 0) {
           // We just started scrolling up
           this.direction = 1;
-          if (this.state.pos + this.offsetHeight < this.prev) {
+          if (this.prev - this.current > this.offsetHeight) {
+            this.setState({ fixed: true, pos: 0 });
+          } else if (this.state.pos + this.offsetHeight < this.prev) {
             this.setState({ pos: Math.max(0, this.prev - this.offsetHeight) });
           }
         } else if (!this.state.fixed && this.current < this.state.pos) {
