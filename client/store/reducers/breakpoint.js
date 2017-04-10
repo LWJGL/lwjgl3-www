@@ -1,5 +1,5 @@
 export const BREAKPOINTS_RESIZE = 'BREAKPOINTS/RESIZE_EVENT';
-export const resizeEvent = (payload) => ({type: BREAKPOINTS_RESIZE, payload});
+export const resizeEvent = payload => ({ type: BREAKPOINTS_RESIZE, payload });
 
 const breakpoint = {
   limits: [0, 576, 768, 992, 1200],
@@ -15,8 +15,8 @@ export const getCurrent = () => {
   const w = window.innerWidth;
 
   let i = breakpoint.limits.length - 1;
-  while ( i > 0 ) {
-    if ( w >= breakpoint.limits[i] ) {
+  while (i > 0) {
+    if (w >= breakpoint.limits[i]) {
       //noinspection BreakStatementJS
       break;
     }
@@ -29,8 +29,8 @@ export const getCurrent = () => {
 breakpoint.current = getCurrent();
 
 export default function(state = breakpoint, action) {
-  if ( action.type === BREAKPOINTS_RESIZE ) {
-    return {...state, current: action.payload};
+  if (action.type === BREAKPOINTS_RESIZE) {
+    return { ...state, current: action.payload };
   }
 
   return state;

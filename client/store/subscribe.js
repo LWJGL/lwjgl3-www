@@ -8,29 +8,26 @@ const subscribe = Component =>
     };
 
     static injected = false;
-    // mounted = false;
 
     state = {
       subscribed: false,
     };
 
-    // reload = (scope, reducer) => {
-    //   if (this.mounted) {
-    //     const store = this.context.store;
-    //     store.asyncReducers[scope] = reducer;
-    //     store.injectReducer();
-    //   }
-    // };
-
     componentDidMount() {
-      // this.mounted = true;
       const store = this.context.store;
+      const state = store.getState();
+      let injected = 0;
 
       if (Component.reducers !== undefined && !SubscribedCompoment.injected) {
         for (let [scope, reducer] of Object.entries(Component.reducers)) {
-          store.asyncReducers[scope] = reducer;
+          if (state[scope] === undefined) {
+            injected += 1;
+            store.asyncReducers[scope] = reducer;
+          }
         }
-        store.injectReducer();
+        if (injected > 0) {
+          store.injectReducer();
+        }
         SubscribedCompoment.injected = true;
       }
 
@@ -48,8 +45,6 @@ const subscribe = Component =>
     }
 
     componentWillUnmount() {
-      // this.mounted = false;
-
       if (Component.sagas !== undefined) {
         for (let saga of this.sagas) {
           if (saga.isRunning()) {
@@ -67,7 +62,6 @@ const subscribe = Component =>
     }
 
     render() {
-      // return this.state.subscribed ? <Component {...this.props} reload={this.reload} /> : null;
       return this.state.subscribed ? <Component {...this.props} /> : null;
     }
   };

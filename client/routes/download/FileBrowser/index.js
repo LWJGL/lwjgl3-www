@@ -25,15 +25,6 @@ class FileBrowser extends React.Component {
 
   static sagas = [saga];
 
-  // constructor(props) {
-  //   super(props);
-  //   if ( process.env.NODE_ENV !== 'production' && module.hot ) {
-  //     module.hot.accept('./reducer', () => {
-  //       props.reload(SCOPE, reducer);
-  //     });
-  //   }
-  // }
-
   browse = () => {
     this.props.browserOpen();
   };

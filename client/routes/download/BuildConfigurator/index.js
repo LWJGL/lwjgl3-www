@@ -141,15 +141,6 @@ class BuildContainer extends React.Component {
   static sagas = [saga];
   static restoreState = true;
 
-  // constructor(props) {
-  //   super(props);
-  //   if ( process.env.NODE_ENV !== 'production' && module.hot ) {
-  //     module.hot.accept('./reducer', () => {
-  //       props.reload('build', reducer);
-  //     });
-  //   }
-  // }
-
   componentDidMount() {
     if (BuildContainer.restoreState) {
       BuildContainer.restoreState = false;

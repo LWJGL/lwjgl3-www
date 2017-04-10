@@ -45,8 +45,9 @@ function configureStore() {
   if (process.env.NODE_ENV !== 'production') {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('./createReducer', () => {
-      store.replaceReducer(createReducer());
+      store.replaceReducer(createReducer(store.asyncReducers));
     });
+
     // Enable Webpack hot module replacement for sagas
     // module.hot.accept('./saga', () => {
     //   sagaMiddleware.run(saga);
