@@ -1,10 +1,10 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import reducer, { actions as $$ } from './reducer'
-import saga from './saga'
-import ControlledPanel from '../../../components/ControlledPanel'
-import Browser from './components/Browser'
-import subscribe from '../../../store/subscribe'
+import React from 'react';
+import { connect } from 'react-redux';
+import reducer, { actions as $$ } from './reducer';
+import saga from './saga';
+import ControlledPanel from '../../../components/ControlledPanel';
+import Browser from './components/Browser';
+import subscribe from '../../../store/subscribe';
 
 const SCOPE = 'browser';
 
@@ -17,11 +17,10 @@ function isBrowsing(state) {
 }
 
 @subscribe
-@connect(null, {browserOpen: $$.browserOpen})
+@connect(null, { browserOpen: $$.browserOpen })
 class FileBrowser extends React.Component {
-
   static reducers = {
-    [SCOPE]: reducer
+    [SCOPE]: reducer,
   };
 
   static sagas = [saga];
@@ -42,14 +41,13 @@ class FileBrowser extends React.Component {
   render() {
     return [
       <ControlledPanel predicate={isClosed}>
-        <button className="btn btn-outline-primary" onClick={this.browse}>Click to browse&hellip;</button>
+        <button className="btn btn-outline-primary" onClick={this.browse}>Click to browse…</button>
       </ControlledPanel>,
       <ControlledPanel predicate={isBrowsing}>
         <Browser />
-      </ControlledPanel>
+      </ControlledPanel>,
     ];
   }
-
 }
 
-export default FileBrowser
+export default FileBrowser;
