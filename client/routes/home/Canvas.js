@@ -18,7 +18,7 @@ function resizeCanvas() {
     const winH = canvas.parentNode.offsetHeight;
     camera.aspect = winW / winH;
     camera.updateProjectionMatrix();
-    renderer.setSize(winW / 2, winH / 2, false);
+    renderer.setSize(winW, winH, false);
   }
 }
 
@@ -70,9 +70,9 @@ function init(el) {
     alpha: true,
   });
   if (window.devicePixelRatio !== undefined) {
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   }
-  renderer.setSize(winW / 2, winH / 2, false);
+  renderer.setSize(winW, winH, false);
   renderer.sortObjects = false;
   animate();
 }
