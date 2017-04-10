@@ -18,7 +18,7 @@ function resizeCanvas() {
     const winH = canvas.parentNode.offsetHeight;
     camera.aspect = winW / winH;
     camera.updateProjectionMatrix();
-    renderer.setSize(winW, winH);
+    renderer.setSize(winW / 2, winH / 2, false);
   }
 }
 
@@ -66,11 +66,13 @@ function init(el) {
 
   renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    antialias: false,
+    antialias: window.devicePixelRatio === 1,
     alpha: true,
   });
-  renderer.setPixelRatio(window.devicePixelRatio);
-  renderer.setSize(winW, winH);
+  if (window.devicePixelRatio !== undefined) {
+    renderer.setPixelRatio(window.devicePixelRatio);
+  }
+  renderer.setSize(winW / 2, winH / 2, false);
   renderer.sortObjects = false;
   animate();
 }
@@ -78,7 +80,7 @@ function init(el) {
 function animate() {
   rafId = requestAnimationFrame(animate);
 
-  let time = Date.now() * 0.00001;
+  let time = Date.now() * 0.000015;
   let rx = time;
   let ry = time;
   group.rotation.x = rx;
