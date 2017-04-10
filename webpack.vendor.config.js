@@ -29,7 +29,7 @@ const config = {
       'reselect',
 
       // Development
-      'redux-logger',
+      // 'redux-logger',
 
       // UI
       'aphrodite',
