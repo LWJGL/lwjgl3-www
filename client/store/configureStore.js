@@ -30,16 +30,15 @@ function configureStore() {
   store.asyncReducers = {};
   store.runSaga = sagaMiddleware.run;
 
-  store.injectReducer = (name, asyncReducer) => {
-    store.asyncReducers[name] = asyncReducer;
+  store.injectReducer = () => {
     store.replaceReducer(createReducer(store.asyncReducers));
   };
 
-  store.ejectReducer = name => {
-    // store.asyncReducers[name] = (state={}) => state;
-    delete store.asyncReducers[name];
-    store.replaceReducer(createReducer(store.asyncReducers));
-  };
+  // store.ejectReducer = name => {
+  //   // Minimize work for ejected reducer scope
+  //   store.asyncReducers[name] = (state = {}, action) => state;
+  //   store.replaceReducer(createReducer(store.asyncReducers));
+  // };
 
   sagaMiddleware.run(saga);
 

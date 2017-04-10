@@ -63,6 +63,7 @@ const helmetConfig = production => {
       setIf: (req, res) => req.hostname === 'www.lwjgl.org',
     };
   } else {
+    config.contentSecurityPolicy.directives.scriptSrc.push("'unsafe-eval'"); // required for Redux DevTools
     config.contentSecurityPolicy.directives.styleSrc.push('blob:');
   }
 
