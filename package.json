@@ -108,7 +108,7 @@
     "webpack": "2.4.1",
     "webpack-chunk-hash": "0.4.0",
     "whatwg-fetch": "2.0.3",
-    "yargs": "7.1.0"
+    "yargs": "8.0.0-candidate.0"
   },
   "devDependencies": {
     "prettier": "1.1.0",
