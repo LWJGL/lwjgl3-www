@@ -211,9 +211,9 @@ autoprefixer@6.7.7, autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.43.0:
-  version "2.43.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.43.0.tgz#a5f38099c2e279414e7e09f69719a542d816bdba"
+aws-sdk@2.45.0:
+  version "2.45.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.45.0.tgz#045dbd323630170968306dc849d793dbb1e4444d"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -379,9 +379,9 @@ babel-helpers@7.0.0-alpha.9:
   dependencies:
     babel-template "7.0.0-alpha.9"
 
-babel-loader@7.0.0-beta.1:
-  version "7.0.0-beta.1"
-  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.0.0-beta.1.tgz#1318888dfcbbd5f05750ba2d72c744cc07815ce2"
+babel-loader@7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/babel-loader/-/babel-loader-7.0.0.tgz#2e43a66bee1fff4470533d0402c8a4532fafbaf7"
   dependencies:
     find-cache-dir "^0.1.1"
     loader-utils "^1.0.2"
@@ -3703,9 +3703,9 @@ react-deep-force-update@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.0.1.tgz#4f7f6c12c3e7de42f345992a3c518236fa1ecad3"
 
-react-dom@16.0.0-alpha.9:
-  version "16.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-alpha.9.tgz#8630250db53956b974220ddc11ce3e3cc4efff2b"
+react-dom@16.0.0-alpha.10:
+  version "16.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-alpha.10.tgz#bf1baf39f065ca3cfd696cd23a59b760442d9152"
   dependencies:
     fbjs "^0.8.9"
     loose-envify "^1.1.0"
@@ -3788,9 +3788,9 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
 
-react@16.0.0-alpha.9:
-  version "16.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.9.tgz#d7fe626bfdc1f69f373c8919d688f2e66e3b3642"
+react@16.0.0-alpha.10:
+  version "16.0.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.10.tgz#dcdafa9f84437d2c7e06b234b86782d316298882"
   dependencies:
     create-react-class "^15.5.2"
     fbjs "^0.8.9"
@@ -4611,9 +4611,9 @@ webpack-core@^0.6.9:
     source-list-map "~0.1.7"
     source-map "~0.4.1"
 
-webpack-dev-middleware@1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-1.10.1.tgz#c6b4cf428139cf1aefbe06a0c00fdb4f8da2f893"
+webpack-dev-middleware@1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-1.10.2.tgz#2e252ce1dfb020dbda1ccb37df26f30ab014dbd1"
   dependencies:
     memory-fs "~0.4.1"
     mime "^1.3.4"
