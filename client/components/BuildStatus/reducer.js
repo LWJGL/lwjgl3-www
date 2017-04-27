@@ -47,7 +47,7 @@ export function* saga(): Generator<any, void, void> {
   yield takeEvery(LOAD_STATUS, getStatus);
 }
 
-export default function(state: State = {}, action: Action) {
+export default function BuildStatusReducer(state: State = {}, action: Action) {
   switch (action.type) {
     case STORE_STATUS:
       if (action.state.version) {
