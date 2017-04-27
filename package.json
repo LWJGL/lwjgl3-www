@@ -61,7 +61,7 @@
     "babel-plugin-transform-react-inline-elements": "7.0.0-alpha.9",
     "babel-plugin-transform-react-jsx": "7.0.0-alpha.9",
     "babel-plugin-transform-react-jsx-source": "7.0.0-alpha.9",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.2",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.3",
     "babel-plugin-transform-regenerator": "7.0.0-alpha.9",
     "babel-polyfill": "7.0.0-alpha.9",
     "bootstrap": "4.0.0-alpha.6",

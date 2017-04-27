@@ -429,14 +429,6 @@ babel-plugin-syntax-class-properties@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-class-properties/-/babel-plugin-syntax-class-properties-7.0.0-alpha.9.tgz#a79f336c5aa729fac70b20790157ebc81bb41c13"
 
-babel-plugin-syntax-decorators@7.0.0-alpha.9:
-  version "7.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-decorators/-/babel-plugin-syntax-decorators-7.0.0-alpha.9.tgz#5b2b6d7c549f5dd10c9c44cdb85a1b8ff62089e6"
-
-babel-plugin-syntax-do-expressions@7.0.0-alpha.9:
-  version "7.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-do-expressions/-/babel-plugin-syntax-do-expressions-7.0.0-alpha.9.tgz#82974b4e3052e826b883b69b89ab2ec06528d0e8"
-
 babel-plugin-syntax-dynamic-import@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-7.0.0-alpha.9.tgz#84cc7ad10524082a59fe6c5dd1714fb5d8fac226"
@@ -502,19 +494,6 @@ babel-plugin-transform-class-properties@7.0.0-alpha.9:
     babel-helper-function-name "7.0.0-alpha.9"
     babel-plugin-syntax-class-properties "7.0.0-alpha.9"
     babel-template "7.0.0-alpha.9"
-
-babel-plugin-transform-decorators@7.0.0-alpha.9:
-  version "7.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-decorators/-/babel-plugin-transform-decorators-7.0.0-alpha.9.tgz#848a3d6cc58360fbf3bb27fe6ce56438b4b7fb2b"
-  dependencies:
-    babel-plugin-syntax-decorators "7.0.0-alpha.9"
-    babel-template "7.0.0-alpha.9"
-
-babel-plugin-transform-do-expressions@7.0.0-alpha.9:
-  version "7.0.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-do-expressions/-/babel-plugin-transform-do-expressions-7.0.0-alpha.9.tgz#0127887eecfa32a617ea6b771f194f8d8eb37653"
-  dependencies:
-    babel-plugin-syntax-do-expressions "7.0.0-alpha.9"
 
 babel-plugin-transform-es2015-arrow-functions@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
@@ -689,9 +668,9 @@ babel-plugin-transform-react-jsx@7.0.0-alpha.9:
     babel-helper-builder-react-jsx "7.0.0-alpha.9"
     babel-plugin-syntax-jsx "7.0.0-alpha.9"
 
-babel-plugin-transform-react-remove-prop-types@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.2.tgz#97e3cab4d05938df91e16c0473737ef6c575a2e6"
+babel-plugin-transform-react-remove-prop-types@0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.3.tgz#fdff5c12933efc3ac979817adcdc0f612c5e3563"
 
 babel-plugin-transform-regenerator@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
