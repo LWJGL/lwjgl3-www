@@ -2,6 +2,10 @@
 // https://hackernoon.com/polyfills-everything-you-ever-wanted-to-know-or-maybe-a-bit-less-7c8de164e423#.qtc0jwnhc
 import 'babel-polyfill';
 
+// Pull common modules that we want preloaded in the main chunk
+import './containers/PageView';
+import './components/Style';
+
 // Used to load external polyfills
 import loadJS from 'fg-loadjs';
 
