@@ -28,14 +28,16 @@ class FileBrowser extends React.Component {
   };
 
   render() {
-    return [
-      <ControlledPanel key="panel1" predicate={isClosed}>
-        <button className="btn btn-outline-primary" onClick={this.browse}>Click to browse…</button>
-      </ControlledPanel>,
-      <ControlledPanel key="panel2" predicate={isBrowsing}>
-        <Browser />
-      </ControlledPanel>,
-    ];
+    return (
+      <div>
+        <ControlledPanel predicate={isClosed}>
+          <button className="btn btn-outline-primary" onClick={this.browse}>Click to browse…</button>
+        </ControlledPanel>
+        <ControlledPanel predicate={isBrowsing}>
+          <Browser />
+        </ControlledPanel>
+      </div>
+    );
   }
 }
 
