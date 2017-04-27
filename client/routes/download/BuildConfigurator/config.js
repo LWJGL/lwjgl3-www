@@ -174,7 +174,7 @@ const config = {
         maven: {
           groupId: 'org.joml',
           artifactId: 'joml',
-          version: '1.9.2',
+          version: '1.9.3',
         },
       },
       'steamworks4j': {
