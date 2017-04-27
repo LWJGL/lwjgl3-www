@@ -48,9 +48,6 @@ export function* saga(): Generator<any, void, void> {
 }
 
 export default function BuildStatusReducer(state: State = {}, action: Action) {
-  if (action == null) {
-    return state;
-  }
   switch (action.type) {
     case STORE_STATUS:
       if (action.state.version) {
