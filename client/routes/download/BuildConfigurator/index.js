@@ -134,7 +134,7 @@ class BuildContainer extends React.Component {
   };
 
   static sagas = [saga];
-  static restoreState = true;
+  static restoreState: boolean = true;
 
   componentDidMount() {
     if (BuildContainer.restoreState) {

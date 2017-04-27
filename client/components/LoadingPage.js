@@ -4,7 +4,6 @@ import type { LoadingComponentProps } from 'react-loadable';
 
 const LoadingPage = ({ isLoading, pastDelay, error }: LoadingComponentProps) => {
   if (error) {
-    console.log(error);
     return (
       <div className="text-center" style={{ padding: '5rem 0' }}>
         <h1 className="display-4 text-danger">Failed to load page</h1>
