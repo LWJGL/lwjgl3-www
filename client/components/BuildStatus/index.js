@@ -3,19 +3,22 @@ import { connect } from 'react-redux';
 import LoaderSpinner from '../LoaderSpinner';
 import { loadStatus } from './reducer';
 
-type Props = {
+type OwnProps = {
   name: string,
+};
+
+type Props = OwnProps & {
   loadStatus: Function,
   version?: string,
   lastModified?: string,
-  error: string,
+  error?: string,
 };
 
 class BuildStatus extends React.Component<void, Props, void> {
   componentDidMount() {
     const { name, loadStatus, version, error } = this.props;
 
-    if (version === undefined && error === undefined) {
+    if (version == null && error == null) {
       loadStatus(name);
     }
   }
@@ -37,10 +40,8 @@ class BuildStatus extends React.Component<void, Props, void> {
 }
 
 export default connect(
-  (state, props) => ({
-    ...state.buildStatus[props.name],
-  }),
-  {
-    loadStatus,
-  }
+  (state: any, props: OwnProps) => {
+    return state.buildStatus[props.name] !== undefined ? { ...state.buildStatus[props.name] } : {};
+  },
+  { loadStatus }
 )(BuildStatus);
