@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import type { Task } from 'redux-saga';
 import { sagaMiddleware } from './saga';
+import createReducer from './createReducer';
+import asyncReducers from './asyncReducers';
 
 type State = {
   subscribed: boolean,
@@ -30,11 +32,11 @@ export default function subscribe(Component: Class<React$Component<*, *, *>>) {
         for (let [scope, reducer] of Object.entries(Component.reducers)) {
           if (state[scope] === undefined) {
             injected += 1;
-            store.asyncReducers[scope] = reducer;
+            asyncReducers[scope] = reducer;
           }
         }
         if (injected > 0) {
-          store.injectReducer();
+          store.replaceReducer(createReducer(asyncReducers));
         }
         SubscribedCompoment.injected = true;
       }

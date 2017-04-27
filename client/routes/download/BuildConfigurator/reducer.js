@@ -11,7 +11,8 @@ const computeArtifacts = state => {
   state.artifacts.allIds.forEach(it => {
     const artifact = state.artifacts.byId[it];
 
-    state.availability[it] = state.mode !== MODE_ZIP ||
+    state.availability[it] =
+      state.mode !== MODE_ZIP ||
       artifact.natives === undefined ||
       artifact.natives.length === nativeCnt ||
       artifact.natives.some(platform => !!state.platform[platform]);
@@ -173,7 +174,7 @@ const loadConfig = (state, config) => {
   return state;
 };
 
-export default function(state = config, action) {
+export default function BuildConfiguratorReducer(state = config, action) {
   switch (action.type) {
     case $.SELECT_TYPE:
       if (action.build !== state.build && state.downloading === false) {
@@ -278,7 +279,6 @@ export default function(state = config, action) {
 
     case $.CONFIG_LOAD:
       return loadConfig({ ...state }, action.payload);
-
   }
 
   return state;

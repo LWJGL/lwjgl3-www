@@ -5,9 +5,9 @@ const $ = {
 };
 
 const $$ = {
-  browserOpen: () => ({type: $.BROWSER_OPEN}),
-  loadPath: (path) => ({type: $.BROWSER_LOAD, path}),
-  storeContents: (path, contents) => ({type: $.STORE_CONTENTS, path, contents}),
+  browserOpen: () => ({ type: $.BROWSER_OPEN }),
+  loadPath: path => ({ type: $.BROWSER_LOAD, path }),
+  storeContents: (path, contents) => ({ type: $.STORE_CONTENTS, path, contents }),
 };
 
 const defaultState = {
@@ -16,8 +16,8 @@ const defaultState = {
       parent: null,
       loading: false,
       files: [],
-      folders: ['release/','stable/','nightly/'],
-    }
+      folders: ['release/', 'stable/', 'nightly/'],
+    },
   },
   path: '/',
   open: false,
@@ -25,12 +25,11 @@ const defaultState = {
 
 export { $ as types };
 export { $$ as actions };
-export default function(state = defaultState, action) {
 
+export default function FileBrowserReducer(state = defaultState, action) {
   switch (action.type) {
-
     case $.BROWSER_OPEN:
-      return {...state, open: true};
+      return { ...state, open: true };
 
     case $.STORE_CONTENTS:
       return {
@@ -42,15 +41,15 @@ export default function(state = defaultState, action) {
             loading: false,
             files: action.contents.files || [],
             folders: action.contents.folders || [],
-          }
-        }
+          },
+        },
       };
 
     case $.BROWSER_LOAD:
-      if ( state.path !== action.path ) {
-        if ( state.contents[action.path] ) {
+      if (state.path !== action.path) {
+        if (state.contents[action.path]) {
           // Go back to a path we have already loaded
-          return {...state, path: action.path};
+          return { ...state, path: action.path };
         } else {
           // Load a new path
           return {
@@ -63,8 +62,8 @@ export default function(state = defaultState, action) {
                 loading: true,
                 files: [],
                 folders: [],
-              }
-            }
+              },
+            },
           };
         }
       }
