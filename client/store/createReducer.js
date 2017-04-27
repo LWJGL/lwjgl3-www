@@ -10,7 +10,7 @@ type AsyncReducers = {
 };
 
 export default function createReducer(asyncReducers: ?AsyncReducers) {
-  let reducers = {
+  const reducers = {
     breakpoint,
     buildStatus,
     teamcityStatus,
@@ -19,11 +19,11 @@ export default function createReducer(asyncReducers: ?AsyncReducers) {
 
   // Force import during development to enable async reducer HMR
   if (process.env.NODE_ENV === 'development') {
-    reducers = {
+    return combineReducers({
       build: require('../routes/download/BuildConfigurator/reducer').default,
       browser: require('../routes/download/FileBrowser/reducer').default,
       ...reducers,
-    };
+    });
   }
 
   return combineReducers(reducers);

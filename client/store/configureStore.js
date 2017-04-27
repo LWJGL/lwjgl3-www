@@ -30,7 +30,6 @@ function configureStore() {
     }
   }
 
-  // $FlowFixMe
   const store = createStore(createReducer(), compose(applyMiddleware(...middleware), ...composed));
   sagaMiddleware.run(saga);
 
