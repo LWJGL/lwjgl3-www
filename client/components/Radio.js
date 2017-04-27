@@ -1,13 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class Radio extends React.Component {
-  static propTypes = {
-    value: PropTypes.any.isRequired,
-    label: PropTypes.string.isRequired,
-    disabled: PropTypes.bool,
-  };
+type DefaultProps = {
+  disabled: boolean,
+};
 
+type Props = {
+  value: any,
+  label: string,
+  disabled: boolean,
+};
+
+class Radio extends React.Component<DefaultProps, Props, void> {
   static defaultProps = {
     disabled: false,
   };

@@ -1,11 +1,17 @@
-import React from 'react'
+import React from 'react';
 
-class ScrollToMe extends React.Component {
+type Props = {
+  location: 'string',
+};
+
+class ScrollToMe extends React.Component<void, Props, void> {
+  el: HTMLDivElement;
+
   componentDidMount() {
     this.scroll();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.location !== this.props.location) {
       this.scroll();
     }
@@ -16,8 +22,14 @@ class ScrollToMe extends React.Component {
   }
 
   render() {
-    return <div ref={(n) => {this.el = n}} />
+    return (
+      <div
+        ref={n => {
+          this.el = n;
+        }}
+      />
+    );
   }
 }
 
-export default ScrollToMe
+export default ScrollToMe;

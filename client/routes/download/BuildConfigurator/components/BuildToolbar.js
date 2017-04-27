@@ -5,15 +5,6 @@ import { configDownload, configLoad } from '../actions';
 import FileSave from 'react-icons/md/archive';
 import FileOpen from 'react-icons/md/settings-backup-restore';
 
-@connect(
-  ({ breakpoint }) => ({
-    breakpoint,
-  }),
-  {
-    configDownload,
-    configLoad,
-  }
-)
 class BuildToolbar extends React.Component {
   state = {
     fileUI: false,
@@ -76,4 +67,12 @@ class BuildToolbar extends React.Component {
   }
 }
 
-export default BuildToolbar;
+export default connect(
+  ({ breakpoint }) => ({
+    breakpoint,
+  }),
+  {
+    configDownload,
+    configLoad,
+  }
+)(BuildToolbar);

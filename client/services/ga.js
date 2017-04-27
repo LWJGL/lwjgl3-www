@@ -1,4 +1,14 @@
+import loadJS from 'fg-loadjs';
+
+// Use this to load GA on demand
+let firstCall = true;
+
 let track = function() {
+  if (process.env.NODE_ENV === 'production' && firstCall) {
+    loadJS('https://www.google-analytics.com/analytics.js');
+    firstCall = false;
+  }
+
   track.q.push(arguments);
 };
 

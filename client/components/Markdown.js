@@ -1,14 +1,33 @@
+/*
 import React from 'react';
 import PropTypes from 'prop-types';
 // https://github.com/jonschlinkert/remarkable
 import Remarkable from 'remarkable';
 
-const Markdown = ({ tag, source, children, options, ...rest }) => {
+type Props = {
+  tag: string,
+  source?: string,
+  children?: React$Element<*>,
+  options: {
+    html: boolean,
+    break: boolean,
+    xhtmlOut: boolean,
+    langPrefix: string,
+    linkify: boolean,
+    typographer: boolean,
+    quotes: string,
+    highlight: Function,
+  },
+};
+
+const Markdown = ({ tag = 'div', source, children, options, ...rest }: Props) => {
   const Container = tag;
   const md = new Remarkable(options);
-  if (source) {
+
+  if (source != null) {
     return <Container {...rest} dangerouslySetInnerHTML={{ __html: md.render(source) }} />;
   }
+
   return (
     <Container {...rest}>
       {React.Children.map(children, child => {
@@ -22,23 +41,6 @@ const Markdown = ({ tag, source, children, options, ...rest }) => {
   );
 };
 
-Markdown.propTypes = {
-  tag: PropTypes.string,
-  source: PropTypes.string,
-  options: PropTypes.shape({
-    html: PropTypes.bool,
-    break: PropTypes.bool,
-    xhtmlOut: PropTypes.bool,
-    langPrefix: PropTypes.string,
-    linkify: PropTypes.bool,
-    typographer: PropTypes.bool,
-    quotes: PropTypes.string,
-    highlight: PropTypes.func,
-  }),
-};
-
-Markdown.defaultProps = {
-  tag: 'div',
-};
-
 export default Markdown;
+*/
+export default null;

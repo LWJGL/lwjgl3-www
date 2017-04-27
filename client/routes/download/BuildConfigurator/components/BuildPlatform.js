@@ -22,19 +22,6 @@ const getIcon = platform => {
   }
 };
 
-@connect(
-  state => {
-    return {
-      platforms: state.build.natives.allIds,
-      natives: state.build.natives.byId,
-      selected: state.build.platform,
-      hide: state.build.mode !== 'zip',
-    };
-  },
-  {
-    togglePlatform,
-  }
-)
 class BuildPlatform extends React.Component {
   toggle = platform => {
     this.props.togglePlatform(platform);
@@ -43,10 +30,10 @@ class BuildPlatform extends React.Component {
   render() {
     const { hide, platforms, natives, selected } = this.props;
 
-    return do {
-      if (hide) {
-        null;
-      } else {
+    if (hide) {
+      return null;
+    } else {
+      return (
         <div>
           <h4 className="mt-3">Natives</h4>
           <div className="custom-controls-stacked">
@@ -61,10 +48,22 @@ class BuildPlatform extends React.Component {
               />
             ))}
           </div>
-        </div>;
-      }
-    };
+        </div>
+      );
+    }
   }
 }
 
-export default BuildPlatform;
+export default connect(
+  state => {
+    return {
+      platforms: state.build.natives.allIds,
+      natives: state.build.natives.byId,
+      selected: state.build.platform,
+      hide: state.build.mode !== 'zip',
+    };
+  },
+  {
+    togglePlatform,
+  }
+)(BuildPlatform);

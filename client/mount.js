@@ -5,6 +5,12 @@ import configureStore from './store/configureStore';
 import App from './containers/App';
 import './services/ga';
 
+declare var module: {
+  hot: {
+    accept(path: string, callback: () => void): void,
+  },
+};
+
 export default function() {
   // Inject global styles
   const styles = require('./styles/layout.scss');

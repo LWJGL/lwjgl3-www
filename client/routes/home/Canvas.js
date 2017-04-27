@@ -1,10 +1,12 @@
 import React from 'react';
 import loadJS from 'fg-loadjs';
 
+declare var THREE: any;
+
 let loadthree = true;
-let canvas = null;
+let canvas: HTMLCanvasElement | null = null;
 let io = null;
-let rafId = null;
+let rafId: number | null = null;
 let scene = null;
 let camera = null;
 let geometry = null;
@@ -22,7 +24,7 @@ function resizeCanvas() {
   }
 }
 
-function init(el) {
+function init(el: HTMLCanvasElement) {
   canvas = el;
   window.addEventListener('resize', resizeCanvas);
 
@@ -122,6 +124,7 @@ function stop() {
 
 class HomeCanvas extends React.Component {
   mounted = false;
+  canvas: HTMLCanvasElement;
 
   componentDidMount() {
     this.mounted = true;

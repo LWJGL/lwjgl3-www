@@ -128,11 +128,6 @@ const fields = {
   },
 };
 
-@subscribe
-@connect(null, {
-  reset: $$.reset,
-  configLoad: $$.configLoad,
-})
 class BuildContainer extends React.Component {
   static reducers = {
     build: reducer,
@@ -145,7 +140,7 @@ class BuildContainer extends React.Component {
     if (BuildContainer.restoreState) {
       BuildContainer.restoreState = false;
       const restore = localStorage.getItem(STORAGE_KEY);
-      if (restore !== null) {
+      if (restore != null) {
         this.props.configLoad(JSON.parse(restore));
       }
     }
@@ -232,4 +227,7 @@ class BuildContainer extends React.Component {
   }
 }
 
-export default BuildContainer;
+export default connect(null, {
+  reset: $$.reset,
+  configLoad: $$.configLoad,
+})(subscribe(BuildContainer));

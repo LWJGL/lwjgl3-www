@@ -1,10 +1,27 @@
-import { takeEvery, call, put } from 'redux-saga/effects'
+import { takeEvery, call, put } from 'redux-saga/effects';
 
 const LOAD_STATUS = 'TEAMCITY_STATUS/LOAD';
 const STORE_STATUS = 'TEAMCITY_STATUS/STORE';
 
-export const loadStatus = (name) => ({type: LOAD_STATUS, name});
-export const storeStatus = (name, status, build) => ({type: STORE_STATUS, name, state: {status, build}});
+type State = {
+  [_: string]: {
+    status: string,
+    build: string,
+  },
+};
+
+type Action = {
+  type: string,
+  name: string,
+  state: any,
+};
+
+export const loadStatus = (name: string) => ({ type: LOAD_STATUS, name });
+export const storeStatus = (name: string, status: string, build: string) => ({
+  type: STORE_STATUS,
+  name,
+  state: { status, build },
+});
 
 async function fetchStatus(url) {
   let response;
@@ -13,34 +30,36 @@ async function fetchStatus(url) {
   try {
     response = await fetch(url);
 
-    if ( response.status !== 200 ) {
-      return {error: response.statusText};
+    if (response.status !== 200) {
+      return { error: response.statusText };
     }
 
     result = await response.json();
   } catch (e) {
-    return {error: e.message};
+    return { error: e.message };
   }
 
-  if ( result.error ) {
+  if (result.error) {
     return result;
   }
 
-  return result.count === 1 && result.build[0].status === 'SUCCESS' ? {
-    status: 'passing',
-    build: result.build[0].number
-  } : {
-    status: 'failing',
-    build: result.build[0].number
-  };
+  return result.count === 1 && result.build[0].status === 'SUCCESS'
+    ? {
+        status: 'passing',
+        build: result.build[0].number,
+      }
+    : {
+        status: 'failing',
+        build: result.build[0].number,
+      };
 }
 
 function* getStatus(action) {
-  const {name} = action;
+  const { name } = action;
 
   const response = yield call(fetchStatus, `/teamcity?build=${name}`);
 
-  if ( response.error ) {
+  if (response.error) {
     yield put(storeStatus(name, 'error'));
     return;
   }
@@ -55,7 +74,7 @@ export function* saga() {
 export default function(state = {}, action) {
   switch (action.type) {
     case STORE_STATUS:
-      return {...state, [action.name]: action.state};
+      return { ...state, [action.name]: action.state };
   }
 
   return state;

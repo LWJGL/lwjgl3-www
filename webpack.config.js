@@ -137,6 +137,9 @@ const buildConfiguration = () => {
     // WebPack Hot Middleware client & HMR plugins
     config.entry.main.unshift('webpack-hot-middleware/client', 'react-hot-loader/patch');
 
+    config.module.rules[0].use.unshift('cache-loader');
+    // config.module.rules[1].use.unshift('cache-loader');
+
     config.plugins.push(
       new HotModuleReplacementPlugin(),
       new NoEmitOnErrorsPlugin(),

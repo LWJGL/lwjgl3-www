@@ -1,7 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const LoaderSpinner = ({ size, style, delay }) => (
+type Props = {
+  size?: number,
+  // Do not use $Shape<CSSStyleDeclaration> here because of SVG rules
+  style?: {},
+  delay?: boolean,
+};
+
+const LoaderSpinner = ({ size = 24, style, delay = false }: Props) => (
   <svg
     className={`loader-spinner${delay ? ' delay' : ''}`}
     viewBox="0 0 32 32"
@@ -12,15 +18,5 @@ const LoaderSpinner = ({ size, style, delay }) => (
     <circle cx={16} cy={16} r={14} fill="none" />
   </svg>
 );
-
-LoaderSpinner.propTypes = {
-  size: PropTypes.number,
-  style: PropTypes.object,
-  name: PropTypes.string,
-};
-
-LoaderSpinner.defaultProps = {
-  size: 24,
-};
 
 export default LoaderSpinner;

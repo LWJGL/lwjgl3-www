@@ -1,0 +1,15 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.parser": "babylon",
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "files.exclude": {
+    "**/.vscode": true,
+    "**/.cache-loader": true
+  }
+}

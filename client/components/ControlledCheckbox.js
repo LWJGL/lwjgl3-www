@@ -1,33 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Checkbox from './Checkbox';
+import type { Dispatch } from 'redux';
 
-@connect(
-  (state, ownProps) => {
-    const spec = ownProps.spec;
-
-    return {
-      checked: spec.checked && spec.checked(state),
-      disabled: spec.disabled && spec.disabled(state),
-      hidden: spec.hidden && spec.hidden(state),
-      label: spec.label,
-    };
+type OwnProps = {
+  spec: {
+    label: string,
+    action: (value: boolean) => {},
+    checked?: (state: any) => boolean,
+    disabled?: (state: any) => boolean,
+    hidden?: (state: any) => boolean,
   },
-  (dispatch, ownProps) => ({
-    handleClick: value => dispatch(ownProps.spec.action(value)),
-  })
-)
-class ControlledCheckbox extends React.Component {
-  static propTypes = {
-    spec: PropTypes.shape({
-      label: PropTypes.string,
-      checked: PropTypes.func,
-      disabled: PropTypes.func,
-      hidden: PropTypes.func,
-    }),
-  };
+};
 
+type Props = OwnProps & {
+  label: string,
+  checked?: boolean,
+  disabled?: boolean,
+  hidden?: boolean,
+  handleClick: (value: any) => mixed,
+};
+
+class ControlledCheckbox extends React.Component<void, Props, void> {
   toggle = () => {
     this.props.handleClick(!this.props.checked);
   };
@@ -47,4 +41,20 @@ class ControlledCheckbox extends React.Component {
   }
 }
 
-export default ControlledCheckbox;
+const ControlledCheckboxConnected = connect(
+  (state: any, ownProps: OwnProps) => {
+    const spec = ownProps.spec;
+
+    return {
+      label: spec.label,
+      checked: spec.checked != null && spec.checked(state),
+      disabled: spec.disabled != null && spec.disabled(state),
+      hidden: spec.hidden != null && spec.hidden(state),
+    };
+  },
+  (dispatch: Dispatch<any>, ownProps: OwnProps) => ({
+    handleClick: value => dispatch(ownProps.spec.action(value)),
+  })
+)(ControlledCheckbox);
+
+export default ControlledCheckboxConnected;

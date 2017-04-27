@@ -5,9 +5,6 @@ import { css } from 'aphrodite/no-important';
 import styles from '../styles';
 import IconFolder from 'react-icons/md/folder';
 
-@connect(null, {
-  loadPath: $$.loadPath,
-})
 class Folder extends React.PureComponent {
   clickHandle = () => {
     this.props.loadPath(this.props.path);
@@ -25,4 +22,6 @@ class Folder extends React.PureComponent {
   }
 }
 
-export default Folder;
+export default connect(null, {
+  loadPath: $$.loadPath,
+})(Folder);

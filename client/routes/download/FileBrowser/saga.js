@@ -1,24 +1,24 @@
-import { takeEvery, select, call, put } from 'redux-saga/effects'
-import { types as $, actions as $$ } from './reducer'
-import { HTTP_OK } from '../../../services/http_status_codes'
+import { takeEvery, select, call, put } from 'redux-saga/effects';
+import { types as $, actions as $$ } from './reducer';
+import { HTTP_OK } from '../../../services/http_status_codes';
 
-const getData = (state) => {
+const getData = state => {
   return {
     path: state.browser.path,
     ...state.browser.contents[state.browser.path],
-  }
+  };
 };
 
 async function fetchContents(path) {
   let requestUrl = '/browse';
 
-  if ( path !== '/' ) {
-    requestUrl += `?path=${path}`
+  if (path !== '/') {
+    requestUrl += `?path=${path}`;
   }
 
   const response = await fetch(requestUrl);
-  if ( response.status !== HTTP_OK ) {
-    throw(response.statusText);
+  if (response.status !== HTTP_OK) {
+    throw response.statusText;
   }
   return await response.json();
 }
@@ -26,7 +26,7 @@ async function fetchContents(path) {
 function* loadPath() {
   const data = yield select(getData);
 
-  if ( !data.loading ) {
+  if (!data.loading) {
     return;
   }
 
@@ -38,9 +38,8 @@ function* loadPath() {
   }
 
   yield put($$.storeContents(data.path, contents));
-
 }
 
-export default function* fileBrowserSaga() {
+export default function* fileBrowserSaga(): Generator<*, *, *> {
   yield takeEvery($.BROWSER_LOAD, loadPath);
 }

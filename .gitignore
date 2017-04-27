@@ -3,7 +3,6 @@
 
 # IDE files
 .idea
-.vscode
 
 # Node
 /node_modules
@@ -12,4 +11,5 @@
 /config.json
 
 # Generated files
+/.cache-loader
 /public/js/*.js*

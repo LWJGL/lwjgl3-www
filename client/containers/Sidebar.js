@@ -6,15 +6,27 @@ import IconMenu from 'react-icons/md/menu';
 import IconClose from 'react-icons/md/close';
 import supportsPassive from '../services/supports-passive';
 
-class Sidebar extends React.Component {
+import type { FocusTrap } from 'focus-trap';
+
+type Props = {};
+
+type State = {
+  open: boolean,
+};
+
+class Sidebar extends React.Component<void, Props, State> {
   state = {
     open: false,
   };
 
-  mounted = false;
-  touchingSideNav = false;
-  startX = 0;
-  currentX = 0;
+  mounted: boolean = false;
+  touchingSideNav: boolean = false;
+  startX: number = 0;
+  currentX: number = 0;
+  focusTrap: FocusTrap;
+  closeButton: HTMLElement;
+  slidingMenu: HTMLElement;
+  sideContainer: HTMLElement;
 
   componentDidMount() {
     this.mounted = true;
@@ -34,27 +46,27 @@ class Sidebar extends React.Component {
   }
 
   onToggle = (/*evt*/) => {
+    const { focusTrap, sideContainer } = this;
+
+    /*::
+    if (focusTrap === null || sideContainer === null) {
+      return;
+    }
+    */
+
     if (this.state.open) {
       noscroll.off();
-      this.focusTrap.deactivate({ onDeactivate: false });
-      this.sideContainer.removeEventListener(
-        'touchstart',
-        this.onTouchStart,
-        supportsPassive ? { passive: true } : false
-      );
-      this.sideContainer.removeEventListener(
-        'touchmove',
-        this.onTouchMove,
-        supportsPassive ? { passive: false } : false
-      );
-      this.sideContainer.removeEventListener('touchend', this.onTouchEnd, supportsPassive ? { passive: true } : false);
+      focusTrap.deactivate({ onDeactivate: false });
+      sideContainer.removeEventListener('touchstart', this.onTouchStart, supportsPassive ? { passive: true } : false);
+      sideContainer.removeEventListener('touchmove', this.onTouchMove, supportsPassive ? { passive: false } : false);
+      sideContainer.removeEventListener('touchend', this.onTouchEnd, supportsPassive ? { passive: true } : false);
     } else {
       noscroll.on();
-      this.focusTrap.activate();
-      this.sideContainer.addEventListener('touchstart', this.onTouchStart, supportsPassive ? { passive: true } : false);
+      focusTrap.activate();
+      sideContainer.addEventListener('touchstart', this.onTouchStart, supportsPassive ? { passive: true } : false);
       // Disable passive to avoid triggering gestures in some devices
-      this.sideContainer.addEventListener('touchmove', this.onTouchMove, supportsPassive ? { passive: false } : false);
-      this.sideContainer.addEventListener('touchend', this.onTouchEnd, supportsPassive ? { passive: true } : false);
+      sideContainer.addEventListener('touchmove', this.onTouchMove, supportsPassive ? { passive: false } : false);
+      sideContainer.addEventListener('touchend', this.onTouchEnd, supportsPassive ? { passive: true } : false);
     }
 
     if (this.mounted) {
@@ -62,7 +74,7 @@ class Sidebar extends React.Component {
     }
   };
 
-  onTouchStart = evt => {
+  onTouchStart = (evt: TouchEvent): void => {
     this.startX = evt.touches[0].pageX;
     this.currentX = this.startX;
 
@@ -71,7 +83,7 @@ class Sidebar extends React.Component {
     requestAnimationFrame(this.update);
   };
 
-  onTouchMove = evt => {
+  onTouchMove = (evt: TouchEvent) => {
     if (this.touchingSideNav) {
       this.currentX = evt.touches[0].pageX;
       evt.preventDefault();

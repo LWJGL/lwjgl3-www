@@ -6,35 +6,6 @@ import BuildToolbar from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
 import IconCopy from 'react-icons/md/content-copy';
 
-@connect(({ build, breakpoint }) => {
-  if (build.mode === MODE_ZIP) {
-    return {
-      breakpoint,
-      mode: build.modes.byId[build.mode],
-    };
-  }
-
-  const selected = [];
-
-  build.artifacts.allIds.forEach(artifact => {
-    if (build.contents[artifact] && build.availability[artifact]) {
-      selected.push(artifact);
-    }
-  });
-
-  return {
-    breakpoint,
-    build: build.build,
-    mode: build.modes.byId[build.mode],
-    version: build.artifacts.version,
-    hardcoded: build.hardcoded,
-    compact: build.compact,
-    artifacts: build.artifacts.byId,
-    addons: build.addons,
-    selected,
-    selectedAddons: build.selectedAddons,
-  };
-})
 class BuildScript extends React.Component {
   copyToClipboard = () => {
     const selection = window.getSelection && window.getSelection();
@@ -111,8 +82,8 @@ class BuildScript extends React.Component {
   }
 }
 
-const mime = mode => mode.file.endsWith('.xml') ? 'text/xml' : 'text/plain';
-const getVersion = (version, build) => build === BUILD_RELEASE ? version : `${version}-SNAPSHOT`;
+const mime = mode => (mode.file.endsWith('.xml') ? 'text/xml' : 'text/plain');
+const getVersion = (version, build) => (build === BUILD_RELEASE ? version : `${version}-SNAPSHOT`);
 
 function generateScript(mode, props) {
   switch (mode) {
@@ -308,4 +279,32 @@ function generateIvy(props) {
   return script;
 }
 
-export default BuildScript;
+export default connect(({ build, breakpoint }) => {
+  if (build.mode === MODE_ZIP) {
+    return {
+      breakpoint,
+      mode: build.modes.byId[build.mode],
+    };
+  }
+
+  const selected = [];
+
+  build.artifacts.allIds.forEach(artifact => {
+    if (build.contents[artifact] && build.availability[artifact]) {
+      selected.push(artifact);
+    }
+  });
+
+  return {
+    breakpoint,
+    build: build.build,
+    mode: build.modes.byId[build.mode],
+    version: build.artifacts.version,
+    hardcoded: build.hardcoded,
+    compact: build.compact,
+    artifacts: build.artifacts.byId,
+    addons: build.addons,
+    selected,
+    selectedAddons: build.selectedAddons,
+  };
+})(BuildScript);

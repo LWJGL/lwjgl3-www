@@ -1,11 +1,12 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["es6"],
-    "module": "commonjs",
-    "experimentalDecorators": true
+    "target": "ES6",
+    "module": "commonjs"
   },
   "exclude": [
+    ".idea",
+    ".vscode",
+    ".cache-loader",
     "node_modules",
     "public"
   ]

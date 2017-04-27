@@ -1,0 +1,25 @@
+[ignore]
+<PROJECT_ROOT>/.cache-loader/.*
+<PROJECT_ROOT>/.idea/.*
+<PROJECT_ROOT>/.vscode/.*
+<PROJECT_ROOT>/node_modules/.*
+<PROJECT_ROOT>/public/.*
+<PROJECT_ROOT>/scripts/.*
+<PROJECT_ROOT>/server/.*
+<PROJECT_ROOT>/webpack\.config\.js
+<PROJECT_ROOT>/webpack\.vendor\.config\.js
+<PROJECT_ROOT>/postcss\.config\.js
+
+[options]
+all=true
+esproposal.class_instance_fields=enable
+esproposal.class_static_fields=enable
+esproposal.decorators=ignore
+module.use_strict=true
+munge_underscores=true
+strip_root=true
+module.file_ext=.js
+# Stub SCSS files to avoid Flow errors
+module.name_mapper='.*\.scss$'->'<PROJECT_ROOT>/client/types/stub/CSSModule.js'
+# Stub all react-icons to <Icon />
+module.name_mapper='.*react-icons/.*'->'<PROJECT_ROOT>/client/components/Icon.js'

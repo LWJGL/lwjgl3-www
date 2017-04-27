@@ -1,17 +1,22 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-class Checkbox extends React.PureComponent {
-  static propTypes = {
-    label: PropTypes.string.isRequired,
-    value: PropTypes.any,
-    checked: PropTypes.bool,
-    onChange: PropTypes.func,
-    disabled: PropTypes.bool,
-    hidden: PropTypes.bool,
-    icon: PropTypes.element,
-  };
+type DefaultProps = {
+  checked: boolean,
+  disabled: boolean,
+  hidden: boolean,
+};
 
+type Props = {
+  label: string,
+  value?: any,
+  checked?: boolean,
+  onChange?: (value: any) => mixed,
+  disabled?: boolean,
+  hidden?: boolean,
+  icon?: React$Element<*>,
+};
+
+class Checkbox extends React.PureComponent<DefaultProps, Props, void> {
   static defaultProps = {
     checked: false,
     disabled: false,

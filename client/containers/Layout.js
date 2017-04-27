@@ -1,6 +1,5 @@
 import React from 'react';
-import Switch from 'react-router-dom/Switch';
-import Route from 'react-router-dom/Route';
+import { Switch, Route } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import Header from './Header';
 import Footer from './Footer';
@@ -10,10 +9,10 @@ import { Home, Download, Guide, Source, License } from '../routes';
 import Miss404 from '../routes/miss404';
 
 const Layout = () => [
-  <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />,
-  <Header />,
+  <Helmet key="helmet" titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />,
+  <Header key="header" />,
 
-  <Switch>
+  <Switch key="main-switch">
     <Route path="/" component={Home} exact={true} />
     <Route path="/download" component={Download} exact={true} />
     <Route path="/guide" component={Guide} exact={true} />
@@ -22,7 +21,7 @@ const Layout = () => [
     <Route component={Miss404} />
   </Switch>,
 
-  <Footer />,
+  <Footer key="footer" />,
 ];
 
 export default Layout;

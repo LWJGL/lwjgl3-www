@@ -1,11 +1,16 @@
 import { createStore, compose, applyMiddleware } from 'redux';
-import createSagaMiddleware from 'redux-saga';
 import createReducer from './createReducer';
 import breakpointMiddeware from './middleware/breakpoint';
-import saga from './saga';
+import { sagaMiddleware, saga } from './saga';
+import type { Store } from 'redux';
+
+declare var module: {
+  hot: {
+    accept(path: string, callback: () => void): void,
+  },
+};
 
 function configureStore() {
-  const sagaMiddleware = createSagaMiddleware();
   const middleware = [sagaMiddleware, breakpointMiddeware];
   const composed = [];
 
@@ -25,33 +30,15 @@ function configureStore() {
     }
   }
 
+  // $FlowFixMe
   const store = createStore(createReducer(), compose(applyMiddleware(...middleware), ...composed));
-
-  store.asyncReducers = {};
-  store.runSaga = sagaMiddleware.run;
-
-  store.injectReducer = () => {
-    store.replaceReducer(createReducer(store.asyncReducers));
-  };
-
-  // store.ejectReducer = name => {
-  //   // Minimize work for ejected reducer scope
-  //   store.asyncReducers[name] = (state = {}, action) => state;
-  //   store.replaceReducer(createReducer(store.asyncReducers));
-  // };
-
   sagaMiddleware.run(saga);
 
   if (process.env.NODE_ENV !== 'production') {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('./createReducer', () => {
-      store.replaceReducer(createReducer(store.asyncReducers));
+      store.replaceReducer(createReducer());
     });
-
-    // Enable Webpack hot module replacement for sagas
-    // module.hot.accept('./saga', () => {
-    //   sagaMiddleware.run(saga);
-    // });
   }
 
   return store;

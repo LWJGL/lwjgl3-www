@@ -1,21 +1,29 @@
 import React from 'react';
-import withRouter from 'react-router-dom/withRouter';
-import Link from 'react-router-dom/Link';
+import { withRouter, Link } from 'react-router-dom';
 import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
 import { IS_IOS } from '../services/globals';
 import supportsPassive from '../services/supports-passive';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
+import type { ContextRouter } from 'react-router-dom';
 
 const HEADER_CLASSNAME = 'site-header';
 
-// force re-rendering when route changes
-@withRouter
-@connect(state => ({
-  desktop: state.breakpoint.current > state.breakpoint.md,
-}))
-class Header extends React.Component {
+type HeaderProps = {
+  desktop: boolean,
+};
+
+type Props = HeaderProps & ContextRouter;
+
+type State = {
+  pos: number,
+  top: boolean,
+  fixed: boolean,
+  hidden: boolean,
+};
+
+class Header extends React.Component<void, Props, State> {
   prev = 0;
   current = 0;
   direction = 0;
@@ -33,7 +41,10 @@ class Header extends React.Component {
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
     // Better get a ref to avoid querying the DOM
-    this.offsetHeight = document.querySelector(`.${HEADER_CLASSNAME}`).offsetHeight;
+    const menu = document.querySelector(`.${HEADER_CLASSNAME}`);
+    if (menu !== null) {
+      this.offsetHeight = menu.offsetHeight;
+    }
 
     window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
   }
@@ -43,7 +54,7 @@ class Header extends React.Component {
    window.removeEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
   }*/
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps !== this.props) {
       this.direction = 0;
       this.current = 0;
@@ -126,7 +137,7 @@ class Header extends React.Component {
         <nav className="container-fluid">
           <div className="row">
             <div className="col col-auto"><Link to="/">LW<b>JGL</b> 3</Link></div>
-            {this.props.desktop
+            {this.props.desktop === true
               ? <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
               : <Sidebar />}
           </div>
@@ -136,4 +147,9 @@ class Header extends React.Component {
   }
 }
 
-export default Header;
+// force re-rendering when route changes
+export default withRouter(
+  connect(state => ({
+    desktop: state.breakpoint.current > state.breakpoint.md,
+  }))(Header)
+);

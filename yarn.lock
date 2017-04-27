@@ -196,6 +196,12 @@ async@^2.1.2, async@^2.1.5:
   dependencies:
     lodash "^4.14.0"
 
+async@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.3.0.tgz#1013d1051047dd320fe24e494d5c66ecaf6147d9"
+  dependencies:
+    lodash "^4.14.0"
+
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -211,9 +217,9 @@ autoprefixer@6.7.7, autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.45.0:
-  version "2.45.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.45.0.tgz#045dbd323630170968306dc849d793dbb1e4444d"
+aws-sdk@2.46.0:
+  version "2.46.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.46.0.tgz#6856d5669d8b00a4cd42091beebf12be7d8ef48e"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -434,6 +440,10 @@ babel-plugin-syntax-do-expressions@7.0.0-alpha.9:
 babel-plugin-syntax-dynamic-import@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-7.0.0-alpha.9.tgz#84cc7ad10524082a59fe6c5dd1714fb5d8fac226"
+
+babel-plugin-syntax-dynamic-import@^6.18.0:
+  version "6.18.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-6.18.0.tgz#8d6a26229c83745a9982a441051572caa179b1da"
 
 babel-plugin-syntax-exponentiation-operator@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
@@ -679,9 +689,9 @@ babel-plugin-transform-react-jsx@7.0.0-alpha.9:
     babel-helper-builder-react-jsx "7.0.0-alpha.9"
     babel-plugin-syntax-jsx "7.0.0-alpha.9"
 
-babel-plugin-transform-react-remove-prop-types@0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.1.tgz#50d6376d3973c6052087b274ca9bd21b8a07409a"
+babel-plugin-transform-react-remove-prop-types@0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-react-remove-prop-types/-/babel-plugin-transform-react-remove-prop-types-0.4.2.tgz#97e3cab4d05938df91e16c0473737ef6c575a2e6"
 
 babel-plugin-transform-regenerator@7.0.0-alpha.9:
   version "7.0.0-alpha.9"
@@ -937,6 +947,14 @@ builtin-modules@^1.0.0:
 builtin-status-codes@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-2.0.0.tgz#6f22003baacf003ccd287afe6872151fddc58579"
+
+cache-loader@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/cache-loader/-/cache-loader-1.0.3.tgz#7717963ec082db068b17a1412deaaa72d21c4e30"
+  dependencies:
+    async "^2.3.0"
+    loader-utils "^1.1.0"
+    mkdirp "^0.5.1"
 
 camelcase-keys@^2.0.0:
   version "2.1.0"
@@ -1508,12 +1526,6 @@ detect-indent@^4.0.0:
   dependencies:
     repeating "^2.0.0"
 
-device@>=0.3.1:
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/device/-/device-0.3.8.tgz#f4072ccea3e6599dc01c3a43b203f6af4f8445aa"
-  dependencies:
-    useragent "*"
-
 diffie-hellman@^5.0.0:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/diffie-hellman/-/diffie-hellman-5.0.2.tgz#b5835739270cfe26acf632099fded2a07f209e5e"
@@ -1696,17 +1708,6 @@ exports-loader@0.6.4:
   dependencies:
     loader-utils "^1.0.2"
     source-map "0.5.x"
-
-express-device@0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/express-device/-/express-device-0.4.2.tgz#597c822fd4204d46b22faf2ad69ec85936bcb6a3"
-  dependencies:
-    device ">=0.3.1"
-    express-partials "0.3.0"
-
-express-partials@0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/express-partials/-/express-partials-0.3.0.tgz#88b9c40164afd9a55278629b2948e6ace7bff45f"
 
 express@5.0.0-alpha.5:
   version "5.0.0-alpha.5"
@@ -2623,6 +2624,14 @@ loader-utils@^1.0.1, loader-utils@^1.0.2:
     emojis-list "^2.0.0"
     json5 "^0.5.0"
 
+loader-utils@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
+  dependencies:
+    big.js "^3.1.3"
+    emojis-list "^2.0.0"
+    json5 "^0.5.0"
+
 lodash-es@^4.2.0, lodash-es@^4.2.1:
   version "4.17.2"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.2.tgz#59011b585166e613eb9dd5fc256b2cd1a30f3712"
@@ -2705,10 +2714,6 @@ loud-rejection@^1.0.0:
   dependencies:
     currently-unhandled "^0.4.1"
     signal-exit "^3.0.0"
-
-lru-cache@2.2.x:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.2.4.tgz#6c658619becf14031d0d0b594b16042ce4dc063d"
 
 lru-cache@^4.0.1:
   version "4.0.1"
@@ -3703,9 +3708,9 @@ react-deep-force-update@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.0.1.tgz#4f7f6c12c3e7de42f345992a3c518236fa1ecad3"
 
-react-dom@16.0.0-alpha.10:
-  version "16.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-alpha.10.tgz#bf1baf39f065ca3cfd696cd23a59b760442d9152"
+react-dom@16.0.0-alpha.11:
+  version "16.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-alpha.11.tgz#f35df79a5542448a4e256d71f1519c9a5ed723f5"
   dependencies:
     fbjs "^0.8.9"
     loose-envify "^1.1.0"
@@ -3741,6 +3746,12 @@ react-icons@2.2.3:
   resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-2.2.3.tgz#3b4847923065ecb09f8ba7f7e422112de0195196"
   dependencies:
     react-icon-base "2.0.4"
+
+react-loadable@3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-3.3.1.tgz#91310f1c2adcc73ce944380ee9529f5d33e100d3"
+  dependencies:
+    babel-plugin-syntax-dynamic-import "^6.18.0"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
@@ -3788,9 +3799,9 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
 
-react@16.0.0-alpha.10:
-  version "16.0.0-alpha.10"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.10.tgz#dcdafa9f84437d2c7e06b234b86782d316298882"
+react@16.0.0-alpha.11:
+  version "16.0.0-alpha.11"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.11.tgz#357aa68e9ed15b4a2076fa13ed738382fa25b5c9"
   dependencies:
     create-react-class "^15.5.2"
     fbjs "^0.8.9"
@@ -4522,12 +4533,6 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
-
-useragent@*:
-  version "2.1.9"
-  resolved "https://registry.yarnpkg.com/useragent/-/useragent-2.1.9.tgz#4dba2bc4dad1875777ab15de3ff8098b475000b7"
-  dependencies:
-    lru-cache "2.2.x"
 
 util-deprecate@~1.0.1:
   version "1.0.2"

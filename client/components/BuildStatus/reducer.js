@@ -1,50 +1,60 @@
-import { takeEvery, call, put, select } from 'redux-saga/effects'
+import { takeEvery, call, put, select } from 'redux-saga/effects';
 
 const LOAD_STATUS = 'BUILD_STATUS/LOAD';
 const STORE_STATUS = 'BUILD_STATUS/STORE';
 
-export const loadStatus = (name) => ({type: LOAD_STATUS, name});
-export const storeStatus = (name, state) => ({type: STORE_STATUS, name, state});
+type State = {
+  [_: string]: string,
+};
 
-async function fetchStatus(url) {
+type Action = {
+  type: string,
+  name: string,
+  state: any,
+};
+
+export const loadStatus = (name: string) => ({ type: LOAD_STATUS, name });
+export const storeStatus = (name: string, state: any) => ({ type: STORE_STATUS, name, state });
+
+async function fetchStatus(url: string): {} | { error: string } {
   let response;
 
   try {
     response = await fetch(url);
 
-    if ( response.status !== 200 ) {
-      return {error: response.statusText};
+    if (response.status !== 200) {
+      return { error: response.statusText };
     }
 
     return await response.json();
   } catch (e) {
-    return {error: e.message};
+    return { error: e.message };
   }
 }
 
-function* getStatus(action) {
+function* getStatus(action: Action) {
   const { name } = action;
   let url = `/build/${name}`;
-  if ( name === 'release' ) {
-    const version = yield select(({build}) => build.versions[0]);
+  if (name === 'release') {
+    const version = yield select(({ build }): string => build.versions[0]);
     url += `/${version}`;
   }
   const response = yield call(fetchStatus, url);
   yield put(storeStatus(name, response));
 }
 
-export function* saga() {
+export function* saga(): Generator<any, void, void> {
   yield takeEvery(LOAD_STATUS, getStatus);
 }
 
-export default function(state = {}, action) {
+export default function(state: State = {}, action: Action) {
   switch (action.type) {
     case STORE_STATUS:
-      if ( action.state.version ) {
+      if (action.state.version) {
         action.state.version = action.state.version.replace(/^LWJGL\s+/, '');
       }
 
-      return {...state, [action.name]: action.state};
+      return { ...state, [action.name]: action.state };
   }
 
   return state;

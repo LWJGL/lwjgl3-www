@@ -82,11 +82,6 @@ if (app.locals.development) {
     })
   );
 
-  // Device type detection
-  // On production we rely on Cloudfront to get this information for free
-  const device = require('express-device');
-  app.use(device.capture());
-
   // Proxy photos from S3
   app.use('/img', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
   app.use('/svg', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));

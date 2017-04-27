@@ -4,7 +4,48 @@ import { connect } from 'react-redux';
 import RadioGroup from './RadioGroup';
 import Radio from './Radio';
 
-@connect((state, ownProps) => {
+type OwnProps = {
+  name: string,
+  spec: {
+    value: (state: any, props: OwnProps) => mixed,
+    options: (state: any, props: OwnProps) => any,
+    hidden?: (state: any, props: OwnProps) => boolean,
+    action: (value: any) => any,
+  },
+};
+
+type Option = {
+  label: string,
+  value: any,
+  disabled: boolean,
+};
+
+type Props = OwnProps & {
+  value: any,
+  hidden: boolean,
+  options: Array<Option>,
+  dispatch: (action: any) => void,
+};
+
+class ControlledRadio extends React.Component<void, Props, void> {
+  select = (value: any) => {
+    this.props.dispatch(this.props.spec.action(value));
+  };
+
+  render() {
+    const { name, value, options } = this.props;
+
+    return (
+      <RadioGroup value={value} onChange={this.select}>
+        {options.map((radio, i) => (
+          <Radio key={`${name}${i}`} value={radio.value} label={radio.label} disabled={radio.disabled} />
+        ))}
+      </RadioGroup>
+    );
+  }
+}
+
+export default connect((state: any, ownProps: OwnProps) => {
   const spec = ownProps.spec;
 
   return {
@@ -12,31 +53,4 @@ import Radio from './Radio';
     options: spec.options(state, ownProps),
     hidden: spec.hidden && spec.hidden(state, ownProps),
   };
-})
-class ControlledRadio extends React.Component {
-  static propTypes = {
-    spec: PropTypes.shape({
-      value: PropTypes.func,
-      options: PropTypes.func,
-      hidden: PropTypes.func,
-    }),
-  };
-
-  select = value => {
-    this.props.dispatch(this.props.spec.action(value));
-  };
-
-  render() {
-    const props = this.props;
-
-    return (
-      <RadioGroup value={props.value} onChange={this.select}>
-        {props.options.map((radio, i) => (
-          <Radio key={`${props.name}${i}`} value={radio.value} label={radio.label} disabled={radio.disabled} />
-        ))}
-      </RadioGroup>
-    );
-  }
-}
-
-export default ControlledRadio;
+})(ControlledRadio);

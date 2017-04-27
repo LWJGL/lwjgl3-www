@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-class RadioGroup extends React.PureComponent {
-  static propTypes = {
-    value: PropTypes.any,
-    onChange: PropTypes.func,
-  };
+type Props = {
+  children?: React$Element<*>,
+  value: any,
+  onChange?: (value: any) => mixed,
+};
 
+class RadioGroup extends React.PureComponent<void, Props, void> {
   static childContextTypes = {
     onChange: PropTypes.func,
     value: PropTypes.any,
@@ -19,8 +20,8 @@ class RadioGroup extends React.PureComponent {
     };
   }
 
-  change = value => {
-    if (value !== this.props.value && this.props.onChange) {
+  change = (value: any) => {
+    if (value !== this.props.value && this.props.onChange != null) {
       this.props.onChange(value);
     }
   };

@@ -3,8 +3,39 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Toggle from './Toggle';
 
-@connect(
-  (state, ownProps) => {
+import type { Dispatch } from 'redux';
+
+type OwnProps = {
+  spec: {
+    label: string,
+    action: (value: boolean) => {},
+    checked?: (state: any) => boolean,
+    disabled?: (state: any) => boolean,
+    hidden?: (state: any) => boolean,
+  },
+};
+
+type Props = OwnProps & {
+  label: string,
+  checked?: boolean,
+  disabled?: boolean,
+  hidden?: boolean,
+  handleClick: (value: any) => mixed,
+};
+
+class ControlledToggle extends React.Component<void, Props, void> {
+  toggle = () => {
+    this.props.handleClick(!this.props.checked);
+  };
+
+  render() {
+    const { label, disabled, hidden, checked } = this.props;
+    return <Toggle label={label} disabled={disabled} hidden={hidden} checked={checked} onChange={this.toggle} />;
+  }
+}
+
+export default connect(
+  (state: any, ownProps: OwnProps) => {
     const spec = ownProps.spec;
 
     return {
@@ -14,37 +45,7 @@ import Toggle from './Toggle';
       label: spec.label,
     };
   },
-  (dispatch, ownProps) => ({
+  (dispatch: Dispatch<any>, ownProps: OwnProps) => ({
     handleClick: value => dispatch(ownProps.spec.action(value)),
   })
-)
-class ControlledToggle extends React.Component {
-  static propTypes = {
-    spec: PropTypes.shape({
-      label: PropTypes.string,
-      checked: PropTypes.func,
-      disabled: PropTypes.func,
-      hidden: PropTypes.func,
-    }),
-  };
-
-  toggle = () => {
-    this.props.handleClick(!this.props.checked);
-  };
-
-  render() {
-    const props = this.props;
-
-    return (
-      <Toggle
-        label={props.label}
-        disabled={props.disabled}
-        hidden={props.hidden}
-        checked={props.checked}
-        onChange={this.toggle}
-      />
-    );
-  }
-}
-
-export default ControlledToggle;
+)(ControlledToggle);

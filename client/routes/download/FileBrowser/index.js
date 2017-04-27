@@ -16,8 +16,6 @@ function isBrowsing(state) {
   return state[SCOPE].open;
 }
 
-@subscribe
-@connect(null, { browserOpen: $$.browserOpen })
 class FileBrowser extends React.Component {
   static reducers = {
     [SCOPE]: reducer,
@@ -31,14 +29,14 @@ class FileBrowser extends React.Component {
 
   render() {
     return [
-      <ControlledPanel predicate={isClosed}>
+      <ControlledPanel key="panel1" predicate={isClosed}>
         <button className="btn btn-outline-primary" onClick={this.browse}>Click to browse…</button>
       </ControlledPanel>,
-      <ControlledPanel predicate={isBrowsing}>
+      <ControlledPanel key="panel2" predicate={isBrowsing}>
         <Browser />
       </ControlledPanel>,
     ];
   }
 }
 
-export default FileBrowser;
+export default connect(null, { browserOpen: $$.browserOpen })(subscribe(FileBrowser));

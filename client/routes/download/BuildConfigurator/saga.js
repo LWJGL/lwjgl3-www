@@ -1,50 +1,51 @@
-import { channel, buffers } from 'redux-saga'
-import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects'
+import { channel, buffers } from 'redux-saga';
+import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects';
 
-import { HTTP_OK } from '../../../services/http_status_codes'
-import * as $ from './actionTypes'
-import { downloadLog as log, downloadComplete } from './actions'
-import { BUILD_RELEASE, STORAGE_KEY } from './constants'
+import { HTTP_OK } from '../../../services/http_status_codes';
+import * as $ from './actionTypes';
+import { downloadLog as log, downloadComplete } from './actions';
+import { BUILD_RELEASE, STORAGE_KEY } from './constants';
 
-import JSZip from 'jszip'
-import { saveAs } from 'file-saver'
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 async function fetchManifest(path) {
   const response = await fetch(`/bin/${path}`);
-  if ( response.status !== HTTP_OK ) {
-    throw(response.statusText);
+  if (response.status !== HTTP_OK) {
+    throw response.statusText;
   }
   return await response.json();
 }
 
-function getBuild({build}) {
+function getBuild({ build }) {
   let path;
   const platformCount = build.natives.allIds.length;
   const selectedPlatforms = build.platform;
 
-  if ( build.build === BUILD_RELEASE ) {
+  if (build.build === BUILD_RELEASE) {
     path = `release/${build.version}`;
   } else {
     path = build.build;
   }
 
-  const selected = build.artifacts.allIds.filter((artifact) => {
-    if ( !build.contents[artifact] ) {
+  const selected = build.artifacts.allIds.filter(artifact => {
+    if (!build.contents[artifact]) {
       return false;
     }
 
     const spec = build.artifacts.byId[artifact];
 
-    return spec.natives === undefined
-      || spec.natives.length === platformCount
-      || spec.natives.some((platform) => selectedPlatforms[platform]);
+    return (
+      spec.natives === undefined ||
+      spec.natives.length === platformCount ||
+      spec.natives.some(platform => selectedPlatforms[platform])
+    );
   });
 
-  const addons = build.selectedAddons.map((addon) => ({
-      id: addon,
-      version: build.addons.byId[addon].maven.version,
-    })
-  );
+  const addons = build.selectedAddons.map(addon => ({
+    id: addon,
+    version: build.addons.byId[addon].maven.version,
+  }));
 
   return {
     path,
@@ -68,18 +69,18 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
 
   const selectedMap = {};
 
-  selected.forEach((key) => {
-    selectedMap[key] = true
+  selected.forEach(key => {
+    selectedMap[key] = true;
   });
 
-  manifest.forEach((file) => {
+  manifest.forEach(file => {
     const filepath = file.replace(rootRegExp, '');
 
-    if ( filepath.endsWith('/') || !filepath.length ) {
+    if (filepath.endsWith('/') || !filepath.length) {
       return;
     }
 
-    if ( filepath.indexOf('/') === -1 ) {
+    if (filepath.indexOf('/') === -1) {
       // Root file, include it in the bundle
       files.push(filepath);
       return;
@@ -88,20 +89,20 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
     const folder = filepath.split('/')[0];
 
     // Check if binding is selected
-    if ( !selectedMap[folder] ) {
+    if (!selectedMap[folder]) {
       return;
     }
 
     // Check if javadoc
-    if ( javaDocRegExp.test(filepath) && javadoc === false ) {
+    if (javaDocRegExp.test(filepath) && javadoc === false) {
       return;
       // Check if sources are included
-    } else if ( sourcesRegExp.test(filepath) && source === false ) {
+    } else if (sourcesRegExp.test(filepath) && source === false) {
       return;
       // Check if platform is selected
-    } else if ( nativeRegExp.test(filepath) ) {
+    } else if (nativeRegExp.test(filepath)) {
       const platform = filepath.match(platformRegExp);
-      if ( platform === null || platforms[platform[1]] === false ) {
+      if (platform === null || platforms[platform[1]] === false) {
         return;
       }
     }
@@ -110,21 +111,21 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
     files.push(filepath);
   });
 
-  return files.map((filepath) => `${path}/bin/${filepath}`);
+  return files.map(filepath => `${path}/bin/${filepath}`);
 }
 
 function getAddons(addons, source, javadoc) {
   const files = [];
 
-  addons.forEach((addon) => {
-    const {id, version} = addon;
+  addons.forEach(addon => {
+    const { id, version } = addon;
 
     files.push(`addons/${id}/${id}-${version}.jar`);
     files.push(`addons/${id}/${id}_license.txt`);
-    if ( javadoc ) {
+    if (javadoc) {
       files.push(`addons/${id}/${id}-${version}-javadoc.jar`);
     }
-    if ( source ) {
+    if (source) {
       files.push(`addons/${id}/${id}-${version}-sources.jar`);
     }
   });
@@ -136,16 +137,13 @@ async function fetchFile(path) {
   const url = `https://build.lwjgl.org/${path}`;
   let response;
 
-  response = await fetch(
-    url,
-    {
-      method: 'GET',
-      mode: 'cors',
-    }
-  );
+  response = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+  });
 
-  if ( response.status !== HTTP_OK ) {
-    throw(response.statusText);
+  if (response.status !== HTTP_OK) {
+    throw response.statusText;
   }
 
   return {
@@ -155,7 +153,6 @@ async function fetchFile(path) {
 }
 
 class CountDownLatch {
-
   channel;
   count;
 
@@ -169,18 +166,17 @@ class CountDownLatch {
   };
 
   await = function*() {
-    for ( let i = 0; i < this.count; i += 1 ) {
+    for (let i = 0; i < this.count; i += 1) {
       yield take(this.channel);
     }
     this.channel.close();
-  }
-
+  };
 }
 
 function* downloadWorker(input, output, latch, files) {
   try {
     //noinspection InfiniteLoopJS
-    while ( true ) {
+    while (true) {
       const index = yield take(input);
       yield put(log(`${index + 1}/${files.length} - ${files[index]}`));
       output.push(yield call(fetchFile, files[index]));
@@ -197,11 +193,11 @@ function* downloadFiles(files) {
   const input = channel(buffers.fixed(files.length));
   const latch = new CountDownLatch(PARALLEL_DOWNLOADS);
 
-  for ( let i = 0; i < PARALLEL_DOWNLOADS; i += 1 ) {
+  for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
     yield fork(downloadWorker, input, output, latch, files);
   }
 
-  for ( const i of files.keys() ) {
+  for (const i of files.keys()) {
     yield put(input, i);
   }
   input.close();
@@ -212,15 +208,14 @@ function* downloadFiles(files) {
 }
 
 function* init() {
-
-  if ( !JSZip.support.blob ) {
+  if (!JSZip.support.blob) {
     yield put(downloadComplete(`We're sorry, your browser is not capable of downloading and bundling files.`));
     return;
   }
 
   yield saveConfig();
 
-  const {build, path, selected, platforms, source, javadoc, version, addons} = yield select(getBuild);
+  const { build, path, selected, platforms, source, javadoc, version, addons } = yield select(getBuild);
 
   yield put(log('Downloading file manifest'));
 
@@ -235,7 +230,7 @@ function* init() {
   yield put(log('Building file list'));
   let files = getFiles(path, manifest, selected, platforms, source, javadoc);
 
-  if ( addons.length ) {
+  if (addons.length) {
     files = files.concat(getAddons(addons, source, javadoc));
   }
 
@@ -245,12 +240,12 @@ function* init() {
   try {
     const downloads = yield downloadFiles(files);
 
-    downloads.forEach((download) => {
+    downloads.forEach(download => {
       //noinspection JSUnresolvedFunction
-      zip.file(download.filename, download.payload, {binary: true});
+      zip.file(download.filename, download.payload, { binary: true });
     });
   } catch (ignore) {
-    yield put(downloadComplete("Artifact download failed. Please try again"));
+    yield put(downloadComplete('Artifact download failed. Please try again'));
     return;
   }
 
@@ -263,19 +258,19 @@ function* init() {
 
   //noinspection JSUnresolvedVariable
   const blob = yield apply(zip, zip.generateAsync, [zipOptions]);
-  saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : (new Date()).toJSON().substr(0,10)}-custom.zip`);
+  saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : new Date().toJSON().substr(0, 10)}-custom.zip`);
 
   yield put(log(`Done!`));
   yield put(downloadComplete());
 }
 
-const keepChecked = (src) => {
+const keepChecked = src => {
   // Keep only checked items to avoid phantom selections
   // when new items (bindings,addons,platforms) are added
-  return Object.keys(src).filter((key) => src[key] === true);
+  return Object.keys(src).filter(key => src[key] === true);
 };
 
-const getConfig = ({build}) => {
+const getConfig = ({ build }) => {
   const save = {
     build: build.build,
     mode: build.mode,
@@ -289,12 +284,12 @@ const getConfig = ({build}) => {
     language: build.language,
   };
 
-  if ( build.preset === 'custom' ) {
+  if (build.preset === 'custom') {
     save.contents = keepChecked(build.contents);
   } else {
     save.preset = build.preset;
   }
-  if ( build.build === BUILD_RELEASE ) {
+  if (build.build === BUILD_RELEASE) {
     save.version = build.version;
     save.versionLatest = build.versions[0];
   }
@@ -303,41 +298,44 @@ const getConfig = ({build}) => {
 };
 
 // Used for debouncing
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 function* saveConfig() {
   yield call(delay, 500);
 
   const save = yield select(getConfig);
-  if ( save.build !== null ) {
+  if (save.build !== null) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
-  } else if ( localStorage.getItem(STORAGE_KEY) !== null ) {
+  } else if (localStorage.getItem(STORAGE_KEY) !== null) {
     localStorage.removeItem(STORAGE_KEY);
   }
 }
 
 function* downloadConfig() {
   const save = yield select(getConfig);
-  const blob = new Blob([JSON.stringify(save, null, 2)], {type: 'application/json', endings: 'native'});
+  const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
   saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
 }
 
-export default function* buildDownloadSaga() {
+export default function* buildDownloadSaga(): Generator<*, *, *> {
   yield takeLatest($.DOWNLOAD_INIT, init);
   yield takeLatest($.CONFIG_DOWNLOAD, downloadConfig);
-  yield takeLatest([
-    $.SELECT_TYPE,
-    $.SELECT_MODE,
-    $.SELECT_PRESET,
-    $.SELECT_LANGUAGE,
-    $.SELECT_VERSION,
-    $.TOGGLE_DESCRIPTIONS,
-    $.TOGGLE_SOURCE,
-    $.TOGGLE_JAVADOC,
-    $.TOGGLE_COMPACT,
-    $.TOGGLE_HARDCODED,
-    $.TOGGLE_PLATFORM,
-    $.TOGGLE_ARTIFACT,
-    $.TOGGLE_ADDON,
-  ], saveConfig);
+  yield takeLatest(
+    [
+      $.SELECT_TYPE,
+      $.SELECT_MODE,
+      $.SELECT_PRESET,
+      $.SELECT_LANGUAGE,
+      $.SELECT_VERSION,
+      $.TOGGLE_DESCRIPTIONS,
+      $.TOGGLE_SOURCE,
+      $.TOGGLE_JAVADOC,
+      $.TOGGLE_COMPACT,
+      $.TOGGLE_HARDCODED,
+      $.TOGGLE_PLATFORM,
+      $.TOGGLE_ARTIFACT,
+      $.TOGGLE_ADDON,
+    ],
+    saveConfig
+  );
 }

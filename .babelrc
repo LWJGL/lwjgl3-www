@@ -1,14 +1,16 @@
 {
   "plugins": [
-    "syntax-flow",
-    "syntax-jsx",
-    "syntax-do-expressions",
     "syntax-dynamic-import",
+    [
+      "react-loadable/babel",
+      {
+        "server": false,
+        "webpack": true
+      }
+    ],
     "transform-react-jsx",
     "transform-flow-strip-types",
-    "transform-do-expressions",
     "transform-react-display-name",
-    "transform-decorators",
     "transform-class-properties",
     "syntax-trailing-function-commas",
     "transform-async-to-generator",

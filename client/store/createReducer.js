@@ -3,7 +3,13 @@ import breakpoint from './reducers/breakpoint';
 import buildStatus from '../components/BuildStatus/reducer';
 import teamcityStatus from '../components/TeamcityStatus/reducer';
 
-export default function createReducer(asyncReducers) {
+import type { Reducer } from 'redux';
+
+type AsyncReducers = {
+  [_: string]: Reducer<*, *>,
+};
+
+export default function createReducer(asyncReducers: ?AsyncReducers) {
   let reducers = {
     breakpoint,
     buildStatus,

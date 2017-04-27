@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import type { Task } from 'redux-saga';
+import { sagaMiddleware } from './saga';
 
-const subscribe = Component =>
-  class SubscribedCompoment extends React.Component {
+type State = {
+  subscribed: boolean,
+};
+
+export default function subscribe(Component: Class<React$Component<*, *, *>>) {
+  return class SubscribedCompoment extends React.Component<void, void, State> {
     static contextTypes = {
       store: PropTypes.object,
     };
 
     static injected = false;
+    sagas: Array<Task> = [];
 
     state = {
       subscribed: false,
@@ -19,6 +26,7 @@ const subscribe = Component =>
       let injected = 0;
 
       if (Component.reducers !== undefined && !SubscribedCompoment.injected) {
+        // $FlowFixMe
         for (let [scope, reducer] of Object.entries(Component.reducers)) {
           if (state[scope] === undefined) {
             injected += 1;
@@ -32,38 +40,28 @@ const subscribe = Component =>
       }
 
       if (Component.sagas !== undefined) {
-        this.sagas = [];
-        for (let saga of Component.sagas) {
-          this.sagas.push(
-            // returns descriptor that we can use to cancel the saga
-            store.runSaga(saga)
-          );
-        }
+        // Store task descriptor so we can cancel the saga onUnnount
+        // $FlowFixMe
+        this.sagas = Component.sagas.map(saga => sagaMiddleware.run(saga));
       }
 
       this.setState({ subscribed: true });
     }
 
     componentWillUnmount() {
-      if (Component.sagas !== undefined) {
+      if (this.sagas.length) {
         for (let saga of this.sagas) {
           if (saga.isRunning()) {
             saga.cancel();
           }
         }
-      }
 
-      // const store = this.context.store;
-      // if (Component.reducers) {
-      //   for (let scope of Object.keys(Component.reducers)) {
-      //     store.ejectReducer(scope);
-      //   }
-      // }
+        this.sagas = [];
+      }
     }
 
     render() {
       return this.state.subscribed ? <Component {...this.props} /> : null;
     }
   };
-
-export default subscribe;
+}

@@ -6,16 +6,6 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { changeType } from '../actions';
 
-@connect(
-  (state, ownProps) => ({
-    isSelected: state.build.build === ownProps.build,
-    isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
-    spec: state.build.builds.byId[ownProps.build],
-  }),
-  {
-    changeType,
-  }
-)
 class BuildType extends React.Component {
   static propTypes = {
     build: PropTypes.string.isRequired,
@@ -39,4 +29,13 @@ class BuildType extends React.Component {
   }
 }
 
-export default BuildType;
+export default connect(
+  (state, ownProps) => ({
+    isSelected: state.build.build === ownProps.build,
+    isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
+    spec: state.build.builds.byId[ownProps.build],
+  }),
+  {
+    changeType,
+  }
+)(BuildType);
