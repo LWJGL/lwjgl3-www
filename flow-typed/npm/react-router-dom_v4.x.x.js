@@ -1,4 +1,4 @@
-// flow-typed signature: a36f060877e62b3caf807efe7db6aa1a
+// flow-typed signature: e3400e471dee2bc156fa7bb9b1cf3c14
 // flow-typed version: 7f8b059d5f/react-router-dom_v4.x.x/flow_>=v0.38.x
 
 declare module 'react-router-dom' {
@@ -87,9 +87,9 @@ declare module 'react-router-dom' {
   }
 
   declare export type ContextRouter = {
-    history: RouterHistory,
-    location: Location,
     match: Match,
+    location: Location,
+    history: RouterHistory,
   }
 
   declare export type GetUserConfirmation =

@@ -1,4 +1,4 @@
-// flow-typed signature: b4609de92af24bec1e6a589bbad1ad7a
+// flow-typed signature: 9ee002d3ad4550b5b7da775c6ba6c5e2
 // flow-typed version: 0bcfb6b09b/intl-messageformat_v1.x.x/flow_>=v0.32.x
 
 declare module 'intl-messageformat' {

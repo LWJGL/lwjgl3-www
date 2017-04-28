@@ -9,7 +9,7 @@ type AsyncReducers = {
   [_: string]: Reducer<*, *>,
 };
 
-export default function createReducer(asyncReducers: ?AsyncReducers) {
+export default function createReducer(asyncReducers: ?AsyncReducers): Reducer<any, any> {
   const reducers = {
     breakpoint,
     buildStatus,

@@ -38,5 +38,5 @@ Promise.all([
     }
   }),
   // Fetch polyfill
-  'fetch' in window ? Promise.resolve() : import(/* webpackChunkName: "whatwg-fetch" */ 'whatwg-fetch'),
+  'fetch' in window ? 1 : import(/* webpackChunkName: "whatwg-fetch" */ 'whatwg-fetch'),
 ]).then(mount);

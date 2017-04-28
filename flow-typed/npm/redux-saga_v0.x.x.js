@@ -465,16 +465,6 @@ declare module 'redux-saga/effects' {
     <P: Pattern>(channel: Channel, pattern: P): TakeEffect<P>;
   }
 
-  declare type TakeEveryFn = {
-    <P: Pattern>(                  pattern: P): TakeEffect<P>;
-    <P: Pattern>(channel: Channel, pattern: P): TakeEffect<P>;
-  }
-
-  declare type TakeLatestFn = {
-    <P: Pattern>(                  pattern: P): TakeEffect<P>;
-    <P: Pattern>(channel: Channel, pattern: P): TakeEffect<P>;
-  }
-
   declare type PutFn = {
     <T: Object>(action: T): PutEffect<T>;
     <T: Object>(channel: Channel, action: T): PutEffect<T>;
@@ -502,8 +492,6 @@ declare module 'redux-saga/effects' {
 
   declare module.exports: {
     take: TakeFn,
-    takeEvery: TakeEveryFn,
-    takeLatest: TakeLatestFn,
     takem: TakeFn,
     put: PutFn,
     race: RaceFn,
