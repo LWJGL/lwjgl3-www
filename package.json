@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aphrodite": "1.2.0",
+    "aphrodite": "1.2.1",
     "autoprefixer": "6.7.7",
     "aws-sdk": "2.46.0",
     "babel-core": "7.0.0-alpha.9",
