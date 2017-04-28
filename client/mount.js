@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import nprogress from 'nprogress';
-import configureStore from './store/configureStore';
+import store from './store';
 import App from './containers/App';
 import './services/ga';
 
@@ -20,9 +20,6 @@ export default function() {
   nprogress.configure({
     showSpinner: false,
   });
-
-  // Configure Redux store
-  const store = configureStore();
 
   // Render React
   const rootEl = document.getElementById('lwjgl-app');

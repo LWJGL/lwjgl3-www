@@ -1,3 +1,7 @@
+import { register } from '../../../store/asyncReducers';
+import { sagaMiddleware } from '../../../store/saga';
+import saga from './saga';
+
 const $ = {
   BROWSER_OPEN: 'BROWSER/OPEN',
   BROWSER_LOAD: 'BROWSER/LOAD_PATH',
@@ -26,7 +30,7 @@ const defaultState = {
 export { $ as types };
 export { $$ as actions };
 
-export default function FileBrowserReducer(state = defaultState, action) {
+export default function fileBrowserReducer(state = defaultState, action) {
   switch (action.type) {
     case $.BROWSER_OPEN:
       return { ...state, open: true };
@@ -72,3 +76,6 @@ export default function FileBrowserReducer(state = defaultState, action) {
 
   return state;
 }
+
+register('browser', fileBrowserReducer);
+sagaMiddleware.run(saga);

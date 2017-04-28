@@ -40,7 +40,9 @@ const DownloadRoute = (props: ContextRouter) => (
         <BuildContainer />
 
         <p>Or browse and download files directly:</p>
-        <FileBrowser />
+        <div style={{ backgroundColor: 'lightyellow', padding: 20 }}>
+          <FileBrowser />
+        </div>
       </section>
 
       <div className="area-dark py-4">

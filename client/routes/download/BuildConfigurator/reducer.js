@@ -1,5 +1,8 @@
+import { register } from '../../../store/asyncReducers';
+import { sagaMiddleware } from '../../../store/saga';
 import * as $ from './actionTypes';
 import config from './config';
+import saga from './saga';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 
@@ -174,7 +177,7 @@ const loadConfig = (state, config) => {
   return state;
 };
 
-export default function BuildConfiguratorReducer(state = config, action) {
+export default function buildConfiguratorReducer(state = config, action) {
   switch (action.type) {
     case $.SELECT_TYPE:
       if (action.build !== state.build && state.downloading === false) {
@@ -283,3 +286,6 @@ export default function BuildConfiguratorReducer(state = config, action) {
 
   return state;
 }
+
+register('build', buildConfiguratorReducer);
+sagaMiddleware.run(saga);

@@ -1,10 +1,8 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import reducer from './reducer';
+import './reducer';
 import * as $$ from './actions';
-import saga from './saga';
-import subscribe from '../../../store/subscribe';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
 
@@ -128,17 +126,12 @@ const fields = {
   },
 };
 
+let restoreState = true;
+
 class BuildContainer extends React.Component {
-  static reducers = {
-    build: reducer,
-  };
-
-  static sagas = [saga];
-  static restoreState: boolean = true;
-
   componentDidMount() {
-    if (BuildContainer.restoreState) {
-      BuildContainer.restoreState = false;
+    if (restoreState) {
+      restoreState = false;
       const restore = localStorage.getItem(STORAGE_KEY);
       if (restore != null) {
         this.props.configLoad(JSON.parse(restore));
@@ -230,4 +223,4 @@ class BuildContainer extends React.Component {
 export default connect(null, {
   reset: $$.reset,
   configLoad: $$.configLoad,
-})(subscribe(BuildContainer));
+})(BuildContainer);

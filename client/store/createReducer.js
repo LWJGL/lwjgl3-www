@@ -17,14 +17,5 @@ export default function createReducer(asyncReducers: ?AsyncReducers): Reducer<an
     ...asyncReducers,
   };
 
-  // Force import during development to enable async reducer HMR
-  if (process.env.NODE_ENV === 'development') {
-    return combineReducers({
-      build: require('../routes/download/BuildConfigurator/reducer').default,
-      browser: require('../routes/download/FileBrowser/reducer').default,
-      ...reducers,
-    });
-  }
-
   return combineReducers(reducers);
 }

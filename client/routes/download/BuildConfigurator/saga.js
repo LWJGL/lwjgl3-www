@@ -1,3 +1,5 @@
+import { sagaMiddleware } from '../../../store/saga';
+
 import { channel, buffers } from 'redux-saga';
 import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects';
 
