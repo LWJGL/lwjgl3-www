@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "1.2.1",
     "autoprefixer": "6.7.7",
-    "aws-sdk": "2.46.0",
+    "aws-sdk": "2.48.0",
     "babel-core": "7.0.0-alpha.9",
     "babel-loader": "7.0.0",
     "babel-plugin-check-es2015-constants": "7.0.0-alpha.9",
@@ -96,7 +96,7 @@
     "react-redux": "5.0.4",
     "react-router-dom": "4.1.1",
     "redux": "3.6.0",
-    "redux-saga": "0.14.8",
+    "redux-saga": "0.15.0",
     "request": "2.81.0",
     "reselect": "3.0.0",
     "sass-loader": "6.0.3",
