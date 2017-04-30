@@ -5,7 +5,9 @@ let firstCall = true;
 
 let track = function() {
   if (process.env.NODE_ENV === 'production' && firstCall) {
-    loadJS('https://www.google-analytics.com/analytics.js');
+    if (document.location.hostname === 'www.lwjgl.org') {
+      loadJS('https://www.google-analytics.com/analytics.js');
+    }
     firstCall = false;
   }
 
