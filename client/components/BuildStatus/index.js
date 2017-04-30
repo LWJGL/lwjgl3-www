@@ -4,6 +4,7 @@ import reduxSaga from '../../store/saga';
 import LoaderSpinner from '../LoaderSpinner';
 import { loadStatus, saga } from './reducer';
 import typeof { loadStatus as LoadStatus } from './reducer';
+import type { Task } from 'redux-saga';
 
 type OwnProps = {
   name: string,
@@ -18,12 +19,27 @@ type ConnectProps = {
 
 type Props = OwnProps & ConnectProps;
 
+let instances = 0;
+let sagaTask: Task | null = null;
+
 class BuildStatus extends React.Component<void, Props, void> {
   componentDidMount() {
     const { name, loadStatus, version, error } = this.props;
 
+    if (instances === 0) {
+      sagaTask = reduxSaga.run(saga);
+    }
+    instances += 1;
+
     if (version === undefined && error === undefined) {
       loadStatus(name);
+    }
+  }
+
+  componentWillUnmount() {
+    instances -= 1;
+    if (instances === 0 && sagaTask !== null) {
+      sagaTask.cancel();
     }
   }
 
@@ -40,8 +56,6 @@ class BuildStatus extends React.Component<void, Props, void> {
     );
   }
 }
-
-reduxSaga.run(saga);
 
 export default connect(
   (state: any, props: OwnProps) => {

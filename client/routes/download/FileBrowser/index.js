@@ -16,7 +16,15 @@ function isBrowsing({ browser: { open } }) {
   return open;
 }
 
+let sagaTask;
+
 class FileBrowser extends React.Component {
+  componentDidMount() {
+    sagaTask = reduxSaga.run(saga);
+  }
+  componentWillUnmount() {
+    sagaTask.cancel();
+  }
   browse = () => {
     this.props.browserOpen();
   };
@@ -36,6 +44,5 @@ class FileBrowser extends React.Component {
 }
 
 register('browser', reducer);
-reduxSaga.run(saga);
 
 export default connect(null, { browserOpen: $$.browserOpen })(FileBrowser);

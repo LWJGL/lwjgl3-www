@@ -5,6 +5,7 @@ import { css } from 'aphrodite/no-important';
 import styles from './styles';
 import LoaderSpinner from '../LoaderSpinner';
 import { loadStatus, saga } from './reducer';
+import type { Task } from 'redux-saga';
 import type { TcStatus, TcStatusObject } from './reducer';
 import typeof { loadStatus as LoadStatus } from './reducer';
 
@@ -17,12 +18,27 @@ type ConnectProps = OwnProps &
     loadStatus: LoadStatus,
   };
 
+let instances = 0;
+let sagaTask: Task | null = null;
+
 class BuildStatus extends React.Component<void, ConnectProps, void> {
   componentDidMount() {
     const { status, loadStatus, name } = this.props;
 
+    if (instances === 0) {
+      sagaTask = reduxSaga.run(saga);
+    }
+    instances += 1;
+
     if (status === 'loading') {
       loadStatus(name);
+    }
+  }
+
+  componentWillUnmount() {
+    instances -= 1;
+    if (instances === 0 && sagaTask !== null) {
+      sagaTask.cancel();
     }
   }
 
@@ -41,8 +57,6 @@ class BuildStatus extends React.Component<void, ConnectProps, void> {
     );
   }
 }
-
-reduxSaga.run(saga);
 
 export default connect(
   (state, props) => ({

@@ -130,9 +130,12 @@ const fields = {
 };
 
 let restoreState = true;
+let sagaTask;
 
 class BuildContainer extends React.Component {
   componentDidMount() {
+    sagaTask = reduxSaga.run(saga);
+
     if (restoreState) {
       restoreState = false;
       const restore = localStorage.getItem(STORAGE_KEY);
@@ -143,6 +146,7 @@ class BuildContainer extends React.Component {
   }
 
   componentWillUnmount() {
+    sagaTask.cancel();
     this.props.reset();
   }
 
@@ -224,7 +228,6 @@ class BuildContainer extends React.Component {
 }
 
 register('build', reducer);
-reduxSaga.run(saga);
 
 export default connect(null, {
   reset: $$.reset,
