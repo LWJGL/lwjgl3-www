@@ -81,7 +81,9 @@ if (app.locals.development) {
       heartbeat: 10 * 1000,
     })
   );
+}
 
+if (app.locals.development || argv.s3proxy) {
   // Proxy photos from S3
   app.use('/img', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
   app.use('/svg', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
