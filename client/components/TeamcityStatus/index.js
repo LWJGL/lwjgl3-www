@@ -1,18 +1,23 @@
 import React from 'react';
-import { css } from 'aphrodite/no-important';
 import { connect } from 'react-redux';
+import reduxSaga from '../../store/saga';
+import { css } from 'aphrodite/no-important';
 import styles from './styles';
 import LoaderSpinner from '../LoaderSpinner';
-import { loadStatus } from './reducer';
+import { loadStatus, saga } from './reducer';
+import type { TcStatus, TcStatusObject } from './reducer';
+import typeof { loadStatus as LoadStatus } from './reducer';
 
-type Props = {
+type OwnProps = {
   name: string,
-  status: 'loading' | 'passing' | 'failing',
-  build?: string,
-  loadStatus: string => void,
 };
 
-class BuildStatus extends React.Component<void, Props, void> {
+type ConnectProps = OwnProps &
+  TcStatusObject & {
+    loadStatus: LoadStatus,
+  };
+
+class BuildStatus extends React.Component<void, ConnectProps, void> {
   componentDidMount() {
     const { status, loadStatus, name } = this.props;
 
@@ -36,6 +41,8 @@ class BuildStatus extends React.Component<void, Props, void> {
     );
   }
 }
+
+reduxSaga.run(saga);
 
 export default connect(
   (state, props) => ({

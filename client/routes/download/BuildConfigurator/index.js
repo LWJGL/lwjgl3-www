@@ -1,8 +1,11 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import './reducer';
+import { register } from '../../../store/asyncReducers';
+import reduxSaga from '../../../store/saga';
 import * as $$ from './actions';
+import reducer from './reducer';
+import saga from './saga';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
 
@@ -219,6 +222,9 @@ class BuildContainer extends React.Component {
     );
   }
 }
+
+register('build', reducer);
+reduxSaga.run(saga);
 
 export default connect(null, {
   reset: $$.reset,

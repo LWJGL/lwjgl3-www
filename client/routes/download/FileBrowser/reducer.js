@@ -1,7 +1,3 @@
-import { register } from '../../../store/asyncReducers';
-import { sagaMiddleware } from '../../../store/saga';
-import saga from './saga';
-
 const $ = {
   BROWSER_OPEN: 'BROWSER/OPEN',
   BROWSER_LOAD: 'BROWSER/LOAD_PATH',
@@ -10,8 +6,8 @@ const $ = {
 
 const $$ = {
   browserOpen: () => ({ type: $.BROWSER_OPEN }),
-  loadPath: path => ({ type: $.BROWSER_LOAD, path }),
-  storeContents: (path, contents) => ({ type: $.STORE_CONTENTS, path, contents }),
+  loadPath: (path: string) => ({ type: $.BROWSER_LOAD, path }),
+  storeContents: (path: string, contents: {}) => ({ type: $.STORE_CONTENTS, path, contents }),
 };
 
 const defaultState = {
@@ -76,6 +72,3 @@ export default function fileBrowserReducer(state = defaultState, action) {
 
   return state;
 }
-
-register('browser', fileBrowserReducer);
-sagaMiddleware.run(saga);

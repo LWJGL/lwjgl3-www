@@ -1,510 +1,458 @@
-/* eslint-disable */
+declare type ReduxSaga$Predicate<T> = (arg: T) => boolean;
 
-/**
- * Shared interfaces between the modules 'redux-saga' and
- * 'redux-saga/effects'
- */
-declare interface $npm$ReduxSaga$Channel {
-  take: (cb: (msg: mixed) => void) => void,
-  put: (msg: mixed) => void,
-  close: Function,
+declare interface ReduxSaga$Task {
+  isRunning(): boolean;
+  isCancelled(): boolean;
+  result(): any;
+  result<T>(): T;
+  error(): any;
+  done: Promise<any>;
+  cancel(): void;
 }
 
-declare type $npm$ReduxSaga$Task = {
-  '@@redux-saga/TASK': true,
-  isRunning: () => boolean;
-  isCancelled: () => boolean;
-  result: () => ?mixed;
-  error: () => ?Error;
-  cancel: () => void;
-  done?: Promise<*>;
-}
-
-declare interface $npm$ReduxSaga$Buffer {
+declare interface ReduxSaga$Buffer<T> {
   isEmpty(): boolean;
-  put(msg: any): void;
-  take(): any;
+  put(message: T): void;
+  take(): T;
 }
 
-declare type $npm$ReduxSaga$IOEffect = {
-  '@@redux-saga/IO': true,
+declare interface ReduxSaga$Channel<T> {
+  take(cb: (message: T) => void, matcher?: ReduxSaga$Predicate<T>): void;
+  put(message: T): void;
+  close(): void;
+}
+
+declare module 'redux-saga/effects' {
+  declare type Predicate<T> = ReduxSaga$Predicate<T>;
+  declare type Task = ReduxSaga$Task;
+  declare type Buffer<T> = ReduxSaga$Buffer<T>;
+  declare type Channel<T> = ReduxSaga$Channel<T>;
+  declare type Action = {type: $Subtype<string>}
+  declare type Pattern<T> = string | Predicate<T> | (string | Predicate<T>)[];
+
+  declare type Effect =
+    TakeEffect<any> |
+    PutEffect<any> |
+    RaceEffect | CallEffect |
+    CpsEffect | ForkEffect | JoinEffect | CancelEffect | SelectEffect |
+    ActionChannelEffect<any> | CancelledEffect | FlushEffect<any>;
+
+
+  // take
+  declare interface TakeEffectDescriptor<T> {
+    pattern: Pattern<T>;
+    channel: Channel<T>;
+    maybe?: boolean;
+  }
+
+  declare interface TakeEffect<T> {
+    TAKE: TakeEffectDescriptor<T>;
+  }
+
+  declare var take: {
+    <T>(pattern: Pattern<T>): TakeEffect<T>;
+    <T>(channel: Channel<T>): TakeEffect<T>;
+    maybe: {
+      <T>(pattern: Pattern<T>): TakeEffect<T>;
+      <T>(channel: Channel<T>): TakeEffect<T>;
+    };
+  };
+
+  declare var takem: void;
+
+  // put
+  declare interface PutEffectDescriptor<T> {
+    action: T;
+    channel: Channel<T>;
+  }
+
+  declare interface PutEffect<T> {
+    PUT: PutEffectDescriptor<T>;
+  }
+
+  declare var put: {
+    <T: Action>(action: T): PutEffect<T>;
+    <T: Action>(channel: Channel<T>, action: T): PutEffect<T>;
+    resolve: {
+      <T: Action>(action: T): PutEffect<T>;
+      <T: Action>(channel: Channel<T>, action: T): PutEffect<T>;
+    };
+    sync: void;
+  };
+
+  // race
+  declare type RaceEffectDescriptor = {[key: string]: Effect};
+
+  declare interface RaceEffect {
+    RACE: RaceEffectDescriptor;
+  }
+
+  declare function race(effects: {[key: string]: Effect}): RaceEffect;
+
+  // call & apply
+  declare interface CallEffectDescriptor {
+    context: any;
+    fn: Function;
+    args: any[];
+  }
+
+  declare type Collable0 = () => any;
+  declare type Collable1<A> = (a: A) => any;
+  declare type Collable2<A, B> = (a: A, b: B) => any;
+  declare type Collable3<A, B, C> = (a: A, b: B, c: C) => any;
+  declare type Collable4<A, B, C, D> = (a: A, b: B, c: C, d: D) => any;
+  declare type Collable5<A, B, C, D, E> = (a: A, b: B, c: C, d: D, e: E) => any;
+  declare type CollableR = (...args: mixed[]) => any;
+
+  declare type CallEffectArg<F> = F | [any, F] | {context: any, fn: F};
+
+  declare interface CallEffect {
+    CALL: CallEffectDescriptor;
+  }
+
+  declare type CallEffectFactory<R> = {
+    (fn: CallEffectArg<Collable0>): R;
+    <A>(fn: CallEffectArg<Collable1<A>>,
+        a: A): R;
+    <A, B>(fn: CallEffectArg<Collable2<A, B>>,
+           a: A, b: B): R;
+    <A, B, C>(fn: CallEffectArg<Collable3<A, B, C>>,
+              a: A, b: B, c: C): R;
+    <A, B, C, D>(fn: CallEffectArg<Collable4<A, B, C, D>>,
+                 a: A, b: B, c: C, d: D): R;
+    <A, B, C, D, E>(fn: CallEffectArg<Collable5<A, B, C, D, E>>,
+                    a: A, b: B, c: C, d: D, e: E): R;
+    (fn: CallEffectArg<CollableR>, ...args: any[]): R;
+  }
+
+  declare var call: CallEffectFactory<CallEffect>;
+
+  declare var apply: {
+    (context: any, fn: Collable0): CallEffect;
+    <A>(context: any, fn: Collable1<A>,
+        args: [A]): CallEffect;
+    <A, B>(context: any, fn: Collable2<A, B>,
+           args: [A, B]): CallEffect;
+    <A, B, C>(context: any, fn: Collable3<A, B, C>,
+              args: [A, B, C]): CallEffect;
+    <A, B, C, D>(context: any, fn: Collable4<A, B, C, D>,
+                 args: [A, B, C, D]): CallEffect;
+    <A, B, C, D, E>(context: any, fn: Collable5<A, B, C, D, E>,
+                    args: [A, B, C, D, E]): CallEffect;
+    (context: any, fn: CollableR, args: any[]): CallEffect;
+  };
+
+  // cps
+  declare interface CpsEffect {
+    CPS: CallEffectDescriptor;
+  }
+
+  declare type CpsCallback = (error: any, result: any) => void;
+
+  declare var cps: {
+    (fn: CallEffectArg<Collable1<CpsCallback>>): CpsEffect;
+    <A>(fn: CallEffectArg<Collable2<A, CpsCallback>>,
+        a: A): CpsEffect;
+    <A, B>(fn: CallEffectArg<Collable3<A, B, CpsCallback>>,
+           a: A, b: B): CpsEffect;
+    <A, B, C>(fn: CallEffectArg<Collable4<A, B, C, CpsCallback>>,
+              a: A, b: B, c: C): CpsEffect;
+    <A, B, C, D>(fn: CallEffectArg<Collable5<A, B, C, D, CpsCallback>>,
+                 a: A, b: B, c: C, d: D): CpsEffect;
+  };
+
+  // fork & spawn
+  declare interface ForkEffectDescriptor extends CallEffectDescriptor {
+    detached?: boolean;
+  }
+
+  declare interface ForkEffect {
+    FORK: ForkEffectDescriptor;
+  }
+
+  declare var fork: CallEffectFactory<ForkEffect>;
+  declare var spawn: CallEffectFactory<ForkEffect>;
+
+  // join
+  declare interface JoinEffect {
+    JOIN: Task;
+  }
+
+  declare function join(task: Task): JoinEffect;
+
+  // cancel
+  declare interface CancelEffect {
+    CANCEL: Task;
+  }
+
+  declare function cancel(task: Task): CancelEffect;
+
+  // select
+  declare interface SelectEffectDescriptor {
+    selector(state: any, ...args: any[]): any;
+    args: any[];
+  }
+
+  declare interface SelectEffect {
+    SELECT: SelectEffectDescriptor;
+  }
+
+  declare var select: {
+    (): SelectEffect;
+    <S>(selector: Collable1<S>): SelectEffect;
+    <S, A>(selector: Collable2<S, A>,
+           a: A): SelectEffect;
+    <S, A, B>(selector: Collable3<S, A, B>,
+              a: A, b: B): SelectEffect;
+    <S, A, B, C>(selector: Collable4<S, A, B, C>,
+                 a: A, b: B, c: C): SelectEffect;
+    <S, A, B, C, D>(selector: Collable5<S, A, B, C, D>,
+                    a: A, b: B, c: C, d: D): SelectEffect;
+    (selector: CollableR, ...rest: any[]): SelectEffect;
+  };
+
+  // actionChannel
+  declare interface ActionChannelEffectDescriptor<T> {
+    pattern: Pattern<T>;
+    buffer: Buffer<T>;
+  }
+
+  declare interface ActionChannelEffect<T> {
+    ACTION_CHANNEL: ActionChannelEffectDescriptor<T>;
+  }
+
+  declare function actionChannel<T>(
+    pattern: Pattern<T>, buffer?: Buffer<T>
+  ): ActionChannelEffect<T>;
+
+  // actionChannel
+  declare interface CancelledEffect {
+    CANCELLED: {};
+  }
+
+  declare function cancelled(): CancelledEffect;
+
+  // flush
+  declare interface FlushEffect<T> {
+    FLUSH: Channel<T>;
+  }
+
+  declare function flush<T>(channel: Channel<T>): FlushEffect<T>;
+
+  // takeEvery & takeLatest
+  declare type Workable0<A> = (action?: A) => any;
+  declare type Workable1<A, B> = (b: B, action?: A) => any;
+  declare type Workable2<A, B, C> = (b: B, c: C, action?: A) => any;
+  declare type Workable3<A, B, C, D> = (b: B, c: C, d: D, action?: A) => any;
+  declare type Workable4<A, B, C, D, E> = (b: B, c: C, d: D, e: E, action?: A) => any;
+  declare type WorkableR<A, B, C, D, E, F> = (b: B, c: C, d: D, e: E, f: F, ...args: mixed[]) => any;
+
+  declare interface TakeHelper {
+    <A>(pattern: Pattern<A>,
+        worker: Workable0<A>): ForkEffect;
+    <A, B>(pattern: Pattern<A>,
+           worker: Workable1<A, B>,
+           b: B): ForkEffect;
+    <A, B, C>(pattern: Pattern<A>,
+              worker: Workable2<A, B, C>,
+              b: B, c: C): ForkEffect;
+    <A, B, C, D>(pattern: Pattern<A>,
+                 worker: Workable3<A, B, C, D>,
+                 b: B, c: C, d: D): ForkEffect;
+    <A, B, C, D, E>(pattern: Pattern<A>,
+                    worker: Workable4<A, B, C, D, E>,
+                    b: B, c: C, d: D, e: E): ForkEffect;
+    <A, B, C, D, E, F>(pattern: Pattern<A>,
+                       worker: WorkableR<A, B, C, D, E, F>,
+                       b: B, c: C, d: D, e: E, f: F,
+                       ...rest: any[]): ForkEffect;
+  }
+
+  declare var takeEvery: TakeHelper;
+  declare var takeLatest: TakeHelper;
+
+  // throttle
+  declare var throttle: {
+    <A>(ms: number, pattern: Pattern<A>,
+        worker: Workable0<A>): ForkEffect;
+    <A, B>(ms: number, pattern: Pattern<A>,
+           worker: Workable1<A, B>,
+           b: B): ForkEffect;
+    <A, B, C>(ms: number, pattern: Pattern<A>,
+              worker: Workable2<A, B, C>,
+              b: B, c: C): ForkEffect;
+    <A, B, C, D>(ms: number, pattern: Pattern<A>,
+                 worker: Workable3<A, B, C, D>,
+                 b: B, c: C, d: D): ForkEffect;
+    <A, B, C, D, E>(ms: number, pattern: Pattern<A>,
+                    worker: Workable4<A, B, C, D, E>,
+                    b: B, c: C, d: D, e: E): ForkEffect;
+    <A, B, C, D, E, F>(ms: number, pattern: Pattern<A>,
+                       worker: WorkableR<A, B, C, D, E, F>,
+                       b: B, c: C, d: D, e: E, f: F,
+                       ...rest: any[]): ForkEffect;
+  };
+}
+
+declare module 'redux-saga/utils' {
+  import type {
+    Effect, TakeEffectDescriptor, PutEffectDescriptor,
+    RaceEffectDescriptor, CallEffectDescriptor, ForkEffectDescriptor,
+    SelectEffectDescriptor, ActionChannelEffectDescriptor
+  } from 'redux-saga/effects';
+
+  declare type Task = ReduxSaga$Task;
+  declare type Channel<T> = ReduxSaga$Channel<T>;
+  declare type Is = ReduxSaga$Predicate<*>;
+  declare interface Deferred<R> {
+    resolve(result: R): void;
+    reject(error: any): void;
+    promise: Promise<R>;
+  }
+  declare interface MockTask extends Task {
+    setRunning(running: boolean): void;
+    setResult(result: any): void;
+    setError(error: any): void;
+  }
+
+  declare var TASK: '@@redux-saga/TASK';
+
+  declare var SAGA_ACTION: '@@redux-saga/SAGA_ACTION';
+
+  declare function noop(): void;
+
+  declare var is: {
+    undef: Is;
+    notUndef: Is;
+    func: Is;
+    number: Is;
+    array: Is;
+    promise: Is;
+    iterator: Is;
+    task: Is;
+    observable: Is;
+    buffer: Is;
+    pattern: Is;
+    channel: Is;
+    helper: Is;
+    stringableFunc: Is;
+  };
+
+  declare function deferred<T, R>(props?: T): T & Deferred<R>;
+
+  declare function arrayOfDeffered<T>(length: number): Deferred<T>[];
+
+  declare function createMockTask(): MockTask;
+
+  declare var asEffect: {
+    take<T>(effect: Effect): ?TakeEffectDescriptor<T>;
+    put<T>(effect: Effect): ?PutEffectDescriptor<T>;
+    race(effect: Effect): ?RaceEffectDescriptor;
+    call(effect: Effect): ?CallEffectDescriptor;
+    cps(effect: Effect): ?CallEffectDescriptor;
+    fork(effect: Effect): ?ForkEffectDescriptor;
+    join(effect: Effect): ?Task;
+    cancel(effect: Effect): ?Task;
+    select(effect: Effect): ?SelectEffectDescriptor;
+    actionChannel<T>(effect: Effect): ?ActionChannelEffectDescriptor<T>;
+    cancelled(effect: Effect): ?{};
+    flush<T>(effect: Effect): ?Channel<T>;
+  };
+
+  declare var CHANNEL_END: {
+    toString(): '@@redux-saga/CHANNEL_END';
+  };
 }
 
 declare module 'redux-saga' {
-  // Parts for the Channel interface
-  declare type EmitterFn = (msg: any) => void;
-  declare type UnsubscribeFn = () => void;
-  declare type SubscribeFn = (emitter: EmitterFn) => UnsubscribeFn;
-  declare type MatcherFn = (msg: any) => boolean;
+  import type {Middleware} from 'redux';
+  import type {Effect} from 'redux-saga/effects';
+  import typeof * as Effects from 'redux-saga/effects';
+  import typeof * as Utils from 'redux-saga/utils';
 
-  declare type Pattern = string | Array<string> | (action: Object) => boolean;
-
-  declare type IOEffect = $npm$ReduxSaga$IOEffect;
-  declare export type Channel = $npm$ReduxSaga$Channel;
-  declare export type Buffer = $npm$ReduxSaga$Buffer;
-  declare export type Task = $npm$ReduxSaga$Task;
+  declare export type Predicate<T> = ReduxSaga$Predicate<T>;
+  declare export type Task = ReduxSaga$Task;
+  declare export type Buffer<T> = ReduxSaga$Buffer<T>;
+  declare export type Channel<T> = ReduxSaga$Channel<T>;
 
   declare export interface SagaMonitor {
     effectTriggered(options: {
-      effectId: number,
-      parentEffectId: number,
-      label: string,
-      effect: Object,
+      effectId: number;
+      parentEffectId: number;
+      label: string;
+      root?: boolean;
+      effect: Effect;
     }): void;
     effectResolved(effectId: number, result: any): void;
     effectRejected(effectId: number, err: any): void;
     effectCancelled(effectId: number): void;
+    actionDispatched<A>(action: A): void;
   }
 
+  declare type Saga0 = () => Generator<*, *, *>;
+  declare type Saga1<A> = (a: A) => Generator<*, *, *>;
+  declare type Saga2<A, B> = (a: A, b: B) => Generator<*, *, *>;
+  declare type Saga3<A, B, C> = (a: A, b: B, c: C) => Generator<*, *, *>;
+  declare type Saga4<A, B, C, D> = (a: A, b: B, c: C, d: D) => Generator<*, *, *>;
+  declare type SagaR = (...args: mixed[]) => Generator<*, *, *>;
+
+  declare export type SagaMiddleware<S, A> = Middleware<S, A> & {
+    run(saga: Saga0): Task;
+    run<A>(saga: Saga1<A>, a: A): Task;
+    run<A, B>(saga: Saga2<A, B>, a: A, B: B): Task;
+    run<A, B, C>(saga: Saga3<A, B, C>, a: A, B: B, c: C): Task;
+    run<A, B, C, T4>(saga: Saga4<A, B, C, T4>, a: A, B: B, c: C, d: T4): Task;
+    run(saga: SagaR, ...args: any[]): Task;
+  }
+
+  declare export type Emit<T> = (input: T) => void;
+
+  declare export default function createSagaMiddleware<T>(options?: {
+    sagaMonitor?: SagaMonitor;
+    emitter: (emit: Emit<T>) => Emit<T>;
+  }): SagaMiddleware<*, *>;
+
+  declare export type Unsubscribe = () => void;
+  declare export type Subscribe<T> = (cb: (input: T) => void) => Unsubscribe;
   declare export type Logger = (level: 'info'|'warning'|'error', ...args: Array<any>) => void;
 
-  declare export var eventChannel: {
-    (sub: SubscribeFn, buffer?: Buffer, matcher?: MatcherFn): Channel,
-  };
+  declare export function runSaga<S, SA, DA>(saga: Generator<*, *, *>, io: {
+    subscribe?: Subscribe<SA>;
+    dispatch?: (input: DA) => any;
+    getState?: () => S;
+    sagaMonitor?: SagaMonitor;
+    logger?: Logger;
+    onError?: void;
+  }): Task;
+
+  declare export var END: {type: '@@redux-saga/CHANNEL_END'};
+
+  declare export function eventChannel<T>(
+    subscribe: Subscribe<T>,
+    buffer?: Buffer<T>,
+    matcher?: Predicate<T>
+  ): Channel<T>;
+
+  declare export function channel<T>(buffer?: Buffer<T>): Channel<T>;
 
   declare export var buffers: {
-    none: () => Buffer,
-    fixed: (limit: ?number) => Buffer,
-    dropping: (limit: ?number) => Buffer,
-    sliding: (limit: ?number) => Buffer,
-    expanding: (initialSize: ?number) => Buffer,
-  }
-
-  declare export var channel: (buffer?: Buffer) => Channel;
-  declare export var END: { type: '@@redux-saga/CHANNEL_END' };
-
-  /**
-   * Saga stuff
-   */
-
-  declare type SagaSpread<Y: IOEffect, R, N, T> = (...args: Array<T>) => Generator<Y, R, N>;
-  declare type SagaList<Y: IOEffect[], R, N> = () => Generator<Y, R, N>;
-  declare type Saga0<Y: IOEffect, R, N> = () => Generator<Y, R, N>;
-  declare type Saga1<Y: IOEffect, R, N, T1> = (t1: T1) => Generator<Y, R, N>;
-  declare type Saga2<Y: IOEffect, R, N, T1, T2> = (t1: T1, t2: T2) => Generator<Y, R, N>;
-  declare type Saga3<Y: IOEffect, R, N, T1, T2, T3> = (t1: T1, t2: T2, t3: T3) => Generator<Y, R, N>;
-  declare type Saga4<Y: IOEffect, R, N, T1, T2, T3, T4> = (t1: T1, t2: T2, t3: T3, t4: T4) => Generator<Y, R, N>;
-  declare type Saga5<Y: IOEffect, R, N, T1, T2, T3, T4, T5> = (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => Generator<Y, R, N>;
-  declare type Saga6<Y: IOEffect, R, N, T1, T2, T3, T4, T5, T6> = (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => Generator<Y, R, N>;
-
-  declare interface FsmIterator extends Generator<*,*,*> {
-    name: string,
-  }
-
-  declare type TakeXFn =
-     & (<Y, R, N, Fn: Saga0<Y, R, N>>(pattern: Pattern, saga: Fn) => FsmIterator)
-     & (<T1, Y, R, N, Fn: Saga1<Y, R, N, T1>>(pattern: Pattern, saga: Fn, t1: T1) => FsmIterator)
-     & (<T1, T2, Y, R, N, Fn: Saga2<Y, R, N, T1, T2>>(pattern: Pattern, saga: Fn, t1: T1, t2: T2) => FsmIterator)
-     & (<T1, T2, T3, Y, R, N, Fn: Saga3<Y, R, N, T1, T2, T3>>(pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3) => FsmIterator)
-     & (<T1, T2, T3, T4, Y, R, N, Fn: Saga4<Y, R, N, T1, T2, T3, T4>>(pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4) => FsmIterator)
-     & (<T1, T2, T3, T4, T5, Y, R, N, Fn: Saga5<Y, R, N, T1, T2, T3, T4, T5>>(pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => FsmIterator)
-     & (<T1, T2, T3, T4, T5, T6, Y, R, N, Fn: Saga6<Y, R, N, T1, T2, T3, T4, T5, T6>>(pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => FsmIterator)
-     & (<T, Y, R, N, Fn: SagaSpread<Y, R, N, T>>(pattern: Pattern, saga: Fn, ...rest: Array<T>) => FsmIterator);
-
-  declare export var takeEvery: TakeXFn;
-  declare export var takeLatest: TakeXFn;
-
-  declare type ThrottleFn =
-     & (<Y, R, N, Fn: Saga0<Y, R, N>>(delayLength: number, pattern: Pattern, saga: Fn) => FsmIterator)
-     & (<T1, Y, R, N, Fn: Saga1<Y, R, N, T1>>(delayLength: number, pattern: Pattern, saga: Fn, t1: T1) => FsmIterator)
-     & (<T1, T2, Y, R, N, Fn: Saga2<Y, R, N, T1, T2>>(delayLength: number, pattern: Pattern, saga: Fn, t1: T1, t2: T2) => FsmIterator)
-     & (<T1, T2, T3, Y, R, N, Fn: Saga3<Y, R, N, T1, T2, T3>>(delayLength: number, pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3) => FsmIterator)
-     & (<T1, T2, T3, T4, Y, R, N, Fn: Saga4<Y, R, N, T1, T2, T3, T4>>(delayLength: number, pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4) => FsmIterator)
-     & (<T1, T2, T3, T4, T5, Y, R, N, Fn: Saga5<Y, R, N, T1, T2, T3, T4, T5>>(delayLength: number, pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => FsmIterator)
-     & (<T1, T2, T3, T4, T5, T6, Y, R, N, Fn: Saga6<Y, R, N, T1, T2, T3, T4, T5, T6>>(delayLength: number, pattern: Pattern, saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => FsmIterator)
-     & (<T, Y, R, N, Fn: SagaSpread<Y, R, N, T>>(delayLength: number, pattern: Pattern, saga: Fn, ...rest: Array<T>) => FsmIterator);
-
-  declare export var throttle: ThrottleFn;
-
-  declare export var delay: <T>(ms: number, val?: T) => Promise<T>;
-  declare export var CANCEL: Symbol;
-
-  declare type RunSagaCb = (input: any) => any;
-
-  // TODO: make this interface less generic,...
-  declare export var runSaga: (
-    iterator: Generator<*,*,*>,
-    options?: {
-      subscribe?: (cb: RunSagaCb) => UnsubscribeFn,
-      dispatch?: (output: any) => any,
-      getState?: () => any,
-      sagaMonitor?: SagaMonitor,
-      logger?: Logger,
-    }
-  ) => Task;
-
-  // Not fully typed because it's not really official API
-  declare export var utils: {
-    createMockTask: () => Task,
+    none<T>(): Buffer<T>;
+    fixed<T>(limit?: number): Buffer<T>;
+    dropping<T>(limit?: number): Buffer<T>;
+    sliding<T>(limit?: number): Buffer<T>;
+    expanding<T>(limit?: number): Buffer<T>;
   };
 
-  declare export var effects: {};
+  // deprecate
+  declare export var takeEvery: void;
+  declare export var takeLatest: void;
+  declare export var throttle: void;
 
-  declare type MiddlewareRunFn =
-    & (<Y, R, N, Fn: SagaList<Y, R, N>>(saga: Fn) => Task)
-    & (<Y, R, N, Fn: Saga0<Y, R, N>>(saga: Fn, ...rest: Array<void>) => Task)
-    & (<T1, Y, R, N, Fn: Saga1<Y, R, N, T1>>(saga: Fn, t1: T1, ...rest: Array<void>) => Task)
-    & (<T1, T2, Y, R, N, Fn: Saga2<Y, R, N, T1, T2>>(saga: Fn, t1: T1, t2: T2, ...rest: Array<void>) => Task)
-    & (<T1, T2, T3, Y, R, N, Fn: Saga3<Y, R, N, T1, T2, T3>>(saga: Fn, t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => Task)
-    & (<T1, T2, T3, T4, Y, R, N, Fn: Saga4<Y, R, N, T1, T2, T3, T4>>(saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => Task)
-    & (<T1, T2, T3, T4, T5, Y, R, N, Fn: Saga5<Y, R, N, T1, T2, T3, T4, T5>>(saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => Task)
-    & (<T1, T2, T3, T4, T5, T6, Y, R, N, Fn: Saga6<Y, R, N, T1, T2, T3, T4, T5, T6>>(saga: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => Task)
-    & (<T, Y, R, N, Fn: SagaSpread<Y, R, N, T>>(saga: Fn, t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...rest: Array<void>) => Task)
+  declare export function delay(ms: number, rest: void): Promise<boolean>;
+  declare export function delay<T>(ms: number, val: T): Promise<T>;
 
-  declare interface SagaMiddleware {
-    // TODO: This should be aligned with the official redux typings sometime
-    (api: any): (next: any) => any;
-    run: MiddlewareRunFn;
-  }
+  declare export var CANCEL: '@@redux-saga/cancelPromise';
 
-  declare type createSagaMiddleware = (
-    options?: {
-      sagaMonitor?: SagaMonitor,
-      logger?: Logger,
-      onError?: Function,
-    }
-  ) => SagaMiddleware;
-
-  declare export default createSagaMiddleware;
-}
-
-declare module 'redux-saga/effects' {
-  // Aliases from the global scope
-  declare type IOEffect = $npm$ReduxSaga$IOEffect;
-  declare type Channel = $npm$ReduxSaga$Channel;
-  declare type Buffer = $npm$ReduxSaga$Buffer;
-  declare type Task = $npm$ReduxSaga$Task;
-
-  declare type TakeEffect<P> = $npm$ReduxSaga$IOEffect & {
-    TAKE: {
-      channel: ?Channel,
-      pattern: P,
-    },
-  };
-
-  declare type PutEffect<T> = $npm$ReduxSaga$IOEffect & {
-    PUT: {
-      channel: ?Channel,
-      action: T,
-    },
-  };
-
-  declare type CallEffect<C, Fn, Args> = $npm$ReduxSaga$IOEffect & {
-    CALL: {
-      context: C,
-      fn: Fn,
-      args: Args,
-    },
-  };
-
-  declare type ForkEffect<C, Fn, Args> = $npm$ReduxSaga$IOEffect & {
-    FORK: {
-      context: C,
-      fn: Fn,
-      args: Args,
-    }
-  }
-
-  declare type CpsEffect<C, Fn, Args> = $npm$ReduxSaga$IOEffect & {
-    CPS: {
-      context: C,
-      fn: Fn,
-      args: Args,
-    }
-  }
-
-  declare type SelectEffect<Fn, Args> = $npm$ReduxSaga$IOEffect & {
-    SELECT: {
-      selector: Fn,
-      args: Args,
-    }
-  }
-
-  declare type SpawnEffect<C, Fn, Args> = $npm$ReduxSaga$IOEffect & {
-    FORK: {
-      context: C,
-      fn: Fn,
-      args: Args,
-      detached: true,
-    }
-  }
-
-  declare type ActionChannelEffect<P> = $npm$ReduxSaga$IOEffect & {
-    ACTION_CHANNEL: {
-      pattern: P,
-      buffer: ?$npm$ReduxSaga$Buffer,
-    }
-  }
-
-  // Apparently, the effects use a stripped
-  // version of a Task object
-  // Since there is some private API in there,
-  // we don't expose this in the Type interface
-  // to prevent misuse
-  declare type EffectTask = {
-    '@@redux-saga/TASK': true,
-    isRunning: () => boolean;
-    isCancelled: () => boolean;
-    result: () => ?mixed;
-    error: () => ?Error;
-    done?: Promise<*>;
-  }
-
-  declare type JoinEffect = $npm$ReduxSaga$IOEffect & {
-    JOIN: EffectTask,
-  }
-
-  declare type CancelEffect = $npm$ReduxSaga$IOEffect & {
-    CANCEL: EffectTask,
-  }
-
-  declare type RaceEffect<T> = $npm$ReduxSaga$IOEffect & {
-    RACE: $Shape<T>,
-  }
-
-  declare type CancelledEffect = $npm$ReduxSaga$IOEffect & {
-    CANCELLED: Object,
-  }
-
-  declare type FlushEffect = $npm$ReduxSaga$IOEffect & {
-    FLUSH: Channel,
-  }
-
-  declare type Pattern = string | Array<string> | (action: Object) => boolean;
-
-  declare type FnSpread<T, R> = (...args: Array<T>) => R | Promise<R>;
-
-  declare type Fn0<R> = () => R | Promise<R> | Generator<*,R,*>;
-  declare type Fn1<T1, R> = (t1: T1) => R | Promise<R> | Generator<*,R,*>;
-  declare type Fn2<T1, T2, R> = (t1: T1, t2: T2) => R | Promise<R> | Generator<*,R,*>;
-  declare type Fn3<T1, T2, T3, R> = (t1: T1, t2: T2, t3: T3) => R | Promise<R> | Generator<*,R,*>;
-  declare type Fn4<T1, T2, T3, T4, R> = (t1: T1, t2: T2, t3: T3, t4: T4) => R | Promise<R> | Generator<*,R,*>;
-  declare type Fn5<T1, T2, T3, T4, T5, R> = (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => R | Promise<R> | Generator<*,R,*>;
-  declare type Fn6<T1, T2, T3, T4, T5, T6, R> = (t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => R | Promise<R> | Generator<*,R,*>;
-
-  declare type SelectFnSpread<T> = (state: any, ...args: Array<T>) => any;
-  declare type SelectFn0 = ((state: any) => any) & (() => any);
-  declare type SelectFn1<T1> = (state: any, t1: T1) => any;
-  declare type SelectFn2<T1, T2> = (state: any, t1: T1, t2: T2) => any;
-  declare type SelectFn3<T1, T2, T3> = (state: any, t1: T1, t2: T2, t3: T3) => any;
-  declare type SelectFn4<T1, T2, T3, T4> = (state: any, t1: T1, t2: T2, t3: T3, t4: T4) => any;
-  declare type SelectFn5<T1, T2, T3, T4, T5> = (state: any, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => any;
-  declare type SelectFn6<T1, T2, T3, T4, T5, T6> = (state: any, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => any;
-
-  declare type CallEffectSpread<C, Fn, T> = CallEffect<C, Fn, Array<T>>;
-  declare type CallEffect0<C, Fn> = CallEffect<C, Fn, []>;
-  declare type CallEffect1<C, Fn, T1> = CallEffect<C, Fn, [T1]>;
-  declare type CallEffect2<C, Fn, T1, T2> = CallEffect<C, Fn, [T1, T2]>;
-  declare type CallEffect3<C, Fn, T1, T2, T3> = CallEffect<C, Fn, [T1, T2, T3]>;
-  declare type CallEffect4<C, Fn, T1, T2, T3, T4> = CallEffect<C, Fn, [T1, T2, T3, T4]>;
-  declare type CallEffect5<C, Fn, T1, T2, T3, T4, T5> = CallEffect<C, Fn, [T1, T2, T3, T4, T5]>;
-  declare type CallEffect6<C, Fn, T1, T2, T3, T4, T5, T6> = CallEffect<C, Fn, [T1, T2, T3, T4, T5, T6]>;
-
-  declare type ForkEffectSpread<C, Fn, T> = ForkEffect<C, Fn, Array<T>>;
-  declare type ForkEffect0<C, Fn> = ForkEffect<C, Fn, []>;
-  declare type ForkEffect1<C, Fn, T1> = ForkEffect<C, Fn, [T1]>;
-  declare type ForkEffect2<C, Fn, T1, T2> = ForkEffect<C, Fn, [T1, T2]>;
-  declare type ForkEffect3<C, Fn, T1, T2, T3> = ForkEffect<C, Fn, [T1, T2, T3]>;
-  declare type ForkEffect4<C, Fn, T1, T2, T3, T4> = ForkEffect<C, Fn, [T1, T2, T3, T4]>;
-  declare type ForkEffect5<C, Fn, T1, T2, T3, T4, T5> = ForkEffect<C, Fn, [T1, T2, T3, T4, T5]>;
-  declare type ForkEffect6<C, Fn, T1, T2, T3, T4, T5, T6> = ForkEffect<C, Fn, [T1, T2, T3, T4, T5, T6]>;
-
-  declare type CpsEffectSpread<C, Fn, T> = CpsEffect<C, Fn, Array<T>>;
-  declare type CpsEffect0<C, Fn> = CpsEffect<C, Fn, []>;
-  declare type CpsEffect1<C, Fn, T1> = CpsEffect<C, Fn, [T1]>;
-  declare type CpsEffect2<C, Fn, T1, T2> = CpsEffect<C, Fn, [T1, T2]>;
-  declare type CpsEffect3<C, Fn, T1, T2, T3> = CpsEffect<C, Fn, [T1, T2, T3]>;
-  declare type CpsEffect4<C, Fn, T1, T2, T3, T4> = CpsEffect<C, Fn, [T1, T2, T3, T4]>;
-  declare type CpsEffect5<C, Fn, T1, T2, T3, T4, T5> = CpsEffect<C, Fn, [T1, T2, T3, T4, T5]>;
-  declare type CpsEffect6<C, Fn, T1, T2, T3, T4, T5, T6> = CpsEffect<C, Fn, [T1, T2, T3, T4, T5, T6]>;
-
-  declare type SpawnEffectSpread<C, Fn, T> = SpawnEffect<C, Fn, Array<T>>;
-  declare type SpawnEffect0<C, Fn> = SpawnEffect<C, Fn, []>;
-  declare type SpawnEffect1<C, Fn, T1> = SpawnEffect<C, Fn, [T1]>;
-  declare type SpawnEffect2<C, Fn, T1, T2> = SpawnEffect<C, Fn, [T1, T2]>;
-  declare type SpawnEffect3<C, Fn, T1, T2, T3> = SpawnEffect<C, Fn, [T1, T2, T3]>;
-  declare type SpawnEffect4<C, Fn, T1, T2, T3, T4> = SpawnEffect<C, Fn, [T1, T2, T3, T4]>;
-  declare type SpawnEffect5<C, Fn, T1, T2, T3, T4, T5> = SpawnEffect<C, Fn, [T1, T2, T3, T4, T5]>;
-  declare type SpawnEffect6<C, Fn, T1, T2, T3, T4, T5, T6> = SpawnEffect<C, Fn, [T1, T2, T3, T4, T5, T6]>;
-
-  declare type SelectEffectSpread<Fn, T> = SelectEffect<Fn, Array<T>>;
-  declare type SelectEffect0<Fn> = SelectEffect<Fn, []>;
-  declare type SelectEffect1<Fn, T1> = SelectEffect<Fn, [T1]>;
-  declare type SelectEffect2<Fn, T1, T2> = SelectEffect<Fn, [T1, T2]>;
-  declare type SelectEffect3<Fn, T1, T2, T3> = SelectEffect<Fn, [T1, T2, T3]>;
-  declare type SelectEffect4<Fn, T1, T2, T3, T4> = SelectEffect<Fn, [T1, T2, T3, T4]>;
-  declare type SelectEffect5<Fn, T1, T2, T3, T4, T5> = SelectEffect<Fn, [T1, T2, T3, T4, T5]>;
-  declare type SelectEffect6<Fn, T1, T2, T3, T4, T5, T6> = SelectEffect<Fn, [T1, T2, T3, T4, T5, T6]>;
-
-  declare type Context = Object;
-
-  /**
-   * APPLY STUFF
-   */
-  declare type ApplyFn =
-    & (<R, C: Context, Fn: Fn0<R>>(c: C, fn: Fn, ...rest: Array<void>) => CallEffect0<C, Fn>)
-    & (<T1, R, C: Context, Fn: Fn1<T1, R>>(c: C, fn: Fn, t1: T1, ...rest: Array<void>) => CallEffect1<C, Fn, T1>)
-    & (<T1, T2, R, C: Context, Fn: Fn2<T1, T2, R>>(c: C, fn: Fn, t1: T1, t2: T2, ...rest: Array<void>) => CallEffect2<C, Fn, T1, T2>)
-    & (<T1, T2, T3, R, C: Context, Fn: Fn3<T1, T2, T3, R>>(c: C, fn: Fn, t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => CallEffect3<C, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, C: Context, Fn: Fn4<T1, T2, T3, T4, R>>(c: C, fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => CallEffect4<C, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, C: Context, Fn: Fn5<T1, T2, T3, T4, T5, R>>(c: C, fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => CallEffect5<C, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, C: Context, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(c: C, fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => CallEffect6<C, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, C: Context, Fn: FnSpread<T, R>>(c: C, fn: Fn, t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => CallEffectSpread<null, Fn, T>);
-
-  /**
-   * CALL STUFF
-   */
-  declare type ContextCallFn =
-    & (<R, C: Context, Fn: Fn0<R>>(cfn: [C, Fn], ...rest: Array<void>) => CallEffect0<C, Fn>)
-    & (<T1, R, C: Context, Fn: Fn1<T1, R>>(cfn: [C, Fn], t1: T1, ...rest: Array<void>) => CallEffect1<C, Fn, T1>)
-    & (<T1, T2, R, C: Context, Fn: Fn2<T1, T2, R>>(cfn: [C, Fn], t1: T1, t2: T2, ...rest: Array<void>) => CallEffect2<C, Fn, T1, T2>)
-    & (<T1, T2, T3, R, C: Context, Fn: Fn3<T1, T2, T3, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => CallEffect3<C, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, C: Context, Fn: Fn4<T1, T2, T3, T4, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => CallEffect4<C, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, C: Context, Fn: Fn5<T1, T2, T3, T4, T5, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => CallEffect5<C, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, C: Context, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => CallEffect6<C, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, C: Context, Fn: FnSpread<T, R>>(cfn: [C, Fn], t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => CallEffectSpread<null, Fn, T>);
-
-  declare type CallFn =
-    & ContextCallFn
-    & (<R, Fn: Fn0<R>>(fn: Fn) => CallEffect0<null, Fn>)
-    & (<T1, R, Fn: Fn1<T1, R>>(fn: Fn, t1: T1) => CallEffect1<null, Fn, T1>)
-    & (<T1, T2, R, Fn: Fn2<T1, T2, R>>(fn: Fn, t1: T1, t2: T2) => CallEffect2<null, Fn, T1, T2>)
-    & (<T1, T2, T3, R, Fn: Fn3<T1, T2, T3, R>>(fn: Fn, t1: T1, t2: T2, t3: T3) => CallEffect3<null, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, Fn: Fn4<T1, T2, T3, T4, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4) => CallEffect4<null, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, Fn: Fn5<T1, T2, T3, T4, T5, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5) => CallEffect5<null, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6) => CallEffect6<null, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, Fn: FnSpread<T, R>>(fn: Fn, ...args: Array<T>) => CallEffectSpread<null, Fn, T>);
-
-  /**
-   * FORK STUFF
-   */
-  declare type ContextForkFn =
-    & (<R, C: Context, Fn: Fn0<R>>(cfn: [C, Fn], ...rest: Array<void>) => ForkEffect0<C, Fn>)
-    & (<T1, R, C: Context, Fn: Fn1<T1, R>>(cfn: [C, Fn], t1: T1, ...rest: Array<void>) => ForkEffect1<C, Fn, T1>)
-    & (<T1, T2, R, C: Context, Fn: Fn2<T1, T2, R>>(cfn: [C, Fn], t1: T1, t2: T2, ...rest: Array<void>) => ForkEffect2<C, Fn, T1, T2>)
-    & (<T1, T2, T3, R, C: Context, Fn: Fn3<T1, T2, T3, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => ForkEffect3<C, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, C: Context, Fn: Fn4<T1, T2, T3, T4, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => ForkEffect4<C, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, C: Context, Fn: Fn5<T1, T2, T3, T4, T5, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => ForkEffect5<C, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, C: Context, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => ForkEffect6<C, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, C: Context, Fn: FnSpread<T, R>>(cfn: [C, Fn], t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => ForkEffectSpread<null, Fn, T>);
-
-  declare type ForkFn =
-    & ContextForkFn
-    & (<R, Fn: Fn0<R>>(fn: Fn, ...rest: Array<void>) => ForkEffect0<null, Fn>)
-    & (<T1, R, Fn: Fn1<T1, R>>(fn: Fn, t1: T1, ...rest: Array<void>) => ForkEffect1<null, Fn, T1>)
-    & (<T1, T2, R, Fn: Fn2<T1, T2, R>>(fn: Fn, t1: T1, t2: T2, ...rest: Array<void>) => ForkEffect2<null, Fn, T1, T2>)
-    & (<T1, T2, T3, R, Fn: Fn3<T1, T2, T3, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => ForkEffect3<null, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, Fn: Fn4<T1, T2, T3, T4, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => ForkEffect4<null, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, Fn: Fn5<T1, T2, T3, T4, T5, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => ForkEffect5<null, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => ForkEffect6<null, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, Fn: FnSpread<T, R>>(fn: Fn, t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => ForkEffectSpread<null, Fn, T>);
-
-  /**
-   * CPS STUFF
-   */
-  declare type ContextCpsFn =
-    & (<R, C: Context, Fn: Fn0<R>>(cfn: [C, Fn], ...rest: Array<void>) => CpsEffect0<C, Fn>)
-    & (<T1, R, C: Context, Fn: Fn1<T1, R>>(cfn: [C, Fn], t1: T1, ...rest: Array<void>) => CpsEffect1<C, Fn, T1>)
-    & (<T1, T2, R, C: Context, Fn: Fn2<T1, T2, R>>(cfn: [C, Fn], t1: T1, t2: T2, ...rest: Array<void>) => CpsEffect2<C, Fn, T1, T2>)
-    & (<T1, T2, T3, R, C: Context, Fn: Fn3<T1, T2, T3, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => CpsEffect3<C, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, C: Context, Fn: Fn4<T1, T2, T3, T4, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => CpsEffect4<C, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, C: Context, Fn: Fn5<T1, T2, T3, T4, T5, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => CpsEffect5<C, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, C: Context, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => CpsEffect6<C, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, C: Context, Fn: FnSpread<T, R>>(cfn: [C, Fn], t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => CpsEffectSpread<null, Fn, T>);
-
-  declare type CpsFn =
-    & ContextCpsFn
-    & (<R, Fn: Fn0<R>>(fn: Fn, ...rest: Array<void>) => CpsEffect0<null, Fn>)
-    & (<T1, R, Fn: Fn1<T1, R>>(fn: Fn, t1: T1, ...rest: Array<void>) => CpsEffect1<null, Fn, T1>)
-    & (<T1, T2, R, Fn: Fn2<T1, T2, R>>(fn: Fn, t1: T1, t2: T2, ...rest: Array<void>) => CpsEffect2<null, Fn, T1, T2>)
-    & (<T1, T2, T3, R, Fn: Fn3<T1, T2, T3, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => CpsEffect3<null, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, Fn: Fn4<T1, T2, T3, T4, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => CpsEffect4<null, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, Fn: Fn5<T1, T2, T3, T4, T5, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => CpsEffect5<null, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => CpsEffect6<null, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, Fn: FnSpread<T, R>>(fn: Fn, t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => CpsEffectSpread<null, Fn, T>);
-
-  /**
-   * SPAWN STUFF
-   */
-  declare type ContextSpawnFn =
-    & (<R, C: Context, Fn: Fn0<R>>(cfn: [C, Fn], ...rest: Array<void>) => SpawnEffect0<C, Fn>)
-    & (<T1, R, C: Context, Fn: Fn1<T1, R>>(cfn: [C, Fn], t1: T1, ...rest: Array<void>) => SpawnEffect1<C, Fn, T1>)
-    & (<T1, T2, R, C: Context, Fn: Fn2<T1, T2, R>>(cfn: [C, Fn], t1: T1, t2: T2, ...rest: Array<void>) => SpawnEffect2<C, Fn, T1, T2>)
-    & (<T1, T2, T3, R, C: Context, Fn: Fn3<T1, T2, T3, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => SpawnEffect3<C, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, C: Context, Fn: Fn4<T1, T2, T3, T4, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => SpawnEffect4<C, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, C: Context, Fn: Fn5<T1, T2, T3, T4, T5, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => SpawnEffect5<C, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, C: Context, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(cfn: [C, Fn], t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => SpawnEffect6<C, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, C: Context, Fn: FnSpread<T, R>>(cfn: [C, Fn], t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => SpawnEffectSpread<null, Fn, T>);
-
-  declare type SpawnFn =
-    & ContextSpawnFn
-    & (<R, Fn: Fn0<R>>(fn: Fn, ...rest: Array<void>) => SpawnEffect0<null, Fn>)
-    & (<T1, R, Fn: Fn1<T1, R>>(fn: Fn, t1: T1, ...rest: Array<void>) => SpawnEffect1<null, Fn, T1>)
-    & (<T1, T2, R, Fn: Fn2<T1, T2, R>>(fn: Fn, t1: T1, t2: T2, ...rest: Array<void>) => SpawnEffect2<null, Fn, T1, T2>)
-    & (<T1, T2, T3, R, Fn: Fn3<T1, T2, T3, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => SpawnEffect3<null, Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, R, Fn: Fn4<T1, T2, T3, T4, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => SpawnEffect4<null, Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, R, Fn: Fn5<T1, T2, T3, T4, T5, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => SpawnEffect5<null, Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, R, Fn: Fn6<T1, T2, T3, T4, T5, T6, R>>(fn: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => SpawnEffect6<null, Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, R, Fn: FnSpread<T, R>>(fn: Fn, t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...args: Array<T>) => SpawnEffectSpread<null, Fn, T>);
-
-  /**
-   * SELECT STUFF
-   */
-  declare type SelectFn =
-    & (<Fn: SelectFn>(selector: Fn, ...rest: Array<void>) => SelectEffect0<Fn>)
-    & (<T1, Fn: SelectFn1<T1>>(selector: Fn, t1: T1, ...rest: Array<void>) => SelectEffect1<Fn, T1>)
-    & (<T1, T2, Fn: SelectFn2<T1, T2>>(selector: Fn, t1: T1, t2: T2, ...rest: Array<void>) => SelectEffect2<Fn, T1, T2>)
-    & (<T1, T2, T3, Fn: SelectFn3<T1, T2, T3>>(selector: Fn, t1: T1, t2: T2, t3: T3, ...rest: Array<void>) => SelectEffect3<Fn, T1, T2, T3>)
-    & (<T1, T2, T3, T4, Fn: SelectFn4<T1, T2, T3, T4>>(selector: Fn, t1: T1, t2: T2, t3: T3, t4: T4, ...rest: Array<void>) => SelectEffect4<Fn, T1, T2, T3, T4>)
-    & (<T1, T2, T3, T4, T5, Fn: SelectFn5<T1, T2, T3, T4, T5>>(selector: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, ...rest: Array<void>) => SelectEffect5<Fn, T1, T2, T3, T4, T5>)
-    & (<T1, T2, T3, T4, T5, T6, Fn: SelectFn6<T1, T2, T3, T4, T5, T6>>(selector: Fn, t1: T1, t2: T2, t3: T3, t4: T4, t5: T5, t6: T6, ...rest: Array<void>) => SelectEffect6<Fn, T1, T2, T3, T4, T5, T6>)
-    & (<T, Fn: SelectFnSpread<T>>(selector: Fn, t1: T, t2: T, t3: T, t4: T, t5: T, t6: T, ...rest: Array<T>) => SelectEffectSpread<Fn, T>)
-
-  declare type TakeFn = {
-    <P: Pattern>(                  pattern: P): TakeEffect<P>;
-    <P: Pattern>(channel: Channel, pattern: P): TakeEffect<P>;
-  }
-
-  declare type PutFn = {
-    <T: Object>(action: T): PutEffect<T>;
-    <T: Object>(channel: Channel, action: T): PutEffect<T>;
-  }
-
-  declare type ActionChannelFn = {
-    <P: Pattern>(pattern: P, buffer?: Buffer): ActionChannelEffect<P>;
-  }
-
-  declare type JoinFn = {
-    (task: Task): JoinEffect;
-  }
-
-  declare type CancelFn = {
-    (task: Task): CancelEffect;
-  }
-
-  declare type RaceFn = {
-    <T: {[key: string]: IOEffect}>(effects: T): RaceEffect<T>;
-  }
-
-  declare type FlushFn = {
-    (channel: Channel): FlushEffect;
-  }
-
-  declare module.exports: {
-    take: TakeFn,
-    takem: TakeFn,
-    put: PutFn,
-    race: RaceFn,
-    call: CallFn,
-    apply: ApplyFn,
-    cps: CpsFn,
-    fork: ForkFn,
-    spawn: SpawnFn,
-    join: JoinFn,
-    cancel: CancelFn,
-    select: SelectFn,
-    actionChannel: ActionChannelFn,
-    cancelled: () => CancelledEffect,
-    flush: FlushFn,
-  }
+  declare export var effects: Effects;
+  declare export var utils: Utils;
 }

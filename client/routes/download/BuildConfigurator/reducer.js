@@ -1,8 +1,5 @@
-import { register } from '../../../store/asyncReducers';
-import { sagaMiddleware } from '../../../store/saga';
 import * as $ from './actionTypes';
 import config from './config';
-import saga from './saga';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 
@@ -286,6 +283,3 @@ export default function buildConfiguratorReducer(state = config, action) {
 
   return state;
 }
-
-register('build', buildConfiguratorReducer);
-sagaMiddleware.run(saga);

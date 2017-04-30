@@ -1,7 +1,7 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createReducer from './createReducer';
 import breakpointMiddeware from './middleware/breakpoint';
-import { sagaMiddleware, saga as defaultSaga } from './saga';
+import sagaMiddleware from './saga';
 import type { Store } from 'redux';
 
 declare var module: {
@@ -32,7 +32,6 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 const store = createStore(createReducer(), compose(applyMiddleware(...middleware), ...composed));
-sagaMiddleware.run(defaultSaga);
 
 if (process.env.NODE_ENV !== 'production') {
   // Enable Webpack hot module replacement for reducers

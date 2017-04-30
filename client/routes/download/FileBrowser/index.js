@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actions as $$ } from './reducer';
 import ControlledPanel from '../../../components/ControlledPanel';
 import Browser from './components/Browser';
+import { actions as $$ } from './reducer';
+import { register } from '../../../store/asyncReducers';
+import reduxSaga from '../../../store/saga';
+import reducer from './reducer';
+import saga from './saga';
 
 function isClosed({ browser: { open } }) {
   return open === false;
@@ -30,5 +34,8 @@ class FileBrowser extends React.Component {
     );
   }
 }
+
+register('browser', reducer);
+reduxSaga.run(saga);
 
 export default connect(null, { browserOpen: $$.browserOpen })(FileBrowser);
