@@ -132,8 +132,13 @@ app.get('/build/:build/:version', routeBuild);
 // Legacy re-directs
 app.get('/license.php', (req, res) => res.redirect(301, '/license'));
 
-// React server-side rendering
-app.get('*', (req, res) => {
+// App
+app.get('*', (req, res, next) => {
+  if (req.accepts('html', '*/*') !== 'html') {
+    next();
+    return;
+  }
+
   let preloadScripts;
   let entry;
   let webpackManifest;
@@ -183,7 +188,6 @@ app.get('*', (req, res) => {
 });
 
 // Page not found
-
 app.use((req, res) => {
   res.status(404);
 
