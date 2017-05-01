@@ -6,7 +6,7 @@ import styles from './styles';
 import LoaderSpinner from '../LoaderSpinner';
 import { loadStatus, saga } from './reducer';
 import type { Task } from 'redux-saga';
-import type { TcStatus, TcStatusObject } from './reducer';
+import type { TcStatus } from './reducer';
 import typeof { loadStatus as LoadStatus } from './reducer';
 
 type OwnProps = {
@@ -14,7 +14,7 @@ type OwnProps = {
 };
 
 type ConnectProps = OwnProps &
-  TcStatusObject & {
+  TcStatus & {
     loadStatus: LoadStatus,
   };
 

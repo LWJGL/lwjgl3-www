@@ -1,39 +1,45 @@
 import { takeEvery, call, put } from 'redux-saga/effects';
 
-export type TcStatus = 'loading' | 'passing' | 'failing' | 'unknown';
-
-export type TcStatusObject = {
-  status: TcStatus,
-  build?: string,
-};
-
-type State = {
-  [_: string]: TcStatusObject,
-};
-
-type Action = {
-  type: string,
-  name: string,
-  state?: TcStatusObject,
-};
-
 // Actions
-const LOAD_STATUS = 'TEAMCITY_STATUS/LOAD';
-const STORE_STATUS = 'TEAMCITY_STATUS/STORE';
+type LOAD_STATUS_TYPE = 'TEAMCITY_STATUS/LOAD';
+type STORE_STATUS_TYPE = 'TEAMCITY_STATUS/STORE';
+const LOAD_STATUS: LOAD_STATUS_TYPE = 'TEAMCITY_STATUS/LOAD';
+const STORE_STATUS: STORE_STATUS_TYPE = 'TEAMCITY_STATUS/STORE';
 
 // Action Creators
-export const loadStatus = (name: string): Action => ({ type: LOAD_STATUS, name });
-export const storeStatus = (name: string, status: TcStatus, build?: string): Action => ({
+type ActionLoad = {
+  type: LOAD_STATUS_TYPE,
+  name: string,
+};
+export const loadStatus = (name: string): ActionLoad => ({ type: LOAD_STATUS, name });
+
+export type TC_STATUS = 'loading' | 'passing' | 'failing' | 'unknown';
+export type TcStatus = {
+  status: TC_STATUS,
+  build?: string,
+};
+type ActionStore = {
+  type: STORE_STATUS_TYPE,
+  name: string,
+  payload: TcStatus,
+};
+export const storeStatus = (name: string, status: TC_STATUS, build?: string): ActionStore => ({
   type: STORE_STATUS,
   name,
-  state: { status, build },
+  payload: { status, build },
 });
 
+type Action = ActionLoad | ActionStore;
+
 // Reducer
+type State = {
+  [_: string]: TcStatus,
+};
+
 export default function(state: State = {}, action: Action) {
   switch (action.type) {
     case STORE_STATUS:
-      return { ...state, [action.name]: action.state };
+      return { ...state, [action.name]: action.payload };
   }
 
   return state;
@@ -63,7 +69,7 @@ function* getStatus(action: Action) {
   const { name } = action;
 
   try {
-    const response: TcStatusObject = yield call(fetchStatus, `/teamcity?build=${name}`);
+    const response: TcStatus = yield call(fetchStatus, `/teamcity?build=${name}`);
     yield put(storeStatus(name, response.status, response.build));
   } catch (e) {
     yield put(storeStatus(name, 'unknown'));
