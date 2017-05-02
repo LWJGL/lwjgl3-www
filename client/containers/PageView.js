@@ -44,7 +44,7 @@ class PageView extends React.Component<void, Props, void> {
   }
 
   render() {
-    return <div>{this.props.children}</div>;
+    return this.props.children;
   }
 }
 
