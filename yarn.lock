@@ -3802,9 +3802,9 @@ react-deep-force-update@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-2.0.1.tgz#4f7f6c12c3e7de42f345992a3c518236fa1ecad3"
 
-react-dom@16.0.0-alpha.11:
-  version "16.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-alpha.11.tgz#f35df79a5542448a4e256d71f1519c9a5ed723f5"
+react-dom@16.0.0-alpha.12:
+  version "16.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0-alpha.12.tgz#c9894ccfd9600ef87952e05340903180b013171e"
   dependencies:
     fbjs "^0.8.9"
     loose-envify "^1.1.0"
@@ -3893,9 +3893,9 @@ react-side-effect@^1.1.0:
     exenv "^1.2.1"
     shallowequal "^0.2.2"
 
-react@16.0.0-alpha.11:
-  version "16.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.11.tgz#357aa68e9ed15b4a2076fa13ed738382fa25b5c9"
+react@16.0.0-alpha.12:
+  version "16.0.0-alpha.12"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.0.0-alpha.12.tgz#8c59485281485df319b6f77682d8dd0621c08194"
   dependencies:
     create-react-class "^15.5.2"
     fbjs "^0.8.9"
