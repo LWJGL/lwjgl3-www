@@ -1,14 +1,14 @@
-## [LWJGL.org](https://www.lwjgl.org) - The home of Lightweight Java Game Library 3
+# [LWJGL.org](https://www.lwjgl.org) - The home of Lightweight Java Game Library 3
 
 The website for LWJGL 3.
 
-### Production Requirements
+## Production Requirements
 
 - [Node.js](https://nodejs.org/)
 - [Yarn](https://yarnpkg.com/)
 - [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
 
-### Dependencies
+## Dependencies
 
 Static assets are loaded from LWJGL's CDN ( AWS CloudFront ).
 
@@ -29,7 +29,7 @@ A static copy of the old LWJGL website is now hosted directly from S3
 - The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/).
 A static copy of the old LWJGL wiki is now hosted directly from S3.
 
-### App Configuration
+## App Configuration
 
 Place a JSON file in the root directory named config.json with the following contents.
 Additional settings are automatically populated when the project is built for production.
@@ -45,6 +45,8 @@ Additional settings are automatically populated when the project is built for pr
   }
 }
 ```
+
+## Development
 
 ### Build/running in development
 
@@ -82,7 +84,21 @@ Monitor for /server changes and auto-restart with:
 npm run watch
 ```
 
-# Production
+### Development flags
+
+Disable Hot Module Reloading:
+
+```bash
+node server --nohmr
+```
+
+Enable async routes:
+
+```bash
+node server --async
+```
+
+## Production
 
 The website is served via Amazon CloudFront using the server's hostname & port as origin.
 SSL Termination happens on the CDN (using a certificate issued by AWS Certificate Manager).
@@ -161,4 +177,24 @@ and then run:
 
 ```bash
 forever start forever.json
+```
+
+### Production flags
+
+Disable Pug view caching:
+
+```bash
+node server --nocache
+```
+
+Pretty print HTML:
+
+```bash
+node server --pretty
+```
+
+Proxy S3 images:
+
+```bash
+node server --s3proxy
 ```

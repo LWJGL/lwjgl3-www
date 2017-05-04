@@ -60,6 +60,13 @@ app.use(helmet(helmetConfig(app.locals.production)));
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 if (app.locals.development) {
+  if (argv.async !== undefined) {
+    process.env.ASYNC = 'true';
+  }
+  if (argv.nohmr !== undefined) {
+    process.env.NOHMR = 'true';
+  }
+
   const webpack = require('webpack');
   const webpackConfig = require('../webpack.config');
   const webpackCompiler = webpack(webpackConfig);
@@ -75,12 +82,14 @@ if (app.locals.development) {
     })
   );
 
-  app.use(
-    require('webpack-hot-middleware')(webpackCompiler, {
-      path: '/__webpack_hmr',
-      heartbeat: 10 * 1000,
-    })
-  );
+  if (argv.nohmr === undefined) {
+    app.use(
+      require('webpack-hot-middleware')(webpackCompiler, {
+        path: '/__webpack_hmr',
+        heartbeat: 10 * 1000,
+      })
+    );
+  }
 }
 
 if (app.locals.development || argv.s3proxy) {

@@ -24,7 +24,7 @@ export default function() {
   // Render React
   const rootEl = document.getElementById('lwjgl-app');
 
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production' || process.env.NOHMR === 'true') {
     render(<App store={store} />, rootEl);
   } else {
     const AppContainer = require('react-hot-loader').AppContainer;

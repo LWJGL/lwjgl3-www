@@ -19,6 +19,15 @@ const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 
+const env = {
+  'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
+};
+
+if (DEV) {
+  env['process.env.NOHMR'] = process.env.NOHMR === 'true' ? JSON.stringify('true') : JSON.stringify('false');
+  env['process.env.ASYNC_ROUTES'] = process.env.ASYNC === 'true' ? JSON.stringify('true') : JSON.stringify('false');
+}
+
 const buildConfiguration = () => {
   const config = {
     target: 'web',
@@ -97,9 +106,7 @@ const buildConfiguration = () => {
       ],
     },
     plugins: [
-      new DefinePlugin({
-        'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
-      }),
+      new DefinePlugin(env),
       new LoaderOptionsPlugin({
         minimize: PRODUCTION,
         debug: false,
@@ -135,13 +142,17 @@ const buildConfiguration = () => {
 
   if (DEV) {
     // WebPack Hot Middleware client & HMR plugins
-    config.entry.main.unshift('webpack-hot-middleware/client', 'react-hot-loader/patch');
+    if (process.env.NOHMR !== 'true') {
+      config.entry.main.unshift('webpack-hot-middleware/client', 'react-hot-loader/patch');
+    }
 
     config.module.rules[0].use.unshift('cache-loader');
     // config.module.rules[1].use.unshift('cache-loader');
 
+    if (process.env.NOHMR !== 'true') {
+      config.plugins.push(new HotModuleReplacementPlugin());
+    }
     config.plugins.push(
-      new HotModuleReplacementPlugin(),
       new NoEmitOnErrorsPlugin(),
       new NamedModulesPlugin(),
       new DllReferencePlugin({

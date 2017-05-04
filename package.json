@@ -102,7 +102,7 @@
     "sass-loader": "6.0.3",
     "serve-favicon": "2.4.2",
     "style-loader": "0.17.0",
-    "webpack": "2.4.1",
+    "webpack": "2.5.0",
     "webpack-chunk-hash": "0.4.0",
     "whatwg-fetch": "2.0.3",
     "yargs": "8.0.1"
@@ -118,7 +118,7 @@
   },
   "scripts": {
     "start": "node server",
-    "start-production": "cross-env NODE_ENV=production node server --s3proxy --nocache --pretty",
+    "test-production": "cross-env NODE_ENV=production node server --s3proxy --nocache --pretty",
     "watch": "nodemon --watch server server/index.js",
     "vendor": "webpack --config webpack.vendor.config.js --progress --color",
     "build": "cross-env NODE_ENV=development webpack --progress --color",

@@ -35,9 +35,11 @@ const store = createStore(createReducer(), compose(applyMiddleware(...middleware
 
 if (process.env.NODE_ENV !== 'production') {
   // Enable Webpack hot module replacement for reducers
-  module.hot.accept('./createReducer', () => {
-    store.replaceReducer(createReducer());
-  });
+  if (module.hot) {
+    module.hot.accept('./createReducer', () => {
+      store.replaceReducer(createReducer());
+    });
+  }
 }
 
 export default store;
