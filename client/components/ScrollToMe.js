@@ -21,14 +21,12 @@ class ScrollToMe extends React.Component<void, Props, void> {
     window.scrollTo(0, this.el.offsetTop);
   }
 
+  getRef = (n: HTMLDivElement) => {
+    this.el = n;
+  };
+
   render() {
-    return (
-      <div
-        ref={n => {
-          this.el = n;
-        }}
-      />
-    );
+    return <div ref={this.getRef} />;
   }
 }
 

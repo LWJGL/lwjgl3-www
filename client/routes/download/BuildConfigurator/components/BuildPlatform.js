@@ -4,12 +4,13 @@ import Checkbox from '../../../../components/Checkbox';
 import { togglePlatform } from '../actions';
 
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
+import type { NATIVES } from '../constants';
 
 import IconWindows from 'react-icons/fa/windows';
 import IconLinux from 'react-icons/fa/linux';
 import IconMacos from 'react-icons/fa/apple';
 
-const getIcon = platform => {
+const getIcon = (platform: NATIVES) => {
   switch (platform) {
     case NATIVE_WIN:
       return <IconWindows />;
@@ -18,12 +19,12 @@ const getIcon = platform => {
     case NATIVE_LINUX:
       return <IconLinux />;
     default:
-      return null;
+      return undefined;
   }
 };
 
 class BuildPlatform extends React.Component {
-  toggle = platform => {
+  toggle = (platform: NATIVES) => {
     this.props.togglePlatform(platform);
   };
 

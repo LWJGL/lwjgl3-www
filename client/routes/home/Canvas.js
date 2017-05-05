@@ -15,7 +15,7 @@ let group = null;
 let renderer = null;
 
 function resizeCanvas() {
-  if (camera !== null) {
+  if (camera !== null && canvas !== null) {
     const winW = canvas.parentNode.offsetWidth;
     const winH = canvas.parentNode.offsetHeight;
     camera.aspect = winW / winH;
@@ -145,14 +145,12 @@ class HomeCanvas extends React.Component {
     unload();
   }
 
+  getRef = (el: HTMLCanvasElement) => {
+    this.canvas = el;
+  };
+
   render() {
-    return (
-      <canvas
-        ref={el => {
-          this.canvas = el;
-        }}
-      />
-    );
+    return <canvas ref={this.getRef} />;
   }
 }
 

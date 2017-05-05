@@ -120,16 +120,23 @@ class Sidebar extends React.Component<void, Props, State> {
     this.sideContainer.style.transform = `translateX(${translateX}px)`;
   };
 
+  getRefSliding = (el: HTMLDivElement) => {
+    this.slidingMenu = el;
+  };
+
+  getRefSlidingOverlay = (el: HTMLDivElement) => {
+    this.sideContainer = el;
+  };
+
+  getRefCloseBtn = (el: HTMLDivElement) => {
+    this.closeButton = el;
+  };
+
   render() {
     let isOpen = this.state.open;
 
     return (
-      <div
-        ref={el => {
-          this.slidingMenu = el;
-        }}
-        className={`col sliding-menu${isOpen ? ' open' : ''}`}
-      >
+      <div ref={this.getRefSliding} className={`col sliding-menu${isOpen ? ' open' : ''}`}>
         <button
           type="button"
           className="btn-link sliding-menu-icon"
@@ -141,9 +148,7 @@ class Sidebar extends React.Component<void, Props, State> {
         </button>
         <div className="sliding-menu-overlay" onClick={this.onToggle} />
         <div
-          ref={el => {
-            this.sideContainer = el;
-          }}
+          ref={this.getRefSlidingOverlay}
           className="sliding-menu-container"
           role="menu"
           aria-hidden={!isOpen}
@@ -151,9 +156,7 @@ class Sidebar extends React.Component<void, Props, State> {
         >
           <div className="text-right">
             <button
-              ref={el => {
-                this.closeButton = el;
-              }}
+              ref={this.getRefCloseBtn}
               type="button"
               className="btn-link sliding-menu-icon"
               onClick={this.onToggle}

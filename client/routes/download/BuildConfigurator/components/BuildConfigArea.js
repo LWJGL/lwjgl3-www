@@ -1,34 +1,34 @@
-import React from 'react'
-import supportsPassive from '../../../../services/supports-passive'
+import React from 'react';
+import supportsPassive from '../../../../services/supports-passive';
 
 class BuildConfigArea extends React.Component {
-
-  ticking = false;
-  forceUpdate = false;
+  ticking: boolean = false;
+  forceUpd: boolean = false;
+  container: HTMLDivElement;
 
   componentDidMount() {
-    window.addEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
-    window.addEventListener('resize', this.onScroll, supportsPassive ? {passive: true} : false);
+    window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
+    window.addEventListener('resize', this.onScroll, supportsPassive ? { passive: true } : false);
     this.update();
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
-    window.removeEventListener('resize', this.onScroll, supportsPassive ? {passive: true} : false);
+    window.removeEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
+    window.removeEventListener('resize', this.onScroll, supportsPassive ? { passive: true } : false);
   }
 
   componentWillUpdate() {
-    this.forceUpdate = true;
+    this.forceUpd = true;
   }
 
   componentDidUpdate() {
-    if ( this.forceUpdate ) {
+    if (this.forceUpd) {
       setImmediate(this.update);
     }
   }
 
   onScroll = () => {
-    if ( !this.ticking ) {
+    if (!this.ticking) {
       requestAnimationFrame(this.update);
       this.ticking = true;
     }
@@ -38,21 +38,24 @@ class BuildConfigArea extends React.Component {
     this.ticking = false;
     const rect = this.container.getBoundingClientRect();
 
-    if ( rect.top + rect.height > window.innerHeight ) {
+    if (rect.top + rect.height > window.innerHeight) {
       this.container.classList.add('stick');
     } else {
       this.container.classList.remove('stick');
     }
   };
 
+  getRef = (el: HTMLDivElement) => {
+    this.container = el;
+  };
+
   render() {
     return (
-      <div className="build-config" ref={(el) => {this.container = el}}>
+      <div className="build-config" ref={this.getRef}>
         {this.props.children}
       </div>
     );
   }
-
 }
 
-export default BuildConfigArea
+export default BuildConfigArea;

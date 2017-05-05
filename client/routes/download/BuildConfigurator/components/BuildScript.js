@@ -6,13 +6,17 @@ import BuildToolbar from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
 import IconCopy from 'react-icons/md/content-copy';
 
+const ALLOW_DOWNLOAD = window.btoa !== undefined;
+
 class BuildScript extends React.Component {
+  script: HTMLPreElement;
+
   copyToClipboard = () => {
-    const selection = window.getSelection && window.getSelection();
-    if (!selection) {
+    if (window.getSelection === undefined) {
       alert('Copying to clipboard not supported!');
       return;
     }
+    const selection = window.getSelection();
     if (selection.rangeCount > 0) {
       selection.removeAllRanges();
     }
@@ -22,6 +26,10 @@ class BuildScript extends React.Component {
     document.execCommand('copy');
     selection.removeAllRanges();
     alert('Script copied to clipboard.');
+  };
+
+  getRef = (el: HTMLPreElement) => {
+    this.script = el;
   };
 
   render() {
@@ -39,7 +47,7 @@ class BuildScript extends React.Component {
 
     if (current < sm) {
       labels.download = 'DOWNLOAD';
-      labels.copy = null;
+      labels.copy = '';
     } else if (current < md) {
       labels.copy = ' COPY';
     }
@@ -51,11 +59,7 @@ class BuildScript extends React.Component {
         <h2 className="mt-1">
           <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
         </h2>
-        <pre
-          ref={el => {
-            this.script = el;
-          }}
-        >
+        <pre ref={this.getRef}>
           <code>{script}</code>
         </pre>
         <BuildToolbar>
@@ -63,7 +67,7 @@ class BuildScript extends React.Component {
             className="btn btn-success"
             download={mode.file}
             href={`data:${mime(mode)};base64,${btoa(script)}`}
-            disabled={!window.btoa}
+            disabled={ALLOW_DOWNLOAD}
             title={`Download ${mode} code snippet`}
           >
             <IconDownload /> {labels.download}

@@ -7,7 +7,6 @@ try {
       supportsPassive = true;
     },
   });
-  // $FlowFixMe
   window.addEventListener('test', null, opts);
 } catch (ignore) {}
 
