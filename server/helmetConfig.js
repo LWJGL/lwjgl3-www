@@ -15,6 +15,7 @@ const helmetConfig = production => {
           'https://api.travis-ci.org',
           'https://travis-ci.org',
           'https://www.google-analytics.com',
+          'https://appveyor-matrix-badges.herokuapp.com',
         ],
         scriptSrc: [
           "'self'",
