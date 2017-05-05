@@ -89,10 +89,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/2"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/2"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -137,10 +137,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/assimp">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/1"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/1"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -150,10 +150,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/assimp">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/2"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/2"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -197,10 +197,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/bgfx">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/1"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/1"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -210,10 +210,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/bgfx">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/2"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/2"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -257,10 +257,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/dyncall">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/1"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/1"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -270,10 +270,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/dyncall">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/2"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/2"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -317,10 +317,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/glfw">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/1"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/1"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -330,10 +330,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/glfw">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/2"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/2"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -377,10 +377,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/1"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/1"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -390,10 +390,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/2"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/2"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -437,10 +437,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/1"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/1"
+                        alt=""
                       />
                     </a>
                   </td>
@@ -450,10 +450,10 @@ const SourceRoute = (props: ContextRouter) => (
                   <td>
                     <a href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft">
                       <img
-                          width={90}
-                          height={20}
-                          src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/2"
-                          alt=""
+                        width={90}
+                        height={20}
+                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/2"
+                        alt=""
                       />
                     </a>
                   </td>
