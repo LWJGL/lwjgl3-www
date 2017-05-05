@@ -124,7 +124,7 @@
     "build": "cross-env NODE_ENV=development webpack --progress --color",
     "production": "cross-env NODE_ENV=production webpack --progress --color --json > ./public/js/webpack.manifest.json",
     "manifest": "node ./scripts/process-manifest.js",
-    "release": "npm run production && npm run manifest",
+    "release": "yarn run production && yarn run manifest",
     "flow": "flow"
   }
 }
