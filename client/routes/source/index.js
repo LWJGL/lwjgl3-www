@@ -4,6 +4,23 @@ import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import FaGithub from 'react-icons/fa/github';
 
+type BadgeProps = {
+  title: string,
+  href: string,
+  src: string,
+};
+
+const BuildBadge = ({ title, href, src }: BadgeProps) => (
+  <tr>
+    <th>{title}</th>
+    <td>
+      <a href={href} target="_blank">
+        <img width={90} height={20} src={src} alt={`${title} build status`} />
+      </a>
+    </td>
+  </tr>
+);
+
 const SourceRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
@@ -44,58 +61,26 @@ const SourceRoute = (props: ContextRouter) => (
             <h2>LWJGL</h2>
             <table className="table table-bordered table-inverse">
               <tbody>
-                <tr>
-                  <th>Linux x64</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-linux64"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>macOS</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-macosx"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x64</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/1"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x86</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/2"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
+                <BuildBadge
+                  title="Linux x64"
+                  href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"
+                  src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-linux64"
+                />
+                <BuildBadge
+                  title="macOS"
+                  href="https://travis-ci.org/LWJGL-CI/lwjgl3/branches"
+                  src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-macosx"
+                />
+                <BuildBadge
+                  title="Windows x64"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/1"
+                />
+                <BuildBadge
+                  title="Windows x86"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/2"
+                />
               </tbody>
             </table>
           </div>
@@ -105,58 +90,26 @@ const SourceRoute = (props: ContextRouter) => (
             <h2>Assimp</h2>
             <table className="table table-bordered table-inverse">
               <tbody>
-                <tr>
-                  <th>Linux x64</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/assimp/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>macOS</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/assimp/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master-macos"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x64</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/assimp">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/1"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x86</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/assimp">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/2"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
+                <BuildBadge
+                  title="Linux x64"
+                  href="https://travis-ci.org/LWJGL-CI/assimp/branches"
+                  src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master"
+                />
+                <BuildBadge
+                  title="macOS"
+                  href="https://travis-ci.org/LWJGL-CI/assimp/branches"
+                  src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master-macos"
+                />
+                <BuildBadge
+                  title="Windows x64"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/assimp"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/1"
+                />
+                <BuildBadge
+                  title="Windows x86"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/assimp"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/2"
+                />
               </tbody>
             </table>
           </div>
@@ -165,58 +118,26 @@ const SourceRoute = (props: ContextRouter) => (
             <h2>bgfx</h2>
             <table className="table table-bordered table-inverse">
               <tbody>
-                <tr>
-                  <th>Linux x64</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/bgfx/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-linux"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>macOS</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/bgfx/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-macos"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x64</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/bgfx">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/1"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x86</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/bgfx">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/2"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
+                <BuildBadge
+                  title="Linux x64"
+                  href="https://travis-ci.org/LWJGL-CI/bgfx/branches"
+                  src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-linux"
+                />
+                <BuildBadge
+                  title="macOS"
+                  href="https://travis-ci.org/LWJGL-CI/bgfx/branches"
+                  src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-macos"
+                />
+                <BuildBadge
+                  title="Windows x64"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/bgfx"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/1"
+                />
+                <BuildBadge
+                  title="Windows x86"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/bgfx"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/2"
+                />
               </tbody>
             </table>
           </div>
@@ -225,58 +146,26 @@ const SourceRoute = (props: ContextRouter) => (
             <h2>dyncall</h2>
             <table className="table table-bordered table-inverse">
               <tbody>
-                <tr>
-                  <th>Linux x64</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/dyncall/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-linux64"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>macOS</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/dyncall/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-macosx"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x64</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/dyncall">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/1"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x86</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/dyncall">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/2"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
+                <BuildBadge
+                  title="Linux x64"
+                  href="https://travis-ci.org/LWJGL-CI/dyncall/branches"
+                  src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-linux64"
+                />
+                <BuildBadge
+                  title="macOS"
+                  href="https://travis-ci.org/LWJGL-CI/dyncall/branches"
+                  src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-macosx"
+                />
+                <BuildBadge
+                  title="Windows x64"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/dyncall"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/1"
+                />
+                <BuildBadge
+                  title="Windows x86"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/dyncall"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/2"
+                />
               </tbody>
             </table>
           </div>
@@ -285,58 +174,26 @@ const SourceRoute = (props: ContextRouter) => (
             <h2>GLFW</h2>
             <table className="table table-bordered table-inverse">
               <tbody>
-                <tr>
-                  <th>Linux x64</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/glfw/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-linux64"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>macOS</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/glfw/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-macosx"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x64</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/glfw">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/1"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x86</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/glfw">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/2"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
+                <BuildBadge
+                  title="Linux x64"
+                  href="https://travis-ci.org/LWJGL-CI/glfw/branches"
+                  src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-linux64"
+                />
+                <BuildBadge
+                  title="macOS"
+                  href="https://travis-ci.org/LWJGL-CI/glfw/branches"
+                  src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-macosx"
+                />
+                <BuildBadge
+                  title="Windows x64"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/glfw"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/1"
+                />
+                <BuildBadge
+                  title="Windows x86"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/glfw"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/2"
+                />
               </tbody>
             </table>
           </div>
@@ -345,58 +202,26 @@ const SourceRoute = (props: ContextRouter) => (
             <h2>jemalloc</h2>
             <table className="table table-bordered table-inverse">
               <tbody>
-                <tr>
-                  <th>Linux x64</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/jemalloc/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-linux64"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>macOS</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/jemalloc/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-macosx"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x64</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/1"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x86</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/2"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
+                <BuildBadge
+                  title="Linux x64"
+                  href="https://travis-ci.org/LWJGL-CI/jemalloc/branches"
+                  src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-linux64"
+                />
+                <BuildBadge
+                  title="macOS"
+                  href="https://travis-ci.org/LWJGL-CI/jemalloc/branches"
+                  src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-macosx"
+                />
+                <BuildBadge
+                  title="Windows x64"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/1"
+                />
+                <BuildBadge
+                  title="Windows x86"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/2"
+                />
               </tbody>
             </table>
           </div>
@@ -405,58 +230,26 @@ const SourceRoute = (props: ContextRouter) => (
             <h2>OpenAL Soft</h2>
             <table className="table table-bordered table-inverse">
               <tbody>
-                <tr>
-                  <th>Linux x64</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-linux64"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>macOS</th>
-                  <td>
-                    <a href="https://travis-ci.org/LWJGL-CI/openal-soft/branches">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-macosx"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x64</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/1"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
-                <tr>
-                  <th>Windows x86</th>
-                  <td>
-                    <a href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft">
-                      <img
-                        width={90}
-                        height={20}
-                        src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/2"
-                        alt=""
-                      />
-                    </a>
-                  </td>
-                </tr>
+                <BuildBadge
+                  title="Linux x64"
+                  href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"
+                  src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-linux64"
+                />
+                <BuildBadge
+                  title="macOS"
+                  href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"
+                  src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-macosx"
+                />
+                <BuildBadge
+                  title="Windows x64"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/1"
+                />
+                <BuildBadge
+                  title="Windows x86"
+                  href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
+                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/2"
+                />
               </tbody>
             </table>
           </div>

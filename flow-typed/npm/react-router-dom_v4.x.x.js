@@ -163,6 +163,7 @@ declare module 'react-router-dom' {
   declare type MatchPathOptions = {
     exact?: boolean,
     strict?: boolean,
-  }
-  declare export function matchPath(pathname: string, path: string, options?: MatchPathOptions): null | Match
+  };
+
+  declare export function matchPath(pathname: string, path: string, options?: MatchPathOptions): null | Match;
 }
