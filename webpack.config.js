@@ -40,7 +40,7 @@ const buildConfiguration = () => {
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: DEV ? '[name].js' : '[name].[chunkhash].js',
-      chunkFilename: DEV ? '[name].js' : '[name].[chunkhash].js',
+      chunkFilename: DEV ? '[name].js' : '[name].[id].[chunkhash].js',
       publicPath: '/js/',
     },
     resolve: {
@@ -117,9 +117,7 @@ const buildConfiguration = () => {
       //   minChunks: 2,
       // }),
     ],
-    // recordsPath: path.resolve(__dirname, `./scripts/recordsPath.js.json`),
-    // recordsInputPath: path.resolve(__dirname, `./scripts/recordsInputPath.js.json`),
-    // recordsOutputPath: path.resolve(__dirname, `./scripts/recordsOutputPath.js.json`),
+    // recordsPath: path.resolve(__dirname, `./recordsPath.json`),
     stats: {
       assets: true,
       cached: false,
