@@ -59,13 +59,13 @@ yarn
 2. To build vendor JS file run:
 
 ```bash
-npm run vendor
+yarn vendor
 ```
 
 3. To start the server in dev mode:
 
 ```bash
-npm start
+yarn start
 # or
 node server
 ```
@@ -81,7 +81,7 @@ npm -g i nodemon
 Monitor for /server changes and auto-restart with:
 
 ```bash
-npm run watch
+yarn watch
 ```
 
 ### Development flags
@@ -107,7 +107,7 @@ SSL Termination happens on the CDN (using a certificate issued by AWS Certificat
 
 ```bash
 yarn
-npm run release
+yarn release
 ```
 
 To run the production build ( in *nix )
@@ -120,8 +120,6 @@ or force production with (not recommended)
 
 ```bash
 node server --production
-# or
-npm run start-production
 ```
 
 ### Run in production with PM2
