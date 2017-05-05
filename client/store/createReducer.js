@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import breakpoint from './reducers/breakpoint';
 import buildStatus from '../components/BuildStatus/reducer';
-// import teamcityStatus from '../components/TeamcityStatus/reducer';
 
 import type { Reducer } from 'redux';
 
@@ -13,7 +12,6 @@ export default function createReducer(asyncReducers: ?AsyncReducers): Reducer<an
   const reducers = {
     breakpoint,
     buildStatus,
-    // teamcityStatus,
     ...asyncReducers,
   };
 

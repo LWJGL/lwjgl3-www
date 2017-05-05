@@ -122,9 +122,6 @@ app.use(
   })
 );
 
-// Teamcity proxy
-app.get('/teamcity', require('./teamcity'));
-
 // Retrieval of artifacts dir/file structure
 const routeBin = require('./bin');
 app.get('/bin/:build', routeBin);

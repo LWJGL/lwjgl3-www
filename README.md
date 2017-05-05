@@ -16,10 +16,6 @@ We use [Google Analytics](http://www.google.com/analytics) for tracking.
 
 Build status icons are loaded directly from travis-ci.org.
 
-A username account to LWJGL's TeamCity server is required for loading
-Windows build statuses. Node proxies requests to
-[teamcity.lwjgl.org](http://teamcity.lwjgl.org) to avoid SSL issues.
-
 Other LWJGL subdomains:
 
 - The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www).
@@ -38,10 +34,6 @@ Additional settings are automatically populated when the project is built for pr
 {
   "server": {
     "port": 8080
-  },
-  "teamcity": {
-    "username": "<user>",
-    "password": "<pass>"
   }
 }
 ```
