@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== 'production') {
   );
   */
 
-  if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) {
+  if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== undefined) {
     // https://github.com/zalmoxisus/redux-devtools-extension
     composed.push(window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__());
   }

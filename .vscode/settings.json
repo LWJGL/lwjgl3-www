@@ -11,6 +11,7 @@
   "flow.useNPMPackagedFlow": true,
   "files.exclude": {
     "**/.vscode": true,
-    "**/.cache-loader": true
+    "**/.cache-loader": true,
+    "**/public/js/*.js*": true
   }
 }

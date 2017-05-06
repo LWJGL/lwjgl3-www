@@ -16,17 +16,20 @@ const WebpackChunkHash = require('webpack-chunk-hash');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
+const { argv } = require('yargs');
+const config = require('./config.json');
+
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
+const HMR = argv.nohmr === undefined;
 
 const env = {
   'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
+  HOSTNAME: JSON.stringify(config.hostname),
+  ANALYTICS_TRACKING_ID: JSON.stringify(config.analytics_tracking_id),
+  NOHMR: String(HMR === false),
+  ASYNC_ROUTES: String(argv.async !== undefined),
 };
-
-if (DEV) {
-  env['process.env.NOHMR'] = process.env.NOHMR === 'true' ? JSON.stringify('true') : JSON.stringify('false');
-  env['process.env.ASYNC_ROUTES'] = process.env.ASYNC === 'true' ? JSON.stringify('true') : JSON.stringify('false');
-}
 
 const buildConfiguration = () => {
   const config = {
@@ -139,15 +142,12 @@ const buildConfiguration = () => {
   };
 
   if (DEV) {
-    // WebPack Hot Middleware client & HMR plugins
-    if (process.env.NOHMR !== 'true') {
-      config.entry.main.unshift('webpack-hot-middleware/client', 'react-hot-loader/patch');
-    }
-
     config.module.rules[0].use.unshift('cache-loader');
     // config.module.rules[1].use.unshift('cache-loader');
 
-    if (process.env.NOHMR !== 'true') {
+    // WebPack Hot Middleware client & HMR plugins
+    if (HMR) {
+      config.entry.main.unshift('webpack-hot-middleware/client', 'react-hot-loader/patch');
       config.plugins.push(new HotModuleReplacementPlugin());
     }
     config.plugins.push(

@@ -9,7 +9,7 @@ export const Source = AR(() => import(/* webpackChunkName: "route-source" */ './
 export const License = AR(() => import(/* webpackChunkName: "route-license" */ './license'));
 
 // Force import during development to enable Hot-Module Replacement
-if (process.env.NODE_ENV === 'development' && process.env.ASYNC_ROUTES !== 'true') {
+if (process.env.NODE_ENV === 'development' && !ASYNC_ROUTES) {
   require('./home');
   require('./download');
   require('./guide');

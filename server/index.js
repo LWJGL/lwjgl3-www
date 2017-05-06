@@ -43,7 +43,7 @@ if (app.locals.production) {
 app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
 
-app.set('port', config.server.port);
+app.set('port', config.port || 80);
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
@@ -60,13 +60,6 @@ app.use(helmet(helmetConfig(app.locals.production)));
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 
 if (app.locals.development) {
-  if (argv.async !== undefined) {
-    process.env.ASYNC = 'true';
-  }
-  if (argv.nohmr !== undefined) {
-    process.env.NOHMR = 'true';
-  }
-
   const webpack = require('webpack');
   const webpackConfig = require('../webpack.config');
   const webpackCompiler = webpack(webpackConfig);

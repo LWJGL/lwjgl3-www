@@ -32,9 +32,9 @@ Additional settings are automatically populated when the project is built for pr
 
 ```json
 {
-  "server": {
-    "port": 8080
-  }
+  "port": 8080,
+  "hostname": "www.lwjgl.org",
+  "analytics_tracking_id": "UA-XXXXXXX-X",
 }
 ```
 

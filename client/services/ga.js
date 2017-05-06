@@ -3,9 +3,9 @@ import loadJS from 'fg-loadjs';
 // Use this to load GA on demand
 let firstCall = true;
 
-let track = function() {
+const track = function(command: string, ...fields: Array<any>): void {
   if (process.env.NODE_ENV === 'production' && firstCall) {
-    if (document.location.hostname === 'www.lwjgl.org') {
+    if (document.location.hostname === HOSTNAME) {
       loadJS('https://www.google-analytics.com/analytics.js');
     }
     firstCall = false;
@@ -21,7 +21,7 @@ window.ga = track;
 window.GoogleAnalyticsObject = 'ga';
 
 // Create primary Tracker
-track('create', 'UA-83518-1', 'auto');
+track('create', ANALYTICS_TRACKING_ID, 'auto');
 
 // Uncomment to enable Remarketing, Demographics and Interest Reporting
 // track('require', 'displayfeatures');
