@@ -1,7 +1,6 @@
-/*
 import React from 'react';
-import PropTypes from 'prop-types';
 // https://github.com/jonschlinkert/remarkable
+// $FlowFixMe
 import Remarkable from 'remarkable';
 
 type Props = {
@@ -42,5 +41,3 @@ const Markdown = ({ tag = 'div', source, children, options, ...rest }: Props) =>
 };
 
 export default Markdown;
-*/
-export default null;

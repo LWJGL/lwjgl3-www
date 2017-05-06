@@ -19,7 +19,8 @@ module.use_strict=true
 munge_underscores=true
 strip_root=true
 module.file_ext=.js
+module.file_ext=.jsx
 # Stub SCSS files to avoid Flow errors
 module.name_mapper='.*\.scss$'->'<PROJECT_ROOT>/client/types/stub/CSSModule.js'
 # Stub all react-icons to <Icon />
-module.name_mapper='.*react-icons/.*'->'<PROJECT_ROOT>/client/components/Icon.js'
+module.name_mapper='.*react-icons/.*'->'<PROJECT_ROOT>/client/components/Icon.jsx'

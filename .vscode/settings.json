@@ -13,5 +13,8 @@
     "**/.vscode": true,
     "**/.cache-loader": true,
     "**/public/js/*.js*": true
+  },
+  "files.associations": {
+    "**/client/**/*.jsx": "javascriptreact"
   }
 }
