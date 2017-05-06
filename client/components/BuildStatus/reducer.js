@@ -1,17 +1,6 @@
 import { takeEvery, call, put, select } from 'redux-saga/effects';
 
-// Actions
-type LOAD_STATUS_TYPE = 'BUILD_STATUS/LOAD';
-type STORE_STATUS_TYPE = 'BUILD_STATUS/STORE';
-const LOAD_STATUS: LOAD_STATUS_TYPE = 'BUILD_STATUS/LOAD';
-const STORE_STATUS: STORE_STATUS_TYPE = 'BUILD_STATUS/STORE';
-
-// Action Creators
-type ActionLoad = {
-  type: LOAD_STATUS_TYPE,
-  name: string,
-};
-export const loadStatus = (name: string): ActionLoad => ({ type: LOAD_STATUS, name });
+// Data Types
 
 type StatusSuccess = {|
   lastModified: string,
@@ -19,11 +8,36 @@ type StatusSuccess = {|
 |};
 type StatusError = {| error: string |};
 type Status = StatusSuccess | StatusError;
+
+// Reducer Data Types
+
+type BUILD_STATUS_LOAD = 'BUILD_STATUS/LOAD';
+type BUILD_STATUS_STORE = 'BUILD_STATUS/STORE';
+
+type ActionLoad = {
+  type: BUILD_STATUS_LOAD,
+  name: string,
+};
+
 type ActionStore = {
-  type: STORE_STATUS_TYPE,
+  type: BUILD_STATUS_STORE,
   name: string,
   payload: Status,
 };
+
+type Action = ActionLoad | ActionStore;
+
+type State = {
+  [_: string]: Status,
+};
+
+// Actions
+const LOAD_STATUS: BUILD_STATUS_LOAD = 'BUILD_STATUS/LOAD';
+const STORE_STATUS: BUILD_STATUS_STORE = 'BUILD_STATUS/STORE';
+
+// Action Creators
+export const loadStatus = (name: string): ActionLoad => ({ type: LOAD_STATUS, name });
+
 export const storeStatus = (name: string, payload: Status): ActionStore => {
   if (payload.error === undefined && payload.version !== undefined) {
     payload.version = payload.version.replace(/^LWJGL\s+/, '');
@@ -31,14 +45,7 @@ export const storeStatus = (name: string, payload: Status): ActionStore => {
   return { type: STORE_STATUS, name, payload };
 };
 
-type Action = ActionLoad | ActionStore;
-
 // Reducer
-
-type State = {
-  [_: string]: Status,
-};
-
 export default function BuildStatusReducer(state: State = {}, action: Action) {
   switch (action.type) {
     case STORE_STATUS:
