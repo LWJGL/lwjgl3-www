@@ -23,7 +23,7 @@ type State = {
   hidden: boolean,
 };
 
-class Header extends React.Component<void, Props, State> {
+class Header extends React.PureComponent<void, Props, State> {
   prev = 0;
   current = 0;
   direction = 0;
@@ -82,7 +82,9 @@ class Header extends React.Component<void, Props, State> {
     if (this.prev - this.current < 0) {
       // We are scrolling down
       if (IS_IOS) {
-        this.setState({ hidden: true });
+        if (!this.state.hidden) {
+          this.setState({ hidden: true });
+        }
       } else if (this.direction >= 0) {
         // We just started scroll down
         this.direction = -1;
@@ -92,13 +94,15 @@ class Header extends React.Component<void, Props, State> {
         }
       }
 
-      if (this.current > this.offsetHeight) {
+      if (this.current > this.offsetHeight && this.state.top) {
         this.setState({ top: false });
       }
     } else {
       // We are scrolling up
       if (IS_IOS) {
-        this.setState({ hidden: false });
+        if (this.state.hidden) {
+          this.setState({ hidden: false });
+        }
       } else {
         if (this.direction <= 0) {
           // We just started scrolling up
@@ -114,7 +118,7 @@ class Header extends React.Component<void, Props, State> {
         }
       }
 
-      if (this.current <= this.offsetHeight) {
+      if (this.current <= this.offsetHeight && !this.state.top) {
         this.setState({ top: true });
       }
     }

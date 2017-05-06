@@ -14,7 +14,7 @@ type State = {
   open: boolean,
 };
 
-class Sidebar extends React.Component<void, Props, State> {
+class Sidebar extends React.PureComponent<void, Props, State> {
   state = {
     open: false,
   };
@@ -134,6 +134,7 @@ class Sidebar extends React.Component<void, Props, State> {
 
   render() {
     let isOpen = this.state.open;
+    console.log('render');
 
     return (
       <div ref={this.getRefSliding} className={`col sliding-menu${isOpen ? ' open' : ''}`}>
