@@ -8,6 +8,15 @@ The website for LWJGL 3.
 - [Yarn](https://yarnpkg.com/)
 - [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
 
+## Development Prerequisites
+
+- **Yarn**
+- **Nodemon**
+
+```bash
+npm -g i nodemon yarn
+```
+
 ## Dependencies
 
 Static assets are loaded from LWJGL's CDN ( AWS CloudFront ).
@@ -64,30 +73,26 @@ node server
 
 For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
 
-First make sure you have it installed globally:
-
-```bash
-npm -g i nodemon
-```
-
 Monitor for /server changes and auto-restart with:
 
 ```bash
 yarn watch
 ```
 
-### Development flags
+### CLI flags
 
-Disable Hot Module Reloading:
+--nohmr => Disables Hot Module Reloading
+--async => Enables async routes
+--nocache => Disables Pug view caching *(for testing production)*
+--pretty => Pretty prints HTML *(for testing production)*
+--s3proxy => Proxies S3 images *(for testing production)*
 
-```bash
-node server --nohmr
-```
-
-Enable async routes:
+Flag usage example:
 
 ```bash
 node server --async
+node server --async --nohmr
+yarn watch -- --async --nohmr
 ```
 
 ## Production
@@ -98,6 +103,7 @@ SSL Termination happens on the CDN (using a certificate issued by AWS Certificat
 ### Build for production
 
 ```bash
+git pull
 yarn
 yarn release
 ```
@@ -167,24 +173,4 @@ and then run:
 
 ```bash
 forever start forever.json
-```
-
-### Production flags
-
-Disable Pug view caching:
-
-```bash
-node server --nocache
-```
-
-Pretty print HTML:
-
-```bash
-node server --pretty
-```
-
-Proxy S3 images:
-
-```bash
-node server --s3proxy
 ```
