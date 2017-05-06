@@ -2,20 +2,6 @@
 
 The website for LWJGL 3.
 
-## Production Requirements
-
-- [Node.js](https://nodejs.org/)
-- [Yarn](https://yarnpkg.com/)
-- [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
-
-## Development Prerequisites
-
-- **Yarn**
-- **Nodemon**
-
-```bash
-npm -g i nodemon yarn
-```
 
 ## Dependencies
 
@@ -33,6 +19,49 @@ A static copy of the old LWJGL website is now hosted directly from S3
 - The forum is [SMF](http://www.simplemachines.org/).
 - The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/).
 A static copy of the old LWJGL wiki is now hosted directly from S3.
+
+## Production Requirements
+
+- [Node.js](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/)
+- [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
+
+## Development Prerequisites
+
+- **Yarn**
+- **Nodemon**
+
+```bash
+npm -g i nodemon yarn
+```
+
+## IDE Setup
+
+We recommend Visual Studio Code with the following plugins:
+
+- Babel ES6/ES7
+- Flow Language Support
+- Prettier
+
+Other useful plugins:
+
+- Babelrc
+- Beautify *(disable for JavaScript to avoid conflicts with Prettier!)*
+- EditorConfig for VS Code
+- npm
+- npm Intellisense
+- SCSS IntelliSense
+- vscode-icons
+- gitignore
+- Git History (git log)
+
+We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab). In VSCode add the following in your config:
+
+```json
+{
+  "files.autoSave": "onWindowChange"
+}
+```
 
 ## App Configuration
 
