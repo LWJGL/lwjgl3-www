@@ -134,7 +134,6 @@ class Sidebar extends React.PureComponent<void, Props, State> {
 
   render() {
     let isOpen = this.state.open;
-    console.log('render');
 
     return (
       <div ref={this.getRefSliding} className={`col sliding-menu${isOpen ? ' open' : ''}`}>
