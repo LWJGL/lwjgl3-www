@@ -155,7 +155,7 @@ const buildConfiguration = () => {
       new NoEmitOnErrorsPlugin(),
       new NamedModulesPlugin(),
       new DllReferencePlugin({
-        context: '.',
+        context: __dirname,
         manifest: require('./public/js/vendor-manifest.json'),
       })
     );

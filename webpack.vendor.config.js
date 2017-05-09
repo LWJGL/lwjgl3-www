@@ -45,15 +45,16 @@ const config = {
   output: {
     path: path.resolve(__dirname, 'public/js'),
     filename: '[name].js',
-    library: 'vendor',
+    library: '[name]',
   },
   plugins: [
     new DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
     new DllPlugin({
-      path: path.resolve(__dirname, 'public/js/vendor-manifest.json'),
-      name: 'vendor',
+      context: __dirname,
+      path: path.resolve(__dirname, 'public/js', 'vendor-manifest.json'),
+      name: '[name]',
     }),
   ],
 };
