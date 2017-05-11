@@ -15,6 +15,7 @@
     "**/public/js/*.js*": true
   },
   "files.associations": {
+    "*.mjs": "javascript",
     "**/client/**/*.jsx": "javascriptreact"
   }
 }

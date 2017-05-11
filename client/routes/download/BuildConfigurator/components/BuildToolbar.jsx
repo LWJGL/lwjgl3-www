@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { configDownload, configLoad } from '../actions';
+import { configDownload, configLoad } from '../reducer';
 
 import FileSave from 'react-icons/md/archive';
 import FileOpen from 'react-icons/md/settings-backup-restore';

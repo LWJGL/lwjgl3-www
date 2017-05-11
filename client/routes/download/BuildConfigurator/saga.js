@@ -2,9 +2,26 @@ import { channel, buffers } from 'redux-saga';
 import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects';
 
 import { HTTP_OK } from '../../../services/http_status_codes';
-import * as $ from './actionTypes';
-import { downloadLog as log, downloadComplete } from './actions';
 import { BUILD_RELEASE, STORAGE_KEY } from './constants';
+import {
+  DOWNLOAD_INIT,
+  CONFIG_DOWNLOAD,
+  SELECT_TYPE,
+  SELECT_MODE,
+  SELECT_PRESET,
+  SELECT_LANGUAGE,
+  SELECT_VERSION,
+  TOGGLE_DESCRIPTIONS,
+  TOGGLE_SOURCE,
+  TOGGLE_JAVADOC,
+  TOGGLE_COMPACT,
+  TOGGLE_HARDCODED,
+  TOGGLE_PLATFORM,
+  TOGGLE_ARTIFACT,
+  TOGGLE_ADDON,
+  downloadLog as log,
+  downloadComplete,
+} from './reducer';
 
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
@@ -318,23 +335,23 @@ function* downloadConfig() {
 }
 
 export default function* buildDownloadSaga(): Generator<*, *, *> {
-  yield takeLatest($.DOWNLOAD_INIT, init);
-  yield takeLatest($.CONFIG_DOWNLOAD, downloadConfig);
+  yield takeLatest(DOWNLOAD_INIT, init);
+  yield takeLatest(CONFIG_DOWNLOAD, downloadConfig);
   yield takeLatest(
     [
-      $.SELECT_TYPE,
-      $.SELECT_MODE,
-      $.SELECT_PRESET,
-      $.SELECT_LANGUAGE,
-      $.SELECT_VERSION,
-      $.TOGGLE_DESCRIPTIONS,
-      $.TOGGLE_SOURCE,
-      $.TOGGLE_JAVADOC,
-      $.TOGGLE_COMPACT,
-      $.TOGGLE_HARDCODED,
-      $.TOGGLE_PLATFORM,
-      $.TOGGLE_ARTIFACT,
-      $.TOGGLE_ADDON,
+      SELECT_TYPE,
+      SELECT_MODE,
+      SELECT_PRESET,
+      SELECT_LANGUAGE,
+      SELECT_VERSION,
+      TOGGLE_DESCRIPTIONS,
+      TOGGLE_SOURCE,
+      TOGGLE_JAVADOC,
+      TOGGLE_COMPACT,
+      TOGGLE_HARDCODED,
+      TOGGLE_PLATFORM,
+      TOGGLE_ARTIFACT,
+      TOGGLE_ADDON,
     ],
     saveConfig
   );

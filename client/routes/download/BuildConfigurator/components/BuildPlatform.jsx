@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Checkbox from '../../../../components/Checkbox';
-import { togglePlatform } from '../actions';
+import { togglePlatform } from '../reducer';
 
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import type { NATIVES } from '../constants';

@@ -1,5 +1,6 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import createReducer from './createReducer';
+import reduxThunk from 'redux-thunk';
 import breakpointMiddeware from './middleware/breakpoint';
 import sagaMiddleware from './saga';
 import type { Store } from 'redux';
@@ -10,7 +11,7 @@ declare var module: {
   },
 };
 
-const middleware = [sagaMiddleware, breakpointMiddeware];
+const middleware = [reduxThunk, sagaMiddleware, breakpointMiddeware];
 const composed = [];
 
 if (process.env.NODE_ENV !== 'production') {

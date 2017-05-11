@@ -3,8 +3,20 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { register } from '../../../store/asyncReducers';
 import reduxSaga from '../../../store/saga';
-import * as $$ from './actions';
-import reducer from './reducer';
+import {
+  default as reducer,
+  reset,
+  configLoad,
+  changePreset,
+  changeLanguage,
+  changeVersion,
+  toggleHardcoded,
+  toggleCompact,
+  toggleJavadoc,
+  toggleDescriptions,
+  toggleSource,
+  changeMode,
+} from './reducer';
 import saga from './saga';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
@@ -42,7 +54,7 @@ const fields = {
   mode: {
     name: 'mode',
     value: getMode,
-    action: $$.changeMode,
+    action: changeMode,
     options: createSelector(
       state => state.build.modes,
       state => state.build.build,
@@ -58,7 +70,7 @@ const fields = {
   preset: {
     name: 'preset',
     value: getPreset,
-    action: $$.changePreset,
+    action: changePreset,
     options: createSelector(
       state => state.build.presets,
       presets =>
@@ -71,7 +83,7 @@ const fields = {
   language: {
     name: 'language',
     value: getLanguage,
-    action: $$.changeLanguage,
+    action: changeLanguage,
     options: createSelector(
       state => state.build.languages,
       languages =>
@@ -85,7 +97,7 @@ const fields = {
   version: {
     name: 'version',
     value: getVersion,
-    action: $$.changeVersion,
+    action: changeVersion,
     options: createSelector(
       state => state.build.versions,
       versions =>
@@ -101,30 +113,30 @@ const fields = {
   descriptions: {
     label: 'Show descriptions',
     checked: state => state.build.descriptions,
-    action: $$.toggleDescriptions,
+    action: toggleDescriptions,
   },
   source: {
     label: 'Include source',
     checked: state => state.build.source,
-    action: $$.toggleSource,
+    action: toggleSource,
     hidden: isModeNotZip,
   },
   javadoc: {
     label: 'Include JavaDoc',
     checked: state => state.build.javadoc,
-    action: $$.toggleJavadoc,
+    action: toggleJavadoc,
     hidden: isModeNotZip,
   },
   compact: {
     label: 'Compact Mode',
     checked: state => state.build.compact,
-    action: $$.toggleCompact,
+    action: toggleCompact,
     hidden: state => !hasCompactModeOption(state),
   },
   hardcoded: {
     label: 'Do not use variables',
     checked: state => state.build.hardcoded,
-    action: $$.toggleHardcoded,
+    action: toggleHardcoded,
     hidden: state => isModeZip(state),
   },
 };
@@ -230,6 +242,6 @@ class BuildContainer extends React.Component {
 register('build', reducer);
 
 export default connect(null, {
-  reset: $$.reset,
-  configLoad: $$.configLoad,
+  reset: reset,
+  configLoad: configLoad,
 })(BuildContainer);

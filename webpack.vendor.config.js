@@ -24,6 +24,7 @@ const config = {
 
       // State management
       'redux',
+      'redux-thunk',
       'redux-saga',
       'react-redux',
       'reselect',

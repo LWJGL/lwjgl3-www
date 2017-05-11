@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { downloadInit } from '../actions';
+import { downloadInit } from '../reducer';
 import { MODE_ZIP } from '../constants';
 
 import BuildToolbar from './BuildToolbar';

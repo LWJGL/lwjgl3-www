@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BuildStatus from '../../../../components/BuildStatus';
+import BuildStatus from './BuildStatus';
 import classnames from 'classnames';
 
 import { connect } from 'react-redux';
-import { changeType } from '../actions';
+import { changeType } from '../reducer';
 
 class BuildType extends React.Component {
   static propTypes = {

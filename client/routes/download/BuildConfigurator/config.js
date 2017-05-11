@@ -10,10 +10,9 @@ import {
   MODE_MAVEN,
   MODE_GRADLE,
   MODE_IVY,
-} from './constants'
+} from './constants';
 
 const config = {
-
   lwjgl: {},
   builds: {
     byId: {
@@ -21,16 +20,19 @@ const config = {
         id: BUILD_RELEASE,
         title: 'Release',
         description: 'Latest official release',
+        status: null,
       },
       [BUILD_STABLE]: {
         id: BUILD_STABLE,
         title: 'Stable',
         description: 'Beta quality, verified to work',
+        status: null,
       },
       [BUILD_NIGHTLY]: {
         id: BUILD_NIGHTLY,
         title: 'Nightly',
         description: 'Bleeding edge, possibly broken',
+        status: null,
       },
     },
     allIds: [BUILD_RELEASE, BUILD_STABLE, BUILD_NIGHTLY],
@@ -76,34 +78,32 @@ const config = {
         title: 'Linux',
       },
     },
-    allIds: NATIVE_ALL
+    allIds: NATIVE_ALL,
   },
   languages: {
     byId: {
-      'groovy': {
+      groovy: {
         id: 'groovy',
         title: 'Groovy',
       },
-      'kotlin': {
+      kotlin: {
         id: 'kotlin',
         title: 'Kotlin',
-      }
-    }
+      },
+    },
   },
   presets: {
     byId: {
-      'none': {
+      none: {
         id: 'none',
         title: 'None',
-        artifacts: [
-          'lwjgl'
-        ]
+        artifacts: ['lwjgl'],
       },
-      'custom': {
+      custom: {
         id: 'custom',
         title: 'Custom',
       },
-      'all': {
+      all: {
         id: 'all',
         title: 'Everything',
       },
@@ -123,19 +123,12 @@ const config = {
           'lwjgl-stb',
           'lwjgl-tinyfd',
           'lwjgl-vulkan',
-        ]
+        ],
       },
       'minimal-opengl': {
         id: 'minimal-opengl',
         title: 'Minimal OpenGL',
-        artifacts: [
-          'lwjgl',
-          'lwjgl-glfw',
-          'lwjgl-jemalloc',
-          'lwjgl-openal',
-          'lwjgl-opengl',
-          'lwjgl-stb',
-        ]
+        artifacts: ['lwjgl', 'lwjgl-glfw', 'lwjgl-jemalloc', 'lwjgl-openal', 'lwjgl-opengl', 'lwjgl-stb'],
       },
       'minimal-opengles': {
         id: 'minimal-opengles',
@@ -148,25 +141,18 @@ const config = {
           'lwjgl-openal',
           'lwjgl-opengles',
           'lwjgl-stb',
-        ]
+        ],
       },
       'minimal-vulkan': {
         id: '',
         title: 'Minimal Vulkan',
-        artifacts: [
-          'lwjgl',
-          'lwjgl-glfw',
-          'lwjgl-jemalloc',
-          'lwjgl-openal',
-          'lwjgl-stb',
-          'lwjgl-vulkan',
-        ]
+        artifacts: ['lwjgl', 'lwjgl-glfw', 'lwjgl-jemalloc', 'lwjgl-openal', 'lwjgl-stb', 'lwjgl-vulkan'],
       },
     },
   },
   addons: {
     byId: {
-      'joml': {
+      joml: {
         id: 'joml',
         title: 'JOML',
         description: 'A Java math library for OpenGL rendering calculations.',
@@ -177,7 +163,7 @@ const config = {
           version: '1.9.3',
         },
       },
-      'steamworks4j': {
+      steamworks4j: {
         id: 'steamworks4j',
         title: 'steamworks4j',
         description: 'A library that allows Java applications to access the Steamworks C++ API.',
@@ -187,12 +173,9 @@ const config = {
           artifactId: 'steamworks4j',
           version: '1.6.1',
         },
-      }
+      },
     },
-    allIds: [
-      'joml',
-      'steamworks4j',
-    ]
+    allIds: ['joml', 'steamworks4j'],
   },
 
   // UI State
@@ -216,35 +199,29 @@ const config = {
 };
 
 function getDefaultPlatform() {
-  if ( navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1 ) {
+  if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
     return 'macos';
-  } else if ( navigator.platform.indexOf('Linux') > -1 ) {
+  } else if (navigator.platform.indexOf('Linux') > -1) {
     return 'linux';
   }
 
   return 'windows';
 }
 
-import lwjgl_300 from './lwjgl/3.0.0'
-import lwjgl_310 from './lwjgl/3.1.0'
-import lwjgl_311 from './lwjgl/3.1.1'
-import lwjgl_stable from './lwjgl/stable'
-import lwjgl_nightly from './lwjgl/nightly'
+import lwjgl_300 from './lwjgl/3.0.0';
+import lwjgl_310 from './lwjgl/3.1.0';
+import lwjgl_311 from './lwjgl/3.1.1';
+import lwjgl_stable from './lwjgl/stable';
+import lwjgl_nightly from './lwjgl/nightly';
 
-[
-  lwjgl_300,
-  lwjgl_310,
-  lwjgl_311,
-  lwjgl_stable,
-  lwjgl_nightly
-].reduce((previousBuild, nextBuildConfig) => {
+[lwjgl_300, lwjgl_310, lwjgl_311, lwjgl_stable, lwjgl_nightly].reduce((previousBuild, nextBuildConfig) => {
   const build = nextBuildConfig(previousBuild);
   build.allIds = Object.keys(build.byId).sort();
   config.lwjgl[build.alias || build.version] = build;
   return build;
 }, null);
 
-config.versions = Object.values(config.lwjgl).filter((it) => it['alias'] === undefined).map((it) => it.version).reverse();
+config.versions = Object.values(config.lwjgl).filter(it => it['alias'] === undefined).map(it => it.version).reverse();
 config.version = config.versions[0];
 
 config.modes.allIds = Object.keys(config.modes.byId);
@@ -253,7 +230,9 @@ config.presets.allIds = Object.keys(config.presets.byId);
 
 config.language = config.languages.allIds[0];
 
-config.natives.allIds.forEach((platform) => { config.platform[platform] = false });
+config.natives.allIds.forEach(platform => {
+  config.platform[platform] = false;
+});
 config.platform[getDefaultPlatform()] = true;
 
 export default config;
