@@ -232,7 +232,7 @@ const saveStatus = (state, name, payload) => {
   return state;
 };
 
-export default function buildConfiguratorReducer(state: {} = config, action: Action) {
+export default function buildConfiguratorReducer(state: any = config, action: Action) {
   switch (action.type) {
     case BUILD_STATUS:
       return saveStatus({ ...state }, action.name, action.payload);

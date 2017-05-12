@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actions as $$ } from '../reducer';
-import LoaderSpinner from '../../../../components/LoaderSpinner';
+import LoaderSpinner from 'components/LoaderSpinner';
 import Folder from './Folder';
 import File from './File';
 import { css } from 'aphrodite/no-important';

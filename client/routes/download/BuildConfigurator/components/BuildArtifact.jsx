@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Checkbox from '../../../../components/Checkbox';
+import Checkbox from 'components/Checkbox';
 import { toggleArtifact } from '../reducer';
 import classnames from 'classnames';
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';

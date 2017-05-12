@@ -1,6 +1,6 @@
 import Loadable from 'react-loadable';
 import nprogress from 'nprogress';
-import LoadingComponent from '../components/LoadingPage';
+import LoadingComponent from 'components/LoadingPage';
 
 type Module = { default: any };
 type PromiseModule = Promise<Module>;

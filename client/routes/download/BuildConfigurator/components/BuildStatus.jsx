@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LoaderSpinner from '../../../../components/LoaderSpinner';
+import LoaderSpinner from 'components/LoaderSpinner';
 import { loadStatus } from '../reducer';
-import typeof { loadStatus as LoadStatusType, BuildStatus as BuildStatusType } from '../reducer';
+import type { BuildStatus as BuildStatusType } from '../reducer';
+import typeof { loadStatus as LoadStatusType } from '../reducer';
 
 type OwnProps = {
   name: string,
@@ -10,7 +11,7 @@ type OwnProps = {
 
 type ConnectProps = {
   loadStatus: LoadStatusType,
-  status?: BuildStatusType,
+  status: BuildStatusType,
 };
 
 type Props = OwnProps & ConnectProps;
@@ -25,7 +26,7 @@ class BuildStatus extends React.Component<void, Props, void> {
   }
 
   render() {
-    const { status } = this.props;
+    const status = this.props.status;
     const loading = status === null;
     const lastModified = !loading && status.lastModified ? status.lastModified : <br />;
 

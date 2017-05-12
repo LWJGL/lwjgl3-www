@@ -1,5 +1,5 @@
 import React from 'react';
-import PageView from '../../containers/PageView';
+import PageView from 'containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import FaGithub from 'react-icons/fa/github';

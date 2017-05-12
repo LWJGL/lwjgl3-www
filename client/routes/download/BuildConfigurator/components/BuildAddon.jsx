@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Checkbox from '../../../../components/Checkbox';
+import Checkbox from 'components/Checkbox';
 import { toggleAddon } from '../reducer';
 
 class BuildAddon extends React.Component {

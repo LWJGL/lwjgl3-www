@@ -1,7 +1,7 @@
 import { channel, buffers } from 'redux-saga';
 import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects';
 
-import { HTTP_OK } from '../../../services/http_status_codes';
+import { HTTP_OK } from 'services/http_status_codes';
 import { BUILD_RELEASE, STORAGE_KEY } from './constants';
 import {
   DOWNLOAD_INIT,

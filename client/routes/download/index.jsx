@@ -1,9 +1,9 @@
 import React from 'react';
-import PageView from '../../containers/PageView';
+import PageView from 'containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import Style from '../../components/Style';
+import Style from 'components/Style';
 
 import BuildContainer from './BuildConfigurator';
 import FileBrowser from './FileBrowser';

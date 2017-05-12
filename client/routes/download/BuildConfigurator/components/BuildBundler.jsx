@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LoaderSpinner from '../../../../components/LoaderSpinner';
+import LoaderSpinner from 'components/LoaderSpinner';
 
 class BuildBundler extends React.Component {
   componentDidMount() {

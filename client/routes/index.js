@@ -1,4 +1,4 @@
-import AR from '../services/asyncRoute';
+import AR from 'services/asyncRoute';
 
 // Import causes routes to be code-split
 // We have to specify each route name/path in order to be statically analyzed by webpack

@@ -5,8 +5,8 @@ import Header from './Header';
 import Footer from './Footer';
 
 // Routes
-import { Home, Download, Guide, Source, License } from '../routes';
-import Miss404 from '../routes/miss404';
+import { Home, Download, Guide, Source, License } from 'routes';
+import Miss404 from 'routes/miss404';
 
 const Layout = () => [
   <Helmet key="helmet" titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />,

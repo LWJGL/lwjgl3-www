@@ -26,7 +26,7 @@ const defaultState = {
 export { $ as types };
 export { $$ as actions };
 
-export default function fileBrowserReducer(state = defaultState, action) {
+export default function fileBrowserReducer(state: any = defaultState, action: {}) {
   switch (action.type) {
     case $.BROWSER_OPEN:
       return { ...state, open: true };

@@ -1,8 +1,8 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { register } from '../../../store/asyncReducers';
-import reduxSaga from '../../../store/saga';
+import { register } from 'store/asyncReducers';
+import reduxSaga from 'store/saga';
 import {
   default as reducer,
   reset,
@@ -21,10 +21,10 @@ import saga from './saga';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
 
-import ControlledPanel from '../../../components/ControlledPanel';
-import ControlledRadio from '../../../components/ControlledRadio';
-import ControlledCheckbox from '../../../components/ControlledCheckbox';
-import ControlledToggle from '../../../components/ControlledToggle';
+import ControlledPanel from 'components/ControlledPanel';
+import ControlledRadio from 'components/ControlledRadio';
+import ControlledCheckbox from 'components/ControlledCheckbox';
+import ControlledToggle from 'components/ControlledToggle';
 
 import BuildConfigArea from './components/BuildConfigArea';
 import BuildType from './components/BuildType';

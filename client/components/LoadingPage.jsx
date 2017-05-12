@@ -1,5 +1,5 @@
 import React from 'react';
-import LoaderSpinner from '../components/LoaderSpinner';
+import LoaderSpinner from 'components/LoaderSpinner';
 import type { LoadingComponentProps } from 'react-loadable';
 
 const LoadingPage = ({ isLoading, pastDelay, error }: LoadingComponentProps) => {

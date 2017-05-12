@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ControlledPanel from '../../../components/ControlledPanel';
+import ControlledPanel from 'components/ControlledPanel';
 import Browser from './components/Browser';
 import { actions as $$ } from './reducer';
-import { register } from '../../../store/asyncReducers';
-import reduxSaga from '../../../store/saga';
+import { register } from 'store/asyncReducers';
+import reduxSaga from 'store/saga';
 import reducer from './reducer';
 import saga from './saga';
 

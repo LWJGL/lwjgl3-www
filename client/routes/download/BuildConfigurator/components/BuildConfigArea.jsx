@@ -1,5 +1,5 @@
 import React from 'react';
-import supportsPassive from '../../../../services/supports-passive';
+import supportsPassive from 'services/supports-passive';
 
 class BuildConfigArea extends React.Component {
   ticking: boolean = false;

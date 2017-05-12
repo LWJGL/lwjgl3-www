@@ -47,6 +47,7 @@ const buildConfiguration = () => {
       publicPath: '/js/',
     },
     resolve: {
+      modules: [path.join(__dirname, 'client'), 'node_modules'],
       extensions: ['.js', '.jsx'],
       alias: {
         // Load our custom version of react-icon-base
