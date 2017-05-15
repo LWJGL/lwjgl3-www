@@ -275,11 +275,18 @@ function* init() {
 
   //noinspection JSUnresolvedVariable
   const blob = yield apply(zip, zip.generateAsync, [zipOptions]);
-  saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : new Date().toJSON().substr(0, 10)}-custom.zip`);
+  saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : getToday()}-custom.zip`);
 
   yield put(log(`Done!`));
   yield put(downloadComplete());
 }
+
+const getToday = () => {
+  const d = new Date();
+  const month = d.getMonth() + 1;
+  const date = d.getDate();
+  return `${d.getFullYear()}-${month > 9 ? month : '0' + month}-${date > 9 ? date : '0' + date}`;
+};
 
 const keepChecked = src => {
   // Keep only checked items to avoid phantom selections
