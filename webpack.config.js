@@ -15,6 +15,7 @@ const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
 const WebpackChunkHash = require('webpack-chunk-hash');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+// const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 
 const { argv } = require('yargs');
 const config = require('./config.json');
@@ -163,6 +164,7 @@ const buildConfiguration = () => {
   } else {
     config.plugins.push(
       new IgnorePlugin(/(redux-logger|react-hot-loader)/),
+      // new ModuleConcatenationPlugin(),
       new HashedModuleIdsPlugin(),
       new WebpackChunkHash(),
       new ChunkManifestPlugin({
