@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 const optimizeJs = require('optimize-js');
 const fs = require('fs');
@@ -11,7 +11,7 @@ const webpackManifest = require('../public/js/webpack.manifest.json');
 const prettyBytes = require('./prettyBytes');
 const formatSize = require('./formatSize');
 
-const headStyle = {head: ['cyan']};
+const headStyle = { head: ['cyan'] };
 
 /*
  * ------------------------------------------------------------------------------------------------------------------------
@@ -24,7 +24,7 @@ let manifest = {};
 function buildManifest() {
   console.log(chalk.yellow('\n Detecting entry point & chunks:'));
 
-  const tbl = new Table({head: ['Type', 'Bundle'], style: headStyle});
+  const tbl = new Table({ head: ['Type', 'Bundle'], style: headStyle });
 
   // We'll use this to boot the app
   // "main" here is the name of the entry in webpack.config.js (config.entry.main)
@@ -39,30 +39,19 @@ function buildManifest() {
 
   // Detect routes from chunk paths
   // ------------------------------
-  webpackManifest.chunks.forEach((chunk) => {
-    if ( chunk.entry === true ) {
+  webpackManifest.chunks.forEach(chunk => {
+    if (chunk.entry === true) {
       // This is the entry chunk, ignore
       return;
     }
 
-    // We know that routes split points are all in RoutesProduction.js
-    // Therefore find the module which has that issuerName
-
-    let routeModule = null;
-    for (let module of chunk.modules) {
-      if ( module.issuerName === './client/routes/index.js' ) {
-        routeModule = module.name;
-        break;
-      }
-    }
-    if ( routeModule === null ) {
+    if (!chunk.names[0].startsWith('route')) {
       // Not a route, ignore
       return;
     }
 
-    const route = routeModule.match(/^\.\/client\/routes\/([a-z][a-z-_/]+)\/index\.js$/);
-
-    if ( route !== null ) {
+    const route = chunk.names[0].match(/^route[-]([a-z][a-z-_/]+)$/);
+    if (route !== null) {
       manifest.routes[route[1]] = chunk.files[0];
     }
   });
@@ -88,15 +77,12 @@ function buildManifest() {
 function optimizeJS() {
   console.log(chalk.yellow('\n Optimizing files:\n'));
 
-  webpackManifest.assets.forEach((asset) => {
-    if ( !asset.name.endsWith('.js') ) {
+  webpackManifest.assets.forEach(asset => {
+    if (!asset.name.endsWith('.js')) {
       return;
     }
     const filename = path.resolve(__dirname, `../public/js/${asset.name}`);
-    fs.writeFileSync(
-      filename,
-      optimizeJs(fs.readFileSync(filename, {encoding: 'utf-8'}))
-    );
+    fs.writeFileSync(filename, optimizeJs(fs.readFileSync(filename, { encoding: 'utf-8' })));
   });
 
   console.log('  OK');
@@ -110,43 +96,40 @@ function optimizeJS() {
 
 function filesReportBuild(files) {
   const tbl = new Table({
-    head: [
-      'Title',
-      'File',
-      'Size',
-      'Gzipped'
-    ],
+    head: ['Title', 'File', 'Size', 'Gzipped'],
     colAligns: ['left', 'left', 'right', 'right'],
-    style: headStyle
+    style: headStyle,
   });
 
   let sum = 0;
   let sumGzip = 0;
 
-  files.map((file) => {
-    const stat = fs.statSync(file.path);
-    if ( !stat.isFile() ) {
-      throw new Error(`${file.path} is not a file`);
-    }
+  files
+    .map(file => {
+      const stat = fs.statSync(file.path);
+      if (!stat.isFile()) {
+        throw new Error(`${file.path} is not a file`);
+      }
 
-    file.size = stat.size;
-    file.gzip = gzipSize.sync(fs.readFileSync(file.path));
-    return file;
-  }).forEach((file) => {
-    const isRoot = file.name === 'entry';
-    const isCss = file.type === 'css';
-    sum += file.size;
-    sumGzip += file.gzip;
-    tbl.push([
-      isRoot ? chalk.magenta(file.name) : file.name,
-      path.basename(file.path),
-      formatSize(file.size, false, isRoot, isCss),
-      formatSize(file.gzip, true, isRoot, isCss)
-    ]);
-  });
+      file.size = stat.size;
+      file.gzip = gzipSize.sync(fs.readFileSync(file.path));
+      return file;
+    })
+    .forEach(file => {
+      const isRoot = file.name === 'entry';
+      const isCss = file.type === 'css';
+      sum += file.size;
+      sumGzip += file.gzip;
+      tbl.push([
+        isRoot ? chalk.magenta(file.name) : file.name,
+        path.basename(file.path),
+        formatSize(file.size, false, isRoot, isCss),
+        formatSize(file.gzip, true, isRoot, isCss),
+      ]);
+    });
 
-  if ( files.length > 1 ) {
-    tbl.push(['', chalk.cyan('TOTAL'), prettyBytes(sum), prettyBytes(sumGzip)])
+  if (files.length > 1) {
+    tbl.push(['', chalk.cyan('TOTAL'), prettyBytes(sum), prettyBytes(sumGzip)]);
   }
 
   console.log(tbl.toString());
@@ -155,29 +138,26 @@ function filesReportBuild(files) {
 function filesReport(entry, routes) {
   filesReportBuild([
     {
-      name: "entry",
+      name: 'entry',
       path: path.resolve(__dirname, '../public/js', entry),
       size: 0,
       gzip: 0,
       type: 'js',
     },
-    ...Object.keys(routes).map((route) => ({
+    ...Object.keys(routes).map(route => ({
       name: route,
       path: path.resolve(__dirname, '../public/js', routes[route]),
       size: 0,
       gzip: 0,
       type: 'js',
-    }))
+    })),
   ]);
 }
 
 buildManifest();
 optimizeJS();
 
-if ( manifest.entry ) {
+if (manifest.entry) {
   console.log(chalk.yellow('\n JavaScript file size report:'));
-  filesReport(
-    manifest.entry,
-    manifest.routes
-  );
+  filesReport(manifest.entry, manifest.routes);
 }
