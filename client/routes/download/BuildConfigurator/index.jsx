@@ -13,6 +13,7 @@ import {
   toggleHardcoded,
   toggleCompact,
   toggleJavadoc,
+  toggleOSGi,
   toggleDescriptions,
   toggleSource,
   changeMode,
@@ -49,6 +50,8 @@ const isModeNotZip = state => getMode(state) !== MODE_ZIP;
 const isBuildRelease = state => getBuild(state) === BUILD_RELEASE;
 const isDownloading = state => state.build.downloading;
 const isCustomizing = state => !state.build.downloading;
+const showOSGi = state =>
+  isModeNotZip(state) && isBuildRelease(state) && parseInt(getVersion(state).replace(/\./g, ''), 10) >= 312;
 
 const fields = {
   mode: {
@@ -127,6 +130,12 @@ const fields = {
     action: toggleJavadoc,
     hidden: isModeNotZip,
   },
+  osgi: {
+    label: 'OSGi Mode',
+    checked: state => state.build.osgi,
+    action: toggleOSGi,
+    hidden: state => !showOSGi(state),
+  },
   compact: {
     label: 'Compact Mode',
     checked: state => state.build.compact,
@@ -193,6 +202,7 @@ class BuildContainer extends React.Component {
                       <ControlledCheckbox spec={fields.javadoc} />
                       <ControlledToggle spec={fields.hardcoded} />
                       <ControlledToggle spec={fields.compact} />
+                      <ControlledToggle spec={fields.osgi} />
                     </div>
 
                     <BuildPlatform />

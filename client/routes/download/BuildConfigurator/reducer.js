@@ -39,6 +39,7 @@ export const SELECT_VERSION = 'BUILD/SELECT_VERSION';
 export const TOGGLE_DESCRIPTIONS = 'BUILD/TOGGLE_DESCRIPTIONS';
 export const TOGGLE_SOURCE = 'BUILD/TOGGLE_SOURCE';
 export const TOGGLE_JAVADOC = 'BUILD/TOGGLE_JAVADOC';
+export const TOGGLE_OSGI = 'BUILD/TOGGLE_OSGI';
 export const TOGGLE_COMPACT = 'BUILD/TOGGLE_COMPACT';
 export const TOGGLE_HARDCODED = 'BUILD/TOGGLE_HARDCODED';
 export const TOGGLE_PLATFORM = 'BUILD/TOGGLE_PLATFORM';
@@ -276,6 +277,12 @@ export default function buildConfiguratorReducer(state: any = config, action: Ac
       }
       break;
 
+    case TOGGLE_OSGI:
+      if (state.mode !== MODE_ZIP && state.build === BUILD_RELEASE) {
+        return { ...state, osgi: action.osgi };
+      }
+      break;
+
     case SELECT_PRESET:
       if (state.preset !== action.preset) {
         return selectPreset({ ...state }, action.preset);
@@ -356,6 +363,7 @@ export const changeVersion = (version: string) => ({ type: SELECT_VERSION, versi
 export const toggleDescriptions = (enabled: boolean) => ({ type: TOGGLE_DESCRIPTIONS, descriptions: enabled });
 export const toggleSource = (enabled: boolean) => ({ type: TOGGLE_SOURCE, source: enabled });
 export const toggleJavadoc = (enabled: boolean) => ({ type: TOGGLE_JAVADOC, javadoc: enabled });
+export const toggleOSGi = (enabled: boolean) => ({ type: TOGGLE_OSGI, osgi: enabled });
 export const toggleCompact = (enabled: boolean) => ({ type: TOGGLE_COMPACT, compact: enabled });
 export const toggleHardcoded = (enabled: boolean) => ({ type: TOGGLE_HARDCODED, hardcoded: enabled });
 export const toggleArtifact = (artifact: string) => ({ type: TOGGLE_ARTIFACT, artifact });

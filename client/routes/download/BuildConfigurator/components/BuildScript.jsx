@@ -103,7 +103,7 @@ function generateScript(mode, props) {
 }
 
 function generateMaven(props) {
-  const { build, hardcoded, compact, artifacts, selected, addons, selectedAddons } = props;
+  const { build, hardcoded, compact, osgi, artifacts, selected, addons, selectedAddons } = props;
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
@@ -111,6 +111,7 @@ function generateMaven(props) {
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
+  const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
   if (!hardcoded) {
     script += `<properties>
@@ -128,9 +129,9 @@ function generateMaven(props) {
   script += `<dependencies>`;
 
   selected.forEach(artifact => {
-    script += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`;
+    script += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`;
     if (artifacts[artifact].natives !== undefined) {
-      nativesBundle += `\n\t<dependency>${nl2}<groupId>org.lwjgl</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}<scope>runtime</scope>${nl1}</dependency>`;
+      nativesBundle += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}<scope>runtime</scope>${nl1}</dependency>`;
     }
   });
 
@@ -165,11 +166,12 @@ function generateMaven(props) {
 }
 
 function generateGradle(props) {
-  const { build, hardcoded, artifacts, selected, addons, selectedAddons } = props;
+  const { build, hardcoded, osgi, artifacts, selected, addons, selectedAddons } = props;
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
   const v = hardcoded ? version : '\${lwjglVersion}';
+  const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
   script += `import org.gradle.internal.os.OperatingSystem
 
@@ -207,9 +209,9 @@ switch ( OperatingSystem.current() ) {
   script += `dependencies {`;
 
   selected.forEach(artifact => {
-    script += `\n\tcompile "org.lwjgl:${artifact}:${v}"`;
+    script += `\n\tcompile "${groupId}:${artifact}:${v}"`;
     if (artifacts[artifact].natives !== undefined) {
-      nativesBundle += `\n\truntime "org.lwjgl:${artifact}:${v}:\${lwjglNatives}"`;
+      nativesBundle += `\n\truntime "${groupId}:${artifact}:${v}:\${lwjglNatives}"`;
     }
   });
 
@@ -226,7 +228,7 @@ switch ( OperatingSystem.current() ) {
 }
 
 function generateIvy(props) {
-  const { build, hardcoded, compact, artifacts, selected, addons, selectedAddons } = props;
+  const { build, hardcoded, osgi, compact, artifacts, selected, addons, selectedAddons } = props;
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
@@ -234,6 +236,7 @@ function generateIvy(props) {
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
+  const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
   if (!hardcoded || build !== BUILD_RELEASE) script += `\t<!-- Add to ivysettings.xml -->`;
 
@@ -265,9 +268,9 @@ function generateIvy(props) {
 
   selected.forEach(artifact => {
     if (artifacts[artifact].natives === undefined) {
-      script += `\n\t\t<dependency org="org.lwjgl" name="${artifact}" rev="${v}"/>`;
+      script += `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}"/>`;
     } else {
-      script += `\n\t\t<dependency org="org.lwjgl" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="\${lwjgl.natives}"/>${nl2}</dependency>`;
+      script += `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="\${lwjgl.natives}"/>${nl2}</dependency>`;
     }
   });
 
@@ -306,6 +309,7 @@ export default connect(({ build, breakpoint }) => {
     version: build.artifacts.version,
     hardcoded: build.hardcoded,
     compact: build.compact,
+    osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
     artifacts: build.artifacts.byId,
     addons: build.addons,
     selected,
