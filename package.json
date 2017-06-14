@@ -16,7 +16,7 @@
   "dependencies": {
     "aphrodite": "1.2.1",
     "autoprefixer": "7.1.1",
-    "aws-sdk": "2.67.0",
+    "aws-sdk": "2.69.0",
     "babel-core": "7.0.0-alpha.12",
     "babel-loader": "7.0.0",
     "babel-plugin-check-es2015-constants": "7.0.0-alpha.12",
@@ -61,7 +61,7 @@
     "babel-plugin-transform-react-inline-elements": "7.0.0-alpha.12",
     "babel-plugin-transform-react-jsx": "7.0.0-alpha.12",
     "babel-plugin-transform-react-jsx-source": "7.0.0-alpha.12",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.5",
+    "babel-plugin-transform-react-remove-prop-types": "0.4.6",
     "babel-plugin-transform-regenerator": "7.0.0-alpha.12",
     "babel-polyfill": "7.0.0-alpha.12",
     "bootstrap": "4.0.0-alpha.6",
@@ -106,11 +106,11 @@
     "webpack": "3.0.0-rc.1",
     "webpack-chunk-hash": "0.4.0",
     "whatwg-fetch": "2.0.3",
-    "yargs": "8.0.1"
+    "yargs": "8.0.2"
   },
   "devDependencies": {
     "cache-loader": "1.0.3",
-    "flow-bin": "0.47.0",
+    "flow-bin": "0.48.0",
     "prettier": "1.4.4",
     "react-hot-loader": "3.0.0-beta.7",
     "redux-logger": "3.0.6",
