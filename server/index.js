@@ -9,6 +9,7 @@ const favicon = require('serve-favicon');
 const { argv } = require('yargs');
 const chalk = require('chalk');
 const proxy = require('http-proxy-middleware');
+const request = require('request');
 
 // AWS
 const AWS = require('aws-sdk');
