@@ -4,7 +4,6 @@ const DefinePlugin = require('webpack/lib/DefinePlugin');
 const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
 const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 // const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
-const NamedChunksPlugin = require('webpack/lib/NamedChunksPlugin');
 
 // Development
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
@@ -14,7 +13,7 @@ const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 
 // Production
 const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
-const WebpackChunkHash = require('webpack-chunk-hash');
+const WebpackMd5Hash = require('webpack-md5-hash');
 const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
@@ -175,25 +174,7 @@ const buildConfiguration = () => {
       new ModuleConcatenationPlugin(),
       // https://webpack.js.org/guides/caching/#deterministic-hashes
       new HashedModuleIdsPlugin(),
-      new WebpackChunkHash(),
-      // https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
-      new NamedChunksPlugin(
-        chunk => chunk.name || chunk.modules.map(m => path.relative(m.context, m.request)).join('_')
-      ),
-      {
-        apply(compiler) {
-          compiler.plugin('compilation', compilation => {
-            compilation.plugin('before-module-ids', modules => {
-              modules.forEach(module => {
-                if (module.id !== null) {
-                  return;
-                }
-                module.id = module.identifier();
-              });
-            });
-          });
-        },
-      },
+      new WebpackMd5Hash(),
       new ChunkManifestPlugin({
         filename: 'chunks.json',
         manifestVariable: 'webpackManifest',
