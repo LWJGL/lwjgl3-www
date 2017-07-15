@@ -2,18 +2,15 @@
 
 const chunkMap = (routes, path) => {
   let parts = path.split('/');
-  parts.splice(0, 2);
+  parts.shift();
 
-  let route = parts.join('-');
+  const route = parts.join('-');
 
   if (!route.length) {
-    // home page
     return [routes.home];
   } else if (routes[route]) {
-    // e.g. /features/columns
     return [routes[route]];
   } else if (routes[`${route}-home`]) {
-    // e.g. /features
     return [routes[`${route}-home`]];
   }
 

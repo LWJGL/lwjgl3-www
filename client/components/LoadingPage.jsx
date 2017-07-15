@@ -5,7 +5,7 @@ import type { LoadingComponentProps } from 'react-loadable';
 const LoadingPage = ({ isLoading, pastDelay, timedOut, error }: LoadingComponentProps) => {
   if (isLoading && !timedOut) {
     return (
-      <div className="text-center" style={{ padding: '5rem 0', minHeight: '90vh' }}>
+      <div className="text-center" style={{ padding: '5rem 0', minHeight: 'calc(100vh - 4rem)' }}>
         {pastDelay ? <LoaderSpinner size={128} /> : null}
       </div>
     );

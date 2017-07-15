@@ -7,22 +7,15 @@
         "loose": true,
         "modules": false,
         "targets": {
-          "browsers": [
-            "last 1 chrome versions"
-          ]
+          "browsers": ["last 1 chrome versions"]
         },
-        "include": [
-          "transform-es2015-classes"
-        ]
+        "include": ["transform-es2015-classes"]
       }
     ],
     "stage-2",
     "stage-3"
   ],
-  "plugins": [
-    "transform-react-jsx",
-    "transform-flow-strip-types"
-  ],
+  "plugins": ["transform-react-jsx", "transform-flow-strip-types"],
   "env": {
     "production": {
       "presets": [
@@ -34,11 +27,7 @@
             "modules": false,
             "useBuiltins": true,
             "targets": {
-              "browsers": [
-                "> 1%",
-                "ie >= 9",
-                "last 2 versions"
-              ]
+              "browsers": ["> 1%", "ie >= 9", "last 2 versions"]
             }
           }
         ],
@@ -46,13 +35,6 @@
         "stage-3"
       ],
       "plugins": [
-        [
-          "import-inspector",
-          {
-            "serverSideRequirePath": false,
-            "webpackRequireWeakId": true
-          }
-        ],
         "transform-react-constant-elements",
         "transform-react-inline-elements",
         "transform-react-remove-prop-types"
