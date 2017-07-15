@@ -1,3 +1,5 @@
+@import "bootstrap/functions";
 @import "variables";
-@import "../../node_modules/bootstrap/scss/variables";
-@import "../../node_modules/bootstrap/scss/mixins";
+@import "bootstrap/variables";
+@import "mixins/default";
+@import "bootstrap/mixins";

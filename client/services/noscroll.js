@@ -14,23 +14,33 @@ function getScrollbarSize(): number {
   return scrollbarSize;
 }
 
+let stackCnt = 0;
+
 export default {
   on: function(): void {
-    if (document.body.scrollHeight > window.innerHeight) {
-      let size = getScrollbarSize();
-      if (size > 0) {
-        document.body.style.paddingRight = size + 'px';
-        document.getElementsByTagName('header')[0].style.paddingRight = size + 'px';
+    stackCnt += 1;
+    if (stackCnt === 1) {
+      if (document.body.scrollHeight > window.innerHeight) {
+        let size = getScrollbarSize();
+        if (size > 0) {
+          document.body.style.paddingRight = size + 'px';
+          document.getElementsByTagName('header')[0].style.paddingRight = size + 'px';
+        }
       }
+      document.body.style.overflowY = 'hidden';
+      document.body.style.overflowX = 'hidden';
     }
-    document.body.style.overflow = 'hidden';
   },
 
   off: function(): void {
-    if (scrollbarSize > 0) {
-      document.body.style.paddingRight = '0';
-      document.getElementsByTagName('header')[0].style.paddingRight = '0';
+    stackCnt -= 1;
+    if (stackCnt === 0) {
+      if (scrollbarSize > 0) {
+        document.body.style.paddingRight = '0';
+        document.getElementsByTagName('header')[0].style.paddingRight = '0';
+      }
+      document.body.style.overflowY = 'visible';
+      document.body.style.overflowX = 'auto';
     }
-    document.body.style.overflow = 'auto';
   },
 };

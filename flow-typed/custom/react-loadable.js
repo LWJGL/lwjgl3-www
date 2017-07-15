@@ -1,9 +1,10 @@
 declare module 'react-loadable' {
   declare export type LoadingComponentProps = {
     isLoading: boolean,
+    timedOut: boolean,
     pastDelay: boolean,
     error: Error | null,
-  }
+  };
 
   declare export type PromiseReactComponent = <Props: {}>() => Promise<LoadedComponent<Props>>;
 
@@ -13,12 +14,14 @@ declare module 'react-loadable' {
 
   declare type Options = {
     loader: PromiseReactComponent,
-    LoadingComponent: LoadingComponent | ReactClass<any>,
+    loading: LoadingComponent | ReactClass<any>,
+    render?: <Props: {}>(
+      loaded: React$Component<any, Props, any>,
+      props: Props
+    ) => Class<React$Component<any, Props, any>>,
     delay?: number,
-    serverSideRequirePath?: string,
-    webpackRequireWeakId?: () => number,
-    resolveModule?: <Props: {}>(obj: Object) => LoadedComponent<Props>,
+    timeout?: number,
   };
 
-  declare export default <Props: {}, Err: Error>(opts: Options) => Class<React$Component<any, Props, any>>
+  declare export default <Props: {}, Err: Error>(opts: Options) => Class<React$Component<any, Props, any>>;
 }

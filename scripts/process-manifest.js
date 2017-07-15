@@ -7,7 +7,7 @@ const chalk = require('chalk');
 const Table = require('cli-table');
 const gzipSize = require('gzip-size');
 
-const webpackManifest = require('../public/js/webpack.manifest.json');
+const manifest = require('../public/js/webpack.manifest.json');
 const prettyBytes = require('./prettyBytes');
 const formatSize = require('./formatSize');
 
@@ -19,50 +19,52 @@ const headStyle = { head: ['cyan'] };
  *  ------------------------------------------------------------------------------------------------------------------------
  */
 
-let manifest = {};
+// Update config.js by populating entry points for JS & CSS
+console.log(chalk`{yellow Updating entry points & chunks:}`);
 
-function buildManifest() {
-  console.log(chalk.yellow('\n Detecting entry point & chunks:'));
+const tbl = new Table({ head: ['Type', 'Bundle'], style: headStyle });
+const routeRegExp = new RegExp('^route[-]([a-z][a-z-_/]+)$');
 
-  const tbl = new Table({ head: ['Type', 'Bundle'], style: headStyle });
-
+const productionManifest = {
   // We'll use this to boot the app
-  // "main" here is the name of the entry in webpack.config.js (config.entry.main)
-  manifest.entry = webpackManifest.assetsByChunkName.main;
+  entry: '',
 
   // App needs this to know where to load the other chunks from
   // We'll serialize it later and inject inline as JavaScript (webpackManifest={})
-  manifest.chunks = require(`../public/js/chunks.json`);
+  chunks: require('../public/js/chunks.json'),
 
   // Build a map of route paths->JS files in order to preload chunks as needed
-  manifest.routes = {};
+  routes: {},
+};
 
-  // Detect routes from chunk paths
-  // ------------------------------
-  webpackManifest.chunks.forEach(chunk => {
-    if (chunk.entry === true) {
-      // This is the entry chunk, ignore
-      return;
-    }
+// "main" here is the name of the entry in webpack.config.js (config.entry.main)
+productionManifest.entry = manifest.assetsByChunkName.main;
 
-    if (!chunk.names[0].startsWith('route')) {
-      // Not a route, ignore
-      return;
-    }
+// Detect routes from chunk paths
+// ------------------------------
+manifest.chunks.forEach(chunk => {
+  if (chunk.entry === true) {
+    // This is the entry chunk, ignore
+    return;
+  }
 
-    const route = chunk.names[0].match(/^route[-]([a-z][a-z-_/]+)$/);
-    if (route !== null) {
-      manifest.routes[route[1]] = chunk.files[0];
-    }
-  });
+  if (!chunk.names[0].startsWith('route')) {
+    // Not a route, ignore
+    return;
+  }
 
-  tbl.push(['JS', JSON.stringify(manifest, null, 2)]);
+  const route = chunk.names[0].match(routeRegExp);
+  if (route !== null) {
+    productionManifest.routes[route[1]] = chunk.files[0];
+  }
+});
 
-  // Update file
-  // -----------
-  fs.writeFileSync(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(manifest, null, 2));
-  console.log(tbl.toString());
-}
+tbl.push(['JS', JSON.stringify(productionManifest, null, 2)]);
+
+// Update file
+// -----------
+fs.writeFileSync(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
+console.log(tbl.toString());
 
 /*
  * ------------------------------------------------------------------------------------------------------------------------
@@ -74,18 +76,20 @@ function buildManifest() {
  * https://github.com/nolanlawson/optimize-js
  * ------------------------------------------------------------------------------------------------------------------------
  */
-function optimizeJS() {
-  console.log(chalk.yellow('\n Optimizing files:\n'));
+console.log('\n');
 
-  webpackManifest.assets.forEach(asset => {
-    if (!asset.name.endsWith('.js')) {
+if (manifest.publicPath === '/js/') {
+  console.log(chalk`{yellow Optimizing files:}`);
+  manifest.assets.forEach(asset => {
+    if (asset.name.split('.').pop() !== 'js') {
       return;
     }
     const filename = path.resolve(__dirname, `../public/js/${asset.name}`);
     fs.writeFileSync(filename, optimizeJs(fs.readFileSync(filename, { encoding: 'utf-8' })));
   });
-
   console.log('  OK');
+} else {
+  console.error(chalk`{red Failed to optimize assets}`);
 }
 
 /*
@@ -116,12 +120,12 @@ function filesReportBuild(files) {
       return file;
     })
     .forEach(file => {
-      const isRoot = file.name === 'entry';
+      const isRoot = file.name === 'main';
       const isCss = file.type === 'css';
       sum += file.size;
       sumGzip += file.gzip;
       tbl.push([
-        isRoot ? chalk.magenta(file.name) : file.name,
+        isRoot ? chalk`{magenta file.name}` : file.name,
         path.basename(file.path),
         formatSize(file.size, false, isRoot, isCss),
         formatSize(file.gzip, true, isRoot, isCss),
@@ -129,14 +133,14 @@ function filesReportBuild(files) {
     });
 
   if (files.length > 1) {
-    tbl.push(['', chalk.cyan('TOTAL'), prettyBytes(sum), prettyBytes(sumGzip)]);
+    tbl.push(['', chalk`{cyan TOTAL}`, prettyBytes(sum), prettyBytes(sumGzip)]);
   }
 
   console.log(tbl.toString());
 }
 
 function filesReport(entry, routes) {
-  filesReportBuild([
+  const files = [
     {
       name: 'entry',
       path: path.resolve(__dirname, '../public/js', entry),
@@ -144,20 +148,23 @@ function filesReport(entry, routes) {
       gzip: 0,
       type: 'js',
     },
-    ...Object.keys(routes).map(route => ({
+  ];
+
+  Object.keys(routes).forEach(route => {
+    files.push({
       name: route,
       path: path.resolve(__dirname, '../public/js', routes[route]),
       size: 0,
       gzip: 0,
       type: 'js',
-    })),
-  ]);
+    });
+  });
+
+  filesReportBuild(files);
 }
 
-buildManifest();
-optimizeJS();
-
-if (manifest.entry) {
-  console.log(chalk.yellow('\n JavaScript file size report:'));
-  filesReport(manifest.entry, manifest.routes);
+if (productionManifest.entry) {
+  console.log('\n');
+  console.log(chalk`{yellow JavaScript file size report:}`);
+  filesReport(productionManifest.entry, productionManifest.routes);
 }

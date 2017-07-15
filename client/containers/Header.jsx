@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
-import { IS_IOS } from 'services/globals';
+import { IS_IOS } from 'services/ua';
 import supportsPassive from 'services/supports-passive';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
@@ -29,6 +29,7 @@ class Header extends React.PureComponent<void, Props, State> {
   direction = 0;
   ticking = false;
   offsetHeight = 0;
+  mounted = false;
 
   state = {
     pos: 0,
@@ -47,12 +48,13 @@ class Header extends React.PureComponent<void, Props, State> {
     }
 
     window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
+    this.mounted = true;
   }
 
-  // This never runs, events are automatically cleaned up on window.unload
-  /*componentWillUnmount() {
-   window.removeEventListener('scroll', this.onScroll, supportsPassive ? {passive: true} : false);
-  }*/
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
+    this.mounted = false;
+  }
 
   componentDidUpdate(prevProps: Props) {
     if (prevProps !== this.props) {
@@ -68,7 +70,7 @@ class Header extends React.PureComponent<void, Props, State> {
   }
 
   onScroll = () => {
-    if (!this.ticking) {
+    if (!this.ticking && this.mounted) {
       requestAnimationFrame(this.update);
       this.ticking = true;
     }
@@ -76,6 +78,9 @@ class Header extends React.PureComponent<void, Props, State> {
 
   update = () => {
     this.ticking = false;
+    if (!this.mounted) {
+      return;
+    }
     this.prev = this.current;
     this.current = Math.max(0, window.pageYOffset);
 

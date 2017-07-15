@@ -17,6 +17,7 @@ AWS.config.update({ region: 'us-east-1' });
 
 // Lib
 const cloudFrontSubnets = require('./cloudfront-subnets.json');
+const chunkMap = require('./chunkMap');
 const helmetConfig = require('./helmetConfig');
 
 // ------------------------------------------------------------------------------
@@ -30,14 +31,7 @@ const config = require('../config.json');
 app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
 
-const manifest = app.locals.production ? require('../public/js/manifest.json') : {};
-
-if (app.locals.production) {
-  // Convert chunks object to JSON so we can inject it in the page as <script>
-  manifest.chunksSerialized = JSON.stringify(manifest.chunks);
-} else {
-  console.log(chalk.yellow(`Starting ${PRODUCT} in ${app.get('env')} mode`));
-}
+let manifest = {};
 
 // View options
 app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
@@ -86,6 +80,12 @@ if (app.locals.development) {
 }
 
 if (app.locals.development || argv.s3proxy) {
+  /*
+    In production we handle photos and downloads at the CDN level.
+    In development these paths will hit Node, therefore we need to handle them.
+    CAUTION: Internet connection is required!
+  */
+
   // Proxy photos from S3
   app.use('/img', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
   app.use('/svg', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
@@ -114,6 +114,13 @@ app.use(
     },
   })
 );
+
+// Redownloads and parses JS manifest from S3
+app.get('/dev/reload', (req, res) => {
+  downloadManifest(() => {
+    res.type('text').status(200).send('Manifest has been updated.');
+  });
+});
 
 // Retrieval of artifacts dir/file structure
 const routeBin = require('./bin');
@@ -153,19 +160,12 @@ app.get('*', (req, res, next) => {
       // Push entry script first, we need to start loading as soon as possible
       // because we need it immediately
       entry,
-    ];
 
-    // Append chunk of important routes to the preload list
-    // Logic can be customized as needed. Can get complicated for recursive routes
-    // or routes deep in site's hierarchy, so not always worth it
-    if (req.path === '/') {
-      preloadScripts.push(manifest.routes.home);
-    } else {
-      const route = req.path.substr(1);
-      if (manifest.routes[route]) {
-        preloadScripts.push(manifest.routes[route]);
-      }
-    }
+      // Append chunk of important routes to the preload list
+      // Logic can be customized as needed. Can get complicated for recursive routes
+      // or routes deep in site's hierarchy, so not always worth it
+      ...chunkMap(manifest.routes, req.path),
+    ];
   } else {
     entry = 'main.js';
     preloadScripts = ['vendor.js', entry];
@@ -236,36 +236,79 @@ app.use((err, req, res, next) => {
 });
 
 // ------------------------------------------------------------------------------
+// JS Manifest
+// ------------------------------------------------------------------------------
+const processManifest = () => {
+  // Convert chunks object to JSON so we can inject it in the page as <script>
+  if (manifest.chunks) {
+    manifest.chunksSerialized = JSON.stringify(manifest.chunks);
+  }
+};
+
+const downloadManifest = cb => {
+  if (app.locals.development) {
+    cb();
+    return;
+  }
+  if (argv.test) {
+    manifest = require('../public/js/manifest.json');
+    processManifest();
+    cb();
+    return;
+  }
+
+  // Load manifest from S3
+  console.log('Downloading manifest');
+  request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/manifest.json', function(err, response, body) {
+    if (err) {
+      throw new Error(err);
+    }
+    if (response.statusCode !== 200) {
+      throw new Error(`Error while trying to download manifest.json ${response.statusCode}`);
+    }
+    manifest = JSON.parse(body);
+    processManifest();
+    cb();
+  });
+};
+
+// ------------------------------------------------------------------------------
 // Launch Server
 // ------------------------------------------------------------------------------
 
-const server = app.listen(app.get('port'), () => {
-  let host = server.address().address;
-  let port = server.address().port;
+const launchServer = () => {
+  console.log(chalk`{yellow Starting {green.bold ${PRODUCT}} in ${app.get('env')} mode}`);
 
-  console.log(chalk.blue(`${PRODUCT} listening at http://${host}:${port}`));
-});
+  const server = app.listen(app.get('port'), () => {
+    let host = server.address().address;
+    let port = server.address().port;
 
-server.on('error', err => {
-  if (err.code === 'EADDRINUSE') {
-    console.error(chalk.red(`${PRODUCT} address in use, exiting...`));
-    process.exit(0);
-  } else {
-    console.error(err.stack);
-    throw err;
+    console.log(chalk`{green.bold ${PRODUCT}} {yellow listening at http://${host}:${port}}`);
+  });
+
+  server.on('error', err => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(chalk`{red {green.bold ${PRODUCT}} address in use, exiting...}`);
+      process.exit(0);
+    } else {
+      console.error(err.stack);
+      throw err;
+    }
+  });
+
+  function shutdown(code) {
+    console.log(chalk`{red Shutting down} {green.bold ${PRODUCT}}`);
+    server.close();
+    process.exit(code || 0);
   }
-});
 
-function shutdown(code) {
-  console.log(chalk.blue(`shutting down ${PRODUCT}`));
-  server.close();
-  process.exit(code || 0);
-}
+  process.on('SIGTERM', shutdown);
+  process.on('SIGINT', shutdown);
 
-process.on('SIGTERM', shutdown);
-process.on('SIGINT', shutdown);
+  process.on('uncaughtException', function(err) {
+    console.error(err.stack);
+    shutdown(1);
+  });
+};
 
-process.on('uncaughtException', function(err) {
-  console.error(err.stack);
-  shutdown(1);
-});
+downloadManifest(launchServer);

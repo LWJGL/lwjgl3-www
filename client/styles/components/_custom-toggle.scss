@@ -13,18 +13,17 @@
       position: absolute;
       top: .1rem;
       left: .1rem;
-      background-color: $custom-control-checked-indicator-color;
+      background-color: $custom-control-indicator-checked-color;
       border-radius: 1rem;
       transition: left 0.2s;
     }
   }
 
   .custom-control-input:checked ~ .custom-control-indicator {
-    background-color: $custom-control-checked-indicator-bg;
+    background-color: $custom-control-indicator-checked-bg;
 
     &:before {
       left: .6rem;
     }
   }
-
 }

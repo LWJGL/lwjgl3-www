@@ -130,7 +130,7 @@ class HomeCanvas extends React.Component {
     this.mounted = true;
     if (loadthree) {
       loadthree = false;
-      loadJS('https://unpkg.com/three@0.84.0/build/three.min.js', () => {
+      loadJS('https://unpkg.com/three@0.86.0/build/three.min.js', () => {
         if (this.mounted) {
           init(this.canvas);
         }

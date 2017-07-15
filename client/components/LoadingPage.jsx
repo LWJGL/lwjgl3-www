@@ -2,8 +2,14 @@ import React from 'react';
 import LoaderSpinner from 'components/LoaderSpinner';
 import type { LoadingComponentProps } from 'react-loadable';
 
-const LoadingPage = ({ isLoading, pastDelay, error }: LoadingComponentProps) => {
-  if (error) {
+const LoadingPage = ({ isLoading, pastDelay, timedOut, error }: LoadingComponentProps) => {
+  if (isLoading && !timedOut) {
+    return (
+      <div className="text-center" style={{ padding: '5rem 0' }}>
+        {pastDelay ? <LoaderSpinner size={128} /> : null}
+      </div>
+    );
+  } else if (error || timedOut) {
     return (
       <div className="text-center" style={{ padding: '5rem 0' }}>
         <h1 className="display-4 text-danger">Failed to load page</h1>
@@ -13,11 +19,7 @@ const LoadingPage = ({ isLoading, pastDelay, error }: LoadingComponentProps) => 
     );
   }
 
-  return (
-    <div className="text-center" style={{ padding: '5rem 0' }}>
-      {pastDelay ? <LoaderSpinner size={128} /> : null}
-    </div>
-  );
+  return null;
 };
 
 export default LoadingPage;

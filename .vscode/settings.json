@@ -8,7 +8,6 @@
   "prettier.parser": "babylon",
   "javascript.format.enable": false,
   "javascript.validate.enable": false,
-  "flow.useNPMPackagedFlow": true,
   "files.exclude": {
     "**/.vscode": true,
     "**/.cache-loader": true,

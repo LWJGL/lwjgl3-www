@@ -1,7 +1,10 @@
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
+const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 // const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
+const NamedChunksPlugin = require('webpack/lib/NamedChunksPlugin');
 
 // Development
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
@@ -10,12 +13,11 @@ const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlug
 const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 
 // Production
-const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
 const WebpackChunkHash = require('webpack-chunk-hash');
+const IgnorePlugin = require('webpack/lib/IgnorePlugin');
 const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-// const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 
 const { argv } = require('yargs');
 const config = require('./config.json');
@@ -35,6 +37,15 @@ const env = {
 const buildConfiguration = () => {
   const config = {
     target: 'web',
+    node: {
+      console: false,
+      global: true,
+      process: true,
+      __filename: false,
+      __dirname: false,
+      Buffer: false,
+      setImmediate: false,
+    },
     performance: {
       hints: false,
     },
@@ -44,7 +55,6 @@ const buildConfiguration = () => {
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: DEV ? '[name].js' : '[name].[chunkhash].js',
-      chunkFilename: DEV ? '[name].js' : '[name].[id].[chunkhash].js',
       publicPath: '/js/',
     },
     resolve: {
@@ -117,11 +127,6 @@ const buildConfiguration = () => {
         minimize: PRODUCTION,
         debug: false,
       }),
-      // new CommonsChunkPlugin({
-      //   async: true,
-      //   children: true,
-      //   minChunks: 2,
-      // }),
     ],
     // recordsPath: path.resolve(__dirname, `./recordsPath.json`),
     stats: {
@@ -146,29 +151,51 @@ const buildConfiguration = () => {
 
   if (DEV) {
     config.module.rules[0].use.unshift('cache-loader');
-    // config.module.rules[1].use.unshift('cache-loader');
 
     // WebPack Hot Middleware client & HMR plugins
     if (HMR) {
-      config.entry.main.unshift('webpack-hot-middleware/client', 'react-hot-loader/patch');
+      config.entry.main.unshift(
+        require.resolve('webpack-hot-middleware/client'),
+        require.resolve('react-hot-loader/patch')
+      );
       config.plugins.push(new HotModuleReplacementPlugin());
     }
     config.plugins.push(
-      new NoEmitOnErrorsPlugin(),
       new NamedModulesPlugin(),
+      new NoEmitOnErrorsPlugin(),
       new DllReferencePlugin({
         context: __dirname,
         manifest: require('./public/js/vendor-manifest.json'),
       })
     );
   } else {
+    config.entry.main.unshift(require.resolve('babel-polyfill'));
     config.plugins.push(
       new IgnorePlugin(/(redux-logger|react-hot-loader)/),
-      // new ModuleConcatenationPlugin(),
+      new ModuleConcatenationPlugin(),
+      // https://webpack.js.org/guides/caching/#deterministic-hashes
       new HashedModuleIdsPlugin(),
       new WebpackChunkHash(),
+      // https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+      new NamedChunksPlugin(
+        chunk => chunk.name || chunk.modules.map(m => path.relative(m.context, m.request)).join('_')
+      ),
+      {
+        apply(compiler) {
+          compiler.plugin('compilation', compilation => {
+            compilation.plugin('before-module-ids', modules => {
+              modules.forEach(module => {
+                if (module.id !== null) {
+                  return;
+                }
+                module.id = module.identifier();
+              });
+            });
+          });
+        },
+      },
       new ChunkManifestPlugin({
-        filename: `chunks.json`,
+        filename: 'chunks.json',
         manifestVariable: 'webpackManifest',
       }),
       new UglifyJsPlugin({

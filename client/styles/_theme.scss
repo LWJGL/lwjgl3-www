@@ -6,12 +6,15 @@ p {
   line-height: 2rem;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   // Lightweight rendering, getit?
   font-weight: 300;
 }
 
-b, strong {
+b,
+strong {
   font-weight: 700;
 }
 
@@ -40,17 +43,23 @@ a.btn {
   color: white;
 }
 
-.area-dark-secondary, .area-dark {
+.area-dark-secondary,
+.area-dark {
   background-color: $body-color;
-  background-image: radial-gradient(circle farthest-corner at center,$body-color 0,$body-color 50%,lighten($body-color, 15%) 100%);
+  background-image: radial-gradient(
+    circle farthest-corner at center,
+    $body-color 0,
+    $body-color 50%,
+    lighten($body-color, 15%) 100%
+  );
   color: white;
 
   :last-child {
     margin-bottom: 0;
   }
 
-  a {
-    color: $link-color-dark;
+  a:not(.btn) {
+    color: lighten($link-color, 15%);
   }
 
   .line-sep {

@@ -13,12 +13,10 @@ Build status icons are loaded directly from travis-ci.org.
 
 Other LWJGL subdomains:
 
-- The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www).
-A static copy of the old LWJGL website is now hosted directly from S3
+- The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www). A static copy of the old LWJGL website is now hosted directly from S3
 - The blog is [Ghost](https://ghost.org/).
 - The forum is [SMF](http://www.simplemachines.org/).
-- The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/).
-A static copy of the old LWJGL wiki is now hosted directly from S3.
+- The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/). A static copy of the old LWJGL wiki is now hosted directly from S3.
 
 ## Production Requirements
 
@@ -35,34 +33,6 @@ A static copy of the old LWJGL wiki is now hosted directly from S3.
 npm -g i nodemon yarn
 ```
 
-## IDE Setup
-
-We recommend Visual Studio Code with the following plugins:
-
-- Babel ES6/ES7
-- Flow Language Support
-- Prettier
-
-Other useful plugins:
-
-- Babelrc
-- Beautify *(disable for JavaScript to avoid conflicts with Prettier!)*
-- EditorConfig for VS Code
-- npm
-- npm Intellisense
-- SCSS IntelliSense
-- vscode-icons
-- gitignore
-- Git History (git log)
-
-We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab). In VSCode add the following in your config:
-
-```json
-{
-  "files.autoSave": "onWindowChange"
-}
-```
-
 ## App Configuration
 
 Place a JSON file in the root directory named config.json with the following contents.
@@ -73,8 +43,15 @@ Additional settings are automatically populated when the project is built for pr
   "port": 8080,
   "hostname": "www.lwjgl.org",
   "analytics_tracking_id": "UA-XXXXXXX-X",
+  "aws": {
+    "accessKeyId": "",
+    "secretAccessKey": "",
+    "region": "us-east-1"
+  }
 }
 ```
+
+AWS credentials are only needed for deploying compiled files to S3 (@see yarn deploy)
 
 ## Development
 
@@ -183,8 +160,7 @@ pm2 save
 
 ### Run in production with forever
 
-Place a JSON file named forever.json in the root folder with the
-following contents:
+Place a JSON file named forever.json in the root folder with the following contents:
 
 ```json
 {
@@ -202,4 +178,32 @@ and then run:
 
 ```bash
 forever start forever.json
+```
+
+## IDE Setup
+
+We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following plugins:
+
+- Babel ES6/ES7
+- vscode-flow-ide
+- Prettier
+
+Other useful plugins:
+
+- Babelrc
+- stylefmt
+- EditorConfig for VS Code
+- npm
+- npm Intellisense
+- SCSS IntelliSense
+- vscode-icons
+- gitignore
+- Git History (git log)
+
+We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab). In VSCode add the following in your config:
+
+```json
+{
+  "files.autoSave": "onWindowChange"
+}
 ```

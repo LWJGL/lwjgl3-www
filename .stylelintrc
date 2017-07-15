@@ -1,0 +1,9 @@
+{
+  "rules": {
+    "color-hex-case": "lower",
+    "color-hex-length": "short",
+    "color-named": "always-where-possible",
+    "font-family-name-quotes": "always-where-recommended",
+    "font-weight-notation": "named-where-possible"
+  }
+}

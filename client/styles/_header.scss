@@ -48,7 +48,7 @@
     }
   }
   .sliding-menu {
-    $gutter: $grid-gutter-width-base / 2;
+    $gutter: $grid-gutter-width / 2;
     a {
       &:hover {
         text-decoration: underline;

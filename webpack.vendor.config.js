@@ -1,11 +1,21 @@
 const path = require('path');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const DllPlugin = require('webpack/lib/DllPlugin');
+const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 
 const config = {
   target: 'web',
   performance: {
     hints: false,
+  },
+  node: {
+    console: false,
+    global: true,
+    process: true,
+    __filename: false,
+    __dirname: false,
+    Buffer: false,
+    setImmediate: false,
   },
   entry: {
     vendor: [
@@ -21,6 +31,7 @@ const config = {
       'fg-loadcss',
       'react-helmet',
       'react-router-dom',
+	  'react-loadable',
 
       // State management
       'redux',
@@ -57,6 +68,7 @@ const config = {
       path: path.resolve(__dirname, 'public/js', 'vendor-manifest.json'),
       name: '[name]',
     }),
+    new NamedModulesPlugin(),
   ],
 };
 

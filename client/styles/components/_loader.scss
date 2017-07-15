@@ -7,16 +7,7 @@
   animation: spinner-line 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite, spinner-rotate 1.6s linear infinite;
 
   &.delay {
-    animation: spinner-fade 0.01s ease-in 1s both, spinner-line 1.6s cubic-bezier(0.4, 0, 0.2, 1) 1s infinite both, spinner-rotate 1.6s linear 1s infinite both;
-  }
-}
-
-@keyframes spinner-fade {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
+    animation: fade-in 0.01s ease-in 1s both, spinner-line 1.6s cubic-bezier(0.4, 0, 0.2, 1) 1s infinite both, spinner-rotate 1.6s linear 1s infinite both;
   }
 }
 

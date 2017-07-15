@@ -1,84 +1,58 @@
 {
+  "presets": [
+    [
+      "env",
+      {
+        "spec": false,
+        "loose": true,
+        "modules": false,
+        "targets": {
+          "browsers": [
+            "last 1 chrome versions"
+          ]
+        },
+        "include": [
+          "transform-es2015-classes"
+        ]
+      }
+    ],
+    "stage-2",
+    "stage-3"
+  ],
   "plugins": [
-    "syntax-dynamic-import",
-    [
-      "react-loadable/babel",
-      {
-        "server": false,
-        "webpack": true
-      }
-    ],
     "transform-react-jsx",
-    "transform-flow-strip-types",
-    "transform-react-display-name",
-    "transform-class-properties",
-    "syntax-trailing-function-commas",
-    "transform-async-to-generator",
-    "transform-exponentiation-operator",
-    "transform-async-generator-functions",
-    "transform-object-rest-spread",
-    [
-      "transform-es2015-template-literals",
-      {
-        "loose": true
-      }
-    ],
-    "transform-es2015-literals",
-    "transform-es2015-function-name",
-    "transform-es2015-arrow-functions",
-    "transform-es2015-block-scoped-functions",
-    [
-      "transform-es2015-classes",
-      {
-        "loose": true
-      }
-    ],
-    "transform-es2015-object-super",
-    "transform-es2015-shorthand-properties",
-    "transform-es2015-duplicate-keys",
-    [
-      "transform-es2015-computed-properties",
-      {
-        "loose": true
-      }
-    ],
-    [
-      "transform-es2015-for-of",
-      {
-        "loose": true
-      }
-    ],
-    "check-es2015-constants",
-    [
-      "transform-es2015-spread",
-      {
-        "loose": true
-      }
-    ],
-    "transform-es2015-parameters",
-    [
-      "transform-es2015-destructuring",
-      {
-        "loose": true
-      }
-    ],
-    [
-      "transform-es2015-block-scoping",
-      {
-        "throwIfClosureRequired": true
-      }
-    ],
-    "transform-es2015-typeof-symbol",
-    [
-      "transform-regenerator",
-      {
-        "async": false
-      }
-    ]
+    "transform-flow-strip-types"
   ],
   "env": {
     "production": {
+      "presets": [
+        [
+          "env",
+          {
+            "spec": false,
+            "loose": true,
+            "modules": false,
+            "useBuiltins": true,
+            "targets": {
+              "browsers": [
+                "> 1%",
+                "ie >= 9",
+                "last 2 versions"
+              ]
+            }
+          }
+        ],
+        "stage-2",
+        "stage-3"
+      ],
       "plugins": [
+        [
+          "import-inspector",
+          {
+            "serverSideRequirePath": false,
+            "webpackRequireWeakId": true
+          }
+        ],
         "transform-react-constant-elements",
         "transform-react-inline-elements",
         "transform-react-remove-prop-types"
@@ -86,10 +60,10 @@
     },
     "development": {
       "plugins": [
-        [
-          "react-hot-loader/babel",
-          "transform-react-jsx-source"
-        ]
+        "react-hot-loader/babel",
+        "transform-react-display-name",
+        "transform-react-jsx-source",
+        "transform-react-jsx-self"
       ]
     }
   }

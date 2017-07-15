@@ -1,0 +1,57 @@
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*
+@keyframes turn-1 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.shake-invalid {
+  animation: shake-small 0.82s cubic-bezier(.36, .07, .19, .97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+@keyframes shake-small {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+*/
+
+.flip-translate {
+  animation: no-translate-3d 0.33s cubic-bezier(0.455, 0.030, 0.515, 0.955) forwards;
+  backface-visibility: hidden;
+}
+
+@keyframes no-translate-3d {
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}

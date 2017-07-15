@@ -38,7 +38,9 @@ const loadSuccess = (Module: Module) => {
 const asyncRoute = (getComponent: PromiseReactModule) =>
   Loadable({
     loader: () => beginLoad(getComponent()).then(loadSuccess, loadErr),
-    LoadingComponent,
+    delay: 2000,
+    timeout: 30000,
+    loading: LoadingComponent,
   });
 
 export default asyncRoute;

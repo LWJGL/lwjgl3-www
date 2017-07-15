@@ -1,75 +1,70 @@
+@import "bootstrap/functions";
+
 // ----------------------------------------------------------------------------------------------------------------
 // VARIABLES
 // ----------------------------------------------------------------------------------------------------------------
 
 @import "variables";
-@import "../../node_modules/bootstrap/scss/variables";
+@import "bootstrap/variables";
+// @import "variables-more";
+@import "animations-common";
 
 // Mixins
-@import "../../node_modules/bootstrap/scss/mixins";
+// @import "mixins/default";
 
 // ----------------------------------------------------------------------------------------------------------------
 // BOOTSTRAP
 // ----------------------------------------------------------------------------------------------------------------
+@import "bootstrap/mixins";
 
-// Reset and dependencies
-@import "../../node_modules/bootstrap/scss/normalize";
-//@import "../../node_modules/bootstrap/scss/print";
+// @import "bootstrap/print";
 
 // Core CSS
-@import "../../node_modules/bootstrap/scss/reboot";
-@import "../../node_modules/bootstrap/scss/type";
-@import "../../node_modules/bootstrap/scss/images";
-@import "../../node_modules/bootstrap/scss/code";
-@import "../../node_modules/bootstrap/scss/grid";
-@import "../../node_modules/bootstrap/scss/tables";
-@import "../../node_modules/bootstrap/scss/forms";
-@import "../../node_modules/bootstrap/scss/buttons";
+@import "bootstrap/reboot";
+@import "bootstrap/type";
+@import "bootstrap/images";
+@import "bootstrap/code";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
+@import "bootstrap/forms";
+@import "bootstrap/buttons";
 
-// // Components
-//@import "../../node_modules/bootstrap/scss/transitions";
-//@import "../../node_modules/bootstrap/scss/dropdown";
-//@import "../../node_modules/bootstrap/scss/button-group";
-//@import "../../node_modules/bootstrap/scss/input-group";
-@import "../../node_modules/bootstrap/scss/custom-forms";
-//@import "../../node_modules/bootstrap/scss/nav";
-//@import "../../node_modules/bootstrap/scss/navbar";
-//@import "../../node_modules/bootstrap/scss/card";
-//@import "../../node_modules/bootstrap/scss/breadcrumb";
-//@import "../../node_modules/bootstrap/scss/pagination";
-//@import "../../node_modules/bootstrap/scss/badge";
-//@import "../../node_modules/bootstrap/scss/jumbotron";
-@import "../../node_modules/bootstrap/scss/alert";
-//@import "../../node_modules/bootstrap/scss/progress";
-//@import "../../node_modules/bootstrap/scss/media";
-//@import "../../node_modules/bootstrap/scss/list-group";
-//@import "../../node_modules/bootstrap/scss/responsive-embed";
-//@import "../../node_modules/bootstrap/scss/close";
-
-// Components w/ JavaScript
-//@import "../../node_modules/bootstrap/scss/modal";
-//@import "../../node_modules/bootstrap/scss/tooltip";
-//@import "../../node_modules/bootstrap/scss/popover";
-//@import "../../node_modules/bootstrap/scss/carousel";
+// Components
+// @import "bootstrap/transitions";
+// @import "bootstrap/dropdown";
+// @import "bootstrap/button-group";
+// @import "bootstrap/input-group";
+@import "bootstrap/custom-forms";
+// @import "bootstrap/nav";
+// @import "bootstrap/navbar";
+// @import "bootstrap/card";
+// @import "bootstrap/breadcrumb";
+// @import "bootstrap/pagination";
+// @import "bootstrap/badge";
+// @import "bootstrap/jumbotron";
+@import "bootstrap/alert";
+// @import "bootstrap/progress";
+// @import "bootstrap/media";
+// @import "bootstrap/list-group";
+// @import "bootstrap/close";
 
 // Utility classes
-@import "../../node_modules/bootstrap/scss/utilities";
+@import "bootstrap/utilities";
 
 // ----------------------------------------------------------------------------------------------------------------
 // COMPONENTS
 // ----------------------------------------------------------------------------------------------------------------
 
-@import "components/_custom-forms-common";
-@import "components/_custom-toggle";
-@import "components/_svg-icon";
+@import "components/custom-forms-common";
+@import "components/custom-toggle";
+@import "components/svg-icon";
+@import "components/loader";
+@import "components/nprogress";
 
 // ----------------------------------------------------------------------------------------------------------------
-// LWJGL THEME
+// THEME
 // ----------------------------------------------------------------------------------------------------------------
-
 @import "theme";
 @import "utils";
 @import "header";
 @import "footer";
-@import "loader";
-@import "nprogress";

@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
+import smoothScroll from 'services/smoothscroll';
 
 type Props = {
   location: Location,
@@ -27,9 +28,11 @@ class HashLinkTarget extends React.Component<void, Props, void> {
   scrollToTarget() {
     const el = document.getElementById(this.props.id);
     if (el !== null) {
+      smoothScroll.init();
       try {
-        el.scrollIntoView({ behavior: 'smooth' });
+        el.scrollIntoView();
       } catch (ignore) {}
+      smoothScroll.play();
     }
   }
 

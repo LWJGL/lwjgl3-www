@@ -1,0 +1,14 @@
+@import "react-transition";
+@import "../../../node_modules/bourbon/core/bourbon";
+
+@mixin square($size) {
+  @include size($size, $size);
+}
+
+@mixin overflow-ellipsis() {
+  // NOTE: not to be confused with Bourbon ellipsis() which sets `display: inline-block`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-wrap: normal;
+}

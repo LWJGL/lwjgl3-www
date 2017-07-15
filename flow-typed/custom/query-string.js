@@ -11,7 +11,11 @@ declare module 'query-string' {
     arrayFormat: ArrayFormat,
   };
 
-  declare export var parse: (query: string, options?: ParseOptions) => {};
+  declare type ParseValues = {
+    [key: string]: string | string[]
+  }
+
+  declare export var parse: (query: string, options?: ParseOptions) => ParseValues;
 
   declare export var stringify: (object: {}, options?: StringifyOptions) => string;
 
