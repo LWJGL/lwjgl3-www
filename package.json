@@ -84,7 +84,7 @@
     "sass-loader": "6.0.6",
     "serve-favicon": "2.4.3",
     "style-loader": "0.18.2",
-    "webpack": "3.2.0",
+    "webpack": "3.3.0",
     "webpack-dev-middleware": "1.11.0",
     "webpack-hot-middleware": "2.18.2",
     "webpack-md5-hash": "0.0.5",
