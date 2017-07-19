@@ -5,13 +5,14 @@ block content
     //- The following content is replaced by React <App />
     style.
       @keyframes spin{0%{stroke-dasharray:150.6 100.4;stroke-dashoffset:0}50%{stroke-dasharray:1 250;stroke-dashoffset:251px}100%{stroke-dasharray:150.6 100.4;stroke-dashoffset:502px}}
+      @keyframes fadein{100%{opacity:1}}
     div(style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:90vh;font-family:-apple-system,system-ui,BlinkMacSystemFont,\"Segoe UI\",Roboto,\"Helvetica Neue\",Arial,sans-serif;")
-      h1(style="font-weight:300")
+      h1(style="font-size:64px;font-weight:300;color:#1b2426;")
         | LW
         b JGL
-      svg(viewBox="0 0 100 100", preserveAspectRatio="xMidYMid" style="max-width:20vw;max-height:96px")
-        circle(cx="50", cy="50", r="40", stroke="#1b2426", fill="none", stroke-width="10", stroke-linecap="round")
-        circle(style="animation:spin 2s linear 1s infinite" cx="50", cy="50", r="40", stroke="#dfba48", fill="none", stroke-width="6", stroke-linecap="round")
+      svg(viewBox="0 0 100 100", preserveAspectRatio="xMidYMid" style="max-width:20vw;max-height:75px;opacity:0;animation:fadein .33s ease-in 1s forwards")
+        circle(cx="50", cy="50", r="40", stroke="#2d6ca5", fill="none", stroke-width="8", stroke-linecap="round")
+        circle(style="animation:spin 2s linear 1s infinite" cx="50", cy="50", r="40", stroke="#4cddff", fill="none", stroke-width="6", stroke-linecap="round")
       noscript
         p(style="color:red") Please enable JavaScript
 
@@ -24,4 +25,4 @@ block content
   script.
     if(!('requestAnimationFrame' in window))requestAnimationFrame=function(cb){setTimeout(cb,0)}
   <![endif]-->
-  script(src=`/js/${entry}`)
+  //-script(src=`/js/${entry}`)
