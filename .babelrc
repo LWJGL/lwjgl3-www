@@ -6,6 +6,7 @@
         "spec": false,
         "loose": true,
         "modules": false,
+        "useBuiltins": true,
         "targets": {
           "browsers": ["last 1 chrome versions"]
         },
