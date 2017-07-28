@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { actions as $$ } from '../reducer';
-import LoaderSpinner from 'components/LoaderSpinner';
+import LoaderSpinner from '~/components/LoaderSpinner';
 import Folder from './Folder';
 import File from './File';
 import { css } from 'aphrodite/no-important';
@@ -24,19 +24,25 @@ class Browser extends React.Component {
       <table className="table">
         <thead className="thead-inverse">
           <tr>
-            <th colSpan={2}>lwjgl/{path}</th>
+            <th colSpan={2}>
+              lwjgl/{path}
+            </th>
           </tr>
         </thead>
         <tbody>
           {props.parent &&
             <tr>
-              <th className={css(styles.folder)} scope="row" onClick={this.goBack} colSpan={2}>…</th>
+              <th className={css(styles.folder)} scope="row" onClick={this.goBack} colSpan={2}>
+                …
+              </th>
             </tr>}
           {props.folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} />)}
           {props.files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} />)}
           {props.loading &&
             <tr>
-              <th scope="row" colSpan={2}><LoaderSpinner /></th>
+              <th scope="row" colSpan={2}>
+                <LoaderSpinner />
+              </th>
             </tr>}
         </tbody>
       </table>

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { CSSModule } from 'services/CSSModule';
+import type { CSSModule } from '~/services/CSSModule';
 
 type Props = {
   loader: CSSModule,

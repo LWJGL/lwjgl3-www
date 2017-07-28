@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import LoaderSpinner from 'components/LoaderSpinner';
+import LoaderSpinner from '~/components/LoaderSpinner';
 
 class BuildBundler extends React.Component {
   componentDidMount() {
@@ -15,7 +15,11 @@ class BuildBundler extends React.Component {
           <h4>Generating ZIP bundle. Please wait...</h4>
         </div>
         <pre>
-          {this.props.progress.slice(0).reverse().map((line, i) => <div key={`log${i}`}>{line}</div>)}
+          {this.props.progress.slice(0).reverse().map((line, i) =>
+            <div key={`log${i}`}>
+              {line}
+            </div>
+          )}
         </pre>
       </div>
     );

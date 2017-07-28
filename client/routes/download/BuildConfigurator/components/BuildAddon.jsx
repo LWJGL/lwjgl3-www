@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Checkbox from 'components/Checkbox';
+import Checkbox from '~/components/Checkbox';
 import { toggleAddon } from '../reducer';
 
 class BuildAddon extends React.Component {
@@ -21,8 +21,15 @@ class BuildAddon extends React.Component {
       return (
         <div className="artifact">
           <Checkbox label={label} checked={checked} onChange={this.toggle} />
-          <p>{addon.description}</p>
-          {addon.website && <p><a href={addon.website} target="_blank">{addon.website}</a></p>}
+          <p>
+            {addon.description}
+          </p>
+          {addon.website &&
+            <p>
+              <a href={addon.website} target="_blank">
+                {addon.website}
+              </a>
+            </p>}
         </div>
       );
     } else {

@@ -1,4 +1,4 @@
-import { IS_IE } from 'services/ua';
+import { IS_IE } from '~/services/ua';
 
 let prevScroll = 0;
 let cb: Function | null = null;

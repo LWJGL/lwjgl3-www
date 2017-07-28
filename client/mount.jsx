@@ -5,11 +5,13 @@ import store from './store';
 import App from './containers/App';
 import './services/ga';
 
+/*::
 declare var module: {
   hot: {
     accept(path: string, callback: () => void): void,
   },
 };
+*/
 
 export default function() {
   // Inject global styles

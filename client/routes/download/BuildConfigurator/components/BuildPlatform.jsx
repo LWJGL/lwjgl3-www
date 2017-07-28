@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Checkbox from 'components/Checkbox';
+import Checkbox from '~/components/Checkbox';
 import { togglePlatform } from '../reducer';
 
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
@@ -38,7 +38,7 @@ class BuildPlatform extends React.Component {
         <div>
           <h4 className="mt-3">Natives</h4>
           <div className="custom-controls-stacked">
-            {platforms.map(platform => (
+            {platforms.map(platform =>
               <Checkbox
                 key={platform}
                 icon={getIcon(platform)}
@@ -47,7 +47,7 @@ class BuildPlatform extends React.Component {
                 value={platform}
                 onChange={this.toggle}
               />
-            ))}
+            )}
           </div>
         </div>
       );

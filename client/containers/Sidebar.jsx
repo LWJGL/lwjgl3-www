@@ -1,10 +1,10 @@
 import React from 'react';
 import createFocusTrap from 'focus-trap';
-import noscroll from 'services/noscroll';
+import noscroll from '~/services/noscroll';
 import MainMenu from './MainMenu';
 import IconMenu from 'react-icons/md/menu';
 import IconClose from 'react-icons/md/close';
-import supportsPassive from 'services/supports-passive';
+import supportsPassive from '~/services/supports-passive';
 
 import type { FocusTrap } from 'focus-trap';
 

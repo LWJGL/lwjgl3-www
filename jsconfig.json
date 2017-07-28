@@ -1,14 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "baseUrl": "client/"
+    "noLib": true,
+    "target": "es6",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./client/*"]
+    }
   },
-  "exclude": [
-    ".idea",
-    ".vscode",
-    ".cache-loader",
-    "node_modules",
-    "public"
-  ]
+  "exclude": [".idea", ".vscode", ".cache-loader", "node_modules", "public"]
 }

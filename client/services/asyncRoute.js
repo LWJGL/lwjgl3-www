@@ -1,9 +1,9 @@
 import React from 'react';
 import Loadable from 'react-loadable';
 import nprogress from 'nprogress';
-import LoadingComponent from 'components/LoadingPage';
-import ErrorBoundary from 'components/ErrorBoundary';
-import PageError from 'components/PageError';
+import LoadingComponent from '../components/LoadingPage';
+import ErrorBoundary from '../components/ErrorBoundary';
+import PageError from '../components/PageError';
 
 type Module = { default: any };
 type PromiseModule = Promise<Module>;

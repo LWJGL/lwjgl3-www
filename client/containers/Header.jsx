@@ -2,8 +2,8 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
-import { IS_IOS } from 'services/ua';
-import supportsPassive from 'services/supports-passive';
+import { IS_IOS } from '~/services/ua';
+import supportsPassive from '~/services/supports-passive';
 import { connect } from 'react-redux';
 import classnames from 'classnames';
 import type { ContextRouter } from 'react-router-dom';
@@ -145,7 +145,11 @@ class Header extends React.PureComponent<void, Props, State> {
       >
         <nav className="container-fluid">
           <div className="row">
-            <div className="col col-auto"><Link to="/">LW<b>JGL</b> 3</Link></div>
+            <div className="col col-auto">
+              <Link to="/">
+                LW<b>JGL</b> 3
+              </Link>
+            </div>
             {this.props.desktop === true
               ? <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
               : <Sidebar />}

@@ -1,8 +1,8 @@
 import React from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { register } from 'store/asyncReducers';
-import reduxSaga from 'store/saga';
+import { register } from '~/store/asyncReducers';
+import reduxSaga from '~/store/saga';
 import {
   default as reducer,
   reset,
@@ -22,10 +22,10 @@ import saga from './saga';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
 
-import ControlledPanel from 'components/ControlledPanel';
-import ControlledRadio from 'components/ControlledRadio';
-import ControlledCheckbox from 'components/ControlledCheckbox';
-import ControlledToggle from 'components/ControlledToggle';
+import ControlledPanel from '~/components/ControlledPanel';
+import ControlledRadio from '~/components/ControlledRadio';
+import ControlledCheckbox from '~/components/ControlledCheckbox';
+import ControlledToggle from '~/components/ControlledToggle';
 
 import BuildConfigArea from './components/BuildConfigArea';
 import BuildType from './components/BuildType';
@@ -188,7 +188,6 @@ class BuildContainer extends React.Component {
         <ControlledPanel className="row" predicate={isBuildSelected}>
           <div className="col">
             <BuildConfigArea>
-
               <ControlledPanel className="pt-3" predicate={isCustomizing}>
                 <div className="row">
                   <div className="col-md">
@@ -211,7 +210,6 @@ class BuildContainer extends React.Component {
                       <h4 className="mt-3">Language</h4>
                       <ControlledRadio spec={fields.language} />
                     </ControlledPanel>
-
                   </div>
                   <div className="col-md">
                     <h4>Presets</h4>
@@ -240,7 +238,6 @@ class BuildContainer extends React.Component {
               <ControlledPanel className="row" predicate={isDownloading}>
                 <BuildBundler />
               </ControlledPanel>
-
             </BuildConfigArea>
           </div>
         </ControlledPanel>

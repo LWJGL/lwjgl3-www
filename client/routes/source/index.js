@@ -1,5 +1,5 @@
 import React from 'react';
-import PageView from 'containers/PageView';
+import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import FaGithub from 'react-icons/fa/github';
@@ -10,18 +10,19 @@ type BadgeProps = {
   src: string,
 };
 
-const BuildBadge = ({ title, href, src }: BadgeProps) => (
+const BuildBadge = ({ title, href, src }: BadgeProps) =>
   <tr>
-    <th>{title}</th>
+    <th>
+      {title}
+    </th>
     <td>
       <a href={href} target="_blank">
         <img width={90} height={20} src={src} alt={`${title} build status`} />
       </a>
     </td>
-  </tr>
-);
+  </tr>;
 
-const SourceRoute = (props: ContextRouter) => (
+const SourceRoute = (props: ContextRouter) =>
   <PageView {...props}>
     <Helmet>
       <title>Source & Build Status</title>
@@ -29,7 +30,9 @@ const SourceRoute = (props: ContextRouter) => (
     </Helmet>
     <main>
       <section className="container pb-5">
-        <h1>LW<b>JGL</b> Source</h1>
+        <h1>
+          LW<b>JGL</b> Source
+        </h1>
 
         <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
         <p>
@@ -44,9 +47,7 @@ const SourceRoute = (props: ContextRouter) => (
           </a>
         </p>
 
-        <p>
-          LWJGL's issue tracker is also hosted on Github.
-        </p>
+        <p>LWJGL's issue tracker is also hosted on Github.</p>
         <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">
           Issue Tracker
         </a>
@@ -256,7 +257,6 @@ const SourceRoute = (props: ContextRouter) => (
         </div>
       </section>
     </main>
-  </PageView>
-);
+  </PageView>;
 
 export default SourceRoute;

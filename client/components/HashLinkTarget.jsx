@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
-import smoothScroll from 'services/smoothscroll';
+import smoothScroll from '~/services/smoothscroll';
 
 type Props = {
   location: Location,

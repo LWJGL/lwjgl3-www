@@ -1,7 +1,7 @@
 import { channel, buffers } from 'redux-saga';
 import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects';
 
-import { HTTP_OK } from 'services/http_status_codes';
+import { HTTP_OK } from '~/services/http_status_codes';
 import { BUILD_RELEASE, STORAGE_KEY } from './constants';
 import {
   DOWNLOAD_INIT,
@@ -82,7 +82,7 @@ function getFiles(path, manifest, selected, platforms, source, javadoc) {
   const javaDocRegExp = new RegExp('-javadoc.jar$');
   const sourcesRegExp = new RegExp('-sources.jar$');
   const nativeRegExp = new RegExp('-natives-');
-  const platformRegExp = new RegExp('-natives-([a-z]+)\.jar$');
+  const platformRegExp = new RegExp('-natives-([a-z]+).jar$');
 
   const selectedMap = {};
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import Checkbox from 'components/Checkbox';
+import Checkbox from '~/components/Checkbox';
 import { toggleArtifact } from '../reducer';
 import classnames from 'classnames';
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
@@ -47,8 +47,15 @@ class BuildArtifact extends React.Component {
         <div className={classnames('artifact', { 'text-muted': disabled })}>
           <Checkbox label={artifact.title} disabled={disabled} checked={checked} onChange={this.toggle} />
           {artifact.natives && getPlatformIcons(artifact.natives)}
-          <p>{artifact.description}</p>
-          {artifact.website && <p><a href={artifact.website} target="_blank">{artifact.website}</a></p>}
+          <p>
+            {artifact.description}
+          </p>
+          {artifact.website &&
+            <p>
+              <a href={artifact.website} target="_blank">
+                {artifact.website}
+              </a>
+            </p>}
         </div>
       );
     } else {

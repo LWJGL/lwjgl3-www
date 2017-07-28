@@ -1,10 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import ControlledPanel from 'components/ControlledPanel';
+import ControlledPanel from '~/components/ControlledPanel';
 import Browser from './components/Browser';
 import { actions as $$ } from './reducer';
-import { register } from 'store/asyncReducers';
-import reduxSaga from 'store/saga';
+import { register } from '~/store/asyncReducers';
+import reduxSaga from '~/store/saga';
 import reducer from './reducer';
 import saga from './saga';
 
@@ -32,7 +32,9 @@ class FileBrowser extends React.Component {
   render() {
     return [
       <ControlledPanel key="p1" predicate={isClosed}>
-        <button className="btn btn-outline-primary" onClick={this.browse}>Click to browse…</button>
+        <button className="btn btn-outline-primary" onClick={this.browse}>
+          Click to browse…
+        </button>
       </ControlledPanel>,
       <ControlledPanel key="p2" predicate={isBrowsing}>
         <Browser />

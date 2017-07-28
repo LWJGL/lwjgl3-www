@@ -57,9 +57,9 @@ const buildConfiguration = () => {
       publicPath: '/js/',
     },
     resolve: {
-      modules: [path.join(__dirname, 'client'), 'node_modules'],
       extensions: ['.js', '.jsx'],
       alias: {
+        '~': path.resolve(__dirname, './client'),
         // Load our custom version of react-icon-base
         'react-icon-base$': path.resolve(__dirname, 'client/components/Icon.jsx'),
       },
@@ -68,7 +68,6 @@ const buildConfiguration = () => {
       rules: [
         {
           test: /\.(js|jsx)$/,
-          include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
           use: [
             {
               loader: 'babel-loader',

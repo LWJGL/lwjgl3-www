@@ -1,5 +1,5 @@
 import React from 'react';
-import smoothScroll from 'services/smoothscroll';
+import smoothScroll from '~/services/smoothscroll';
 import IconArrowUpward from 'react-icons/md/arrow-upward';
 
 const scrollTopTop = (e: SyntheticEvent): boolean => {
@@ -12,7 +12,9 @@ const scrollTopTop = (e: SyntheticEvent): boolean => {
 
 const BackToTop = () =>
   <p className="text-center">
-    <a className="btn btn-link" href="#" onClick={scrollTopTop}>top<IconArrowUpward /></a>
+    <a className="btn btn-link" href="#" onClick={scrollTopTop}>
+      top<IconArrowUpward />
+    </a>
   </p>;
 
 export default BackToTop;

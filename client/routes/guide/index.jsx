@@ -1,12 +1,12 @@
 import React from 'react';
-import PageView from 'containers/PageView';
+import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import codeSample from './sample';
 import loadJS from 'fg-loadjs';
 import { loadCSS } from 'fg-loadcss';
-import HashLinkTarget from 'components/HashLinkTarget';
+import HashLinkTarget from '~/components/HashLinkTarget';
 
 class GuideRoute extends React.Component {
   static init = true;
