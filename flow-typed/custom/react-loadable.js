@@ -16,9 +16,9 @@ declare module 'react-loadable' {
     loader: PromiseReactComponent,
     loading: LoadingComponent | ReactClass<any>,
     render?: <Props: {}>(
-      loaded: React$Component<any, Props, any>,
+      loaded: Class<React$Component<any, Props, any>>,
       props: Props
-    ) => Class<React$Component<any, Props, any>>,
+    ) => any,
     delay?: number,
     timeout?: number,
   };
