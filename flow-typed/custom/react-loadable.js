@@ -15,13 +15,10 @@ declare module 'react-loadable' {
   declare type Options = {
     loader: PromiseReactComponent,
     loading: LoadingComponent | ReactClass<any>,
-    render?: <Props: {}>(
-      loaded: Class<React$Component<any, Props, any>>,
-      props: Props
-    ) => any,
+    render?: <Props: {}>(loaded: Class<React$Component<any, Props, any>>, props: Props) => any,
     delay?: number,
     timeout?: number,
   };
 
-  declare export default <Props: {}, Err: Error>(opts: Options) => Class<React$Component<any, Props, any>>;
+  declare export default (opts: Options) => Class<React$Component<any, any, any>>
 }
