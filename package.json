@@ -18,7 +18,7 @@
     "body-parser": "1.17.2",
     "chalk": "2.0.1",
     "express": "5.0.0-alpha.5",
-    "helmet": "3.8.0",
+    "helmet": "3.8.1",
     "pug": "2.0.0-rc.2",
     "request": "2.81.0",
     "yargs": "8.0.2"
