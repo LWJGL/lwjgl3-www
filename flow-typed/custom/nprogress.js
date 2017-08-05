@@ -7,14 +7,24 @@ declare module 'nprogress' {
     trickle?: boolean,
     trickeSpeed?: number,
     showSpinner?: boolean,
+    barSelector?: string,
+    positionUsing?: string,
     parent?: HTMLElement | string,
   };
 
-  declare export default {
-    start: () => void,
-    done: (?true) => void,
-    set: (n: number) => void,
-    inc: (n?: number) => void,
-    configure: (NProgressConfiguration) => void,
-  }
+  declare type NProgress = {
+    start: () => NProgress,
+    isStarted: () => boolean,
+    isRendered: () => boolean,
+    status: number | null,
+    done: (?true) => NProgress,
+    set: (n: number) => NProgress,
+    inc: (n?: number) => NProgress,
+    configure: NProgressConfiguration => NProgress,
+    trickle: () => NProgress,
+    remove: () => void,
+    getPositioningCSS: () => string,
+  };
+
+  declare export default NProgress
 }
