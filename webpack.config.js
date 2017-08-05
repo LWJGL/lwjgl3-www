@@ -68,6 +68,7 @@ const buildConfiguration = () => {
       rules: [
         {
           test: /\.(js|jsx)$/,
+          include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
           use: [
             {
               loader: 'babel-loader',

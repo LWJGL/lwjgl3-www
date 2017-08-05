@@ -38,7 +38,7 @@ const productionManifest = {
 };
 
 // "main" here is the name of the entry in webpack.config.js (config.entry.main)
-productionManifest.entry = manifest.assetsByChunkName.main;
+productionManifest.entry = manifest.assetsByChunkName.main[1];
 
 // Detect routes from chunk paths
 // ------------------------------

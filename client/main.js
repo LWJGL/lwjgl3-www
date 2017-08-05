@@ -1,10 +1,5 @@
 // Loosely based on "Polyfills: everything you ever wanted to know, or maybe a bit less" by David Gilbertson
 // https://hackernoon.com/polyfills-everything-you-ever-wanted-to-know-or-maybe-a-bit-less-7c8de164e423#.qtc0jwnhc
-import 'babel-polyfill';
-
-// Pull common modules that we want preloaded in the main chunk
-import './containers/PageView';
-import './components/Style';
 
 // Used to load external polyfills
 import loadJS from 'fg-loadjs';
@@ -28,7 +23,7 @@ Promise.all([
   // Really-old browsers that need to be taken by the hand
   // This requires HTTP request out of our control
   new Promise(resolve => {
-    if ('requestAnimationFrame' in window && 'classList' in HTMLElement.prototype) {
+    if ('classList' in HTMLElement.prototype) {
       resolve();
     } else {
       loadJS(
