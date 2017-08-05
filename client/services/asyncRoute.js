@@ -23,7 +23,7 @@ const endLoad = (): void => {
   routesLoaded += 1;
 
   // Hide loading bar
-  if (nprogress.status) {
+  if (nprogress.isStarted()) {
     nprogress.done();
   }
 };
