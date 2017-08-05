@@ -20,6 +20,7 @@ client/**/*.jsx
 all=warn
 untyped-type-import=error
 sketchy-null-bool=off
+sketchy-null-string=off
 
 [options]
 all=true
