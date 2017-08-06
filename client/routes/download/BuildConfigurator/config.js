@@ -19,7 +19,7 @@ import lwjgl_312 from './lwjgl/3.1.2';
 import lwjgl_stable from './lwjgl/stable';
 import lwjgl_nightly from './lwjgl/nightly';
 
-import type { BuildConfig, BuildOptions, BuildOptionsBuilder } from './types';
+import type { BuildConfig, BuildOptions, BuildOptionsBuilder, NATIVES } from './types';
 
 function getDefaultPlatform() {
   if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
@@ -198,15 +198,10 @@ const config: BuildConfig = {
         title: 'LWJGLX/debug',
         description: 'Java Agent for debugging LWJGL3 programs to prevent JVM crashes and resolve OpenGL errors.',
         website: 'https://github.com/LWJGLX/debug',
-        maven: {
-          groupId: 'org.lwjglx',
-          artifactId: 'debug',
-          version: '1.0.0',
-          zipOnly: true,
-        },
+        modes: [MODE_ZIP],
       },
     },
-    allIds: ['joml', 'steamworks4j'],
+    allIds: ['joml', 'lwjglx-debug', 'steamworks4j'],
   },
 
   // UI State
@@ -244,7 +239,11 @@ builders.reduce((previousBuild: BuildOptions, nextBuildConfig: BuildOptionsBuild
   return build;
 }, build);
 
-config.versions = Object.values(config.lwjgl).filter(it => it['alias'] === undefined).map(it => it.version).reverse();
+config.versions = Object.keys(config.lwjgl)
+  .map((it: string) => config.lwjgl[it])
+  .filter((it: BuildOptions) => it.alias === undefined)
+  .map((it: BuildOptions) => it.version)
+  .reverse();
 config.version = config.versions[0];
 
 config.modes.allIds = Object.keys(config.modes.byId);
@@ -253,7 +252,7 @@ config.presets.allIds = Object.keys(config.presets.byId);
 
 config.language = config.languages.allIds[0];
 
-config.natives.allIds.forEach(platform => {
+config.natives.allIds.forEach((platform: NATIVES) => {
   config.platform[platform] = false;
 });
 config.platform[getDefaultPlatform()] = true;
