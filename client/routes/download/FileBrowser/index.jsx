@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ControlledPanel from '~/components/ControlledPanel';
 import Browser from './components/Browser';
-import { actions as $$ } from './reducer';
+import { browserOpen } from './reducer';
 import { register } from '~/store/asyncReducers';
 import reduxSaga from '~/store/saga';
 import reducer from './reducer';
@@ -45,4 +45,4 @@ class FileBrowser extends React.Component {
 
 register('browser', reducer);
 
-export default connect(null, { browserOpen: $$.browserOpen })(FileBrowser);
+export default connect(null, { browserOpen })(FileBrowser);

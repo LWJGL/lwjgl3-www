@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actions as $$ } from '../reducer';
+import { loadPath } from '../reducer';
 import { css } from 'aphrodite/no-important';
 import styles from '../styles';
 import IconFolder from 'react-icons/md/folder';
@@ -16,12 +16,14 @@ class Folder extends React.PureComponent {
 
     return (
       <tr>
-        <th className={css(styles.folder)} colSpan={2} onClick={this.clickHandle}><IconFolder /> {name}</th>
+        <th className={css(styles.folder)} colSpan={2} onClick={this.clickHandle}>
+          <IconFolder /> {name}
+        </th>
       </tr>
     );
   }
 }
 
 export default connect(null, {
-  loadPath: $$.loadPath,
+  loadPath,
 })(Folder);

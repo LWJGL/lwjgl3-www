@@ -1,37 +1,77 @@
-const $ = {
-  BROWSER_OPEN: 'BROWSER/OPEN',
-  BROWSER_LOAD: 'BROWSER/LOAD_PATH',
-  STORE_CONTENTS: 'BROWSER/STORE_CONTENTS',
-};
+// State
 
-const $$ = {
-  browserOpen: () => ({ type: $.BROWSER_OPEN }),
-  loadPath: (path: string) => ({ type: $.BROWSER_LOAD, path }),
-  storeContents: (path: string, contents: {}) => ({ type: $.STORE_CONTENTS, path, contents }),
-};
+type Folder = {|
+  parent: Folder | null,
+  loading: boolean,
+  files: Array<string>,
+  folders: Array<string>,
+|};
 
-const defaultState = {
+type State = {
   contents: {
-    '/': {
-      parent: null,
-      loading: false,
-      files: [],
-      folders: ['release/', 'stable/', 'nightly/'],
-    },
+    [string]: Folder,
   },
-  path: '/',
-  open: false,
+  path: string,
+  open: boolean,
 };
 
-export { $ as types };
-export { $$ as actions };
+// Actions
 
-export default function fileBrowserReducer(state: any = defaultState, action: {}) {
+export const BROWSER_OPEN = 'BROWSER/OPEN';
+export const BROWSER_LOAD = 'BROWSER/LOAD_PATH';
+export const STORE_CONTENTS = 'BROWSER/STORE_CONTENTS';
+
+type BrowserOpenAction = {|
+  type: typeof BROWSER_OPEN,
+|};
+
+type StoreContentsAction = {|
+  type: typeof STORE_CONTENTS,
+  path: string,
+  contents: Folder,
+|};
+
+type BrowserLoadAction = {|
+  type: typeof BROWSER_LOAD,
+  path: string,
+|};
+
+type Action = BrowserOpenAction | StoreContentsAction | BrowserLoadAction;
+
+// Action Creators
+
+export const browserOpen = (): BrowserOpenAction => ({ type: BROWSER_OPEN });
+
+export const loadPath = (path: string): BrowserLoadAction => ({ type: BROWSER_LOAD, path });
+
+export const storeContents = (path: string, contents: Folder): StoreContentsAction => ({
+  type: STORE_CONTENTS,
+  path,
+  contents,
+});
+
+// Reducer
+
+export default function fileBrowserReducer(
+  state: State = {
+    contents: {
+      '/': {
+        parent: null,
+        loading: false,
+        files: [],
+        folders: ['release/', 'stable/', 'nightly/'],
+      },
+    },
+    path: '/',
+    open: false,
+  },
+  action: Action
+): State {
   switch (action.type) {
-    case $.BROWSER_OPEN:
+    case BROWSER_OPEN:
       return { ...state, open: true };
 
-    case $.STORE_CONTENTS:
+    case STORE_CONTENTS:
       return {
         ...state,
         contents: {
@@ -45,7 +85,7 @@ export default function fileBrowserReducer(state: any = defaultState, action: {}
         },
       };
 
-    case $.BROWSER_LOAD:
+    case BROWSER_LOAD:
       if (state.path !== action.path) {
         if (state.contents[action.path]) {
           // Go back to a path we have already loaded

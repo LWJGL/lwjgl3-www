@@ -211,10 +211,12 @@ function* downloadFiles(files) {
   const latch = new CountDownLatch(PARALLEL_DOWNLOADS);
 
   for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
+    //$FlowFixMe
     yield fork(downloadWorker, input, output, latch, files);
   }
 
   for (const i of files.keys()) {
+    //$FlowFixMe
     yield put(input, i);
   }
   input.close();
@@ -232,6 +234,7 @@ function* init() {
 
   yield saveConfig();
 
+  //$FlowFixMe
   const { build, path, selected, platforms, source, javadoc, version, addons } = yield select(getBuild);
 
   yield put(log('Downloading file manifest'));
@@ -278,6 +281,7 @@ function* init() {
   saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : getToday()}-custom.zip`);
 
   yield put(log(`Done!`));
+  //$FlowFixMe
   yield put(downloadComplete());
 }
 
@@ -325,8 +329,10 @@ const getConfig = ({ build }) => {
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 function* saveConfig() {
+  //$FlowFixMe
   yield call(delay, 500);
 
+  //$FlowFixMe
   const save = yield select(getConfig);
   if (save.build !== null) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
@@ -336,6 +342,7 @@ function* saveConfig() {
 }
 
 function* downloadConfig() {
+  //$FlowFixMe
   const save = yield select(getConfig);
   const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
   saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
