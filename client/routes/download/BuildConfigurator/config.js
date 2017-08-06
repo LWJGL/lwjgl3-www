@@ -12,7 +12,26 @@ import {
   MODE_IVY,
 } from './constants';
 
-const config = {
+import lwjgl_300 from './lwjgl/3.0.0';
+import lwjgl_310 from './lwjgl/3.1.0';
+import lwjgl_311 from './lwjgl/3.1.1';
+import lwjgl_312 from './lwjgl/3.1.2';
+import lwjgl_stable from './lwjgl/stable';
+import lwjgl_nightly from './lwjgl/nightly';
+
+import type { BuildConfig, BuildOptions, BuildOptionsBuilder } from './types';
+
+function getDefaultPlatform() {
+  if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
+    return 'macos';
+  } else if (navigator.platform.indexOf('Linux') > -1) {
+    return 'linux';
+  }
+
+  return 'windows';
+}
+
+const config: BuildConfig = {
   lwjgl: {},
   builds: {
     byId: {
@@ -174,6 +193,18 @@ const config = {
           version: '1.6.2',
         },
       },
+      debug: {
+        id: 'lwjglx-debug',
+        title: 'LWJGLX/debug',
+        description: 'Java Agent for debugging LWJGL3 programs to prevent JVM crashes and resolve OpenGL errors.',
+        website: 'https://github.com/LWJGLX/debug',
+        maven: {
+          groupId: 'org.lwjglx',
+          artifactId: 'debug',
+          version: '1.0.0',
+          zipOnly: true,
+        },
+      },
     },
     allIds: ['joml', 'steamworks4j'],
   },
@@ -199,29 +230,19 @@ const config = {
   selectedAddons: [],
 };
 
-function getDefaultPlatform() {
-  if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
-    return 'macos';
-  } else if (navigator.platform.indexOf('Linux') > -1) {
-    return 'linux';
-  }
+// Generate first LWJGL3 build
+let build: BuildOptions = lwjgl_300();
+build.allIds = Object.keys(build.byId).sort();
+config.lwjgl[build.version] = build;
 
-  return 'windows';
-}
-
-import lwjgl_300 from './lwjgl/3.0.0';
-import lwjgl_310 from './lwjgl/3.1.0';
-import lwjgl_311 from './lwjgl/3.1.1';
-import lwjgl_312 from './lwjgl/3.1.2';
-import lwjgl_stable from './lwjgl/stable';
-import lwjgl_nightly from './lwjgl/nightly';
-
-[lwjgl_300, lwjgl_310, lwjgl_311, lwjgl_312, lwjgl_stable, lwjgl_nightly].reduce((previousBuild, nextBuildConfig) => {
+// Generate all other LWJGL3 builds using previous build
+const builders: Array<BuildOptionsBuilder> = [lwjgl_310, lwjgl_311, lwjgl_312, lwjgl_stable, lwjgl_nightly];
+builders.reduce((previousBuild: BuildOptions, nextBuildConfig: BuildOptionsBuilder) => {
   const build = nextBuildConfig(previousBuild);
   build.allIds = Object.keys(build.byId).sort();
   config.lwjgl[build.alias || build.version] = build;
   return build;
-}, null);
+}, build);
 
 config.versions = Object.values(config.lwjgl).filter(it => it['alias'] === undefined).map(it => it.version).reverse();
 config.version = config.versions[0];

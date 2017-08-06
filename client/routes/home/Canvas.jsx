@@ -16,6 +16,11 @@ let renderer = null;
 
 function resizeCanvas() {
   if (camera !== null && canvas !== null) {
+    /*::
+    if ( renderer === null || !(canvas.parentNode instanceof HTMLElement) ) {
+      return;
+    }
+    */
     const winW = canvas.parentNode.offsetWidth;
     const winH = canvas.parentNode.offsetHeight;
     camera.aspect = winW / winH;
@@ -28,7 +33,7 @@ function init(el: HTMLCanvasElement) {
   canvas = el;
   window.addEventListener('resize', resizeCanvas);
 
-  if (window.IntersectionObserver !== void 0) {
+  if (window.IntersectionObserver !== undefined) {
     io = new IntersectionObserver(entries => {
       if (entries[0].intersectionRatio > 0) {
         if (rafId === null) {
@@ -40,6 +45,12 @@ function init(el: HTMLCanvasElement) {
     });
     io.observe(canvas);
   }
+
+  /*::
+  if ( !(canvas.parentNode instanceof HTMLElement) ) {
+    return;
+  }
+  */
 
   const winW = canvas.parentNode.offsetWidth;
   const winH = canvas.parentNode.offsetHeight;
@@ -85,6 +96,13 @@ function animate() {
   let time = Date.now() * 0.000015;
   let rx = time;
   let ry = time;
+
+  /*::
+  if ( group === null || !group.rotation || renderer === null ) {
+    return;
+  }
+  */
+
   group.rotation.x = rx;
   group.rotation.y = ry;
 
@@ -103,6 +121,12 @@ function unload() {
 
   if (scene !== null) {
     scene.remove(group);
+
+    /*::
+    if ( material === null || geometry === null ) {
+      return;
+    }
+    */
     geometry.dispose();
     material.dispose();
 

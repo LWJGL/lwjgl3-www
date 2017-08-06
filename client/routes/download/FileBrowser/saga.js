@@ -1,13 +1,11 @@
 import { takeEvery, select, call, put } from 'redux-saga/effects';
-import { types as $, actions as $$ } from './reducer';
+import { BROWSER_LOAD, storeContents } from './reducer';
 import { HTTP_OK } from '~/services/http_status_codes';
 
-const getData = state => {
-  return {
-    path: state.browser.path,
-    ...state.browser.contents[state.browser.path],
-  };
-};
+const getData = state => ({
+  path: state.browser.path,
+  ...state.browser.contents[state.browser.path],
+});
 
 async function fetchContents(path) {
   let requestUrl = '/browse';
@@ -24,6 +22,7 @@ async function fetchContents(path) {
 }
 
 function* loadPath() {
+  //$FlowFixMe
   const data = yield select(getData);
 
   if (!data.loading) {
@@ -37,9 +36,9 @@ function* loadPath() {
     return;
   }
 
-  yield put($$.storeContents(data.path, contents));
+  yield put(storeContents(data.path, contents));
 }
 
 export default function* fileBrowserSaga(): Generator<*, *, *> {
-  yield takeEvery($.BROWSER_LOAD, loadPath);
+  yield takeEvery(BROWSER_LOAD, loadPath);
 }

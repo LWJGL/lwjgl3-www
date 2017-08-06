@@ -1,8 +1,7 @@
-import {
-  NATIVE_ALL
-} from '../constants'
+import { NATIVE_ALL } from '../constants';
+import type { BuildOptions } from '../types';
 
-export default (prev) => ({
+export default (prev: BuildOptions): BuildOptions => ({
   ...prev,
   version: '3.1.1',
   byId: {
@@ -21,6 +20,6 @@ export default (prev) => ({
     'lwjgl-opengles': {
       ...prev.byId['lwjgl-opengles'],
       natives: NATIVE_ALL,
-    }
-  }
-})
+    },
+  },
+});

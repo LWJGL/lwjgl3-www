@@ -1,8 +1,7 @@
-import {
-  NATIVE_ALL
-} from '../constants'
+import { NATIVE_ALL } from '../constants';
+import type { BuildOptions } from '../types';
 
-export default (prev) => ({
+export default (prev: BuildOptions): BuildOptions => ({
   ...prev,
   version: '3.1.0',
   byId: {
@@ -10,14 +9,16 @@ export default (prev) => ({
     'lwjgl-bgfx': {
       id: 'lwjgl-bgfx',
       title: 'bgfx bindings',
-      description: 'A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.',
+      description:
+        'A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.',
       natives: NATIVE_ALL,
       website: 'https://github.com/bkaradzic/bgfx',
     },
     'lwjgl-lmdb': {
       id: 'lwjgl-lmdb',
       title: 'LMDB bindings',
-      description: 'A compact, fast, powerful, and robust database that implements a simplified variant of the BerkeleyDB (BDB) API.',
+      description:
+        'A compact, fast, powerful, and robust database that implements a simplified variant of the BerkeleyDB (BDB) API.',
       natives: NATIVE_ALL,
       website: 'https://symas.com/products/lightning-memory-mapped-database/',
     },
@@ -34,6 +35,6 @@ export default (prev) => ({
       description: 'Provides basic modal dialogs.',
       natives: NATIVE_ALL,
       website: 'https://sourceforge.net/projects/tinyfiledialogs/files/',
-    }
-  }
-})
+    },
+  },
+});

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { actions as $$ } from '../reducer';
+import { loadPath } from '../reducer';
 import LoaderSpinner from '~/components/LoaderSpinner';
 import Folder from './Folder';
 import File from './File';
@@ -58,6 +58,6 @@ export default connect(
     };
   },
   {
-    loadPath: $$.loadPath,
+    loadPath,
   }
 )(Browser);

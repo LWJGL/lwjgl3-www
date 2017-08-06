@@ -4,7 +4,7 @@ import Checkbox from '~/components/Checkbox';
 import { togglePlatform } from '../reducer';
 
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
-import type { NATIVES } from '../constants';
+import type { NATIVES } from '../types';
 
 import IconWindows from 'react-icons/fa/windows';
 import IconLinux from 'react-icons/fa/linux';

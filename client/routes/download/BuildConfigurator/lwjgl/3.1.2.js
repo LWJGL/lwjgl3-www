@@ -1,6 +1,7 @@
 import { NATIVE_ALL } from '../constants';
+import type { BuildOptions } from '../types';
 
-export default prev => ({
+export default (prev: BuildOptions): BuildOptions => ({
   ...prev,
   version: '3.1.2',
   byId: {
@@ -8,7 +9,8 @@ export default prev => ({
     'lwjgl-openvr': {
       id: 'lwjgl-openvr',
       title: 'OpenVR bindings',
-      description: 'OpenVR is an API and runtime that allows access to VR hardware from multiple vendors without requiring that applications have specific knowledge of the hardware they are targeting.',
+      description:
+        'OpenVR is an API and runtime that allows access to VR hardware from multiple vendors without requiring that applications have specific knowledge of the hardware they are targeting.',
       natives: NATIVE_ALL,
       website: 'https://github.com/ValveSoftware/openvr',
     },
