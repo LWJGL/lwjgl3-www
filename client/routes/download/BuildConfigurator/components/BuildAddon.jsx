@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Checkbox from '~/components/Checkbox';
 import { toggleAddon } from '../reducer';
+import { MODE_ZIP } from '../constants';
 
 class BuildAddon extends React.Component {
   static propTypes = {
@@ -14,13 +15,20 @@ class BuildAddon extends React.Component {
   };
 
   render() {
-    const { addon, checked, showDescriptions } = this.props;
-    const label = `${addon.title} v${addon.maven.version}`;
+    const { mode, addon, checked, showDescriptions } = this.props;
+    let disabled = false;
+    let label = addon.title;
+
+    if (addon.maven !== undefined) {
+      label += ` v${addon.maven.version}`;
+    } else if (mode !== MODE_ZIP) {
+      disabled = true;
+    }
 
     if (showDescriptions) {
       return (
         <div className="artifact">
-          <Checkbox label={label} checked={checked} onChange={this.toggle} />
+          <Checkbox label={label} checked={checked && !disabled} disabled={disabled} onChange={this.toggle} />
           <p>
             {addon.description}
           </p>
@@ -33,7 +41,7 @@ class BuildAddon extends React.Component {
         </div>
       );
     } else {
-      return <Checkbox label={label} checked={checked} onChange={this.toggle} />;
+      return <Checkbox label={label} checked={checked && !disabled} disabled={disabled} onChange={this.toggle} />;
     }
   }
 }
@@ -43,6 +51,7 @@ export default connect(
     const addon = build.addons.byId[ownProps.id];
 
     return {
+      mode: build.mode,
       addon,
       checked: build.selectedAddons.includes(ownProps.id),
       showDescriptions: build.descriptions,

@@ -60,7 +60,9 @@ class BuildScript extends React.Component {
           <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
         </h2>
         <pre ref={this.getRef}>
-          <code>{script}</code>
+          <code>
+            {script}
+          </code>
         </pre>
         <BuildToolbar>
           <a
@@ -78,7 +80,8 @@ class BuildScript extends React.Component {
             disabled={!document.execCommand}
             title="Copy to clipboard"
           >
-            <IconCopy />{labels.copy}
+            <IconCopy />
+            {labels.copy}
           </button>
         </BuildToolbar>
       </div>
@@ -107,7 +110,7 @@ function generateMaven(props) {
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
-  const v = hardcoded ? version : '\${lwjgl.version}';
+  const v = hardcoded ? version : '${lwjgl.version}';
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
@@ -120,7 +123,9 @@ function generateMaven(props) {
 \t<lwjgl.version>${version}</lwjgl.version>`;
 
     selectedAddons.forEach(addon => {
-      script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}</${addon}.version>`;
+      if (addons.byId[addon].maven) {
+        script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}</${addon}.version>`;
+      }
     });
 
     script += `\n</properties>\n\n`;
@@ -139,7 +144,12 @@ function generateMaven(props) {
 
   selectedAddons.forEach(addon => {
     const maven = addons.byId[addon].maven;
-    script += `\n\t<dependency>${nl2}<groupId>${maven.groupId}</groupId>${nl2}<artifactId>${maven.artifactId}</artifactId>${nl2}<version>${hardcoded ? maven.version : `\${${addon}.version}`}</version>${nl1}</dependency>`;
+    if (maven === undefined) {
+      return;
+    }
+    script += `\n\t<dependency>${nl2}<groupId>${maven.groupId}</groupId>${nl2}<artifactId>${maven.artifactId}</artifactId>${nl2}<version>${hardcoded
+      ? maven.version
+      : `\${${addon}.version}`}</version>${nl1}</dependency>`;
   });
 
   script += `\n</dependencies>`;
@@ -170,7 +180,7 @@ function generateGradle(props) {
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
-  const v = hardcoded ? version : '\${lwjglVersion}';
+  const v = hardcoded ? version : '${lwjglVersion}';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
   script += `import org.gradle.internal.os.OperatingSystem
@@ -191,6 +201,9 @@ switch ( OperatingSystem.current() ) {
     script += `project.ext.lwjglVersion = "${version}"\n`;
     selectedAddons.forEach(addon => {
       const maven = addons.byId[addon].maven;
+      if (maven === undefined) {
+        return;
+      }
       script += `project.ext.${addon}Version = "${maven.version}"\n`;
     });
     script += `\n`;
@@ -219,6 +232,9 @@ switch ( OperatingSystem.current() ) {
 
   selectedAddons.forEach(addon => {
     const maven = addons.byId[addon].maven;
+    if (maven === undefined) {
+      return;
+    }
     script += `\n\tcompile "${maven.groupId}:${maven.artifactId}:${hardcoded ? maven.version : `\${${addon}Version}`}"`;
   });
 
@@ -232,7 +248,7 @@ function generateIvy(props) {
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
-  const v = hardcoded ? version : '\${lwjgl.version}';
+  const v = hardcoded ? version : '${lwjgl.version}';
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
@@ -254,6 +270,9 @@ function generateIvy(props) {
     script += `\n\t<property name="lwjgl.version" value="${version}"/>`;
 
     selectedAddons.forEach(addon => {
+      if (addons.byId[addon].maven === undefined) {
+        return;
+      }
       script += `\n\t<property name="${addon}.version" value="${addons.byId[addon].maven.version}"/>`;
     });
   }
@@ -278,7 +297,12 @@ function generateIvy(props) {
 
   selectedAddons.forEach(addon => {
     const maven = addons.byId[addon].maven;
-    script += `\n\t\t<dependency org="${maven.groupId}" name="${maven.artifactId}" rev="${hardcoded ? maven.version : `\${${addon}.version}`}"/>`;
+    if (maven === undefined) {
+      return;
+    }
+    script += `\n\t\t<dependency org="${maven.groupId}" name="${maven.artifactId}" rev="${hardcoded
+      ? maven.version
+      : `\${${addon}.version}`}"/>`;
   });
 
   script += `\n\t</dependencies>`;

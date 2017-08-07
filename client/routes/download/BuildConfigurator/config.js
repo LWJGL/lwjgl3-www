@@ -196,17 +196,14 @@ const config: BuildConfig = {
           version: '1.6.2',
         },
       },
-      /*
-      debug: {
+      'lwjglx-debug': {
         id: 'lwjglx-debug',
         title: 'LWJGLX/debug',
         description: 'Java Agent for debugging LWJGL3 programs to prevent JVM crashes and resolve OpenGL errors.',
         website: 'https://github.com/LWJGLX/debug',
-        modes: [MODE_ZIP],
       },
-      */
     },
-    allIds: ['joml', /*'lwjglx-debug', */ 'steamworks4j'],
+    allIds: ['joml', 'lwjglx-debug', 'steamworks4j'],
   },
 
   // UI State
