@@ -37,7 +37,7 @@ class ErrorBoundary extends React.Component<void, Props, State> {
     if (this.state.hasError) {
       const Component = this.props.render;
       const { error, info } = this.state;
-      // $FlowFixMe
+      //$FlowFixMe
       return <Component error={error} info={info} />;
     }
     return this.props.children;

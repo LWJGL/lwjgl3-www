@@ -1,31 +1,19 @@
 import config from './config';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
-
-// Types
-
-type BuildStatusSuccess = {|
-  lastModified: string,
-  version?: string,
-|};
-type BuildStatusError = {| error: string |};
-export type BuildStatus = BuildStatusSuccess | BuildStatusError;
-
-type ActionBuildStatus = 'BUILD/STATUS';
-
-type ActionStore = {
-  type: ActionBuildStatus,
-  name: string,
-  payload: BuildStatus,
-};
-
-// TODO: Add definitions for all possible actions
-type Action = ActionStore | any;
-
-/*
-type State = {
-  [_: string]: Status,
-};
-*/
+import type {
+  BUILD_TYPES,
+  NATIVES,
+  MODES,
+  Build,
+  BuildConfig,
+  BuildConfigStored,
+  BuildStatus,
+  BuildStatusSuccess,
+  BuildStatusError,
+  ActionBuildStatus,
+  ActionStore,
+  Action,
+} from './types';
 
 // Actions
 
@@ -59,8 +47,11 @@ export const RESET = 'BUILD/RESET';
 
 const nativeCnt = config.natives.allIds.length;
 
-const computeArtifacts = state => {
-  state.artifacts = state.lwjgl[state.build === BUILD_RELEASE ? state.version : state.build];
+const computeArtifacts = (state: BuildConfig) => {
+  if (state.build === null) {
+    return;
+  }
+  state.artifacts = state.lwjgl[state.build === BUILD_RELEASE && state.version !== null ? state.version : state.build];
   state.availability = {};
   state.artifacts.allIds.forEach(it => {
     const artifact = state.artifacts.byId[it];
@@ -69,7 +60,7 @@ const computeArtifacts = state => {
       state.mode !== MODE_ZIP ||
       artifact.natives === undefined ||
       artifact.natives.length === nativeCnt ||
-      artifact.natives.some(platform => !!state.platform[platform]);
+      artifact.natives.some((platform: NATIVES) => !!state.platform[platform]);
   });
 
   if (state.preset !== 'custom') {
@@ -85,7 +76,7 @@ const computeArtifacts = state => {
   return state;
 };
 
-const selectBuild = (state, build) => {
+const selectBuild = (state: BuildConfig, build: BUILD_TYPES) => {
   state.build = build;
   if (build !== null) {
     computeArtifacts(state);
@@ -94,19 +85,25 @@ const selectBuild = (state, build) => {
   return state;
 };
 
-const selectVersion = (state, version) => {
+const selectVersion = (state: BuildConfig, version: string) => {
   state.version = version;
   computeArtifacts(state);
   return state;
 };
 
-const selectMode = (state, mode) => {
+const selectMode = (state: BuildConfig, mode: MODES) => {
   state.mode = mode;
   computeArtifacts(state);
   return state;
 };
 
-const selectPreset = (state, preset) => {
+const selectPreset = (state: BuildConfig, preset: string) => {
+  // Make sure preset exists
+  if (state.presets.byId[preset] === undefined) {
+    return;
+  }
+
+  // Set preset
   state.preset = preset;
 
   if (preset === 'all') {
@@ -119,15 +116,17 @@ const selectPreset = (state, preset) => {
     state.artifacts.allIds.forEach(artifact => {
       state.contents[artifact] = false;
     });
-    state.presets.byId[preset].artifacts.forEach(artifact => {
-      state.contents[artifact] = true;
-    });
+    if (state.presets.byId[preset].artifacts !== undefined) {
+      state.presets.byId[preset].artifacts.forEach(artifact => {
+        state.contents[artifact] = true;
+      });
+    }
   }
 
   return state;
 };
 
-const doToggleArtifact = (state, artifact) => {
+const doToggleArtifact = (state: BuildConfig, artifact: string) => {
   state.contents = { ...state.contents, [artifact]: !state.contents[artifact] };
 
   // MATCH PRESET
@@ -143,19 +142,21 @@ const doToggleArtifact = (state, artifact) => {
   }
 
   // match selected artifacts with a preset
-  const presetFoundMatch = state.presets.allIds.some(preset => {
+  const presetFoundMatch = state.presets.allIds.some((preset: string) => {
     // only check predefined presets
     if (preset === 'custom' || preset === 'all' || preset === 'none') {
       return false;
     }
 
     // Get preset artifacts but keep only ones present in the current artifact collection
-    const artifacts = state.presets.byId[preset].artifacts.filter(it => !!state.artifacts.byId[it]);
+    if (state.presets.byId[preset].artifacts) {
+      const artifacts = state.presets.byId[preset].artifacts.filter(it => !!state.artifacts.byId[it]);
 
-    // first check length for speed, then do deep comparison
-    if (artifacts.length === selected.length && artifacts.every((it, i) => it === selected[i])) {
-      state.preset = preset;
-      return true;
+      // first check length for speed, then do deep comparison
+      if (artifacts.length === selected.length && artifacts.every((it, i) => it === selected[i])) {
+        state.preset = preset;
+        return true;
+      }
     }
 
     return false;
@@ -169,7 +170,7 @@ const doToggleArtifact = (state, artifact) => {
   return state;
 };
 
-const doToggleAddon = (state, addon) => {
+const doToggleAddon = (state: BuildConfig, addon: string) => {
   if (state.selectedAddons.includes(addon)) {
     state.selectedAddons = state.selectedAddons.filter(it => it !== addon);
   } else {
@@ -179,7 +180,7 @@ const doToggleAddon = (state, addon) => {
   return state;
 };
 
-const loadConfig = (state, config) => {
+const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
   if (config.build === null) {
     return state;
   }
@@ -193,9 +194,10 @@ const loadConfig = (state, config) => {
   state.javadoc = config.javadoc;
   state.source = config.source;
   state.language = config.language;
+  state.osgi = !!config.osgi;
 
-  if (config.build === BUILD_RELEASE) {
-    if (!config.versionLatest || config.versionLatest === state.versions[1]) {
+  if (config.build === BUILD_RELEASE && config.version && config.versionLatest) {
+    if (config.versionLatest === state.versions[1]) {
       state.version = state.versions[0];
     } else {
       state.version = config.version;
@@ -215,25 +217,29 @@ const loadConfig = (state, config) => {
 
   if (config.preset) {
     selectPreset(state, config.preset);
-  } else {
+  } else if (config.contents !== undefined) {
     state.preset = 'custom';
     state.contents = {};
-    config.contents.forEach(binding => {
-      if (state.artifacts.byId[binding]) {
-        state.contents[binding] = true;
-      }
-    });
+    if (Array.isArray(config.contents)) {
+      config.contents.forEach((binding: string) => {
+        if (state.artifacts.byId[binding]) {
+          state.contents[binding] = true;
+        }
+      });
+    }
+  } else {
+    selectPreset(state, 'getting-started');
   }
 
   return state;
 };
 
-const saveStatus = (state, name, payload) => {
+const saveStatus = (state: BuildConfig, name: BUILD_TYPES, payload: BuildStatus) => {
   state.builds.byId[name].status = payload;
   return state;
 };
 
-export default function buildConfiguratorReducer(state: any = config, action: Action) {
+export default function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
   switch (action.type) {
     case BUILD_STATUS:
       return saveStatus({ ...state }, action.name, action.payload);
@@ -379,11 +385,23 @@ export const configDownload = () => ({ type: CONFIG_DOWNLOAD });
 
 export const reset = () => ({ type: RESET });
 
-export const storeStatus = (name: string, payload: BuildStatus): ActionStore => {
-  if (payload.error === undefined && payload.version !== undefined) {
-    payload.version = payload.version.replace(/^LWJGL\s+/, '');
+export const storeStatus = (name: BUILD_TYPES, response: BuildStatus): ActionStore => {
+  if (response.error) {
+    const payload: BuildStatusError = {
+      error: response.error,
+    };
+    return { type: BUILD_STATUS, name, payload };
+  } else if (response.lastModified) {
+    const payload: BuildStatusSuccess = {
+      lastModified: response.lastModified,
+    };
+    if (response.version !== undefined) {
+      payload.version = response.version.replace(/^LWJGL\s+/, '');
+    }
+    return { type: BUILD_STATUS, name, payload };
   }
-  return { type: BUILD_STATUS, name, payload };
+
+  return { type: BUILD_STATUS, name, payload: { error: 'Unknown' } };
 };
 
 async function fetchStatus(url: string) {
@@ -396,7 +414,7 @@ async function fetchStatus(url: string) {
   return await response.json();
 }
 
-export const loadStatus = (name: string) => async (dispatch: Function, getState: () => any) => {
+export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getState: () => any) => {
   let result;
   let url = `/build/${name}`;
 

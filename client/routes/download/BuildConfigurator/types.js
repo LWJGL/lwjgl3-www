@@ -3,23 +3,23 @@ export type NATIVES = 'macos' | 'windows' | 'linux';
 export type MODES = 'zip' | 'maven' | 'gradle' | 'ivy';
 export type LANGUAGES = 'groovy' | 'kotlin';
 
-export type BindingDefinition = {|
+export type BindingDefinition = {
   id: string,
   title: string,
   description: string,
-  natives?: Array<string>,
   required?: boolean,
+  natives?: Array<NATIVES>,
   website?: string,
-|};
+};
 
-export type BuildOptions = {|
+export type BuildOptions = {
   version: string,
   alias?: string,
-  allIds?: Array<string>,
-  byId: {|
+  allIds: Array<string>,
+  byId: {
     [string]: BindingDefinition,
-  |},
-|};
+  },
+};
 
 export type BuildOptionsBuilder = BuildOptions => BuildOptions;
 
@@ -27,7 +27,7 @@ export type Build = {|
   id: BUILD_TYPES,
   title: string,
   description: string,
-  status: null,
+  status: null | BuildStatus,
 |};
 
 export type Mode = {|
@@ -41,14 +41,14 @@ export type Builds = {|
   byId: {|
     [BUILD_TYPES]: Build,
   |},
-  allIds?: Array<string>,
+  allIds: Array<string>,
 |};
 
 export type Modes = {|
   byId: {|
     [MODES]: Mode,
   |},
-  allIds?: Array<string>,
+  allIds: Array<string>,
 |};
 
 export type Native = {|
@@ -70,7 +70,7 @@ export type Languages = {
       title: string,
     },
   },
-  allIds?: Array<string>,
+  allIds: Array<string>,
 };
 
 export type Preset = {
@@ -83,7 +83,7 @@ export type Presets = {|
   byId: {
     [string]: Preset,
   },
-  allIds?: Array<string>,
+  allIds: Array<string>,
 |};
 
 export type MavenConfig = {|
@@ -112,11 +112,11 @@ export type LWJGLVersions = {
   [string]: BuildOptions,
 };
 
-export type Platform = {|
+export type Platforms = {
   [NATIVES]: boolean,
-|};
+};
 
-export type BuildConfig = {|
+export type BuildConfig = {
   lwjgl: LWJGLVersions,
   builds: Builds,
   modes: Modes,
@@ -124,10 +124,10 @@ export type BuildConfig = {|
   languages: Languages,
   presets: Presets,
   addons: Addons,
-  versions?: Array<string>,
+  versions: Array<string>,
 
   // UI State
-  build: null,
+  build: null | BUILD_TYPES,
   mode: MODES,
   preset: string,
   descriptions: boolean,
@@ -136,12 +136,53 @@ export type BuildConfig = {|
   javadoc: boolean,
   source: boolean,
   osgi: boolean,
-  language: null | string,
-  platform: Platform,
-  version: null | string,
+  language: string,
+  platform: Platforms,
+  version: string,
   downloading: boolean,
   progress: Array<string>,
   contents: {},
   availability: {},
   selectedAddons: Array<string>,
+  artifacts: BuildOptions,
+};
+
+export type BuildConfigStored = {
+  build: BUILD_TYPES,
+  mode: MODES,
+  selectedAddons: Array<string>,
+  platform: Array<NATIVES>,
+  descriptions: boolean,
+  compact: boolean,
+  hardcoded: boolean,
+  javadoc: boolean,
+  source: boolean,
+  osgi: boolean,
+  language: string,
+  preset?: string,
+  contents?: Array<string>,
+  version?: string,
+  versionLatest?: string,
+};
+
+// Reducer
+
+export type BuildStatusSuccess = {|
+  lastModified: string,
+  version?: string,
 |};
+
+export type BuildStatusError = {| error: string |};
+
+export type BuildStatus = BuildStatusSuccess | BuildStatusError;
+
+export type ActionBuildStatus = 'BUILD/STATUS';
+
+export type ActionStore = {
+  type: ActionBuildStatus,
+  name: BUILD_TYPES,
+  payload: BuildStatus,
+};
+
+// TODO: Add definitions for all possible actions
+export type Action = ActionStore | any;
