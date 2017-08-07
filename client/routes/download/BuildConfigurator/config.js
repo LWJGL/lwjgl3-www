@@ -81,6 +81,7 @@ const config: BuildConfig = {
         file: 'ivy.xml',
       },
     },
+    allIds: [],
   },
   natives: {
     byId: {
@@ -110,6 +111,7 @@ const config: BuildConfig = {
         title: 'Kotlin',
       },
     },
+    allIds: [],
   },
   presets: {
     byId: {
@@ -168,6 +170,7 @@ const config: BuildConfig = {
         artifacts: ['lwjgl', 'lwjgl-glfw', 'lwjgl-jemalloc', 'lwjgl-openal', 'lwjgl-stb', 'lwjgl-vulkan'],
       },
     },
+    allIds: [],
   },
   addons: {
     byId: {
@@ -193,6 +196,7 @@ const config: BuildConfig = {
           version: '1.6.2',
         },
       },
+      /*
       debug: {
         id: 'lwjglx-debug',
         title: 'LWJGLX/debug',
@@ -200,8 +204,9 @@ const config: BuildConfig = {
         website: 'https://github.com/LWJGLX/debug',
         modes: [MODE_ZIP],
       },
+      */
     },
-    allIds: ['joml', 'lwjglx-debug', 'steamworks4j'],
+    allIds: ['joml', /*'lwjglx-debug', */ 'steamworks4j'],
   },
 
   // UI State
@@ -215,14 +220,20 @@ const config: BuildConfig = {
   javadoc: true,
   source: true,
   osgi: false,
-  language: null,
+  language: '',
   platform: {},
-  version: null,
+  versions: [],
+  version: '',
   downloading: false,
   progress: [],
   contents: {},
   availability: {},
   selectedAddons: [],
+  artifacts: {
+    version: '',
+    byId: {},
+    allIds: [],
+  },
 };
 
 // Generate first LWJGL3 build
@@ -246,15 +257,19 @@ config.versions = Object.keys(config.lwjgl)
   .reverse();
 config.version = config.versions[0];
 
+// Fill allIds
 config.modes.allIds = Object.keys(config.modes.byId);
 config.languages.allIds = Object.keys(config.languages.byId);
 config.presets.allIds = Object.keys(config.presets.byId);
 
-config.language = config.languages.allIds[0];
+if (config.languages.allIds && config.languages.allIds.length) {
+  config.language = config.languages.allIds[0];
+}
 
 config.natives.allIds.forEach((platform: NATIVES) => {
   config.platform[platform] = false;
 });
+
 config.platform[getDefaultPlatform()] = true;
 
 export default config;

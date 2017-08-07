@@ -4,6 +4,7 @@ import type { BuildOptions } from '../types';
 
 export default (): BuildOptions => ({
   version: '3.0.0',
+  allIds: [],
   byId: {
     lwjgl: {
       id: 'lwjgl',

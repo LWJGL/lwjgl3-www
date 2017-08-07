@@ -9,7 +9,7 @@ import mount from './mount';
 
 // Webpack manifest
 if (process.env.NODE_ENV === 'production') {
-  // $FlowFixMe
+  //$FlowFixMe
   window.webpackManifest = JSON.parse(document.getElementById('manifest').innerHTML);
 }
 

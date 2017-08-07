@@ -23,6 +23,9 @@ import {
   downloadComplete,
 } from './reducer';
 
+import type { BuildConfig, BuildConfigStored } from './types';
+import type { GenerateOptions } from 'jszip';
+
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
@@ -270,13 +273,13 @@ function* init() {
   }
 
   yield put(log(`Compressing files`));
-  const zipOptions = {
+  const zipOptions: GenerateOptions = {
     type: 'blob',
     // compression: 'DEFLATE',
     // compressionOptions: {level:6},
   };
 
-  //noinspection JSUnresolvedVariable
+  //$FlowFixMe
   const blob = yield apply(zip, zip.generateAsync, [zipOptions]);
   saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : getToday()}-custom.zip`);
 
@@ -292,14 +295,20 @@ const getToday = () => {
   return `${d.getFullYear()}-${month > 9 ? month : '0' + month}-${date > 9 ? date : '0' + date}`;
 };
 
-const keepChecked = src => {
+//$FlowFixMe
+const keepChecked = (src: {}): Array<string> => {
   // Keep only checked items to avoid phantom selections
   // when new items (bindings,addons,platforms) are added
-  return Object.keys(src).filter(key => src[key] === true);
+  return Object.keys(src).filter((key: string) => src[key] === true);
 };
 
-const getConfig = ({ build }) => {
-  const save = {
+const getConfig = (state): BuildConfigStored | void => {
+  const build = (state.build: BuildConfig);
+  if (build.build === null) {
+    return;
+  }
+
+  const save: BuildConfigStored = {
     build: build.build,
     mode: build.mode,
     selectedAddons: build.selectedAddons,
@@ -309,6 +318,7 @@ const getConfig = ({ build }) => {
     hardcoded: build.hardcoded,
     javadoc: build.javadoc,
     source: build.source,
+    osgi: build.osgi,
     language: build.language,
   };
 
@@ -332,9 +342,8 @@ function* saveConfig() {
   //$FlowFixMe
   yield call(delay, 500);
 
-  //$FlowFixMe
   const save = yield select(getConfig);
-  if (save.build !== null) {
+  if (save !== undefined) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
   } else if (localStorage.getItem(STORAGE_KEY) !== null) {
     localStorage.removeItem(STORAGE_KEY);
@@ -342,8 +351,10 @@ function* saveConfig() {
 }
 
 function* downloadConfig() {
-  //$FlowFixMe
   const save = yield select(getConfig);
+  if (save === undefined) {
+    return;
+  }
   const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
   saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
 }

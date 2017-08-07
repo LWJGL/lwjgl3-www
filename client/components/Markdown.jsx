@@ -1,22 +1,13 @@
 import React from 'react';
 // https://github.com/jonschlinkert/remarkable
-// $FlowFixMe
 import Remarkable from 'remarkable';
+import type { RemarkableOptions, RemarkableSettings } from 'remarkable';
 
 type Props = {
   tag: string,
   source?: string,
   children?: React$Element<*>,
-  options: {
-    html: boolean,
-    break: boolean,
-    xhtmlOut: boolean,
-    langPrefix: string,
-    linkify: boolean,
-    typographer: boolean,
-    quotes: string,
-    highlight: Function,
-  },
+  options?: RemarkableOptions | RemarkableSettings,
 };
 
 const Markdown = ({ tag = 'div', source, children, options, ...rest }: Props) => {
