@@ -21,17 +21,17 @@ export const BROWSER_OPEN = 'BROWSER/OPEN';
 export const BROWSER_LOAD = 'BROWSER/LOAD_PATH';
 export const STORE_CONTENTS = 'BROWSER/STORE_CONTENTS';
 
-type BrowserOpenAction = {|
+export type BrowserOpenAction = {|
   type: typeof BROWSER_OPEN,
 |};
 
-type StoreContentsAction = {|
+export type StoreContentsAction = {|
   type: typeof STORE_CONTENTS,
   path: string,
   contents: Folder,
 |};
 
-type BrowserLoadAction = {|
+export type BrowserLoadAction = {|
   type: typeof BROWSER_LOAD,
   path: string,
 |};

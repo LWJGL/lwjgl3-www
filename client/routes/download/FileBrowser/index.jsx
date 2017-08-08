@@ -7,25 +7,33 @@ import { register } from '~/store/asyncReducers';
 import reduxSaga from '~/store/saga';
 import reducer from './reducer';
 import saga from './saga';
+import type { Task } from 'redux-saga';
+import type { BrowserOpenAction } from './reducer';
 
-function isClosed({ browser: { open } }) {
+type Props = {
+  browserOpen: () => BrowserOpenAction,
+};
+
+type BrowserState = { browser: { open: boolean } };
+
+function isClosed({ browser: { open } }: BrowserState): boolean {
   return open === false;
 }
 
-function isBrowsing({ browser: { open } }) {
+function isBrowsing({ browser: { open } }: BrowserState): boolean {
   return open;
 }
 
-let sagaTask;
+let sagaTask: Task;
 
-class FileBrowser extends React.Component {
+class FileBrowser extends React.Component<void, Props, void> {
   componentDidMount() {
     sagaTask = reduxSaga.run(saga);
   }
   componentWillUnmount() {
     sagaTask.cancel();
   }
-  browse = () => {
+  browse: () => void = () => {
     this.props.browserOpen();
   };
 

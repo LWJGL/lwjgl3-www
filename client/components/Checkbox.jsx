@@ -30,7 +30,7 @@ class Checkbox extends React.PureComponent<DefaultProps, Props, void> {
   };
 
   render() {
-    const props = this.props;
+    const props: Props = this.props;
 
     return props.hidden
       ? null
@@ -44,7 +44,9 @@ class Checkbox extends React.PureComponent<DefaultProps, Props, void> {
           />
           <span className="custom-control-indicator" />
           <span className="custom-control-description">
-            {props.icon ? props.icon : null}{props.icon ? ' ' : null}{props.label}
+            {props.icon ? props.icon : null}
+            {props.icon ? ' ' : null}
+            {props.label}
           </span>
         </label>;
   }

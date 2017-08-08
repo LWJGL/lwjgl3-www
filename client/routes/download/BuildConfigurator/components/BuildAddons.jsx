@@ -1,19 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import BuildAddon from './BuildAddon';
+import type { BuildConfig } from '../types';
+
+type AddonData = {
+  addons: Array<string>,
+};
 
 class BuildAddons extends React.Component {
   render() {
-    const { addons } = this.props;
+    const { addons }: AddonData = this.props;
 
     return (
       <div className="custom-controls-stacked">
-        {addons.map(it => <BuildAddon key={it} id={it} />)}
+        {addons.map((it: string) => <BuildAddon key={it} id={it} />)}
       </div>
     );
   }
 }
 
-export default connect(({ build }) => ({
-  addons: build.addons.allIds,
-}))(BuildAddons);
+export default connect(
+  ({ build }: { build: BuildConfig }) =>
+    ({
+      addons: build.addons.allIds,
+    }: AddonData)
+)(BuildAddons);
