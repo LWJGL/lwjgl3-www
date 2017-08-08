@@ -4,7 +4,7 @@
       "env",
       {
         "spec": false,
-        "loose": true,
+        "loose": false,
         "modules": false,
         "useBuiltins": true,
         "targets": {
@@ -24,11 +24,11 @@
           "env",
           {
             "spec": false,
-            "loose": true,
+            "loose": false,
             "modules": false,
             "useBuiltins": true,
             "targets": {
-              "browsers": ["> 1%", "ie >= 9", "last 2 versions"]
+              "browsers": ["last 2 versions", "ie > 9", "> 1%"]
             }
           }
         ],
