@@ -4,24 +4,31 @@ import { connect } from 'react-redux';
 import Checkbox from '~/components/Checkbox';
 import { toggleAddon } from '../reducer';
 import { MODE_ZIP } from '../constants';
+import type { BuildConfig, MODES, Addon } from '../types';
 
-class BuildAddon extends React.Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-  };
+type OwnProps = {
+  id: string,
+};
 
-  toggle = () => {
+type Props = OwnProps & {
+  toggleAddon: typeof toggleAddon,
+  mode: MODES,
+  addon: Addon,
+  checked: boolean,
+  showDescriptions: boolean,
+};
+
+class BuildAddon extends React.Component<void, Props, void> {
+  toggle: () => void = () => {
     this.props.toggleAddon(this.props.id);
   };
 
   render() {
     const { mode, addon, checked, showDescriptions } = this.props;
-    let disabled = false;
-    let label = addon.title;
+    let disabled: boolean = false;
+    const label: string = `${addon.title} v${addon.maven.version}`;
 
-    if (addon.maven !== undefined) {
-      label += ` v${addon.maven.version}`;
-    } else if (mode !== MODE_ZIP) {
+    if (addon.modes && addon.modes.indexOf(mode) === -1) {
       disabled = true;
     }
 
@@ -46,9 +53,9 @@ class BuildAddon extends React.Component {
   }
 }
 
-export default connect(
-  ({ build }, ownProps) => {
-    const addon = build.addons.byId[ownProps.id];
+export default (connect(
+  ({ build }: { build: BuildConfig }, ownProps: OwnProps) => {
+    const addon: Addon = build.addons.byId[ownProps.id];
 
     return {
       mode: build.mode,
@@ -60,4 +67,4 @@ export default connect(
   {
     toggleAddon,
   }
-)(BuildAddon);
+)(BuildAddon): Class<React$Component<void, OwnProps, void>>);

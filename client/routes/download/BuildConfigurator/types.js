@@ -97,7 +97,7 @@ export type Addon = {|
   title: string,
   description: string,
   website: string,
-  maven?: MavenConfig,
+  maven: MavenConfig,
   modes?: Array<MODES>,
 |};
 

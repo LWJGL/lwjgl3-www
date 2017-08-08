@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
+import type { MODES, Addon } from '../types';
 
 import BuildToolbar from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
@@ -106,7 +107,7 @@ function generateScript(mode, props) {
 }
 
 function generateMaven(props) {
-  const { build, hardcoded, compact, osgi, artifacts, selected, addons, selectedAddons } = props;
+  const { build, hardcoded, compact, osgi, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
@@ -122,10 +123,8 @@ function generateMaven(props) {
 \t<maven.compiler.target>1.8</maven.compiler.target>
 \t<lwjgl.version>${version}</lwjgl.version>`;
 
-    selectedAddons.forEach(addon => {
-      if (addons.byId[addon].maven) {
-        script += `\n\t<${addon}.version>${addons.byId[addon].maven.version}</${addon}.version>`;
-      }
+    addons.forEach((addon: Addon) => {
+      script += `\n\t<${addon.id}.version>${addon.maven.version}</${addon.id}.version>`;
     });
 
     script += `\n</properties>\n\n`;
@@ -142,14 +141,11 @@ function generateMaven(props) {
 
   script += nativesBundle;
 
-  selectedAddons.forEach(addon => {
-    const maven = addons.byId[addon].maven;
-    if (maven === undefined) {
-      return;
-    }
+  addons.forEach((addon: Addon) => {
+    const maven = addon.maven;
     script += `\n\t<dependency>${nl2}<groupId>${maven.groupId}</groupId>${nl2}<artifactId>${maven.artifactId}</artifactId>${nl2}<version>${hardcoded
       ? maven.version
-      : `\${${addon}.version}`}</version>${nl1}</dependency>`;
+      : `\${${addon.id}.version}`}</version>${nl1}</dependency>`;
   });
 
   script += `\n</dependencies>`;
@@ -176,7 +172,7 @@ function generateMaven(props) {
 }
 
 function generateGradle(props) {
-  const { build, hardcoded, osgi, artifacts, selected, addons, selectedAddons } = props;
+  const { build, hardcoded, osgi, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
@@ -199,19 +195,15 @@ switch ( OperatingSystem.current() ) {
 
   if (!hardcoded) {
     script += `project.ext.lwjglVersion = "${version}"\n`;
-    selectedAddons.forEach(addon => {
-      const maven = addons.byId[addon].maven;
-      if (maven === undefined) {
-        return;
-      }
-      script += `project.ext.${addon}Version = "${maven.version}"\n`;
+    addons.forEach((addon: Addon) => {
+      script += `project.ext.${addon.id}Version = "${addon.maven.version}"\n`;
     });
     script += `\n`;
   }
 
   script += `repositories {`;
 
-  if (build === BUILD_RELEASE || selectedAddons.length) {
+  if (build === BUILD_RELEASE || addons.length) {
     script += `\n\tmavenCentral()`;
   }
   if (build !== BUILD_RELEASE) {
@@ -230,12 +222,11 @@ switch ( OperatingSystem.current() ) {
 
   script += nativesBundle;
 
-  selectedAddons.forEach(addon => {
-    const maven = addons.byId[addon].maven;
-    if (maven === undefined) {
-      return;
-    }
-    script += `\n\tcompile "${maven.groupId}:${maven.artifactId}:${hardcoded ? maven.version : `\${${addon}Version}`}"`;
+  addons.forEach((addon: Addon) => {
+    const maven = addon.maven;
+    script += `\n\tcompile "${maven.groupId}:${maven.artifactId}:${hardcoded
+      ? maven.version
+      : `\${${addon.id}Version}`}"`;
   });
 
   script += `\n}`;
@@ -244,7 +235,7 @@ switch ( OperatingSystem.current() ) {
 }
 
 function generateIvy(props) {
-  const { build, hardcoded, osgi, compact, artifacts, selected, addons, selectedAddons } = props;
+  const { build, hardcoded, osgi, compact, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
@@ -269,11 +260,8 @@ function generateIvy(props) {
   if (!hardcoded) {
     script += `\n\t<property name="lwjgl.version" value="${version}"/>`;
 
-    selectedAddons.forEach(addon => {
-      if (addons.byId[addon].maven === undefined) {
-        return;
-      }
-      script += `\n\t<property name="${addon}.version" value="${addons.byId[addon].maven.version}"/>`;
+    addons.forEach((addon: Addon) => {
+      script += `\n\t<property name="${addon.id}.version" value="${addon.maven.version}"/>`;
     });
   }
 
@@ -295,14 +283,11 @@ function generateIvy(props) {
 
   script += nativesBundle;
 
-  selectedAddons.forEach(addon => {
-    const maven = addons.byId[addon].maven;
-    if (maven === undefined) {
-      return;
-    }
+  addons.forEach((addon: Addon) => {
+    const maven = addon.maven;
     script += `\n\t\t<dependency org="${maven.groupId}" name="${maven.artifactId}" rev="${hardcoded
       ? maven.version
-      : `\${${addon}.version}`}"/>`;
+      : `\${${addon.id}.version}`}"/>`;
   });
 
   script += `\n\t</dependencies>`;
@@ -314,16 +299,27 @@ export default connect(({ build, breakpoint }) => {
   if (build.mode === MODE_ZIP) {
     return {
       breakpoint,
-      mode: build.modes.byId[build.mode],
+      mode: build.modes.byId[MODE_ZIP],
     };
   }
 
+  // Artifacts
   const selected = [];
 
   build.artifacts.allIds.forEach(artifact => {
     if (build.contents[artifact] && build.availability[artifact]) {
       selected.push(artifact);
     }
+  });
+
+  // Addons
+  const addons = [];
+  build.selectedAddons.forEach((id: string) => {
+    const addon = build.addons.byId[id];
+    if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
+      return;
+    }
+    addons.push(build.addons.byId[id]);
   });
 
   return {
@@ -335,8 +331,7 @@ export default connect(({ build, breakpoint }) => {
     compact: build.compact,
     osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
     artifacts: build.artifacts.byId,
-    addons: build.addons,
     selected,
-    selectedAddons: build.selectedAddons,
+    addons,
   };
 })(BuildScript);

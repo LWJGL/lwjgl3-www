@@ -165,7 +165,7 @@ const config: BuildConfig = {
         ],
       },
       'minimal-vulkan': {
-        id: '',
+        id: 'minimal-vulkan',
         title: 'Minimal Vulkan',
         artifacts: ['lwjgl', 'lwjgl-glfw', 'lwjgl-jemalloc', 'lwjgl-openal', 'lwjgl-stb', 'lwjgl-vulkan'],
       },
@@ -201,6 +201,12 @@ const config: BuildConfig = {
         title: 'LWJGLX/debug',
         description: 'Java Agent for debugging LWJGL3 programs to prevent JVM crashes and resolve OpenGL errors.',
         website: 'https://github.com/LWJGLX/debug',
+        modes: [MODE_ZIP],
+        maven: {
+          groupId: 'org.lwjglx',
+          artifactId: 'debug',
+          version: '1.0.0',
+        },
       },
     },
     allIds: ['joml', 'lwjglx-debug', 'steamworks4j'],
