@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 
-const Miss404 = () => (
+const Miss404 = () =>
   <main>
     <Helmet>
       <title>Page not Found</title>
@@ -10,7 +10,6 @@ const Miss404 = () => (
       <h1>404</h1>
       <h3>Page not found</h3>
     </section>
-  </main>
-);
+  </main>;
 
 export default Miss404;

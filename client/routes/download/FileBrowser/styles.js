@@ -1,4 +1,4 @@
-import { StyleSheet } from 'aphrodite/no-important'
+import { StyleSheet } from 'aphrodite/no-important';
 
 export default StyleSheet.create({
   folder: {
@@ -6,10 +6,10 @@ export default StyleSheet.create({
     userSelect: 'none',
     ':hover': {
       backgroundColor: '#5bc0de',
-      color: 'white'
-    }
+      color: 'white',
+    },
   },
   file: {
-    wordBreak: "break-all"
-  }
+    wordBreak: 'break-all',
+  },
 });

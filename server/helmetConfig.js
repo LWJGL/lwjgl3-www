@@ -27,7 +27,7 @@ const helmetConfig = production => {
           'https://unpkg.com',
         ],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com'],
-		objectSrc: ["'none'"],
+        objectSrc: ["'none'"],
       },
     },
     dnsPrefetchControl: {

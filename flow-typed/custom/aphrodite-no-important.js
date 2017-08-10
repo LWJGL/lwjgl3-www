@@ -15,23 +15,25 @@ declare module 'aphrodite/no-important' {
     [key: string]: {
       _name: string,
       _definition: Object,
-    }
+    },
   };
 
   declare export var css: (...definitions: Array<StyleDefinition | false>) => string;
 
-  declare export var StyleSheetServer :{
-    renderStatic(renderFunc: Function): DehydratedServerContent;
+  declare export var StyleSheetServer: {
+    renderStatic(renderFunc: Function): DehydratedServerContent,
   };
 
   declare export var StyleSheet: {
-    create(sheetDefinition: SheetDefinition): {
-      [key: string]: StyleDefinition
-    }
+    create(
+      sheetDefinition: SheetDefinition
+    ): {
+      [key: string]: StyleDefinition,
+    },
   };
 
   declare export var StyleSheetTestUtils: {
-    suppressStyleInjection: () => void;
-    clearBufferAndResumeStyleInjection: () => void;
+    suppressStyleInjection: () => void,
+    clearBufferAndResumeStyleInjection: () => void,
   };
-};
+}

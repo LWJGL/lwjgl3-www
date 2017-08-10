@@ -57,10 +57,12 @@ class BuildToolbar extends React.Component {
       <div className="download-toolbar">
         {this.props.children}
         <button className="btn btn-outline-info" title="Load configuration file (JSON)" onClick={this.toggleFileUI}>
-          <FileOpen />{showLabels ? ` Load config` : null}
+          <FileOpen />
+          {showLabels ? ` Load config` : null}
         </button>
         <button className="btn btn-outline-info" title="Save configuration (in JSON)" onClick={configDownload}>
-          <FileSave />{showLabels ? ` Save config` : null}
+          <FileSave />
+          {showLabels ? ` Save config` : null}
         </button>
       </div>
     );

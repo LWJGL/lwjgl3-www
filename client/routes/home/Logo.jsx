@@ -4,7 +4,7 @@ type Props = {
   className: string,
 };
 
-const Logo = (props: Props) => (
+const Logo = (props: Props) =>
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -148,8 +148,9 @@ const Logo = (props: Props) => (
     <use xlinkHref="#btn-key" x="89" y="104" width="50" height="50" filter="url(#wasd)" />
     <use xlinkHref="#btn-key" x="140" y="104" width="50" height="50" filter="url(#wasd)" />
     <use xlinkHref="#lwjgl-letters" x="210" y="0" height="155" />
-    <text x="115" y="36" style={{ fontSize: 12, fontWeight: 700 }}>3</text>
-  </svg>
-);
+    <text x="115" y="36" style={{ fontSize: 12, fontWeight: 700 }}>
+      3
+    </text>
+  </svg>;
 
 export default Logo;

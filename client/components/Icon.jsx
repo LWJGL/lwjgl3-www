@@ -8,10 +8,9 @@ type Props = {
   props?: { [$Keys<HTMLElement>]: any },
 };
 
-const Icon = ({ children, style, ...props }: Props) => (
+const Icon = ({ children, style, ...props }: Props) =>
   <span className="svg-icon" style={style}>
     <svg children={children} fill="currentColor" preserveAspectRatio="xMidYMid meet" {...props} />
-  </span>
-);
+  </span>;
 
 export default Icon;

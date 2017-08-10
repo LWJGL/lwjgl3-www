@@ -38,7 +38,9 @@ class Radio extends React.Component<DefaultProps, Props, void> {
           onChange={this.change}
         />
         <span className="custom-control-indicator" />
-        <span className="custom-control-description">{props.label}</span>
+        <span className="custom-control-description">
+          {props.label}
+        </span>
       </label>
     );
   }

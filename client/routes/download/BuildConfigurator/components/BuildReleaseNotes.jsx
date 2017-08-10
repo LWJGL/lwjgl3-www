@@ -4,7 +4,13 @@ import { connect } from 'react-redux';
 class BuildReleaseNotes extends React.Component {
   render() {
     const v = this.props.version;
-    return <p><a href={`https://github.com/LWJGL/lwjgl3/releases/tag/${v}`}>release notes for {v}</a></p>;
+    return (
+      <p>
+        <a href={`https://github.com/LWJGL/lwjgl3/releases/tag/${v}`}>
+          release notes for {v}
+        </a>
+      </p>
+    );
   }
 }
 

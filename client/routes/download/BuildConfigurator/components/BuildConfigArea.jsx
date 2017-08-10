@@ -1,7 +1,7 @@
 import React from 'react';
 import supportsPassive from '~/services/supports-passive';
 
-class BuildConfigArea extends React.Component {
+export default class BuildConfigArea extends React.Component {
   ticking: boolean = false;
   forceUpd: boolean = false;
   container: HTMLDivElement;
@@ -57,5 +57,3 @@ class BuildConfigArea extends React.Component {
     );
   }
 }
-
-export default BuildConfigArea;

@@ -7,7 +7,7 @@ type Props = {
   delay?: boolean,
 };
 
-const LoaderSpinner = ({ size = 24, style, delay = false }: Props) => (
+const LoaderSpinner = ({ size = 24, style, delay = false }: Props) =>
   <svg
     className={`loader-spinner${delay ? ' delay' : ''}`}
     viewBox="0 0 32 32"
@@ -16,7 +16,6 @@ const LoaderSpinner = ({ size = 24, style, delay = false }: Props) => (
     style={style}
   >
     <circle cx={16} cy={16} r={14} fill="none" />
-  </svg>
-);
+  </svg>;
 
 export default LoaderSpinner;

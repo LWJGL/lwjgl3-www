@@ -12,8 +12,8 @@ declare module 'query-string' {
   };
 
   declare type ParseValues = {
-    [key: string]: string | string[]
-  }
+    [key: string]: string | string[],
+  };
 
   declare export var parse: (query: string, options?: ParseOptions) => ParseValues;
 

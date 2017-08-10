@@ -37,9 +37,9 @@ class ControlledRadio extends React.Component<void, Props, void> {
 
     return (
       <RadioGroup value={value} onChange={this.select}>
-        {options.map((radio, i) => (
+        {options.map((radio, i) =>
           <Radio key={`${name}${i}`} value={radio.value} label={radio.label} disabled={radio.disabled} />
-        ))}
+        )}
       </RadioGroup>
     );
   }
