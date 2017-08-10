@@ -1,22 +1,7 @@
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
-const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
 // const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
-
-// Development
-const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
-const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
-const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
-const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
-
-// Production
-const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
-const WebpackMd5Hash = require('webpack-md5-hash');
-const IgnorePlugin = require('webpack/lib/IgnorePlugin');
-const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 
 const { argv } = require('yargs');
 const config = require('./config.json');
@@ -149,6 +134,11 @@ const buildConfiguration = () => {
   };
 
   if (DEV) {
+    const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
+    const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
+    const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
+    const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
+
     config.module.rules[0].use.unshift('cache-loader');
 
     // WebPack Hot Middleware client & HMR plugins
@@ -168,10 +158,24 @@ const buildConfiguration = () => {
       })
     );
   } else {
+    const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
+    const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
+    const WebpackMd5Hash = require('webpack-md5-hash');
+    const IgnorePlugin = require('webpack/lib/IgnorePlugin');
+    const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+    const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
+    const ShakePlugin = require('webpack-common-shake').Plugin;
+
     config.entry.main.unshift(require.resolve('babel-polyfill'));
     config.plugins.push(
       new IgnorePlugin(/(redux-logger|react-hot-loader)/),
       new ModuleConcatenationPlugin(),
+      new ShakePlugin({
+        warnings: {
+          global: true,
+          module: false,
+        },
+      }),
       // https://webpack.js.org/guides/caching/#deterministic-hashes
       new HashedModuleIdsPlugin(),
       new WebpackMd5Hash(),
