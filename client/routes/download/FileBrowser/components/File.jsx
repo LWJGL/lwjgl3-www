@@ -1,24 +1,32 @@
-import React from 'react'
-import { css } from 'aphrodite/no-important'
-import styles from '../styles'
+import React from 'react';
+import { css } from 'aphrodite/no-important';
+import styles from '../styles';
 
-class File extends React.PureComponent {
+type Props = {
+  path: string,
+};
 
-  render() {
-    const parts = this.props.path.split('/');
-    const name = parts[parts.length-1];
-    const url = `https://build.lwjgl.org/${this.props.path}`;
+const File = (props: Props) => {
+  const url = `https://build.lwjgl.org/${props.path}`;
 
-    return (
-      <tr>
-        <td className={css(styles.file)}><b>{name}</b><br /><small>{url}</small></td>
-        <td style={{textAlign:'right'}}>
-          <a download={true} href={url} className="btn btn-sm btn-outline-info">Download</a>
-        </td>
-      </tr>
-    );
-  }
+  return (
+    <tr>
+      <td className={css(styles.file)}>
+        <b>
+          {props.path.split('/').pop()}
+        </b>
+        <br />
+        <small>
+          {url}
+        </small>
+      </td>
+      <td style={{ textAlign: 'right' }}>
+        <a download={true} href={url} className="btn btn-sm btn-outline-info">
+          Download
+        </a>
+      </td>
+    </tr>
+  );
+};
 
-}
-
-export default File
+export default File;
