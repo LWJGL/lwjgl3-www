@@ -1,52 +1,136 @@
 {
-  "presets": [
+  "plugins": [
+    "syntax-jsx",
+    "syntax-trailing-function-commas",
+    "transform-flow-strip-types",
+
+    // Stage 2
+    "syntax-dynamic-import",
+    ["transform-class-properties", { "spec": false }],
+
+    // ES2015
     [
-      "env",
+      "transform-es2015-classes",
       {
-        "spec": false,
-        "loose": false,
-        "modules": false,
-        "useBuiltins": true,
-        "targets": {
-          "browsers": ["last 1 chrome versions"]
-        },
-        "include": ["transform-es2015-classes"]
+        "loose": true
       }
-    ],
-    "stage-2",
-    "stage-3"
+    ]
   ],
-  "plugins": ["transform-react-jsx", "transform-flow-strip-types"],
   "env": {
-    "production": {
-      "presets": [
-        [
-          "env",
-          {
-            "spec": false,
-            "loose": false,
-            "modules": false,
-            "useBuiltins": true,
-            "targets": {
-              "browsers": ["last 2 versions", "ie > 9", "> 1%"]
-            }
-          }
-        ],
-        "stage-2",
-        "stage-3"
-      ],
-      "plugins": [
-        "transform-react-constant-elements",
-        "transform-react-inline-elements",
-        "transform-react-remove-prop-types"
-      ]
-    },
     "development": {
       "plugins": [
+        // Hot Loading
         "react-hot-loader/babel",
-        "transform-react-display-name",
+
+        // React
+        "transform-react-jsx-self",
         "transform-react-jsx-source",
-        "transform-react-jsx-self"
+        [
+          "transform-react-jsx",
+          {
+            "pragma": "React.createElement",
+            "useBuiltIns": true
+          }
+        ],
+        "transform-react-display-name",
+
+        // Stage 3 using built-ins
+        ["transform-object-rest-spread", { "useBuiltIns": true }]
+      ]
+    },
+    "production": {
+      "plugins": [
+        // React
+        "transform-react-constant-elements",
+        "transform-react-inline-elements",
+        "transform-react-remove-prop-types",
+        [
+          "transform-react-jsx",
+          {
+            "pragma": "React.createElement",
+            "useBuiltIns": false
+          }
+        ],
+
+        // Stage 3
+        ["transform-object-rest-spread", { "useBuiltIns": false }],
+        "transform-async-generator-functions",
+
+        // ES2017
+        "transform-async-to-generator",
+
+        // ES2016
+        "transform-exponentiation-operator",
+
+        // ES2015
+        [
+          "transform-es2015-template-literals",
+          {
+            "spec": false,
+            "loose": true
+          }
+        ],
+        "transform-es2015-literals",
+        "transform-es2015-function-name",
+        [
+          "transform-es2015-arrow-functions",
+          {
+            "spec": false
+          }
+        ],
+        "transform-es2015-block-scoped-functions",
+        "transform-es2015-object-super",
+        "transform-es2015-shorthand-properties",
+        "transform-es2015-duplicate-keys",
+        [
+          "transform-es2015-computed-properties",
+          {
+            "loose": true
+          }
+        ],
+        [
+          "transform-es2015-for-of",
+          {
+            "loose": true
+          }
+        ],
+        // "transform-es2015-sticky-regex",
+        // "transform-es2015-unicode-regex",
+        "check-es2015-constants",
+        [
+          "transform-es2015-spread",
+          {
+            "loose": true
+          }
+        ],
+        "transform-es2015-parameters",
+        [
+          "transform-es2015-destructuring",
+          {
+            "loose": true
+          }
+        ],
+        [
+          "transform-es2015-block-scoping",
+          {
+            "throwIfClosureRequired": true
+          }
+        ],
+        "transform-es2015-typeof-symbol",
+        [
+          "transform-regenerator",
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+
+        // ES5 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get
+        // "transform-es5-property-mutators",
+
+        // ES3 ( required for IE8 )
+        // "transform-es3-property-literals",
+        // "transform-es3-member-expression-literals"
       ]
     }
   }

@@ -219,9 +219,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.94.0:
-  version "2.94.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.94.0.tgz#7043de3ef8c24cb6ab4bf235f08d87d84173e174"
+aws-sdk@2.95.0:
+  version "2.95.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.95.0.tgz#26e21db149443b1f063949dc87984f0d17700e6a"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -423,12 +423,6 @@ babel-messages@^6.23.0:
 babel-plugin-check-es2015-constants@7.0.0-alpha.19:
   version "7.0.0-alpha.19"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-7.0.0-alpha.19.tgz#26035252ce8500ca0da8af797bb352d58a62e428"
-
-babel-plugin-react-transform@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-transform/-/babel-plugin-react-transform-2.0.2.tgz#515bbfa996893981142d90b1f9b1635de2995109"
-  dependencies:
-    lodash "^4.6.1"
 
 babel-plugin-syntax-async-functions@7.0.0-alpha.19:
   version "7.0.0-alpha.19"
@@ -730,13 +724,11 @@ babel-polyfill@7.0.0-alpha.19:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-preset-env@2.0.0-alpha.19:
-  version "2.0.0-alpha.19"
-  resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-2.0.0-alpha.19.tgz#b38eccbb0b75fc8450bd5a07eb8d3f99ca4cf06f"
+babel-preset-es2015@7.0.0-alpha.19:
+  version "7.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-7.0.0-alpha.19.tgz#938fd5feae186fff28c9f7c8cd1f0ee094174524"
   dependencies:
     babel-plugin-check-es2015-constants "7.0.0-alpha.19"
-    babel-plugin-syntax-trailing-function-commas "7.0.0-alpha.19"
-    babel-plugin-transform-async-to-generator "7.0.0-alpha.19"
     babel-plugin-transform-es2015-arrow-functions "7.0.0-alpha.19"
     babel-plugin-transform-es2015-block-scoped-functions "7.0.0-alpha.19"
     babel-plugin-transform-es2015-block-scoping "7.0.0-alpha.19"
@@ -759,11 +751,31 @@ babel-preset-env@2.0.0-alpha.19:
     babel-plugin-transform-es2015-template-literals "7.0.0-alpha.19"
     babel-plugin-transform-es2015-typeof-symbol "7.0.0-alpha.19"
     babel-plugin-transform-es2015-unicode-regex "7.0.0-alpha.19"
-    babel-plugin-transform-exponentiation-operator "7.0.0-alpha.19"
     babel-plugin-transform-regenerator "7.0.0-alpha.19"
-    browserslist "^2.1.2"
-    invariant "^2.2.2"
-    semver "^5.3.0"
+
+babel-preset-es2016@7.0.0-alpha.19:
+  version "7.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/babel-preset-es2016/-/babel-preset-es2016-7.0.0-alpha.19.tgz#f8651495f282ab38cd86d27d53b971c235404860"
+  dependencies:
+    babel-plugin-transform-exponentiation-operator "7.0.0-alpha.19"
+
+babel-preset-es2017@7.0.0-alpha.19:
+  version "7.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/babel-preset-es2017/-/babel-preset-es2017-7.0.0-alpha.19.tgz#c4d48035014658c954b0c5191d419b44f2d33a9c"
+  dependencies:
+    babel-plugin-syntax-trailing-function-commas "7.0.0-alpha.19"
+    babel-plugin-transform-async-to-generator "7.0.0-alpha.19"
+
+babel-preset-react@7.0.0-alpha.19:
+  version "7.0.0-alpha.19"
+  resolved "https://registry.yarnpkg.com/babel-preset-react/-/babel-preset-react-7.0.0-alpha.19.tgz#6b0e6d7de1e64cb9fdab993a741527d3452da39d"
+  dependencies:
+    babel-plugin-syntax-jsx "7.0.0-alpha.19"
+    babel-plugin-transform-flow-strip-types "7.0.0-alpha.19"
+    babel-plugin-transform-react-display-name "7.0.0-alpha.19"
+    babel-plugin-transform-react-jsx "7.0.0-alpha.19"
+    babel-plugin-transform-react-jsx-self "7.0.0-alpha.19"
+    babel-plugin-transform-react-jsx-source "7.0.0-alpha.19"
 
 babel-preset-stage-2@7.0.0-alpha.19:
   version "7.0.0-alpha.19"
@@ -1008,7 +1020,7 @@ browserslist@^1.3.6, browserslist@^1.5.2, browserslist@^1.7.6:
     caniuse-db "^1.0.30000639"
     electron-to-chromium "^1.2.7"
 
-browserslist@^2.1.2, browserslist@^2.1.5:
+browserslist@^2.1.5:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/browserslist/-/browserslist-2.3.0.tgz#b2aa76415c71643fe2368f6243b43bbbb4211752"
   dependencies:
@@ -5051,9 +5063,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@3.5.1:
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.5.1.tgz#b749ee3d2b5a118dad53e8e41585b3f71e75499a"
+webpack@3.5.3:
+  version "3.5.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.5.3.tgz#e68653963bda146e212832c04a4d8041d2b4b8c8"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"

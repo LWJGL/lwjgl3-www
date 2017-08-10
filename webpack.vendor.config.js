@@ -20,7 +20,6 @@ const config = {
   entry: {
     vendor: [
       // Polyfills
-      'babel-polyfill',
       'whatwg-fetch',
 
       // Core
@@ -31,7 +30,7 @@ const config = {
       'fg-loadcss',
       'react-helmet',
       'react-router-dom',
-	  'react-loadable',
+      'react-loadable',
 
       // State management
       'redux',
