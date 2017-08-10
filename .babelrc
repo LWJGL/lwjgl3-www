@@ -6,9 +6,14 @@
 
     // Stage 2
     "syntax-dynamic-import",
-    ["transform-class-properties", { "spec": false }],
+    [
+      "transform-class-properties",
+      {
+        "spec": false
+      }
+    ],
 
-    // ES2015
+    // ES2015 -- Move this to production-only when browsers add support for class properties (see above)
     [
       "transform-es2015-classes",
       {
@@ -35,7 +40,12 @@
         "transform-react-display-name",
 
         // Stage 3 using built-ins
-        ["transform-object-rest-spread", { "useBuiltIns": true }]
+        [
+          "transform-object-rest-spread",
+          {
+            "useBuiltIns": true
+          }
+        ]
       ]
     },
     "production": {
