@@ -146,7 +146,7 @@ function stop() {
   }
 }
 
-export default class HomeCanvas extends React.Component<void, void, void> {
+export default class HomeCanvas extends React.Component {
   mounted = false;
   canvas: HTMLCanvasElement;
 

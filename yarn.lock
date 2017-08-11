@@ -219,9 +219,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.95.0:
-  version "2.95.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.95.0.tgz#26e21db149443b1f063949dc87984f0d17700e6a"
+aws-sdk@2.97.0:
+  version "2.97.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.97.0.tgz#5b16df1d638c190f0f460bceefaa047b8a9d220e"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -5026,7 +5026,7 @@ watchpack@^1.4.0:
     chokidar "^1.7.0"
     graceful-fs "^4.1.2"
 
-webpack-common-shake@^1.5.3:
+webpack-common-shake@1.5.3:
   version "1.5.3"
   resolved "https://registry.yarnpkg.com/webpack-common-shake/-/webpack-common-shake-1.5.3.tgz#d239321a71a2d5128e5fb871616ce340db729bbb"
   dependencies:

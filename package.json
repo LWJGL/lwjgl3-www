@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aws-sdk": "2.95.0",
+    "aws-sdk": "2.97.0",
     "body-parser": "1.17.2",
     "chalk": "2.1.0",
     "express": "5.0.0-alpha.5",
