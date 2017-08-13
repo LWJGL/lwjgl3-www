@@ -59,7 +59,6 @@
     "node-sass": "4.5.3",
     "node-uuid": "1.4.8",
     "nprogress": "0.2.0",
-    "optimize-js": "1.0.3",
     "postcss-loader": "2.0.6",
     "prettier": "1.5.3",
     "prop-types": "15.5.10",
@@ -81,11 +80,11 @@
     "sass-loader": "6.0.6",
     "serve-favicon": "2.4.3",
     "style-loader": "0.18.2",
+    "uglify-js": "3.0.27",
     "webpack": "3.5.4",
     "webpack-common-shake": "1.5.3",
     "webpack-dev-middleware": "1.12.0",
     "webpack-hot-middleware": "2.18.2",
-    "webpack-md5-hash": "0.0.5",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {

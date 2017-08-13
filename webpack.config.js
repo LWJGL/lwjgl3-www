@@ -9,6 +9,7 @@ const config = require('./config.json');
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
+const FILENAME_TEMPLATE = PRODUCTION ? '[name].js' : '[name].dev.js';
 
 const env = {
   'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
@@ -38,7 +39,8 @@ const buildConfiguration = () => {
     },
     output: {
       path: path.resolve(__dirname, 'public/js'),
-      filename: DEV ? '[name].js' : '[name].[chunkhash].js',
+      filename: FILENAME_TEMPLATE,
+      chunkFilename: FILENAME_TEMPLATE,
       publicPath: '/js/',
     },
     resolve: {
@@ -112,13 +114,12 @@ const buildConfiguration = () => {
         debug: false,
       }),
     ],
-    // recordsPath: path.resolve(__dirname, `./recordsPath.json`),
     stats: {
       assets: true,
       cached: false,
       children: false,
-      chunks: true,
-      chunkModules: true,
+      chunks: false,
+      chunkModules: false,
       chunkOrigins: false,
       errors: false,
       errorDetails: false,
@@ -160,15 +161,12 @@ const buildConfiguration = () => {
   } else {
     const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
     const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
-    const WebpackMd5Hash = require('webpack-md5-hash');
-    const IgnorePlugin = require('webpack/lib/IgnorePlugin');
     const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
     const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
     const ShakePlugin = require('webpack-common-shake').Plugin;
 
     config.entry.main.unshift(require.resolve('babel-polyfill'));
     config.plugins.push(
-      new IgnorePlugin(/(redux-logger|react-hot-loader)/),
       new ModuleConcatenationPlugin(),
       new ShakePlugin({
         warnings: {
@@ -176,46 +174,11 @@ const buildConfiguration = () => {
           module: false,
         },
       }),
-      // https://webpack.js.org/guides/caching/#deterministic-hashes
       new HashedModuleIdsPlugin(),
-      new WebpackMd5Hash(),
       new ChunkManifestPlugin({
         filename: 'chunks.json',
         manifestVariable: 'webpackManifest',
-      }),
-      new UglifyJsPlugin({
-        sourceMap: false,
-        mangle: {
-          screw_ie8: true,
-          except: [],
-        },
-        comments: false,
-        compress: {
-          screw_ie8: true,
-          sequences: true,
-          properties: true,
-          dead_code: true,
-          drop_debugger: true,
-          unsafe: true,
-          conditionals: true,
-          comparisons: true,
-          evaluate: true,
-          booleans: true,
-          loops: true,
-          unused: true,
-          hoist_funs: true,
-          hoist_vars: false,
-          if_return: true,
-          join_vars: true,
-          cascade: true,
-          warnings: false,
-          negate_iife: true,
-          pure_getters: true,
-          pure_funcs: null,
-          drop_console: true,
-          keep_fargs: false,
-          keep_fnames: false,
-        },
+        inlineManifest: false,
       })
     );
   }
