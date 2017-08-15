@@ -1,7 +1,6 @@
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-// const CommonsChunkPlugin = require('webpack/lib/optimize/CommonsChunkPlugin');
 
 const { argv } = require('yargs');
 const config = require('./config.json');
@@ -9,7 +8,6 @@ const config = require('./config.json');
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
-const FILENAME_TEMPLATE = PRODUCTION ? '[name].js' : '[name].dev.js';
 
 const env = {
   'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
@@ -39,8 +37,8 @@ const buildConfiguration = () => {
     },
     output: {
       path: path.resolve(__dirname, 'public/js'),
-      filename: FILENAME_TEMPLATE,
-      chunkFilename: FILENAME_TEMPLATE,
+      filename: '[name].js',
+      chunkFilename: '[name].js',
       publicPath: '/js/',
     },
     resolve: {
