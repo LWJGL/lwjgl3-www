@@ -25,4 +25,4 @@ block content
   script.
     if(!('requestAnimationFrame' in window))requestAnimationFrame=function(cb){setTimeout(cb)}
   <![endif]-->
-  script(src=`/js/${entry}`)
+  script(src=`/js/${entry}` defer)

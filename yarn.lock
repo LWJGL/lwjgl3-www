@@ -219,9 +219,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.97.0:
-  version "2.97.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.97.0.tgz#5b16df1d638c190f0f460bceefaa047b8a9d220e"
+aws-sdk@2.98.0:
+  version "2.98.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.98.0.tgz#90ad023d73389dd15ec7bdfaf932ecab65445711"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
