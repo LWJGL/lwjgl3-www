@@ -5,12 +5,6 @@ import breakpointMiddeware from './middleware/breakpoint';
 import sagaMiddleware from './saga';
 import type { Store } from 'redux';
 
-declare var module: {
-  hot: {
-    accept(path: string, callback: () => void): void,
-  },
-};
-
 const middleware = [reduxThunk, sagaMiddleware, breakpointMiddeware];
 const composed = [];
 
