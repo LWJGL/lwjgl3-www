@@ -45,7 +45,7 @@ const breakpoint: State = {
   xl: 4,
 };
 
-export default function(state: State = breakpoint, action: Action): State {
+export default function breakpointReducer(state: State = breakpoint, action: Action): State {
   if (action.type === BREAKPOINTS_RESIZE) {
     return { ...state, current: action.payload };
   }
