@@ -1,13 +1,14 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
+import Radio from './Radio';
 
 type Props = {
-  children?: React$Element<*>,
+  children?: React.ChildrenArray<React.Element<Class<Radio>>>,
   value: any,
   onChange?: (value: any) => mixed,
 };
 
-class RadioGroup extends React.PureComponent<void, Props, void> {
+class RadioGroup extends React.PureComponent<Props, void> {
   static childContextTypes = {
     onChange: PropTypes.func,
     value: PropTypes.any,

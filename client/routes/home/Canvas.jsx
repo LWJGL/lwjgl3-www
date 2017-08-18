@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import loadJS from 'fg-loadjs';
 
 declare var THREE: any;
@@ -146,20 +146,20 @@ function stop() {
   }
 }
 
-export default class HomeCanvas extends React.Component {
+export default class HomeCanvas extends React.Component<{||}> {
   mounted = false;
-  canvas: HTMLCanvasElement;
+  canvas: ?HTMLCanvasElement;
 
   componentDidMount() {
     this.mounted = true;
     if (loadthree) {
       loadthree = false;
       loadJS('https://unpkg.com/three@0.86.0/build/three.min.js', () => {
-        if (this.mounted) {
+        if (this.mounted && this.canvas) {
           init(this.canvas);
         }
       });
-    } else {
+    } else if (this.canvas) {
       init(this.canvas);
     }
   }
@@ -169,7 +169,7 @@ export default class HomeCanvas extends React.Component {
     unload();
   }
 
-  getRef = (el: HTMLCanvasElement) => {
+  getRef = (el: ?HTMLCanvasElement) => {
     this.canvas = el;
   };
 

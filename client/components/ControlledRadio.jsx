@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import RadioGroup from './RadioGroup';
 import Radio from './Radio';
@@ -27,7 +26,7 @@ type Props = OwnProps & {
   dispatch: (action: any) => void,
 };
 
-class ControlledRadio extends React.Component<void, Props, void> {
+class ControlledRadio extends React.Component<Props, void> {
   select = (value: any) => {
     this.props.dispatch(this.props.spec.action(value));
   };

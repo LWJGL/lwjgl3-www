@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import ControlledPanel from '~/components/ControlledPanel';
 import Browser from './components/Browser';
@@ -26,7 +26,7 @@ function isBrowsing({ browser: { open } }: BrowserState): boolean {
 
 let sagaTask: Task;
 
-class FileBrowser extends React.Component<void, Props, void> {
+class FileBrowser extends React.Component<Props, void> {
   componentDidMount() {
     sagaTask = reduxSaga.run(saga);
   }

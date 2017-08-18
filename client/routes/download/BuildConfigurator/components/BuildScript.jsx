@@ -1,7 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
-import type { MODES, Addon } from '../types';
+import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition } from '../types';
+import type { BreakPointState } from '~/store/reducers/breakpoint';
 
 import BuildToolbar from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
@@ -9,8 +10,21 @@ import IconCopy from 'react-icons/md/content-copy';
 
 const ALLOW_DOWNLOAD = window.btoa !== undefined;
 
-class BuildScript extends React.Component {
-  script: HTMLPreElement;
+type Props = {
+  breakpoint: BreakPointState,
+  build: BUILD_TYPES,
+  mode: Mode,
+  version: string,
+  hardcoded: boolean,
+  compact: boolean,
+  osgi: boolean,
+  artifacts: { [string]: BindingDefinition },
+  selected: Array<string>,
+  addons: Array<Addon>,
+};
+
+class BuildScript extends React.Component<Props> {
+  script: ?HTMLPreElement;
 
   copyToClipboard = () => {
     if (window.getSelection === undefined) {
@@ -22,14 +36,19 @@ class BuildScript extends React.Component {
       selection.removeAllRanges();
     }
     const range = document.createRange();
-    range.selectNode(this.script);
+    if (this.script) {
+      range.selectNode(this.script);
+    } else {
+      alert('Failed to copy text');
+      return;
+    }
     selection.addRange(range);
     document.execCommand('copy');
     selection.removeAllRanges();
     alert('Script copied to clipboard.');
   };
 
-  getRef = (el: HTMLPreElement) => {
+  getRef = (el: ?HTMLPreElement) => {
     this.script = el;
   };
 
@@ -42,7 +61,7 @@ class BuildScript extends React.Component {
 
     const { current, sm, md } = this.props.breakpoint;
     const labels = {
-      download: `DOWNLOAD ${mode.file.toUpperCase()}`,
+      download: `DOWNLOAD ${mode.file ? mode.file.toUpperCase() : 'FILE'}`,
       copy: ' COPY TO CLIPBOARD',
     };
 
@@ -71,7 +90,7 @@ class BuildScript extends React.Component {
             download={mode.file}
             href={`data:${mime(mode)};base64,${btoa(script)}`}
             disabled={ALLOW_DOWNLOAD}
-            title={`Download ${mode} code snippet`}
+            title={`Download ${mode.id} code snippet`}
           >
             <IconDownload /> {labels.download}
           </a>
@@ -90,10 +109,10 @@ class BuildScript extends React.Component {
   }
 }
 
-const mime = mode => (mode.file.endsWith('.xml') ? 'text/xml' : 'text/plain');
+const mime = (mode: Mode) => (mode.file !== undefined && mode.file.endsWith('.xml') ? 'text/xml' : 'text/plain');
 const getVersion = (version, build) => (build === BUILD_RELEASE ? version : `${version}-SNAPSHOT`);
 
-function generateScript(mode, props) {
+function generateScript(mode: MODES, props: Props): string {
   switch (mode) {
     case MODE_MAVEN:
       return generateMaven(props);
@@ -106,7 +125,7 @@ function generateScript(mode, props) {
   }
 }
 
-function generateMaven(props) {
+function generateMaven(props: Props) {
   const { build, hardcoded, compact, osgi, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
@@ -171,7 +190,7 @@ function generateMaven(props) {
   return script;
 }
 
-function generateGradle(props) {
+function generateGradle(props: Props) {
   const { build, hardcoded, osgi, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
@@ -234,7 +253,7 @@ switch ( OperatingSystem.current() ) {
   return script;
 }
 
-function generateIvy(props) {
+function generateIvy(props: Props) {
   const { build, hardcoded, osgi, compact, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
@@ -295,43 +314,62 @@ function generateIvy(props) {
   return script;
 }
 
-export default connect(({ build, breakpoint }) => {
-  if (build.mode === MODE_ZIP) {
+const BuildScriptConnected = connect(
+  ({ build, breakpoint }: { build: BuildConfig, breakpoint: BreakPointState }): Props => {
+    // Artifacts
+    const selected: Array<string> = [];
+
+    build.artifacts.allIds.forEach(artifact => {
+      if (build.contents[artifact] && build.availability[artifact]) {
+        selected.push(artifact);
+      }
+    });
+
+    // Addons
+    const addons: Array<Addon> = [];
+    build.selectedAddons.forEach((id: string) => {
+      const addon = build.addons.byId[id];
+      if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
+        return;
+      }
+      addons.push(build.addons.byId[id]);
+    });
+
+    /*::
+    if (build.build === null) {
+      throw new Error('Invalid state');
+    }
+    */
+
     return {
       breakpoint,
-      mode: build.modes.byId[MODE_ZIP],
+      build: build.build,
+      mode: build.modes.byId[build.mode],
+      version: build.artifacts.version,
+      hardcoded: build.hardcoded,
+      compact: build.compact,
+      osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
+      artifacts: build.artifacts.byId,
+      selected,
+      addons,
     };
   }
+)(BuildScript);
 
-  // Artifacts
-  const selected = [];
+// Use a container to only render & connect when mode is 'ZIP'
 
-  build.artifacts.allIds.forEach(artifact => {
-    if (build.contents[artifact] && build.availability[artifact]) {
-      selected.push(artifact);
-    }
-  });
+type PropsContainer = {
+  mode: string,
+};
 
-  // Addons
-  const addons = [];
-  build.selectedAddons.forEach((id: string) => {
-    const addon = build.addons.byId[id];
-    if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
-      return;
-    }
-    addons.push(build.addons.byId[id]);
-  });
+class BuildScriptContainer extends React.Component<PropsContainer> {
+  render() {
+    return this.props.mode === MODE_ZIP ? null : <BuildScriptConnected />;
+  }
+}
 
+export default connect(({ build }: { build: BuildConfig }): PropsContainer => {
   return {
-    breakpoint,
-    build: build.build,
-    mode: build.modes.byId[build.mode],
-    version: build.artifacts.version,
-    hardcoded: build.hardcoded,
-    compact: build.compact,
-    osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
-    artifacts: build.artifacts.byId,
-    selected,
-    addons,
+    mode: build.modes.byId[build.mode].id,
   };
-})(BuildScript);
+})(BuildScriptContainer);

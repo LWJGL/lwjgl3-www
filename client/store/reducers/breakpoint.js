@@ -1,11 +1,11 @@
 export const BREAKPOINTS_RESIZE = 'BREAKPOINTS/RESIZE_EVENT';
 
-type Action = {
+export type SetBreakPoint = {
   type: string,
   payload: number,
 };
 
-type State = {
+export type BreakPointState = {
   +limits: Array<number>,
   +current: number,
   +xs: number,
@@ -18,7 +18,7 @@ type State = {
 
 const BOOTSTRAP_BREAKPOINTS = [0, 576, 768, 992, 1200];
 
-export const resizeEvent = (payload: number): Action => ({ type: BREAKPOINTS_RESIZE, payload });
+export const resizeEvent = (payload: number): SetBreakPoint => ({ type: BREAKPOINTS_RESIZE, payload });
 
 export const getCurrent = (): number => {
   const w = window.innerWidth;
@@ -35,7 +35,7 @@ export const getCurrent = (): number => {
   return i;
 };
 
-const breakpoint: State = {
+const breakpoint: BreakPointState = {
   limits: BOOTSTRAP_BREAKPOINTS,
   current: getCurrent(),
   xs: 0,
@@ -45,7 +45,7 @@ const breakpoint: State = {
   xl: 4,
 };
 
-export default function breakpointReducer(state: State = breakpoint, action: Action): State {
+export default function breakpointReducer(state: BreakPointState = breakpoint, action: SetBreakPoint): BreakPointState {
   if (action.type === BREAKPOINTS_RESIZE) {
     return { ...state, current: action.payload };
   }

@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { register } from '~/store/asyncReducers';
@@ -153,7 +153,16 @@ const fields = {
 let restoreState = true;
 let sagaTask;
 
-class BuildContainer extends React.Component {
+type OwnProps = {};
+
+type ConnectedProps = {
+  configLoad: ({}) => void,
+  reset: () => void,
+};
+
+type Props = OwnProps & ConnectedProps;
+
+class BuildContainer extends React.Component<Props> {
   componentDidMount() {
     sagaTask = reduxSaga.run(saga);
 

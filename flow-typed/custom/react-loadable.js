@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 declare module 'react-loadable' {
   declare export type LoadingComponentProps = {
     isLoading: boolean,
@@ -6,19 +8,15 @@ declare module 'react-loadable' {
     error: Error | null,
   };
 
-  declare export type PromiseReactComponent = <Props: {}>() => Promise<LoadedComponent<Props>>;
+  declare export type LoadingComponent = React.ComponentType<LoadingComponentProps>;
 
-  declare type GenericComponent<Props> = Class<React$Component<any, Props, any>>;
-  declare type LoadedComponent<Props> = GenericComponent<Props>;
-  declare type LoadingComponent = GenericComponent<LoadingComponentProps>;
-
-  declare type Options = {
-    loader: PromiseReactComponent,
-    loading: LoadingComponent | ReactClass<any>,
-    render?: <Props: {}>(loaded: Class<React$Component<any, Props, any>>, props: Props) => any,
+  declare type ReactLoadable = <Props: {}>(opts: {
+    loader: () => Promise<React.ComponentType<Props>>,
+    loading: LoadingComponent,
+    render?: (loaded: React.ComponentType<Props>, props: Props) => React.Element<any>,
     delay?: number,
     timeout?: number,
-  };
+  }) => React.ComponentType<Props>;
 
-  declare export default (opts: Options) => Class<React$Component<any, any, any>>
+  declare export default ReactLoadable
 }

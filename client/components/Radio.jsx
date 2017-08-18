@@ -1,9 +1,5 @@
-import React from 'react';
+import * as React from 'react';
 import PropTypes from 'prop-types';
-
-type DefaultProps = {
-  disabled: boolean,
-};
 
 type Props = {
   value: any,
@@ -11,7 +7,7 @@ type Props = {
   disabled: boolean,
 };
 
-class Radio extends React.Component<DefaultProps, Props, void> {
+class Radio extends React.Component<Props, void> {
   static defaultProps = {
     disabled: false,
   };

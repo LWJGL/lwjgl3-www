@@ -14,8 +14,8 @@ declare module 'focus-trap' {
   declare export type FocusTrapCreateOptions = {
     onActivate?: () => any,
     onDeactivate?: () => any,
-    initialFocus?: HTMLElement | string | (() => HTMLElement),
-    fallbackFocus?: HTMLElement | string | (() => HTMLElement),
+    initialFocus?: HTMLElement | string | (() => ?HTMLElement),
+    fallbackFocus?: HTMLElement | string | (() => ?HTMLElement),
     escapeDeactivates?: boolean,
     clickOutsideDeactivates?: boolean,
     returnFocusOnDeactivate?: boolean,

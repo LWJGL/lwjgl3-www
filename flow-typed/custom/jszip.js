@@ -58,7 +58,7 @@ declare module 'jszip' {
 
   declare type StreamHelper = {
     on: (event: StreamHelperEvent, callback: StreamHelperCallback) => StreamHelper,
-    accumulate: (updateCallback: (metadata: Metadata) => void) => Promise,
+    accumulate: (updateCallback: (metadata: Metadata) => void) => Promise<any>,
     resume: () => StreamHelper,
     pause: () => StreamHelper,
   };
@@ -69,7 +69,7 @@ declare module 'jszip' {
     optimizedBinaryString?: boolean,
     createFolders?: boolean,
     decodeFileName?: (name: Uint8Array) => string,
-    decodeFileName?: (name: array) => string,
+    decodeFileName?: (name: Array<string>) => string,
   };
 
   declare class JSZip {
@@ -81,7 +81,7 @@ declare module 'jszip' {
     file: (name: string, data: Uint8Array, options?: Options) => this,
     file: (name: string, data: Buffer, options?: Options) => this,
     file: (name: string, data: Blob, options?: Options) => this,
-    file: (name: string, data: Promise, options?: Options) => this,
+    file: (name: string, data: Promise<any>, options?: Options) => this,
 
     folder: (name: string) => this,
     folder: (name: RegExp) => Array<ZipObject>,
@@ -91,12 +91,12 @@ declare module 'jszip' {
 
     remove: (name: string) => this,
 
-    generateAsync: (options: GenerateOptions, onUpdate: (metadata: Metadata) => void) => Promise,
+    generateAsync: (options: GenerateOptions, onUpdate: (metadata: Metadata) => void) => Promise<any>,
     generateInternalStream: (options: GenerateOptions) => StreamHelper,
 
-    loadAsync: (data: string, options: LoadOptions) => Promise,
+    loadAsync: (data: string, options: LoadOptions) => Promise<any>,
 
-    static loadAsync: (data: string, options: LoadOptions) => Promise,
+    static loadAsync: (data: string, options: LoadOptions) => Promise<any>,
 
     static support: {
       +arraybuffer: boolean,

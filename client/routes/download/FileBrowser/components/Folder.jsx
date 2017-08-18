@@ -1,11 +1,21 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { loadPath } from '../reducer';
 import { css } from 'aphrodite/no-important';
 import styles from '../styles';
 import IconFolder from 'react-icons/md/folder';
 
-class Folder extends React.PureComponent {
+type OwnProps = {
+  path: string,
+};
+
+type ConnectedProps = {
+  loadPath: string => void,
+};
+
+type Props = OwnProps & ConnectedProps;
+
+class Folder extends React.PureComponent<Props> {
   clickHandle = () => {
     this.props.loadPath(this.props.path);
   };

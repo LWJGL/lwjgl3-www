@@ -1,8 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import BuildArtifact from './BuildArtifact';
 
-class BuildArtifacts extends React.Component {
+type Props = {
+  artifacts: Array<string>,
+};
+
+class BuildArtifacts extends React.Component<Props> {
   render() {
     return (
       <div className="custom-controls-stacked">

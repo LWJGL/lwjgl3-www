@@ -1,8 +1,12 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import LoaderSpinner from '~/components/LoaderSpinner';
 
-class BuildBundler extends React.Component {
+type Props = {
+  progress: Array<string>,
+};
+
+class BuildBundler extends React.Component<Props> {
   componentDidMount() {
     document.getElementsByClassName('config-container')[0].scrollIntoView(true);
   }

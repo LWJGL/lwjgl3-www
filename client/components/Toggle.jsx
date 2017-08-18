@@ -1,10 +1,4 @@
-import React from 'react';
-
-type DefaultProps = {
-  checked: boolean,
-  disabled: boolean,
-  hidden: boolean,
-};
+import * as React from 'react';
 
 type Props = {
   label: string,
@@ -15,7 +9,7 @@ type Props = {
   onChange?: (value: any) => mixed,
 };
 
-class Toggle extends React.PureComponent<DefaultProps, Props, void> {
+class Toggle extends React.PureComponent<Props, void> {
   static defaultProps = {
     checked: false,
     disabled: false,

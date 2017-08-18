@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 // https://github.com/jonschlinkert/remarkable
 import Remarkable from 'remarkable';
 import type { RemarkableOptions, RemarkableSettings } from 'remarkable';

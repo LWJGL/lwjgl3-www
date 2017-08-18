@@ -360,8 +360,11 @@ function* downloadConfig() {
 }
 
 export default function* buildDownloadSaga(): Generator<*, *, *> {
+  //$FlowFixMe
   yield takeLatest(DOWNLOAD_INIT, init);
+  //$FlowFixMe
   yield takeLatest(CONFIG_DOWNLOAD, downloadConfig);
+  //$FlowFixMe
   yield takeLatest(
     [
       SELECT_TYPE,

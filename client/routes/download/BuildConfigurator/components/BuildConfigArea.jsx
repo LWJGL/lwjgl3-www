@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import supportsPassive from '~/services/supports-passive';
 
-export default class BuildConfigArea extends React.Component {
+export default class BuildConfigArea extends React.Component<{ children?: React.Node }> {
   ticking: boolean = false;
   forceUpd: boolean = false;
-  container: HTMLDivElement;
+  container: ?HTMLDivElement;
 
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
@@ -36,16 +36,20 @@ export default class BuildConfigArea extends React.Component {
 
   update = () => {
     this.ticking = false;
-    const rect = this.container.getBoundingClientRect();
+    if (this.container != null) {
+      const rect = this.container.getBoundingClientRect();
 
-    if (rect.top + rect.height > window.innerHeight) {
-      this.container.classList.add('stick');
-    } else {
-      this.container.classList.remove('stick');
+      if (rect.top + rect.height > window.innerHeight) {
+        //$FlowFixMe
+        this.container.classList.add('stick');
+      } else {
+        //$FlowFixMe
+        this.container.classList.remove('stick');
+      }
     }
   };
 
-  getRef = (el: HTMLDivElement) => {
+  getRef = (el: ?HTMLDivElement) => {
     this.container = el;
   };
 

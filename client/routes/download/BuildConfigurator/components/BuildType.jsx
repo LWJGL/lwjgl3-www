@@ -1,16 +1,21 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import BuildStatus from './BuildStatus';
 import classnames from 'classnames';
 
 import { connect } from 'react-redux';
 import { changeType } from '../reducer';
 
-class BuildType extends React.Component {
-  static propTypes = {
-    build: PropTypes.string.isRequired,
-  };
+import type { BUILD_TYPES, Build } from '../types';
 
+type Props = {
+  build: BUILD_TYPES,
+  isSelected: boolean,
+  isActive: boolean,
+  spec: Build,
+  changeType: typeof changeType,
+};
+
+class BuildType extends React.Component<Props> {
   select = () => {
     const { isSelected, build, changeType } = this.props;
     changeType(isSelected ? null : build);

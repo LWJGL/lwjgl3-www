@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 
 type Props = {
   location: 'string',
 };
 
-class ScrollToMe extends React.Component<void, Props, void> {
-  el: HTMLDivElement;
+class ScrollToMe extends React.Component<Props, void> {
+  el: ?HTMLDivElement;
 
   componentDidMount() {
     this.scroll();
@@ -18,10 +18,12 @@ class ScrollToMe extends React.Component<void, Props, void> {
   }
 
   scroll() {
-    window.scrollTo(0, this.el.offsetTop);
+    if (this.el != null) {
+      window.scrollTo(0, this.el.offsetTop);
+    }
   }
 
-  getRef = (n: HTMLDivElement) => {
+  getRef = (n: ?HTMLDivElement) => {
     this.el = n;
   };
 

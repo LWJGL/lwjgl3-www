@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import Checkbox from '~/components/Checkbox';
 import { toggleArtifact } from '../reducer';
@@ -30,11 +29,23 @@ const getPlatformIcons = platforms => {
   );
 };
 
-class BuildArtifact extends React.Component {
-  static propTypes = {
-    id: PropTypes.string.isRequired,
-  };
+type OwnProps = {
+  id: string,
+};
 
+import type { BindingDefinition } from '../types';
+
+type ConnectedProps = {
+  toggleArtifact: typeof toggleArtifact,
+  artifact: BindingDefinition,
+  checked: boolean,
+  disabled: boolean,
+  showDescriptions: boolean,
+};
+
+type Props = OwnProps & ConnectedProps;
+
+class BuildArtifact extends React.Component<Props> {
   toggle = () => {
     this.props.toggleArtifact(this.props.id);
   };

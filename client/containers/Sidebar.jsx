@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import createFocusTrap from 'focus-trap';
 import noscroll from '~/services/noscroll';
 import MainMenu from './MainMenu';
@@ -14,7 +14,7 @@ type State = {
   open: boolean,
 };
 
-class Sidebar extends React.PureComponent<void, Props, State> {
+class Sidebar extends React.PureComponent<Props, State> {
   state = {
     open: false,
   };
@@ -24,17 +24,19 @@ class Sidebar extends React.PureComponent<void, Props, State> {
   startX: number = 0;
   currentX: number = 0;
   focusTrap: FocusTrap;
-  closeButton: HTMLElement;
-  slidingMenu: HTMLElement;
-  sideContainer: HTMLElement;
+  closeButton: ?HTMLElement;
+  slidingMenu: ?HTMLElement;
+  sideContainer: ?HTMLElement;
 
   componentDidMount() {
     this.mounted = true;
-    this.focusTrap = createFocusTrap(this.slidingMenu, {
-      onDeactivate: this.onToggle,
-      initialFocus: this.closeButton,
-      // clickOutsideDeactivates: true
-    });
+    if (this.slidingMenu && this.closeButton) {
+      this.focusTrap = createFocusTrap(this.slidingMenu, {
+        onDeactivate: this.onToggle,
+        initialFocus: this.closeButton,
+        // clickOutsideDeactivates: true
+      });
+    }
   }
 
   componentWillUnmount() {
@@ -49,7 +51,7 @@ class Sidebar extends React.PureComponent<void, Props, State> {
     const { focusTrap, sideContainer } = this;
 
     /*::
-    if (focusTrap === null || sideContainer === null) {
+    if (focusTrap == null || sideContainer == null) {
       return;
     }
     */
@@ -75,6 +77,12 @@ class Sidebar extends React.PureComponent<void, Props, State> {
   };
 
   onTouchStart = (evt: TouchEvent): void => {
+    /*::
+    if (this.sideContainer == null) {
+      return;
+    }
+    */
+
     this.startX = evt.touches[0].pageX;
     this.currentX = this.startX;
 
@@ -92,6 +100,11 @@ class Sidebar extends React.PureComponent<void, Props, State> {
 
   onTouchEnd = () => {
     if (this.touchingSideNav) {
+      /*::
+      if (this.sideContainer == null) {
+        return;
+      }
+      */
       this.touchingSideNav = false;
 
       const translateX = this.currentX - this.startX;
@@ -117,18 +130,23 @@ class Sidebar extends React.PureComponent<void, Props, State> {
       translateX = 0;
     }
 
+    /*::
+    if (this.sideContainer == null) {
+      return;
+    }
+    */
     this.sideContainer.style.transform = `translateX(${translateX}px)`;
   };
 
-  getRefSliding = (el: HTMLDivElement) => {
+  getRefSliding = (el: ?HTMLDivElement) => {
     this.slidingMenu = el;
   };
 
-  getRefSlidingOverlay = (el: HTMLDivElement) => {
+  getRefSlidingOverlay = (el: ?HTMLDivElement) => {
     this.sideContainer = el;
   };
 
-  getRefCloseBtn = (el: HTMLDivElement) => {
+  getRefCloseBtn = (el: ?HTMLButtonElement) => {
     this.closeButton = el;
   };
 

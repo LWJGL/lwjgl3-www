@@ -1,10 +1,4 @@
-import React from 'react';
-
-type DefaultProps = {
-  checked: boolean,
-  disabled: boolean,
-  hidden: boolean,
-};
+import * as React from 'react';
 
 type Props = {
   label: string,
@@ -16,7 +10,7 @@ type Props = {
   icon?: React$Element<*>,
 };
 
-class Checkbox extends React.PureComponent<DefaultProps, Props, void> {
+class Checkbox extends React.PureComponent<Props, void> {
   static defaultProps = {
     checked: false,
     disabled: false,

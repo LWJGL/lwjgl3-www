@@ -1,10 +1,10 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import Checkbox from '~/components/Checkbox';
 import { togglePlatform } from '../reducer';
 
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
-import type { NATIVES } from '../types';
+import type { NATIVES, Native, Platforms } from '../types';
 
 import IconWindows from 'react-icons/fa/windows';
 import IconLinux from 'react-icons/fa/linux';
@@ -23,7 +23,15 @@ const getIcon = (platform: NATIVES) => {
   }
 };
 
-class BuildPlatform extends React.Component {
+type Props = {
+  togglePlatform: typeof togglePlatform,
+  hide: boolean,
+  platforms: Array<NATIVES>,
+  natives: { [NATIVES]: Native },
+  selected: Platforms,
+};
+
+class BuildPlatform extends React.Component<Props> {
   toggle = (platform: NATIVES) => {
     this.props.togglePlatform(platform);
   };

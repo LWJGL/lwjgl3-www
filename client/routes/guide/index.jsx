@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -8,7 +8,11 @@ import loadJS from 'fg-loadjs';
 import { loadCSS } from 'fg-loadcss';
 import HashLinkTarget from '~/components/HashLinkTarget';
 
-class GuideRoute extends React.Component {
+type State = {
+  sample: string,
+};
+
+class GuideRoute extends React.Component<ContextRouter, State> {
   static init = true;
   static sample = codeSample;
   mounted = false;

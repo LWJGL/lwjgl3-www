@@ -1030,9 +1030,77 @@ declare module 'redux-saga/effects' {
     (channel: Channel): FlushEffect,
   };
 
+  declare type SagaSpread<Y: IOEffect, R, N, T> = (...args: Array<T>) => Generator<Y, R, N>;
+  declare type SagaList<Y: IOEffect[], R, N> = () => Generator<Y, R, N>;
+  declare type Saga0<Y: IOEffect, R, N> = () => Generator<Y, R, N>;
+  declare type Saga1<Y: IOEffect, R, N, T1> = (t1: T1) => Generator<Y, R, N>;
+  declare type Saga2<Y: IOEffect, R, N, T1, T2> = (t1: T1, t2: T2) => Generator<Y, R, N>;
+  declare type Saga3<Y: IOEffect, R, N, T1, T2, T3> = (t1: T1, t2: T2, t3: T3) => Generator<Y, R, N>;
+  declare type Saga4<Y: IOEffect, R, N, T1, T2, T3, T4> = (t1: T1, t2: T2, t3: T3, t4: T4) => Generator<Y, R, N>;
+  declare type Saga5<Y: IOEffect, R, N, T1, T2, T3, T4, T5> = (
+    t1: T1,
+    t2: T2,
+    t3: T3,
+    t4: T4,
+    t5: T5
+  ) => Generator<Y, R, N>;
+  declare type Saga6<Y: IOEffect, R, N, T1, T2, T3, T4, T5, T6> = (
+    t1: T1,
+    t2: T2,
+    t3: T3,
+    t4: T4,
+    t5: T5,
+    t6: T6
+  ) => Generator<Y, R, N>;
+
+  declare interface FsmIterator extends Generator<*, *, *> {
+    name: string,
+  }
+
+  declare type TakeXFn = (<Y, R, N, Fn: Saga0<Y, R, N>>(pattern: Pattern, saga: Fn) => FsmIterator) &
+    (<T1, Y, R, N, Fn: Saga1<Y, R, N, T1>>(pattern: Pattern, saga: Fn, t1: T1) => FsmIterator) &
+    (<T1, T2, Y, R, N, Fn: Saga2<Y, R, N, T1, T2>>(pattern: Pattern, saga: Fn, t1: T1, t2: T2) => FsmIterator) &
+    (<T1, T2, T3, Y, R, N, Fn: Saga3<Y, R, N, T1, T2, T3>>(
+      pattern: Pattern,
+      saga: Fn,
+      t1: T1,
+      t2: T2,
+      t3: T3
+    ) => FsmIterator) &
+    (<T1, T2, T3, T4, Y, R, N, Fn: Saga4<Y, R, N, T1, T2, T3, T4>>(
+      pattern: Pattern,
+      saga: Fn,
+      t1: T1,
+      t2: T2,
+      t3: T3,
+      t4: T4
+    ) => FsmIterator) &
+    (<T1, T2, T3, T4, T5, Y, R, N, Fn: Saga5<Y, R, N, T1, T2, T3, T4, T5>>(
+      pattern: Pattern,
+      saga: Fn,
+      t1: T1,
+      t2: T2,
+      t3: T3,
+      t4: T4,
+      t5: T5
+    ) => FsmIterator) &
+    (<T1, T2, T3, T4, T5, T6, Y, R, N, Fn: Saga6<Y, R, N, T1, T2, T3, T4, T5, T6>>(
+      pattern: Pattern,
+      saga: Fn,
+      t1: T1,
+      t2: T2,
+      t3: T3,
+      t4: T4,
+      t5: T5,
+      t6: T6
+    ) => FsmIterator) &
+    (<T, Y, R, N, Fn: SagaSpread<Y, R, N, T>>(pattern: Pattern, saga: Fn, ...rest: Array<T>) => FsmIterator);
+
   declare module.exports: {
     take: TakeFn,
     takem: TakeFn,
+    takeEvery: TakeXFn,
+    takeLatest: TakeXFn,
     put: PutFn,
     race: RaceFn,
     call: CallFn,
@@ -1046,8 +1114,5 @@ declare module 'redux-saga/effects' {
     actionChannel: ActionChannelFn,
     cancelled: () => CancelledEffect,
     flush: FlushFn,
-    takeEvery: TakeXFn,
-    takeLatest: TakeXFn,
-    throttle: ThrottleFn,
   };
 }

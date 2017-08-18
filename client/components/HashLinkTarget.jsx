@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import type { Location } from 'react-router-dom';
 import smoothScroll from '~/services/smoothscroll';
@@ -8,7 +8,7 @@ type Props = {
   id: string,
 };
 
-class HashLinkTarget extends React.Component<void, Props, void> {
+class HashLinkTarget extends React.Component<Props, void> {
   componentDidMount() {
     if (this.props.location.hash === `#${this.props.id}`) {
       this.scrollToTarget();

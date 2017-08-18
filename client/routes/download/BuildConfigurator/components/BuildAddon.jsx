@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import Checkbox from '~/components/Checkbox';
 import { toggleAddon } from '../reducer';
@@ -18,7 +17,7 @@ type Props = OwnProps & {
   showDescriptions: boolean,
 };
 
-class BuildAddon extends React.Component<void, Props, void> {
+class BuildAddon extends React.Component<Props, void> {
   toggle: () => void = () => {
     this.props.toggleAddon(this.props.id);
   };
@@ -67,4 +66,4 @@ export default (connect(
   {
     toggleAddon,
   }
-)(BuildAddon): Class<React$Component<void, OwnProps, void>>);
+)(BuildAddon): Class<React$Component<OwnProps, void>>);

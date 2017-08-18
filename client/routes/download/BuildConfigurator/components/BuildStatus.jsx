@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import LoaderSpinner from '~/components/LoaderSpinner';
 import { loadStatus } from '../reducer';
@@ -16,7 +16,7 @@ type ConnectProps = {
 
 type Props = OwnProps & ConnectProps;
 
-class BuildStatus extends React.Component<void, Props, void> {
+class BuildStatus extends React.Component<Props, void> {
   componentDidMount() {
     const { name, loadStatus, status } = this.props;
 

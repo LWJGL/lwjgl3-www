@@ -1,11 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 type OwnProps = {
   predicate: (state: any) => boolean,
   getClassName?: (state: any) => string,
-  children?: React$Element<*>,
+  children?: React.Node,
 };
 
 type ConnectedProps = {
@@ -35,4 +34,4 @@ export default (connect((state: any, props: OwnProps) => {
   }
 
   return map;
-})(Panel): Class<React$Component<void, OwnProps, void>>);
+})(Panel): Class<React$Component<OwnProps, void>>);

@@ -1,7 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
-class BuildReleaseNotes extends React.Component {
+type Props = {
+  version: string,
+};
+
+class BuildReleaseNotes extends React.Component<Props> {
   render() {
     const v = this.props.version;
     return (

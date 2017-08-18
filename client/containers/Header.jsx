@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
@@ -23,7 +23,7 @@ type State = {
   hidden: boolean,
 };
 
-class Header extends React.PureComponent<void, Props, State> {
+class Header extends React.PureComponent<Props, State> {
   prev = 0;
   current = 0;
   direction = 0;

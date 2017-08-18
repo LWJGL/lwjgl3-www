@@ -1,11 +1,24 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { configDownload, configLoad } from '../reducer';
 
 import FileSave from 'react-icons/md/archive';
 import FileOpen from 'react-icons/md/settings-backup-restore';
 
-class BuildToolbar extends React.Component {
+import type { BreakPointState } from '~/store/reducers/breakpoint';
+
+type State = {
+  fileUI: boolean,
+};
+
+type Props = {
+  breakpoint: BreakPointState,
+  configDownload: typeof configDownload,
+  configLoad: typeof configLoad,
+  children?: React.Node,
+};
+
+class BuildToolbar extends React.Component<Props, State> {
   state = {
     fileUI: false,
   };

@@ -360,7 +360,7 @@ export default function buildConfiguratorReducer(state: BuildConfig = config, ac
 
 // Action Creators
 
-export const changeType = (type: string) => ({ type: SELECT_TYPE, build: type });
+export const changeType = (type: string | null) => ({ type: SELECT_TYPE, build: type });
 export const changeMode = (mode: string) => ({ type: SELECT_MODE, mode });
 export const changePreset = (preset: string) => ({ type: SELECT_PRESET, preset });
 export const changeLanguage = (language: string) => ({ type: SELECT_LANGUAGE, language });

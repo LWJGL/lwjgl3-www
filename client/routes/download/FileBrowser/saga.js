@@ -40,5 +40,6 @@ function* loadPath() {
 }
 
 export default function* fileBrowserSaga(): Generator<*, *, *> {
+  //$FlowFixMe
   yield takeEvery(BROWSER_LOAD, loadPath);
 }

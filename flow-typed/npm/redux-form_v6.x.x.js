@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 declare module 'redux-form' {
   declare type FieldData = void | null | boolean | string | number | Date;
@@ -143,7 +143,7 @@ declare module 'redux-form' {
     warning: any,
   };
 
-  declare type InputEventOrValue = SyntheticEvent | FieldData;
+  declare type InputEventOrValue = SyntheticEvent<HTMLElement> | FieldData;
 
   declare type InputProps = {
     checked: boolean,
@@ -177,14 +177,14 @@ declare module 'redux-form' {
   // <Field />
   declare type FieldProps = {
     name: string,
-    component: 'string' | Function | React.Component<*, *, *>,
+    component: React.ElementType,
     format?: (value: any, name: string) => string,
     normalize?: (value: any, previousValue: any, allValues: {}, previousAllValues: {}) => any,
-    onBlur?: (event: SyntheticEvent, newValue: any, previousValue: any) => void,
-    onChange?: (event: SyntheticEvent, newValue: any, previousValue: any) => void,
-    onDragStart?: (event: SyntheticEvent) => void,
-    onDrop?: (event: SyntheticEvent, newValue: any, previousValue: any) => void,
-    onFocus?: (event: SyntheticEvent) => void,
+    onBlur?: (event: SyntheticEvent<HTMLElement>, newValue: any, previousValue: any) => void,
+    onChange?: (event: SyntheticEvent<HTMLElement>, newValue: any, previousValue: any) => void,
+    onDragStart?: (event: SyntheticEvent<HTMLElement>) => void,
+    onDrop?: (event: SyntheticEvent<HTMLElement>, newValue: any, previousValue: any) => void,
+    onFocus?: (event: SyntheticEvent<HTMLElement>) => void,
     props?: {},
     parse?: (value: string, name: string) => any,
     validate?: (value: string, allValues: {}, props: {}) => string | Error | void,
@@ -195,45 +195,45 @@ declare module 'redux-form' {
      */
     withRef?: boolean,
   };
-  declare var Field: React.Component<void, FieldProps, void>;
+  declare var Field: React.Component<FieldProps, void>;
 
   // <Fields />
   declare type FieldsProps = {
     name: string,
-    component: 'string' | Function | React.Component<*, *, *>,
+    component: React.ElementType,
     format?: (value: any, name: string) => string,
     props?: {},
     parse?: (value: string, name: string) => any,
     withRef?: boolean,
   };
-  declare var Fields: React.Component<void, FieldsProps, void>;
+  declare var Fields: React.Component<FieldsProps, void>;
 
   // <FieldArray />
   declare type FieldArrayProps = {
     name: string,
-    component: 'string' | Function | React.Component<*, *, *>,
+    component: React.ElementType,
     format?: (value: any, name: string) => string,
     validate?: (value: string, allValues: {}, props: {}) => string | Error | void,
     warn?: (value: string, allValues: {}, props: {}) => string | Error | void,
     withRef?: boolean,
     props?: {},
   };
-  declare var FieldArray: React.Component<void, FieldArrayProps, void>;
+  declare var FieldArray: React.Component<FieldArrayProps, void>;
 
   // <Form />
   declare type FormElementProps = {
     onSubmit?: (values: FieldValues, dispatch: Function, props: FormProps) => Promise<void> | Error | true,
   };
-  declare var Form: HTMLFormElement & React.Component<void, FormElementProps, void>;
+  declare var Form: HTMLFormElement & React.Component<FormElementProps, void>;
 
   // <FormSection />
   declare type FormSectionProps = {
     name: string,
-    component?: 'string' | Function | React.Component<*, *, *>,
+    component?: React.ElementType,
   };
-  declare var FormSection: React.Component<void, FormSectionProps, void>;
+  declare var FormSection: React.Component<FormSectionProps, void>;
 
-  declare function reduxForm(config: FormConfig): (component: React.Component<*, *, *>) => React.Component<*, *, *>;
+  declare function reduxForm(config: FormConfig): (component: React.ComponentType<any>) => React.ComponentType<any>;
 
   declare function reducer(state: any, action: {}): any;
   declare function getValues(state: any): any;

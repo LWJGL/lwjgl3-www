@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import Loadable from 'react-loadable';
 import nprogress from 'nprogress';
 import LoadingComponent from '../components/LoadingPage';
 import ErrorBoundary from '../components/ErrorBoundary';
 import PageError from '../components/PageError';
 
-type Module = { default: any };
+type Module = { default: React.ComponentType<any> };
 type PromiseModule = Promise<Module>;
 type PromiseReactModule = () => PromiseModule;
 
@@ -38,10 +38,10 @@ const loadSuccess = (Module: Module) => {
   return Module.default;
 };
 
-const asyncRoute = (getComponent: PromiseReactModule) =>
+const asyncRoute = <InputProps: {}>(getComponent: PromiseReactModule): React.ComponentType<InputProps> =>
   Loadable({
     loader: () => beginLoad(getComponent()).then(loadSuccess, loadErr),
-    render: <Props: {}>(loaded: Class<React$Component<any, Props, any>>, props: Props) => {
+    render: (loaded: React.ComponentType<InputProps>, props: InputProps) => {
       const Component = loaded;
       if (process.env.NODE_ENV === 'production') {
         return (

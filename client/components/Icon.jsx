@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 
 // https://github.com/gorangajic/react-icons/tree/master/fa
 

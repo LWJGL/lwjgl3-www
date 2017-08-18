@@ -11,7 +11,7 @@ declare module 'react-redux' {
 
   */
 
-  declare type MapStateToProps<S, OP: Object, SP: Object> = (state: S, ownProps: OP) => SP | MapStateToProps<S, OP, SP>;
+  declare type MapStateToProps<S, OP: Object, SP: Object> = (state: S, ownProps: OP) => SP;
 
   declare type MapDispatchToProps<A, OP: Object, DP: Object> = ((dispatch: Dispatch<A>, ownProps: OP) => DP) | DP;
 
@@ -21,13 +21,11 @@ declare module 'react-redux' {
     ownProps: OP
   ) => P;
 
-  declare type Context = { store: Store<*, *> };
+  declare type StatelessComponent<P> = (props: P) => ?React$Element<any>;
 
-  declare type StatelessComponent<P> = (props: P, context: Context) => ?React$Element<any>;
-
-  declare class ConnectedComponent<OP, P, Def, St> extends React$Component<void, OP, void> {
-    static WrappedComponent: Class<React$Component<Def, P, St>>,
-    getWrappedInstance(): React$Component<Def, P, St>,
+  declare class ConnectedComponent<OP, P, Def, St> extends React$Component<OP, void> {
+    static WrappedComponent: Class<React$Component<P, St>>,
+    getWrappedInstance(): React$Component<P, St>,
     static defaultProps: void,
     props: OP,
     state: void,
@@ -37,10 +35,10 @@ declare module 'react-redux' {
 
   declare type Connector<OP, P> = {
     (component: StatelessComponent<P>): ConnectedComponentClass<OP, P, void, void>,
-    <Def, St>(component: Class<React$Component<Def, P, St>>): ConnectedComponentClass<OP, P, Def, St>,
+    <Def, St>(component: Class<React$Component<P, St>>): ConnectedComponentClass<OP, P, Def, St>,
   };
 
-  declare class Provider<S, A> extends React$Component<void, { store: Store<S, A>, children?: any }, void> {}
+  declare class Provider<S, A> extends React$Component<{ store: Store<S, A>, children?: any }, void> {}
 
   declare type ConnectOptions = {
     pure?: boolean,
@@ -80,13 +78,6 @@ declare module 'react-redux' {
     mergeProps: Null,
     options?: ConnectOptions
   ): Connector<OP, $Supertype<SP & DP & OP>>;
-
-  declare function connect<S, A, OP, SP, DP, P>(
-    mapStateToProps: MapStateToProps<S, OP, SP>,
-    mapDispatchToProps: Null,
-    mergeProps: MergeProps<SP, DP, OP, P>,
-    options?: ConnectOptions
-  ): Connector<OP, P>;
 
   declare function connect<S, A, OP, SP, DP, P>(
     mapStateToProps: MapStateToProps<S, OP, SP>,

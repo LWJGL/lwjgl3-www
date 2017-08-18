@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import type { ContextRouter } from 'react-router-dom';
 
 type ScrollPositions = {
@@ -6,10 +6,10 @@ type ScrollPositions = {
 };
 
 type Props = ContextRouter & {
-  children?: React$Element<*>,
+  children?: React.Node,
 };
 
-class PageView extends React.Component<void, Props, void> {
+class PageView extends React.Component<Props, void> {
   // Remembers last scroll positions
   // TODO: We shouldn't allow infinite keys here, implement a *shared* LRU cache
   static scrollPositions: ScrollPositions = {};

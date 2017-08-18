@@ -1,4 +1,3 @@
-// Place your settings in this file to overwrite default and user settings.
 {
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
@@ -14,8 +13,15 @@
   },
   "javascript.format.enable": false,
   "javascript.validate.enable": false,
+  "javascript.referencesCodeLens.enabled": false,
+  "javascript.nameSuggestions": false,
   "prettier.printWidth": 120,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
-  "prettier.parser": "babylon"
+  "prettier.parser": "babylon",
+  "typescript.validate.enable": false,
+  "typescript.format.enable": false,
+  "typescript.referencesCodeLens.enabled": false,
+  "typescript.implementationsCodeLens.enabled": false,
+  "typescript.tsc.autoDetect": "off"
 }

@@ -1,15 +1,15 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import BuildAddon from './BuildAddon';
 import type { BuildConfig } from '../types';
 
-type AddonData = {
+type Props = {
   addons: Array<string>,
 };
 
-class BuildAddons extends React.Component {
+class BuildAddons extends React.Component<Props> {
   render() {
-    const { addons }: AddonData = this.props;
+    const { addons } = this.props;
 
     return (
       <div className="custom-controls-stacked">
@@ -19,9 +19,6 @@ class BuildAddons extends React.Component {
   }
 }
 
-export default connect(
-  ({ build }: { build: BuildConfig }) =>
-    ({
-      addons: build.addons.allIds,
-    }: AddonData)
-)(BuildAddons);
+export default connect(({ build }: { build: BuildConfig }) => ({
+  addons: build.addons.allIds,
+}))(BuildAddons);

@@ -1,8 +1,8 @@
-import React from 'react';
+import * as React from 'react';
 import smoothScroll from '~/services/smoothscroll';
 import IconArrowUpward from 'react-icons/md/arrow-upward';
 
-const scrollTopTop = (e: SyntheticEvent): boolean => {
+const scrollTopTop = (e: SyntheticEvent<HTMLLinkElement>): boolean => {
   smoothScroll.init();
   e.preventDefault();
   window.scroll(0, 0);

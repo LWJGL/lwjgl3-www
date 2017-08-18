@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react';
 import type { CSSModule } from '~/services/CSSModule';
 
 type Props = {
   loader: CSSModule,
 };
 
-class Style extends React.Component<void, Props, void> {
+class Style extends React.Component<Props, void> {
   componentDidMount() {
     this.props.loader.use();
   }

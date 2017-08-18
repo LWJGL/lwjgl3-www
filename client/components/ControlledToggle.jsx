@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import Toggle from './Toggle';
 
@@ -23,7 +22,7 @@ type Props = OwnProps & {
   handleClick: (value: any) => mixed,
 };
 
-class ControlledToggle extends React.Component<void, Props, void> {
+class ControlledToggle extends React.Component<Props, void> {
   toggle = () => {
     this.props.handleClick(!this.props.checked);
   };

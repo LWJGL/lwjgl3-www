@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { loadPath } from '../reducer';
 import LoaderSpinner from '~/components/LoaderSpinner';
@@ -7,7 +7,21 @@ import File from './File';
 import { css } from 'aphrodite/no-important';
 import styles from '../styles';
 
-class Browser extends React.Component {
+type OwnProps = {
+  path: string,
+  parent: string,
+  folders: Array<string>,
+  files: Array<string>,
+  loading: boolean,
+};
+
+type ConnectedProps = {
+  loadPath: string => void,
+};
+
+type Props = OwnProps & ConnectedProps;
+
+class Browser extends React.Component<Props> {
   componentDidMount() {
     this.props.loadPath(this.props.path);
   }
