@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import LoaderSpinner from '~/components/LoaderSpinner';
 import type { LoadingComponentProps } from 'react-loadable';

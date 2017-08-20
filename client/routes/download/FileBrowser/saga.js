@@ -1,3 +1,4 @@
+// @flow
 import { takeEvery, select, call, put } from 'redux-saga/effects';
 import { BROWSER_LOAD, storeContents } from './reducer';
 import { HTTP_OK } from '~/services/http_status_codes';

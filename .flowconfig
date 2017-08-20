@@ -2,13 +2,10 @@
 <PROJECT_ROOT>/.cache-loader/.*
 <PROJECT_ROOT>/.idea/.*
 <PROJECT_ROOT>/.vscode/.*
-<PROJECT_ROOT>/node_modules/.*
 <PROJECT_ROOT>/public/.*
-<PROJECT_ROOT>/scripts/.*
-<PROJECT_ROOT>/server/.*
-<PROJECT_ROOT>/webpack\.config\.js
-<PROJECT_ROOT>/webpack\.vendor\.config\.js
-<PROJECT_ROOT>/postcss\.config\.js
+<PROJECT_ROOT>/node_modules/fbjs/.*
+<PROJECT_ROOT>/node_modules/aphrodite/.*
+<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/.*
 
 [include]
 client/**/*.js
@@ -23,7 +20,6 @@ sketchy-null-bool=off
 sketchy-null-string=off
 
 [options]
-all=true
 include_warnings=true
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable

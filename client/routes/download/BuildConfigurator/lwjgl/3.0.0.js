@@ -1,3 +1,4 @@
+// @flow
 import { NATIVE_WIN, NATIVE_ALL } from '../constants';
 
 import type { BuildOptions } from '../types';

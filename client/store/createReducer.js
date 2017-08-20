@@ -1,3 +1,4 @@
+// @flow
 import { combineReducers } from 'redux';
 import breakpoint from './reducers/breakpoint';
 

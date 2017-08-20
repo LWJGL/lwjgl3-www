@@ -1,3 +1,4 @@
+// @flow
 import loadJS from 'fg-loadjs';
 
 // Use this to load GA on demand

@@ -1,3 +1,4 @@
+// @flow
 import { createStore, compose, applyMiddleware } from 'redux';
 import createReducer from './createReducer';
 import reduxThunk from 'redux-thunk';

@@ -1,3 +1,4 @@
+// @flow
 import { channel, buffers } from 'redux-saga';
 import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects';
 
@@ -284,7 +285,6 @@ function* init() {
   saveAs(blob, `lwjgl-${build}-${build === BUILD_RELEASE ? version : getToday()}-custom.zip`);
 
   yield put(log(`Done!`));
-  //$FlowFixMe
   yield put(downloadComplete());
 }
 

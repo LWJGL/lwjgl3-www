@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import supportsPassive from '~/services/supports-passive';
 

@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const DllPlugin = require('webpack/lib/DllPlugin');

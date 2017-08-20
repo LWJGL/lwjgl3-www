@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import { css } from 'aphrodite/no-important';
 import styles from '../styles';

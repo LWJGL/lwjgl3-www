@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import type { Location } from 'react-router-dom';

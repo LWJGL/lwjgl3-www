@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import createFocusTrap from 'focus-trap';
 import noscroll from '~/services/noscroll';

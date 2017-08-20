@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import BuildStatus from './BuildStatus';
 import classnames from 'classnames';

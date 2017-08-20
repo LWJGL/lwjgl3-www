@@ -1,3 +1,4 @@
+// @flow
 export const BUILD_RELEASE = 'release';
 export const BUILD_STABLE = 'stable';
 export const BUILD_NIGHTLY = 'nightly';

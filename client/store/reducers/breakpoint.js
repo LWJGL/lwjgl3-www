@@ -1,3 +1,4 @@
+// @flow
 export const BREAKPOINTS_RESIZE = 'BREAKPOINTS/RESIZE_EVENT';
 
 export type SetBreakPoint = {

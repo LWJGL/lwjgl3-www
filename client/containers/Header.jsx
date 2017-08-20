@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import MainMenu from './MainMenu';

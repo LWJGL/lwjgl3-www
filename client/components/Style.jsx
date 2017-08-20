@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import type { CSSModule } from '~/services/CSSModule';
 

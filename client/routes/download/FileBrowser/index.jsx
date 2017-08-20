@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import ControlledPanel from '~/components/ControlledPanel';

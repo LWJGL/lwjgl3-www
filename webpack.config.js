@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');

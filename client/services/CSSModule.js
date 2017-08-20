@@ -1,3 +1,4 @@
+// @flow
 export type CSSModule = {
   use: () => void,
   unuse: () => void,

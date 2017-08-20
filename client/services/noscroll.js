@@ -1,3 +1,4 @@
+// @flow
 declare var document;
 
 let scrollbarSize: number = -1;

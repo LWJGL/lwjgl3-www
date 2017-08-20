@@ -1,3 +1,4 @@
+// @flow
 // export const IS_CHROME = /Chrome/.test(navigator.userAgent);
 // export const IS_SAFARI = !IS_CHROME && /Safari/.test(navigator.userAgent);
 let ua = navigator.userAgent;

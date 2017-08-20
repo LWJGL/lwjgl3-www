@@ -1,3 +1,4 @@
+// @flow
 import { IS_IE } from '~/services/ua';
 
 let prevScroll = 0;

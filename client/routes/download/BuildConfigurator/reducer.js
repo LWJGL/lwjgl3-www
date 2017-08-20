@@ -1,3 +1,4 @@
+// @flow
 import config from './config';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 import type {
@@ -339,7 +340,7 @@ export default function buildConfiguratorReducer(state: BuildConfig = config, ac
       return { ...state, progress: [...state.progress, action.message] };
 
     case DOWNLOAD_COMPLETE:
-      if (action.error) {
+      if (action.error !== undefined) {
         alert(action.error);
       }
       return { ...state, downloading: false };
@@ -377,7 +378,7 @@ export const togglePlatform = (platform: string) => ({ type: TOGGLE_PLATFORM, pl
 export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
 
 export const downloadInit = () => ({ type: DOWNLOAD_INIT });
-export const downloadComplete = (error: string) => ({ type: DOWNLOAD_COMPLETE, error });
+export const downloadComplete = (error?: string) => ({ type: DOWNLOAD_COMPLETE, error });
 export const downloadLog = (message: string) => ({ type: DOWNLOAD_LOG, message });
 
 export const configLoad = (payload: {}) => ({ type: CONFIG_LOAD, payload });

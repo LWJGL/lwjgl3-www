@@ -1,3 +1,4 @@
+// @flow
 export type BUILD_TYPES = 'release' | 'stable' | 'nightly';
 export type NATIVES = 'macos' | 'windows' | 'linux';
 export type MODES = 'zip' | 'maven' | 'gradle' | 'ivy';

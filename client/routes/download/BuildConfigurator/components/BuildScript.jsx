@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';

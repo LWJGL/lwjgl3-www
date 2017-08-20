@@ -1,3 +1,4 @@
+// @flow
 let supportsPassive = false;
 
 try {

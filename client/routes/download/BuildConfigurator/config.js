@@ -1,3 +1,4 @@
+// @flow
 import {
   BUILD_RELEASE,
   BUILD_STABLE,

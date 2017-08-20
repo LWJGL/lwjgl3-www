@@ -1,3 +1,4 @@
+// @flow
 import store from './';
 import createReducer from './createReducer';
 import type { Reducer } from 'redux';

@@ -1,3 +1,4 @@
+// @flow
 import * as React from 'react';
 // https://github.com/jonschlinkert/remarkable
 import Remarkable from 'remarkable';

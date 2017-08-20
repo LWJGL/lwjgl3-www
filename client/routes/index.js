@@ -1,3 +1,4 @@
+// @flow
 import AR from '../services/asyncRoute';
 
 // Import causes routes to be code-split

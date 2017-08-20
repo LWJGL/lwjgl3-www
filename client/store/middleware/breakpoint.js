@@ -1,3 +1,4 @@
+// @flow
 import { resizeEvent, getCurrent } from '../reducers/breakpoint';
 import type { Dispatch, MiddlewareAPI } from 'redux';
 

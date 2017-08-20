@@ -1,3 +1,4 @@
+// @flow
 // State
 
 type Folder = {|

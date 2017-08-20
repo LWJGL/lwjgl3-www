@@ -1,3 +1,4 @@
+// @flow
 export const HTTP_OK: number = 200;
 // export const HTTP_CREATED: number = 201;
 // export const HTTP_ACCEPTED: number = 202;
