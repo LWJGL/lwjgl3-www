@@ -8,7 +8,6 @@ const helmet = require('helmet');
 const favicon = require('serve-favicon');
 const { argv } = require('yargs');
 const chalk = require('chalk');
-const proxy = require('http-proxy-middleware');
 const request = require('request-promise-native');
 
 // AWS
@@ -87,6 +86,7 @@ if (app.locals.development || argv.s3proxy) {
     In development these paths will hit Node, therefore we need to handle them.
     CAUTION: Internet connection is required!
   */
+  const proxy = require('http-proxy-middleware');
 
   // Proxy photos from S3
   app.use('/img', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
