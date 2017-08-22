@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
+// import { connect } from '~/services/connect';
 import { register } from '~/store/asyncReducers';
 import reduxSaga from '~/store/saga';
 import {
@@ -183,20 +184,20 @@ class BuildContainer extends React.Component<Props> {
 
   render() {
     return (
-      <div className="mb-5 config-container" style={{ position: 'relative' }}>
+      <div className="config-container" style={{ position: 'relative' }}>
         <div className="row">
-          <div className="col-lg">
+          <div className="col-lg p-0 px-lg-3">
             <BuildType build="release" />
           </div>
-          <div className="col-lg">
+          <div className="col-lg p-0">
             <BuildType build="stable" />
           </div>
-          <div className="col-lg">
+          <div className="col-lg p-0 px-lg-3">
             <BuildType build="nightly" />
           </div>
         </div>
         <ControlledPanel className="row" predicate={isBuildSelected}>
-          <div className="col">
+          <div className="col p-0">
             <BuildConfigArea>
               <ControlledPanel className="pt-3" predicate={isCustomizing}>
                 <div className="row">

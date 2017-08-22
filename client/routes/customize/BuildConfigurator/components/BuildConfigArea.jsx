@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 // import { connect } from '~/services/connect';
-import supportsPassive from '~/services/supports-passive';
 import styled from 'styled-components';
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BUILD_TYPES } from '../types';
@@ -21,6 +20,8 @@ import {
 const ConfigPanel = styled.div`
   position: relative;
   z-index: 0;
+  margin-bottom: 66px;
+  padding: 0 1rem 1rem 1rem;
 
   ${mediaBreakpointUp('lg')} {
     &.release {
@@ -35,11 +36,9 @@ const ConfigPanel = styled.div`
       background-color: ${COLOR_NIGHTLY_LIGHT};
       border-color: ${COLOR_NIGHTLY};
     }
-
     margin-top: 1rem;
     border-width: 2px;
     border-style: solid;
-    padding: 1rem;
   }
 
   p {
@@ -74,9 +73,13 @@ const ConfigPanel = styled.div`
 
   .download-toolbar {
     background: ${COLOR_PRIMARY.l(COLOR_PRIMARY.lightness + 5)};
-    margin: 1rem -1rem -1rem -1rem;
     padding: 1rem 0;
     text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
     .btn + .btn {
       margin-left: .5rem;
     }
@@ -89,29 +92,6 @@ const ConfigPanel = styled.div`
       }
     }
   }
-
-  &.stick {
-    padding-bottom: 66px;
-
-    .download-toolbar {
-      position: fixed;
-      bottom: 0;
-      left: 50%;
-      width: 1110px;
-      margin: 0;
-      margin-left: -555px;
-
-      ${mediaBreakpointUp('lg')} {
-        left: 50%;
-        width: 930px;
-        margin-left: -465px;
-      }
-      ${mediaBreakpointUp('xl')} {
-        width: 1110px;
-        margin-left: -555px;
-      }
-    }
-  }
 `;
 
 type Props = {
@@ -120,62 +100,9 @@ type Props = {
 };
 
 class BuildConfigArea extends React.Component<Props> {
-  ticking: boolean = false;
-  forceUpd: boolean = false;
-  container: ?HTMLDivElement;
-
-  componentDidMount() {
-    window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
-    window.addEventListener('resize', this.onScroll, supportsPassive ? { passive: true } : false);
-    this.update();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
-    window.removeEventListener('resize', this.onScroll, supportsPassive ? { passive: true } : false);
-  }
-
-  componentWillUpdate() {
-    this.forceUpd = true;
-  }
-
-  componentDidUpdate() {
-    if (this.forceUpd) {
-      requestAnimationFrame(this.update);
-    }
-  }
-
-  onScroll = () => {
-    if (!this.ticking) {
-      requestAnimationFrame(this.update);
-      this.ticking = true;
-    }
-  };
-
-  update = () => {
-    this.ticking = false;
-    if (this.container != null) {
-      const rect = this.container.getBoundingClientRect();
-      /*::
-      if (this.container == null) {
-        return;
-      }
-      */
-      if (rect.top + rect.height > window.innerHeight) {
-        this.container.classList.add('stick');
-      } else {
-        this.container.classList.remove('stick');
-      }
-    }
-  };
-
-  getRef = (el: ?HTMLDivElement) => {
-    this.container = el;
-  };
-
   render() {
     return (
-      <ConfigPanel innerRef={this.getRef} className={this.props.build}>
+      <ConfigPanel className={this.props.build}>
         {this.props.children}
       </ConfigPanel>
     );

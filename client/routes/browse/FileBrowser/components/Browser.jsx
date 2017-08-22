@@ -5,6 +5,8 @@ import { loadPath } from '../reducer';
 import LoaderSpinner from '~/components/LoaderSpinner';
 import Folder, { FolderName } from './Folder';
 import File from './File';
+import IconCloud from 'react-icons/fa/cloud';
+import IconArrowRight from 'react-icons/fa/chevron-right';
 
 type OwnProps = {
   path: string,
@@ -34,11 +36,11 @@ class Browser extends React.Component<Props> {
     const path = props.path === '/' ? '' : props.path;
 
     return (
-      <table className="table">
-        <thead className="thead-inverse">
+      <table className="table mb-0">
+        <thead className="thead-default">
           <tr>
             <th colSpan={2}>
-              lwjgl/{path}
+              <IconCloud /> &nbsp;lwjgl/{path}
             </th>
           </tr>
         </thead>

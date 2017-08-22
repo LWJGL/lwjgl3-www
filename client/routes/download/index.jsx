@@ -5,46 +5,55 @@ import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 
-import BuildContainer from './BuildConfigurator';
-import FileBrowser from './FileBrowser';
-import FaGithub from 'react-icons/fa/github';
+import IconGithub from 'react-icons/fa/github';
+import IconCustomize from 'react-icons/fa/check-square-o';
+import IconFolder from 'react-icons/md/folder';
 
 const DownloadRoute = (props: ContextRouter) =>
   <PageView {...props}>
     <Helmet>
       <title>Download</title>
-      <meta name="description" content="Download release, stable, or nightly builds of LWJGL 3" />
+      <meta name="description" content="Download LWJGL 3" />
     </Helmet>
     <main>
       <section className="container pb-4">
         <h1>
           Download LW<b>JGL</b> 3
         </h1>
-        <p>All official releases are available for download from GitHub.</p>
-        <p>
-          <a
-            className="btn btn-xs-block btn-lg btn-primary"
-            href="https://github.com/LWJGL/lwjgl3/releases"
-            target="_blank"
-          >
-            <FaGithub /> Download from Github
-          </a>
-        </p>
-        <p>
-          To customize your LWJGL build or use the latest stable & nightly releases, start by selecting a release below
-          to begin configuring your download. See the{' '}
-          <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">installation instructions</a> for additional
-          information and for setting up your IDE.
-        </p>
-        <BuildContainer />
-
-        <p>Or browse and download files directly:</p>
-        <div style={{ backgroundColor: 'lightyellow', padding: 20 }}>
-          <FileBrowser />
+        <hr />
+        <div className="row">
+          <div className="col-md-12 col-lg-4">
+            <p>All official releases are available for download from GitHub:</p>
+            <p>
+              <a
+                className="btn btn-xs-block btn-lg btn-primary"
+                href="https://github.com/LWJGL/lwjgl3/releases"
+                target="_blank"
+              >
+                <IconGithub /> Download from Github
+              </a>
+            </p>
+          </div>
+          <div className="col-md-12 col-lg-4">
+            <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
+            <p>
+              <Link className="btn btn-xs-block btn-lg btn-primary" to="/customize">
+                <IconCustomize /> Customize LWJGL 3
+              </Link>
+            </p>
+          </div>
+          <div className="col-md-12 col-lg-4">
+            <p>Or you can browse and download individual LWJGL artifacts:</p>
+            <p>
+              <Link className="btn btn-xs-block btn-lg btn-outline-primary" to="/browse">
+                <IconFolder /> Browse LWJGL files
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
 
-      <div className="area-dark py-4">
+      <div className="area-dark py-5">
         <section className="container">
           <h3>Build from source?</h3>
           <p>Click below if you prefer to build from source:</p>
@@ -59,7 +68,7 @@ const DownloadRoute = (props: ContextRouter) =>
         </section>
       </div>
 
-      <section className="container pt-4">
+      <section className="container py-4">
         <p>
           Broken download? Let us know at the <a href="http://forum.lwjgl.org/">forums</a>.
         </p>

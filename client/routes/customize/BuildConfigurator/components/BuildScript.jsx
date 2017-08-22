@@ -80,7 +80,7 @@ class BuildScript extends React.Component<Props> {
         <h2 className="mt-1">
           <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
         </h2>
-        <pre ref={this.getRef}>
+        <pre ref={this.getRef} className="m-0">
           <code>
             {script}
           </code>

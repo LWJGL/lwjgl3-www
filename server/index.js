@@ -129,8 +129,8 @@ const routeBin = require('./bin');
 app.get('/bin/:build', routeBin);
 app.get('/bin/:build/:version', routeBin);
 
-// S3 bucket browsing
-app.get('/browse', require('./browse'));
+// S3 bucket listing
+app.get('/list', require('./browse'));
 
 // S3 build information
 const routeBuild = require('./build');

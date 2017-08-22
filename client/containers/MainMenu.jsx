@@ -25,6 +25,11 @@ const MainMenu = ({ onClick, ...rest }: Props) =>
       </NavLink>
     </li>
     <li>
+      <NavLink activeClassName="active" onClick={onClick} to="/customize">
+        CUSTOMIZE
+      </NavLink>
+    </li>
+    <li>
       <NavLink activeClassName="active" onClick={onClick} to="/source">
         SOURCE
       </NavLink>

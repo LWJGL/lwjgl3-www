@@ -13,18 +13,12 @@ type State = {
     [string]: Folder,
   },
   path: string,
-  open: boolean,
 };
 
 // Actions
 
-export const BROWSER_OPEN = 'BROWSER/OPEN';
 export const BROWSER_LOAD = 'BROWSER/LOAD_PATH';
 export const STORE_CONTENTS = 'BROWSER/STORE_CONTENTS';
-
-export type BrowserOpenAction = {|
-  type: typeof BROWSER_OPEN,
-|};
 
 export type StoreContentsAction = {|
   type: typeof STORE_CONTENTS,
@@ -37,12 +31,9 @@ export type BrowserLoadAction = {|
   path: string,
 |};
 
-type Action = BrowserOpenAction | StoreContentsAction | BrowserLoadAction;
+type Action = StoreContentsAction | BrowserLoadAction;
 
 // Action Creators
-
-export const browserOpen = (): BrowserOpenAction => ({ type: BROWSER_OPEN });
-
 export const loadPath = (path: string): BrowserLoadAction => ({ type: BROWSER_LOAD, path });
 
 export const storeContents = (path: string, contents: Folder): StoreContentsAction => ({
@@ -64,14 +55,10 @@ export default function fileBrowserReducer(
       },
     },
     path: '/',
-    open: false,
   },
   action: Action
 ): State {
   switch (action.type) {
-    case BROWSER_OPEN:
-      return { ...state, open: true };
-
     case STORE_CONTENTS:
       return {
         ...state,

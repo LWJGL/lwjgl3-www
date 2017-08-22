@@ -9,6 +9,7 @@ import { changeType } from '../reducer';
 
 import type { BUILD_TYPES, Build } from '../types';
 
+import IconClose from 'react-icons/md/close';
 import styled from 'styled-components';
 import { mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import {
@@ -63,19 +64,34 @@ const BuildBox = styled.div`
     }
   }
 
+  .svg-icon {
+    display: none;
+  }
+
   ${mediaBreakpointDown('md')} {
-    margin-bottom: 1rem;
+    margin: 0 1rem 1rem 1rem;
     &.active {
       display: none;
     }
     &.selected {
-      margin: 0 -1rem;
+      margin: 0;
       display: block;
       background-color: transparent;
       border-top-color: transparent;
       border-right-color: transparent;
       border-left-color: transparent;
       border-radius: 0 !important;
+    }
+    .svg-icon {
+      color: black;
+      display: block;
+      position: absolute;
+      top: .75rem;
+      right: 2rem;
+      font-size: 200%;
+      &:hover {
+        color: red;
+      }
     }
   }
 
@@ -122,6 +138,7 @@ class BuildType extends React.Component<Props> {
           {spec.description}
         </p>
         <BuildStatus name={spec.id} />
+        {isSelected ? <IconClose /> : null}
       </BuildBox>
     );
   }

@@ -9,7 +9,7 @@ const getData = state => ({
 });
 
 async function fetchContents(path) {
-  let requestUrl = '/browse';
+  let requestUrl = '/list';
 
   if (path !== '/') {
     requestUrl += `?path=${path}`;
