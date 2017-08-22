@@ -6,8 +6,10 @@ import Sidebar from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import supportsPassive from '~/services/supports-passive';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import classnames from 'classnames';
 import type { ContextRouter } from 'react-router-dom';
+import { COLOR_PRIMARY } from '~/theme';
 
 const HEADER_CLASSNAME = 'site-header';
 
@@ -23,6 +25,18 @@ type State = {
   fixed: boolean,
   hidden: boolean,
 };
+
+const StyledHeader = styled.header`
+  &.opaque {
+    background-color: ${COLOR_PRIMARY};
+  }
+  &.home {
+    transition: background-color .5s ease-out;
+    &.top {
+      background-color: transparent;
+    }
+  }
+`;
 
 class Header extends React.PureComponent<Props, State> {
   prev = 0;
@@ -132,11 +146,14 @@ class Header extends React.PureComponent<Props, State> {
 
   render() {
     const { pos, top, fixed, hidden } = this.state;
+    const isHome = this.props.location.pathname === '/';
 
     return (
-      <header
+      <StyledHeader
         role="navigation"
         className={classnames(HEADER_CLASSNAME, {
+          home: isHome,
+          opaque: !isHome || !top,
           alt: IS_IOS,
           top,
           fixed,
@@ -156,7 +173,7 @@ class Header extends React.PureComponent<Props, State> {
               : <Sidebar />}
           </div>
         </nav>
-      </header>
+      </StyledHeader>
     );
   }
 }

@@ -3,10 +3,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { loadPath } from '../reducer';
 import LoaderSpinner from '~/components/LoaderSpinner';
-import Folder from './Folder';
+import Folder, { FolderName } from './Folder';
 import File from './File';
-import { css } from 'aphrodite/no-important';
-import styles from '../styles';
 
 type OwnProps = {
   path: string,
@@ -47,9 +45,9 @@ class Browser extends React.Component<Props> {
         <tbody>
           {props.parent &&
             <tr>
-              <th className={css(styles.folder)} scope="row" onClick={this.goBack} colSpan={2}>
+              <FolderName scope="row" onClick={this.goBack} colSpan={2}>
                 …
-              </th>
+              </FolderName>
             </tr>}
           {props.folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} />)}
           {props.files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} />)}

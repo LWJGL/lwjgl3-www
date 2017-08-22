@@ -63,18 +63,19 @@ AWS credentials are only needed for deploying compiled files to S3 (@see yarn de
 yarn
 ```
 
-2. To build vendor JS file run:
+2. To build vendor/css files for development run:
 
 ```bash
 yarn vendor
+yarn styles
 ```
 
 3. To start the server in dev mode:
 
 ```bash
-yarn start
-# or
 node server
+# or
+yarn start
 ```
 
 For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
@@ -87,16 +88,17 @@ yarn watch
 
 ### CLI flags
 
---nohmr => Disables Hot Module Reloading
+--nohmr => Disables Hot Module Reloading (HMR)
 --async => Enables async routes
 --nocache => Disables Pug view caching *(for testing production)*
 --pretty => Pretty prints HTML *(for testing production)*
 --s3proxy => Proxies S3 images *(for testing production)*
+--css => Enables CSS modules in development mode *(for SCSS HMR)*
 
 Flag usage example:
 
 ```bash
-node server --async
+node server --css
 node server --async --nohmr
 yarn watch -- --async --nohmr
 ```
@@ -106,6 +108,18 @@ yarn watch -- --async --nohmr
 The website is served via Amazon CloudFront using the server's hostname & port as origin.
 SSL Termination happens on the CDN (using a certificate issued by AWS Certificate Manager).
 
+The production process involves the following steps:
+
+- Compile core SCSS files with webpack ( *sass-loader -> postcss-loader -> css-loader -> ExtractTextPlugin* )
+- Compile JS files with webpack ( *babel* ) and store the manifest on disk
+- Process the manifest:
+  * Read the webpack manifest and compile list of files & routes
+  * Process each file with uglify-js
+  * Compute hashes of final files
+  * Store each production file on disk
+  * Generate production manifest that also needs to be shipped
+  * Generate & print file size report
+
 ### Build for production
 
 ```bash
@@ -114,16 +128,20 @@ yarn
 yarn release
 ```
 
-To run the production build ( in *nix )
+To run the production build (*nix only)
 
 ```bash
 NODE_ENV=production node server
+yarn 
 ```
 
-or force production with (not recommended)
+you can simulate and run the production build locally:
 
 ```bash
-node server --production
+# will use production assets on disk
+yarn test-production
+# will download production assets from S3, only proxies request that pass through Cloudfront
+yarn run-production
 ```
 
 ### Run in production with PM2
@@ -184,23 +202,16 @@ forever start forever.json
 
 We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following plugins:
 
-- Babel ES6/ES7
-- vscode-flow-ide
+- flow-for-vscode
 - Prettier
 
 Other useful plugins:
 
-- Babelrc
-- stylefmt
-- EditorConfig for VS Code
-- npm
 - npm Intellisense
 - SCSS IntelliSense
-- vscode-icons
-- gitignore
-- Git History (git log)
 
-We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab). In VSCode add the following in your config:
+We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab).
+In VSCode add the following in the user settings:
 
 ```json
 {

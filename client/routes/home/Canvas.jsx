@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import loadJS from 'fg-loadjs';
+import styled from 'styled-components';
 
 declare var THREE: any;
 
@@ -147,6 +148,14 @@ function stop() {
   }
 }
 
+const Canvas = styled.canvas`
+  position: absolute;
+  z-index: 0;
+  opacity: .15;
+  width: 100%;
+  height: 100%;
+`;
+
 export default class HomeCanvas extends React.Component<{||}> {
   mounted = false;
   canvas: ?HTMLCanvasElement;
@@ -175,6 +184,6 @@ export default class HomeCanvas extends React.Component<{||}> {
   };
 
   render() {
-    return <canvas ref={this.getRef} />;
+    return <Canvas innerRef={this.getRef} />;
   }
 }

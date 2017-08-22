@@ -4,7 +4,7 @@
 <PROJECT_ROOT>/.vscode/.*
 <PROJECT_ROOT>/public/.*
 <PROJECT_ROOT>/node_modules/fbjs/.*
-<PROJECT_ROOT>/node_modules/aphrodite/.*
+<PROJECT_ROOT>/node_modules/styled-components/.*
 <PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/.*
 
 [include]

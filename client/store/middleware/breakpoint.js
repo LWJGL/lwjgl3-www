@@ -1,6 +1,7 @@
 // @flow
 import { resizeEvent, getCurrent } from '../reducers/breakpoint';
 import type { Dispatch, MiddlewareAPI } from 'redux';
+import { breakpoints } from '~/theme';
 
 /**
  * Listens to matchMedia events and updates state.breakpoint.current
@@ -26,17 +27,17 @@ export default function breakpointMiddleware({ dispatch, getState }: MiddlewareA
   }
 
   if (window.matchMedia) {
-    const limits = getState().breakpoint.limits;
-    const last = limits.length - 1;
+    // const last = breakpoints.length - 1;
+    const last = 4;
 
-    limits.forEach((limit, i) => {
+    breakpoints.forEach((limit, i) => {
       let mediaQuery;
       if (i === 0) {
-        mediaQuery = `(max-width:${limits[1] - 1}px)`;
+        mediaQuery = `(max-width:${breakpoints[1] - 1}px)`;
       } else if (i === last) {
         mediaQuery = `(min-width:${limit}px)`;
       } else {
-        mediaQuery = `(min-width:${limit}px) and (max-width:${limits[i + 1] - 1}px)`;
+        mediaQuery = `(min-width:${limit}px) and (max-width:${breakpoints[i + 1] - 1}px)`;
       }
 
       const mqr = window.matchMedia(mediaQuery);

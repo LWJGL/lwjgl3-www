@@ -183,7 +183,7 @@ class BuildContainer extends React.Component<Props> {
 
   render() {
     return (
-      <div className="mb-5 config-container">
+      <div className="mb-5 config-container" style={{ position: 'relative' }}>
         <div className="row">
           <div className="col-lg">
             <BuildType build="release" />

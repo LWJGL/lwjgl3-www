@@ -1,31 +1,17 @@
 {
-  "plugins": [
-    "syntax-jsx",
-    "syntax-trailing-function-commas",
-    "transform-flow-strip-types",
-
-    // Stage 2
-    "syntax-dynamic-import",
-    [
-      "transform-class-properties",
-      {
-        "spec": false
-      }
-    ],
-
-    // ES2015 -- Move this to production-only when browsers add support for class properties (see above)
-    [
-      "transform-es2015-classes",
-      {
-        "loose": true
-      }
-    ]
-  ],
   "env": {
     "development": {
       "plugins": [
-        // Hot Loading
         "react-hot-loader/babel",
+        ["styled-components", {
+          "ssr": false,
+          "displayName": true,
+          "preprocess": false,
+          "minify": false
+        }],
+        "syntax-jsx",
+        "syntax-trailing-function-commas",
+        "transform-flow-strip-types",
 
         // React
         "transform-react-jsx-self",
@@ -33,11 +19,27 @@
         [
           "transform-react-jsx",
           {
-            "pragma": "React.createElement",
             "useBuiltIns": true
           }
         ],
         "transform-react-display-name",
+        
+        // Stage 2
+        "syntax-dynamic-import",
+        [
+          "transform-class-properties",
+          {
+            "spec": false
+          }
+        ],
+    
+        // ES2015 -- Move this to production-only when browsers add support for class properties (see above)
+        [
+          "transform-es2015-classes",
+          {
+            "loose": true
+          }
+        ],
 
         // Stage 3 using built-ins
         [
@@ -50,6 +52,17 @@
     },
     "production": {
       "plugins": [
+        ["styled-components", {
+          "ssr": false,
+          "displayName": false,
+          "preprocess": false,
+          "minify": true,
+          "transpileTemplateLiterals": true
+        }],
+        "syntax-jsx",
+        "syntax-trailing-function-commas",
+        "transform-flow-strip-types",
+    
         // React
         "transform-react-constant-elements",
         "transform-react-inline-elements",
@@ -57,11 +70,27 @@
         [
           "transform-react-jsx",
           {
-            "pragma": "React.createElement",
             "useBuiltIns": false
           }
         ],
 
+        // Stage 2
+        "syntax-dynamic-import",
+        [
+          "transform-class-properties",
+          {
+            "spec": false
+          }
+        ],
+    
+        // ES2015 -- Move this to production-only when browsers add support for class properties (see above)
+        [
+          "transform-es2015-classes",
+          {
+            "loose": true
+          }
+        ],
+        
         // Stage 3
         ["transform-object-rest-spread", { "useBuiltIns": false }],
         "transform-async-generator-functions",

@@ -45,8 +45,8 @@ const config = {
       // 'redux-logger',
 
       // UI
-      'aphrodite',
       'classnames',
+      'styled-components',
       'focus-trap',
       'nprogress',
 

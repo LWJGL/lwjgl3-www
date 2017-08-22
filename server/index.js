@@ -9,7 +9,7 @@ const favicon = require('serve-favicon');
 const { argv } = require('yargs');
 const chalk = require('chalk');
 const proxy = require('http-proxy-middleware');
-const request = require('request');
+const request = require('request-promise-native');
 
 // AWS
 const AWS = require('aws-sdk');
@@ -32,6 +32,7 @@ const config = require('../config.json');
 app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
 
+const CSS_MODE = app.locals.development ? (argv.css ? 'HMR' : 'LINK') : 'INLINE';
 let manifest = {};
 
 // View options
@@ -146,45 +147,46 @@ app.get('*', (req, res, next) => {
     return;
   }
 
-  let preloadScripts;
-  let entry;
-  let webpackManifest;
+  const renderOptions = {};
 
   if (app.locals.production) {
     // Set entry point
-    entry = manifest.entry;
+    renderOptions.entry = manifest.entry;
 
     // Webpack manifest (pre-generated script ready for injection, see above)
-    webpackManifest = manifest.chunksSerialized;
+    renderOptions.webpackManifest = manifest.chunksSerialized;
 
-    preloadScripts = [
-      // Push entry script first, we need to start loading as soon as possible
-      // because we need it immediately
-      entry,
+    // Asset preloading
+    // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
+    // To disable PUSH, append "; nopush"
+    // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
+    res.set(
+      'Link',
+      [
+        // Push entry script first, we need to start loading as soon as possible
+        // because we need it immediately
+        manifest.entry,
 
-      // Append chunk of important routes to the preload list
-      // Logic can be customized as needed. Can get complicated for recursive routes
-      // or routes deep in site's hierarchy, so not always worth it
-      ...chunkMap(manifest.routes, req.path),
-    ];
+        // Append chunk of important routes to the preload list
+        // Logic can be customized as needed. Can get complicated for recursive routes
+        // or routes deep in site's hierarchy, so not always worth it
+        ...chunkMap(manifest.routes, req.path),
+      ].map((script /*: string*/) => `\</js/${script}\>; rel=preload; as=script`)
+    );
   } else {
-    entry = 'main.js';
-    preloadScripts = ['vendor.js', entry];
+    renderOptions.entry = 'main.js';
   }
 
-  // Asset preloading
-  // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
-  // To disable PUSH, append "; nopush"
-  // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
-  const linkHeaders = [...preloadScripts.map(script => `\</js/${script}\>; rel=preload; as=script`)];
+  switch (CSS_MODE) {
+    case 'INLINE':
+      renderOptions.styles = manifest.styles;
+      break;
+    case 'LINK':
+      renderOptions.css = true;
+      break;
+  }
 
-  // Append Link headers
-  res.set('Link', linkHeaders);
-
-  res.render('index', {
-    webpackManifest,
-    entry,
-  });
+  res.render('index', renderOptions);
 });
 
 // Page not found
@@ -246,31 +248,33 @@ const processManifest = () => {
   }
 };
 
-const downloadManifest = cb => {
+const downloadManifest = async cb => {
   if (app.locals.development) {
     cb();
     return;
   }
   if (argv.test) {
     manifest = require('../public/js/manifest.json');
+    manifest.styles = fs.readFileSync(path.join(__dirname, '../public/css', 'core.css'));
     processManifest();
     cb();
     return;
   }
 
   // Load manifest from S3
-  console.log('Downloading manifest');
-  request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/manifest.json', function(err, response, body) {
-    if (err) {
-      throw new Error(err);
-    }
-    if (response.statusCode !== 200) {
-      throw new Error(`Error while trying to download manifest.json ${response.statusCode}`);
-    }
-    manifest = JSON.parse(body);
-    processManifest();
-    cb();
-  });
+  if (app.locals.development) {
+    console.log('Downloading manifest');
+  }
+
+  try {
+    manifest = JSON.parse(await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/manifest.json'));
+    manifest.styles = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/css/core.css');
+  } catch (err) {
+    console.error(chalk`{red failed to download manifest files: ${err.message}}`);
+    process.exit(1);
+  }
+  processManifest();
+  cb();
 };
 
 // ------------------------------------------------------------------------------
@@ -290,7 +294,7 @@ const launchServer = () => {
   server.on('error', err => {
     if (err.code === 'EADDRINUSE') {
       console.error(chalk`{red {green.bold ${PRODUCT}} address in use, exiting...}`);
-      process.exit(0);
+      process.exit(1);
     } else {
       console.error(err.stack);
       throw err;

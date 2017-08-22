@@ -19,5 +19,9 @@ html(lang="en-US")
     link(rel="icon" type="image/png" href="/img/fav/favicon-16x16.png" sizes="16x16")
     link(rel="icon" type="image/png" href="/img/fav/favicon-32x32.png" sizes="32x32")
     link(rel="manifest" href="/manifest.json")
+    if ( styles !== undefined )
+      style!=styles
+    else if ( css === true )
+      link(rel="stylesheet" href="css/core.css")
   body
     block content

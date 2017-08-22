@@ -4,9 +4,90 @@ import BuildStatus from './BuildStatus';
 import classnames from 'classnames';
 
 import { connect } from 'react-redux';
+// import { connect } from '~/services/connect';
 import { changeType } from '../reducer';
 
 import type { BUILD_TYPES, Build } from '../types';
+
+import styled from 'styled-components';
+import { mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
+import {
+  COLOR_RELEASE,
+  COLOR_RELEASE_LIGHT,
+  COLOR_STABLE,
+  COLOR_STABLE_LIGHT,
+  COLOR_NIGHTLY,
+  COLOR_NIGHTLY_LIGHT,
+  BORDER_RADIUS,
+} from '../theme';
+
+const BuildBox = styled.div`
+  border: 2px solid ${COLOR_PRIMARY};
+  padding: 1rem;
+  border-radius: ${BORDER_RADIUS};
+  text-align: center;
+  cursor: pointer;
+  will-change: transform, background-color;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+
+  > h2 {
+    font-weight: normal;
+  }
+
+  > p {
+    color: ${COLOR_PRIMARY};
+    margin: 0;
+  }
+
+  &.release {
+    background-color: ${COLOR_RELEASE_LIGHT};
+    border-color: ${COLOR_RELEASE};
+    color: ${COLOR_RELEASE};
+  }
+  &.stable {
+    background-color: ${COLOR_STABLE_LIGHT};
+    border-color: ${COLOR_STABLE};
+    color: ${COLOR_STABLE};
+  }
+  &.nightly {
+    background-color: ${COLOR_NIGHTLY_LIGHT};
+    border-color: ${COLOR_NIGHTLY};
+    color: ${COLOR_NIGHTLY};
+  }
+
+  &:hover {
+    > h2 {
+      text-decoration: underline;
+    }
+  }
+
+  ${mediaBreakpointDown('md')} {
+    margin-bottom: 1rem;
+    &.active {
+      display: none;
+    }
+    &.selected {
+      margin: 0 -1rem;
+      display: block;
+      background-color: transparent;
+      border-top-color: transparent;
+      border-right-color: transparent;
+      border-left-color: transparent;
+      border-radius: 0 !important;
+    }
+  }
+
+  ${mediaBreakpointUp('lg')} {
+    transition: transform .083s ease-out;
+    &.selected {
+      transform: translateY(1.25rem);
+      border-bottom: 0;
+      border-radius: ${BORDER_RADIUS} ${BORDER_RADIUS} 0 0;
+    }
+  }
+`;
 
 type Props = {
   build: BUILD_TYPES,
@@ -26,15 +107,22 @@ class BuildType extends React.Component<Props> {
     const { isSelected, isActive, build, spec } = this.props;
 
     return (
-      <div onClick={this.select} className={classnames('build', build, { selected: isSelected, active: isActive })}>
+      <BuildBox
+        onClick={this.select}
+        className={classnames({
+          [build]: true,
+          selected: isSelected,
+          active: isActive,
+        })}
+      >
         <h2>
           {spec.title}
         </h2>
-        <p className="my-0">
+        <p>
           {spec.description}
         </p>
         <BuildStatus name={spec.id} />
-      </div>
+      </BuildBox>
     );
   }
 }

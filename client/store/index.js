@@ -30,12 +30,11 @@ if (process.env.NODE_ENV !== 'production') {
 const store = createStore(createReducer(), compose(applyMiddleware(...middleware), ...composed));
 
 if (process.env.NODE_ENV !== 'production') {
-  // Enable Webpack hot module replacement for reducers
+  // Enable Webpack hot module replacement for global reducers
   if (module.hot) {
     module.hot.accept('./createReducer', () => {
       store.replaceReducer(createReducer());
     });
   }
 }
-
 export default store;

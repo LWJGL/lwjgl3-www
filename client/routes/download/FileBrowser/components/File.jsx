@@ -1,18 +1,20 @@
 // @flow
 import * as React from 'react';
-import { css } from 'aphrodite/no-important';
-import styles from '../styles';
+import styled from 'styled-components';
 
 type Props = {
   path: string,
 };
+
+const FileTitle = styled.td`word-break: break-all;`;
+const FileActions = styled.td`text-align: right;`;
 
 const File = (props: Props) => {
   const url = `https://build.lwjgl.org/${props.path}`;
 
   return (
     <tr>
-      <td className={css(styles.file)}>
+      <FileTitle>
         <b>
           {props.path.split('/').pop()}
         </b>
@@ -20,12 +22,12 @@ const File = (props: Props) => {
         <small>
           {url}
         </small>
-      </td>
-      <td style={{ textAlign: 'right' }}>
+      </FileTitle>
+      <FileActions>
         <a download={true} href={url} className="btn btn-sm btn-outline-info">
           Download
         </a>
-      </td>
+      </FileActions>
     </tr>
   );
 };

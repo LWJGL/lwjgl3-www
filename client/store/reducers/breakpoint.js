@@ -1,4 +1,5 @@
 // @flow
+import { breakpoints } from '~/theme';
 export const BREAKPOINTS_RESIZE = 'BREAKPOINTS/RESIZE_EVENT';
 
 export type SetBreakPoint = {
@@ -7,7 +8,6 @@ export type SetBreakPoint = {
 };
 
 export type BreakPointState = {
-  +limits: Array<number>,
   +current: number,
   +xs: number,
   +sm: number,
@@ -17,17 +17,15 @@ export type BreakPointState = {
   +xl: number,
 };
 
-const BOOTSTRAP_BREAKPOINTS = [0, 576, 768, 992, 1200];
-
 export const resizeEvent = (payload: number): SetBreakPoint => ({ type: BREAKPOINTS_RESIZE, payload });
 
 export const getCurrent = (): number => {
   const w = window.innerWidth;
 
-  // let i = BOOTSTRAP_BREAKPOINTS.length - 1;
+  // let i = breakpoints.length - 1;
   let i = 4;
   while (i > 0) {
-    if (w >= BOOTSTRAP_BREAKPOINTS[i]) {
+    if (w >= breakpoints[i]) {
       break;
     }
     i -= 1;
@@ -37,7 +35,6 @@ export const getCurrent = (): number => {
 };
 
 const breakpoint: BreakPointState = {
-  limits: BOOTSTRAP_BREAKPOINTS,
   current: getCurrent(),
   xs: 0,
   sm: 1,

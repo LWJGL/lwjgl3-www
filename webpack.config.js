@@ -3,6 +3,8 @@
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
+const ProvidePlugin = require('webpack/lib/ProvidePlugin');
+const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
 
 const { argv } = require('yargs');
 const config = require('./config.json');
@@ -16,6 +18,7 @@ const env = {
   HOSTNAME: JSON.stringify(config.hostname),
   ANALYTICS_TRACKING_ID: JSON.stringify(config.analytics_tracking_id),
   NOHMR: String(HMR === false),
+  CSSMODULES: String(DEV && argv.css !== undefined),
   ASYNC_ROUTES: String(argv.async !== undefined),
 };
 
@@ -45,6 +48,7 @@ const buildConfiguration = () => {
     },
     resolve: {
       extensions: ['.js', '.jsx'],
+      symlinks: false,
       alias: {
         '~': path.resolve(__dirname, './client'),
         // Load our custom version of react-icon-base
@@ -61,46 +65,6 @@ const buildConfiguration = () => {
               loader: 'babel-loader',
               options: {
                 cacheDirectory: true,
-              },
-            },
-          ],
-        },
-        {
-          test: /\.scss?$/,
-          use: [
-            'style-loader/useable',
-            {
-              loader: 'css-loader',
-              options: {
-                // This breaks HMR (CSS Modules change name because their hash changes)
-                modules: false,
-                localIdentName: '[local]_[hash:base64:7]',
-                // This breaks background-image and other relative paths
-                // Monitor this: https://github.com/webpack/style-loader/pull/124
-                // sourceMap: DEV,
-                sourceMap: false,
-                import: false,
-                url: false,
-                // CSSNano Options
-                minimize: {
-                  // safe: true,
-                  colormin: false,
-                  calc: false,
-                  zindex: false,
-                  discardComments: {
-                    removeAll: true,
-                  },
-                },
-              },
-            },
-            'postcss-loader',
-            {
-              loader: 'sass-loader',
-              query: {
-                sourceMap: false,
-                sourceComments: false,
-                outputStyle: 'expanded',
-                precision: 6,
               },
             },
           ],
@@ -145,8 +109,8 @@ const buildConfiguration = () => {
     // WebPack Hot Middleware client & HMR plugins
     if (HMR) {
       config.entry.main.unshift(
-        require.resolve('webpack-hot-middleware/client'),
-        require.resolve('react-hot-loader/patch')
+        require.resolve('react-hot-loader/patch'),
+        require.resolve('webpack-hot-middleware/client')
       );
       config.plugins.push(new HotModuleReplacementPlugin());
     }
@@ -158,6 +122,48 @@ const buildConfiguration = () => {
         manifest: require('./public/js/vendor-manifest.json'),
       })
     );
+
+    if (argv.css) {
+      config.module.rules.push({
+        test: /\.scss?$/,
+        use: [
+          'style-loader/useable',
+          {
+            loader: 'css-loader',
+            options: {
+              root: '/',
+              url: false,
+              import: false,
+              modules: false,
+              // CSSNano Options
+              minimize: {
+                // safe: true,
+                colormin: false,
+                calc: false,
+                zindex: false,
+                discardComments: {
+                  removeAll: true,
+                },
+              },
+              sourceMap: false,
+              camelCase: false,
+              importLoaders: 2,
+              localIdentName: '[local]_[hash:base64:7]',
+            },
+          },
+          'postcss-loader',
+          {
+            loader: 'sass-loader',
+            query: {
+              sourceMap: false,
+              sourceComments: false,
+              outputStyle: 'expanded',
+              precision: 6,
+            },
+          },
+        ],
+      });
+    }
   } else {
     const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
     const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
@@ -167,6 +173,16 @@ const buildConfiguration = () => {
 
     config.entry.main.unshift(require.resolve('babel-polyfill'));
     config.plugins.push(
+      new NormalModuleReplacementPlugin(/^~\/services\/connect$/, resource => {
+        throw `
+-------------------------------------------------------------
+* Use of unpure connect is only allowed during development. *
+* Please replace ~/services/connect with react-redux        *
+-------------------------------------------------------------
+${resource.contextInfo.issuer}
+-------------------------------------------------------------
+`;
+      }),
       new ModuleConcatenationPlugin(),
       new ShakePlugin({
         warnings: {

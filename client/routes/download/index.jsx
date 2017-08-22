@@ -4,7 +4,6 @@ import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import Style from '~/components/Style';
 
 import BuildContainer from './BuildConfigurator';
 import FileBrowser from './FileBrowser';
@@ -12,7 +11,6 @@ import FaGithub from 'react-icons/fa/github';
 
 const DownloadRoute = (props: ContextRouter) =>
   <PageView {...props}>
-    <Style loader={require('./styles.scss')} />
     <Helmet>
       <title>Download</title>
       <meta name="description" content="Download release, stable, or nightly builds of LWJGL 3" />
@@ -33,12 +31,10 @@ const DownloadRoute = (props: ContextRouter) =>
           </a>
         </p>
         <p>
-          To customize your LWJGL build or use the latest stable & nightly releases, use the download configurator
-          below.
-          <br />
-          For more information and IDE setup, see the{' '}
-          <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">installation instructions</a>
-          .
+          To customize your LWJGL build or use the latest stable & nightly releases, start by selecting a release below
+          to begin configuring your download. See the{' '}
+          <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">installation instructions</a> for additional
+          information and for setting up your IDE.
         </p>
         <BuildContainer />
 

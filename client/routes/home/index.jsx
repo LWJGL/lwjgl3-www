@@ -4,14 +4,12 @@ import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import Style from '~/components/Style';
-import Logo from './Logo';
-import Canvas from './Canvas';
+import styled from 'styled-components';
 import HashLinkTarget from '~/components/HashLinkTarget';
+import Hero from './Hero';
 
 // Icons
 import IconLowLevel from 'react-icons/md/settings-input-composite';
-import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
 import IconObjectiveC from 'react-icons/fa/apple';
 import IconDocumentation from 'react-icons/md/library-books';
 import IconUtilities from 'react-icons/md/widgets';
@@ -21,30 +19,24 @@ import IconGLFW from 'react-icons/md/videogame-asset';
 import IconGitHub from 'react-icons/fa/github';
 import IconMoreApi from 'react-icons/md/battery-unknown';
 
+const Bindings = styled.div`
+  .svg-icon,
+  img {
+    font-size: 4rem;
+    margin: 1rem 0 2rem 0;
+  }
+`;
+
 const HomeRoute = (props: ContextRouter) =>
   <PageView {...props}>
-    <Style loader={require('./styles.scss')} />
     <Helmet>
       <meta
         name="description"
         content="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
       />
     </Helmet>
-    <main>
-      <section className="hero-container">
-        <Canvas />
-        <div className="d-flex flex-column justify-content-center align-items-center">
-          <Logo className="logo" />
-          <div className="intro">
-            <h1>Lightweight Java&nbsp;Game&nbsp;Library&nbsp;3</h1>
-            <Link to="/#learn-more">
-              LEARN MORE<br />
-              <IconArrowDown />
-            </Link>
-          </div>
-        </div>
-      </section>
-
+    <main style={{ marginTop: '-4rem' }}>
+      <Hero />
       <HashLinkTarget id="learn-more" />
 
       <section className="container py-5">
@@ -89,7 +81,7 @@ const HomeRoute = (props: ContextRouter) =>
         </div>
       </section>
 
-      <div className="area-dark bindings">
+      <Bindings className={`area-dark`}>
         <section className="container py-5 text-center features">
           <h1>Main Features</h1>
 
@@ -147,9 +139,7 @@ const HomeRoute = (props: ContextRouter) =>
 
           <div className="row">
             <div className="col-md py-3">
-              <p>
-                <img width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
-              </p>
+              <img width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
               <h3>
                 Vulkan<sup>TM</sup> Bindings
               </h3>
@@ -159,15 +149,13 @@ const HomeRoute = (props: ContextRouter) =>
               </p>
             </div>
             <div className="col-md py-3">
-              <p>
-                <img
-                  width={60}
-                  height={60}
-                  src="/img/opencl@x1.png"
-                  srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x"
-                  alt="OpenCL"
-                />
-              </p>
+              <img
+                width={60}
+                height={60}
+                src="/img/opencl@x1.png"
+                srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x"
+                alt="OpenCL"
+              />
               <h3>
                 OpenCL<sup>TM</sup> Bindings
               </h3>
@@ -177,9 +165,7 @@ const HomeRoute = (props: ContextRouter) =>
               </p>
             </div>
             <div className="col-md py-3">
-              <p>
-                <img width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
-              </p>
+              <img width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
               <h3>OpenAL Bindings</h3>
               <p>
                 Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback and
@@ -190,9 +176,7 @@ const HomeRoute = (props: ContextRouter) =>
 
           <div className="row">
             <div className="col-md py-3">
-              <p>
-                <img width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
-              </p>
+              <img width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
               <h3>
                 OpenGL<sup>®</sup> Bindings
               </h3>
@@ -204,9 +188,7 @@ const HomeRoute = (props: ContextRouter) =>
               </p>
             </div>
             <div className="col-md py-3">
-              <p>
-                <img width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
-              </p>
+              <img width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
               <h3>
                 OpenGL<sup>®</sup> ES Bindings
               </h3>
@@ -217,9 +199,7 @@ const HomeRoute = (props: ContextRouter) =>
               </p>
             </div>
             <div className="col-md py-3">
-              <p>
-                <img width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
-              </p>
+              <img width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
               <h3>
                 EGL<sup>TM</sup> Bindings
               </h3>
@@ -234,9 +214,7 @@ const HomeRoute = (props: ContextRouter) =>
 
           <div className="row">
             <div className="col-md py-3">
-              <p>
-                <img width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" />
-              </p>
+              <img width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" />
               <h3>
                 LibOVR Bindings <small>(beta)</small>
               </h3>
@@ -292,7 +270,7 @@ const HomeRoute = (props: ContextRouter) =>
             </div>
           </div>
         </section>
-      </div>
+      </Bindings>
 
       <section className="container pt-5 pb-3">
         <div className="row justify-content-center">

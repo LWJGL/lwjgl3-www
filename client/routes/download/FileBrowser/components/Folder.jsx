@@ -2,8 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { loadPath } from '../reducer';
-import { css } from 'aphrodite/no-important';
-import styles from '../styles';
+import styled from 'styled-components';
 import IconFolder from 'react-icons/md/folder';
 
 type OwnProps = {
@@ -16,7 +15,16 @@ type ConnectedProps = {
 
 type Props = OwnProps & ConnectedProps;
 
-class Folder extends React.PureComponent<Props> {
+export const FolderName = styled.th`
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    background-color: #5bc0de;
+    color: white;
+  }
+`;
+
+class Folder extends React.Component<Props> {
   clickHandle = () => {
     this.props.loadPath(this.props.path);
   };
@@ -27,9 +35,9 @@ class Folder extends React.PureComponent<Props> {
 
     return (
       <tr>
-        <th className={css(styles.folder)} colSpan={2} onClick={this.clickHandle}>
+        <FolderName colSpan={2} onClick={this.clickHandle}>
           <IconFolder /> {name}
-        </th>
+        </FolderName>
       </tr>
     );
   }

@@ -14,6 +14,7 @@ AWS.config.update({ region: config.aws.region });
 
 // Collect files
 const files = [
+  path.join(__dirname, '../public/css/', 'core.css'),
   path.join(__dirname, '../public/js/', 'manifest.json'),
   path.join(__dirname, '../public/js/', manifest.entry),
 ];
@@ -34,9 +35,11 @@ files.map(file => {
       throw err;
     }
 
+    const folder = basename.endsWith('css') ? 'css' : 'js';
+
     const uploadSettings = {
       Bucket: 'cdn.lwjgl.org',
-      Key: `js/${basename}`,
+      Key: `${folder}/${basename}`,
       Body: data,
       ACL: 'public-read',
     };
@@ -46,6 +49,8 @@ files.map(file => {
       uploadSettings.CacheControl = 'public,max-age=31536000,immutable';
     } else if (basename.endsWith('json')) {
       uploadSettings.ContentType = 'application/json';
+    } else if (basename.endsWith('css')) {
+      uploadSettings.ContentType = 'text/css';
     }
 
     console.log(`Uploading ${basename}`);

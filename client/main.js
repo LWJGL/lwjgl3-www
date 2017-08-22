@@ -5,9 +5,6 @@
 // Used to load external polyfills
 import loadJS from 'fg-loadjs';
 
-// Mounts the app only after we are done polyfilling
-import mount from './mount';
-
 // Webpack manifest
 if (process.env.NODE_ENV === 'production') {
   //$FlowFixMe
@@ -19,20 +16,38 @@ if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';
 }
 
+if (process.env.NODE_ENV === 'development' && CSSMODULES) {
+  // Inject global styles, this enables HMR
+  const styles = require('./styles/layout.scss');
+  styles.use();
+}
+
+// Hide spinner from nprogress
+import nprogress from 'nprogress';
+nprogress.configure({
+  showSpinner: false,
+});
+
+// Mounts the app only after we are done polyfilling
+import mount from './mount';
+
+const bootPromises: Array<Promise<any>> = [];
+
+if (!('classList' in HTMLElement.prototype)) {
+  bootPromises.push(
+    new Promise(resolve => {
+      loadJS('https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=Element.prototype.classList', resolve);
+    })
+  );
+}
+
+if (!('fetch' in window)) {
+  bootPromises.push(import(/* webpackChunkName: "whatwg-fetch" */ 'whatwg-fetch'));
+}
+
 // The following should resolve immediatelly in modern browsers
-Promise.all([
-  // Really-old browsers that need to be taken by the hand
-  // This requires HTTP request out of our control
-  new Promise(resolve => {
-    if ('classList' in HTMLElement.prototype) {
-      resolve();
-    } else {
-      loadJS(
-        'https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=requestAnimationFrame,Element.prototype.classList',
-        resolve
-      );
-    }
-  }),
-  // Fetch polyfill
-  'fetch' in window ? 1 : import(/* webpackChunkName: "whatwg-fetch" */ 'whatwg-fetch'),
-]).then(mount);
+if (bootPromises.length) {
+  Promise.all(bootPromises).then(mount);
+} else {
+  mount();
+}

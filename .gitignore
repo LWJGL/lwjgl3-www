@@ -13,3 +13,4 @@
 # Generated files
 /.cache-loader
 /public/js/*.js*
+/public/css/*.css
