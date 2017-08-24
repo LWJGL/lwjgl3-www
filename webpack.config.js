@@ -171,7 +171,7 @@ const buildConfiguration = () => {
     const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
     const ShakePlugin = require('webpack-common-shake').Plugin;
 
-    config.entry.main.unshift(require.resolve('babel-polyfill'));
+    config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
       new NormalModuleReplacementPlugin(/^~\/services\/connect$/, resource => {
         throw `
