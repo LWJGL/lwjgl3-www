@@ -10,27 +10,27 @@ type Props = {
 const MainMenu = ({ onClick, ...rest }: Props) =>
   <ul {...rest} role="navigation" aria-label="Main Menu">
     <li>
-      <NavLink activeClassName="active" onClick={onClick} to="/" exact={true}>
+      <NavLink ariaCurrent="page" activeClassName="active" exact={true} onClick={onClick} to="/">
         HOME
       </NavLink>
     </li>
     <li>
-      <NavLink activeClassName="active" onClick={onClick} to="/guide">
+      <NavLink ariaCurrent="page" activeClassName="active" exact={true} onClick={onClick} to="/guide">
         GET STARTED
       </NavLink>
     </li>
     <li>
-      <NavLink activeClassName="active" onClick={onClick} to="/download">
+      <NavLink ariaCurrent="page" activeClassName="active" exact={true} onClick={onClick} to="/download">
         DOWNLOAD
       </NavLink>
     </li>
     <li>
-      <NavLink activeClassName="active" onClick={onClick} to="/customize">
+      <NavLink ariaCurrent="page" activeClassName="active" exact={true} onClick={onClick} to="/customize">
         CUSTOMIZE
       </NavLink>
     </li>
     <li>
-      <NavLink activeClassName="active" onClick={onClick} to="/source">
+      <NavLink ariaCurrent="page" activeClassName="active" exact={true} onClick={onClick} to="/source">
         SOURCE
       </NavLink>
     </li>

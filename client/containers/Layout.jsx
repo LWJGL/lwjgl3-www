@@ -14,13 +14,13 @@ const Layout = () => [
   <Header key="header" />,
 
   <Switch key="router">
-    <Route path="/" component={Home} exact={true} />
-    <Route path="/guide" component={Guide} exact={true} />
-    <Route path="/download" component={Download} exact={true} />
-    <Route path="/customize" component={Customize} exact={true} />
-    <Route path="/browse" component={Browse} exact={true} />
-    <Route path="/source" component={Source} exact={true} />
-    <Route path="/license" component={License} exact={true} />
+    <Route path="/" exact={true} strict={true} component={Home} />
+    <Route path="/guide" sensitive={true} exact={true} strict={true} component={Guide} />
+    <Route path="/download" sensitive={true} exact={true} strict={true} component={Download} />
+    <Route path="/customize" sensitive={true} exact={true} strict={true} component={Customize} />
+    <Route path="/browse" sensitive={true} exact={true} strict={true} component={Browse} />
+    <Route path="/source" sensitive={true} exact={true} strict={true} component={Source} />
+    <Route path="/license" sensitive={true} exact={true} strict={true} component={License} />
     <Route component={Miss404} />
   </Switch>,
 

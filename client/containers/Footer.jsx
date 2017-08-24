@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Footer = () =>
   <footer>
@@ -10,19 +10,34 @@ const Footer = () =>
           <h3>About</h3>
           <ul className="list-unstyled">
             <li>
-              <Link to="/">Home</Link>
+              <NavLink ariaCurrent="page" exact={true} to="/">
+                Home
+              </NavLink>
             </li>
             <li>
-              <Link to="/guide">Get Started</Link>
+              <NavLink ariaCurrent="page" exact={true} to="/guide">
+                Get Started
+              </NavLink>
             </li>
             <li>
-              <Link to="/download">Download</Link>
+              <NavLink ariaCurrent="page" exact={true} to="/download">
+                Download
+              </NavLink>
             </li>
             <li>
-              <Link to="/source">Source</Link>
+              <NavLink ariaCurrent="page" exact={true} to="/customize">
+                Customize
+              </NavLink>
             </li>
             <li>
-              <Link to="/license">License</Link>
+              <NavLink ariaCurrent="page" exact={true} to="/source">
+                Source
+              </NavLink>
+            </li>
+            <li>
+              <NavLink ariaCurrent="page" exact={true} to="/license">
+                License
+              </NavLink>
             </li>
           </ul>
         </div>
@@ -81,7 +96,10 @@ const Footer = () =>
         Copyright © 2012-{new Date().getFullYear()} Lightweight Java Game Library 3
       </p>
       <p>
-        Licensed under <Link to="/license">BSD</Link>
+        Licensed under{' '}
+        <NavLink ariaCurrent="page" exact={true} to="/license">
+          BSD
+        </NavLink>
       </p>
     </section>
   </footer>;

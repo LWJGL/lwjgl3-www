@@ -31,6 +31,7 @@ const config = {
       'fg-loadjs',
       'fg-loadcss',
       'react-helmet',
+      'react-router',
       'react-router-dom',
       'react-loadable',
 
