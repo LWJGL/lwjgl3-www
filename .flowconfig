@@ -3,9 +3,10 @@
 <PROJECT_ROOT>/.idea/.*
 <PROJECT_ROOT>/.vscode/.*
 <PROJECT_ROOT>/public/.*
+<PROJECT_ROOT>/node_modules/babel.*
 <PROJECT_ROOT>/node_modules/fbjs/.*
 <PROJECT_ROOT>/node_modules/styled-components/.*
-<PROJECT_ROOT>/node_modules/babel-plugin-transform-react-remove-prop-types/.*
+<PROJECT_ROOT>/node_modules/postcss.*
 
 [include]
 client/**/*.js
