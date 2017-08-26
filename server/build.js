@@ -23,9 +23,10 @@ module.exports = (req, res, next) => {
 
   const params = {
     Bucket: 'build.lwjgl.org',
-    Key: req.params.build === 'release'
-      ? `${req.params.build}/${req.params.version}/bin/build.txt`
-      : `${req.params.build}/bin/build.txt`,
+    Key:
+      req.params.build === 'release'
+        ? `${req.params.build}/${req.params.version}/bin/build.txt`
+        : `${req.params.build}/bin/build.txt`,
   };
 
   s3.getObject(params, function(err, data) {

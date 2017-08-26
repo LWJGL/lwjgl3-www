@@ -27,7 +27,7 @@ const Bindings = styled.div`
   }
 `;
 
-const HomeRoute = (props: ContextRouter) =>
+const HomeRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
       <meta
@@ -302,6 +302,7 @@ const HomeRoute = (props: ContextRouter) =>
         </div>
       </section>
     </main>
-  </PageView>;
+  </PageView>
+);
 
 export default HomeRoute;

@@ -15,7 +15,7 @@
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "browserslist": ["> 1%", "ie >= 10", "not ie < 10"],
   "dependencies": {
-    "aws-sdk": "2.103.0",
+    "aws-sdk": "2.104.0",
     "body-parser": "1.17.2",
     "chalk": "2.1.0",
     "express": "5.0.0-alpha.5",
@@ -62,7 +62,7 @@
     "node-uuid": "1.4.8",
     "nprogress": "0.2.0",
     "postcss-loader": "2.0.6",
-    "prettier": "1.5.3",
+    "prettier": "1.6.0-beta2",
     "prop-types": "15.5.10",
     "query-string": "5.0.0",
     "react": "16.0.0-beta.5",
@@ -97,10 +97,14 @@
     "vendor": "webpack --config webpack.vendor.config.js --bail --progress --color",
     "bundle": "cross-env NODE_ENV=development webpack --bail --progress --color",
     "compile": "cross-env NODE_ENV=production webpack --progress --color --display-error-details --verbose",
-    "production": "cross-env NODE_ENV=production webpack --bail --progress --color --json > ./public/js/webpack.manifest.json",
+    "production":
+      "cross-env NODE_ENV=production webpack --bail --progress --color --json > ./public/js/webpack.manifest.json",
     "manifest": "node ./scripts/process-manifest.js",
     "release": "yarn run styles && yarn run production && yarn run manifest",
     "deploy": "node ./scripts/deploy.js",
+    "prettier": "prettier",
+    "format":
+      "prettier --print-width 120 --trailing-comma es5 --single-quote --write \"{client,server,scripts}/**/*.js*\"",
     "flow": "flow"
   }
 }

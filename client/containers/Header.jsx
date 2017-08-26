@@ -31,7 +31,7 @@ const StyledHeader = styled.header`
     background-color: ${COLOR_PRIMARY};
   }
   &.home {
-    transition: background-color .5s ease-out;
+    transition: background-color 0.5s ease-out;
     &.top {
       background-color: transparent;
     }
@@ -168,9 +168,11 @@ class Header extends React.PureComponent<Props, State> {
                 LW<b>JGL</b> 3
               </Link>
             </div>
-            {this.props.desktop === true
-              ? <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
-              : <Sidebar />}
+            {this.props.desktop === true ? (
+              <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
+            ) : (
+              <Sidebar />
+            )}
           </div>
         </nav>
       </StyledHeader>

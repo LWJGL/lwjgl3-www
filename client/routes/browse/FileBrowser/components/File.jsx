@@ -15,13 +15,9 @@ const File = (props: Props) => {
   return (
     <tr>
       <FileTitle>
-        <b>
-          {props.path.split('/').pop()}
-        </b>
+        <b>{props.path.split('/').pop()}</b>
         <br />
-        <small>
-          {url}
-        </small>
+        <small>{url}</small>
       </FileTitle>
       <FileActions>
         <a download={true} href={url} className="btn btn-sm btn-outline-info">

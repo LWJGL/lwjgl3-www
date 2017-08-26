@@ -86,7 +86,7 @@ const BuildBox = styled.div`
       color: black;
       display: block;
       position: absolute;
-      top: .75rem;
+      top: 0.75rem;
       right: 2rem;
       font-size: 200%;
       &:hover {
@@ -96,7 +96,7 @@ const BuildBox = styled.div`
   }
 
   ${mediaBreakpointUp('lg')} {
-    transition: transform .083s ease-out;
+    transition: transform 0.083s ease-out;
     &.selected {
       transform: translateY(1.25rem);
       border-bottom: 0;
@@ -131,12 +131,8 @@ class BuildType extends React.Component<Props> {
           active: isActive,
         })}
       >
-        <h2>
-          {spec.title}
-        </h2>
-        <p>
-          {spec.description}
-        </p>
+        <h2>{spec.title}</h2>
+        <p>{spec.description}</p>
         <BuildStatus name={spec.id} />
         {isSelected ? <IconClose /> : null}
       </BuildBox>

@@ -9,7 +9,7 @@ import IconGithub from 'react-icons/fa/github';
 import IconCustomize from 'react-icons/fa/check-square-o';
 import IconFolder from 'react-icons/md/folder';
 
-const DownloadRoute = (props: ContextRouter) =>
+const DownloadRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
       <title>Download</title>
@@ -86,6 +86,7 @@ const DownloadRoute = (props: ContextRouter) =>
         </p>
       </section>
     </main>
-  </PageView>;
+  </PageView>
+);
 
 export default DownloadRoute;

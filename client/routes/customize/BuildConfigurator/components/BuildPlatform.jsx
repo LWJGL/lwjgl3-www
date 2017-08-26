@@ -47,7 +47,7 @@ class BuildPlatform extends React.Component<Props> {
         <div>
           <h4 className="mt-3">Natives</h4>
           <div className="custom-controls-stacked">
-            {platforms.map(platform =>
+            {platforms.map(platform => (
               <Checkbox
                 key={platform}
                 icon={getIcon(platform)}
@@ -56,7 +56,7 @@ class BuildPlatform extends React.Component<Props> {
                 value={platform}
                 onChange={this.toggle}
               />
-            )}
+            ))}
           </div>
         </div>
       );

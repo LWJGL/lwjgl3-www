@@ -19,7 +19,6 @@
   "prettier.printWidth": 120,
   "prettier.singleQuote": true,
   "prettier.trailingComma": "es5",
-  "prettier.parser": "babylon",
   "typescript.validate.enable": false,
   "typescript.format.enable": false,
   "typescript.referencesCodeLens.enabled": false,

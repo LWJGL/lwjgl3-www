@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Footer = () =>
+const Footer = () => (
   <footer>
     <section className="container">
       <nav className="row">
@@ -92,9 +92,7 @@ const Footer = () =>
       </nav>
     </section>
     <section className="container copyright">
-      <p>
-        Copyright © 2012-{new Date().getFullYear()} Lightweight Java Game Library 3
-      </p>
+      <p>Copyright © 2012-{new Date().getFullYear()} Lightweight Java Game Library 3</p>
       <p>
         Licensed under{' '}
         <NavLink ariaCurrent="page" exact={true} to="/license">
@@ -102,6 +100,7 @@ const Footer = () =>
         </NavLink>
       </p>
     </section>
-  </footer>;
+  </footer>
+);
 
 export default Footer;

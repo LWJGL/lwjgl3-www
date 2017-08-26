@@ -5,7 +5,7 @@ import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import FileBrowser from './FileBrowser';
 
-const BrowseRoute = (props: ContextRouter) =>
+const BrowseRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
       <title>Browse</title>
@@ -16,6 +16,7 @@ const BrowseRoute = (props: ContextRouter) =>
         <FileBrowser />
       </section>
     </main>
-  </PageView>;
+  </PageView>
+);
 
 export default BrowseRoute;

@@ -26,21 +26,19 @@ class Toggle extends React.PureComponent<Props, void> {
   render() {
     const props = this.props;
 
-    return props.hidden
-      ? null
-      : <label className={`custom-control custom-toggle${props.disabled ? ' custom-control-disabled' : ''}`}>
-          <input
-            type="checkbox"
-            className="custom-control-input"
-            disabled={props.disabled}
-            checked={props.checked}
-            onChange={this.change}
-          />
-          <span className="custom-control-indicator" />
-          <span className="custom-control-description">
-            {props.label}
-          </span>
-        </label>;
+    return props.hidden ? null : (
+      <label className={`custom-control custom-toggle${props.disabled ? ' custom-control-disabled' : ''}`}>
+        <input
+          type="checkbox"
+          className="custom-control-input"
+          disabled={props.disabled}
+          checked={props.checked}
+          onChange={this.change}
+        />
+        <span className="custom-control-indicator" />
+        <span className="custom-control-description">{props.label}</span>
+      </label>
+    );
   }
 }
 

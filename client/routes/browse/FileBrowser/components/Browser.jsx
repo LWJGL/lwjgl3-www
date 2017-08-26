@@ -45,20 +45,22 @@ class Browser extends React.Component<Props> {
           </tr>
         </thead>
         <tbody>
-          {props.parent &&
+          {props.parent && (
             <tr>
               <FolderName scope="row" onClick={this.goBack} colSpan={2}>
                 …
               </FolderName>
-            </tr>}
+            </tr>
+          )}
           {props.folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} />)}
           {props.files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} />)}
-          {props.loading &&
+          {props.loading && (
             <tr>
               <th scope="row" colSpan={2}>
                 <LoaderSpinner />
               </th>
-            </tr>}
+            </tr>
+          )}
         </tbody>
       </table>
     );

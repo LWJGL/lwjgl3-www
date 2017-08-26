@@ -18,11 +18,7 @@ type Props = OwnProps & ConnectedProps;
 type PanelElement = Props => React$Element<*> | null;
 
 const Panel: PanelElement = ({ children, hidden, className }: Props) => {
-  return hidden
-    ? null
-    : <div className={className}>
-        {children}
-      </div>;
+  return hidden ? null : <div className={className}>{children}</div>;
 };
 
 export default (connect((state: any, props: OwnProps) => {

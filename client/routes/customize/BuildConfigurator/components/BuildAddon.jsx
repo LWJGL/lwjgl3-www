@@ -36,15 +36,14 @@ class BuildAddon extends React.Component<Props, void> {
       return (
         <div className="artifact">
           <Checkbox label={label} checked={checked && !disabled} disabled={disabled} onChange={this.toggle} />
-          <p>
-            {addon.description}
-          </p>
-          {addon.website &&
+          <p>{addon.description}</p>
+          {addon.website && (
             <p>
               <a href={addon.website} target="_blank">
                 {addon.website}
               </a>
-            </p>}
+            </p>
+          )}
         </div>
       );
     } else {

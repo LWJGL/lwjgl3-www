@@ -5,7 +5,7 @@ import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import BuildConfigurator from './BuildConfigurator';
 
-const CustomizeRoute = (props: ContextRouter) =>
+const CustomizeRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
       <title>Customize</title>
@@ -16,6 +16,7 @@ const CustomizeRoute = (props: ContextRouter) =>
         <BuildConfigurator />
       </section>
     </main>
-  </PageView>;
+  </PageView>
+);
 
 export default CustomizeRoute;

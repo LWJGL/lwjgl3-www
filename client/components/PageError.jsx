@@ -3,7 +3,7 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import type { ErrorProps } from './ErrorBoundary';
 
-const PageError = (props: ErrorProps) =>
+const PageError = (props: ErrorProps) => (
   <main>
     <Helmet>
       <title>An error has occured</title>
@@ -12,6 +12,7 @@ const PageError = (props: ErrorProps) =>
       <h1>Something went wrong</h1>
       <h3 className="text-danger">Oh no! It appears that the page has crashed.</h3>
     </section>
-  </main>;
+  </main>
+);
 
 export default PageError;

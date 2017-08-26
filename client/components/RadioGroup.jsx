@@ -29,11 +29,7 @@ class RadioGroup extends React.PureComponent<Props, void> {
   };
 
   render() {
-    return (
-      <div className="custom-controls-stacked">
-        {this.props.children}
-      </div>
-    );
+    return <div className="custom-controls-stacked">{this.props.children}</div>;
   }
 }
 

@@ -5,7 +5,7 @@ type Props = {
   className?: string,
 };
 
-const Logo = (props: Props) =>
+const Logo = (props: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -152,6 +152,7 @@ const Logo = (props: Props) =>
     <text x="115" y="36" style={{ fontSize: 12, fontWeight: 700 }}>
       3
     </text>
-  </svg>;
+  </svg>
+);
 
 export default Logo;

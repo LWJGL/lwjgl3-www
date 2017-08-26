@@ -59,15 +59,14 @@ class BuildArtifact extends React.Component<Props> {
         <div className={classnames('artifact', { 'text-muted': disabled })}>
           <Checkbox label={artifact.title} disabled={disabled} checked={checked} onChange={this.toggle} />
           {artifact.natives && getPlatformIcons(artifact.natives)}
-          <p>
-            {artifact.description}
-          </p>
-          {artifact.website &&
+          <p>{artifact.description}</p>
+          {artifact.website && (
             <p>
               <a href={artifact.website} target="_blank">
                 {artifact.website}
               </a>
-            </p>}
+            </p>
+          )}
         </div>
       );
     } else {

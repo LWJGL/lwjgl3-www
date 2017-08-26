@@ -53,12 +53,12 @@ const ConfigPanel = styled.div`
     }
 
     svg {
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
 
     p {
       margin-left: 1.5rem;
-      margin-bottom: .25rem;
+      margin-bottom: 0.25rem;
       font-size: ${SMALL_FONT_SIZE};
     }
   }
@@ -67,7 +67,7 @@ const ConfigPanel = styled.div`
     background-color: #ffffe6;
     font-size: 13px;
     line-height: 1rem;
-    padding: .5rem;
+    padding: 0.5rem;
     tab-size: 4;
   }
 
@@ -81,7 +81,7 @@ const ConfigPanel = styled.div`
     width: 100%;
 
     .btn + .btn {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
 
     &.file {
@@ -101,11 +101,7 @@ type Props = {
 
 class BuildConfigArea extends React.Component<Props> {
   render() {
-    return (
-      <ConfigPanel className={this.props.build}>
-        {this.props.children}
-      </ConfigPanel>
-    );
+    return <ConfigPanel className={this.props.build}>{this.props.children}</ConfigPanel>;
   }
 }
 

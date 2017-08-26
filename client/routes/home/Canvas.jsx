@@ -151,7 +151,7 @@ function stop() {
 const Canvas = styled.canvas`
   position: absolute;
   z-index: 0;
-  opacity: .15;
+  opacity: 0.15;
   width: 100%;
   height: 100%;
 `;

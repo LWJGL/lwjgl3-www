@@ -4,7 +4,7 @@ import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-const LicenseRoute = (props: ContextRouter) =>
+const LicenseRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
       <title>License</title>
@@ -57,6 +57,7 @@ const LicenseRoute = (props: ContextRouter) =>
         </article>
       </section>
     </main>
-  </PageView>;
+  </PageView>
+);
 
 export default LicenseRoute;

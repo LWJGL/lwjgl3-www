@@ -12,11 +12,7 @@ class BuildAddons extends React.Component<Props> {
   render() {
     const { addons } = this.props;
 
-    return (
-      <div className="custom-controls-stacked">
-        {addons.map((it: string) => <BuildAddon key={it} id={it} />)}
-      </div>
-    );
+    return <div className="custom-controls-stacked">{addons.map((it: string) => <BuildAddon key={it} id={it} />)}</div>;
   }
 }
 

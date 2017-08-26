@@ -7,7 +7,7 @@ type Props = {
   rest?: {},
 };
 
-const MainMenu = ({ onClick, ...rest }: Props) =>
+const MainMenu = ({ onClick, ...rest }: Props) => (
   <ul {...rest} role="navigation" aria-label="Main Menu">
     <li>
       <NavLink ariaCurrent="page" activeClassName="active" exact={true} onClick={onClick} to="/">
@@ -44,6 +44,7 @@ const MainMenu = ({ onClick, ...rest }: Props) =>
         BLOG
       </a>
     </li>
-  </ul>;
+  </ul>
+);
 
 export default MainMenu;

@@ -8,9 +8,10 @@ import './PageView';
 
 const supportsHistory = 'pushState' in window.history;
 
-const App = () =>
+const App = () => (
   <BrowserRouter forceRefresh={!supportsHistory} keyLength={12}>
     <Layout />
-  </BrowserRouter>;
+  </BrowserRouter>
+);
 
 export default App;

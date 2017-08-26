@@ -70,7 +70,7 @@ const HeroContent = styled.div`
   }
 `;
 
-const Hero = () =>
+const Hero = () => (
   <HeroBox>
     <Canvas />
     <LogoContainer className="d-flex flex-column justify-content-center align-items-center">
@@ -83,6 +83,7 @@ const Hero = () =>
         </Link>
       </HeroContent>
     </LogoContainer>
-  </HeroBox>;
+  </HeroBox>
+);
 
 export default Hero;

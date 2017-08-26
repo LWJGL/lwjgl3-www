@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import FaGithub from 'react-icons/fa/github';
 import BuildBadge from './BuildBadge';
 
-const SourceRoute = (props: ContextRouter) =>
+const SourceRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
       <title>Source & Build Status</title>
@@ -241,6 +241,7 @@ const SourceRoute = (props: ContextRouter) =>
         </div>
       </section>
     </main>
-  </PageView>;
+  </PageView>
+);
 
 export default SourceRoute;
