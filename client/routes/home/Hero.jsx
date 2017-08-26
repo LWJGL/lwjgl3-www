@@ -7,6 +7,7 @@ import Canvas from './Canvas';
 import styled from 'styled-components';
 
 const HeroBox = styled.section`
+  margin-top: -4rem;
   background: linear-gradient(
     to top left,
     #4cddff,

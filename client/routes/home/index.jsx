@@ -35,7 +35,7 @@ const HomeRoute = (props: ContextRouter) => (
         content="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
       />
     </Helmet>
-    <main style={{ marginTop: '-4rem' }}>
+    <main>
       <Hero />
       <HashLinkTarget id="learn-more" />
 
