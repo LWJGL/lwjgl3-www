@@ -147,7 +147,9 @@ app.get('*', (req, res, next) => {
     return;
   }
 
-  const renderOptions = {};
+  const renderOptions = {
+    msie: req.headers['user-agent'].indexOf('MSIE') >= 0,
+  };
 
   if (app.locals.production) {
     // Set entry point
