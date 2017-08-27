@@ -63,7 +63,7 @@ AWS credentials are only needed for deploying compiled files to S3 (@see yarn de
 yarn
 ```
 
-2. To build vendor/css files for development run:
+2. To build vendor file(s) for development run:
 
 ```bash
 yarn vendor
@@ -110,8 +110,8 @@ SSL Termination happens on the CDN (using a certificate issued by AWS Certificat
 
 The production process involves the following steps:
 
-- Compile core SCSS files with webpack ( *sass-loader -> postcss-loader -> css-loader -> ExtractTextPlugin* )
-- Compile JS files with webpack ( *babel* ) and store the manifest on disk
+- Compile core SCSS files with webpack (*sass-loader -> postcss-loader -> css-loader -> ExtractTextPlugin*)
+- Compile JS files with webpack (*babel*) and store the manifest on disk
 - Process the manifest:
   * Read the webpack manifest and compile list of files & routes
   * Process each file with uglify-js
@@ -132,7 +132,6 @@ To run the production build (*nix only)
 
 ```bash
 NODE_ENV=production node server
-yarn 
 ```
 
 you can simulate and run the production build locally:

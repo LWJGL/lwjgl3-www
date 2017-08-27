@@ -30,6 +30,8 @@ const config = {
       'prop-types',
       'fg-loadjs',
       'fg-loadcss',
+
+      // React
       'react-helmet',
       'react-router',
       'react-router-dom',

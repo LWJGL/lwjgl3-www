@@ -4,6 +4,7 @@ import createReducer from './createReducer';
 import reduxThunk from 'redux-thunk';
 import breakpointMiddeware from './middleware/breakpoint';
 import sagaMiddleware from './saga';
+
 import type { Store } from 'redux';
 
 const middleware = [reduxThunk, sagaMiddleware, breakpointMiddeware];
@@ -37,4 +38,5 @@ if (process.env.NODE_ENV !== 'production') {
     });
   }
 }
+
 export default store;

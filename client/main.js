@@ -45,7 +45,6 @@ if (!('fetch' in window)) {
   bootPromises.push(import(/* webpackChunkName: "whatwg-fetch" */ 'whatwg-fetch'));
 }
 
-// The following should resolve immediatelly in modern browsers
 if (bootPromises.length) {
   Promise.all(bootPromises).then(mount);
 } else {

@@ -167,7 +167,7 @@ app.get('*', (req, res, next) => {
       [
         // Push entry script first, we need to start loading as soon as possible
         // because we need it immediately
-        manifest.entry,
+        renderOptions.entry,
 
         // Append chunk of important routes to the preload list
         // Logic can be customized as needed. Can get complicated for recursive routes

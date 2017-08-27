@@ -9,8 +9,6 @@
 <PROJECT_ROOT>/node_modules/postcss.*
 
 [include]
-client/**/*.js
-client/**/*.jsx
 
 [libs]
 

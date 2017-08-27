@@ -1,5 +1,11 @@
 'use strict';
 
+function out(name, status) {
+  process.stdout.clearLine();
+  process.stdout.cursorTo(0);
+  process.stdout.write(`${name}: ${status}`);
+}
+
 /*
  * ------------------------------------------------------------------------------------------------------------------------
  * Post production steps
@@ -20,6 +26,8 @@ const UglifyJS = require('uglify-js');
 const gzipSize = require('gzip-size');
 const chalk = require('chalk');
 
+console.log(chalk`{yellow Compiling list of files & routes:}`);
+
 // Read webpack's manifest & chunks into memory
 const manifest = require('../public/js/webpack.manifest.json');
 // We'll us this to detect route chunks
@@ -38,14 +46,6 @@ const productionManifest = {
   // Build a map of route paths->JS files in order to preload chunks as needed
   routes: {},
 };
-
-console.log(chalk`{yellow Compiling list of files & routes:}`);
-
-function out(name, status) {
-  process.stdout.clearLine();
-  process.stdout.cursorTo(0);
-  process.stdout.write(`${name}: ${status}`);
-}
 
 // Store entrypoint names in an array
 const entrypoints = Object.keys(manifest.entrypoints);

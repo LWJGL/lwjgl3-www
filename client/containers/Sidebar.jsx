@@ -25,9 +25,9 @@ class Sidebar extends React.PureComponent<Props, State> {
   startX: number = 0;
   currentX: number = 0;
   focusTrap: FocusTrap;
-  closeButton: ?HTMLElement;
-  slidingMenu: ?HTMLElement;
-  sideContainer: ?HTMLElement;
+  closeButton: ?HTMLButtonElement;
+  slidingMenu: ?HTMLDivElement;
+  sideContainer: ?HTMLDivElement;
 
   componentDidMount() {
     this.mounted = true;

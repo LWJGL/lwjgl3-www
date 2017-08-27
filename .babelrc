@@ -3,12 +3,14 @@
     "development": {
       "plugins": [
         "react-hot-loader/babel",
+
         ["styled-components", {
           "ssr": false,
           "displayName": true,
           "preprocess": false,
           "minify": false
         }],
+
         "syntax-jsx",
         "syntax-trailing-function-commas",
         "transform-flow-strip-types",
@@ -89,7 +91,7 @@
         "syntax-jsx",
         "syntax-trailing-function-commas",
         "transform-flow-strip-types",
-    
+
         // React
         "transform-react-constant-elements",
         "transform-react-inline-elements",
