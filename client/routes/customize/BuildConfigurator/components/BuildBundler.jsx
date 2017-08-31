@@ -19,7 +19,12 @@ class BuildBundler extends React.Component<Props> {
           <LoaderSpinner size={32} style={{ marginBottom: '1rem' }} />
           <h4>Generating ZIP bundle. Please wait...</h4>
         </div>
-        <pre>{this.props.progress.slice(0).reverse().map((line, i) => <div key={`log${i}`}>{line}</div>)}</pre>
+        <pre>
+          {this.props.progress
+            .slice(0)
+            .reverse()
+            .map((line, i) => <div key={`log${i}`}>{line}</div>)}
+        </pre>
       </div>
     );
   }

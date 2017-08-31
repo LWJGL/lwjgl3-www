@@ -120,7 +120,10 @@ app.use(
 // Redownloads and parses JS manifest from S3
 app.get('/dev/reload', (req, res) => {
   downloadManifest(() => {
-    res.type('text').status(200).send('Manifest has been updated.');
+    res
+      .type('text')
+      .status(200)
+      .send('Manifest has been updated.');
   });
 });
 
