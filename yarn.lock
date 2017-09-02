@@ -211,9 +211,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.106.0:
-  version "2.106.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.106.0.tgz#8296b8ffbc63be61ae0a73b0e66f72b98baf293c"
+aws-sdk@2.108.0:
+  version "2.108.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.108.0.tgz#8b6f6ed8692bfc6cac1782d0424f9867d1baa5bd"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -2076,9 +2076,9 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flow-bin@0.53.1:
-  version "0.53.1"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.53.1.tgz#9b22b63a23c99763ae533ebbab07f88c88c97d84"
+flow-bin@0.54.0:
+  version "0.54.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.54.0.tgz#f2fb0478e9e99702b623c9ed84079a39903bba77"
 
 focus-trap@2.3.0:
   version "2.3.0"
