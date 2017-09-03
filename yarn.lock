@@ -446,6 +446,10 @@ babel-plugin-syntax-export-extensions@7.0.0-alpha.20:
   version "7.0.0-alpha.20"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-export-extensions/-/babel-plugin-syntax-export-extensions-7.0.0-alpha.20.tgz#4138ee9bdd362d6ad7ad8c96fb5b8ca1e55c97d7"
 
+babel-plugin-syntax-flow@7.0.0-alpha.20:
+  version "7.0.0-alpha.20"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-flow/-/babel-plugin-syntax-flow-7.0.0-alpha.20.tgz#93caea843cc4d56ff2322f27c57334b4431b774c"
+
 babel-plugin-syntax-function-sent@7.0.0-alpha.20:
   version "7.0.0-alpha.20"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-function-sent/-/babel-plugin-syntax-function-sent-7.0.0-alpha.20.tgz#7cba5d008929b72d8d966eb417076aa3ff36ecc6"
@@ -643,6 +647,12 @@ babel-plugin-transform-export-namespace@7.0.0-alpha.20:
   dependencies:
     babel-plugin-syntax-export-extensions "7.0.0-alpha.20"
 
+babel-plugin-transform-flow-strip-types@7.0.0-alpha.20:
+  version "7.0.0-alpha.20"
+  resolved "https://registry.yarnpkg.com/babel-plugin-transform-flow-strip-types/-/babel-plugin-transform-flow-strip-types-7.0.0-alpha.20.tgz#e489f9bd55b803db873458d7ccfd56ac134350fa"
+  dependencies:
+    babel-plugin-syntax-flow "7.0.0-alpha.20"
+
 babel-plugin-transform-function-sent@7.0.0-alpha.20:
   version "7.0.0-alpha.20"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-function-sent/-/babel-plugin-transform-function-sent-7.0.0-alpha.20.tgz#bbe2425d2f9b7841d7efeadceb1af7998da0ebb5"
@@ -766,6 +776,12 @@ babel-preset-env@2.0.0-alpha.20:
     browserslist "^2.1.2"
     invariant "^2.2.2"
     semver "^5.3.0"
+
+babel-preset-flow@7.0.0-alpha.20:
+  version "7.0.0-alpha.20"
+  resolved "https://registry.yarnpkg.com/babel-preset-flow/-/babel-preset-flow-7.0.0-alpha.20.tgz#d7e764c9e7609c1ebb99b4e48b821f9e16be316a"
+  dependencies:
+    babel-plugin-transform-flow-strip-types "7.0.0-alpha.20"
 
 babel-preset-react@7.0.0-alpha.20:
   version "7.0.0-alpha.20"
