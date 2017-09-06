@@ -4,12 +4,15 @@
       "plugins": [
         "react-hot-loader/babel",
 
-        ["styled-components", {
-          "ssr": false,
-          "displayName": true,
-          "preprocess": false,
-          "minify": false
-        }],
+        [
+          "styled-components",
+          {
+            "ssr": false,
+            "displayName": true,
+            "preprocess": false,
+            "minify": false
+          }
+        ],
 
         "syntax-jsx",
         "syntax-trailing-function-commas",
@@ -19,75 +22,81 @@
         "transform-react-jsx-self",
         "transform-react-jsx-source",
         "transform-react-display-name",
-        ["transform-react-jsx", {"useBuiltIns": true}],
+        ["transform-react-jsx", { "useBuiltIns": true }],
 
         // Stage 2
         "syntax-dynamic-import",
-        ["transform-class-properties", {"spec": false}],
+        ["transform-class-properties", { "spec": false }],
 
         // Stage 3
         ["transform-object-rest-spread", { "useBuiltIns": true }],
 
         // ES2015 -- Move this to production-only when browsers add support for class properties (see above)
-        ["transform-es2015-classes", {"loose": true}]
+        ["transform-es2015-classes", { "loose": true }]
       ]
     },
     "production": {
       "presets": [
-        ["env", {
-          "spec": false,
-          "loose": true,
-          "modules": false,
-          "forceAllTransforms": true,
-          "debug": false,
-          "useBuiltIns": "entry",
-          "targets": {
-            "browsers": ["> 1%", "ie >= 10", "not ie < 10"]
-          },
-          "exclude": [
-            "transform-es2015-sticky-regex",
-            "transform-es2015-unicode-regex",
-            "es6.reflect.apply",
-            "es6.reflect.construct",
-            "es6.reflect.define-property",
-            "es6.reflect.delete-property",
-            "es6.reflect.get",
-            "es6.reflect.get-own-property-descriptor",
-            "es6.reflect.get-prototype-of",
-            "es6.reflect.has",
-            "es6.reflect.is-extensible",
-            "es6.reflect.own-keys",
-            "es6.reflect.prevent-extensions",
-            "es6.reflect.set",
-            "es6.reflect.set-prototype-of",
-            "es6.math.acosh",
-            "es6.math.asinh",
-            "es6.math.atanh",
-            "es6.math.cbrt",
-            "es6.math.clz32",
-            "es6.math.cosh",
-            "es6.math.expm1",
-            "es6.math.fround",
-            "es6.math.hypot",
-            "es6.math.imul",
-            "es6.math.log10",
-            "es6.math.log1p",
-            "es6.math.log2",
-            "es6.math.sign",
-            "es6.math.sinh",
-            "es6.math.tanh",
-            "es6.math.trunc"
-          ]
-        }]
+        [
+          "env",
+          {
+            "spec": false,
+            "loose": true,
+            "modules": false,
+            "forceAllTransforms": true,
+            "debug": false,
+            "useBuiltIns": "entry",
+            "targets": {
+              "browsers": ["> 1%", "ie >= 10", "not ie < 10"]
+            },
+            "exclude": [
+              "transform-es2015-sticky-regex",
+              "transform-es2015-unicode-regex",
+              "es6.reflect.apply",
+              "es6.reflect.construct",
+              "es6.reflect.define-property",
+              "es6.reflect.delete-property",
+              "es6.reflect.get",
+              "es6.reflect.get-own-property-descriptor",
+              "es6.reflect.get-prototype-of",
+              "es6.reflect.has",
+              "es6.reflect.is-extensible",
+              "es6.reflect.own-keys",
+              "es6.reflect.prevent-extensions",
+              "es6.reflect.set",
+              "es6.reflect.set-prototype-of",
+              "es6.math.acosh",
+              "es6.math.asinh",
+              "es6.math.atanh",
+              "es6.math.cbrt",
+              "es6.math.clz32",
+              "es6.math.cosh",
+              "es6.math.expm1",
+              "es6.math.fround",
+              "es6.math.hypot",
+              "es6.math.imul",
+              "es6.math.log10",
+              "es6.math.log1p",
+              "es6.math.log2",
+              "es6.math.sign",
+              "es6.math.sinh",
+              "es6.math.tanh",
+              "es6.math.trunc"
+            ]
+          }
+        ]
       ],
       "plugins": [
-        ["styled-components", {
-          "ssr": false,
-          "displayName": false,
-          "preprocess": false,
-          "minify": true,
-          "transpileTemplateLiterals": true
-        }],
+        [
+          "styled-components",
+          {
+            "ssr": false,
+            "displayName": false,
+            "preprocess": false,
+            "minify": true,
+            "transpileTemplateLiterals": true
+          }
+        ],
         "syntax-jsx",
         "syntax-trailing-function-commas",
         "transform-flow-strip-types",
@@ -96,11 +105,11 @@
         "transform-react-constant-elements",
         "transform-react-inline-elements",
         "transform-react-remove-prop-types",
-        ["transform-react-jsx", {"useBuiltIns": true}],
+        ["transform-react-jsx", { "useBuiltIns": true }],
 
         // Stage 2
         "syntax-dynamic-import",
-        ["transform-class-properties", {"spec": false}],
+        ["transform-class-properties", { "spec": false }],
 
         // Stage 3
         ["transform-object-rest-spread", { "useBuiltIns": true }],
