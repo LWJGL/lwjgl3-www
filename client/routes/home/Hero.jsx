@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
 import Logo from './Logo';
 import Canvas from './Canvas';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 
 const HeroBox = styled.section`
   margin-top: -4rem;
@@ -31,7 +31,7 @@ const LogoContainer = styled.div`
   width: 100%;
   height: 100vh;
 
-  .logo {
+  & .logo {
     display: block;
     max-width: 700px;
     margin: 2rem;
@@ -47,24 +47,24 @@ const HeroContent = styled.div`
   color: white;
   font-weight: 300;
 
-  .svg-icon {
+  & .svg-icon {
     font-size: 1.5rem;
   }
 
-  a {
+  & a {
     color: white;
   }
 
   @media (max-width: 600px) {
-    h1 {
+    & h1 {
       font-size: 1.4rem;
     }
-    a {
+    & a {
       font-size: 90%;
     }
   }
   @media (max-width: 400px), (max-height: 420px) {
-    h1 {
+    & h1 {
       font-size: 1.1rem;
       line-height: 1.5rem;
     }

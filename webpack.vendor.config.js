@@ -49,7 +49,7 @@ const config = {
 
       // UI
       'classnames',
-      'styled-components',
+      'emotion',
       'focus-trap',
       'nprogress',
 

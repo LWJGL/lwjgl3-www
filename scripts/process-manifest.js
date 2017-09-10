@@ -10,7 +10,7 @@ function out(name, status) {
  * ------------------------------------------------------------------------------------------------------------------------
  * Post production steps
  * ------------------------------------------------------------------------------------------------------------------------
- * 
+ *
  * 1. Read webpack manifest and compile list of files & routes
  * 2. Process each file with uglify-js
  * 3. Compute hashes of final files
@@ -118,19 +118,7 @@ manifest.assets.forEach(asset => {
       keep_infinity: true,
       side_effects: true,
     },
-    // mangle: {
-    //   reserved: [],
-    //   toplevel: false,
-    //   keep_fnames: false,
-    //   eval: false,
-    //   properties: {
-    //     reserved: [],
-    //     regex: null,
-    //     keep_quoted: false,
-    //     debug: false,
-    //     builtins: false,
-    //   },
-    // },
+    mangle: true,
     output: {
       ascii_only: false,
       beautify: false,

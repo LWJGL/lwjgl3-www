@@ -4,7 +4,7 @@ import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 import HashLinkTarget from '~/components/HashLinkTarget';
 import Hero from './Hero';
 
@@ -19,9 +19,10 @@ import IconGLFW from 'react-icons/md/videogame-asset';
 import IconGitHub from 'react-icons/fa/github';
 import IconMoreApi from 'react-icons/md/battery-unknown';
 
-const Bindings = styled.div`
-  .svg-icon,
-  img {
+const BindingsDiv = styled.div`
+  composes: ${'area-dark'};
+  & .svg-icon,
+  & img {
     font-size: 4rem;
     margin: 1rem 0 2rem 0;
   }
@@ -81,7 +82,7 @@ const HomeRoute = (props: ContextRouter) => (
         </div>
       </section>
 
-      <Bindings className={`area-dark`}>
+      <BindingsDiv>
         <section className="container py-5 text-center features">
           <h1>Main Features</h1>
 
@@ -270,7 +271,7 @@ const HomeRoute = (props: ContextRouter) => (
             </div>
           </div>
         </section>
-      </Bindings>
+      </BindingsDiv>
 
       <section className="container pt-5 pb-3">
         <div className="row justify-content-center">

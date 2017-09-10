@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { loadPath } from '../reducer';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 import IconFolder from 'react-icons/md/folder';
 
 type OwnProps = {

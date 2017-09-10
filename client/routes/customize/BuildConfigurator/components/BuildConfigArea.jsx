@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 // import { connect } from '~/services/connect';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BUILD_TYPES } from '../types';
 
@@ -25,45 +25,45 @@ const ConfigPanel = styled.div`
 
   ${mediaBreakpointUp('lg')} {
     &.release {
-      background-color: ${COLOR_RELEASE_LIGHT};
-      border-color: ${COLOR_RELEASE};
+      background-color: ${`${COLOR_RELEASE_LIGHT}`};
+      border-color: ${COLOR_RELEASE.hsl()};
     }
     &.stable {
-      background-color: ${COLOR_STABLE_LIGHT};
-      border-color: ${COLOR_STABLE};
+      background-color: ${COLOR_STABLE_LIGHT.hsl()};
+      border-color: ${COLOR_STABLE.hsl()};
     }
     &.nightly {
-      background-color: ${COLOR_NIGHTLY_LIGHT};
-      border-color: ${COLOR_NIGHTLY};
+      background-color: ${COLOR_NIGHTLY_LIGHT.hsl()};
+      border-color: ${COLOR_NIGHTLY.hsl()};
     }
     margin-top: 1rem;
     border-width: 2px;
     border-style: solid;
   }
 
-  p {
+  & p {
     line-height: 1.5rem;
   }
 
-  .artifact {
+  & .artifact {
     margin-bottom: 1.25rem;
 
-    a {
+    & a {
       word-wrap: break-word;
     }
 
-    svg {
+    & svg {
       margin-right: 0.5rem;
     }
 
-    p {
+    & p {
       margin-left: 1.5rem;
       margin-bottom: 0.25rem;
       font-size: ${SMALL_FONT_SIZE};
     }
   }
 
-  pre {
+  & pre {
     background-color: #ffffe6;
     font-size: 13px;
     line-height: 1rem;
@@ -71,8 +71,8 @@ const ConfigPanel = styled.div`
     tab-size: 4;
   }
 
-  .download-toolbar {
-    background: ${COLOR_PRIMARY.l(COLOR_PRIMARY.lightness + 5)};
+  & .download-toolbar {
+    background: ${COLOR_PRIMARY.l(COLOR_PRIMARY.lightness + 5).hsl()};
     padding: 1rem 0;
     text-align: center;
     position: fixed;
@@ -80,7 +80,7 @@ const ConfigPanel = styled.div`
     bottom: 0;
     width: 100%;
 
-    .btn + .btn {
+    & .btn + .btn {
       margin-left: 0.5rem;
     }
 

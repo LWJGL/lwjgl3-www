@@ -67,6 +67,10 @@ export class Hsl {
     return new Hsl(this.hue, this.saturation, this.lightness, value);
   }
 
+  hsl() {
+    return this.toString();
+  }
+
   toString() {
     return this.alpha < 1.0
       ? `hsla(${this.hue}, ${this.saturation}%, ${this.lightness}%, ${this.alpha})`

@@ -4,6 +4,7 @@
   "files.eol": "\n",
   "files.exclude": {
     "**/.vscode": true,
+    "**/.history": true,
     "**/.cache-loader": true,
     "**/public/js/*.js*": true,
     "**/public/css/*.css*": true

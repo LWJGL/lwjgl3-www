@@ -6,7 +6,7 @@ import Sidebar from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import supportsPassive from '~/services/supports-passive';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import { css } from 'emotion';
 import classnames from 'classnames';
 import type { ContextRouter } from 'react-router-dom';
 import { COLOR_PRIMARY } from '~/theme';
@@ -26,17 +26,8 @@ type State = {
   hidden: boolean,
 };
 
-const StyledHeader = styled.header`
-  &.opaque {
-    background-color: ${COLOR_PRIMARY};
-  }
-  &.home {
-    transition: background-color 0.5s ease-out;
-    &.top {
-      background-color: transparent;
-    }
-  }
-`;
+const styleOpaque = css`background-color: ${COLOR_PRIMARY.hsl()};`;
+const styleHome = css`transition: background-color 0.5s ease-out;`;
 
 class Header extends React.PureComponent<Props, State> {
   prev = 0;
@@ -149,13 +140,12 @@ class Header extends React.PureComponent<Props, State> {
     const isHome = this.props.location.pathname === '/';
 
     return (
-      <StyledHeader
+      <header
         role="navigation"
         className={classnames(HEADER_CLASSNAME, {
-          home: isHome,
-          opaque: !isHome || !top,
+          [styleHome]: isHome,
+          [styleOpaque]: !isHome || !top,
           alt: IS_IOS,
-          top,
           fixed,
           hidden,
         })}
@@ -175,7 +165,7 @@ class Header extends React.PureComponent<Props, State> {
             )}
           </div>
         </nav>
-      </StyledHeader>
+      </header>
     );
   }
 }

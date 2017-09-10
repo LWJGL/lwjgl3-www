@@ -3,17 +3,7 @@
     "development": {
       "plugins": [
         "react-hot-loader/babel",
-
-        [
-          "styled-components",
-          {
-            "ssr": false,
-            "displayName": true,
-            "preprocess": false,
-            "minify": false
-          }
-        ],
-
+        "emotion",
         "syntax-jsx",
         "syntax-trailing-function-commas",
         "transform-flow-strip-types",
@@ -87,16 +77,7 @@
         ]
       ],
       "plugins": [
-        [
-          "styled-components",
-          {
-            "ssr": false,
-            "displayName": false,
-            "preprocess": false,
-            "minify": true,
-            "transpileTemplateLiterals": true
-          }
-        ],
+        "emotion",
         "syntax-jsx",
         "syntax-trailing-function-commas",
         "transform-flow-strip-types",

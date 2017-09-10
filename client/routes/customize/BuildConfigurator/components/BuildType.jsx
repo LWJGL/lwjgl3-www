@@ -10,7 +10,7 @@ import { changeType } from '../reducer';
 import type { BUILD_TYPES, Build } from '../types';
 
 import IconClose from 'react-icons/md/close';
-import styled from 'styled-components';
+import styled from 'emotion/react';
 import { mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import {
   COLOR_RELEASE,
@@ -23,7 +23,7 @@ import {
 } from '../theme';
 
 const BuildBox = styled.div`
-  border: 2px solid ${COLOR_PRIMARY};
+  border: 2px solid ${COLOR_PRIMARY.toString()};
   padding: 1rem;
   border-radius: ${BORDER_RADIUS};
   text-align: center;
@@ -33,29 +33,29 @@ const BuildBox = styled.div`
   position: relative;
   z-index: 1;
 
-  > h2 {
+  & > h2 {
     font-weight: normal;
   }
 
-  > p {
-    color: ${COLOR_PRIMARY};
+  & > p {
+    color: ${COLOR_PRIMARY.toString()};
     margin: 0;
   }
 
   &.release {
-    background-color: ${COLOR_RELEASE_LIGHT};
-    border-color: ${COLOR_RELEASE};
-    color: ${COLOR_RELEASE};
+    background-color: ${COLOR_RELEASE_LIGHT.toString()};
+    border-color: ${COLOR_RELEASE.toString()};
+    color: ${COLOR_RELEASE.toString()};
   }
   &.stable {
-    background-color: ${COLOR_STABLE_LIGHT};
-    border-color: ${COLOR_STABLE};
-    color: ${COLOR_STABLE};
+    background-color: ${COLOR_STABLE_LIGHT.toString()};
+    border-color: ${COLOR_STABLE.toString()};
+    color: ${COLOR_STABLE.toString()};
   }
   &.nightly {
-    background-color: ${COLOR_NIGHTLY_LIGHT};
-    border-color: ${COLOR_NIGHTLY};
-    color: ${COLOR_NIGHTLY};
+    background-color: ${COLOR_NIGHTLY_LIGHT.toString()};
+    border-color: ${COLOR_NIGHTLY.toString()};
+    color: ${COLOR_NIGHTLY.toString()};
   }
 
   &:hover {
@@ -64,7 +64,7 @@ const BuildBox = styled.div`
     }
   }
 
-  .svg-icon {
+  & .svg-icon {
     display: none;
   }
 
