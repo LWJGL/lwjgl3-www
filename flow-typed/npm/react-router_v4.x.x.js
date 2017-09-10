@@ -1,45 +1,7 @@
-declare module 'react-router-dom' {
-  declare export class BrowserRouter extends React$Component<{
-    basename?: string,
-    forceRefresh?: boolean,
-    getUserConfirmation?: GetUserConfirmation,
-    keyLength?: number,
-    children?: React$Node,
-  }> {}
-
-  declare export class HashRouter extends React$Component<{
-    basename?: string,
-    getUserConfirmation?: GetUserConfirmation,
-    hashType?: 'slash' | 'noslash' | 'hashbang',
-    children?: React$Node,
-  }> {}
-
-  declare export class Link extends React$Component<{
-    to: string | LocationShape,
-    replace?: boolean,
-    children?: React$Node,
-  }> {}
-
-  declare export class NavLink extends React$Component<{
-    to: string | LocationShape,
-    activeClassName?: string,
-    className?: string,
-    activeStyle?: Object,
-    style?: Object,
-    isActive?: (match: Match, location: Location) => boolean,
-    children?: React$Node,
-    exact?: boolean,
-    strict?: boolean,
-    ariaCurrent?:
-      | 'page' // represents the current page within a set of pages;
-      | 'step' // represents the current step within a process;
-      | 'location' // represents the current location within an environment or context;
-      | 'true' // represents the current item within a set;
-      | 'false', // does not represent item within a set.
-  }> {}
-
-  // NOTE: Below are duplicated from react-router. If updating these, please
-  // update the react-router and react-router-native types as well.
+declare module 'react-router' {
+  // NOTE: many of these are re-exported by react-router-dom and
+  // react-router-native, so when making changes, please be sure to update those
+  // as well.
   declare export type Location = {
     pathname: string,
     search: string,
@@ -81,17 +43,17 @@ declare module 'react-router-dom' {
     url: string,
   };
 
-  declare export type ContextRouter = {
+  declare export type ContextRouter = {|
     history: RouterHistory,
     location: Location,
     match: Match,
-  };
+  |};
 
   declare export type GetUserConfirmation = (message: string, callback: (confirmed: boolean) => void) => void;
 
-  declare type StaticRouterContext = {
+  declare type StaticRouterContext = {|
     url?: string,
-  };
+  |};
 
   declare export class StaticRouter extends React$Component<{
     basename?: string,
@@ -143,9 +105,8 @@ declare module 'react-router-dom' {
   declare type MatchPathOptions = {
     path?: string,
     exact?: boolean,
-    sensitive?: boolean,
     strict?: boolean,
+    sensitive?: boolean,
   };
-
   declare export function matchPath(pathname: string, options?: MatchPathOptions | string): null | Match;
 }

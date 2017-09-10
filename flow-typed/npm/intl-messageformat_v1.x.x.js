@@ -8,7 +8,7 @@ declare module 'intl-messageformat' {
   };
 
   declare class IntlMessageFormat {
-    constructor(message: string, locales: string | Array<string>, formats?: ?FormatsObject): void,
+    constructor(message: string, locales: string | Array<string>, formats?: ?FormatsObject): IntlMessageFormat,
 
     /**
      * This method returns an object with the options values that were resolved during instance creation. It currently only contains a locale property.
@@ -21,5 +21,5 @@ declare module 'intl-messageformat' {
     format(values: { [key: string]: any }): string,
   }
 
-  declare export default Class<IntlMessageFormat>
+  declare module.exports: Class<IntlMessageFormat>;
 }
