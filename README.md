@@ -210,10 +210,38 @@ Other useful plugins:
 - SCSS IntelliSense
 
 We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab).
-In VSCode add the following in the user settings:
+In VS Code add the following in the user settings:
 
 ```json
 {
   "files.autoSave": "onWindowChange"
+}
+```
+
+Recommended VS Code Workspace Settings:
+
+```json
+{
+  "editor.formatOnSave": true,
+  "files.exclude": {
+    "**/.vscode": true,
+    "**/.history": true,
+    "**/.cache-loader": true,
+    "**/public/js/*.js*": true,
+    "**/public/css/*.css*": true
+  },
+  "files.associations": {
+    "*.mjs": "javascript",
+    "**/client/**/*.jsx": "javascriptreact"
+  },
+  "javascript.format.enable": false,
+  "javascript.validate.enable": false,
+  "javascript.referencesCodeLens.enabled": false,
+  "javascript.nameSuggestions": false,
+  "typescript.validate.enable": false,
+  "typescript.format.enable": false,
+  "typescript.referencesCodeLens.enabled": false,
+  "typescript.implementationsCodeLens.enabled": false,
+  "typescript.tsc.autoDetect": "off"
 }
 ```
