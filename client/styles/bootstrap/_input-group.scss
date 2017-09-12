@@ -39,7 +39,6 @@
   white-space: nowrap;
 }
 
-
 // Sizing options
 //
 // Remix the default form control sizing classes into new ones for easier
@@ -55,7 +54,6 @@
 .input-group-sm > .input-group-btn > .btn {
   @extend .form-control-sm;
 }
-
 
 //
 // Text input groups
@@ -89,13 +87,12 @@
 
   // scss-lint:disable QualifyingElement
   // Nuke default margins from checkboxes and radios to vertically center within.
-  input[type="radio"],
-  input[type="checkbox"] {
+  input[type='radio'],
+  input[type='checkbox'] {
     margin-top: 0;
   }
   // scss-lint:enable QualifyingElement
 }
-
 
 //
 // Reset rounded corners

@@ -58,7 +58,6 @@
   }
 }
 
-
 //
 // Optional textual caps
 //
@@ -83,7 +82,6 @@
     @include border-radius(0 0 $card-inner-border-radius $card-inner-border-radius);
   }
 }
-
 
 //
 // Header navs
@@ -127,7 +125,6 @@
   @include border-bottom-radius($card-inner-border-radius);
 }
 
-
 // Card deck
 
 @include media-breakpoint-up(sm) {
@@ -146,7 +143,6 @@
     }
   }
 }
-
 
 //
 // Card groups
@@ -200,7 +196,6 @@
     }
   }
 }
-
 
 //
 // Columns

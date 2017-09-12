@@ -38,11 +38,11 @@
   }
 
   .arrow::before {
-    content: "";
+    content: '';
     border-width: $popover-arrow-outer-width;
   }
   .arrow::after {
-    content: "";
+    content: '';
     border-width: $popover-arrow-outer-width;
   }
 
@@ -128,7 +128,7 @@
       display: block;
       width: 20px;
       margin-left: -10px;
-      content: "";
+      content: '';
       border-bottom: 1px solid $popover-header-bg;
     }
   }
@@ -157,21 +157,20 @@
     }
   }
   &.bs-popover-auto {
-    &[x-placement^="top"] {
+    &[x-placement^='top'] {
       @extend .bs-popover-top;
     }
-    &[x-placement^="right"] {
+    &[x-placement^='right'] {
       @extend .bs-popover-right;
     }
-    &[x-placement^="bottom"] {
+    &[x-placement^='bottom'] {
       @extend .bs-popover-bottom;
     }
-    &[x-placement^="left"] {
+    &[x-placement^='left'] {
       @extend .bs-popover-left;
     }
   }
 }
-
 
 // Offset the popover to account for the popover arrow
 .popover-header {

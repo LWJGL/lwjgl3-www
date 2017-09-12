@@ -46,7 +46,7 @@
 //    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    "-sm"
 @function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
-  @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
+  @return if(breakpoint-min($name, $breakpoints) == null, '', '-#{$name}');
 }
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
@@ -98,8 +98,8 @@
       @content;
     }
   } @else if $max == null {
-    @include media-breakpoint-up($name)
+    @include media-breakpoint-up($name);
   } @else if $min == null {
-    @include media-breakpoint-down($name)
+    @include media-breakpoint-down($name);
   }
 }

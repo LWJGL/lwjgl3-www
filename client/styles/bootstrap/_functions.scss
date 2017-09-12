@@ -11,9 +11,13 @@
     @if $prev-num == null {
       // Do nothing
     } @else if not comparable($prev-num, $num) {
-      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order,
+        but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num},
+        the value of the previous key '#{$prev-key}' !";
     } @else if $prev-num >= $num {
-      @warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
+      @warn "Invalid value for #{$map-name}: This map must be in ascending order,
+        but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num},
+        the value of the previous key '#{$prev-key}' !";
     }
     $prev-key: $key;
     $prev-num: $num;
@@ -38,7 +42,7 @@
 // @param {String} $search - Substring to replace
 // @param {String} $replace ('') - New value
 // @return {String} - Updated string
-@function str-replace($string, $search, $replace: "") {
+@function str-replace($string, $search, $replace: '') {
   $index: str-index($string, $search);
 
   @if $index {
@@ -64,20 +68,20 @@
 }
 
 // Retreive color Sass maps
-@function color($key: "blue") {
+@function color($key: 'blue') {
   @return map-get($colors, $key);
 }
 
-@function theme-color($key: "primary") {
+@function theme-color($key: 'primary') {
   @return map-get($theme-colors, $key);
 }
 
-@function grayscale($key: "100") {
+@function grayscale($key: '100') {
   @return map-get($grays, $key);
 }
 
 // Request a theme color level
-@function theme-color-level($color-name: "primary", $level: 0) {
+@function theme-color-level($color-name: 'primary', $level: 0) {
   $color: theme-color($color-name);
   $color-base: if($level > 0, #000, #fff);
 

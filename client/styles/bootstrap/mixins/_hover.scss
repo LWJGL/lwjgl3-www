@@ -1,28 +1,33 @@
 @mixin hover {
   // TODO: re-enable along with mq4-hover-shim
-//  @if $enable-hover-media-query {
-//    // See Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#hover
-//    // Currently shimmed by https://github.com/twbs/mq4-hover-shim
-//    @media (hover: hover) {
-//      &:hover { @content }
-//    }
-//  }
-//  @else {
-// scss-lint:disable Indentation
-    &:hover { @content }
-// scss-lint:enable Indentation
-//  }
+  //  @if $enable-hover-media-query {
+  //    // See Media Queries Level 4: https://drafts.csswg.org/mediaqueries/#hover
+  //    // Currently shimmed by https://github.com/twbs/mq4-hover-shim
+  //    @media (hover: hover) {
+  //      &:hover { @content }
+  //    }
+  //  }
+  //  @else {
+  // scss-lint:disable Indentation
+  &:hover {
+    @content;
+  }
+  // scss-lint:enable Indentation
+  //  }
 }
-
 
 @mixin hover-focus {
   @if $enable-hover-media-query {
-    &:focus { @content }
-    @include hover { @content }
+    &:focus {
+      @content;
+    }
+    @include hover {
+      @content;
+    }
   } @else {
     &:focus,
     &:hover {
-      @content
+      @content;
     }
   }
 }
@@ -31,14 +36,16 @@
   @if $enable-hover-media-query {
     &,
     &:focus {
-      @content
+      @content;
     }
-    @include hover { @content }
+    @include hover {
+      @content;
+    }
   } @else {
     &,
     &:focus,
     &:hover {
-      @content
+      @content;
     }
   }
 }
@@ -47,14 +54,16 @@
   @if $enable-hover-media-query {
     &:focus,
     &:active {
-      @content
+      @content;
     }
-    @include hover { @content }
+    @include hover {
+      @content;
+    }
   } @else {
     &:focus,
     &:active,
     &:hover {
-      @content
+      @content;
     }
   }
 }

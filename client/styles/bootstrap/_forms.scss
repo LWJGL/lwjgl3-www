@@ -82,7 +82,6 @@ select.form-control {
   display: block;
 }
 
-
 //
 // Labels
 //
@@ -107,7 +106,6 @@ select.form-control {
   font-size: $font-size-sm;
 }
 
-
 //
 // Legends
 //
@@ -120,7 +118,6 @@ select.form-control {
   margin-bottom: 0;
   font-size: $font-size-base;
 }
-
 
 // Readonly controls as plain text
 //
@@ -141,7 +138,6 @@ select.form-control {
     padding-left: 0;
   }
 }
-
 
 // Form control sizing
 //
@@ -177,7 +173,6 @@ select.form-control-lg {
   }
 }
 
-
 // Form groups
 //
 // Designed to help with the organization and spacing of vertical forms. For
@@ -192,7 +187,6 @@ select.form-control-lg {
   margin-top: $form-text-margin-top;
 }
 
-
 // Form grid
 //
 // Special replacement for our grid system's `.row` for tighter form layouts.
@@ -204,12 +198,11 @@ select.form-control-lg {
   margin-left: -5px;
 
   > .col,
-  > [class*="col-"] {
+  > [class*='col-'] {
     padding-right: 5px;
     padding-left: 5px;
   }
 }
-
 
 // Checkboxes and radios
 //
@@ -251,7 +244,6 @@ select.form-control-lg {
   }
 }
 
-
 // Form validation
 //
 // Provide feedback to users when form field values are valid or invalid. Works
@@ -261,8 +253,8 @@ select.form-control-lg {
 
 .invalid-feedback {
   display: none;
-  margin-top: .25rem;
-  font-size: .875rem;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
   color: $form-feedback-invalid-color;
 }
 
@@ -272,17 +264,17 @@ select.form-control-lg {
   z-index: 5;
   display: none;
   width: 250px;
-  padding: .5rem;
-  margin-top: .1rem;
-  font-size: .875rem;
+  padding: 0.5rem;
+  margin-top: 0.1rem;
+  font-size: 0.875rem;
   line-height: 1;
   color: #fff;
-  background-color: rgba($form-feedback-invalid-color,.8);
-  border-radius: .2rem;
+  background-color: rgba($form-feedback-invalid-color, 0.8);
+  border-radius: 0.2rem;
 }
 
-@include form-validation-state("valid", $form-feedback-valid-color);
-@include form-validation-state("invalid", $form-feedback-invalid-color);
+@include form-validation-state('valid', $form-feedback-valid-color);
+@include form-validation-state('invalid', $form-feedback-invalid-color);
 
 // Inline forms
 //

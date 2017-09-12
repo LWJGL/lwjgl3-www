@@ -10,13 +10,12 @@
 
 // Expand certain elements to full-width below some breakpoints
 @mixin make-fullwidth-blocks($breakpoints: $grid-breakpoints) {
-
   $breakpoint-counter: 0;
   @each $breakpoint in map-keys($breakpoints) {
     $breakpoint-counter: ($breakpoint-counter + 1);
 
     .btn-#{$breakpoint}-block + .btn-#{$breakpoint}-block {
-      margin-left: .5rem;
+      margin-left: 0.5rem;
     }
 
     @include media-breakpoint-down($breakpoint, $breakpoints) {
@@ -26,7 +25,7 @@
           width: 100%;
         }
         .btn-#{$breakpoint}-block + .btn-#{$breakpoint}-block {
-          margin-top: .5rem;
+          margin-top: 0.5rem;
           margin-left: 0;
         }
       }

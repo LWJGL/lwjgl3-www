@@ -31,7 +31,7 @@
     }
     @include media-breakpoint-up(lg) {
       background: linear-gradient(currentColor, currentColor) bottom / 0 2px no-repeat;
-      transition: .5s background-size, 0.75s color ease-out;
+      transition: 0.5s background-size, 0.75s color ease-out;
       &:hover,
       &.active {
         background-size: 100% 2px;
@@ -78,11 +78,11 @@
       top: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, .5);
+      background-color: rgba(0, 0, 0, 0.5);
       pointer-events: none;
       opacity: 0;
       will-change: opacity;
-      transition: opacity 0.3s cubic-bezier(0, 0, .3, 1);
+      transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
     }
     .sliding-menu-container {
       background-color: #1b2426;
@@ -97,7 +97,7 @@
       overflow-y: auto;
       will-change: transform;
       transform: translateX(102%) translate3d(0, 0, 0);
-      transition: transform 0.3s cubic-bezier(0, 0, .3, 1);
+      transition: transform 0.3s cubic-bezier(0, 0, 0.3, 1);
       pointer-events: none;
       &.touching {
         // Avoids resetting transform onTouchEnd

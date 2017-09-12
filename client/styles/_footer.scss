@@ -1,7 +1,12 @@
 footer {
   margin-top: 1rem;
   background-color: $body-color;
-  background-image: radial-gradient(circle farthest-corner at center,$body-color 0,$body-color 50%,lighten($body-color, 15%) 100%);
+  background-image: radial-gradient(
+    circle farthest-corner at center,
+    $body-color 0,
+    $body-color 50%,
+    lighten($body-color, 15%) 100%
+  );
   color: $body-color-dark-secondary;
   padding-bottom: 3rem;
 
@@ -9,18 +14,29 @@ footer {
     margin-top: 3rem;
   }
 
-  a, a:hover, a:active, a:focus {
+  a,
+  a:hover,
+  a:active,
+  a:focus {
     color: white;
   }
-  li { line-height: 2rem; }
-  ul { margin-bottom: 0; }
+  li {
+    line-height: 2rem;
+  }
+  ul {
+    margin-bottom: 0;
+  }
 
-  img { height: 60px; }
+  img {
+    height: 60px;
+  }
 }
 
 .copyright {
   text-align: center;
   padding-top: 3rem;
   font-size: 14px;
-  p { margin: 0; }
+  p {
+    margin: 0;
+  }
 }

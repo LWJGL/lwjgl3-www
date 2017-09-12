@@ -1,5 +1,5 @@
-@import "react-transition";
-@import "../../../node_modules/bourbon/core/bourbon";
+@import 'react-transition';
+@import '../../../node_modules/bourbon/core/bourbon';
 
 @mixin square($size) {
   @include size($size, $size);

@@ -79,22 +79,24 @@
   @include border-left-radius(0);
 }
 
-
 // Sizing
 //
 // Remix the default button sizing classes into new ones for easier manipulation.
 
-.btn-group-sm > .btn { @extend .btn-sm; }
-.btn-group-lg > .btn { @extend .btn-lg; }
-
+.btn-group-sm > .btn {
+  @extend .btn-sm;
+}
+.btn-group-lg > .btn {
+  @extend .btn-lg;
+}
 
 //
 // Split button dropdowns
 //
 
 .btn + .dropdown-toggle-split {
-  padding-right: $input-btn-padding-x * .75;
-  padding-left: $input-btn-padding-x * .75;
+  padding-right: $input-btn-padding-x * 0.75;
+  padding-left: $input-btn-padding-x * 0.75;
 
   &::after {
     margin-left: 0;
@@ -102,15 +104,14 @@
 }
 
 .btn-sm + .dropdown-toggle-split {
-  padding-right: $input-btn-padding-x-sm * .75;
-  padding-left: $input-btn-padding-x-sm * .75;
+  padding-right: $input-btn-padding-x-sm * 0.75;
+  padding-left: $input-btn-padding-x-sm * 0.75;
 }
 
 .btn-lg + .dropdown-toggle-split {
-  padding-right: $input-btn-padding-x-lg * .75;
-  padding-left: $input-btn-padding-x-lg * .75;
+  padding-right: $input-btn-padding-x-lg * 0.75;
+  padding-left: $input-btn-padding-x-lg * 0.75;
 }
-
 
 // The clickable button for toggling the menu
 // Set the same inset shadow as the :active state
@@ -122,7 +123,6 @@
     @include box-shadow(none);
   }
 }
-
 
 //
 // Vertical button groups
@@ -172,7 +172,6 @@
   @include border-top-radius(0);
 }
 
-
 // Checkbox and radio options
 //
 // In order to support the browser's form validation feedback, powered by the
@@ -185,13 +184,13 @@
 // See https://github.com/twbs/bootstrap/pull/12794 and
 // https://github.com/twbs/bootstrap/pull/14559 for more information.
 
-[data-toggle="buttons"] {
+[data-toggle='buttons'] {
   > .btn,
   > .btn-group > .btn {
-    input[type="radio"],
-    input[type="checkbox"] {
+    input[type='radio'],
+    input[type='checkbox'] {
       position: absolute;
-      clip: rect(0,0,0,0);
+      clip: rect(0, 0, 0, 0);
       pointer-events: none;
     }
   }

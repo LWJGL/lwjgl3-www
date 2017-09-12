@@ -14,7 +14,6 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "prettier": {
-    "parser": "babylon",
     "printWidth": 120,
     "singleQuote": true,
     "trailingComma": "es5",
@@ -47,7 +46,7 @@
     "babel-plugin-transform-react-jsx-source": "7.0.0-beta.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.8",
     "babel-polyfill": "7.0.0-beta.0",
-    "babel-preset-env": "2.0.0-alpha.20",
+    "babel-preset-env": "2.0.0-beta.0",
     "babel-preset-flow": "7.0.0-beta.0",
     "babel-preset-react": "7.0.0-beta.0",
     "babel-preset-stage-2": "7.0.0-beta.0",
@@ -116,6 +115,7 @@
     "deploy": "node ./scripts/deploy.js",
     "prettier": "prettier",
     "format": "prettier --write \"{client,server,scripts}/**/*.js*\"",
+    "format-styles": "prettier --write \"client/styles/**/*.scss*\"",
     "flow": "flow"
   }
 }

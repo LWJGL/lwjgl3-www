@@ -28,7 +28,7 @@
   // Disabled comes first so active can properly restyle
   &.disabled,
   &:disabled {
-    opacity: .65;
+    opacity: 0.65;
     @include box-shadow(none);
   }
 
@@ -45,7 +45,6 @@ fieldset[disabled] a.btn {
   pointer-events: none;
 }
 
-
 //
 // Alternate buttons
 //
@@ -61,7 +60,6 @@ fieldset[disabled] a.btn {
     @include button-outline-variant($value, #fff);
   }
 }
-
 
 //
 // Link buttons
@@ -103,7 +101,6 @@ fieldset[disabled] a.btn {
   }
 }
 
-
 //
 // Button Sizes
 //
@@ -115,7 +112,6 @@ fieldset[disabled] a.btn {
 .btn-sm {
   @include button-size($input-btn-padding-y-sm, $input-btn-padding-x-sm, $font-size-sm, $line-height-sm, $btn-border-radius-sm);
 }
-
 
 //
 // Block button
@@ -132,9 +128,9 @@ fieldset[disabled] a.btn {
 }
 
 // Specificity overrides
-input[type="submit"],
-input[type="reset"],
-input[type="button"] {
+input[type='submit'],
+input[type='reset'],
+input[type='button'] {
   &.btn-block {
     width: 100%;
   }
