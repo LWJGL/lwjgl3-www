@@ -13,9 +13,19 @@
     "url": "https://github.com/LWJGL/lwjgl3-www/issues"
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
+  "prettier": {
+    "parser": "babylon",
+    "printWidth": 120,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "useTabs": false,
+    "semi": true,
+    "bracketSpacing": true
+  },
   "browserslist": ["> 1%", "ie >= 10", "not ie < 10"],
   "dependencies": {
-    "aws-sdk": "2.112.0",
+    "aws-sdk": "2.113.0",
     "body-parser": "1.18.0",
     "chalk": "2.1.0",
     "express": "5.0.0-alpha.5",
@@ -23,25 +33,25 @@
     "pug": "2.0.0-rc.4",
     "request": "2.81.0",
     "request-promise-native": "1.0.4",
-    "serve-favicon": "2.4.3",
+    "serve-favicon": "2.4.4",
     "yargs": "9.0.0"
   },
   "devDependencies": {
     "autoprefixer": "7.1.4",
-    "babel-core": "7.0.0-alpha.20",
+    "babel-core": "7.0.0-beta.0",
     "babel-loader": "7.1.2",
     "babel-plugin-emotion": "7.2.2",
-    "babel-plugin-transform-react-constant-elements": "7.0.0-alpha.20",
-    "babel-plugin-transform-react-inline-elements": "7.0.0-alpha.20",
-    "babel-plugin-transform-react-jsx-self": "7.0.0-alpha.20",
-    "babel-plugin-transform-react-jsx-source": "7.0.0-alpha.20",
+    "babel-plugin-transform-react-constant-elements": "7.0.0-beta.0",
+    "babel-plugin-transform-react-inline-elements": "7.0.0-beta.0",
+    "babel-plugin-transform-react-jsx-self": "7.0.0-beta.0",
+    "babel-plugin-transform-react-jsx-source": "7.0.0-beta.0",
     "babel-plugin-transform-react-remove-prop-types": "0.4.8",
-    "babel-polyfill": "7.0.0-alpha.20",
+    "babel-polyfill": "7.0.0-beta.0",
     "babel-preset-env": "2.0.0-alpha.20",
-    "babel-preset-flow": "7.0.0-alpha.20",
-    "babel-preset-react": "7.0.0-alpha.20",
-    "babel-preset-stage-2": "7.0.0-alpha.20",
-    "babel-preset-stage-3": "7.0.0-alpha.20",
+    "babel-preset-flow": "7.0.0-beta.0",
+    "babel-preset-react": "7.0.0-beta.0",
+    "babel-preset-stage-2": "7.0.0-beta.0",
+    "babel-preset-stage-3": "7.0.0-beta.0",
     "bourbon": "5.0.0-beta.8",
     "cache-loader": "1.0.3",
     "chunk-manifest-webpack-plugin": "1.1.2",
@@ -105,8 +115,7 @@
     "release": "yarn run styles && yarn run production && yarn run manifest",
     "deploy": "node ./scripts/deploy.js",
     "prettier": "prettier",
-    "format":
-      "prettier --print-width 120 --trailing-comma es5 --single-quote --write \"{client,server,scripts}/**/*.js*\"",
+    "format": "prettier --write \"{client,server,scripts}/**/*.js*\"",
     "flow": "flow"
   }
 }

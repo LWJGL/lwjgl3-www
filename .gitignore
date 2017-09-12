@@ -1,17 +1,17 @@
-.DS_Store
-.history
-*.log
-
-# IDE files
-.idea
-
-# Node
-/node_modules
-
-# Configuration files
+# Private files
 /config.json
 
 # Generated files
+/node_modules
 /.cache-loader
 /public/js/*.js*
 /public/css/*.css
+*.log
+
+# IDE files
+/.idea
+/.vscode
+/.history
+
+# OS
+.DS_Store
