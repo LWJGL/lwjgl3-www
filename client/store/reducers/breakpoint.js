@@ -2,11 +2,6 @@
 import { breakpoints } from '~/theme';
 export const BREAKPOINTS_RESIZE = 'BREAKPOINTS/RESIZE_EVENT';
 
-export type SetBreakPoint = {
-  type: string,
-  payload: number,
-};
-
 export type BreakPointState = {
   +current: number,
   +xs: number,
@@ -17,7 +12,7 @@ export type BreakPointState = {
   +xl: number,
 };
 
-export const resizeEvent = (payload: number): SetBreakPoint => ({ type: BREAKPOINTS_RESIZE, payload });
+export const resizeEvent = (payload: number) => ({ type: BREAKPOINTS_RESIZE, payload });
 
 export const getCurrent = (): number => {
   const w = window.innerWidth;
@@ -43,7 +38,10 @@ const breakpoint: BreakPointState = {
   xl: 4,
 };
 
-export default function breakpointReducer(state: BreakPointState = breakpoint, action: SetBreakPoint): BreakPointState {
+export default function breakpointReducer(
+  state: BreakPointState = breakpoint,
+  action: ExtractReturn<typeof resizeEvent>
+): BreakPointState {
   if (action.type === BREAKPOINTS_RESIZE) {
     return { ...state, current: action.payload };
   }

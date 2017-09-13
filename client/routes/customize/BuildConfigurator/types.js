@@ -176,14 +176,3 @@ export type BuildStatusSuccess = {|
 export type BuildStatusError = {| error: string |};
 
 export type BuildStatus = BuildStatusSuccess | BuildStatusError;
-
-export type ActionBuildStatus = 'BUILD/STATUS';
-
-export type ActionStore = {
-  type: ActionBuildStatus,
-  name: BUILD_TYPES,
-  payload: BuildStatus,
-};
-
-// TODO: Add definitions for all possible actions
-export type Action = ActionStore | any;

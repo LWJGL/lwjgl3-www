@@ -11,14 +11,11 @@ import type {
   BuildStatus,
   BuildStatusSuccess,
   BuildStatusError,
-  ActionBuildStatus,
-  ActionStore,
-  Action,
 } from './types';
 
 // Actions
 
-export const BUILD_STATUS: ActionBuildStatus = 'BUILD/STATUS';
+export const BUILD_STATUS = 'BUILD/STATUS';
 
 export const SELECT_TYPE = 'BUILD/SELECT_TYPE';
 export const SELECT_MODE = 'BUILD/SELECT_MODE';
@@ -44,9 +41,222 @@ export const CONFIG_DOWNLOAD = 'BUILD/CONFIG_DOWNLOAD';
 
 export const RESET = 'BUILD/RESET';
 
+// Action Creators
+
+export const changeType = (type: BUILD_TYPES | null) => ({ type: SELECT_TYPE, build: type });
+export const changeMode = (mode: string) => ({ type: SELECT_MODE, mode });
+export const changePreset = (preset: string) => ({ type: SELECT_PRESET, preset });
+export const changeLanguage = (language: string) => ({ type: SELECT_LANGUAGE, language });
+export const changeVersion = (version: string) => ({ type: SELECT_VERSION, version });
+
+export const toggleDescriptions = (enabled: boolean) => ({ type: TOGGLE_DESCRIPTIONS, descriptions: enabled });
+export const toggleSource = (enabled: boolean) => ({ type: TOGGLE_SOURCE, source: enabled });
+export const toggleJavadoc = (enabled: boolean) => ({ type: TOGGLE_JAVADOC, javadoc: enabled });
+export const toggleOSGi = (enabled: boolean) => ({ type: TOGGLE_OSGI, osgi: enabled });
+export const toggleCompact = (enabled: boolean) => ({ type: TOGGLE_COMPACT, compact: enabled });
+export const toggleHardcoded = (enabled: boolean) => ({ type: TOGGLE_HARDCODED, hardcoded: enabled });
+export const toggleArtifact = (artifact: string) => ({ type: TOGGLE_ARTIFACT, artifact });
+export const togglePlatform = (platform: string) => ({ type: TOGGLE_PLATFORM, platform });
+export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
+
+export const downloadInit = () => ({ type: DOWNLOAD_INIT });
+export const downloadComplete = (error?: string) => ({ type: DOWNLOAD_COMPLETE, error });
+export const downloadLog = (message: string) => ({ type: DOWNLOAD_LOG, message });
+
+export const configLoad = (payload: {}) => ({ type: CONFIG_LOAD, payload });
+export const configDownload = () => ({ type: CONFIG_DOWNLOAD });
+
+export const reset = () => ({ type: RESET });
+
+export const storeStatus = (name: BUILD_TYPES, response: BuildStatus) => {
+  if (response.error) {
+    const payload: BuildStatusError = {
+      error: response.error,
+    };
+    return { type: BUILD_STATUS, name, payload };
+  } else if (response.lastModified) {
+    const payload: BuildStatusSuccess = {
+      lastModified: response.lastModified,
+    };
+    if (response.version !== undefined) {
+      payload.version = response.version.replace(/^LWJGL\s+/, '');
+    }
+    return { type: BUILD_STATUS, name, payload };
+  }
+
+  return { type: BUILD_STATUS, name, payload: { error: 'Unknown' } };
+};
+
+type Action =
+  | ExtractReturn<typeof storeStatus>
+  | ExtractReturn<typeof changeType>
+  | ExtractReturn<typeof changeMode>
+  | ExtractReturn<typeof changePreset>
+  | ExtractReturn<typeof changeLanguage>
+  | ExtractReturn<typeof changeVersion>
+  | ExtractReturn<typeof toggleDescriptions>
+  | ExtractReturn<typeof toggleSource>
+  | ExtractReturn<typeof toggleJavadoc>
+  | ExtractReturn<typeof toggleOSGi>
+  | ExtractReturn<typeof toggleCompact>
+  | ExtractReturn<typeof toggleHardcoded>
+  | ExtractReturn<typeof toggleArtifact>
+  | ExtractReturn<typeof togglePlatform>
+  | ExtractReturn<typeof toggleAddon>
+  | ExtractReturn<typeof downloadInit>
+  | ExtractReturn<typeof downloadComplete>
+  | ExtractReturn<typeof downloadLog>
+  | ExtractReturn<typeof configLoad>
+  | ExtractReturn<typeof configDownload>
+  | ExtractReturn<typeof reset>;
+
+async function fetchStatus(url: string) {
+  const response = await fetch(url);
+
+  if (response.status !== 200) {
+    throw new Error(response.statusText);
+  }
+
+  return await response.json();
+}
+
+export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getState: () => any) => {
+  let result;
+  let url = `/build/${name}`;
+
+  if (name === 'release') {
+    url += `/${getState().build.versions[0]}`;
+  }
+
+  try {
+    result = await fetchStatus(url);
+  } catch (err) {
+    result = { error: err.message };
+  }
+
+  dispatch(storeStatus(name, result));
+};
+
 // Reducer
 
-const nativeCnt = config.natives.allIds.length;
+export default function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
+  switch (action.type) {
+    case BUILD_STATUS:
+      return saveStatus({ ...state }, action.name, action.payload);
+
+    case SELECT_TYPE:
+      if (action.build !== state.build && state.downloading === false) {
+        return selectBuild({ ...state }, action.build);
+      }
+      break;
+
+    case SELECT_MODE:
+      if (state.build !== BUILD_STABLE && state.mode !== action.mode) {
+        return selectMode({ ...state }, action.mode);
+      }
+      break;
+
+    case TOGGLE_DESCRIPTIONS:
+      return { ...state, descriptions: action.descriptions };
+
+    case TOGGLE_COMPACT:
+      if (state.mode === MODE_MAVEN || state.mode === MODE_IVY) {
+        return { ...state, compact: action.compact };
+      }
+      break;
+
+    case TOGGLE_HARDCODED:
+      if (state.mode !== MODE_ZIP) {
+        return { ...state, hardcoded: action.hardcoded };
+      }
+      break;
+
+    case TOGGLE_JAVADOC:
+      if (state.mode === MODE_ZIP) {
+        return { ...state, javadoc: action.javadoc };
+      }
+      break;
+
+    case TOGGLE_SOURCE:
+      if (state.mode === MODE_ZIP) {
+        return { ...state, source: action.source };
+      }
+      break;
+
+    case TOGGLE_OSGI:
+      if (state.mode !== MODE_ZIP && state.build === BUILD_RELEASE) {
+        return { ...state, osgi: action.osgi };
+      }
+      break;
+
+    case SELECT_PRESET:
+      if (state.preset !== action.preset) {
+        return selectPreset({ ...state }, action.preset);
+      }
+      break;
+
+    case SELECT_LANGUAGE:
+      // not implemented
+      break;
+
+    case TOGGLE_PLATFORM:
+      if (state.mode === MODE_ZIP) {
+        const selections = state.natives.allIds.reduce(
+          (previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0),
+          0
+        );
+        if (selections > 1 || state.platform[action.platform] === false) {
+          return computeArtifacts({
+            ...state,
+            platform: { ...state.platform, [action.platform]: !state.platform[action.platform] },
+          });
+        }
+      }
+      break;
+
+    case SELECT_VERSION:
+      if (state.build === BUILD_RELEASE && state.version !== action.version) {
+        return selectVersion({ ...state }, action.version);
+      }
+      break;
+
+    case TOGGLE_ARTIFACT:
+      if (action.artifact !== 'lwjgl') {
+        return doToggleArtifact({ ...state }, action.artifact);
+      }
+      break;
+
+    case TOGGLE_ADDON:
+      return doToggleAddon({ ...state }, action.addon);
+
+    case DOWNLOAD_INIT:
+      if (state.mode === MODE_ZIP && state.downloading === false) {
+        return { ...state, downloading: true, progress: [] };
+      }
+      break;
+
+    case DOWNLOAD_LOG:
+      return { ...state, progress: [...state.progress, action.message] };
+
+    case DOWNLOAD_COMPLETE:
+      if (action.error !== undefined) {
+        alert(action.error);
+      }
+      return { ...state, downloading: false };
+
+    case RESET:
+      if (state.downloading) {
+        // TODO: Cancel fetch when browsers start supporting it
+        return { ...state, downloading: false };
+      }
+      break;
+
+    case CONFIG_LOAD:
+      return loadConfig({ ...state }, action.payload);
+  }
+
+  return state;
+}
 
 const computeArtifacts = (state: BuildConfig) => {
   if (state.build === null) {
@@ -60,7 +270,7 @@ const computeArtifacts = (state: BuildConfig) => {
     state.availability[it] =
       state.mode !== MODE_ZIP ||
       artifact.natives === undefined ||
-      artifact.natives.length === nativeCnt ||
+      artifact.natives.length === config.natives.allIds.length ||
       artifact.natives.some((platform: NATIVES) => !!state.platform[platform]);
   });
 
@@ -77,7 +287,7 @@ const computeArtifacts = (state: BuildConfig) => {
   return state;
 };
 
-const selectBuild = (state: BuildConfig, build: BUILD_TYPES) => {
+const selectBuild = (state: BuildConfig, build: BUILD_TYPES | null) => {
   state.build = build;
   if (build !== null) {
     computeArtifacts(state);
@@ -238,196 +448,4 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
 const saveStatus = (state: BuildConfig, name: BUILD_TYPES, payload: BuildStatus) => {
   state.builds.byId[name].status = payload;
   return state;
-};
-
-export default function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
-  switch (action.type) {
-    case BUILD_STATUS:
-      return saveStatus({ ...state }, action.name, action.payload);
-
-    case SELECT_TYPE:
-      if (action.build !== state.build && state.downloading === false) {
-        return selectBuild({ ...state }, action.build);
-      }
-      break;
-
-    case SELECT_MODE:
-      if (state.build !== BUILD_STABLE && state.mode !== action.mode) {
-        return selectMode({ ...state }, action.mode);
-      }
-      break;
-
-    case TOGGLE_DESCRIPTIONS:
-      return { ...state, descriptions: action.descriptions };
-
-    case TOGGLE_COMPACT:
-      if (state.mode === MODE_MAVEN || state.mode === MODE_IVY) {
-        return { ...state, compact: action.compact };
-      }
-      break;
-
-    case TOGGLE_HARDCODED:
-      if (state.mode !== MODE_ZIP) {
-        return { ...state, hardcoded: action.hardcoded };
-      }
-      break;
-
-    case TOGGLE_JAVADOC:
-      if (state.mode === MODE_ZIP) {
-        return { ...state, javadoc: action.javadoc };
-      }
-      break;
-
-    case TOGGLE_SOURCE:
-      if (state.mode === MODE_ZIP) {
-        return { ...state, source: action.source };
-      }
-      break;
-
-    case TOGGLE_OSGI:
-      if (state.mode !== MODE_ZIP && state.build === BUILD_RELEASE) {
-        return { ...state, osgi: action.osgi };
-      }
-      break;
-
-    case SELECT_PRESET:
-      if (state.preset !== action.preset) {
-        return selectPreset({ ...state }, action.preset);
-      }
-      break;
-
-    case SELECT_LANGUAGE:
-      // not implemented
-      break;
-
-    case TOGGLE_PLATFORM:
-      if (state.mode === MODE_ZIP) {
-        const selections = state.natives.allIds.reduce(
-          (previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0),
-          0
-        );
-        if (selections > 1 || state.platform[action.platform] === false) {
-          return computeArtifacts({
-            ...state,
-            platform: { ...state.platform, [action.platform]: !state.platform[action.platform] },
-          });
-        }
-      }
-      break;
-
-    case SELECT_VERSION:
-      if (state.build === BUILD_RELEASE && state.version !== action.version) {
-        return selectVersion({ ...state }, action.version);
-      }
-      break;
-
-    case TOGGLE_ARTIFACT:
-      if (action.artifact !== 'lwjgl') {
-        return doToggleArtifact({ ...state }, action.artifact);
-      }
-      break;
-
-    case TOGGLE_ADDON:
-      return doToggleAddon({ ...state }, action.addon);
-
-    case DOWNLOAD_INIT:
-      if (state.mode === MODE_ZIP && state.downloading === false) {
-        return { ...state, downloading: true, progress: [] };
-      }
-      break;
-
-    case DOWNLOAD_LOG:
-      return { ...state, progress: [...state.progress, action.message] };
-
-    case DOWNLOAD_COMPLETE:
-      if (action.error !== undefined) {
-        alert(action.error);
-      }
-      return { ...state, downloading: false };
-
-    case RESET:
-      if (state.downloading) {
-        // TODO: Cancel fetch when browsers start supporting it
-        return { ...state, downloading: false };
-      }
-      break;
-
-    case CONFIG_LOAD:
-      return loadConfig({ ...state }, action.payload);
-  }
-
-  return state;
-}
-
-// Action Creators
-
-export const changeType = (type: string | null) => ({ type: SELECT_TYPE, build: type });
-export const changeMode = (mode: string) => ({ type: SELECT_MODE, mode });
-export const changePreset = (preset: string) => ({ type: SELECT_PRESET, preset });
-export const changeLanguage = (language: string) => ({ type: SELECT_LANGUAGE, language });
-export const changeVersion = (version: string) => ({ type: SELECT_VERSION, version });
-
-export const toggleDescriptions = (enabled: boolean) => ({ type: TOGGLE_DESCRIPTIONS, descriptions: enabled });
-export const toggleSource = (enabled: boolean) => ({ type: TOGGLE_SOURCE, source: enabled });
-export const toggleJavadoc = (enabled: boolean) => ({ type: TOGGLE_JAVADOC, javadoc: enabled });
-export const toggleOSGi = (enabled: boolean) => ({ type: TOGGLE_OSGI, osgi: enabled });
-export const toggleCompact = (enabled: boolean) => ({ type: TOGGLE_COMPACT, compact: enabled });
-export const toggleHardcoded = (enabled: boolean) => ({ type: TOGGLE_HARDCODED, hardcoded: enabled });
-export const toggleArtifact = (artifact: string) => ({ type: TOGGLE_ARTIFACT, artifact });
-export const togglePlatform = (platform: string) => ({ type: TOGGLE_PLATFORM, platform });
-export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
-
-export const downloadInit = () => ({ type: DOWNLOAD_INIT });
-export const downloadComplete = (error?: string) => ({ type: DOWNLOAD_COMPLETE, error });
-export const downloadLog = (message: string) => ({ type: DOWNLOAD_LOG, message });
-
-export const configLoad = (payload: {}) => ({ type: CONFIG_LOAD, payload });
-export const configDownload = () => ({ type: CONFIG_DOWNLOAD });
-
-export const reset = () => ({ type: RESET });
-
-export const storeStatus = (name: BUILD_TYPES, response: BuildStatus): ActionStore => {
-  if (response.error) {
-    const payload: BuildStatusError = {
-      error: response.error,
-    };
-    return { type: BUILD_STATUS, name, payload };
-  } else if (response.lastModified) {
-    const payload: BuildStatusSuccess = {
-      lastModified: response.lastModified,
-    };
-    if (response.version !== undefined) {
-      payload.version = response.version.replace(/^LWJGL\s+/, '');
-    }
-    return { type: BUILD_STATUS, name, payload };
-  }
-
-  return { type: BUILD_STATUS, name, payload: { error: 'Unknown' } };
-};
-
-async function fetchStatus(url: string) {
-  const response = await fetch(url);
-
-  if (response.status !== 200) {
-    throw new Error(response.statusText);
-  }
-
-  return await response.json();
-}
-
-export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getState: () => any) => {
-  let result;
-  let url = `/build/${name}`;
-
-  if (name === 'release') {
-    url += `/${getState().build.versions[0]}`;
-  }
-
-  try {
-    result = await fetchStatus(url);
-  } catch (err) {
-    result = { error: err.message };
-  }
-
-  dispatch(storeStatus(name, result));
 };
