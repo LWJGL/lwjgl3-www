@@ -113,7 +113,6 @@
     "manifest": "node ./scripts/process-manifest.js",
     "release": "yarn run styles && yarn run production && yarn run manifest",
     "deploy": "node ./scripts/deploy.js",
-    "prettier": "prettier",
     "format": "prettier --write \"{client,server,scripts}/**/*.js*\"",
     "format-styles": "prettier --write \"client/styles/**/*.scss*\"",
     "flow": "flow"

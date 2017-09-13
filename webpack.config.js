@@ -3,8 +3,6 @@
 const path = require('path');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
-const ProvidePlugin = require('webpack/lib/ProvidePlugin');
-const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
 
 const { argv } = require('yargs');
 const config = require('./config.json');
@@ -165,11 +163,11 @@ const buildConfiguration = () => {
       });
     }
   } else {
+    const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
     const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
+    const ShakePlugin = require('webpack-common-shake').Plugin;
     const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
     const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-    const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
-    const ShakePlugin = require('webpack-common-shake').Plugin;
 
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
