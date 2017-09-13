@@ -1,3 +1,7 @@
+// Helper
+type _ExtractReturn<B, F: (...args: any[]) => B> = B;
+declare type ExtractReturn<F> = _ExtractReturn<*, F>;
+
 // Webpack globals
 declare var NOHMR: boolean;
 declare var CSSMODULES: boolean;
