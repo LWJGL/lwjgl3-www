@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import BuildStatus from './BuildStatus';
-import classnames from 'classnames';
+import wrap from 'classwrap';
 
 import { connect } from 'react-redux';
 // import { connect } from '~/services/connect';
@@ -125,7 +125,7 @@ class BuildType extends React.Component<Props> {
     return (
       <BuildBox
         onClick={this.select}
-        className={classnames({
+        className={wrap({
           [build]: true,
           selected: isSelected,
           active: isActive,

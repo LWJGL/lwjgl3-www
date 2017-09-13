@@ -7,7 +7,7 @@ import { IS_IOS } from '~/services/ua';
 import supportsPassive from '~/services/supports-passive';
 import { connect } from 'react-redux';
 import { css } from 'emotion';
-import classnames from 'classnames';
+import wrap from 'classwrap';
 import type { ContextRouter } from 'react-router-dom';
 import { COLOR_PRIMARY } from '~/theme';
 
@@ -142,13 +142,16 @@ class Header extends React.PureComponent<Props, State> {
     return (
       <header
         role="navigation"
-        className={classnames(HEADER_CLASSNAME, {
-          [styleHome]: isHome,
-          [styleOpaque]: !isHome || !top,
-          alt: IS_IOS,
-          fixed,
-          hidden,
-        })}
+        className={wrap([
+          HEADER_CLASSNAME,
+          {
+            [styleHome]: isHome,
+            [styleOpaque]: !isHome || !top,
+            alt: IS_IOS,
+            fixed,
+            hidden,
+          },
+        ])}
         style={{ top: pos }}
       >
         <nav className="container-fluid">

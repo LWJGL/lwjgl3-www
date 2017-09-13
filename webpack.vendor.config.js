@@ -48,8 +48,8 @@ const config = {
       // 'redux-logger',
 
       // UI
-      'classnames',
       'emotion',
+      'classwrap',
       'focus-trap',
       'nprogress',
 

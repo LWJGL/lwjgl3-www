@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Checkbox from '~/components/Checkbox';
 import { toggleArtifact } from '../reducer';
-import classnames from 'classnames';
+import wrap from 'classwrap';
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 
 import IconWindows from 'react-icons/fa/windows';
@@ -56,7 +56,7 @@ class BuildArtifact extends React.Component<Props> {
 
     if (showDescriptions) {
       return (
-        <div className={classnames('artifact', { 'text-muted': disabled })}>
+        <div className={wrap(['artifact', { 'text-muted': disabled }])}>
           <Checkbox label={artifact.title} disabled={disabled} checked={checked} onChange={this.toggle} />
           {artifact.natives && getPlatformIcons(artifact.natives)}
           <p>{artifact.description}</p>
