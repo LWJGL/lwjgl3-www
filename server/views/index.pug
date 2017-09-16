@@ -23,7 +23,8 @@ block content
     script(src=`/js/vendor.js`)
   if ( msie === true)
     //- Required for React 16+
+    <!--[if IE]>
     script.
       if(!('requestAnimationFrame' in window))requestAnimationFrame=function(cb){setTimeout(cb)}
-  <![endif]-->
+    <![endif]-->
   script(src=`/js/${entry}` defer)
