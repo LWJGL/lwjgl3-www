@@ -32,7 +32,7 @@
   background-image: radial-gradient(circle, $inner-color, $outer-color);
   background-repeat: no-repeat;
 }
-@mixin gradient-striped($color: rgba(255,255,255,.15), $angle: 45deg) {
+@mixin gradient-striped($color: rgba(255,255,255,0.15), $angle: 45deg) {
   background-image: linear-gradient(
     $angle,
     $color 25%,

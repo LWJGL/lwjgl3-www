@@ -1,7 +1,7 @@
 .custom-toggle {
   .custom-control-indicator {
     width: 1.5rem;
-    left: -.25rem;
+    left: -0.25rem;
     @include border-radius(1rem);
     background: darken($custom-control-indicator-bg, 10%);
 
