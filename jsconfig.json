@@ -7,5 +7,5 @@
       "~/*": ["./client/*"]
     }
   },
-  "exclude": [".idea", ".vscode", ".cache-loader", "node_modules", "public"]
+  "exclude": [".idea", ".vscode", ".history", ".cache-loader", "node_modules", "public"]
 }
