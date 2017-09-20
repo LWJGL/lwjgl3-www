@@ -5,8 +5,8 @@ import RadioGroup from './RadioGroup';
 import Radio from './Radio';
 
 type OwnProps = {
-  name: string,
   spec: {
+    name: string,
     value: (state: any, props: OwnProps) => mixed,
     options: (state: any, props: OwnProps) => any,
     hidden?: (state: any, props: OwnProps) => boolean,
@@ -20,37 +20,44 @@ type Option = {
   disabled: boolean,
 };
 
-type Props = OwnProps & {
+type ConnectedProps = {
   value: any,
-  hidden: boolean,
   options: Array<Option>,
-  dispatch: (action: any) => void,
+  hidden: boolean,
 };
+
+type Props = OwnProps & ConnectedProps;
 
 class ControlledRadio extends React.Component<Props, void> {
   select = (value: any) => {
+    // $FlowFixMe
     this.props.dispatch(this.props.spec.action(value));
   };
 
   render() {
-    const { name, value, options } = this.props;
+    const { spec: { name }, value, options } = this.props;
 
     return (
       <RadioGroup value={value} onChange={this.select}>
         {options.map((radio, i) => (
-          <Radio key={`${name}${i}`} value={radio.value} label={radio.label} disabled={radio.disabled} />
+          <Radio
+            key={`${name}-${typeof radio.value === 'string' ? radio.value : i}`}
+            value={radio.value}
+            label={radio.label}
+            disabled={radio.disabled}
+          />
         ))}
       </RadioGroup>
     );
   }
 }
 
-export default connect((state: any, ownProps: OwnProps) => {
+export default connect((state: Object, ownProps: OwnProps): ConnectedProps => {
   const spec = ownProps.spec;
 
   return {
     value: spec.value(state, ownProps),
     options: spec.options(state, ownProps),
-    hidden: spec.hidden && spec.hidden(state, ownProps),
+    hidden: spec.hidden !== undefined && spec.hidden(state, ownProps),
   };
 })(ControlledRadio);

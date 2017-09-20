@@ -2,11 +2,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-type Props = {
+type ConnectedProps = {
   version: string,
 };
 
-class BuildReleaseNotes extends React.Component<Props> {
+class BuildReleaseNotes extends React.Component<ConnectedProps> {
   render() {
     const v = this.props.version;
     return (
@@ -19,8 +19,6 @@ class BuildReleaseNotes extends React.Component<Props> {
   }
 }
 
-export default connect(state => {
-  return {
-    version: state.build.version,
-  };
-})(BuildReleaseNotes);
+export default connect((state: Object): ConnectedProps => ({
+  version: state.build.version,
+}))(BuildReleaseNotes);

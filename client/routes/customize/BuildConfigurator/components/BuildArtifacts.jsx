@@ -3,11 +3,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import BuildArtifact from './BuildArtifact';
 
-type Props = {
+type ConnectedProps = {
   artifacts: Array<string>,
 };
 
-class BuildArtifacts extends React.Component<Props> {
+class BuildArtifacts extends React.Component<ConnectedProps> {
   render() {
     return (
       <div className="custom-controls-stacked">
@@ -17,6 +17,6 @@ class BuildArtifacts extends React.Component<Props> {
   }
 }
 
-export default connect(state => ({
+export default connect((state: Object): ConnectedProps => ({
   artifacts: state.build.artifacts.allIds,
 }))(BuildArtifacts);

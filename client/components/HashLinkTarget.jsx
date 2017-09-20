@@ -1,15 +1,17 @@
 // @flow
 import * as React from 'react';
-import { withRouter } from 'react-router-dom';
-import type { Location } from 'react-router-dom';
+import { Route, type Location } from 'react-router-dom';
 import smoothScroll from '~/services/smoothscroll';
 
-type Props = {
-  location: Location,
+type OwnProps = {
   id: string,
 };
 
-class HashLinkTarget extends React.Component<Props, void> {
+type Props = OwnProps & {
+  location: Location,
+};
+
+class HashLinkTarget extends React.Component<Props> {
   componentDidMount() {
     if (this.props.location.hash === `#${this.props.id}`) {
       this.scrollToTarget();
@@ -42,4 +44,8 @@ class HashLinkTarget extends React.Component<Props, void> {
   }
 }
 
-export default withRouter(HashLinkTarget);
+const HashLinkTargetRoute = ({ id }: OwnProps) => (
+  <Route render={({ location }) => <HashLinkTarget id={id} location={location} />} />
+);
+
+export default HashLinkTargetRoute;

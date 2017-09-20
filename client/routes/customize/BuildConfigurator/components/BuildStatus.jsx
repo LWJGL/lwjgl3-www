@@ -2,9 +2,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import LoaderSpinner from '~/components/LoaderSpinner';
-import { loadStatus } from '../reducer';
+import { loadStatus, typeof loadStatus as LoadStatusType } from '../reducer';
 import type { BuildStatus as BuildStatusType, BUILD_TYPES } from '../types';
-import typeof { loadStatus as LoadStatusType } from '../reducer';
 
 type OwnProps = {
   name: BUILD_TYPES,

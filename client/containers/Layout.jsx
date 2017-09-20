@@ -11,7 +11,7 @@ import Miss404 from '../routes/miss404';
 
 const Layout = () => [
   <Helmet key="helmet" titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />,
-  <Header key="header" />,
+  <Route key="header" render={({ location: { pathname } }) => <Header pathname={pathname} />} />,
 
   <Switch key="router">
     <Route path="/" exact={true} strict={true} component={Home} />

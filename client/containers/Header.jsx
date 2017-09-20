@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { withRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
 import { IS_IOS } from '~/services/ua';
@@ -8,16 +8,19 @@ import supportsPassive from '~/services/supports-passive';
 import { connect } from 'react-redux';
 import { css } from 'emotion';
 import wrap from 'classwrap';
-import type { ContextRouter } from 'react-router-dom';
 import { COLOR_PRIMARY } from '~/theme';
 
 const HEADER_CLASSNAME = 'site-header';
 
-type HeaderProps = {
+type OwnProps = {
+  pathname: string,
+};
+
+type ConnectedProps = {
   desktop: boolean,
 };
 
-type Props = HeaderProps & ContextRouter;
+type Props = OwnProps & ConnectedProps;
 
 type State = {
   pos: number,
@@ -137,7 +140,7 @@ class Header extends React.PureComponent<Props, State> {
 
   render() {
     const { pos, top, fixed, hidden } = this.state;
-    const isHome = this.props.location.pathname === '/';
+    const isHome = this.props.pathname === '/';
 
     return (
       <header
@@ -174,8 +177,6 @@ class Header extends React.PureComponent<Props, State> {
 }
 
 // force re-rendering when route changes
-export default withRouter(
-  connect(state => ({
-    desktop: state.breakpoint.current > state.breakpoint.md,
-  }))(Header)
-);
+export default connect((state: Object): ConnectedProps => ({
+  desktop: state.breakpoint.current > state.breakpoint.md,
+}))(Header);

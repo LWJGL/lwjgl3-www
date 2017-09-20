@@ -3,11 +3,11 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import LoaderSpinner from '~/components/LoaderSpinner';
 
-type Props = {
+type ConnectedProps = {
   progress: Array<string>,
 };
 
-class BuildBundler extends React.Component<Props> {
+class BuildBundler extends React.Component<ConnectedProps> {
   componentDidMount() {
     document.getElementsByClassName('config-container')[0].scrollIntoView(true);
   }
@@ -30,6 +30,6 @@ class BuildBundler extends React.Component<Props> {
   }
 }
 
-export default connect(state => ({
+export default connect((state: Object): ConnectedProps => ({
   progress: state.build.progress,
 }))(BuildBundler);

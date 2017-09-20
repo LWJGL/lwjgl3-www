@@ -15,13 +15,11 @@ type ConnectedProps = {
 
 type Props = OwnProps & ConnectedProps;
 
-type PanelElement = Props => React$Element<*> | null;
-
-const Panel: PanelElement = ({ children, hidden, className }: Props) => {
+const Panel = ({ children, hidden, className }: Props) => {
   return hidden ? null : <div className={className}>{children}</div>;
 };
 
-export default (connect((state: any, props: OwnProps) => {
+export default connect((state: Object, props: OwnProps): ConnectedProps => {
   const map: ConnectedProps = {
     hidden: props.predicate && !props.predicate(state),
   };
@@ -31,4 +29,4 @@ export default (connect((state: any, props: OwnProps) => {
   }
 
   return map;
-})(Panel): Class<React$Component<OwnProps, void>>);
+})(Panel);

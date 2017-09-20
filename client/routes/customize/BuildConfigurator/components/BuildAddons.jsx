@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import BuildAddon from './BuildAddon';
 import type { BuildConfig } from '../types';
 
-type Props = {
+type ConnectedProps = {
   addons: Array<string>,
 };
 
-class BuildAddons extends React.Component<Props> {
+class BuildAddons extends React.Component<ConnectedProps> {
   render() {
     const { addons } = this.props;
 
@@ -16,6 +16,6 @@ class BuildAddons extends React.Component<Props> {
   }
 }
 
-export default connect(({ build }: { build: BuildConfig }) => ({
+export default connect(({ build }: { build: BuildConfig }): ConnectedProps => ({
   addons: build.addons.allIds,
 }))(BuildAddons);
