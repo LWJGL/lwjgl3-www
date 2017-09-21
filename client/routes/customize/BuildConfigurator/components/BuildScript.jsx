@@ -194,7 +194,7 @@ function generateGradle(props: Props) {
   const version = getVersion(props.version, build);
   let script = '';
   let nativesBundle = '';
-  const v = hardcoded ? version : '${lwjglVersion}';
+  const v = hardcoded ? version : '$lwjglVersion';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
   script += `import org.gradle.internal.os.OperatingSystem
@@ -234,7 +234,7 @@ switch ( OperatingSystem.current() ) {
   selected.forEach(artifact => {
     script += `\n\tcompile "${groupId}:${artifact}:${v}"`;
     if (artifacts[artifact].natives !== undefined) {
-      nativesBundle += `\n\truntime "${groupId}:${artifact}:${v}:\${lwjglNatives}"`;
+      nativesBundle += `\n\truntime "${groupId}:${artifact}:${v}:\$lwjglNatives"`;
     }
   });
 
