@@ -17,6 +17,7 @@ import lwjgl_300 from './lwjgl/3.0.0';
 import lwjgl_310 from './lwjgl/3.1.0';
 import lwjgl_311 from './lwjgl/3.1.1';
 import lwjgl_312 from './lwjgl/3.1.2';
+import lwjgl_313 from './lwjgl/3.1.3';
 import lwjgl_stable from './lwjgl/stable';
 import lwjgl_nightly from './lwjgl/nightly';
 
@@ -246,7 +247,7 @@ build.allIds = Object.keys(build.byId).sort();
 config.lwjgl[build.version] = build;
 
 // Generate all other LWJGL3 builds using previous build
-const builders: Array<BuildOptionsBuilder> = [lwjgl_310, lwjgl_311, lwjgl_312, lwjgl_stable, lwjgl_nightly];
+const builders: Array<BuildOptionsBuilder> = [lwjgl_310, lwjgl_311, lwjgl_312, lwjgl_313, lwjgl_stable, lwjgl_nightly];
 builders.reduce((previousBuild: BuildOptions, nextBuildConfig: BuildOptionsBuilder) => {
   const build = nextBuildConfig(previousBuild);
   build.allIds = Object.keys(build.byId).sort();
