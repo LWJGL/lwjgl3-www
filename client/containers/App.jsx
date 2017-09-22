@@ -5,7 +5,7 @@ import Layout from './Layout';
 
 // Pull common modules that we want preloaded in the main chunk
 import 'emotion';
-import 'emotion/react';
+import 'react-emotion';
 import './PageView';
 
 const supportsHistory = 'pushState' in window.history;

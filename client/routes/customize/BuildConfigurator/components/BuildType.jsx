@@ -10,7 +10,7 @@ import { changeType } from '../reducer';
 import type { BUILD_TYPES, Build } from '../types';
 
 import IconClose from 'react-icons/md/close';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import {
   COLOR_RELEASE,
@@ -33,11 +33,11 @@ const BuildBox = styled.div`
   position: relative;
   z-index: 1;
 
-  & > h2 {
+  > h2 {
     font-weight: normal;
   }
 
-  & > p {
+  > p {
     color: ${COLOR_PRIMARY.toString()};
     margin: 0;
   }
@@ -64,7 +64,7 @@ const BuildBox = styled.div`
     }
   }
 
-  & .svg-icon {
+  .svg-icon {
     display: none;
   }
 

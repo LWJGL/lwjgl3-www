@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 // import { connect } from '~/services/connect';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BUILD_TYPES } from '../types';
 
@@ -41,29 +41,29 @@ const ConfigPanel = styled.div`
     border-style: solid;
   }
 
-  & p {
+  p {
     line-height: 1.5rem;
   }
 
-  & .artifact {
+  .artifact {
     margin-bottom: 1.25rem;
 
-    & a {
+    a {
       word-wrap: break-word;
     }
 
-    & svg {
+    svg {
       margin-right: 0.5rem;
     }
 
-    & p {
+    p {
       margin-left: 1.5rem;
       margin-bottom: 0.25rem;
       font-size: ${SMALL_FONT_SIZE};
     }
   }
 
-  & pre {
+  pre {
     background-color: #ffffe6;
     font-size: 13px;
     line-height: 1rem;
@@ -71,7 +71,7 @@ const ConfigPanel = styled.div`
     tab-size: 4;
   }
 
-  & .download-toolbar {
+  .download-toolbar {
     background: ${COLOR_PRIMARY.l(COLOR_PRIMARY.lightness + 5).hsl()};
     padding: 1rem 0;
     text-align: center;
@@ -80,7 +80,7 @@ const ConfigPanel = styled.div`
     bottom: 0;
     width: 100%;
 
-    & .btn + .btn {
+    .btn + .btn {
       margin-left: 0.5rem;
     }
 

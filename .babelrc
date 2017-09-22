@@ -2,8 +2,8 @@
   "env": {
     "development": {
       "plugins": [
-        "react-hot-loader/babel",
         "emotion",
+        "react-hot-loader/babel",
         "syntax-jsx",
         "syntax-trailing-function-commas",
         "transform-flow-strip-types",

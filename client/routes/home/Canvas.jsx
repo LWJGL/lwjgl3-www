@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import loadJS from 'fg-loadjs';
-import styled from 'emotion/react';
+import styled from 'react-emotion';
 
 declare var THREE: any;
 

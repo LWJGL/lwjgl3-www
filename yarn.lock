@@ -189,7 +189,7 @@ asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
 
-autoprefixer@7.1.4, autoprefixer@^7.1.2:
+autoprefixer@7.1.4:
   version "7.1.4"
   resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-7.1.4.tgz#960847dbaa4016bc8e8e52ec891cbf8f1257a748"
   dependencies:
@@ -211,9 +211,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.119.0:
-  version "2.119.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.119.0.tgz#461dfbde4f5814b35a39dc7ea7f327b6de394598"
+aws-sdk@2.121.0:
+  version "2.121.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.121.0.tgz#9994b1497dfc0cf882571e78401839cb0ad416de"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -471,17 +471,13 @@ babel-plugin-check-es2015-constants@7.0.0-beta.0:
   version "7.0.0-beta.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-7.0.0-beta.0.tgz#7af8e4edfc3cda0aa90d9a19c95dd8ca963b14f4"
 
-babel-plugin-emotion@7.3.2, babel-plugin-emotion@^7.3.2:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-7.3.2.tgz#2d07d990281ac680ef981326debbe115a67d436a"
+babel-plugin-emotion@8.0.2-3, babel-plugin-emotion@^8.0.2-3:
+  version "8.0.2-3"
+  resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-8.0.2-3.tgz#4ca0dc33c196d1c6506d2e450a6ee4997dbb06b9"
   dependencies:
-    autoprefixer "^7.1.2"
     babel-macros "^1.0.2"
     babel-plugin-syntax-jsx "^6.18.0"
-    emotion-utils "^7.3.1"
-    postcss "^6.0.9"
-    postcss-js "^1.0.0"
-    postcss-nested "^2.1.1"
+    emotion-utils "^8.0.2-3"
     touch "^1.0.0"
 
 babel-plugin-syntax-async-functions@7.0.0-beta.0:
@@ -1236,10 +1232,6 @@ cache-loader@1.0.3:
     loader-utils "^1.1.0"
     mkdirp "^0.5.1"
 
-camelcase-css@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/camelcase-css/-/camelcase-css-1.0.1.tgz#157c4238265f5cf94a1dffde86446552cbf3f705"
-
 camelcase-keys@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/camelcase-keys/-/camelcase-keys-2.1.0.tgz#308beeaffdf28119051efa1d932213c91b8f92e7"
@@ -1903,27 +1895,16 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
-emotion-server@^7.3.2:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/emotion-server/-/emotion-server-7.3.2.tgz#64a1727beb71fe615671bddcc674cbeb71abd52b"
-  dependencies:
-    emotion "^7.3.2"
-    emotion-utils "^7.3.1"
+emotion-utils@^8.0.2-3:
+  version "8.0.2-3"
+  resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.2-3.tgz#96980078737c82205d5bf6d66ddbec82e53f8d45"
 
-emotion-utils@^7.3.1:
-  version "7.3.1"
-  resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-7.3.1.tgz#e54446e4008a44150a45403ae0266e35b609ee36"
+emotion@8.0.2-4:
+  version "8.0.2-4"
+  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.2-4.tgz#9fa32b43c817f8b70a0474e8eb461bb9f8e925b8"
   dependencies:
-    fbjs "^0.8.12"
-
-emotion@7.3.2, emotion@^7.3.2:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-7.3.2.tgz#54d2533f2451a6b96e7bf600b54ede5ce0160fe1"
-  dependencies:
-    babel-plugin-emotion "^7.3.2"
-    emotion-server "^7.3.2"
-    emotion-utils "^7.3.1"
-    react-emotion "^7.3.2"
+    babel-plugin-emotion "^8.0.2-3"
+    emotion-utils "^8.0.2-3"
 
 encodeurl@~1.0.1:
   version "1.0.1"
@@ -2187,18 +2168,6 @@ fast-deep-equal@^1.0.0:
 fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
-
-fbjs@^0.8.12:
-  version "0.8.15"
-  resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.15.tgz#4f0695fdfcc16c37c0b07facec8cb4c4091685b9"
-  dependencies:
-    core-js "^1.0.0"
-    isomorphic-fetch "^2.1.1"
-    loose-envify "^1.0.0"
-    object-assign "^4.1.0"
-    promise "^7.1.1"
-    setimmediate "^1.0.5"
-    ua-parser-js "^0.7.9"
 
 fbjs@^0.8.9:
   version "0.8.14"
@@ -3822,13 +3791,6 @@ postcss-filter-plugins@^2.0.0:
     postcss "^5.0.4"
     uniqid "^4.0.0"
 
-postcss-js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-js/-/postcss-js-1.0.0.tgz#ccee5aa3b1970dd457008e79438165f66919ba30"
-  dependencies:
-    camelcase-css "^1.0.1"
-    postcss "^6.0.1"
-
 postcss-load-config@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/postcss-load-config/-/postcss-load-config-1.2.0.tgz#539e9afc9ddc8620121ebf9d8c3673e0ce50d28a"
@@ -3949,13 +3911,6 @@ postcss-modules-values@^1.1.0:
     icss-replace-symbols "^1.1.0"
     postcss "^6.0.1"
 
-postcss-nested@^2.1.1:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/postcss-nested/-/postcss-nested-2.1.2.tgz#04057281f9631fef684857fb0119bae04ede03c6"
-  dependencies:
-    postcss "^6.0.9"
-    postcss-selector-parser "^2.2.3"
-
 postcss-normalize-charset@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/postcss-normalize-charset/-/postcss-normalize-charset-1.1.1.tgz#ef9ee71212d7fe759c78ed162f61ed62b5cb93f1"
@@ -3999,7 +3954,7 @@ postcss-reduce-transforms@^1.0.3:
     postcss "^5.0.8"
     postcss-value-parser "^3.0.1"
 
-postcss-selector-parser@^2.0.0, postcss-selector-parser@^2.2.2, postcss-selector-parser@^2.2.3:
+postcss-selector-parser@^2.0.0, postcss-selector-parser@^2.2.2:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/postcss-selector-parser/-/postcss-selector-parser-2.2.3.tgz#f9437788606c3c9acee16ffe8d8b16297f27bb90"
   dependencies:
@@ -4053,7 +4008,7 @@ postcss@^6.0.1, postcss@^6.0.2:
     source-map "^0.5.6"
     supports-color "^4.2.0"
 
-postcss@^6.0.11, postcss@^6.0.9:
+postcss@^6.0.11:
   version "6.0.11"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-6.0.11.tgz#f48db210b1d37a7f7ab6499b7a54982997ab6f72"
   dependencies:
@@ -4317,13 +4272,12 @@ react-dom@16.0.0-rc.3:
     object-assign "^4.1.0"
     prop-types "^15.5.6"
 
-react-emotion@7.3.2, react-emotion@^7.3.2:
-  version "7.3.2"
-  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-7.3.2.tgz#f935105369641efb02d49ad063d274d1ac7bdfa3"
+react-emotion@8.0.2-3:
+  version "8.0.2-3"
+  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.2-3.tgz#b52efaae3048b3687ce5576b4c515c88ccbca28d"
   dependencies:
-    babel-plugin-emotion "^7.3.2"
-    emotion "^7.3.2"
-    emotion-utils "^7.3.1"
+    babel-plugin-emotion "^8.0.2-3"
+    emotion-utils "^8.0.2-3"
 
 react-helmet@5.2.0:
   version "5.2.0"
