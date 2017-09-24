@@ -10,6 +10,7 @@ const config = require('./config.json');
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
+const SOURCEMAP = argv.sourcemap !== undefined;
 
 const env = {
   'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
@@ -103,6 +104,10 @@ const buildConfiguration = () => {
     const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 
     config.module.rules[0].use.unshift('cache-loader');
+
+    if (SOURCEMAP) {
+      config.devtool = 'inline-source-map';
+    }
 
     // WebPack Hot Middleware client & HMR plugins
     if (HMR) {

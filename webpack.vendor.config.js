@@ -19,6 +19,7 @@ const config = {
     Buffer: false,
     setImmediate: false,
   },
+  devtool: 'inline-source-map',
   entry: {
     vendor: [
       // Polyfills

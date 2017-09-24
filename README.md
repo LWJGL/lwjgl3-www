@@ -94,6 +94,7 @@ yarn watch
 --pretty => Pretty prints HTML *(for testing production)*
 --s3proxy => Proxies S3 images *(for testing production)*
 --css => Enables CSS modules in development mode *(for SCSS HMR)*
+--sourcemap => Enables inline source-maps
 
 Flag usage example:
 
