@@ -3,6 +3,6 @@ import type { BuildOptions } from '../types';
 
 export default (prev: BuildOptions): BuildOptions => ({
   ...prev,
-  version: '3.1.3',
+  version: '3.1.4',
   alias: 'stable',
 });
