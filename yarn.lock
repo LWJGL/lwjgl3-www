@@ -211,9 +211,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.122.0:
-  version "2.122.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.122.0.tgz#d40980fdb24a07db166de91cb8813f0dc640d7c6"
+aws-sdk@2.123.0:
+  version "2.123.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.123.0.tgz#245283323ce73e3d39d0a166861451ce129ca8be"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -1835,9 +1835,9 @@ emotion-utils@^8.0.2-7:
   version "8.0.2-7"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.2-7.tgz#83f55c6d1ace6b47d02454755bfba97938812d6a"
 
-emotion@8.0.2-7:
-  version "8.0.2-7"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.2-7.tgz#08ad5245b45d9834bc2a983f9b90462650b65225"
+emotion@8.0.2-8:
+  version "8.0.2-8"
+  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.2-8.tgz#822b1ea8d042a2b21cf7a031a1a7a7aa92c29fe1"
   dependencies:
     babel-plugin-emotion "^8.0.2-7"
     emotion-utils "^8.0.2-7"
@@ -4232,9 +4232,9 @@ react-dom@16.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-emotion@8.0.2-7:
-  version "8.0.2-7"
-  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.2-7.tgz#33604d014c8db620065b562b34c5a8d5ee52db89"
+react-emotion@8.0.2-8:
+  version "8.0.2-8"
+  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.2-8.tgz#cbd09219a936f9e1ace0e9632f9257ef5b76db39"
   dependencies:
     babel-plugin-emotion "^8.0.2-7"
     emotion-utils "^8.0.2-7"
@@ -4589,9 +4589,9 @@ request@2, request@^2.79.0, request@^2.81.0:
     tunnel-agent "^0.6.0"
     uuid "^3.0.0"
 
-request@2.82.0:
-  version "2.82.0"
-  resolved "https://registry.yarnpkg.com/request/-/request-2.82.0.tgz#2ba8a92cd7ac45660ea2b10a53ae67cd247516ea"
+request@2.83.0:
+  version "2.83.0"
+  resolved "https://registry.yarnpkg.com/request/-/request-2.83.0.tgz#ca0b65da02ed62935887808e6f510381034e3356"
   dependencies:
     aws-sign2 "~0.7.0"
     aws4 "^1.6.0"
@@ -4612,7 +4612,7 @@ request@2.82.0:
     qs "~6.5.1"
     safe-buffer "^5.1.1"
     stringstream "~0.0.5"
-    tough-cookie "~2.3.2"
+    tough-cookie "~2.3.3"
     tunnel-agent "^0.6.0"
     uuid "^3.1.0"
 
@@ -5108,13 +5108,13 @@ touch@^1.0.0:
   dependencies:
     nopt "~1.0.10"
 
-tough-cookie@>=2.3.3:
+tough-cookie@>=2.3.3, tough-cookie@~2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.3.tgz#0b618a5565b6dea90bf3425d04d55edc475a7561"
   dependencies:
     punycode "^1.4.1"
 
-tough-cookie@~2.3.0, tough-cookie@~2.3.2:
+tough-cookie@~2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.2.tgz#f081f76e4c85720e6c37a5faced737150d84072a"
   dependencies:

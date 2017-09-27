@@ -8,6 +8,7 @@ export const breakpointIndex: { [BREAKPOINT]: number } = {
   lg: 3,
   xl: 4,
 };
+
 export const breakpointNames: Array<BREAKPOINT> = ['xs', 'sm', 'md', 'lg', 'xl'];
 export const breakpoints: Array<number> = [0, 576, 768, 992, 1200];
 
