@@ -5,12 +5,11 @@
 <PROJECT_ROOT>/.vscode/.*
 <PROJECT_ROOT>/public/.*
 <PROJECT_ROOT>/node_modules/babel.*
-<PROJECT_ROOT>/node_modules/fbjs/.*
-<PROJECT_ROOT>/node_modules/prop-types/.*
 <PROJECT_ROOT>/node_modules/emotion/.*
 <PROJECT_ROOT>/node_modules/emotion-server/.*
 <PROJECT_ROOT>/node_modules/emotion-utils/.*
 <PROJECT_ROOT>/node_modules/postcss.*
+.*/fbjs/.*
 
 [include]
 
