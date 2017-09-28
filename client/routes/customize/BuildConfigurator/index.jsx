@@ -155,14 +155,17 @@ const fields = {
 let restoreState = true;
 let sagaTask;
 
-type OwnProps = {};
+type OwnProps = {||};
 
-type ConnectedProps = {
+type ConnectedProps = {|
   configLoad: ({}) => void,
   reset: () => void,
-};
+|};
 
-type Props = OwnProps & ConnectedProps;
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
 
 class BuildContainer extends React.Component<Props> {
   componentDidMount() {
@@ -259,7 +262,7 @@ class BuildContainer extends React.Component<Props> {
 
 register('build', reducer);
 
-export default connect(null, {
+export default connect((state: Object, ownProps: OwnProps) => ({}), {
   reset: reset,
   configLoad: configLoad,
 })(BuildContainer);

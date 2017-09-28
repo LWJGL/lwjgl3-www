@@ -11,16 +11,21 @@ import wrap from 'classwrap';
 import { COLOR_PRIMARY } from '~/theme';
 
 const HEADER_CLASSNAME = 'site-header';
+const styleOpaque = css`background-color: ${COLOR_PRIMARY.hsl()};`;
+const styleHome = css`transition: background-color 0.5s ease-out;`;
 
-type OwnProps = {
+type OwnProps = {|
   pathname: string,
-};
+|};
 
-type ConnectedProps = {
+type ConnectedProps = {|
   desktop: boolean,
-};
+|};
 
-type Props = OwnProps & ConnectedProps;
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
 
 type State = {
   pos: number,
@@ -28,9 +33,6 @@ type State = {
   fixed: boolean,
   hidden: boolean,
 };
-
-const styleOpaque = css`background-color: ${COLOR_PRIMARY.hsl()};`;
-const styleHome = css`transition: background-color 0.5s ease-out;`;
 
 class Header extends React.PureComponent<Props, State> {
   prev = 0;
@@ -177,6 +179,9 @@ class Header extends React.PureComponent<Props, State> {
 }
 
 // force re-rendering when route changes
-export default connect((state: Object): ConnectedProps => ({
-  desktop: state.breakpoint.current > state.breakpoint.md,
-}))(Header);
+export default connect(
+  (state: Object) => ({
+    desktop: state.breakpoint.current > state.breakpoint.md,
+  }),
+  () => ({})
+)(Header);

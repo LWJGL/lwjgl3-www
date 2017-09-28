@@ -5,18 +5,21 @@ import LoaderSpinner from '~/components/LoaderSpinner';
 import { loadStatus, typeof loadStatus as LoadStatusType } from '../reducer';
 import type { BuildStatus as BuildStatusType, BUILD_TYPES } from '../types';
 
-type OwnProps = {
+type OwnProps = {|
   name: BUILD_TYPES,
-};
+|};
 
-type ConnectProps = {
+type ConnectedProps = {|
   loadStatus: LoadStatusType,
   status: BuildStatusType,
-};
+|};
 
-type Props = OwnProps & ConnectProps;
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
 
-class BuildStatus extends React.Component<Props, void> {
+class BuildStatus extends React.Component<Props> {
   componentDidMount() {
     const { name, loadStatus, status } = this.props;
 
@@ -40,6 +43,11 @@ class BuildStatus extends React.Component<Props, void> {
   }
 }
 
-export default connect((state: any, props: OwnProps) => ({ status: state.build.builds.byId[props.name].status }), {
-  loadStatus,
-})(BuildStatus);
+export default connect(
+  (state: any, ownProps: OwnProps) => ({
+    status: state.build.builds.byId[ownProps.name].status,
+  }),
+  {
+    loadStatus,
+  }
+)(BuildStatus);

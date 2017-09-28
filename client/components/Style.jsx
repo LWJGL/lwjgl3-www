@@ -6,7 +6,7 @@ type Props = {
   loader: CSSModule,
 };
 
-class Style extends React.Component<Props, void> {
+class Style extends React.Component<Props> {
   componentDidMount() {
     this.props.loader.use();
   }

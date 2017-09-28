@@ -8,19 +8,22 @@ import File from './File';
 import IconCloud from 'react-icons/fa/cloud';
 import IconArrowRight from 'react-icons/fa/chevron-right';
 
-type OwnProps = {
+type OwnProps = {|
   path: string,
   parent: string,
   folders: Array<string>,
   files: Array<string>,
   loading: boolean,
-};
+|};
 
-type ConnectedProps = {
+type ConnectedProps = {|
   loadPath: string => void,
-};
+|};
 
-type Props = OwnProps & ConnectedProps;
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
 
 class Browser extends React.Component<Props> {
   componentDidMount() {
@@ -48,7 +51,7 @@ class Browser extends React.Component<Props> {
           {props.parent && (
             <tr>
               <FolderName scope="row" onClick={this.goBack} colSpan={2}>
-                …
+                &hellip;
               </FolderName>
             </tr>
           )}

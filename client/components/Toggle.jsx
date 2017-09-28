@@ -10,7 +10,7 @@ type Props = {
   onChange?: (value: any) => mixed,
 };
 
-class Toggle extends React.PureComponent<Props, void> {
+class Toggle extends React.PureComponent<Props> {
   static defaultProps = {
     checked: false,
     disabled: false,

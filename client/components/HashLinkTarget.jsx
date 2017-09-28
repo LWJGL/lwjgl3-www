@@ -3,13 +3,14 @@ import * as React from 'react';
 import { Route, type Location } from 'react-router-dom';
 import smoothScroll from '~/services/smoothscroll';
 
-type OwnProps = {
+type OwnProps = {|
   id: string,
-};
+|};
 
-type Props = OwnProps & {
+type Props = {|
+  ...OwnProps,
   location: Location,
-};
+|};
 
 class HashLinkTarget extends React.Component<Props> {
   componentDidMount() {

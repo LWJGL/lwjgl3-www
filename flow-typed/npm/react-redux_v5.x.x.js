@@ -30,10 +30,10 @@ declare module 'react-redux' {
   declare type Context = { store: Store<*, *> };
 
   declare class ConnectedComponent<OP, P> extends React$Component<OP> {
-    static WrappedComponent: Class<React$Component<P>>,
-    getWrappedInstance(): React$Component<P>,
-    props: OP,
-    state: void,
+    static WrappedComponent: Class<React$Component<P>>;
+    getWrappedInstance(): React$Component<P>;
+    props: OP;
+    state: void;
   }
 
   declare type ConnectedComponentClass<OP, P> = Class<ConnectedComponent<OP, P>>;

@@ -5,7 +5,7 @@ type Props = {
   location: 'string',
 };
 
-class ScrollToMe extends React.Component<Props, void> {
+class ScrollToMe extends React.Component<Props> {
   el: ?HTMLDivElement;
 
   componentDidMount() {

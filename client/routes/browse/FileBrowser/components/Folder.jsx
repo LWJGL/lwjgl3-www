@@ -5,16 +5,6 @@ import { loadPath } from '../reducer';
 import styled from 'react-emotion';
 import IconFolder from 'react-icons/md/folder';
 
-type OwnProps = {
-  path: string,
-};
-
-type ConnectedProps = {
-  loadPath: string => void,
-};
-
-type Props = OwnProps & ConnectedProps;
-
 export const FolderName = styled.th`
   cursor: pointer;
   user-select: none;
@@ -23,6 +13,19 @@ export const FolderName = styled.th`
     color: white;
   }
 `;
+
+type OwnProps = {|
+  path: string,
+|};
+
+type ConnectedProps = {|
+  loadPath: string => void,
+|};
+
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
 
 class Folder extends React.Component<Props> {
   clickHandle = () => {
@@ -43,6 +46,6 @@ class Folder extends React.Component<Props> {
   }
 }
 
-export default connect(null, {
+export default connect((state: Object, ownProps: OwnProps) => ({}), {
   loadPath,
 })(Folder);

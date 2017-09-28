@@ -2,31 +2,26 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-type OwnProps = {
-  predicate: (state: any) => boolean,
-  getClassName?: (state: any) => string,
-  children?: React.Node,
-};
-
-type ConnectedProps = {
-  hidden: boolean,
+type OwnProps = {|
+  predicate: (state: Object) => boolean,
   className?: string,
-};
+  children?: React.Node,
+|};
 
-type Props = OwnProps & ConnectedProps;
+type ConnectedProps = {|
+  hidden: boolean,
+|};
 
-const Panel = ({ children, hidden, className }: Props) => {
-  return hidden ? null : <div className={className}>{children}</div>;
-};
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
 
-export default connect((state: Object, props: OwnProps): ConnectedProps => {
-  const map: ConnectedProps = {
-    hidden: props.predicate && !props.predicate(state),
-  };
+const Panel = ({ children, hidden, className }: Props) => (hidden ? null : <div className={className}>{children}</div>);
 
-  if (props.getClassName) {
-    map.className = props.getClassName(state);
-  }
-
-  return map;
-})(Panel);
+export default connect(
+  (state: Object, ownProps: OwnProps) => ({
+    hidden: !ownProps.predicate(state),
+  }),
+  () => ({})
+)(Panel);

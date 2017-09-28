@@ -211,9 +211,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.123.0:
-  version "2.123.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.123.0.tgz#245283323ce73e3d39d0a166861451ce129ca8be"
+aws-sdk@2.124.0:
+  version "2.124.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.124.0.tgz#52352b543723a2ab86d0fbd1a0cbe3e1cc16d7d2"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -1829,9 +1829,9 @@ emotion-utils@^8.0.2-7:
   version "8.0.2-7"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.2-7.tgz#83f55c6d1ace6b47d02454755bfba97938812d6a"
 
-emotion@8.0.2-8:
-  version "8.0.2-8"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.2-8.tgz#822b1ea8d042a2b21cf7a031a1a7a7aa92c29fe1"
+emotion@8.0.2-9:
+  version "8.0.2-9"
+  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.2-9.tgz#b4f565f70774c3feb3c39d3e123732c814bf5974"
   dependencies:
     babel-plugin-emotion "^8.0.2-7"
     emotion-utils "^8.0.2-7"
@@ -3954,9 +3954,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@1.7.1:
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.1.tgz#f674c52978e14ae7dffd7828e88cce07501d95dc"
+prettier@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.7.2.tgz#81371e64018aafc69cf1031956c70e029339f54e"
 
 private@^0.1.6:
   version "0.1.7"
@@ -4214,9 +4214,9 @@ react-dom@16.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-emotion@8.0.2-8:
-  version "8.0.2-8"
-  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.2-8.tgz#cbd09219a936f9e1ace0e9632f9257ef5b76db39"
+react-emotion@8.0.2-9:
+  version "8.0.2-9"
+  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.2-9.tgz#2a2f7f58f3e1b0a11916fe45ef4d97678f48b677"
   dependencies:
     babel-plugin-emotion "^8.0.2-7"
     emotion-utils "^8.0.2-7"

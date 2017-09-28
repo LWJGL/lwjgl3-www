@@ -8,7 +8,7 @@ type Props = {
   disabled: boolean,
 };
 
-class Radio extends React.Component<Props, void> {
+class Radio extends React.Component<Props> {
   static defaultProps = {
     disabled: false,
   };

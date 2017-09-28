@@ -9,7 +9,7 @@ type Props = {
   onChange?: (value: any) => mixed,
 };
 
-class RadioGroup extends React.PureComponent<Props, void> {
+class RadioGroup extends React.PureComponent<Props> {
   static childContextTypes = {
     onChange: PropTypes.func,
     value: PropTypes.any,

@@ -6,19 +6,24 @@ import { toggleAddon } from '../reducer';
 import { MODE_ZIP } from '../constants';
 import type { BuildConfig, MODES, Addon } from '../types';
 
-type OwnProps = {
+type OwnProps = {|
   id: string,
-};
+|};
 
-type Props = OwnProps & {
+type ConnectedProps = {|
   toggleAddon: typeof toggleAddon,
   mode: MODES,
   addon: Addon,
   checked: boolean,
   showDescriptions: boolean,
-};
+|};
 
-class BuildAddon extends React.Component<Props, void> {
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
+
+class BuildAddon extends React.Component<Props> {
   toggle: () => void = () => {
     this.props.toggleAddon(this.props.id);
   };
@@ -52,7 +57,7 @@ class BuildAddon extends React.Component<Props, void> {
   }
 }
 
-export default (connect(
+export default connect(
   ({ build }: { build: BuildConfig }, ownProps: OwnProps) => {
     const addon: Addon = build.addons.byId[ownProps.id];
 
@@ -66,4 +71,4 @@ export default (connect(
   {
     toggleAddon,
   }
-)(BuildAddon): Class<React$Component<OwnProps, void>>);
+)(BuildAddon);

@@ -11,7 +11,7 @@ type Props = {
   icon?: React$Element<*>,
 };
 
-class Checkbox extends React.PureComponent<Props, void> {
+class Checkbox extends React.PureComponent<Props> {
   static defaultProps = {
     checked: false,
     disabled: false,

@@ -30,21 +30,24 @@ const getPlatformIcons = platforms => {
   );
 };
 
-type OwnProps = {
-  id: string,
-};
-
 import type { BindingDefinition } from '../types';
 
-type ConnectedProps = {
+type OwnProps = {|
+  id: string,
+|};
+
+type ConnectedProps = {|
   toggleArtifact: typeof toggleArtifact,
   artifact: BindingDefinition,
   checked: boolean,
   disabled: boolean,
   showDescriptions: boolean,
-};
+|};
 
-type Props = OwnProps & ConnectedProps;
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
 
 class BuildArtifact extends React.Component<Props> {
   toggle = () => {

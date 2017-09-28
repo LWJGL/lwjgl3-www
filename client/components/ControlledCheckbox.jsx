@@ -4,27 +4,32 @@ import { connect } from 'react-redux';
 import Checkbox from './Checkbox';
 import type { Dispatch } from 'redux';
 
-type Spec = {
+type Spec = {|
   label: string,
   action: (value: boolean) => {},
   checked?: (state: any) => boolean,
   disabled?: (state: any) => boolean,
   hidden?: (state: any) => boolean,
-};
+|};
 
-type OwnProps = {
+type OwnProps = {|
   spec: Spec,
-};
+|};
 
-type Props = OwnProps & {
+type ConnectedProps = {|
   label: string,
   checked?: boolean,
   disabled?: boolean,
   hidden?: boolean,
   handleClick: (value: boolean) => mixed,
-};
+|};
 
-class ControlledCheckbox extends React.Component<Props, void> {
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
+
+class ControlledCheckbox extends React.Component<Props> {
   toggle = () => {
     this.props.handleClick(!this.props.checked);
   };
@@ -44,8 +49,8 @@ class ControlledCheckbox extends React.Component<Props, void> {
   }
 }
 
-const ControlledCheckboxConnected: Class<React$Component<OwnProps, void>> = connect(
-  (state: any, ownProps: OwnProps) => {
+export default connect(
+  (state: Object, ownProps: OwnProps) => {
     const spec: Spec = ownProps.spec;
 
     return {
@@ -59,5 +64,3 @@ const ControlledCheckboxConnected: Class<React$Component<OwnProps, void>> = conn
     handleClick: (value: boolean) => dispatch(ownProps.spec.action(value)),
   })
 )(ControlledCheckbox);
-
-export default ControlledCheckboxConnected;

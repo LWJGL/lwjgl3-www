@@ -94,15 +94,14 @@ const ConfigPanel = styled.div`
   }
 `;
 
-type ConnectedProps = {
+type ConnectedProps = {|
   build: BUILD_TYPES,
-};
+|};
 
-type OwnProps = {
+type Props = {
+  ...ConnectedProps,
   children?: React.Node,
 };
-
-type Props = OwnProps & ConnectedProps;
 
 class BuildConfigArea extends React.Component<Props> {
   render() {
@@ -110,6 +109,9 @@ class BuildConfigArea extends React.Component<Props> {
   }
 }
 
-export default connect((state: Object): ConnectedProps => ({
-  build: state.build.build,
-}))(BuildConfigArea);
+export default connect(
+  (state: Object) => ({
+    build: state.build.build,
+  }),
+  () => ({})
+)(BuildConfigArea);

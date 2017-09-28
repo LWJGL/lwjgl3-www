@@ -2,28 +2,32 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Toggle from './Toggle';
-
 import type { Dispatch } from 'redux';
 
-type OwnProps = {
-  spec: {
+type OwnProps = {|
+  spec: {|
     label: string,
-    action: (value: boolean) => {},
+    action: (value: boolean) => { type: 'string' /* ... */ },
     checked?: (state: any) => boolean,
     disabled?: (state: any) => boolean,
     hidden?: (state: any) => boolean,
-  },
-};
+  |},
+|};
 
-type Props = OwnProps & {
+type ConnectedProps = {|
   label: string,
   checked?: boolean,
   disabled?: boolean,
   hidden?: boolean,
   handleClick: (value: any) => mixed,
-};
+|};
 
-class ControlledToggle extends React.Component<Props, void> {
+type Props = {|
+  ...OwnProps,
+  ...ConnectedProps,
+|};
+
+class ControlledToggle extends React.Component<Props> {
   toggle = () => {
     this.props.handleClick(!this.props.checked);
   };
@@ -45,7 +49,7 @@ export default connect(
       label: spec.label,
     };
   },
-  (dispatch: Dispatch<any>, ownProps: OwnProps) => ({
+  (dispatch: Dispatch<*>, ownProps: OwnProps) => ({
     handleClick: value => dispatch(ownProps.spec.action(value)),
   })
 )(ControlledToggle);
