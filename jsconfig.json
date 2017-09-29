@@ -5,7 +5,12 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./client/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ]
   },
   "exclude": [".idea", ".vscode", ".history", ".cache-loader", "node_modules", "public"]
 }
