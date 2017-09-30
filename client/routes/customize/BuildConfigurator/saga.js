@@ -1,6 +1,6 @@
 // @flow
-import { channel, buffers } from 'redux-saga';
-import { take, takeLatest, fork, call, apply, put, select } from 'redux-saga/effects';
+import { channel, buffers, delay } from 'redux-saga';
+import { take, takeLatest, fork, call, apply, put, select, cancelled } from 'redux-saga/effects';
 
 import { HTTP_OK } from '~/services/http_status_codes';
 import { BUILD_RELEASE, STORAGE_KEY } from './constants';
@@ -29,6 +29,16 @@ import type { GenerateOptions } from 'jszip';
 
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+
+//$FlowFixMe
+const abortController = window.AbortController ? new AbortController() : null;
+const abortSignal = abortController !== null ? abortController.signal : null;
+
+// if (abortSignal !== null) {
+//   abortSignal.addEventListener('abort', () => {
+//     console.log('AbortController cancelled fetch: ' + abortSignal.aborted);
+//   });
+// }
 
 async function fetchManifest(path) {
   const response = await fetch(`/bin/${path}`);
@@ -161,6 +171,7 @@ async function fetchFile(path) {
   response = await fetch(url, {
     method: 'GET',
     mode: 'cors',
+    signal: abortSignal,
   });
 
   if (response.status !== HTTP_OK) {
@@ -196,7 +207,6 @@ class CountDownLatch {
 
 function* downloadWorker(input, output, latch, files) {
   try {
-    //noinspection InfiniteLoopJS
     while (true) {
       const index = yield take(input);
       yield put(log(`${index + 1}/${files.length} - ${files[index]}`));
@@ -207,7 +217,6 @@ function* downloadWorker(input, output, latch, files) {
   }
 }
 
-//noinspection FunctionWithMultipleLoopsJS
 function* downloadFiles(files) {
   const PARALLEL_DOWNLOADS = Math.min(8, files.length);
   const output = [];
@@ -265,12 +274,17 @@ function* init() {
     const downloads = yield downloadFiles(files);
 
     downloads.forEach(download => {
-      //noinspection JSUnresolvedFunction
       zip.file(download.filename, download.payload, { binary: true });
     });
   } catch (ignore) {
     yield put(downloadComplete('Artifact download failed. Please try again'));
     return;
+  } finally {
+    if (yield cancelled()) {
+      if (abortController !== null) {
+        abortController.abort();
+      }
+    }
   }
 
   yield put(log(`Compressing files`));
@@ -335,11 +349,7 @@ const getConfig = (state): BuildConfigStored | void => {
   return save;
 };
 
-// Used for debouncing
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
 function* saveConfig() {
-  //$FlowFixMe
   yield call(delay, 500);
 
   const save = yield select(getConfig);

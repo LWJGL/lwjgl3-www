@@ -33,6 +33,7 @@ export const TOGGLE_ARTIFACT = 'BUILD/TOGGLE_ARTIFACT';
 export const TOGGLE_ADDON = 'BUILD/TOGGLE_ADDON';
 
 export const DOWNLOAD_INIT = 'BUILD/DOWNLOAD_INIT';
+export const DOWNLOAD_CANCEL = 'BUILD/DOWNLOAD_CANCEL';
 export const DOWNLOAD_COMPLETE = 'BUILD/DOWNLOAD_COMPLETE';
 export const DOWNLOAD_LOG = 'BUILD/DOWNLOAD_LOG';
 
@@ -60,6 +61,7 @@ export const togglePlatform = (platform: string) => ({ type: TOGGLE_PLATFORM, pl
 export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
 
 export const downloadInit = () => ({ type: DOWNLOAD_INIT });
+export const downloadCancel = () => ({ type: DOWNLOAD_CANCEL });
 export const downloadComplete = (error?: string) => ({ type: DOWNLOAD_COMPLETE, error });
 export const downloadLog = (message: string) => ({ type: DOWNLOAD_LOG, message });
 
@@ -104,6 +106,7 @@ type Action =
   | ExtractReturn<typeof togglePlatform>
   | ExtractReturn<typeof toggleAddon>
   | ExtractReturn<typeof downloadInit>
+  | ExtractReturn<typeof downloadCancel>
   | ExtractReturn<typeof downloadComplete>
   | ExtractReturn<typeof downloadLog>
   | ExtractReturn<typeof configLoad>

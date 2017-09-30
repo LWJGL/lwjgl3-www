@@ -16,7 +16,7 @@ class BuildBundler extends React.Component<ConnectedProps> {
     return (
       <div className="col">
         <div className="text-center">
-          <LoaderSpinner size={32} style={{ marginBottom: '1rem' }} />
+          <LoaderSpinner size={32} className="my-3" />
           <h4>Generating ZIP bundle. Please wait...</h4>
         </div>
         <pre>
