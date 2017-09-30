@@ -5,34 +5,26 @@ import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import supportsPassive from '~/services/supports-passive';
-import { connect } from 'react-redux';
 import { css } from 'emotion';
 import wrap from 'classwrap';
 import { COLOR_PRIMARY } from '~/theme';
+import store from '~/store';
 
 const HEADER_CLASSNAME = 'site-header';
 const styleOpaque = css`background-color: ${COLOR_PRIMARY.hsl()};`;
 const styleHome = css`transition: background-color 0.5s ease-out;`;
 
-type OwnProps = {|
+type Props = {|
   pathname: string,
 |};
 
-type ConnectedProps = {|
-  desktop: boolean,
-|};
-
-type Props = {|
-  ...OwnProps,
-  ...ConnectedProps,
-|};
-
-type State = {
+type State = {|
   pos: number,
   top: boolean,
   fixed: boolean,
   hidden: boolean,
-};
+  desktop: boolean,
+|};
 
 class Header extends React.PureComponent<Props, State> {
   prev = 0;
@@ -42,12 +34,28 @@ class Header extends React.PureComponent<Props, State> {
   offsetHeight = 0;
   mounted = false;
 
-  state = {
-    pos: 0,
-    top: true,
-    fixed: false,
-    hidden: false,
+  isDesktop() {
+    const breakpoint = store.getState().breakpoint;
+    return breakpoint.current > breakpoint.md;
+  }
+
+  storeListener = () => {
+    this.setState({ desktop: this.isDesktop() });
   };
+
+  constructor(props: Props) {
+    super(props);
+
+    store.subscribe(this.storeListener);
+
+    this.state = {
+      pos: 0,
+      top: true,
+      fixed: false,
+      hidden: false,
+      desktop: this.isDesktop(),
+    };
+  }
 
   componentDidMount() {
     // Cache menu height to avoid touching the DOM on every tick
@@ -166,7 +174,7 @@ class Header extends React.PureComponent<Props, State> {
                 LW<b>JGL</b> 3
               </Link>
             </div>
-            {this.props.desktop === true ? (
+            {this.state.desktop === true ? (
               <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
             ) : (
               <Sidebar />
@@ -178,10 +186,4 @@ class Header extends React.PureComponent<Props, State> {
   }
 }
 
-// force re-rendering when route changes
-export default connect(
-  (state: Object) => ({
-    desktop: state.breakpoint.current > state.breakpoint.md,
-  }),
-  () => ({})
-)(Header);
+export default Header;
