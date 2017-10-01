@@ -1,7 +1,5 @@
 // @flow
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { loadPath } from '../reducer';
 import styled from 'react-emotion';
 import IconFolder from 'react-icons/md/folder';
 
@@ -14,20 +12,12 @@ export const FolderName = styled.th`
   }
 `;
 
-type OwnProps = {|
+type Props = {|
   path: string,
-|};
-
-type ConnectedProps = {|
   loadPath: string => void,
 |};
 
-type Props = {|
-  ...OwnProps,
-  ...ConnectedProps,
-|};
-
-class Folder extends React.Component<Props> {
+class Folder extends React.PureComponent<Props> {
   clickHandle = () => {
     this.props.loadPath(this.props.path);
   };
@@ -46,6 +36,4 @@ class Folder extends React.Component<Props> {
   }
 }
 
-export default connect((state: Object, ownProps: OwnProps) => ({}), {
-  loadPath,
-})(Folder);
+export default Folder;

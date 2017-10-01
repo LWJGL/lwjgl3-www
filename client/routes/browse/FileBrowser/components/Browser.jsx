@@ -35,8 +35,8 @@ class Browser extends React.Component<Props> {
   };
 
   render() {
-    const props = this.props;
-    const path = props.path === '/' ? '' : props.path;
+    const { parent, folders, files, loading, loadPath } = this.props;
+    const path = this.props.path === '/' ? '' : this.props.path;
 
     return (
       <table className="table mb-0">
@@ -48,16 +48,16 @@ class Browser extends React.Component<Props> {
           </tr>
         </thead>
         <tbody>
-          {props.parent && (
+          {parent && (
             <tr>
               <FolderName scope="row" onClick={this.goBack} colSpan={2}>
                 &hellip;
               </FolderName>
             </tr>
           )}
-          {props.folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} />)}
-          {props.files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} />)}
-          {props.loading && (
+          {folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} loadPath={loadPath} />)}
+          {files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} loadPath={loadPath} />)}
+          {loading && (
             <tr>
               <th scope="row" colSpan={2}>
                 <LoaderSpinner />
