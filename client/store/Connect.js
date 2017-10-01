@@ -37,6 +37,11 @@ class Connect extends React.PureComponent<Props, Object> {
     this.state = this.props.state(store.getState());
   }
 
+  componentWillReceiveProps(nextProps: Props) {
+    this.actions = nextProps.actions ? this.mapDispatch(nextProps.actions) : undefined;
+    this.setState(nextProps.state(store.getState()));
+  }
+
   componentDidMount() {
     this.unsubscribe = store.subscribe(this.storeListener);
   }
