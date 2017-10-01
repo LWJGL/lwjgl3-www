@@ -33,6 +33,7 @@ class Header extends React.PureComponent<Props, State> {
   ticking = false;
   offsetHeight = 0;
   mounted = false;
+  unsubscribe: Function;
 
   isDesktop() {
     const breakpoint = store.getState().breakpoint;
@@ -46,7 +47,7 @@ class Header extends React.PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    store.subscribe(this.storeListener);
+    this.unsubscribe = store.subscribe(this.storeListener);
 
     this.state = {
       pos: 0,
@@ -71,6 +72,7 @@ class Header extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
+    this.unsubscribe();
     window.removeEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
     this.mounted = false;
   }
