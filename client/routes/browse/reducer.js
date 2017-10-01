@@ -1,4 +1,7 @@
 // @flow
+import type { Dispatch } from 'redux';
+import { HTTP_OK } from '~/services/http_status_codes';
+
 // State
 
 type Folder = {|
@@ -34,7 +37,42 @@ export type BrowserLoadAction = {|
 type Action = StoreContentsAction | BrowserLoadAction;
 
 // Action Creators
-export const loadPath = (path: string): BrowserLoadAction => ({ type: BROWSER_LOAD, path });
+
+async function fetchContents(path: string) {
+  let requestUrl = '/list';
+
+  if (path !== '/') {
+    requestUrl += `?path=${path}`;
+  }
+
+  const response = await fetch(requestUrl);
+  if (response.status !== HTTP_OK) {
+    throw response.statusText;
+  }
+  return await response.json();
+}
+
+export const loadPath = (path: string) => async (dispatch: Dispatch<*>, getState: () => Object) => {
+  dispatch({ type: BROWSER_LOAD, path });
+
+  const browser: State = getState().browser;
+  const data = {
+    path: browser.path,
+    ...browser.contents[browser.path],
+  };
+
+  if (!data.loading) {
+    // Already cached!
+    return;
+  }
+
+  try {
+    dispatch(storeContents(data.path, await fetchContents(data.path)));
+  } catch (err) {
+    // TODO: handle errors
+    return;
+  }
+};
 
 export const storeContents = (path: string, contents: Folder): StoreContentsAction => ({
   type: STORE_CONTENTS,

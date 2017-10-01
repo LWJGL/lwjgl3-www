@@ -3,7 +3,13 @@ import * as React from 'react';
 import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import FileBrowser from './FileBrowser';
+
+import Browser from './components/Browser';
+import { register } from '~/store/asyncReducers';
+import reducer, { loadPath } from './reducer';
+import Connect from '~/store/Connect';
+
+register('browser', reducer);
 
 const BrowseRoute = (props: ContextRouter) => (
   <PageView {...props}>
@@ -13,7 +19,17 @@ const BrowseRoute = (props: ContextRouter) => (
     </Helmet>
     <main>
       <section className="container px-0" style={{ margin: '-1rem auto' }}>
-        <FileBrowser />
+        <Connect
+          state={state => ({
+            ...state.browser.contents[state.browser.path],
+            path: state.browser.path,
+          })}
+          actions={dispatch => ({
+            loadPath: (path: string) => dispatch(loadPath(path)),
+          })}
+        >
+          {(props, actions) => <Browser {...props} {...actions} />}
+        </Connect>
       </section>
     </main>
   </PageView>
