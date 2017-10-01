@@ -16,6 +16,7 @@ export default function() {
     const AppContainer = require('react-hot-loader').AppContainer;
     const mount = (Component: React.ComponentType<any>) => {
       render(
+        // <AppContainer key={Math.random()}>
         <AppContainer>
           <Component />
         </AppContainer>,
