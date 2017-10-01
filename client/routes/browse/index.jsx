@@ -24,9 +24,9 @@ const BrowseRoute = (props: ContextRouter) => (
             ...state.browser.contents[state.browser.path],
             path: state.browser.path,
           })}
-          actions={dispatch => ({
-            loadPath: (path: string) => dispatch(loadPath(path)),
-          })}
+          actions={{
+            loadPath,
+          }}
         >
           {(props, actions) => <Browser {...props} {...actions} />}
         </Connect>
