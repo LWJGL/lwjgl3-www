@@ -12,12 +12,12 @@ type mapDispatchToProps = { [string]: DispatchAPI<*> } | ((dispatch: Dispatch<*>
 type Props = {
   state: (state: Object) => {},
   actions?: mapDispatchToProps,
-  children: (state: Object, actions: ?Actions) => React.Node,
+  children: (state: Object, actions: Actions) => React.Node,
 };
 
 class Connect extends React.PureComponent<Props, Object> {
   unsubscribe: () => void;
-  actions: ?Actions;
+  actions: Actions;
 
   storeListener = () => {
     this.setState(this.props.state(store.getState()));
@@ -33,12 +33,12 @@ class Connect extends React.PureComponent<Props, Object> {
 
   constructor(props: Props) {
     super(props);
-    this.actions = this.props.actions ? this.mapDispatch(this.props.actions) : undefined;
+    this.actions = { dispatch: store.dispatch, ...(this.props.actions && this.mapDispatch(this.props.actions)) };
     this.state = this.props.state(store.getState());
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    this.actions = nextProps.actions ? this.mapDispatch(nextProps.actions) : undefined;
+    this.actions = { dispatch: store.dispatch, ...(nextProps.actions && this.mapDispatch(nextProps.actions)) };
     this.setState(nextProps.state(store.getState()));
   }
 
