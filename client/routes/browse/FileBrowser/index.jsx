@@ -3,13 +3,13 @@ import * as React from 'react';
 import Browser from './components/Browser';
 import { register } from '~/store/asyncReducers';
 import reduxSaga from '~/store/saga';
-import reducer from './reducer';
+import reducer, { loadPath } from './reducer';
 import saga from './saga';
 import type { Task } from 'redux-saga';
-import { Provider } from 'react-redux';
-import store from '~/store';
+import Connect from '~/store/Connect';
 
 let sagaTask: Task;
+register('browser', reducer);
 
 class FileBrowser extends React.Component<{||}> {
   componentDidMount() {
@@ -22,13 +22,19 @@ class FileBrowser extends React.Component<{||}> {
 
   render() {
     return (
-      <Provider store={store}>
-        <Browser />
-      </Provider>
+      <Connect
+        state={state => ({
+          ...state.browser.contents[state.browser.path],
+          path: state.browser.path,
+        })}
+        actions={dispatch => ({
+          loadPath: (path: string) => dispatch(loadPath(path)),
+        })}
+      >
+        {(props, actions) => <Browser {...props} {...actions} />}
+      </Connect>
     );
   }
 }
-
-register('browser', reducer);
 
 export default FileBrowser;
