@@ -1,13 +1,10 @@
 // @flow
 import * as React from 'react';
-import { connect } from 'react-redux';
 import LoaderSpinner from '~/components/LoaderSpinner';
+import Connect from '~/store/Connect';
+import type { BuildConfig } from '../types';
 
-type ConnectedProps = {
-  progress: Array<string>,
-};
-
-class BuildBundler extends React.Component<ConnectedProps> {
+class BuildBundler extends React.Component<{||}> {
   componentDidMount() {
     document.getElementsByClassName('config-container')[0].scrollIntoView(true);
   }
@@ -20,16 +17,21 @@ class BuildBundler extends React.Component<ConnectedProps> {
           <h4>Generating ZIP bundle. Please wait...</h4>
         </div>
         <pre>
-          {this.props.progress
-            .slice(0)
-            .reverse()
-            .map((line, i) => <div key={`log${i}`}>{line}</div>)}
+          <Connect
+            state={({ build }: { build: BuildConfig }) => ({
+              progress: build.progress,
+            })}
+          >
+            {({ progress }) =>
+              progress
+                .slice(0)
+                .reverse()
+                .map((line, i) => <div key={`log${i}`}>{line}</div>)}
+          </Connect>
         </pre>
       </div>
     );
   }
 }
 
-export default connect((state: Object): ConnectedProps => ({
-  progress: state.build.progress,
-}))(BuildBundler);
+export default BuildBundler;

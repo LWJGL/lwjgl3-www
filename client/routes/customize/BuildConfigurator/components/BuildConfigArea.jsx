@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
-import { connect } from 'react-redux';
 import styled from 'react-emotion';
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
-import type { BUILD_TYPES } from '../types';
+import type { BuildConfig } from '../types';
+import Connect from '~/store/Connect';
 
 import {
   COLOR_RELEASE,
@@ -93,24 +93,14 @@ const ConfigPanel = styled.div`
   }
 `;
 
-type ConnectedProps = {|
-  build: BUILD_TYPES,
-|};
+const BuildConfigArea = ({ children }: { children?: React.Node }) => (
+  <Connect
+    state={({ build }: { build: BuildConfig }) => ({
+      build: build.build,
+    })}
+  >
+    {({ build }) => <ConfigPanel className={build}>{children}</ConfigPanel>}
+  </Connect>
+);
 
-type Props = {
-  ...ConnectedProps,
-  children?: React.Node,
-};
-
-class BuildConfigArea extends React.Component<Props> {
-  render() {
-    return <ConfigPanel className={this.props.build}>{this.props.children}</ConfigPanel>;
-  }
-}
-
-export default connect(
-  (state: Object) => ({
-    build: state.build.build,
-  }),
-  () => ({})
-)(BuildConfigArea);
+export default BuildConfigArea;

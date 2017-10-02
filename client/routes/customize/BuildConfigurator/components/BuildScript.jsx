@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
 import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition } from '../types';
 import type { BreakPointState } from '~/store/reducers/breakpoint';
+import Connect from '~/store/Connect';
 
 import BuildToolbar from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
@@ -11,9 +11,9 @@ import IconCopy from 'react-icons/md/content-copy';
 
 const ALLOW_DOWNLOAD = window.btoa !== undefined;
 
-type Props = {
+type ConnectedProps = {|
   breakpoint: BreakPointState,
-  build: BUILD_TYPES,
+  build: null | BUILD_TYPES,
   mode: Mode,
   version: string,
   hardcoded: boolean,
@@ -22,9 +22,9 @@ type Props = {
   artifacts: { [string]: BindingDefinition },
   selected: Array<string>,
   addons: Array<Addon>,
-};
+|};
 
-class BuildScript extends React.Component<Props> {
+class BuildScript extends React.Component<{||}> {
   script: ?HTMLPreElement;
 
   copyToClipboard = () => {
@@ -54,56 +54,91 @@ class BuildScript extends React.Component<Props> {
   };
 
   render() {
-    const { mode } = this.props;
-
-    if (mode.id === MODE_ZIP) {
-      return null;
-    }
-
-    const { current, sm, md } = this.props.breakpoint;
-    const labels = {
-      download: `DOWNLOAD ${mode.file ? mode.file.toUpperCase() : 'FILE'}`,
-      copy: ' COPY TO CLIPBOARD',
-    };
-
-    if (current < sm) {
-      labels.download = 'DOWNLOAD';
-      labels.copy = '';
-    } else if (current < md) {
-      labels.copy = ' COPY';
-    }
-
-    const script = generateScript(mode.id, this.props);
-
     return (
-      <div>
-        <h2 className="mt-1">
-          <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
-        </h2>
-        <pre ref={this.getRef} className="m-0">
-          <code>{script}</code>
-        </pre>
-        <BuildToolbar>
-          <a
-            className="btn btn-success"
-            download={mode.file}
-            href={`data:${mime(mode)};base64,${btoa(script)}`}
-            disabled={ALLOW_DOWNLOAD}
-            title={`Download ${mode.id} code snippet`}
-          >
-            <IconDownload /> {labels.download}
-          </a>
-          <button
-            className="btn btn-success"
-            onClick={this.copyToClipboard}
-            disabled={!document.execCommand}
-            title="Copy to clipboard"
-          >
-            <IconCopy />
-            {labels.copy}
-          </button>
-        </BuildToolbar>
-      </div>
+      <Connect
+        state={({ build, breakpoint }: { build: BuildConfig, breakpoint: BreakPointState }): ConnectedProps => {
+          // Artifacts
+          const selected: Array<string> = [];
+
+          build.artifacts.allIds.forEach(artifact => {
+            if (build.contents[artifact] && build.availability[artifact]) {
+              selected.push(artifact);
+            }
+          });
+
+          // Addons
+          const addons: Array<Addon> = [];
+          build.selectedAddons.forEach((id: string) => {
+            const addon = build.addons.byId[id];
+            if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
+              return;
+            }
+            addons.push(build.addons.byId[id]);
+          });
+
+          return {
+            breakpoint,
+            build: build.build,
+            mode: build.modes.byId[build.mode],
+            version: build.artifacts.version,
+            hardcoded: build.hardcoded,
+            compact: build.compact,
+            osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
+            artifacts: build.artifacts.byId,
+            selected,
+            addons,
+          };
+        }}
+      >
+        {(props: ConnectedProps) => {
+          const { mode, breakpoint: { current, sm, md } } = props;
+
+          const labels = {
+            download: `DOWNLOAD ${mode.file ? mode.file.toUpperCase() : 'FILE'}`,
+            copy: ' COPY TO CLIPBOARD',
+          };
+
+          if (current < sm) {
+            labels.download = 'DOWNLOAD';
+            labels.copy = '';
+          } else if (current < md) {
+            labels.copy = ' COPY';
+          }
+
+          const script = generateScript(mode.id, props);
+
+          return (
+            <div>
+              <h2 className="mt-1">
+                <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
+              </h2>
+              <pre ref={this.getRef} className="m-0">
+                <code>{script}</code>
+              </pre>
+              <BuildToolbar>
+                <a
+                  className="btn btn-success"
+                  download={mode.file}
+                  href={`data:${mime(mode)};base64,${btoa(script)}`}
+                  disabled={ALLOW_DOWNLOAD}
+                  title={`Download ${mode.id} code snippet`}
+                >
+                  <IconDownload /> {labels.download}
+                </a>
+                <button
+                  className="btn btn-success"
+                  onClick={this.copyToClipboard}
+                  disabled={!document.execCommand}
+                  title="Copy to clipboard"
+                >
+                  <IconCopy />
+                  {labels.copy}
+                </button>
+              </BuildToolbar>
+            </div>
+          );
+        }}
+      </Connect>
     );
   }
 }
@@ -111,7 +146,7 @@ class BuildScript extends React.Component<Props> {
 const mime = (mode: Mode) => (mode.file !== undefined && mode.file.endsWith('.xml') ? 'text/xml' : 'text/plain');
 const getVersion = (version, build) => (build === BUILD_RELEASE ? version : `${version}-SNAPSHOT`);
 
-function generateScript(mode: MODES, props: Props): string {
+function generateScript(mode: MODES, props: ConnectedProps): string {
   switch (mode) {
     case MODE_MAVEN:
       return generateMaven(props);
@@ -124,7 +159,7 @@ function generateScript(mode: MODES, props: Props): string {
   }
 }
 
-function generateMaven(props: Props) {
+function generateMaven(props: ConnectedProps) {
   const { build, hardcoded, compact, osgi, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
@@ -189,7 +224,7 @@ function generateMaven(props: Props) {
   return script;
 }
 
-function generateGradle(props: Props) {
+function generateGradle(props: ConnectedProps) {
   const { build, hardcoded, osgi, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
@@ -252,7 +287,7 @@ switch ( OperatingSystem.current() ) {
   return script;
 }
 
-function generateIvy(props: Props) {
+function generateIvy(props: ConnectedProps) {
   const { build, hardcoded, osgi, compact, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
@@ -313,62 +348,4 @@ function generateIvy(props: Props) {
   return script;
 }
 
-const BuildScriptConnected = connect(
-  ({ build, breakpoint }: { build: BuildConfig, breakpoint: BreakPointState }): Props => {
-    // Artifacts
-    const selected: Array<string> = [];
-
-    build.artifacts.allIds.forEach(artifact => {
-      if (build.contents[artifact] && build.availability[artifact]) {
-        selected.push(artifact);
-      }
-    });
-
-    // Addons
-    const addons: Array<Addon> = [];
-    build.selectedAddons.forEach((id: string) => {
-      const addon = build.addons.byId[id];
-      if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
-        return;
-      }
-      addons.push(build.addons.byId[id]);
-    });
-
-    /*::
-    if (build.build === null) {
-      throw new Error('Invalid state');
-    }
-    */
-
-    return {
-      breakpoint,
-      build: build.build,
-      mode: build.modes.byId[build.mode],
-      version: build.artifacts.version,
-      hardcoded: build.hardcoded,
-      compact: build.compact,
-      osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
-      artifacts: build.artifacts.byId,
-      selected,
-      addons,
-    };
-  }
-)(BuildScript);
-
-// Use a container to only render & connect when mode is 'ZIP'
-
-type PropsContainer = {
-  mode: string,
-};
-
-class BuildScriptContainer extends React.Component<PropsContainer> {
-  render() {
-    return this.props.mode === MODE_ZIP ? null : <BuildScriptConnected />;
-  }
-}
-
-export default connect(({ build }: { build: BuildConfig }): PropsContainer => {
-  return {
-    mode: build.modes.byId[build.mode].id,
-  };
-})(BuildScriptContainer);
+export default BuildScript;

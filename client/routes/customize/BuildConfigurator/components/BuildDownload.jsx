@@ -1,39 +1,31 @@
 // @flow
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { downloadInit } from '../reducer';
 import { MODE_ZIP } from '../constants';
-import type { MODES } from '../types';
+import type { BuildConfig } from '../types';
+import Connect from '~/store/Connect';
 
 import BuildToolbar from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
 
-type Props = {
-  mode: MODES,
-  downloadInit: typeof downloadInit,
-};
-
-class BuildDownload extends React.Component<Props> {
-  render() {
-    if (this.props.mode === MODE_ZIP) {
-      return (
+const BuildDownload = () => (
+  <Connect
+    state={({ build }: { build: BuildConfig }) => ({
+      mode: build.mode,
+    })}
+    actions={{
+      downloadInit,
+    }}
+  >
+    {({ mode }, { downloadInit }) =>
+      mode === MODE_ZIP ? (
         <BuildToolbar>
-          <button className="btn btn-success" onClick={this.props.downloadInit}>
+          <button className="btn btn-success" onClick={downloadInit}>
             <IconDownload /> DOWNLOAD ZIP
           </button>
         </BuildToolbar>
-      );
-    } else {
-      return null;
-    }
-  }
-}
+      ) : null}
+  </Connect>
+);
 
-export default connect(
-  state => ({
-    mode: state.build.mode,
-  }),
-  {
-    downloadInit,
-  }
-)(BuildDownload);
+export default BuildDownload;

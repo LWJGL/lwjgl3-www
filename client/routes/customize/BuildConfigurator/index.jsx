@@ -41,7 +41,6 @@ import BuildArtifact from './components/BuildArtifact';
 import BuildDownload from './components/BuildDownload';
 import BuildScript from './components/BuildScript';
 import BuildBundler from './components/BuildBundler';
-import BuildReleaseNotes from './components/BuildReleaseNotes';
 
 register('build', reducer);
 
@@ -240,7 +239,22 @@ class BuildConfigurator extends React.Component<{||}> {
                       <ControlledPanel predicate={isBuildRelease}>
                         <h4 className="mt-3">Version</h4>
                         <ControlledRadio spec={fields.version} />
-                        <BuildReleaseNotes />
+                        <Connect
+                          state={({ build }: { build: BuildConfig }) => ({
+                            version: build.version,
+                          })}
+                        >
+                          {({ version }) => (
+                            <p>
+                              <a
+                                href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
+                                style={{ fontSize: '80%' }}
+                              >
+                                release notes for {version}
+                              </a>
+                            </p>
+                          )}
+                        </Connect>
                       </ControlledPanel>
                     </div>
 
@@ -261,7 +275,14 @@ class BuildConfigurator extends React.Component<{||}> {
                   </div>
 
                   <BuildDownload />
-                  <BuildScript />
+
+                  <Connect
+                    state={({ build }: { build: BuildConfig }) => ({
+                      mode: build.modes.byId[build.mode].id,
+                    })}
+                  >
+                    {({ mode }) => (mode === MODE_ZIP ? null : <BuildScript />)}
+                  </Connect>
                 </ControlledPanel>
 
                 <ControlledPanel predicate={isDownloading}>
