@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import { connect } from 'react-redux';
 import Checkbox from '~/components/Checkbox';
+import Connect from '~/store/Connect';
 import { toggleArtifact } from '../reducer';
 import wrap from 'classwrap';
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
@@ -30,66 +30,63 @@ const getPlatformIcons = platforms => {
   );
 };
 
-import type { BindingDefinition } from '../types';
+import type { BuildConfig, BindingDefinition } from '../types';
 
-type OwnProps = {|
+type Props = {|
   id: string,
 |};
 
-type ConnectedProps = {|
-  toggleArtifact: typeof toggleArtifact,
-  artifact: BindingDefinition,
-  checked: boolean,
-  disabled: boolean,
-  showDescriptions: boolean,
-|};
+const BuildArtifact = ({ id }: Props) => (
+  <Connect
+    state={({ build }: { build: BuildConfig }) => {
+      const artifact = build.artifacts.byId[id];
 
-type Props = {|
-  ...OwnProps,
-  ...ConnectedProps,
-|};
+      return {
+        artifact,
+        checked: build.availability[artifact.id] !== undefined && build.contents[artifact.id],
+        showDescriptions: build.descriptions,
+        disabled: !build.availability[artifact.id] || artifact.required,
+      };
+    }}
+    actions={{
+      toggleArtifact,
+    }}
+  >
+    {({ artifact, checked, disabled, showDescriptions }, { toggleArtifact }) => {
+      if (showDescriptions) {
+        return (
+          <div className={wrap(['artifact', { 'text-muted': disabled }])}>
+            <Checkbox
+              value={artifact.id}
+              label={artifact.title}
+              disabled={disabled}
+              checked={checked}
+              onChange={toggleArtifact}
+            />
+            {artifact.natives && getPlatformIcons(artifact.natives)}
+            <p>{artifact.description}</p>
+            {artifact.website && (
+              <p>
+                <a href={artifact.website} target="_blank">
+                  {artifact.website}
+                </a>
+              </p>
+            )}
+          </div>
+        );
+      } else {
+        return (
+          <Checkbox
+            value={artifact.id}
+            label={artifact.title}
+            disabled={disabled}
+            checked={checked}
+            onChange={toggleArtifact}
+          />
+        );
+      }
+    }}
+  </Connect>
+);
 
-class BuildArtifact extends React.Component<Props> {
-  toggle = () => {
-    this.props.toggleArtifact(this.props.id);
-  };
-
-  render() {
-    const { artifact, checked, disabled, showDescriptions } = this.props;
-
-    if (showDescriptions) {
-      return (
-        <div className={wrap(['artifact', { 'text-muted': disabled }])}>
-          <Checkbox label={artifact.title} disabled={disabled} checked={checked} onChange={this.toggle} />
-          {artifact.natives && getPlatformIcons(artifact.natives)}
-          <p>{artifact.description}</p>
-          {artifact.website && (
-            <p>
-              <a href={artifact.website} target="_blank">
-                {artifact.website}
-              </a>
-            </p>
-          )}
-        </div>
-      );
-    } else {
-      return <Checkbox label={artifact.title} disabled={disabled} checked={checked} onChange={this.toggle} />;
-    }
-  }
-}
-
-export default connect(
-  ({ build }, ownProps) => {
-    const artifact = build.artifacts.byId[ownProps.id];
-
-    return {
-      artifact,
-      checked: build.availability[artifact.id] && build.contents[artifact.id],
-      showDescriptions: build.descriptions,
-      disabled: !build.availability[artifact.id] || artifact.required,
-    };
-  },
-  {
-    toggleArtifact,
-  }
-)(BuildArtifact);
+export default BuildArtifact;

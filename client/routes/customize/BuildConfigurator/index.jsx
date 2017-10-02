@@ -3,6 +3,7 @@ import * as React from 'react';
 import { createSelector } from 'reselect';
 import { register } from '~/store/asyncReducers';
 import store from '~/store';
+import Connect from '~/store/Connect';
 
 import {
   default as reducer,
@@ -35,7 +36,7 @@ import BuildConfigArea from './components/BuildConfigArea';
 import BuildType from './components/BuildType';
 import BuildPlatform from './components/BuildPlatform';
 import BuildAddons from './components/BuildAddons';
-import BuildArtifacts from './components/BuildArtifacts';
+import BuildArtifact from './components/BuildArtifact';
 import BuildDownload from './components/BuildDownload';
 import BuildScript from './components/BuildScript';
 import BuildBundler from './components/BuildBundler';
@@ -234,7 +235,17 @@ class BuildConfigurator extends React.Component<{||}> {
 
                     <div className="col-md-6">
                       <h4>Contents</h4>
-                      <BuildArtifacts />
+                      <Connect
+                        state={state => ({
+                          artifacts: state.build.artifacts.allIds,
+                        })}
+                      >
+                        {({ artifacts }) => (
+                          <div className="custom-controls-stacked">
+                            {artifacts.map(it => <BuildArtifact key={it} id={it} />)}
+                          </div>
+                        )}
+                      </Connect>
                     </div>
                   </div>
 
