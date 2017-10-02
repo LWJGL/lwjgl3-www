@@ -1,15 +1,14 @@
 // @flow
 import * as React from 'react';
+
 import BuildStatus from './BuildStatus';
-import wrap from 'classwrap';
-
-import { connect } from 'react-redux';
 import { changeType } from '../reducer';
-
+import Connect from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
-import IconClose from 'react-icons/md/close';
 import styled from 'react-emotion';
+import wrap from 'classwrap';
+import IconClose from 'react-icons/md/close';
 import { mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import {
   COLOR_RELEASE,
@@ -106,24 +105,26 @@ const BuildBox = styled.div`
 
 type Props = {
   build: BUILD_TYPES,
+};
+
+type ConnectedProps = {
   isSelected: boolean,
   isActive: boolean,
   spec: Build,
-  changeType: typeof changeType,
 };
 
-class BuildType extends React.Component<Props> {
-  select = () => {
-    const { isSelected, build, changeType } = this.props;
-    changeType(isSelected ? null : build);
-  };
-
-  render() {
-    const { isSelected, isActive, build, spec } = this.props;
-
-    return (
+const BuildType = ({ build }: Props) => (
+  <Connect
+    state={(state): ConnectedProps => ({
+      isSelected: state.build.build === build,
+      isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
+      spec: state.build.builds.byId[build],
+    })}
+    actions={{ changeType }}
+  >
+    {({ isSelected, isActive, spec }, { changeType }) => (
       <BuildBox
-        onClick={this.select}
+        onClick={changeType.bind(this, build)}
         className={wrap({
           [build]: true,
           selected: isSelected,
@@ -135,17 +136,8 @@ class BuildType extends React.Component<Props> {
         <BuildStatus name={spec.id} />
         {isSelected ? <IconClose /> : null}
       </BuildBox>
-    );
-  }
-}
+    )}
+  </Connect>
+);
 
-export default connect(
-  (state, ownProps) => ({
-    isSelected: state.build.build === ownProps.build,
-    isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
-    spec: state.build.builds.byId[ownProps.build],
-  }),
-  {
-    changeType,
-  }
-)(BuildType);
+export default BuildType;

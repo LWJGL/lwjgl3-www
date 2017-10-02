@@ -148,8 +148,8 @@ export default function buildConfiguratorReducer(state: BuildConfig = config, ac
       return saveStatus({ ...state }, action.name, action.payload);
 
     case SELECT_TYPE:
-      if (action.build !== state.build && state.downloading === false) {
-        return selectBuild({ ...state }, action.build);
+      if (state.downloading === false) {
+        return selectBuild({ ...state }, action.build !== state.build ? action.build : null);
       }
       break;
 

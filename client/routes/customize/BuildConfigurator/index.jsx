@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import { createSelector } from 'reselect';
-import { connect } from 'react-redux';
 import { register } from '~/store/asyncReducers';
-import reduxSaga from '~/store/saga';
+import store from '~/store';
+
 import {
   default as reducer,
   reset,
@@ -19,6 +19,9 @@ import {
   toggleSource,
   changeMode,
 } from './reducer';
+
+import type { Task } from 'redux-saga';
+import reduxSaga from '~/store/saga';
 import saga from './saga';
 
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
@@ -37,6 +40,8 @@ import BuildDownload from './components/BuildDownload';
 import BuildScript from './components/BuildScript';
 import BuildBundler from './components/BuildBundler';
 import BuildReleaseNotes from './components/BuildReleaseNotes';
+
+register('build', reducer);
 
 const getMode = state => state.build.mode;
 const getBuild = state => state.build.build;
@@ -151,37 +156,25 @@ const fields = {
   },
 };
 
-let restoreState = true;
-let sagaTask;
+class BuildConfigurator extends React.Component<{||}> {
+  restoreState = true;
+  sagaTask: Task;
 
-type OwnProps = {||};
-
-type ConnectedProps = {|
-  configLoad: ({}) => void,
-  reset: () => void,
-|};
-
-type Props = {|
-  ...OwnProps,
-  ...ConnectedProps,
-|};
-
-class BuildContainer extends React.Component<Props> {
   componentDidMount() {
-    sagaTask = reduxSaga.run(saga);
+    this.sagaTask = reduxSaga.run(saga);
 
-    if (restoreState) {
-      restoreState = false;
+    if (this.restoreState) {
+      this.restoreState = false;
       const restore = localStorage.getItem(STORAGE_KEY);
       if (restore != null) {
-        this.props.configLoad(JSON.parse(restore));
+        store.dispatch(configLoad(JSON.parse(restore)));
       }
     }
   }
 
   componentWillUnmount() {
-    sagaTask.cancel();
-    this.props.reset();
+    this.sagaTask.cancel();
+    store.dispatch(reset());
   }
 
   render() {
@@ -263,9 +256,4 @@ class BuildContainer extends React.Component<Props> {
   }
 }
 
-register('build', reducer);
-
-export default connect((state: Object, ownProps: OwnProps) => ({}), {
-  reset: reset,
-  configLoad: configLoad,
-})(BuildContainer);
+export default BuildConfigurator;

@@ -1,53 +1,44 @@
 // @flow
 import * as React from 'react';
-import { connect } from 'react-redux';
 import LoaderSpinner from '~/components/LoaderSpinner';
-import { loadStatus, typeof loadStatus as LoadStatusType } from '../reducer';
-import type { BuildStatus as BuildStatusType, BUILD_TYPES } from '../types';
+import { loadStatus } from '../reducer';
+import type { BUILD_TYPES } from '../types';
+import Connect from '~/store/Connect';
 
-type OwnProps = {|
+type Props = {|
   name: BUILD_TYPES,
 |};
 
-type ConnectedProps = {|
-  loadStatus: LoadStatusType,
-  status: BuildStatusType,
-|};
+const BuildStatus = ({ name }: Props) => (
+  <Connect
+    state={(state: Object) => ({
+      status: state.build.builds.byId[name].status,
+    })}
+    actions={{
+      loadStatus,
+    }}
+  >
+    {({ status }, { loadStatus }) => {
+      if (status === null) {
+        loadStatus(name);
+        return (
+          <p className="my-0">
+            <LoaderSpinner size={16} />
+            <br />
+            <br />
+          </p>
+        );
+      }
 
-type Props = {|
-  ...OwnProps,
-  ...ConnectedProps,
-|};
+      return (
+        <p className="my-0">
+          {status.error || status.version}
+          <br />
+          {status.lastModified ? status.lastModified : <br />}
+        </p>
+      );
+    }}
+  </Connect>
+);
 
-class BuildStatus extends React.Component<Props> {
-  componentDidMount() {
-    const { name, loadStatus, status } = this.props;
-
-    if (status === null) {
-      loadStatus(name);
-    }
-  }
-
-  render() {
-    const status = this.props.status;
-    const loading = status === null;
-    const lastModified = !loading && status.lastModified ? status.lastModified : <br />;
-
-    return (
-      <p className="my-0">
-        {loading ? <LoaderSpinner size={16} /> : status.error !== undefined ? status.error : status.version}
-        <br />
-        {lastModified}
-      </p>
-    );
-  }
-}
-
-export default connect(
-  (state: any, ownProps: OwnProps) => ({
-    status: state.build.builds.byId[ownProps.name].status,
-  }),
-  {
-    loadStatus,
-  }
-)(BuildStatus);
+export default BuildStatus;
