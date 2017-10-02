@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
+import { toggleArtifact } from '../reducer';
+import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import Checkbox from '~/components/Checkbox';
 import Connect from '~/store/Connect';
-import { toggleArtifact } from '../reducer';
 import wrap from 'classwrap';
-import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 
 import IconWindows from 'react-icons/fa/windows';
 import IconLinux from 'react-icons/fa/linux';
@@ -60,7 +60,7 @@ const BuildArtifact = ({ id }: Props) => (
               value={artifact.id}
               label={artifact.title}
               disabled={disabled}
-              checked={checked}
+              checked={checked && !disabled}
               onChange={toggleArtifact}
             />
             {artifact.natives && getPlatformIcons(artifact.natives)}

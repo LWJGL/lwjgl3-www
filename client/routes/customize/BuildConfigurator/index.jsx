@@ -25,6 +25,7 @@ import type { Task } from 'redux-saga';
 import reduxSaga from '~/store/saga';
 import saga from './saga';
 
+import type { BuildConfig } from './types';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
 
 import ControlledPanel from '~/components/ControlledPanel';
@@ -35,7 +36,7 @@ import ControlledToggle from '~/components/ControlledToggle';
 import BuildConfigArea from './components/BuildConfigArea';
 import BuildType from './components/BuildType';
 import BuildPlatform from './components/BuildPlatform';
-import BuildAddons from './components/BuildAddons';
+import BuildAddon from './components/BuildAddon';
 import BuildArtifact from './components/BuildArtifact';
 import BuildDownload from './components/BuildDownload';
 import BuildScript from './components/BuildScript';
@@ -224,7 +225,17 @@ class BuildConfigurator extends React.Component<{||}> {
                       <ControlledRadio spec={fields.preset} />
 
                       <h4 className="mt-3">Addons</h4>
-                      <BuildAddons />
+                      <Connect
+                        state={({ build }: { build: BuildConfig }) => ({
+                          addons: build.addons.allIds,
+                        })}
+                      >
+                        {({ addons }) => (
+                          <div className="custom-controls-stacked">
+                            {addons.map(it => <BuildAddon key={it} id={it} />)}
+                          </div>
+                        )}
+                      </Connect>
 
                       <ControlledPanel predicate={isBuildRelease}>
                         <h4 className="mt-3">Version</h4>
@@ -236,8 +247,8 @@ class BuildConfigurator extends React.Component<{||}> {
                     <div className="col-md-6">
                       <h4>Contents</h4>
                       <Connect
-                        state={state => ({
-                          artifacts: state.build.artifacts.allIds,
+                        state={({ build }: { build: BuildConfig }) => ({
+                          artifacts: build.artifacts.allIds,
                         })}
                       >
                         {({ artifacts }) => (
