@@ -1,21 +1,22 @@
 // @flow
 import * as React from 'react';
-import { bindActionCreators, type Dispatch, type DispatchAPI } from 'redux';
+import { bindActionCreators, type ActionCreator, type ActionCreators, type Dispatch, type DispatchAPI } from 'redux';
 import store from './';
 
 type Actions = {
-  [string]: Function,
+  dispatch: Dispatch<*>,
+  [string]: <A, B>(...args: Array<A>) => B,
 };
 
-type mapDispatchToProps = { [string]: DispatchAPI<*> } | ((dispatch: Dispatch<*>) => Actions);
+type mapDispatchToProps = ActionCreators<*, *> | ((dispatch: Dispatch<*>) => Actions);
 
-type Props = {
-  state: (state: Object) => {},
+type Props<S> = {
+  state: (state: Object) => S,
   actions?: mapDispatchToProps,
-  children: (state: Object, actions: Actions) => React.Node,
+  children: (state: S, actions: Actions) => React.Node,
 };
 
-class Connect extends React.PureComponent<Props, Object> {
+class Connect extends React.PureComponent<Props<*>, Object> {
   unsubscribe: () => void;
   actions: Actions;
 
@@ -31,13 +32,13 @@ class Connect extends React.PureComponent<Props, Object> {
     return bindActionCreators(actions, store.dispatch);
   }
 
-  constructor(props: Props) {
+  constructor(props: Props<*>) {
     super(props);
     this.actions = { dispatch: store.dispatch, ...(this.props.actions && this.mapDispatch(this.props.actions)) };
     this.state = this.props.state(store.getState());
   }
 
-  componentWillReceiveProps(nextProps: Props) {
+  componentWillReceiveProps(nextProps: Props<*>) {
     this.actions = { dispatch: store.dispatch, ...(nextProps.actions && this.mapDispatch(nextProps.actions)) };
     this.setState(nextProps.state(store.getState()));
   }
