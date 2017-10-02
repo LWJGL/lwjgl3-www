@@ -4,7 +4,6 @@ import BuildStatus from './BuildStatus';
 import wrap from 'classwrap';
 
 import { connect } from 'react-redux';
-// import { connect } from '~/services/connect';
 import { changeType } from '../reducer';
 
 import type { BUILD_TYPES, Build } from '../types';

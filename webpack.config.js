@@ -176,16 +176,6 @@ const buildConfiguration = () => {
 
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
-      new NormalModuleReplacementPlugin(/^~\/services\/connect$/, resource => {
-        throw `
--------------------------------------------------------------
-* Use of unpure connect is only allowed during development. *
-* Please replace ~/services/connect with react-redux        *
--------------------------------------------------------------
-${resource.contextInfo.issuer}
--------------------------------------------------------------
-`;
-      }),
       new ModuleConcatenationPlugin(),
       new ShakePlugin({
         warnings: {

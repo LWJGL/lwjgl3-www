@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
-// import { connect } from '~/services/connect';
 import styled from 'react-emotion';
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BUILD_TYPES } from '../types';

@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
-// import { connect } from '~/services/connect';
 import { configDownload, configLoad } from '../reducer';
 
 import FileSave from 'react-icons/md/archive';

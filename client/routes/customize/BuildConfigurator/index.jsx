@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-// import { connect } from '~/services/connect';
 import { register } from '~/store/asyncReducers';
 import reduxSaga from '~/store/saga';
 import {
