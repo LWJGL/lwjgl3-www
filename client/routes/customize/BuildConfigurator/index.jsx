@@ -199,60 +199,64 @@ class BuildContainer extends React.Component<Props> {
             <BuildType build="nightly" />
           </div>
         </div>
-        <ControlledPanel className="row" predicate={isBuildSelected}>
-          <div className="col p-0">
-            <BuildConfigArea>
-              <ControlledPanel className="pt-3" predicate={isCustomizing}>
-                <div className="row">
-                  <div className="col-md">
-                    <h4>Mode</h4>
-                    <ControlledRadio spec={fields.mode} />
+        <ControlledPanel predicate={isBuildSelected}>
+          <div className="row">
+            <div className="col p-0">
+              <BuildConfigArea>
+                <ControlledPanel predicate={isCustomizing}>
+                  <div className="row pt-3">
+                    <div className="col-md">
+                      <h4>Mode</h4>
+                      <ControlledRadio spec={fields.mode} />
 
-                    <h4 className="mt-3">Options</h4>
-                    <div className="custom-controls-stacked">
-                      <ControlledToggle spec={fields.descriptions} />
-                      <ControlledCheckbox spec={fields.source} />
-                      <ControlledCheckbox spec={fields.javadoc} />
-                      <ControlledToggle spec={fields.hardcoded} />
-                      <ControlledToggle spec={fields.compact} />
-                      <ControlledToggle spec={fields.osgi} />
+                      <h4 className="mt-3">Options</h4>
+                      <div className="custom-controls-stacked">
+                        <ControlledToggle spec={fields.descriptions} />
+                        <ControlledCheckbox spec={fields.source} />
+                        <ControlledCheckbox spec={fields.javadoc} />
+                        <ControlledToggle spec={fields.hardcoded} />
+                        <ControlledToggle spec={fields.compact} />
+                        <ControlledToggle spec={fields.osgi} />
+                      </div>
+
+                      <BuildPlatform />
+
+                      <ControlledPanel predicate={hasLanguageOption}>
+                        <h4 className="mt-3">Language</h4>
+                        <ControlledRadio spec={fields.language} />
+                      </ControlledPanel>
+                    </div>
+                    <div className="col-md">
+                      <h4>Presets</h4>
+                      <ControlledRadio spec={fields.preset} />
+
+                      <h4 className="mt-3">Addons</h4>
+                      <BuildAddons />
+
+                      <ControlledPanel predicate={isBuildRelease}>
+                        <h4 className="mt-3">Version</h4>
+                        <ControlledRadio spec={fields.version} />
+                        <BuildReleaseNotes />
+                      </ControlledPanel>
                     </div>
 
-                    <BuildPlatform />
-
-                    <ControlledPanel predicate={hasLanguageOption}>
-                      <h4 className="mt-3">Language</h4>
-                      <ControlledRadio spec={fields.language} />
-                    </ControlledPanel>
-                  </div>
-                  <div className="col-md">
-                    <h4>Presets</h4>
-                    <ControlledRadio spec={fields.preset} />
-
-                    <h4 className="mt-3">Addons</h4>
-                    <BuildAddons />
-
-                    <ControlledPanel predicate={isBuildRelease}>
-                      <h4 className="mt-3">Version</h4>
-                      <ControlledRadio spec={fields.version} />
-                      <BuildReleaseNotes />
-                    </ControlledPanel>
+                    <div className="col-md-6">
+                      <h4>Contents</h4>
+                      <BuildArtifacts />
+                    </div>
                   </div>
 
-                  <div className="col-md-6">
-                    <h4>Contents</h4>
-                    <BuildArtifacts />
+                  <BuildDownload />
+                  <BuildScript />
+                </ControlledPanel>
+
+                <ControlledPanel predicate={isDownloading}>
+                  <div className="row">
+                    <BuildBundler />
                   </div>
-                </div>
-
-                <BuildDownload />
-                <BuildScript />
-              </ControlledPanel>
-
-              <ControlledPanel className="row" predicate={isDownloading}>
-                <BuildBundler />
-              </ControlledPanel>
-            </BuildConfigArea>
+                </ControlledPanel>
+              </BuildConfigArea>
+            </div>
           </div>
         </ControlledPanel>
       </div>
