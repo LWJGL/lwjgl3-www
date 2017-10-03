@@ -1,28 +1,19 @@
 // @flow
 import * as React from 'react';
 import { createSelector } from 'reselect';
+import debounce from 'lodash-es/debounce';
+import { saveAs } from 'file-saver';
+
+//$FlowFixMe
+import areEqual from 'fbjs/lib/areEqual';
+
 import { register } from '~/store/asyncReducers';
 import store from '~/store';
 import Connect from '~/store/Connect';
 
-import {
-  default as reducer,
-  reset,
-  configLoad,
-  changePreset,
-  changeLanguage,
-  changeVersion,
-  toggleHardcoded,
-  toggleCompact,
-  toggleJavadoc,
-  toggleOSGi,
-  toggleDescriptions,
-  toggleSource,
-  changeMode,
-} from './reducer';
-
-import type { BuildConfig } from './types';
-import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
+import reducer, { configLoad, reset } from './reducer';
+import fields, { isDownloading, isBuildRelease, hasLanguageOption, isCustomizing, isBuildSelected } from './fields';
+import { MODE_ZIP, BUILD_RELEASE } from './constants';
 
 import ControlledPanel from '~/components/ControlledPanel';
 import ControlledRadio from '~/components/ControlledRadio';
@@ -38,140 +29,99 @@ import BuildDownload from './components/BuildDownload';
 import BuildScript from './components/BuildScript';
 import BuildBundler from './components/BuildBundler';
 
-register('build', reducer);
-
-const getMode = state => state.build.mode;
-const getBuild = state => state.build.build;
-const getPreset = state => state.build.preset;
-const getLanguage = state => state.build.language;
-const getVersion = state => state.build.version;
-const isBuildSelected = state => getBuild(state) !== null;
-const hasLanguageOption = state => getMode(state) === MODE_GRADLE;
-const hasCompactModeOption = state => getMode(state) === MODE_MAVEN || getMode(state) === MODE_IVY;
-const isModeZip = state => getMode(state) === MODE_ZIP;
-const isModeNotZip = state => getMode(state) !== MODE_ZIP;
-const isBuildRelease = state => getBuild(state) === BUILD_RELEASE;
-const isDownloading = state => state.build.downloading;
-const isCustomizing = state => !state.build.downloading;
-const showOSGi = state =>
-  isModeNotZip(state) && isBuildRelease(state) && parseInt(getVersion(state).replace(/\./g, ''), 10) >= 312;
-
-const fields = {
-  mode: {
-    name: 'mode',
-    value: getMode,
-    action: changeMode,
-    options: createSelector(
-      state => state.build.modes,
-      state => state.build.build,
-      (modes, build) => {
-        return modes.allIds.map(mode => ({
-          value: mode,
-          label: modes.byId[mode].title,
-          disabled: build === BUILD_STABLE && mode !== MODE_ZIP,
-        }));
-      }
-    ),
-  },
-  preset: {
-    name: 'preset',
-    value: getPreset,
-    action: changePreset,
-    options: createSelector(
-      state => state.build.presets,
-      presets =>
-        presets.allIds.map(preset => ({
-          value: preset,
-          label: presets.byId[preset].title,
-        }))
-    ),
-  },
-  language: {
-    name: 'language',
-    value: getLanguage,
-    action: changeLanguage,
-    options: createSelector(
-      state => state.build.languages,
-      languages =>
-        languages.allIds.map(lang => ({
-          value: lang,
-          label: languages.byId[lang].title,
-          disabled: lang !== 'groovy',
-        }))
-    ),
-  },
-  version: {
-    name: 'version',
-    value: getVersion,
-    action: changeVersion,
-    options: createSelector(
-      state => state.build.versions,
-      versions =>
-        versions.map(version => {
-          return {
-            value: version,
-            label: version,
-            disabled: version === '3.0.0',
-          };
-        })
-    ),
-  },
-  descriptions: {
-    label: 'Show descriptions',
-    checked: state => state.build.descriptions,
-    action: toggleDescriptions,
-  },
-  source: {
-    label: 'Include source',
-    checked: state => state.build.source,
-    action: toggleSource,
-    hidden: isModeNotZip,
-  },
-  javadoc: {
-    label: 'Include JavaDoc',
-    checked: state => state.build.javadoc,
-    action: toggleJavadoc,
-    hidden: isModeNotZip,
-  },
-  osgi: {
-    label: 'OSGi Mode',
-    checked: state => state.build.osgi,
-    action: toggleOSGi,
-    hidden: state => !showOSGi(state),
-  },
-  compact: {
-    label: 'Compact Mode',
-    checked: state => state.build.compact,
-    action: toggleCompact,
-    hidden: state => !hasCompactModeOption(state),
-  },
-  hardcoded: {
-    label: 'Do not use variables',
-    checked: state => state.build.hardcoded,
-    action: toggleHardcoded,
-    hidden: state => isModeZip(state),
-  },
-};
-
+import type { BuildConfig, BuildConfigStored, NATIVES } from './types';
 type Props = {||};
 
+const STORAGE_KEY = 'lwjgl-build-config';
+
+const keepChecked = (src: Object): Array<string> => {
+  // Keep only checked items to avoid phantom selections
+  // when new items (bindings,addons,platforms) are added
+  return Object.keys(src).filter((key: string) => src[key] === true);
+};
+
+const getConfig = ({ build }: { build: BuildConfig }): BuildConfigStored | null => {
+  if (build.build === null) {
+    return null;
+  }
+
+  const save: BuildConfigStored = {
+    build: build.build,
+    mode: build.mode,
+    selectedAddons: build.selectedAddons,
+    //$FlowFixMe
+    platform: keepChecked(build.platform),
+    descriptions: build.descriptions,
+    compact: build.compact,
+    hardcoded: build.hardcoded,
+    javadoc: build.javadoc,
+    source: build.source,
+    osgi: build.osgi,
+    language: build.language,
+  };
+
+  if (build.preset === 'custom') {
+    save.contents = keepChecked(build.contents);
+  } else {
+    save.preset = build.preset;
+  }
+  if (build.build === BUILD_RELEASE) {
+    save.version = build.version;
+    save.versionLatest = build.versions[0];
+  }
+
+  return save;
+};
+
 class BuildConfigurator extends React.Component<Props> {
-  static restoreConfig = true;
+  static firstLoad = true;
+  unsubscribe: () => void;
+  prevSave: BuildConfigStored | null = null;
 
   constructor(props: Props) {
     super(props);
-    if (BuildConfigurator.restoreConfig) {
-      BuildConfigurator.restoreConfig = false;
+    if (BuildConfigurator.firstLoad) {
+      register('build', reducer);
+      // Only restore once, use redux store for subsequent mounts
+      BuildConfigurator.firstLoad = false;
       const restore = localStorage.getItem(STORAGE_KEY);
       if (restore != null) {
-        store.dispatch(configLoad(JSON.parse(restore)));
+        this.prevSave = JSON.parse(restore);
+        store.dispatch(configLoad(this.prevSave));
       }
     }
   }
 
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(
+      debounce(() => {
+        const save = getConfig(store.getState());
+        if (save !== null) {
+          if (this.prevSave === null || !areEqual(this.prevSave, save)) {
+            this.prevSave = save;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+          }
+        } else if (this.prevSave !== null) {
+          this.prevSave = null;
+          localStorage.removeItem(STORAGE_KEY);
+        }
+      }, 500)
+    );
+  }
+
   componentWillUnmount() {
+    this.unsubscribe();
     store.dispatch(reset());
   }
+
+  configDownload = () => {
+    const save = getConfig(store.getState());
+    if (save === null) {
+      return;
+    }
+    const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
+    saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
+  };
 
   render() {
     return (
@@ -269,7 +219,7 @@ class BuildConfigurator extends React.Component<Props> {
                     </div>
                   </div>
 
-                  <BuildDownload />
+                  <BuildDownload configDownload={this.configDownload} />
 
                   <Connect
                     state={({ build }: { build: BuildConfig }) => ({

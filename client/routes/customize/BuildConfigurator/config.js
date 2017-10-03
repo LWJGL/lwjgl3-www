@@ -21,7 +21,7 @@ import lwjgl_313 from './lwjgl/3.1.3';
 import lwjgl_stable from './lwjgl/stable';
 import lwjgl_nightly from './lwjgl/nightly';
 
-import type { BuildConfig, BuildOptions, BuildOptionsBuilder, NATIVES } from './types';
+import type { BuildConfig, BuildOptions, BuildOptionsBuilder } from './types';
 
 function getDefaultPlatform() {
   if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
@@ -263,15 +263,17 @@ config.versions = Object.keys(config.lwjgl)
 config.version = config.versions[0];
 
 // Fill allIds
-config.modes.allIds = Object.keys(config.modes.byId);
-config.languages.allIds = Object.keys(config.languages.byId);
 config.presets.allIds = Object.keys(config.presets.byId);
+// $FlowFixMe
+config.modes.allIds = Object.keys(config.modes.byId);
+// $FlowFixMe
+config.languages.allIds = Object.keys(config.languages.byId);
 
 if (config.languages.allIds && config.languages.allIds.length) {
   config.language = config.languages.allIds[0];
 }
 
-config.natives.allIds.forEach((platform: NATIVES) => {
+config.natives.allIds.forEach(platform => {
   config.platform[platform] = false;
 });
 

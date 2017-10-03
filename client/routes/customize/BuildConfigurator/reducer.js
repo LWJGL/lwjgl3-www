@@ -38,7 +38,6 @@ export const DOWNLOAD_COMPLETE = 'BUILD/DOWNLOAD_COMPLETE';
 export const DOWNLOAD_LOG = 'BUILD/DOWNLOAD_LOG';
 
 export const CONFIG_LOAD = 'BUILD/CONFIG_LOAD';
-export const CONFIG_DOWNLOAD = 'BUILD/CONFIG_DOWNLOAD';
 
 export const RESET = 'BUILD/RESET';
 
@@ -66,7 +65,6 @@ export const downloadComplete = (error?: string) => ({ type: DOWNLOAD_COMPLETE, 
 export const downloadLog = (message: string) => ({ type: DOWNLOAD_LOG, message });
 
 export const configLoad = (payload: {}) => ({ type: CONFIG_LOAD, payload });
-export const configDownload = () => ({ type: CONFIG_DOWNLOAD });
 
 export const reset = () => ({ type: RESET });
 

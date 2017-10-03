@@ -8,7 +8,11 @@ import Connect from '~/store/Connect';
 import BuildToolbar from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
 
-const BuildDownload = () => (
+type Props = {|
+  configDownload: () => void,
+|};
+
+const BuildDownload = (props: Props) => (
   <Connect
     state={({ build }: { build: BuildConfig }) => ({
       mode: build.mode,
@@ -19,7 +23,7 @@ const BuildDownload = () => (
   >
     {({ mode }, { downloadInit }) =>
       mode === MODE_ZIP ? (
-        <BuildToolbar>
+        <BuildToolbar configDownload={props.configDownload}>
           <button className="btn btn-success" onClick={downloadInit}>
             <IconDownload /> DOWNLOAD ZIP
           </button>

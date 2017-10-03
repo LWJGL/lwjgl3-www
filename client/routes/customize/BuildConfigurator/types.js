@@ -42,14 +42,14 @@ export type Builds = {|
   byId: {|
     [BUILD_TYPES]: Build,
   |},
-  allIds: Array<string>,
+  allIds: Array<BUILD_TYPES>,
 |};
 
 export type Modes = {|
   byId: {|
-    [MODES]: Mode,
+    [id: MODES]: Mode,
   |},
-  allIds: Array<string>,
+  allIds: Array<MODES>,
 |};
 
 export type Native = {|
@@ -59,19 +59,19 @@ export type Native = {|
 
 export type Natives = {|
   byId: {
-    [NATIVES]: Native,
+    [id: NATIVES]: Native,
   },
   allIds: Array<NATIVES>,
 |};
 
 export type Languages = {
   byId: {
-    [LANGUAGES]: {
+    [id: LANGUAGES]: {
       id: LANGUAGES,
       title: string,
     },
   },
-  allIds: Array<string>,
+  allIds: Array<LANGUAGES>,
 };
 
 export type Preset = {
@@ -104,17 +104,17 @@ export type Addon = {|
 
 export type Addons = {|
   byId: {
-    [string]: Addon,
+    [id: string]: Addon,
   },
   allIds: Array<string>,
 |};
 
 export type LWJGLVersions = {
-  [string]: BuildOptions,
+  [version: string]: BuildOptions,
 };
 
 export type Platforms = {
-  [NATIVES]: boolean,
+  [platform: NATIVES]: boolean,
 };
 
 export type BuildConfig = {

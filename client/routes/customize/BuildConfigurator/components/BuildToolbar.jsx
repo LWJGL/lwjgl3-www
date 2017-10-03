@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { configDownload, configLoad } from '../reducer';
+import { configLoad } from '../reducer';
 import store from '~/store';
 import Connect from '~/store/Connect';
 
@@ -9,11 +9,16 @@ import FileOpen from 'react-icons/md/settings-backup-restore';
 
 import type { BreakPointState } from '~/store/reducers/breakpoint';
 
+type Props = {|
+  configDownload: () => void,
+  children?: React.Node,
+|};
+
 type State = {
   fileUI: boolean,
 };
 
-class BuildToolbar extends React.Component<{| children?: React.Node |}, State> {
+class BuildToolbar extends React.Component<Props, State> {
   state = {
     fileUI: false,
   };
@@ -63,11 +68,8 @@ class BuildToolbar extends React.Component<{| children?: React.Node |}, State> {
           current: breakpoint.current,
           sm: breakpoint.sm,
         })}
-        actions={{
-          configDownload,
-        }}
       >
-        {({ current, sm }, { configDownload, configLoad }) => {
+        {({ current, sm }, { configLoad }) => {
           const showLabels = current > sm;
           return (
             <div className="download-toolbar">
@@ -80,7 +82,11 @@ class BuildToolbar extends React.Component<{| children?: React.Node |}, State> {
                 <FileOpen />
                 {showLabels ? ` Load config` : null}
               </button>
-              <button className="btn btn-outline-info" title="Save configuration (in JSON)" onClick={configDownload}>
+              <button
+                className="btn btn-outline-info"
+                title="Save configuration (in JSON)"
+                onClick={this.props.configDownload}
+              >
                 <FileSave />
                 {showLabels ? ` Save config` : null}
               </button>
