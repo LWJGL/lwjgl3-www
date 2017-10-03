@@ -31,6 +31,7 @@ const config = {
       'prop-types',
       'fg-loadjs',
       'fg-loadcss',
+      'lodash-es',
 
       // React
       'react-helmet',
