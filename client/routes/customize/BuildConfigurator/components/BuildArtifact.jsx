@@ -67,7 +67,7 @@ const BuildArtifact = ({ id }: Props) => (
             <p>{artifact.description}</p>
             {artifact.website && (
               <p>
-                <a href={artifact.website} target="_blank">
+                <a href={artifact.website} target="_blank" rel="noopener">
                   {artifact.website}
                 </a>
               </p>

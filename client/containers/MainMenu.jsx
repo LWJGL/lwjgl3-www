@@ -35,12 +35,12 @@ const MainMenu = ({ onClick, ...rest }: Props) => (
       </NavLink>
     </li>
     <li>
-      <a href="http://forum.lwjgl.org/" target="_blank">
+      <a href="http://forum.lwjgl.org/" target="_blank" rel="noopener">
         FORUM
       </a>
     </li>
     <li>
-      <a href="http://blog.lwjgl.org/" target="_blank">
+      <a href="http://blog.lwjgl.org/" target="_blank" rel="noopener">
         BLOG
       </a>
     </li>

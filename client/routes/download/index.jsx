@@ -29,6 +29,7 @@ const DownloadRoute = (props: ContextRouter) => (
                 className="btn btn-xs-block btn-lg btn-primary"
                 href="https://github.com/LWJGL/lwjgl3/releases"
                 target="_blank"
+                rel="noopener"
               >
                 <IconGithub /> Download from Github
               </a>

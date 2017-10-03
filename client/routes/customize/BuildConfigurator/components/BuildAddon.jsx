@@ -44,7 +44,7 @@ const BuildAddon = ({ id }: Props) => (
             <p>{addon.description}</p>
             {addon.website && (
               <p>
-                <a href={addon.website} target="_blank">
+                <a href={addon.website} target="_blank" rel="noopener">
                   {addon.website}
                 </a>
               </p>
