@@ -42,7 +42,6 @@ const config = {
       'redux',
       'redux-thunk',
       'redux-saga',
-      'react-redux',
       'reselect',
 
       // Development

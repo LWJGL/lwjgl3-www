@@ -4,7 +4,6 @@ import PageView from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import BuildConfigurator from './BuildConfigurator';
-import { Provider } from 'react-redux';
 import store from '~/store';
 
 const CustomizeRoute = (props: ContextRouter) => (
@@ -15,9 +14,7 @@ const CustomizeRoute = (props: ContextRouter) => (
     </Helmet>
     <main>
       <section className="container">
-        <Provider store={store}>
-          <BuildConfigurator />
-        </Provider>
+        <BuildConfigurator />
       </section>
     </main>
   </PageView>
