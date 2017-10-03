@@ -3100,7 +3100,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.6.1, lodash@~4.17.4:
+lodash@4.17.4, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.17.2, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.6.1, lodash@~4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -4419,10 +4419,6 @@ redux-logger@3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
-redux-saga@0.15.6:
-  version "0.15.6"
-  resolved "https://registry.yarnpkg.com/redux-saga/-/redux-saga-0.15.6.tgz#8638dc522de6c6c0a496fe8b2b5466287ac2dc4d"
-
 redux-thunk@2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
@@ -5141,9 +5137,9 @@ typescript-styled-plugin@0.0.5:
   dependencies:
     vscode-css-languageservice "^2.1.4"
 
-typescript@2.6.0-dev.20170930:
-  version "2.6.0-dev.20170930"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.0-dev.20170930.tgz#1ddb510dc99724f8a8f8279ff17c0b4f01ee2c26"
+typescript@2.6.0-dev.20171003:
+  version "2.6.0-dev.20171003"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.0-dev.20171003.tgz#e1d0d6e2df40d8a6a444b5e67c32aa8e6392901a"
 
 ua-parser-js@^0.7.9:
   version "0.7.14"
