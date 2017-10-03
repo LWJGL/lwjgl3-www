@@ -21,10 +21,6 @@ import {
   changeMode,
 } from './reducer';
 
-import type { Task } from 'redux-saga';
-import reduxSaga from '~/store/saga';
-import saga from './saga';
-
 import type { BuildConfig } from './types';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, STORAGE_KEY } from './constants';
 
@@ -157,15 +153,15 @@ const fields = {
   },
 };
 
-class BuildConfigurator extends React.Component<{||}> {
-  restoreState = true;
-  sagaTask: Task;
+type Props = {||};
 
-  componentDidMount() {
-    this.sagaTask = reduxSaga.run(saga);
+class BuildConfigurator extends React.Component<Props> {
+  static restoreConfig = true;
 
-    if (this.restoreState) {
-      this.restoreState = false;
+  constructor(props: Props) {
+    super(props);
+    if (BuildConfigurator.restoreConfig) {
+      BuildConfigurator.restoreConfig = false;
       const restore = localStorage.getItem(STORAGE_KEY);
       if (restore != null) {
         store.dispatch(configLoad(JSON.parse(restore)));
@@ -174,7 +170,6 @@ class BuildConfigurator extends React.Component<{||}> {
   }
 
   componentWillUnmount() {
-    this.sagaTask.cancel();
     store.dispatch(reset());
   }
 
