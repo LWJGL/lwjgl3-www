@@ -44,7 +44,7 @@ const SourceRoute = (props: ContextRouter) => (
         <div className="row">
           <div className="col-lg-4">
             <h2>LWJGL</h2>
-            <table className="table table-bordered table-inverse">
+            <table className="table table-bordered table-dark">
               <tbody>
                 <BuildBadge
                   title="Linux x64"
@@ -73,7 +73,7 @@ const SourceRoute = (props: ContextRouter) => (
         <div className="row">
           <div className="col-lg-4">
             <h2>Assimp</h2>
-            <table className="table table-bordered table-inverse">
+            <table className="table table-bordered table-dark">
               <tbody>
                 <BuildBadge
                   title="Linux x64"
@@ -101,7 +101,7 @@ const SourceRoute = (props: ContextRouter) => (
 
           <div className="col-lg-4">
             <h2>bgfx</h2>
-            <table className="table table-bordered table-inverse">
+            <table className="table table-bordered table-dark">
               <tbody>
                 <BuildBadge
                   title="Linux x64"
@@ -129,7 +129,7 @@ const SourceRoute = (props: ContextRouter) => (
 
           <div className="col-lg-4">
             <h2>dyncall</h2>
-            <table className="table table-bordered table-inverse">
+            <table className="table table-bordered table-dark">
               <tbody>
                 <BuildBadge
                   title="Linux x64"
@@ -157,7 +157,7 @@ const SourceRoute = (props: ContextRouter) => (
 
           <div className="col-lg-4">
             <h2>GLFW</h2>
-            <table className="table table-bordered table-inverse">
+            <table className="table table-bordered table-dark">
               <tbody>
                 <BuildBadge
                   title="Linux x64"
@@ -185,7 +185,7 @@ const SourceRoute = (props: ContextRouter) => (
 
           <div className="col-lg-4">
             <h2>jemalloc</h2>
-            <table className="table table-bordered table-inverse">
+            <table className="table table-bordered table-dark">
               <tbody>
                 <BuildBadge
                   title="Linux x64"
@@ -213,7 +213,7 @@ const SourceRoute = (props: ContextRouter) => (
 
           <div className="col-lg-4">
             <h2>OpenAL Soft</h2>
-            <table className="table table-bordered table-inverse">
+            <table className="table table-bordered table-dark">
               <tbody>
                 <BuildBadge
                   title="Linux x64"

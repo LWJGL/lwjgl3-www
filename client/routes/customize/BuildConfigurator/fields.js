@@ -6,7 +6,6 @@ import type { BuildConfig, LANGUAGES } from './types';
 
 import {
   default as reducer,
-  reset,
   configLoad,
   changePreset,
   changeLanguage,
@@ -35,8 +34,6 @@ const hasCompactModeOption = (state: State) => getMode(state) === MODE_MAVEN || 
 const isModeZip = (state: State) => getMode(state) === MODE_ZIP;
 const isModeNotZip = (state: State) => getMode(state) !== MODE_ZIP;
 export const isBuildRelease = (state: State) => getBuild(state) === BUILD_RELEASE;
-export const isDownloading = (state: State) => state.build.downloading;
-export const isCustomizing = (state: State) => !state.build.downloading;
 const showOSGi = (state: State) =>
   isModeNotZip(state) && isBuildRelease(state) && parseInt(getVersion(state).replace(/\./g, ''), 10) >= 312;
 

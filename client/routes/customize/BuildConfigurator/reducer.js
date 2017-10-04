@@ -32,14 +32,7 @@ export const TOGGLE_PLATFORM = 'BUILD/TOGGLE_PLATFORM';
 export const TOGGLE_ARTIFACT = 'BUILD/TOGGLE_ARTIFACT';
 export const TOGGLE_ADDON = 'BUILD/TOGGLE_ADDON';
 
-export const DOWNLOAD_INIT = 'BUILD/DOWNLOAD_INIT';
-export const DOWNLOAD_CANCEL = 'BUILD/DOWNLOAD_CANCEL';
-export const DOWNLOAD_COMPLETE = 'BUILD/DOWNLOAD_COMPLETE';
-export const DOWNLOAD_LOG = 'BUILD/DOWNLOAD_LOG';
-
 export const CONFIG_LOAD = 'BUILD/CONFIG_LOAD';
-
-export const RESET = 'BUILD/RESET';
 
 // Action Creators
 
@@ -59,14 +52,7 @@ export const toggleArtifact = (artifact: string) => ({ type: TOGGLE_ARTIFACT, ar
 export const togglePlatform = (platform: string) => ({ type: TOGGLE_PLATFORM, platform });
 export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
 
-export const downloadInit = () => ({ type: DOWNLOAD_INIT });
-export const downloadCancel = () => ({ type: DOWNLOAD_CANCEL });
-export const downloadComplete = (error?: string) => ({ type: DOWNLOAD_COMPLETE, error });
-export const downloadLog = (message: string) => ({ type: DOWNLOAD_LOG, message });
-
 export const configLoad = (payload: {}) => ({ type: CONFIG_LOAD, payload });
-
-export const reset = () => ({ type: RESET });
 
 export const storeStatus = (name: BUILD_TYPES, response: BuildStatus) => {
   if (response.error) {
@@ -103,12 +89,7 @@ type Action =
   | ExtractReturn<typeof toggleArtifact>
   | ExtractReturn<typeof togglePlatform>
   | ExtractReturn<typeof toggleAddon>
-  | ExtractReturn<typeof downloadInit>
-  | ExtractReturn<typeof downloadCancel>
-  | ExtractReturn<typeof downloadComplete>
-  | ExtractReturn<typeof downloadLog>
-  | ExtractReturn<typeof configLoad>
-  | ExtractReturn<typeof reset>;
+  | ExtractReturn<typeof configLoad>;
 
 async function fetchStatus(url: string) {
   const response = await fetch(url);
@@ -145,10 +126,7 @@ export default function buildConfiguratorReducer(state: BuildConfig = config, ac
       return saveStatus({ ...state }, action.name, action.payload);
 
     case SELECT_TYPE:
-      if (state.downloading === false) {
-        return selectBuild({ ...state }, action.build !== state.build ? action.build : null);
-      }
-      break;
+      return selectBuild({ ...state }, action.build !== state.build ? action.build : null);
 
     case SELECT_MODE:
       if (state.build !== BUILD_STABLE && state.mode !== action.mode) {
@@ -228,28 +206,6 @@ export default function buildConfiguratorReducer(state: BuildConfig = config, ac
 
     case TOGGLE_ADDON:
       return doToggleAddon({ ...state }, action.addon);
-
-    case DOWNLOAD_INIT:
-      if (state.mode === MODE_ZIP && state.downloading === false) {
-        return { ...state, downloading: true, progress: [] };
-      }
-      break;
-
-    case DOWNLOAD_LOG:
-      return { ...state, progress: [...state.progress, action.message] };
-
-    case DOWNLOAD_COMPLETE:
-      if (action.error !== undefined) {
-        alert(action.error);
-      }
-      return { ...state, downloading: false };
-
-    case RESET:
-      if (state.downloading) {
-        // TODO: Cancel fetch when browsers start supporting it
-        return { ...state, downloading: false };
-      }
-      break;
 
     case CONFIG_LOAD:
       return loadConfig({ ...state }, action.payload);
