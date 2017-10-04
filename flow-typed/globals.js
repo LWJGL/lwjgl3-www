@@ -25,9 +25,20 @@ declare var Intl: {
 // TODO: Remove this when IntersectionObserver definition is fixed
 // https://github.com/facebook/flow/pull/4664
 declare class IntersectionObserver {
-  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverOptions): void,
-  observe(target: HTMLElement): void,
-  unobserve(): void,
-  takeRecords(): Array<IntersectionObserverEntry>,
-  disconnect(): void,
+  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverOptions): IntersectionObserver;
+  observe(target: HTMLElement): void;
+  unobserve(): void;
+  takeRecords(): Array<IntersectionObserverEntry>;
+  disconnect(): void;
+}
+
+declare class AbortSignal {
+  +aborted: boolean;
+  onabort: Event;
+}
+
+declare class AbortController {
+  constructor(): AbortController;
+  signal: AbortSignal;
+  abort(): void;
 }
