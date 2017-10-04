@@ -3,11 +3,11 @@
 // Generate semantic grid columns with these mixins.
 
 @mixin make-container() {
-  margin-right: auto;
-  margin-left: auto;
+  width: 100%;
   padding-right: ($grid-gutter-width / 2);
   padding-left: ($grid-gutter-width / 2);
-  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 // For each breakpoint, define the maximum width of the container in a media query
@@ -43,4 +43,8 @@
   // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
   // do not appear to require this.
   max-width: percentage($size / $columns);
+}
+
+@mixin make-col-offset($size, $columns: $grid-columns) {
+  margin-left: percentage($size / $columns);
 }

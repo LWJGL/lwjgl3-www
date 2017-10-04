@@ -1,3 +1,5 @@
+// stylelint-disable declaration-no-important
+
 //
 // Utilities for common `display` values
 //
@@ -20,6 +22,9 @@
     }
     .d#{$infix}-table {
       display: table !important;
+    }
+    .d#{$infix}-table-row {
+      display: table-row !important;
     }
     .d#{$infix}-table-cell {
       display: table-cell !important;
