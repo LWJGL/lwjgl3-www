@@ -1,4 +1,5 @@
 // @flow
+import { NATIVE_ALL } from '../constants';
 import type { BuildOptions } from '../types';
 
 export default (prev: BuildOptions): BuildOptions => ({
@@ -10,8 +11,7 @@ export default (prev: BuildOptions): BuildOptions => ({
     'lwjgl-remotery': {
       id: 'lwjgl-remotery',
       title: 'Remotery bindings',
-      description:
-        'A realtime CPU/GPU profiler hosted in a single C file with a viewer that runs in a web browser.',
+      description: 'A realtime CPU/GPU profiler hosted in a single C file with a viewer that runs in a web browser.',
       natives: NATIVE_ALL,
       website: 'https://github.com/Celtoys/Remotery',
     },
