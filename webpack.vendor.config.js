@@ -31,7 +31,8 @@ const config = {
       'prop-types',
       'fg-loadjs',
       'fg-loadcss',
-      'lodash-es',
+      'lodash',
+      'fbjs',
 
       // React
       'react-helmet',
@@ -44,9 +45,6 @@ const config = {
       'redux-thunk',
       'reselect',
 
-      // Development
-      // 'redux-logger',
-
       // UI
       'emotion',
       'react-emotion',
@@ -57,6 +55,12 @@ const config = {
       // Route-specific
       'file-saver',
       'jszip',
+
+      // Dev
+      'ansi-html',
+      'html-entities',
+      'redbox-react',
+      'react-proxy',
     ],
   },
   output: {

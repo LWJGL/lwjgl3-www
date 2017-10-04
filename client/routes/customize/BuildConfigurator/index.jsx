@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { createSelector } from 'reselect';
-import debounce from 'lodash-es/debounce';
+import debounce from 'lodash/debounce';
 import { saveAs } from 'file-saver';
 
 //$FlowFixMe

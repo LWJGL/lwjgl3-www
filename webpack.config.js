@@ -77,24 +77,6 @@ const buildConfiguration = () => {
         debug: false,
       }),
     ],
-    stats: {
-      assets: true,
-      cached: false,
-      children: false,
-      chunks: false,
-      chunkModules: false,
-      chunkOrigins: false,
-      errors: false,
-      errorDetails: false,
-      hash: false,
-      modules: false,
-      publicPath: true,
-      reasons: false,
-      source: false,
-      timings: false,
-      version: false,
-      warnings: false,
-    },
   };
 
   if (DEV) {
@@ -173,9 +155,11 @@ const buildConfiguration = () => {
     const ShakePlugin = require('webpack-common-shake').Plugin;
     const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
     const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
+    const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
+      new LodashModuleReplacementPlugin(),
       new ModuleConcatenationPlugin(),
       new ShakePlugin({
         warnings: {
@@ -190,6 +174,25 @@ const buildConfiguration = () => {
         inlineManifest: false,
       })
     );
+
+    config.stats = {
+      assets: true,
+      cached: false,
+      children: false,
+      chunks: false,
+      chunkModules: false,
+      chunkOrigins: false,
+      errors: false,
+      errorDetails: false,
+      hash: false,
+      modules: false,
+      publicPath: true,
+      reasons: false,
+      source: false,
+      timings: false,
+      version: false,
+      warnings: false,
+    };
   }
 
   return config;

@@ -78,6 +78,7 @@
       ],
       "plugins": [
         ["emotion", { "sourceMap": false }],
+        "lodash",
         "syntax-jsx",
         "syntax-trailing-function-commas",
         "transform-flow-strip-types",
