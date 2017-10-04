@@ -24,7 +24,11 @@ type ConnectedProps = {|
   addons: Array<Addon>,
 |};
 
-class BuildScript extends React.Component<{||}> {
+type Props = {|
+  configDownload: Function,
+|};
+
+class BuildScript extends React.Component<Props> {
   script: ?HTMLPreElement;
 
   copyToClipboard = () => {
@@ -115,7 +119,7 @@ class BuildScript extends React.Component<{||}> {
               <pre ref={this.getRef} className="m-0">
                 <code>{script}</code>
               </pre>
-              <BuildToolbar>
+              <BuildToolbar configDownload={this.props.configDownload}>
                 <a
                   className="btn btn-success"
                   download={mode.file}
