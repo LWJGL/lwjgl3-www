@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { createSelector } from 'reselect';
 import debounce from 'lodash/debounce';
+import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 
 //$FlowFixMe
@@ -11,8 +12,9 @@ import { register } from '~/store/asyncReducers';
 import store from '~/store';
 import Connect from '~/store/Connect';
 
-import reducer, { configLoad, reset } from './reducer';
-import fields, { isDownloading, isBuildRelease, hasLanguageOption, isCustomizing, isBuildSelected } from './fields';
+import reducer, { configLoad } from './reducer';
+import fields, { isBuildRelease, hasLanguageOption, isBuildSelected } from './fields';
+import { getConfig, fetchManifest, getBuild, getFiles, getAddons, downloadFiles, abortDownload } from './bundler';
 import { MODE_ZIP, BUILD_RELEASE } from './constants';
 
 import ControlledPanel from '~/components/ControlledPanel';
@@ -32,53 +34,27 @@ import BuildToolbar from './components/BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
 
 import type { BuildConfig, BuildConfigStored, NATIVES } from './types';
-type Props = {||};
+import type { GenerateOptions } from 'jszip';
 
 const STORAGE_KEY = 'lwjgl-build-config';
 
-const keepChecked = (src: Object): Array<string> => {
-  // Keep only checked items to avoid phantom selections
-  // when new items (bindings,addons,platforms) are added
-  return Object.keys(src).filter((key: string) => src[key] === true);
+type Props = {||};
+
+type State = {
+  isDownloading: boolean,
+  progress: Array<string>,
 };
 
-const getConfig = ({ build }: { build: BuildConfig }): BuildConfigStored | null => {
-  if (build.build === null) {
-    return null;
-  }
-
-  const save: BuildConfigStored = {
-    build: build.build,
-    mode: build.mode,
-    selectedAddons: build.selectedAddons,
-    //$FlowFixMe
-    platform: keepChecked(build.platform),
-    descriptions: build.descriptions,
-    compact: build.compact,
-    hardcoded: build.hardcoded,
-    javadoc: build.javadoc,
-    source: build.source,
-    osgi: build.osgi,
-    language: build.language,
-  };
-
-  if (build.preset === 'custom') {
-    save.contents = keepChecked(build.contents);
-  } else {
-    save.preset = build.preset;
-  }
-  if (build.build === BUILD_RELEASE) {
-    save.version = build.version;
-    save.versionLatest = build.versions[0];
-  }
-
-  return save;
-};
-
-class BuildConfigurator extends React.Component<Props> {
+class BuildConfigurator extends React.Component<Props, State> {
   static firstLoad = true;
   unsubscribe: () => void;
   prevSave: BuildConfigStored | null = null;
+  mounted: boolean = false;
+
+  state = {
+    isDownloading: false,
+    progress: [],
+  };
 
   constructor(props: Props) {
     super(props);
@@ -95,6 +71,7 @@ class BuildConfigurator extends React.Component<Props> {
   }
 
   componentDidMount() {
+    this.mounted = true;
     this.unsubscribe = store.subscribe(
       debounce(() => {
         const save = getConfig(store.getState());
@@ -112,9 +89,15 @@ class BuildConfigurator extends React.Component<Props> {
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     this.unsubscribe();
-    store.dispatch(reset());
+    if (this.state.isDownloading) {
+      this.downloadCancel();
+    }
   }
+
+  abortController: AbortController | null = null;
+  abortSignal: AbortSignal | null = null;
 
   configDownload = () => {
     const save = getConfig(store.getState());
@@ -125,127 +108,221 @@ class BuildConfigurator extends React.Component<Props> {
     saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
   };
 
-  download = () => {};
+  download = async () => {
+    if (!JSZip.support.blob) {
+      alert(`We're sorry, your browser is not capable of downloading and bundling files.`);
+      return;
+    }
+
+    if (window.AbortController !== undefined) {
+      this.abortController = new AbortController();
+      this.abortSignal = this.abortController.signal;
+      // this.abortSignal.addEventListener('abort', () => {
+      //   console.log('AbortController cancelled fetch: ' + this.abortSignal.aborted);
+      // });
+    }
+
+    this.setState({
+      isDownloading: true,
+      progress: ['Downloading file manifest'],
+    });
+
+    const { build, path, selected, platforms, source, javadoc, version, addons } = getBuild(store.getState());
+
+    let manifest;
+    try {
+      manifest = await fetchManifest(path);
+    } catch (e) {
+      this.downloadCancel(e.message);
+      return;
+    }
+
+    let files = getFiles(path, manifest, selected, platforms, source, javadoc);
+
+    if (addons.length) {
+      files = files.concat(getAddons(addons, source, javadoc));
+    }
+
+    this.downloadLog(`Downloading ${files.length} files`);
+
+    const zip = new JSZip();
+    try {
+      await downloadFiles(files, zip, this.downloadLog.bind(this), this.abortSignal);
+    } catch (err) {
+      if (err.message !== 'Aborted') {
+        this.downloadCancel(err.message);
+      }
+      return;
+    }
+
+    this.downloadLog('Compressing files');
+
+    const blob = await zip.generateAsync({
+      type: 'blob',
+      // compression: 'DEFLATE',
+      // compressionOptions: {level:6},
+    });
+
+    saveAs(
+      blob,
+      `lwjgl-${build}-${build === BUILD_RELEASE ? version : new Date().toISOString().slice(0, 10)}-custom.zip`
+    );
+
+    this.downloadComplete();
+  };
+
+  downloadAbort = (e: SyntheticEvent<HTMLButtonElement>) => {
+    this.downloadCancel();
+  };
+
+  downloadCancel(msg: ?string) {
+    abortDownload();
+    if (this.abortController !== null) {
+      this.abortController.abort();
+    }
+    if (this.mounted) {
+      this.downloadComplete();
+    }
+    if (msg !== undefined) {
+      alert(msg);
+    }
+  }
+
+  downloadLog(msg: string) {
+    this.setState({
+      progress: [...this.state.progress, msg],
+    });
+  }
+
+  downloadComplete() {
+    this.setState({
+      isDownloading: false,
+      progress: [],
+    });
+  }
 
   render() {
+    const { isDownloading } = this.state;
+
     return (
       <div className="config-container" style={{ position: 'relative' }}>
         <div className="row">
           <div className="col-lg p-0 px-lg-3">
-            <BuildType build="release" />
+            <BuildType build="release" downloading={isDownloading} />
           </div>
           <div className="col-lg p-0">
-            <BuildType build="stable" />
+            <BuildType build="stable" downloading={isDownloading} />
           </div>
           <div className="col-lg p-0 px-lg-3">
-            <BuildType build="nightly" />
+            <BuildType build="nightly" downloading={isDownloading} />
           </div>
         </div>
         <ControlledPanel predicate={isBuildSelected}>
           <div className="row">
             <div className="col p-0">
               <BuildConfigArea>
-                <ControlledPanel predicate={isCustomizing}>
-                  <div className="row pt-3">
-                    <div className="col-md">
-                      <h4>Mode</h4>
-                      <ControlledRadio spec={fields.mode} />
+                {!isDownloading ? (
+                  [
+                    <div key="customizer" className="row pt-3">
+                      <div className="col-md">
+                        <h4>Mode</h4>
+                        <ControlledRadio spec={fields.mode} />
 
-                      <h4 className="mt-3">Options</h4>
-                      <div className="custom-controls-stacked">
-                        <ControlledToggle spec={fields.descriptions} />
-                        <ControlledCheckbox spec={fields.source} />
-                        <ControlledCheckbox spec={fields.javadoc} />
-                        <ControlledToggle spec={fields.hardcoded} />
-                        <ControlledToggle spec={fields.compact} />
-                        <ControlledToggle spec={fields.osgi} />
+                        <h4 className="mt-3">Options</h4>
+                        <div className="custom-controls-stacked">
+                          <ControlledToggle spec={fields.descriptions} />
+                          <ControlledCheckbox spec={fields.source} />
+                          <ControlledCheckbox spec={fields.javadoc} />
+                          <ControlledToggle spec={fields.hardcoded} />
+                          <ControlledToggle spec={fields.compact} />
+                          <ControlledToggle spec={fields.osgi} />
+                        </div>
+
+                        <BuildPlatform />
+
+                        <ControlledPanel predicate={hasLanguageOption}>
+                          <h4 className="mt-3">Language</h4>
+                          <ControlledRadio spec={fields.language} />
+                        </ControlledPanel>
                       </div>
+                      <div className="col-md">
+                        <h4>Presets</h4>
+                        <ControlledRadio spec={fields.preset} />
 
-                      <BuildPlatform />
-
-                      <ControlledPanel predicate={hasLanguageOption}>
-                        <h4 className="mt-3">Language</h4>
-                        <ControlledRadio spec={fields.language} />
-                      </ControlledPanel>
-                    </div>
-                    <div className="col-md">
-                      <h4>Presets</h4>
-                      <ControlledRadio spec={fields.preset} />
-
-                      <h4 className="mt-3">Addons</h4>
-                      <Connect
-                        state={({ build }: { build: BuildConfig }) => ({
-                          addons: build.addons.allIds,
-                        })}
-                      >
-                        {({ addons }) => (
-                          <div className="custom-controls-stacked">
-                            {addons.map(it => <BuildAddon key={it} id={it} />)}
-                          </div>
-                        )}
-                      </Connect>
-
-                      <ControlledPanel predicate={isBuildRelease}>
-                        <h4 className="mt-3">Version</h4>
-                        <ControlledRadio spec={fields.version} />
+                        <h4 className="mt-3">Addons</h4>
                         <Connect
                           state={({ build }: { build: BuildConfig }) => ({
-                            version: build.version,
+                            addons: build.addons.allIds,
                           })}
                         >
-                          {({ version }) => (
-                            <p>
-                              <a
-                                href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
-                                style={{ fontSize: '80%' }}
-                              >
-                                release notes for {version}
-                              </a>
-                            </p>
+                          {({ addons }) => (
+                            <div className="custom-controls-stacked">
+                              {addons.map(it => <BuildAddon key={it} id={it} />)}
+                            </div>
                           )}
                         </Connect>
-                      </ControlledPanel>
-                    </div>
 
-                    <div className="col-md-6">
-                      <h4>Contents</h4>
-                      <Connect
-                        state={({ build }: { build: BuildConfig }) => ({
-                          artifacts: build.artifacts.allIds,
-                        })}
-                      >
-                        {({ artifacts }) => (
-                          <div className="custom-controls-stacked">
-                            {artifacts.map(it => <BuildArtifact key={it} id={it} />)}
-                          </div>
+                        <ControlledPanel predicate={isBuildRelease}>
+                          <h4 className="mt-3">Version</h4>
+                          <ControlledRadio spec={fields.version} />
+                          <Connect
+                            state={({ build }: { build: BuildConfig }) => ({
+                              version: build.version,
+                            })}
+                          >
+                            {({ version }) => (
+                              <p>
+                                <a
+                                  href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
+                                  style={{ fontSize: '80%' }}
+                                >
+                                  release notes for {version}
+                                </a>
+                              </p>
+                            )}
+                          </Connect>
+                        </ControlledPanel>
+                      </div>
+
+                      <div className="col-md-6">
+                        <h4>Contents</h4>
+                        <Connect
+                          state={({ build }: { build: BuildConfig }) => ({
+                            artifacts: build.artifacts.allIds,
+                          })}
+                        >
+                          {({ artifacts }) => (
+                            <div className="custom-controls-stacked">
+                              {artifacts.map(it => <BuildArtifact key={it} id={it} />)}
+                            </div>
+                          )}
+                        </Connect>
+                      </div>
+                    </div>,
+
+                    <Connect
+                      key="toolbar"
+                      state={({ build }: { build: BuildConfig }) => ({
+                        mode: build.modes.byId[build.mode].id,
+                      })}
+                    >
+                      {({ mode }) =>
+                        mode === MODE_ZIP ? (
+                          <BuildToolbar configDownload={this.configDownload}>
+                            <button className="btn btn-success" onClick={this.download}>
+                              <IconDownload /> DOWNLOAD ZIP
+                            </button>
+                          </BuildToolbar>
+                        ) : (
+                          <BuildScript configDownload={this.configDownload} />
                         )}
-                      </Connect>
-                    </div>
-                  </div>
-
-                  <Connect
-                    state={({ build }: { build: BuildConfig }) => ({
-                      mode: build.modes.byId[build.mode].id,
-                    })}
-                  >
-                    {({ mode }) =>
-                      mode === MODE_ZIP ? (
-                        <BuildToolbar configDownload={this.configDownload}>
-                          <button className="btn btn-success" onClick={this.download}>
-                            <IconDownload /> DOWNLOAD ZIP
-                          </button>
-                        </BuildToolbar>
-                      ) : (
-                        <BuildScript configDownload={this.configDownload} />
-                      )}
-                  </Connect>
-                </ControlledPanel>
-
-                <ControlledPanel predicate={isDownloading}>
+                    </Connect>,
+                  ]
+                ) : (
                   <div className="row">
-                    <BuildBundler />
+                    <BuildBundler progress={this.state.progress} cancel={this.downloadAbort} />
                   </div>
-                </ControlledPanel>
+                )}
               </BuildConfigArea>
             </div>
           </div>

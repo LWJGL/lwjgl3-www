@@ -140,8 +140,6 @@ export type BuildConfig = {
   language: string,
   platform: Platforms,
   version: string,
-  downloading: boolean,
-  progress: Array<string>,
   contents: {},
   availability: {},
   selectedAddons: Array<string>,

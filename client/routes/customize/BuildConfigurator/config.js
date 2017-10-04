@@ -229,8 +229,6 @@ const config: BuildConfig = {
   platform: {},
   versions: [],
   version: '',
-  downloading: false,
-  progress: [],
   contents: {},
   availability: {},
   selectedAddons: [],

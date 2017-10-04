@@ -55,6 +55,10 @@ const BuildBox = styled.div`
     border-color: ${COLOR_NIGHTLY.toString()};
     color: ${COLOR_NIGHTLY.toString()};
   }
+  &.locked {
+    opacity: 0.5;
+    filter: saturate(0%);
+  }
 
   &:hover {
     > h2 {
@@ -105,6 +109,7 @@ const BuildBox = styled.div`
 
 type Props = {
   build: BUILD_TYPES,
+  downloading: boolean,
 };
 
 type ConnectedProps = {
@@ -113,7 +118,7 @@ type ConnectedProps = {
   spec: Build,
 };
 
-const BuildType = ({ build }: Props) => (
+const BuildType = ({ build, downloading }: Props) => (
   <Connect
     state={(state): ConnectedProps => ({
       isSelected: state.build.build === build,
@@ -124,9 +129,10 @@ const BuildType = ({ build }: Props) => (
   >
     {({ isSelected, isActive, spec }, { changeType }) => (
       <BuildBox
-        onClick={changeType.bind(this, build)}
+        onClick={downloading ? null : changeType.bind(this, build)}
         className={wrap({
           [build]: true,
+          locked: downloading && !isSelected,
           selected: isSelected,
           active: isActive,
         })}
