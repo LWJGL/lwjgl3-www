@@ -6,8 +6,12 @@ type Props = {
   path: string,
 };
 
-const FileTitle = styled.td`word-break: break-all;`;
-const FileActions = styled.td`text-align: right;`;
+const FileTitle = styled.td`
+  word-break: break-all;
+`;
+const FileActions = styled.td`
+  text-align: right;
+`;
 
 const File = (props: Props) => {
   const url = `https://build.lwjgl.org/${props.path}`;

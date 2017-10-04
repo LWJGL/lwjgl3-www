@@ -64,7 +64,7 @@ const BuildArtifact = ({ id }: Props) => (
               onChange={toggleArtifact}
             />
             {artifact.natives && getPlatformIcons(artifact.natives)}
-            <p dangerouslySetInnerHTML={{__html: artifact.description}}/>
+            <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
             {artifact.website && (
               <p>
                 <a href={artifact.website} target="_blank" rel="noopener">

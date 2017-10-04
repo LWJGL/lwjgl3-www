@@ -11,8 +11,12 @@ import { COLOR_PRIMARY } from '~/theme';
 import store from '~/store';
 
 const HEADER_CLASSNAME = 'site-header';
-const styleOpaque = css`background-color: ${COLOR_PRIMARY.hsl()};`;
-const styleHome = css`transition: background-color 0.5s ease-out;`;
+const styleOpaque = css`
+  background-color: ${COLOR_PRIMARY.hsl()};
+`;
+const styleHome = css`
+  transition: background-color 0.5s ease-out;
+`;
 
 type Props = {|
   pathname: string,
