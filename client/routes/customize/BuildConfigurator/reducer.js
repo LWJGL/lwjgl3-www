@@ -108,7 +108,6 @@ type Action =
   | ExtractReturn<typeof downloadComplete>
   | ExtractReturn<typeof downloadLog>
   | ExtractReturn<typeof configLoad>
-  | ExtractReturn<typeof configDownload>
   | ExtractReturn<typeof reset>;
 
 async function fetchStatus(url: string) {

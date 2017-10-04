@@ -25,9 +25,11 @@ import BuildType from './components/BuildType';
 import BuildPlatform from './components/BuildPlatform';
 import BuildAddon from './components/BuildAddon';
 import BuildArtifact from './components/BuildArtifact';
-import BuildDownload from './components/BuildDownload';
 import BuildScript from './components/BuildScript';
 import BuildBundler from './components/BuildBundler';
+import BuildToolbar from './components/BuildToolbar';
+
+import IconDownload from 'react-icons/md/file-download';
 
 import type { BuildConfig, BuildConfigStored, NATIVES } from './types';
 type Props = {||};
@@ -122,6 +124,8 @@ class BuildConfigurator extends React.Component<Props> {
     const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
     saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
   };
+
+  download = () => {};
 
   render() {
     return (
@@ -219,14 +223,21 @@ class BuildConfigurator extends React.Component<Props> {
                     </div>
                   </div>
 
-                  <BuildDownload configDownload={this.configDownload} />
-
                   <Connect
                     state={({ build }: { build: BuildConfig }) => ({
                       mode: build.modes.byId[build.mode].id,
                     })}
                   >
-                    {({ mode }) => (mode === MODE_ZIP ? null : <BuildScript />)}
+                    {({ mode }) =>
+                      mode === MODE_ZIP ? (
+                        <BuildToolbar configDownload={this.configDownload}>
+                          <button className="btn btn-success" onClick={this.download}>
+                            <IconDownload /> DOWNLOAD ZIP
+                          </button>
+                        </BuildToolbar>
+                      ) : (
+                        <BuildScript configDownload={this.configDownload} />
+                      )}
                   </Connect>
                 </ControlledPanel>
 
