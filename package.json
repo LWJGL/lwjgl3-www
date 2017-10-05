@@ -87,7 +87,7 @@
     "react-emotion": "8.0.2",
     "react-helmet": "5.2.0",
     "react-hot-loader": "3.0.0-beta.7",
-    "react-icons": "2.2.5",
+    "react-icons": "2.2.7",
     "react-loadable": "4.0.5",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
