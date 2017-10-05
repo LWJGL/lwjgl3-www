@@ -211,9 +211,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.127.0:
-  version "2.127.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.127.0.tgz#3d70e8f868c234a212f7b62d5a0452561a63b4dc"
+aws-sdk@2.128.0:
+  version "2.128.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.128.0.tgz#b9be561c5e3733c0068c6121b587674534662d4b"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -452,7 +452,19 @@ babel-plugin-check-es2015-constants@7.0.0-beta.2:
   version "7.0.0-beta.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-check-es2015-constants/-/babel-plugin-check-es2015-constants-7.0.0-beta.2.tgz#0d63c05ffa6e7c90aa0b39ece04a4c03e53e6216"
 
-babel-plugin-emotion@8.0.2-11, babel-plugin-emotion@^8.0.2-11:
+babel-plugin-emotion@8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-8.0.2.tgz#0d674bd480c69e6b2d3affccfb654d6f97c6bf04"
+  dependencies:
+    babel-generator "^6.26.0"
+    babel-macros "^1.0.2"
+    babel-plugin-syntax-jsx "^6.18.0"
+    convert-source-map "^1.5.0"
+    emotion-utils "^8.0.2-7"
+    source-map "^0.5.7"
+    touch "^1.0.0"
+
+babel-plugin-emotion@^8.0.2-11:
   version "8.0.2-11"
   resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-8.0.2-11.tgz#aa8821bbc6f4eefdea00bd9c76810676ec60f4cc"
   dependencies:

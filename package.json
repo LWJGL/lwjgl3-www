@@ -28,7 +28,7 @@
     "not ie < 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.127.0",
+    "aws-sdk": "2.128.0",
     "body-parser": "1.18.2",
     "chalk": "2.1.0",
     "express": "5.0.0-alpha.6",
@@ -43,7 +43,7 @@
     "autoprefixer": "7.1.4",
     "babel-core": "7.0.0-beta.2",
     "babel-loader": "7.1.2",
-    "babel-plugin-emotion": "8.0.2-11",
+    "babel-plugin-emotion": "8.0.2",
     "babel-plugin-lodash": "3.2.11",
     "babel-plugin-transform-react-constant-elements": "7.0.0-beta.2",
     "babel-plugin-transform-react-inline-elements": "7.0.0-beta.2",
