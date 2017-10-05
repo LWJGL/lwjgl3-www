@@ -211,9 +211,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.126.0:
-  version "2.126.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.126.0.tgz#f77e794153b68b0304f526b6cff4e10cc849b274"
+aws-sdk@2.127.0:
+  version "2.127.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.127.0.tgz#3d70e8f868c234a212f7b62d5a0452561a63b4dc"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -222,7 +222,7 @@ aws-sdk@2.126.0:
     querystring "0.2.0"
     sax "1.2.1"
     url "0.10.3"
-    uuid "3.0.1"
+    uuid "3.1.0"
     xml2js "0.4.17"
     xmlbuilder "4.2.1"
 
@@ -1838,9 +1838,9 @@ emotion-utils@^8.0.2-7:
   version "8.0.2-7"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.2-7.tgz#83f55c6d1ace6b47d02454755bfba97938812d6a"
 
-emotion@8.0.2-12:
-  version "8.0.2-12"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.2-12.tgz#29484bfa667fa4e22f850748e0bb56988a3983b8"
+emotion@8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.2.tgz#6455f588e4d4193a7ff0e27414a990f8f194938e"
   dependencies:
     babel-plugin-emotion "^8.0.2-11"
     emotion-utils "^8.0.2-7"
@@ -4242,9 +4242,9 @@ react-dom@16.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-emotion@8.0.2-13:
-  version "8.0.2-13"
-  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.2-13.tgz#3470a6ef2cb2b7b7fb12b5c4fcf995aef7d74f1f"
+react-emotion@8.0.2:
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.2.tgz#abe74825d116fca9bab65e6c97729915e07f9cd5"
   dependencies:
     babel-plugin-emotion "^8.0.2-11"
     emotion-utils "^8.0.2-7"
@@ -5150,9 +5150,9 @@ typescript-styled-plugin@0.0.5:
   dependencies:
     vscode-css-languageservice "^2.1.4"
 
-typescript@2.6.0-dev.20171004:
-  version "2.6.0-dev.20171004"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.0-dev.20171004.tgz#e661eeaaec21bb916403680baebca30fb5c5faac"
+typescript@2.6.0-dev.20171005:
+  version "2.6.0-dev.20171005"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.0-dev.20171005.tgz#002e8a48528eb1d0aa81dac65615f510773fb7c6"
 
 ua-parser-js@^0.7.9:
   version "0.7.14"
@@ -5259,11 +5259,7 @@ utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
 
-uuid@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.1.tgz#6544bba2dfda8c1cf17e629a3a305e2bb1fee6c1"
-
-uuid@^3.0.0, uuid@^3.1.0:
+uuid@3.1.0, uuid@^3.0.0, uuid@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
