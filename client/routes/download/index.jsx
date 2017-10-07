@@ -9,6 +9,8 @@ import IconGithub from 'react-icons/fa/github';
 import IconCustomize from 'react-icons/fa/check-square-o';
 import IconFolder from 'react-icons/md/folder';
 
+import { Customize, Browse } from '../';
+
 const DownloadRoute = (props: ContextRouter) => (
   <PageView {...props}>
     <Helmet>
@@ -35,7 +37,12 @@ const DownloadRoute = (props: ContextRouter) => (
               </a>
             </p>
           </div>
-          <div className="col-md-12 col-lg-4">
+          <div
+            className="col-md-12 col-lg-4"
+            onMouseOver={() =>
+              // $FlowFixMe
+              Customize.preload()}
+          >
             <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-primary" to="/customize">
@@ -43,7 +50,12 @@ const DownloadRoute = (props: ContextRouter) => (
               </Link>
             </p>
           </div>
-          <div className="col-md-12 col-lg-4">
+          <div
+            className="col-md-12 col-lg-4"
+            onMouseOver={() =>
+              // $FlowFixMe
+              Browse.preload()}
+          >
             <p>Or you can browse and download individual LWJGL artifacts:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-outline-primary" to="/browse">
