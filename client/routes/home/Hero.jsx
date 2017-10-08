@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
-import Logo from './Logo';
-import Canvas from './Canvas';
 import styled from 'react-emotion';
+import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
+import Loadable from 'react-loadable';
+import Logo from './Logo';
 
 const HeroBox = styled.section`
   margin-top: -4rem;
@@ -71,6 +71,11 @@ const HeroContent = styled.div`
     }
   }
 `;
+
+const Canvas = Loadable({
+  loader: () => import(/* webpackChunkName: "home$canvas" */ './Canvas'),
+  loading: () => null,
+});
 
 const Hero = () => (
   <HeroBox>

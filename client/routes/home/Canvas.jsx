@@ -2,152 +2,8 @@
 import * as React from 'react';
 import loadJS from 'fg-loadjs';
 import styled from 'react-emotion';
+import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SupportsIntersectionObserver } from '~/services/supports';
-
-declare var THREE: any;
-
-let loadthree = true;
-let canvas: HTMLCanvasElement | null = null;
-let io: IntersectionObserver | null = null;
-let rafId: number | null = null;
-let scene = null;
-let camera = null;
-let geometry = null;
-let material = null;
-let group = null;
-let renderer = null;
-
-function resizeCanvas() {
-  if (camera !== null && canvas !== null) {
-    /*::
-    if ( renderer === null || !(canvas.parentNode instanceof HTMLElement) ) {
-      return;
-    }
-    */
-    const winW = canvas.parentNode.offsetWidth;
-    const winH = canvas.parentNode.offsetHeight;
-    camera.aspect = winW / winH;
-    camera.updateProjectionMatrix();
-    renderer.setSize(winW, winH, false);
-  }
-}
-
-function init(el: HTMLCanvasElement) {
-  canvas = el;
-  window.addEventListener('resize', resizeCanvas);
-
-  if (SupportsIntersectionObserver) {
-    io = new IntersectionObserver(entries => {
-      if (entries[0].intersectionRatio > 0) {
-        if (rafId === null) {
-          animate();
-        }
-      } else if (rafId !== null) {
-        stop();
-      }
-    });
-    io.observe(canvas);
-  }
-
-  /*::
-  if ( !(canvas.parentNode instanceof HTMLElement) ) {
-    return;
-  }
-  */
-
-  const winW = canvas.parentNode.offsetWidth;
-  const winH = canvas.parentNode.offsetHeight;
-
-  camera = new THREE.PerspectiveCamera(60, winW / winH, 100, 10000);
-  camera.position.z = 1500;
-
-  geometry = new THREE.BoxGeometry(60, 60, 60);
-  material = new THREE.MeshNormalMaterial();
-
-  group = new THREE.Group();
-  for (let i = 0; i < 300; i += 1) {
-    let mesh = new THREE.Mesh(geometry, material);
-    mesh.position.x = Math.random() * 2000 - 1000;
-    mesh.position.y = Math.random() * 2000 - 1000;
-    mesh.position.z = Math.random() * 2000 - 1000;
-    mesh.rotation.x = Math.random() * 2 * Math.PI;
-    mesh.rotation.y = Math.random() * 2 * Math.PI;
-    mesh.matrixAutoUpdate = false;
-    mesh.updateMatrix();
-    group.add(mesh);
-  }
-
-  scene = new THREE.Scene();
-  scene.add(group);
-
-  renderer = new THREE.WebGLRenderer({
-    canvas: canvas,
-    antialias: window.devicePixelRatio === 1,
-    alpha: true,
-  });
-  if (window.devicePixelRatio !== undefined) {
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  }
-  renderer.setSize(winW, winH, false);
-  renderer.sortObjects = false;
-  animate();
-}
-
-function animate() {
-  rafId = requestAnimationFrame(animate);
-
-  let time = Date.now() * 0.000015;
-  let rx = time;
-  let ry = time;
-
-  /*::
-  if ( group === null || !group.rotation || renderer === null ) {
-    return;
-  }
-  */
-
-  group.rotation.x = rx;
-  group.rotation.y = ry;
-
-  renderer.render(scene, camera);
-}
-
-function unload() {
-  stop();
-  canvas = null;
-  window.removeEventListener('resize', resizeCanvas);
-
-  if (io !== null) {
-    io.disconnect();
-    io = null;
-  }
-
-  if (scene !== null) {
-    scene.remove(group);
-
-    /*::
-    if ( material === null || geometry === null ) {
-      return;
-    }
-    */
-    geometry.dispose();
-    material.dispose();
-
-    scene = null;
-    geometry = null;
-    material = null;
-    group = null;
-    camera = null;
-    renderer = null;
-  }
-}
-
-function stop() {
-  if (rafId !== null) {
-    cancelAnimationFrame(rafId);
-    rafId = null;
-  }
-}
 
 const Canvas = styled.canvas`
   position: absolute;
@@ -158,26 +14,149 @@ const Canvas = styled.canvas`
 `;
 
 export default class HomeCanvas extends React.Component<{||}> {
-  mounted = false;
   canvas: ?HTMLCanvasElement;
 
-  componentDidMount() {
-    this.mounted = true;
-    if (loadthree) {
-      loadthree = false;
-      loadJS('https://unpkg.com/three@0.86.0/build/three.min.js', () => {
-        if (this.mounted && this.canvas) {
-          init(this.canvas);
-        }
-      });
-    } else if (this.canvas) {
-      init(this.canvas);
+  io: IntersectionObserver | null = null;
+  rafId: number | null = null;
+  scene: Scene = null;
+  camera: PerspectiveCamera | null = null;
+  geometry: BoxGeometry | null = null;
+  material: MeshNormalMaterial | null = null;
+  group: Group | null = null;
+  renderer: WebGLRenderer | null = null;
+
+  resizeCanvas = () => {
+    if (this.camera !== null && this.canvas != null) {
+      /*::
+      if ( !(this.canvas.parentNode instanceof HTMLElement) ) {
+        return;
+      }
+      */
+      const winW = this.canvas.parentNode.offsetWidth;
+      const winH = this.canvas.parentNode.offsetHeight;
+      this.camera.aspect = winW / winH;
+      this.camera.updateProjectionMatrix();
+      /*:: if ( this.renderer !== null ) */
+      this.renderer.setSize(winW, winH, false);
+    }
+  };
+
+  animate = () => {
+    this.rafId = requestAnimationFrame(this.animate);
+
+    let time = Date.now() * 0.000015;
+    let rx = time;
+    let ry = time;
+
+    /*:: if ( this.group !== null ) */
+    this.group.rotation.x = rx;
+    /*:: if ( this.group !== null ) */
+    this.group.rotation.y = ry;
+    /*:: if ( this.renderer !== null ) */
+    this.renderer.render(this.scene, this.camera);
+  };
+
+  stop() {
+    if (this.rafId !== null) {
+      cancelAnimationFrame(this.rafId);
+      this.rafId = null;
     }
   }
 
+  ioCheck = (entries: Array<IntersectionObserverEntry>) => {
+    if (entries[0].intersectionRatio > 0) {
+      if (this.rafId === null) {
+        this.animate();
+      }
+    } else if (this.rafId !== null) {
+      this.stop();
+    }
+  };
+
+  componentDidMount() {
+    if (this.canvas == null) {
+      return;
+    }
+    /*::
+      if ( !(this.canvas.parentNode instanceof HTMLElement) ) {
+        return;
+      }
+    */
+    const winW = this.canvas.parentNode.offsetWidth;
+    const winH = this.canvas.parentNode.offsetHeight;
+
+    this.camera = new PerspectiveCamera(60, winW / winH, 100, 10000);
+    this.camera.position.z = 1500;
+
+    this.geometry = new BoxGeometry(60, 60, 60);
+    this.material = new MeshNormalMaterial();
+
+    this.group = new Group();
+    for (let i = 0; i < 300; i += 1) {
+      let mesh = new Mesh(this.geometry, this.material);
+      mesh.position.x = Math.random() * 2000 - 1000;
+      mesh.position.y = Math.random() * 2000 - 1000;
+      mesh.position.z = Math.random() * 2000 - 1000;
+      mesh.rotation.x = Math.random() * 2 * Math.PI;
+      mesh.rotation.y = Math.random() * 2 * Math.PI;
+      mesh.matrixAutoUpdate = false;
+      mesh.updateMatrix();
+      /*:: if ( this.group !== null ) */
+      this.group.add(mesh);
+    }
+
+    this.scene = new Scene();
+    this.scene.add(this.group);
+
+    this.renderer = new WebGLRenderer({
+      canvas: this.canvas,
+      antialias: window.devicePixelRatio === 1,
+      alpha: true,
+    });
+    if (window.devicePixelRatio !== undefined) {
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    }
+    this.renderer.setSize(winW, winH, false);
+    /*:: if ( this.renderer !== null ) */
+    this.renderer.sortObjects = false;
+    this.animate();
+
+    if (SupportsIntersectionObserver) {
+      this.io = new IntersectionObserver(this.ioCheck);
+      /*:: if ( this.canvas != null ) */
+      this.io.observe(this.canvas);
+    }
+
+    window.addEventListener('resize', this.resizeCanvas);
+  }
+
   componentWillUnmount() {
-    this.mounted = false;
-    unload();
+    this.stop();
+    this.canvas = null;
+    window.removeEventListener('resize', this.resizeCanvas);
+
+    if (this.io !== null) {
+      this.io.disconnect();
+      this.io = null;
+    }
+
+    if (this.scene !== null) {
+      this.scene.remove(this.group);
+
+      if (this.geometry !== null) {
+        this.geometry.dispose();
+      }
+      if (this.material !== null) {
+        this.material.dispose();
+      }
+
+      this.scene = null;
+      this.geometry = null;
+      this.material = null;
+      this.group = null;
+      this.camera = null;
+      this.renderer = null;
+    }
   }
 
   getRef = (el: ?HTMLCanvasElement) => {

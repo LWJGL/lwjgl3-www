@@ -96,6 +96,7 @@
     "reselect": "3.0.1",
     "sass-loader": "6.0.6",
     "style-loader": "0.19.0",
+    "three": "0.87.1",
     "typescript": "2.6.0-dev.20171007",
     "typescript-styled-plugin": "0.0.5",
     "uglify-js": "3.1.3",

@@ -55,6 +55,7 @@ const config = {
       // Route-specific
       'file-saver',
       'jszip',
+      'three',
 
       // Dev
       'ansi-html',
