@@ -1849,12 +1849,13 @@ emotion-utils@^8.0.2-7:
   version "8.0.2-7"
   resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.2-7.tgz#83f55c6d1ace6b47d02454755bfba97938812d6a"
 
-emotion@8.0.4:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.4.tgz#6c0519804cbd7d0f40662d3f83bb08e3c482e573"
+emotion@8.0.5:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.5.tgz#bf7ab53554b95da88151bb5dc50a3b5795d0aa02"
   dependencies:
     babel-plugin-emotion "^8.0.4"
     emotion-utils "^8.0.2-7"
+    stylis-plugin-emotion "^8.0.5"
 
 encodeurl@~1.0.1:
   version "1.0.1"
@@ -4239,9 +4240,9 @@ react-dom@16.0.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-emotion@8.0.4:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.4.tgz#a89fcc5ebe535422bc1c83fc3b22add9b760497a"
+react-emotion@8.0.5:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-8.0.5.tgz#a86cd56995d7806691112f62102f0eeee23cf32b"
   dependencies:
     babel-plugin-emotion "^8.0.4"
     emotion-utils "^8.0.2-7"
@@ -4997,6 +4998,10 @@ style-loader@0.19.0:
   dependencies:
     loader-utils "^1.0.2"
     schema-utils "^0.3.0"
+
+stylis-plugin-emotion@^8.0.5:
+  version "8.0.5"
+  resolved "https://registry.yarnpkg.com/stylis-plugin-emotion/-/stylis-plugin-emotion-8.0.5.tgz#81c1700c5002e41c26620d1e78855516d564938a"
 
 supports-color@^2.0.0:
   version "2.0.0"
