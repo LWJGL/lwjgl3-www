@@ -30,5 +30,5 @@ track('create', ANALYTICS_TRACKING_ID, 'auto');
 // Updates the tracker to use `navigator.sendBeacon` if available.
 track('set', 'transport', 'beacon');
 
-// Do not track view here because we'll do it in the router (see ../routes/asyncRoute.js)
+// Do not track view here because we'll do it in the router (see ~/container/PageView.jsx)
 // track('send', 'pageview');

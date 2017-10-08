@@ -1,5 +1,18 @@
 // @flow
-import AR from '../services/asyncRoute';
+/*:: import * as React from 'react'; */
+import Loadable from 'react-loadable';
+import LoadingPage from '../components/LoadingPage';
+
+type PromiseReactModule = () => Promise<{ default: React.ComponentType<any> }>;
+
+const AR = function(loader: PromiseReactModule): React.ComponentType<any> {
+  return Loadable({
+    loader,
+    delay: 2000,
+    timeout: 30000,
+    loading: LoadingPage,
+  });
+};
 
 // Import causes routes to be code-split
 // We have to specify each route name/path in order to be statically analyzed by webpack

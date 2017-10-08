@@ -1,5 +1,8 @@
 // @flow
 import * as React from 'react';
+import ErrorBoundary from '../components/ErrorBoundary';
+import PageError from '../components/PageError';
+
 import type { ContextRouter } from 'react-router-dom';
 
 type ScrollPositions = {
@@ -46,7 +49,7 @@ class PageView extends React.Component<Props> {
   }
 
   render() {
-    return this.props.children;
+    return <ErrorBoundary render={PageError}>{this.props.children}</ErrorBoundary>;
   }
 }
 
