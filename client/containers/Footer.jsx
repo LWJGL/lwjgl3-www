@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
+import LazyImg from '~/components/LazyImg';
 
 const Footer = () => (
   <footer>
@@ -86,7 +87,7 @@ const Footer = () => (
         <div className="col-sm">
           <h3>Sponsor</h3>
           <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external">
-            <img className="mb-2" alt="WebHotelier" src="/svg/webhotelier.svg" />
+            <LazyImg className="mb-2" alt="WebHotelier" src="/svg/webhotelier.svg" />
           </a>
         </div>
       </nav>

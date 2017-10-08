@@ -2,12 +2,13 @@
 import * as React from 'react';
 import loadJS from 'fg-loadjs';
 import styled from 'react-emotion';
+import { SupportsIntersectionObserver } from '~/services/supports';
 
 declare var THREE: any;
 
 let loadthree = true;
 let canvas: HTMLCanvasElement | null = null;
-let io = null;
+let io: IntersectionObserver | null = null;
 let rafId: number | null = null;
 let scene = null;
 let camera = null;
@@ -35,7 +36,7 @@ function init(el: HTMLCanvasElement) {
   canvas = el;
   window.addEventListener('resize', resizeCanvas);
 
-  if (window.IntersectionObserver !== undefined) {
+  if (SupportsIntersectionObserver) {
     io = new IntersectionObserver(entries => {
       if (entries[0].intersectionRatio > 0) {
         if (rafId === null) {

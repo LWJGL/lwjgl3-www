@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
 import { IS_IOS } from '~/services/ua';
-import supportsPassive from '~/services/supports-passive';
+import { SupportsPassiveEvents } from '~/services/supports';
 import { css } from 'emotion';
 import wrap from 'classwrap';
 import { COLOR_PRIMARY } from '~/theme';
@@ -71,13 +71,13 @@ class Header extends React.PureComponent<Props, State> {
       this.offsetHeight = menu.offsetHeight;
     }
 
-    window.addEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
+    window.addEventListener('scroll', this.onScroll, SupportsPassiveEvents ? { passive: true } : false);
     this.mounted = true;
   }
 
   componentWillUnmount() {
     this.unsubscribe();
-    window.removeEventListener('scroll', this.onScroll, supportsPassive ? { passive: true } : false);
+    window.removeEventListener('scroll', this.onScroll, SupportsPassiveEvents ? { passive: true } : false);
     this.mounted = false;
   }
 

@@ -5,7 +5,7 @@ import noscroll from '~/services/noscroll';
 import MainMenu from './MainMenu';
 import IconMenu from 'react-icons/md/menu';
 import IconClose from 'react-icons/md/close';
-import supportsPassive from '~/services/supports-passive';
+import { SupportsPassiveEvents } from '~/services/supports';
 
 import type { FocusTrap } from 'focus-trap';
 
@@ -60,16 +60,28 @@ class Sidebar extends React.PureComponent<Props, State> {
     if (this.state.open) {
       noscroll.off();
       focusTrap.deactivate({ onDeactivate: false });
-      sideContainer.removeEventListener('touchstart', this.onTouchStart, supportsPassive ? { passive: true } : false);
-      sideContainer.removeEventListener('touchmove', this.onTouchMove, supportsPassive ? { passive: false } : false);
-      sideContainer.removeEventListener('touchend', this.onTouchEnd, supportsPassive ? { passive: true } : false);
+      sideContainer.removeEventListener(
+        'touchstart',
+        this.onTouchStart,
+        SupportsPassiveEvents ? { passive: true } : false
+      );
+      sideContainer.removeEventListener(
+        'touchmove',
+        this.onTouchMove,
+        SupportsPassiveEvents ? { passive: false } : false
+      );
+      sideContainer.removeEventListener('touchend', this.onTouchEnd, SupportsPassiveEvents ? { passive: true } : false);
     } else {
       noscroll.on();
       focusTrap.activate();
-      sideContainer.addEventListener('touchstart', this.onTouchStart, supportsPassive ? { passive: true } : false);
+      sideContainer.addEventListener(
+        'touchstart',
+        this.onTouchStart,
+        SupportsPassiveEvents ? { passive: true } : false
+      );
       // Disable passive to avoid triggering gestures in some devices
-      sideContainer.addEventListener('touchmove', this.onTouchMove, supportsPassive ? { passive: false } : false);
-      sideContainer.addEventListener('touchend', this.onTouchEnd, supportsPassive ? { passive: true } : false);
+      sideContainer.addEventListener('touchmove', this.onTouchMove, SupportsPassiveEvents ? { passive: false } : false);
+      sideContainer.addEventListener('touchend', this.onTouchEnd, SupportsPassiveEvents ? { passive: true } : false);
     }
 
     if (this.mounted) {

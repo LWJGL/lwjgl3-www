@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 import HashLinkTarget from '~/components/HashLinkTarget';
+import LazyImg from '~/components/LazyImg';
 import Hero from './Hero';
 
 // Icons
@@ -139,7 +140,7 @@ const HomeRoute = (props: ContextRouter) => (
 
           <div className="row">
             <div className="col-md py-3">
-              <img width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
+              <LazyImg width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
               <h3>
                 Vulkan<sup>TM</sup> Bindings
               </h3>
@@ -149,7 +150,7 @@ const HomeRoute = (props: ContextRouter) => (
               </p>
             </div>
             <div className="col-md py-3">
-              <img
+              <LazyImg
                 width={60}
                 height={60}
                 src="/img/opencl@x1.png"
@@ -165,7 +166,7 @@ const HomeRoute = (props: ContextRouter) => (
               </p>
             </div>
             <div className="col-md py-3">
-              <img width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
+              <LazyImg width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
               <h3>OpenAL Bindings</h3>
               <p>
                 Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback and
@@ -176,7 +177,7 @@ const HomeRoute = (props: ContextRouter) => (
 
           <div className="row">
             <div className="col-md py-3">
-              <img width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
+              <LazyImg width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
               <h3>
                 OpenGL<sup>®</sup> Bindings
               </h3>
@@ -188,7 +189,7 @@ const HomeRoute = (props: ContextRouter) => (
               </p>
             </div>
             <div className="col-md py-3">
-              <img width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
+              <LazyImg width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
               <h3>
                 OpenGL<sup>®</sup> ES Bindings
               </h3>
@@ -199,7 +200,7 @@ const HomeRoute = (props: ContextRouter) => (
               </p>
             </div>
             <div className="col-md py-3">
-              <img width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
+              <LazyImg width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
               <h3>
                 EGL<sup>TM</sup> Bindings
               </h3>
@@ -214,7 +215,7 @@ const HomeRoute = (props: ContextRouter) => (
 
           <div className="row">
             <div className="col-md py-3">
-              <img width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" />
+              <LazyImg width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" />
               <h3>
                 LibOVR Bindings <small>(beta)</small>
               </h3>

@@ -27,7 +27,7 @@ declare var Intl: {
 declare class IntersectionObserver {
   constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverOptions): IntersectionObserver;
   observe(target: HTMLElement): void;
-  unobserve(): void;
+  unobserve(target: HTMLElement): void;
   takeRecords(): Array<IntersectionObserverEntry>;
   disconnect(): void;
 }
