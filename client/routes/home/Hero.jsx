@@ -77,20 +77,36 @@ const Canvas = Loadable({
   loading: () => null,
 });
 
-const Hero = () => (
-  <HeroBox>
-    <Canvas />
-    <LogoContainer className="d-flex flex-column justify-content-center align-items-center">
-      <Logo className="logo" />
-      <HeroContent>
-        <h1>Lightweight Java&nbsp;Game&nbsp;Library&nbsp;3</h1>
-        <Link to="/#learn-more">
-          LEARN MORE<br />
-          <IconArrowDown />
-        </Link>
-      </HeroContent>
-    </LogoContainer>
-  </HeroBox>
-);
+class Hero extends React.Component<{||}, { supportsWebGL: boolean }> {
+  state = {
+    supportsWebGL: false,
+  };
+
+  componentDidMount() {
+    // detect WebGL support
+    const cnv = document.createElement('canvas');
+    if (cnv.getContext('webgl') !== null) {
+      this.setState({ supportsWebGL: true });
+    }
+  }
+
+  render() {
+    return (
+      <HeroBox>
+        {this.state.supportsWebGL ? <Canvas /> : null}
+        <LogoContainer className="d-flex flex-column justify-content-center align-items-center">
+          <Logo className="logo" />
+          <HeroContent>
+            <h1>Lightweight Java&nbsp;Game&nbsp;Library&nbsp;3</h1>
+            <Link to="/#learn-more">
+              LEARN MORE<br />
+              <IconArrowDown />
+            </Link>
+          </HeroContent>
+        </LogoContainer>
+      </HeroBox>
+    );
+  }
+}
 
 export default Hero;
