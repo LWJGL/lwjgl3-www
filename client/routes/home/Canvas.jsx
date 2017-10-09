@@ -1,16 +1,26 @@
 // @flow
 import * as React from 'react';
 import loadJS from 'fg-loadjs';
+import { keyframes } from 'emotion';
 import styled from 'react-emotion';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SupportsIntersectionObserver } from '~/services/supports';
 
+const fadeIn = keyframes`
+from {
+  opacity: 0;
+}
+to {
+  opacity: 0.175;
+}
+`;
+
 const Canvas = styled.canvas`
   position: absolute;
   z-index: 0;
-  opacity: 0.15;
   width: 100%;
   height: 100%;
+  animation: ${fadeIn} 2s ease-out forwards;
 `;
 
 export default class HomeCanvas extends React.Component<{||}> {
