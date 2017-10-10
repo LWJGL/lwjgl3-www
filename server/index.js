@@ -9,6 +9,8 @@ const favicon = require('serve-favicon');
 const { argv } = require('yargs');
 const chalk = require('chalk');
 const request = require('request-promise-native');
+const { promisify } = require('util');
+const readFileAsync = promisify(fs.readFile);
 
 // AWS
 const AWS = require('aws-sdk');
@@ -260,7 +262,7 @@ const downloadManifest = async cb => {
   }
   if (argv.test) {
     manifest = require('../public/js/manifest.json');
-    manifest.styles = fs.readFileSync(path.join(__dirname, '../public/css', 'core.css'));
+    manifest.styles = await readFileAsync(path.join(__dirname, '../public/css', 'core.css'));
     processManifest();
     cb();
     return;
