@@ -83,7 +83,6 @@ const buildConfiguration = () => {
     const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
     const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
     const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
-    const NoEmitOnErrorsPlugin = require('webpack/lib/NoEmitOnErrorsPlugin');
 
     config.module.rules[0].use.unshift('cache-loader');
 
@@ -101,7 +100,6 @@ const buildConfiguration = () => {
     }
     config.plugins.push(
       new NamedModulesPlugin(),
-      new NoEmitOnErrorsPlugin(),
       new DllReferencePlugin({
         context: __dirname,
         manifest: require('./public/js/vendor-manifest.json'),
