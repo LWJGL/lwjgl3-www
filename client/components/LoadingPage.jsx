@@ -11,6 +11,9 @@ class LoadingPage extends React.Component<LoadingComponentProps> {
   componentDidMount() {
     if (LoadingPage.firstRoute) {
       LoadingPage.firstRoute = false;
+      nprogress.configure({
+        showSpinner: false,
+      });
     } else {
       nprogress.start();
     }

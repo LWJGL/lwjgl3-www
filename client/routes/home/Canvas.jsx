@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import loadJS from 'fg-loadjs';
 import { keyframes } from 'emotion';
 import styled from 'react-emotion';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
