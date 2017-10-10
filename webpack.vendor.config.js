@@ -60,7 +60,6 @@ const config = {
       // Dev
       'ansi-html',
       'html-entities',
-      'redbox-react',
       'react-proxy',
     ],
   },
