@@ -9,6 +9,23 @@ if (process.env.NODE_ENV === 'production') {
   if (manifestJson) {
     window.webpackManifest = JSON.parse(manifestJson.innerHTML);
   }
+
+  // Service worker
+  window.addEventListener('load', () => {
+    if (navigator.serviceWorker) {
+      navigator.serviceWorker.register('/sw.js');
+      // .then(registration => {
+      //   // Registration was successful
+      //   console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      // })
+      // .catch(err => {
+      //   // registration failed :(
+      //   console.error('ServiceWorker registration failed: ', err);
+      // });
+      // } else {
+      //   console.warn('Service workers are not supported.');
+    }
+  });
 } else if (CSSMODULES) {
   // Inject global styles, this enables HMR for SASS
   const styles = require('./styles/layout.scss');
@@ -31,7 +48,7 @@ const bootPromises: Array<Promise<any>> = [];
 // }
 
 if (!('fetch' in window)) {
-  bootPromises.push(import(/* webpackChunkName: "whatwg-fetch" */ 'whatwg-fetch'));
+  bootPromises.push(import(/* webpackChunkName: "nosw-fetch" */ 'whatwg-fetch'));
 }
 
 if (bootPromises.length) {

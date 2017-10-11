@@ -3,6 +3,7 @@
 // Server
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const express = require('express');
 const helmet = require('helmet');
 const favicon = require('serve-favicon');
@@ -35,6 +36,7 @@ app.locals.production = !app.locals.development;
 
 const CSS_MODE = app.locals.development ? (argv.css ? 'HMR' : 'LINK') : 'INLINE';
 let manifest = {};
+let serviceWorkerCache = null;
 
 // View options
 app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
@@ -121,7 +123,12 @@ app.use(
 
 // Redownloads and parses JS manifest from S3
 app.get('/dev/reload', (req, res) => {
+  // Update manifest
   downloadManifest(() => {
+    // Reset service worker cache so it gets rebuilt on next request
+    // If a single byte has changed, clients should update their cache
+    serviceWorkerCache = null;
+
     res
       .type('text')
       .status(200)
@@ -144,6 +151,37 @@ app.get('/build/:build/:version', routeBuild);
 
 // Legacy re-directs
 app.get('/license.php', (req, res) => res.redirect(301, '/license'));
+
+app.get('/sw.js', async (req, res) => {
+  if (serviceWorkerCache === null || true) {
+    // Read service worker source code
+    let swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
+
+    // Compute & update version hash
+    const md5 = crypto.createHash('MD5');
+    md5.update(manifest.chunksSerialized);
+    swJS = swJS.toString().replace(/VERSION/, md5.digest('hex'));
+
+    // Populate service worker script with files to cache
+    const files = [`/js/${manifest.entry}`];
+    Object.values(manifest.chunks).forEach(chunk => {
+      if (chunk.startsWith('nosw-')) {
+        return;
+      }
+      files.push(`/js/${chunk}`);
+    });
+    swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
+
+    // Populate routes array
+    const routes = Object.keys(manifest.routes).map((route /*: string*/) => (route === 'home' ? '/' : `/${route}`));
+    swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
+
+    // Store SW script source so we can serve immediately
+    serviceWorkerCache = swJS;
+  }
+
+  res.type('text/javascript').send(serviceWorkerCache);
+});
 
 // App
 app.get('*', (req, res, next) => {
