@@ -39,23 +39,16 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   const req = new URL(event.request.url);
 
-  // network first, fall back to cache if we are offline
-  if (ROUTES.indexOf(req.pathname) !== -1) {
-    event.respondWith(
-      fetch(event.request).catch(function() {
-        if (req.pathname !== '/') {
-          // Always use homepage cache for all other pages (since we have client-side routing)
-          return caches.match(
-            new Request('/', {
-              method: event.request.method,
-              headers: event.request.headers,
-            })
-          );
-        }
+  if (ROUTES.indexOf(req.pathname) !== -1 && req.pathname !== '/') {
+    // Always use homepage cache for all other pages (since we have client-side routing)
+    const rewriteReq = new Request('/', {
+      method: event.request.method,
+      headers: event.request.headers,
+    });
 
-        return caches.match(event.request);
-      })
-    );
+    caches.match(rewriteReq).then(function(response) {
+      return response || fetch(event.request);
+    });
     return;
   }
 
