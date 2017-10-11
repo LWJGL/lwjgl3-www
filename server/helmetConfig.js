@@ -8,7 +8,7 @@ const helmetConfig = production => {
         baseUri: ["'self'"],
         blockAllMixedContent: true,
         childSrc: ["'none'"],
-        connectSrc: ["'self'", 'https://build.lwjgl.org', 'https://www.google-analytics.com'],
+        connectSrc: ["'self'", 'https://*'],
         formAction: ["'self'"],
         frameAncestors: ["'none'"],
         imgSrc: [
@@ -23,8 +23,7 @@ const helmetConfig = production => {
           "'self'",
           'https://www.google-analytics.com',
           'https://cdnjs.cloudflare.com',
-          'https://cdn.polyfill.io',
-          'https://unpkg.com',
+          // 'https://cdn.polyfill.io',
         ],
         styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com'],
         objectSrc: ["'none'"],
