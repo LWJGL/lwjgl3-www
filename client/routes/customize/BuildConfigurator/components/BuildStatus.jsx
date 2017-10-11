@@ -32,7 +32,7 @@ const BuildStatus = ({ name }: Props) => (
 
       return (
         <p className="my-0">
-          {status.error || status.version}
+          {status.error ? <span className="text-danger">{status.error}</span> : status.version}
           <br />
           {status.lastModified ? status.lastModified : <br />}
         </p>
