@@ -1,6 +1,7 @@
 {
   "name": "Lightweight Java Game Library",
-  "description": "LWJGL is a Java library that enables cross-platform access to popular native APIs useful in the development of graphics (OpenGL), audio (OpenAL) and parallel computing (OpenCL) applications.",
+  "description":
+    "LWJGL is a Java library that enables cross-platform access to popular native APIs useful in the development of graphics (OpenGL), audio (OpenAL) and parallel computing (OpenCL) applications.",
   "lang": "en",
   "dir": "ltr",
   "short_name": "LWJGL",
@@ -31,13 +32,13 @@
       "type": "image/png"
     },
     {
-        "src": "/img/fav/512x512.png",
-        "sizes": "512x512",
-        "type": "image/png"
+      "src": "/img/fav/512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": "/",
-  "display": "browser",
+  "display": "minimal-ui",
   "background_color": "#1b2426",
   "theme_color": "#1b2426"
 }
