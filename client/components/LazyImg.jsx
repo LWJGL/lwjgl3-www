@@ -16,7 +16,7 @@ function observeEntries(entries: Array<IntersectionObserverEntry>) {
 }
 
 type Props = {
-  src: string,
+  src?: string,
   srcSet?: string,
 };
 
@@ -27,14 +27,13 @@ class LazyImg extends React.PureComponent<Props, Props> {
   el: ?HTMLImageElement;
   observed: boolean = false;
 
-  state = {
-    src: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
-  };
+  state = {};
 
   componentDidMount() {
     if (!SupportsIntersectionObserver) {
       this.setState({
         src: this.props.src,
+        srcSet: this.props.srcSet,
       });
       return;
     }
