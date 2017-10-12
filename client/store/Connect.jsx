@@ -21,7 +21,7 @@ type Props<S> = {
 };
 
 type Context = {
-  parent: Connect,
+  connectParent: Connect,
 };
 
 class Connect extends React.Component<Props<*>, *> {
@@ -37,17 +37,17 @@ class Connect extends React.Component<Props<*>, *> {
 
   // Parent will be undefined for top-level <Connect />
   static contextTypes = {
-    parent: PropTypes.object,
+    connectParent: PropTypes.object,
   };
 
   // Provide this <Connect /> to descendants
   static childContextTypes = {
-    parent: PropTypes.object,
+    connectParent: PropTypes.object,
   };
 
   getChildContext(): Context {
     return {
-      parent: this,
+      connectParent: this,
     };
   }
 
@@ -77,12 +77,12 @@ class Connect extends React.Component<Props<*>, *> {
     // Compute initial state
     this.state = this.props.state(store.getState());
 
-    if (context.parent === undefined) {
+    if (context.connectParent === undefined) {
       // This is a top-level Connect, subscribe to the store directly
       this.storeUnsubscribe = store.subscribe(this.storeListener);
     } else {
       // This is a descendant Connect, subscribe to its parent
-      context.parent.subscribe(this.storeListener);
+      context.connectParent.subscribe(this.storeListener);
     }
   }
 
@@ -105,10 +105,10 @@ class Connect extends React.Component<Props<*>, *> {
   }
 
   componentWillUnmount() {
-    if (this.context.parent === undefined) {
+    if (this.context.connectParent === undefined) {
       this.storeUnsubscribe();
     } else {
-      this.context.parent.unsubscribe(this.storeListener);
+      this.context.connectParent.unsubscribe(this.storeListener);
     }
   }
 
