@@ -4,41 +4,33 @@ const helmetConfig = production => {
   const config = {
     contentSecurityPolicy: {
       directives: {
-        defaultSrc: ["'self'"],
-        baseUri: ["'self'"],
         blockAllMixedContent: true,
-        childSrc: ["'none'"],
-        connectSrc: ["'self'", 'https://*'],
+        // defaultSrc: ['*'],
+        // connectSrc: ['*'],
+        // fontSrc: ['*'], // default-src
         formAction: ["'self'"],
         frameAncestors: ["'none'"],
-        imgSrc: [
-          "'self'",
-          'data:',
-          'https://api.travis-ci.org',
-          'https://travis-ci.org',
-          'https://www.google-analytics.com',
-          'https://appveyor-matrix-badges.herokuapp.com',
-        ],
-        scriptSrc: [
-          "'self'",
-          'https://www.google-analytics.com',
-          'https://cdnjs.cloudflare.com',
-          // 'https://cdn.polyfill.io',
-        ],
-        styleSrc: ["'self'", "'unsafe-inline'", 'https://cdnjs.cloudflare.com'],
+        // frameSrc: ['*'], // default-src
+        // imgSrc: ['*'], // default-src
+        // manifestSrc: ["'self'"],
+        // mediaSrc: ['*'], // default-src
         objectSrc: ["'none'"],
+        // scriptSrc: ['*'], // default-src
+        // styleSrc: ['*'], // default-src
+        // workerSrc: ["'self'"]
       },
     },
-    dnsPrefetchControl: {
-      allow: false,
-    },
+    // browserSniff: false,
+    dnsPrefetchControl: false,
+    // dnsPrefetchControl: {
+    //   allow: false,
+    // },
     frameguard: {
-      action: 'deny',
+      action: 'sameorigin',
     },
     hidePoweredBy: false,
     ieNoOpen: false,
     noSniff: true,
-    referrerPolicy: false,
     xssFilter: true,
   };
 
