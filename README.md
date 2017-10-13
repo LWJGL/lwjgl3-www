@@ -219,7 +219,7 @@ In VS Code add the following in the user settings:
 }
 ```
 
-Recommended VS Code Workspace Settings:
+Recommended VS Code **Workspace Settings**:
 
 ```json
 {
@@ -236,13 +236,8 @@ Recommended VS Code Workspace Settings:
     "**/client/**/*.jsx": "javascriptreact"
   },
   "javascript.format.enable": false,
-  "javascript.validate.enable": false,
-  "javascript.referencesCodeLens.enabled": false,
   "javascript.nameSuggestions": false,
-  "typescript.validate.enable": false,
-  "typescript.format.enable": false,
-  "typescript.referencesCodeLens.enabled": false,
-  "typescript.implementationsCodeLens.enabled": false,
-  "typescript.tsc.autoDetect": "off"
+  "javascript.referencesCodeLens.enabled": false,
+  "javascript.validate.enable": false
 }
 ```

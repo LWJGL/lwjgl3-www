@@ -37,7 +37,7 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "9.0.1"
+    "yargs": "10.0.0-alpha.0"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",

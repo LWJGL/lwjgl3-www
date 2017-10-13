@@ -9,13 +9,18 @@ $enable-transitions: true;
 $whitespace: 0.5rem;
 
 // Adjust heading sizes back to Bootstrap 3 defaults
-
 $h1-font-size: 2rem;
 $h2-font-size: 1.75rem;
 $h3-font-size: 1.5rem;
 $h4-font-size: 1.25rem;
 $h5-font-size: 1.25rem;
 $h6-font-size: 1rem;
+
+// Make display-N size smaller
+//$display1-size: 4rem;
+//$display2-size: 3.5rem;
+//$display3-size: 3rem;
+//$display4-size: 2.5rem;
 
 $btn-line-height: 1;
 

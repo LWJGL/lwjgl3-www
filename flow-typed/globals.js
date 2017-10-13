@@ -11,6 +11,7 @@ declare var ANALYTICS_TRACKING_ID: string;
 declare var webpackManifest: {
   [chunkId: string]: string,
 };
+
 declare var module: {
   hot: {
     accept(path: string, callback: () => void): void,

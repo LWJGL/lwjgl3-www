@@ -1,6 +1,5 @@
 // @flow
-import nprogress from 'nprogress';
-import loadJS from 'fg-loadjs';
+// import loadJS from 'fg-loadjs';
 import mount from './mount';
 
 // Webpack manifest
