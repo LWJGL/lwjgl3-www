@@ -148,7 +148,6 @@ const buildConfiguration = () => {
       });
     }
   } else {
-    const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplacementPlugin');
     const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
     const ShakePlugin = require('webpack-common-shake').Plugin;
     const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
