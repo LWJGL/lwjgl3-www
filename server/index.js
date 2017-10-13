@@ -153,7 +153,7 @@ app.get('/build/:build/:version', routeBuild);
 app.get('/license.php', (req, res) => res.redirect(301, '/license'));
 
 app.get('/sw.js', async (req, res) => {
-  if (serviceWorkerCache === null || true) {
+  if (serviceWorkerCache === null) {
     // Read service worker source code
     let swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
 
@@ -180,7 +180,12 @@ app.get('/sw.js', async (req, res) => {
     serviceWorkerCache = swJS;
   }
 
-  res.type('text/javascript').send(serviceWorkerCache);
+  res
+    .type('text/javascript')
+    // .set({
+    //   'Cache-Control': 'max-age=30',
+    // })
+    .send(serviceWorkerCache);
 });
 
 // App
