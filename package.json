@@ -28,7 +28,7 @@
     "not ie < 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.133.0",
+    "aws-sdk": "2.134.0",
     "body-parser": "1.18.2",
     "chalk": "2.1.0",
     "express": "5.0.0-alpha.6",
@@ -37,7 +37,7 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "10.0.0-alpha.1"
+    "yargs": "10.0.0-alpha.2"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",
@@ -60,9 +60,9 @@
     "chunk-manifest-webpack-plugin": "1.1.2",
     "classwrap": "1.2.1",
     "cli-table": "0.3.1",
-    "cross-env": "5.0.5",
+    "cross-env": "5.1.0",
     "css-loader": "0.28.7",
-    "emotion": "8.0.6",
+    "emotion": "8.0.8",
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "3.0.1",
     "fbjs": "0.9.0-alpha.2",
@@ -82,9 +82,9 @@
     "query-string": "5.0.0",
     "react": "16.0.0",
     "react-dom": "16.0.0",
-    "react-emotion": "8.0.6",
+    "react-emotion": "8.0.8",
     "react-helmet": "5.2.0",
-    "react-hot-loader": "3.1.0",
+    "react-hot-loader": "3.1.1",
     "react-icons": "2.2.7",
     "react-loadable": "5.2.2",
     "react-router-dom": "4.2.2",
@@ -97,11 +97,11 @@
     "three": "0.87.1",
     "typescript": "2.6.0-rc",
     "typescript-styled-plugin": "0.1.0",
-    "uglify-js": "3.1.3",
+    "uglify-js": "3.1.4",
     "webpack": "3.7.1",
     "webpack-common-shake": "1.5.3",
     "webpack-dev-middleware": "1.12.0",
-    "webpack-hot-middleware": "2.19.1",
+    "webpack-hot-middleware": "2.20.0",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
