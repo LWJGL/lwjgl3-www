@@ -9,6 +9,10 @@ export default function() {
   // Render React
   const rootEl = document.getElementById('lwjgl-app');
 
+  if (rootEl === null) {
+    return;
+  }
+
   if (process.env.NODE_ENV === 'production' || NOHMR) {
     render(<App />, rootEl);
   } else {
