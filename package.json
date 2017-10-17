@@ -37,7 +37,7 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "10.0.0-alpha.2"
+    "yargs": "10.0.0-alpha.3"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",
@@ -86,7 +86,7 @@
     "react-helmet": "5.2.0",
     "react-hot-loader": "3.1.1",
     "react-icons": "2.2.7",
-    "react-loadable": "5.2.2",
+    "react-loadable": "5.2.4",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",
@@ -95,10 +95,10 @@
     "sass-loader": "6.0.6",
     "style-loader": "0.19.0",
     "three": "0.87.1",
-    "typescript": "2.6.0-rc",
+    "typescript": "2.6.1-insiders.20171016",
     "typescript-styled-plugin": "0.1.0",
     "uglify-js": "3.1.4",
-    "webpack": "3.7.1",
+    "webpack": "3.8.1",
     "webpack-common-shake": "1.5.3",
     "webpack-dev-middleware": "1.12.0",
     "webpack-hot-middleware": "2.20.0",
