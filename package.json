@@ -28,16 +28,16 @@
     "not ie < 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.134.0",
+    "aws-sdk": "2.135.0",
     "body-parser": "1.18.2",
-    "chalk": "2.1.0",
+    "chalk": "2.2.0",
     "express": "5.0.0-alpha.6",
     "helmet": "3.9.0",
     "pug": "2.0.0-rc.4",
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "10.0.0-alpha.3"
+    "yargs": "10.0.0"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",
