@@ -190,11 +190,6 @@ app.get('/sw.js', async (req, res) => {
 
 // App
 app.get('*', (req, res, next) => {
-  if (req.accepts('html', '*/*') !== 'html') {
-    next();
-    return;
-  }
-
   const renderOptions = {
     msie: req.headers['user-agent'].indexOf('MSIE') >= 0,
   };
@@ -243,27 +238,19 @@ app.get('*', (req, res, next) => {
 app.use((req, res) => {
   res.status(404);
 
-  if (req.accepts('html', '*/*') === 'html') {
-    res.render('404');
+  if (req.is('json')) {
+    res.json({ error: 'Not found' });
     return;
   }
 
-  if (req.accepts('json', '*/*') === 'json') {
-    res.send({ error: 'Not found' });
-    return;
-  }
-
-  res.type('txt').send();
+  res.render('404');
 });
 
 // Error handling
 app.use((err, req, res, next) => {
   res.status(500);
 
-  if (req.accepts('html', '*/*') === 'html') {
-    // HTML
-    res.render('500', { error: err });
-  } else if (req.accepts('json', '*/*') === 'json') {
+  if (req.is('json')) {
     // JSON
     if (err instanceof Error) {
       if (req.app.locals.development) {
@@ -281,11 +268,14 @@ app.use((err, req, res, next) => {
     } else {
       res.send({ error: err });
     }
-  } else {
+  } else if (req.is('text/plain')) {
     // default to plain-text.
     // keep only message
-    res.type('txt').send(err.message);
+    res.type('text/plain').send(err.message);
   }
+
+  // HTML
+  res.render('500', { error: err });
 });
 
 // ------------------------------------------------------------------------------
