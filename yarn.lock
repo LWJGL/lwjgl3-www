@@ -211,9 +211,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.135.0:
-  version "2.135.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.135.0.tgz#81f4a47b99212f2f236bf5b11b0b3a3a02086db4"
+aws-sdk@2.137.0:
+  version "2.137.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.137.0.tgz#2abbdc2b8642afd0786a17635d9488cc87791171"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -4244,9 +4244,9 @@ react-icons@2.2.7:
   dependencies:
     react-icon-base "2.1.0"
 
-react-loadable@5.2.4:
-  version "5.2.4"
-  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-5.2.4.tgz#e2ed2228ea5d3ad3bad51c1e1632a2f0864cdcae"
+react-loadable@5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-5.3.0.tgz#ee082ea7c40f0de4cfab5895cbf3c1594efee4e2"
 
 react-proxy@^3.0.0-alpha.0:
   version "3.0.0-alpha.1"
@@ -5500,9 +5500,9 @@ yargs-parser@^8.0.0:
   dependencies:
     camelcase "^4.1.0"
 
-yargs@10.0.0:
-  version "10.0.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-10.0.0.tgz#212f981412b470c7a3588034caba90deb9952b33"
+yargs@10.0.1:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-10.0.1.tgz#abaa3d29ffec1bef4d15fe4c7fb57f4cf90919fc"
   dependencies:
     cliui "^3.2.0"
     decamelize "^1.1.1"

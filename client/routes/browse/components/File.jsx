@@ -6,10 +6,10 @@ type Props = {
   path: string,
 };
 
-const FileTitle = styled.td`
+const FileTitle = styled('td')`
   word-break: break-all;
 `;
-const FileActions = styled.td`
+const FileActions = styled('td')`
   text-align: right;
 `;
 

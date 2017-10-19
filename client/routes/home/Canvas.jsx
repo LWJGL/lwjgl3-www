@@ -14,7 +14,7 @@ to {
 }
 `;
 
-const Canvas = styled.canvas`
+const Canvas = styled('canvas')`
   position: absolute;
   z-index: 0;
   width: 100%;

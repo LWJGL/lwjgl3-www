@@ -20,7 +20,7 @@ import {
   BORDER_RADIUS,
 } from '../theme';
 
-const BuildBox = styled.div`
+const BuildBox = styled('div')`
   border: 2px solid ${COLOR_PRIMARY.toString()};
   padding: 1rem;
   border-radius: ${BORDER_RADIUS};

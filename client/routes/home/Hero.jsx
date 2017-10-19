@@ -6,7 +6,7 @@ import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
 import Loadable from 'react-loadable';
 import Logo from './Logo';
 
-const HeroBox = styled.section`
+const HeroBox = styled('section')`
   margin-top: -4rem;
   background: linear-gradient(
     to top left,
@@ -25,7 +25,7 @@ const HeroBox = styled.section`
   position: relative;
 `;
 
-const LogoContainer = styled.div`
+const LogoContainer = styled('div')`
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -41,7 +41,7 @@ const LogoContainer = styled.div`
   }
 `;
 
-const HeroContent = styled.div`
+const HeroContent = styled('div')`
   text-align: center;
   padding: 0 2rem;
   color: white;

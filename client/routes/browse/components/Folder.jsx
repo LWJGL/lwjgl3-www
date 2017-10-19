@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import IconFolder from 'react-icons/md/folder';
 
-export const FolderName = styled.th`
+export const FolderName = styled('th')`
   cursor: pointer;
   user-select: none;
   &:hover {

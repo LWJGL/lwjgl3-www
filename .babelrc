@@ -2,7 +2,6 @@
   "env": {
     "development": {
       "plugins": [
-        ["emotion", { "sourceMap": true }],
         "react-hot-loader/babel",
         "syntax-jsx",
         "syntax-trailing-function-commas",
@@ -77,7 +76,6 @@
         ]
       ],
       "plugins": [
-        ["emotion", { "sourceMap": false }],
         "lodash",
         "syntax-jsx",
         "syntax-trailing-function-commas",

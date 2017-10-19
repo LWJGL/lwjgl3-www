@@ -28,7 +28,7 @@
     "not ie < 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.135.0",
+    "aws-sdk": "2.137.0",
     "body-parser": "1.18.2",
     "chalk": "2.2.0",
     "express": "5.0.0-alpha.6",
@@ -37,7 +37,7 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "10.0.0"
+    "yargs": "10.0.1"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",
@@ -86,7 +86,7 @@
     "react-helmet": "5.2.0",
     "react-hot-loader": "3.1.1",
     "react-icons": "2.2.7",
-    "react-loadable": "5.2.4",
+    "react-loadable": "5.3.0",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
     "redux-logger": "3.0.6",

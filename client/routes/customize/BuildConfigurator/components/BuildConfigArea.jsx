@@ -16,7 +16,7 @@ import {
   BORDER_RADIUS,
 } from '../theme';
 
-const ConfigPanel = styled.div`
+const ConfigPanel = styled('div')`
   position: relative;
   z-index: 0;
   margin-bottom: 66px;

@@ -20,7 +20,7 @@ import IconGLFW from 'react-icons/md/videogame-asset';
 import IconGitHub from 'react-icons/fa/github';
 import IconMoreApi from 'react-icons/md/battery-unknown';
 
-const BindingsDiv = styled.div`
+const BindingsDiv = styled('div')`
   .svg-icon,
   img {
     font-size: 4rem;
