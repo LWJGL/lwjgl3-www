@@ -23,16 +23,16 @@ const SourceRoute = (props: ContextRouter) => (
           <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3">
             <FaGithub /> Github Repository
           </a>
-          <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/releases">
+          <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/releases">
             Release notes
           </a>
-          <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/commits/master">
+          <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/commits/master">
             Changelog
           </a>
         </p>
 
         <p>LWJGL's issue tracker is also hosted on Github.</p>
-        <a className="btn btn-xs-block btn-outline-primary" href="https://github.com/LWJGL/lwjgl3/issues">
+        <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/issues">
           Issue Tracker
         </a>
       </section>

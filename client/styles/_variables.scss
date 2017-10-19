@@ -1,107 +1,27 @@
-//$enable-rounded: true;
+//$enable-rounded: false;
 $enable-shadows: true;
-$enable-gradients: true;
-$enable-transitions: true;
-//$enable-hover-media-query: false;
-//$enable-grid-classes: true;
-//$enable-print-styles: true;
-
-$whitespace: 0.5rem;
+// $enable-gradients: true;
+//$enable-transitions: false;
+//$enable-hover-media-query: true;
+//$enable-grid-classes: false;
+$enable-caret: false;
+$enable-print-styles: false;
 
 // Adjust heading sizes back to Bootstrap 3 defaults
 $h1-font-size: 2rem;
 $h2-font-size: 1.75rem;
 $h3-font-size: 1.5rem;
 $h4-font-size: 1.25rem;
-$h5-font-size: 1.25rem;
-$h6-font-size: 1rem;
 
 // Make display-N size smaller
-//$display1-size: 4rem;
-//$display2-size: 3.5rem;
-//$display3-size: 3rem;
-//$display4-size: 2.5rem;
+$display1-size: 4rem;
+$display2-size: 3.5rem;
+$display3-size: 3rem;
+$display4-size: 2.5rem;
 
-$btn-line-height: 1;
-
-//
-// Color system
-//
+// Colors
 
 $lwjgl-primary: #1b2426;
 
 $body-color: $lwjgl-primary;
 $body-color-dark-secondary: #6c8f91;
-
-$link-color-dark: #63aae7;
-$btn-primary-bg: $lwjgl-primary;
-$btn-primary-border: $lwjgl-primary;
-
-$white: #fff;
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #868e96;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
-$black: #000;
-
-$grays: (
-  100: $gray-100,
-  200: $gray-200,
-  300: $gray-300,
-  400: $gray-400,
-  500: $gray-500,
-  600: $gray-600,
-  700: $gray-700,
-  800: $gray-800,
-  900: $gray-900
-);
-
-$blue: #007bff;
-// $blue: #0275d8;
-$indigo: #6610f2;
-$purple: #6f42c1;
-$pink: #e83e8c;
-$red: #dc3545;
-$orange: #fd7e14;
-$yellow: #ffc107;
-$green: #28a745;
-$teal: #20c997;
-$cyan: #17a2b8;
-
-$colors: (
-  blue: $blue,
-  indigo: $indigo,
-  purple: $purple,
-  pink: $pink,
-  red: $red,
-  orange: $orange,
-  yellow: $yellow,
-  green: $green,
-  teal: $teal,
-  cyan: $cyan,
-  white: $white,
-  gray: $gray-600,
-  gray-dark: $gray-800
-);
-
-$theme-colors: (
-  primary: $lwjgl-primary,
-  secondary: $gray-600,
-  success: $green,
-  info: $cyan,
-  warning: $yellow,
-  danger: $red,
-  light: $gray-100,
-  dark: $gray-800
-);
-
-// $component-active-bg: #0275d8;
-$link-color: $blue;
-// $custom-control-indicator-checked-bg: $component-active-bg;
-// $custom-control-indicator-focus-box-shadow: 0 0 0 1px #fff, 0 0 0 3px $component-active-bg;
-// $custom-control-indicator-active-bg: lighten($component-active-bg, 35%);

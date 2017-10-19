@@ -68,7 +68,7 @@ const HomeRoute = (props: ContextRouter) => (
             </p>
 
             <p className="text-center pt-1">
-              <Link className="btn btn-xs-block btn-lg btn-outline-primary" to="/download">
+              <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/download">
                 DOWNLOAD
               </Link>
               <Link className="btn btn-xs-block btn-lg btn-outline-success" to="/guide">
@@ -286,10 +286,10 @@ const HomeRoute = (props: ContextRouter) => (
             </p>
 
             <p className="text-center">
-              <a className="btn btn-xs-block btn-outline-primary" href="http://legacy.lwjgl.org/">
+              <a className="btn btn-xs-block btn-outline-dark" href="http://legacy.lwjgl.org/">
                 LWJGL 2 WEBSITE
               </a>
-              <a className="btn btn-xs-block btn-outline-primary" href="http://wiki.lwjgl.org/">
+              <a className="btn btn-xs-block btn-outline-dark" href="http://wiki.lwjgl.org/">
                 LWJGL 2 WIKI
               </a>
             </p>

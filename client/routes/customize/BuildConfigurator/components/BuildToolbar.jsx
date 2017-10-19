@@ -55,7 +55,7 @@ class BuildToolbar extends React.Component<Props, State> {
             <input type="file" className="custom-file-input" accept=".json" onChange={this.handleFile} />
             <span className="custom-file-control" />
           </label>
-          <button className="btn btn-primary" onClick={this.toggleFileUI}>
+          <button className="btn btn-light" onClick={this.toggleFileUI}>
             Cancel
           </button>
         </div>
@@ -75,7 +75,7 @@ class BuildToolbar extends React.Component<Props, State> {
             <div className="download-toolbar">
               {this.props.children}
               <button
-                className="btn btn-outline-info"
+                className="btn btn-outline-light"
                 title="Load configuration file (JSON)"
                 onClick={this.toggleFileUI}
               >
@@ -83,7 +83,7 @@ class BuildToolbar extends React.Component<Props, State> {
                 {showLabels ? ` Load config` : null}
               </button>
               <button
-                className="btn btn-outline-info"
+                className="btn btn-outline-light"
                 title="Save configuration (in JSON)"
                 onClick={this.props.configDownload}
               >

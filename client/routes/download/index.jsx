@@ -28,7 +28,7 @@ const DownloadRoute = (props: ContextRouter) => (
             <p>All official releases are available for download from GitHub:</p>
             <p>
               <a
-                className="btn btn-xs-block btn-lg btn-primary"
+                className="btn btn-xs-block btn-lg btn-dark"
                 href="https://github.com/LWJGL/lwjgl3/releases"
                 target="_blank"
                 rel="noopener"
@@ -45,7 +45,7 @@ const DownloadRoute = (props: ContextRouter) => (
           >
             <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
             <p>
-              <Link className="btn btn-xs-block btn-lg btn-primary" to="/customize">
+              <Link className="btn btn-xs-block btn-lg btn-dark" to="/customize">
                 <IconCustomize /> Customize LWJGL 3
               </Link>
             </p>
@@ -58,7 +58,7 @@ const DownloadRoute = (props: ContextRouter) => (
           >
             <p>Or you can browse and download individual LWJGL artifacts:</p>
             <p>
-              <Link className="btn btn-xs-block btn-lg btn-outline-primary" to="/browse">
+              <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/browse">
                 <IconFolder /> Browse LWJGL files
               </Link>
             </p>

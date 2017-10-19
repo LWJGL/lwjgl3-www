@@ -56,6 +56,7 @@
     "babel-preset-react": "7.0.0-beta.3",
     "babel-preset-stage-2": "7.0.0-beta.3",
     "babel-preset-stage-3": "7.0.0-beta.3",
+    "bootstrap": "4.0.0-beta.2",
     "cache-loader": "1.1.0",
     "chunk-manifest-webpack-plugin": "1.1.2",
     "classwrap": "1.2.1",
