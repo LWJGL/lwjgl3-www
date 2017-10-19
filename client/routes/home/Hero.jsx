@@ -85,7 +85,7 @@ class Hero extends React.Component<{||}, { supportsWebGL: boolean }> {
   componentDidMount() {
     // detect WebGL support
     const cnv = document.createElement('canvas');
-    if (cnv.getContext('webgl') !== null) {
+    if (cnv.getContext('webgl') !== null || cnv.getContext('experimental-webgl') !== null) {
       this.setState({ supportsWebGL: true });
     }
   }
