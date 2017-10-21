@@ -28,7 +28,7 @@
     "not ie < 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.137.0",
+    "aws-sdk": "2.138.0",
     "body-parser": "1.18.2",
     "chalk": "2.2.0",
     "express": "5.0.0-alpha.6",
@@ -37,7 +37,7 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "10.0.1"
+    "yargs": "10.0.3"
   },
   "devDependencies": {
     "autoprefixer": "7.1.5",
@@ -96,9 +96,9 @@
     "sass-loader": "6.0.6",
     "style-loader": "0.19.0",
     "three": "0.87.1",
-    "typescript": "2.6.1-insiders.20171016",
+    "typescript": "2.7.0-dev.20171021",
     "typescript-styled-plugin": "0.1.0",
-    "uglify-js": "3.1.4",
+    "uglify-js": "3.1.5",
     "webpack": "3.8.1",
     "webpack-common-shake": "1.5.3",
     "webpack-dev-middleware": "1.12.0",
