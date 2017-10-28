@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import wrap from 'classwrap';
+import cc from 'classcat';
 
 type Props = {
   size?: number,
@@ -18,7 +18,7 @@ const LoaderSpinner = ({ size = 24, style, className, delay = false }: Props) =>
   }
 
   return (
-    <svg className={wrap(['loader-spinner', cl])} viewBox="0 0 32 32" width={size} height={size} style={style}>
+    <svg className={cc(['loader-spinner', cl])} viewBox="0 0 32 32" width={size} height={size} style={style}>
       <circle cx={16} cy={16} r={14} fill="none" />
     </svg>
   );

@@ -6,7 +6,7 @@ import Sidebar from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import { SupportsPassiveEvents } from '~/services/supports';
 import { css } from 'emotion';
-import wrap from 'classwrap';
+import cc from 'classcat';
 import { COLOR_PRIMARY } from '~/theme';
 import store from '~/store';
 
@@ -161,7 +161,7 @@ class Header extends React.PureComponent<Props, State> {
     return (
       <header
         role="navigation"
-        className={wrap([
+        className={cc([
           HEADER_CLASSNAME,
           {
             [styleHome]: isHome,

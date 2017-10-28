@@ -48,7 +48,7 @@ const config = {
       // UI
       'emotion',
       'react-emotion',
-      'classwrap',
+      'classcat',
       'focus-trap',
       'nprogress',
 
