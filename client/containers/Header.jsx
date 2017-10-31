@@ -5,10 +5,17 @@ import MainMenu from './MainMenu';
 import Sidebar from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import { SupportsPassiveEvents } from '~/services/supports';
-import { css } from 'emotion';
+import { css, injectGlobal } from 'emotion';
 import cc from 'classcat';
 import { COLOR_PRIMARY } from '~/theme';
 import store from '~/store';
+
+injectGlobal`
+  body {
+    padding-top: 4rem;
+    overflow-y: scroll;
+  }
+`;
 
 const HEADER_CLASSNAME = 'site-header';
 const styleOpaque = css`
