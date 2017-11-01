@@ -24,57 +24,6 @@
       ]
     },
     "production": {
-      "presets": [
-        [
-          "@babel/env",
-          {
-            "spec": false,
-            "loose": true,
-            "modules": false,
-            "forceAllTransforms": true,
-            "debug": false,
-            "useBuiltIns": false,
-            "shippedProposals": true,
-            "targets": {
-              "browsers": ["> 1%", "ie >= 10", "not ie < 10"]
-            },
-            "exclude": [
-              "transform-sticky-regex",
-              "transform-unicode-regex",
-              "es6.reflect.apply",
-              "es6.reflect.construct",
-              "es6.reflect.define-property",
-              "es6.reflect.delete-property",
-              "es6.reflect.get",
-              "es6.reflect.get-own-property-descriptor",
-              "es6.reflect.get-prototype-of",
-              "es6.reflect.has",
-              "es6.reflect.is-extensible",
-              "es6.reflect.own-keys",
-              "es6.reflect.prevent-extensions",
-              "es6.reflect.set",
-              "es6.reflect.set-prototype-of",
-              "es6.math.acosh",
-              "es6.math.asinh",
-              "es6.math.atanh",
-              "es6.math.cbrt",
-              "es6.math.clz32",
-              "es6.math.cosh",
-              "es6.math.expm1",
-              "es6.math.fround",
-              "es6.math.hypot",
-              "es6.math.imul",
-              "es6.math.log10",
-              "es6.math.log1p",
-              "es6.math.log2",
-              "es6.math.sign",
-              "es6.math.sinh",
-              "es6.math.tanh",
-              "es6.math.trunc"
-            ]
-          }
-        ]
-      ],
       "plugins": [
         // ["emotion", { "sourceMap": false }],
         // "lodash",
@@ -92,10 +41,47 @@
 
         // Stage 3
         ["@babel/proposal-object-rest-spread", { "useBuiltIns": true }],
-        "@babel/proposal-async-generator-functions",
+        // "@babel/proposal-async-generator-functions",
 
-        // Parameter destructuring breaks if we don't require this
-        "@babel/transform-parameters"
+        // State 4
+        // check-constants
+
+        // ES2015
+        "@babel/check-constants",
+        ["@babel/transform-arrow-functions", { "spec": false }],
+        "@babel/transform-block-scoped-functions",
+        "@babel/transform-block-scoping",
+        ["@babel/transform-classes", { "loose": true }],
+        ["@babel/transform-computed-properties", { "loose": true }],
+        ["@babel/transform-destructuring", { "loose": true }],
+        "@babel/transform-duplicate-keys",
+        ["@babel/transform-for-of", { "loose": true }],
+        "@babel/transform-function-name",
+        "@babel/transform-literals",
+        "@babel/transform-object-super",
+        ["@babel/transform-parameters", { "loose": true }],
+        "@babel/transform-shorthand-properties",
+        ["@babel/transform-spread", { "loose": true }],
+        // "@babel/sticky-regex",
+        ["@babel/transform-template-literals", { "spec": false, "loose": true }],
+        "@babel/transform-typeof-symbol",
+        "@babel/transform-new-target",
+        // ["@babel/transform-regenerator", { "async": false, "asyncGenerators": false }],
+        // "@babel/unicode-regex"
+
+        // ES2016
+        "@babel/transform-exponentiation-operator",
+
+        // ES2017
+        // "@babel/transform-async-to-generator"
+
+        // async/await
+        [
+          "module:fast-async",
+          {
+            "spec": true
+          }
+        ]
       ]
     }
   }

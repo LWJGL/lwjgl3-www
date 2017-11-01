@@ -23,9 +23,12 @@
     "bracketSpacing": true
   },
   "browserslist": [
-    "> 1%",
-    "ie >= 10",
-    "not ie < 10"
+    "chrome >= 40",
+    "firefox >= 32",
+    "safari >= 6",
+    "edge >= 12",
+    "ios >= 7",
+    "ie >= 10"
   ],
   "dependencies": {
     "aws-sdk": "2.142.0",
@@ -60,11 +63,13 @@
     "chunk-manifest-webpack-plugin": "1.1.2",
     "classcat": "1.0.1",
     "cli-table": "0.3.1",
+    "core-js": "2.5.1",
     "cross-env": "5.1.1",
     "css-loader": "0.28.7",
     "emotion": "8.0.9",
     "exports-loader": "0.6.4",
     "extract-text-webpack-plugin": "3.0.2",
+    "fast-async": "6.3.0",
     "fbjs": "0.9.0-alpha.2",
     "fg-loadcss": "1.3.1",
     "fg-loadjs": "1.0.0",
