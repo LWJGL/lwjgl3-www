@@ -3,45 +3,44 @@
     "development": {
       "plugins": [
         // ["emotion", { "sourceMap": true }],
-        "react-hot-loader/babel",
-        "syntax-jsx",
-        "syntax-trailing-function-commas",
-        "transform-flow-strip-types",
+        // "react-hot-loader/babel",
+        "@babel/transform-flow-strip-types",
 
         // React
-        "transform-react-jsx-self",
-        "transform-react-jsx-source",
-        "transform-react-display-name",
-        ["transform-react-jsx", { "useBuiltIns": true }],
+        "@babel/transform-react-jsx-self",
+        "@babel/transform-react-jsx-source",
+        "@babel/transform-react-display-name",
+        ["@babel/transform-react-jsx", { "useBuiltIns": true }],
 
         // Stage 2
-        "syntax-dynamic-import",
-        ["transform-class-properties", { "spec": false }],
+        "@babel/syntax-dynamic-import",
+        ["@babel/proposal-class-properties", { "spec": false }],
 
         // Stage 3
-        ["transform-object-rest-spread", { "useBuiltIns": true }],
+        ["@babel/proposal-object-rest-spread", { "useBuiltIns": true }],
 
         // ES2015 -- Move this to production-only when browsers add support for class properties (see above)
-        ["transform-es2015-classes", { "loose": true }]
+        ["@babel/transform-classes", { "loose": true }]
       ]
     },
     "production": {
       "presets": [
         [
-          "env",
+          "@babel/env",
           {
             "spec": false,
             "loose": true,
             "modules": false,
             "forceAllTransforms": true,
             "debug": false,
-            "useBuiltIns": "entry",
+            "useBuiltIns": false,
+            "shippedProposals": true,
             "targets": {
               "browsers": ["> 1%", "ie >= 10", "not ie < 10"]
             },
             "exclude": [
-              "transform-es2015-sticky-regex",
-              "transform-es2015-unicode-regex",
+              "transform-sticky-regex",
+              "transform-unicode-regex",
               "es6.reflect.apply",
               "es6.reflect.construct",
               "es6.reflect.define-property",
@@ -79,26 +78,24 @@
       "plugins": [
         // ["emotion", { "sourceMap": false }],
         // "lodash",
-        "syntax-jsx",
-        "syntax-trailing-function-commas",
-        "transform-flow-strip-types",
+        "@babel/transform-flow-strip-types",
 
         // React
-        "transform-react-constant-elements",
-        "transform-react-inline-elements",
+        "@babel/transform-react-constant-elements",
+        "@babel/transform-react-inline-elements",
         "transform-react-remove-prop-types",
-        ["transform-react-jsx", { "useBuiltIns": true }],
+        ["@babel/transform-react-jsx", { "useBuiltIns": true }],
 
         // Stage 2
-        "syntax-dynamic-import",
-        ["transform-class-properties", { "spec": false }],
+        "@babel/syntax-dynamic-import",
+        ["@babel/proposal-class-properties", { "spec": false }],
 
         // Stage 3
-        ["transform-object-rest-spread", { "useBuiltIns": true }],
-        "transform-async-generator-functions",
+        ["@babel/proposal-object-rest-spread", { "useBuiltIns": true }],
+        "@babel/proposal-async-generator-functions",
 
         // Parameter destructuring breaks if we don't require this
-        "transform-es2015-parameters"
+        "@babel/transform-parameters"
       ]
     }
   }

@@ -84,14 +84,13 @@ const buildConfiguration = () => {
     const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
     const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
 
-    config.module.rules[0].use.unshift('cache-loader');
-
     if (SOURCEMAP) {
       config.devtool = 'inline-source-map';
     }
 
     // WebPack Hot Middleware client & HMR plugins
     if (HMR) {
+      config.module.rules[0].use.unshift('react-hot-loader/webpack');
       config.entry.main.unshift(
         require.resolve('react-hot-loader/patch'),
         require.resolve('webpack-hot-middleware/client')
@@ -105,6 +104,8 @@ const buildConfiguration = () => {
         manifest: require('./public/js/vendor-manifest.json'),
       })
     );
+
+    config.module.rules[0].use.unshift('cache-loader');
 
     if (argv.css) {
       config.module.rules.push({
