@@ -130,12 +130,14 @@ const BuildType = ({ build, downloading }: Props) => (
     {({ isSelected, isActive, spec }, { changeType }) => (
       <BuildBox
         onClick={downloading ? null : changeType.bind(this, build)}
-        className={cc({
-          [build]: true,
-          locked: downloading && !isSelected,
-          selected: isSelected,
-          active: isActive,
-        })}
+        className={cc([
+          build,
+          {
+            locked: downloading && !isSelected,
+            selected: isSelected,
+            active: isActive,
+          },
+        ])}
       >
         <h2>{spec.title}</h2>
         <p>{spec.description}</p>

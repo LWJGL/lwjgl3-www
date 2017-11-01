@@ -45,7 +45,7 @@ const BuildArtifact = ({ id }: Props) => (
         artifact,
         checked: build.availability[artifact.id] !== undefined && build.contents[artifact.id],
         showDescriptions: build.descriptions,
-        disabled: !build.availability[artifact.id] || artifact.required,
+        disabled: build.availability[artifact.id] === undefined || artifact.required === true,
       };
     }}
     actions={{

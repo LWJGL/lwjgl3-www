@@ -3,12 +3,11 @@ import * as React from 'react';
 import smoothScroll from '~/services/smoothscroll';
 import IconArrowUpward from 'react-icons/md/arrow-upward';
 
-const scrollTopTop = (e: SyntheticEvent<HTMLLinkElement>): boolean => {
-  smoothScroll.init();
+const scrollTopTop = (e: SyntheticEvent<HTMLLinkElement>) => {
   e.preventDefault();
+  smoothScroll.init();
   window.scroll(0, 0);
   smoothScroll.play();
-  return false;
 };
 
 const BackToTop = () => (

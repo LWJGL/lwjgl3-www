@@ -37,7 +37,7 @@ declare module 'react-router' {
   };
 
   declare export type Match = {
-    params: { [key: string]: ?string },
+    params: { [key: string]: string },
     isExact: boolean,
     path: string,
     url: string,

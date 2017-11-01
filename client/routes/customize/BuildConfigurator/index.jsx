@@ -4,8 +4,6 @@ import { createSelector } from 'reselect';
 import debounce from 'lodash/debounce';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
-
-//$FlowFixMe
 import areEqual from 'fbjs/lib/areEqual';
 
 import { register } from '~/store/asyncReducers';

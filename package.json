@@ -28,7 +28,7 @@
     "not ie < 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.141.0",
+    "aws-sdk": "2.142.0",
     "body-parser": "1.18.2",
     "chalk": "2.3.0",
     "express": "5.0.0-alpha.6",
@@ -118,7 +118,6 @@
     "release": "yarn run styles && yarn run production && yarn run manifest",
     "deploy": "node ./scripts/deploy.js",
     "format": "prettier --write \"{client,server,scripts}/**/*.js*\"",
-    "format-styles": "prettier --write \"client/styles/**/*.scss*\"",
-    "flow": "flow"
+    "format-styles": "prettier --write \"client/styles/**/*.scss*\""
   }
 }
