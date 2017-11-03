@@ -173,24 +173,24 @@ const buildConfiguration = () => {
       })
     );
 
-    config.stats = {
-      assets: true,
-      cached: false,
-      children: false,
-      chunks: false,
-      chunkModules: false,
-      chunkOrigins: false,
-      errors: false,
-      errorDetails: false,
-      hash: false,
-      modules: false,
-      publicPath: true,
-      reasons: false,
-      source: false,
-      timings: false,
-      version: false,
-      warnings: false,
-    };
+    // config.stats = {
+    //   assets: true,
+    //   cached: false,
+    //   children: false,
+    //   chunks: false,
+    //   chunkModules: false,
+    //   chunkOrigins: false,
+    //   errors: false,
+    //   errorDetails: false,
+    //   hash: false,
+    //   modules: false,
+    //   publicPath: true,
+    //   reasons: false,
+    //   source: false,
+    //   timings: false,
+    //   version: false,
+    //   warnings: false,
+    // };
   }
 
   return config;
