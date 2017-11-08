@@ -90,7 +90,7 @@ const buildConfiguration = () => {
 
     // WebPack Hot Middleware client & HMR plugins
     if (HMR) {
-      config.module.rules[0].use.unshift('react-hot-loader/webpack');
+      // config.module.rules[0].use.unshift('react-hot-loader/webpack');
       config.entry.main.unshift(
         require.resolve('react-hot-loader/patch'),
         require.resolve('webpack-hot-middleware/client')
@@ -153,11 +153,11 @@ const buildConfiguration = () => {
     const ShakePlugin = require('webpack-common-shake').Plugin;
     const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
     const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-    const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
+    // const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
-      new LodashModuleReplacementPlugin(),
+      // new LodashModuleReplacementPlugin(),
       new ModuleConcatenationPlugin(),
       new ShakePlugin({
         warnings: {

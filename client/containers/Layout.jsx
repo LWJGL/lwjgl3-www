@@ -27,7 +27,8 @@ const Layout = () => [
   <Route
     key="footer"
     render={props =>
-      props.location.pathname !== '/customize' && props.location.pathname !== '/browse' ? <Footer /> : null}
+      props.location.pathname !== '/customize' && props.location.pathname !== '/browse' ? <Footer /> : null
+    }
   />,
 ];
 

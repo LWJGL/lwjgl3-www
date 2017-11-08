@@ -48,8 +48,9 @@ const HomeRoute = (props: ContextRouter) => (
           <div className="col-md-10">
             <p>
               LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
-              development of graphics (<a href="https://www.opengl.org/">OpenGL</a>), audio (<a href="http://www.openal.org/">OpenAL</a>)
-              and parallel computing (
+              development of graphics (<a href="https://www.opengl.org/">OpenGL</a>), audio (<a href="http://www.openal.org/">
+                OpenAL
+              </a>) and parallel computing (
               <a href="https://www.khronos.org/opencl/">OpenCL</a>
               ) applications. This access is direct and high-performance, yet also wrapped in a type-safe and
               user-friendly layer, appropriate for the Java ecosystem.

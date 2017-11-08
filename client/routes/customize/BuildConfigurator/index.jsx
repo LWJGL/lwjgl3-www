@@ -313,7 +313,8 @@ class BuildConfigurator extends React.Component<Props, State> {
                           </BuildToolbar>
                         ) : (
                           <BuildScript configDownload={this.configDownload} />
-                        )}
+                        )
+                      }
                     </Connect>,
                   ]
                 ) : (

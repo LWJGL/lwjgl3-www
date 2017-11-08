@@ -54,7 +54,8 @@ const BuildPlatform = () => (
                 />
               ))}
             </div>,
-          ]}
+          ]
+    }
   </Connect>
 );
 

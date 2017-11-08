@@ -11,7 +11,8 @@ export default (prev: BuildOptions): BuildOptions => ({
     'lwjgl-lz4': {
       id: 'lwjgl-lz4',
       title: 'LZ4 bindings',
-      description: 'LZ4 is a lossless data compression algorithm that is focused on compression and decompression speed.',
+      description:
+        'LZ4 is a lossless data compression algorithm that is focused on compression and decompression speed.',
       natives: NATIVE_ALL,
       website: 'http://lz4.github.io/lz4/',
     },
@@ -25,7 +26,8 @@ export default (prev: BuildOptions): BuildOptions => ({
     'lwjgl-zstd': {
       id: 'lwjgl-zstd',
       title: 'Zstandard bindings',
-      description: 'Zstandard (zstd) is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios.',
+      description:
+        'Zstandard (zstd) is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios.',
       natives: NATIVE_ALL,
       website: 'http://facebook.github.io/zstd/',
     },

@@ -29,29 +29,25 @@ module.exports = (req, res, next) => {
       const result = {};
 
       if (data.Contents.length) {
-        result.files = data.Contents
-          .filter(item => {
-            if (!isRoot) {
-              if (item.Key === params.Prefix) {
-                return false;
-              }
+        result.files = data.Contents.filter(item => {
+          if (!isRoot) {
+            if (item.Key === params.Prefix) {
+              return false;
             }
-            return true;
-          })
-          .map(item => (isRoot ? item.Key : item.Key.replace(replacer, '')));
+          }
+          return true;
+        }).map(item => (isRoot ? item.Key : item.Key.replace(replacer, '')));
       }
 
       if (data.CommonPrefixes.length) {
-        result.folders = data.CommonPrefixes
-          .filter(folder => {
-            if (isRoot) {
-              if (!['release/', 'stable/', 'nightly/'].includes(folder.Prefix)) {
-                return false;
-              }
+        result.folders = data.CommonPrefixes.filter(folder => {
+          if (isRoot) {
+            if (!['release/', 'stable/', 'nightly/'].includes(folder.Prefix)) {
+              return false;
             }
-            return true;
-          })
-          .map(folder => (isRoot ? folder.Prefix : folder.Prefix.replace(replacer, '')));
+          }
+          return true;
+        }).map(folder => (isRoot ? folder.Prefix : folder.Prefix.replace(replacer, '')));
       }
 
       res.send(result);
