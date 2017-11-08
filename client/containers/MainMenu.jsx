@@ -35,12 +35,17 @@ const MainMenu = ({ onClick, ...rest }: Props) => (
       </NavLink>
     </li>
     <li>
+      <a href="https://opencollective.com/lwjgl" target="_blank" rel="noopener">
+        DONATE
+      </a>
+    </li>
+    <li>
       <a href="http://forum.lwjgl.org/" target="_blank" rel="noopener">
         FORUM
       </a>
     </li>
     <li>
-      <a href="http://blog.lwjgl.org/" target="_blank" rel="noopener">
+      <a href="https://blog.lwjgl.org/" target="_blank" rel="noopener">
         BLOG
       </a>
     </li>

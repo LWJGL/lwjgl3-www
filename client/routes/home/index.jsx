@@ -276,8 +276,39 @@ const HomeRoute = (props: ContextRouter) => (
 
       <section className="container pt-5 pb-3">
         <div className="row justify-content-center">
-          <div className="col-md-10">
-            <h1 className="text-center">Looking for LWJGL 2?</h1>
+          <div className="col-md-9">
+            <h1>Contributors</h1>
+            <p>
+              This project exists thanks to all the people who{' '}
+              <a href="https://github.com/LWJGL/lwjgl3/blob/master/CONTRIBUTING.md" target="_blank" rel="noopener">
+                contribute
+              </a>.
+            </p>
+            <p>
+              <a href="https://github.com/LWJGL/lwjgl3/graphs/contributors" target="_blank" rel="noopener">
+                <LazyImg
+                  className="img-fluid"
+                  src="https://opencollective.com/lwjgl/contributors.svg?width=825"
+                  alt="LWJGL contributors"
+                />
+              </a>
+            </p>
+
+            <h1 className="mt-5">Backers</h1>
+            <p>Thank you to all our backers!</p>
+            <p>
+              <a href="https://opencollective.com/lwjgl#backers" target="_blank" rel="noopener">
+                <LazyImg
+                  className="img-fluid"
+                  src="https://opencollective.com/lwjgl/backers.svg?width=825"
+                  alt="LWJGL Backers"
+                />
+              </a>
+            </p>
+
+            <hr className="my-5" />
+
+            <h1>Looking for LWJGL 2?</h1>
             <p>
               LW<b>JGL</b> 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation of
               dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang and{' '}
