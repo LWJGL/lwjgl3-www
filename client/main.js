@@ -29,6 +29,14 @@ if (process.env.NODE_ENV === 'production') {
   // Inject global styles, this enables HMR for SASS
   const styles = require('./styles/layout.scss');
   styles.use();
+
+  // Unregister service workers if found
+  // TODO: test me
+  if (navigator.serviceWorker) {
+    navigator.serviceWorker.getRegistrations().then(registrations => {
+      registrations.forEach(registration => registration.unregister());
+    });
+  }
 }
 
 // We want to handle scroll restoration on our own
