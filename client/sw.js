@@ -1,8 +1,8 @@
-var CACHEPREFIX = 'lwjgl-static-';
-var CACHENAME = CACHEPREFIX + 'VERSION';
-var FILES = [];
-var ROUTES = [];
-var WHITELIST = [/^\/(img|svg)\//];
+const CACHEPREFIX = 'lwjgl-static-';
+const CACHENAME = CACHEPREFIX + 'VERSION';
+const FILES = [];
+const ROUTES = [];
+const WHITELIST = [/^\/(img|svg)\//];
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
@@ -60,7 +60,7 @@ self.addEventListener('fetch', function(event) {
       }
 
       return fetch(event.request).then(function(response) {
-        var shouldCache =
+        const shouldCache =
           event.request.method === 'GET' &&
           response.ok &&
           response.type === 'basic' &&
