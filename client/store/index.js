@@ -10,17 +10,6 @@ const middleware = [reduxThunk, breakpointMiddeware];
 const composed = [];
 
 if (process.env.NODE_ENV !== 'production') {
-  /*
-  middleware.push(
-    // https://github.com/evgenyrodionov/redux-logger
-    require('redux-logger').createLogger({
-      duration: true,
-      // diff: true,
-      collapsed: true,
-    })
-  );
-  */
-
   if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== undefined) {
     // https://github.com/zalmoxisus/redux-devtools-extension
     composed.push(window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__());

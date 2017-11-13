@@ -7,6 +7,7 @@
         "@babel/transform-flow-strip-types",
 
         // React
+        "reflective-bind/babel",
         "@babel/transform-react-jsx-self",
         "@babel/transform-react-jsx-source",
         "@babel/transform-react-display-name",
@@ -151,6 +152,7 @@
         "@babel/transform-flow-strip-types",
 
         // React
+        "reflective-bind/babel",
         "@babel/transform-react-constant-elements",
         "@babel/transform-react-inline-elements",
         "transform-react-remove-prop-types",

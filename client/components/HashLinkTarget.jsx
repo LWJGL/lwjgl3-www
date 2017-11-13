@@ -45,8 +45,11 @@ class HashLinkTarget extends React.Component<Props> {
   }
 }
 
-const HashLinkTargetRoute = ({ id }: OwnProps) => (
-  <Route render={({ location }) => <HashLinkTarget id={id} location={location} />} />
-);
+class HashLinkTargetRoute extends React.Component<OwnProps> {
+  render() {
+    let HashLinkTargetHoist = HashLinkTarget;
+    return <Route render={({ location }) => <HashLinkTargetHoist id={this.props.id} location={location} />} />;
+  }
+}
 
 export default HashLinkTargetRoute;
