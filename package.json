@@ -56,7 +56,7 @@
     "autoprefixer": "7.1.6",
     "babel-loader": "8.0.0-beta.0",
     "babel-plugin-emotion": "8.0.10",
-    "babel-plugin-lodash": "3.3.1",
+    "babel-plugin-lodash": "3.3.2",
     "babel-plugin-transform-react-remove-prop-types": "0.4.10",
     "bootstrap": "4.0.0-beta.2",
     "cache-loader": "1.1.0",

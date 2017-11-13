@@ -26,6 +26,7 @@
     "production": {
       "plugins": [
         ["emotion", { "sourceMap": false }],
+        "lodash",
         "@babel/transform-flow-strip-types",
 
         // React
