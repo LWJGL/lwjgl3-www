@@ -1,4 +1,5 @@
-// import '@babel/polyfill';
+import '@babel/polyfill';
+/*
 import 'core-js/modules/es6.typed.array-buffer';
 import 'core-js/modules/es6.typed.int8-array';
 import 'core-js/modules/es6.typed.uint8-array';
@@ -56,3 +57,4 @@ import 'core-js/modules/es7.string.pad-end';
 import 'core-js/modules/web.timers';
 import 'core-js/modules/web.immediate';
 import 'core-js/modules/web.dom.iterable';
+*/
