@@ -4,7 +4,7 @@ import type { BuildOptions } from '../types';
 
 export default (prev: BuildOptions): BuildOptions => ({
   ...prev,
-  version: '3.1.4',
+  version: '3.1.5',
   alias: 'nightly',
   byId: {
     ...prev.byId,
