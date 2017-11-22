@@ -95,6 +95,8 @@
       height: 100%;
       overflow-x: hidden;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior: contain;
       will-change: transform;
       transform: translateX(102%) translate3d(0, 0, 0);
       transition: transform 0.3s cubic-bezier(0, 0, 0.3, 1);
