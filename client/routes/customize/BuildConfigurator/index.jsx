@@ -220,8 +220,8 @@ export class BuildConfigurator extends React.Component<Props, State> {
             <div className="col p-0">
               <BuildConfigArea>
                 {!isDownloading ? (
-                  [
-                    <div key="customizer" className="row pt-3">
+                  <>
+                    <div className="row pt-3">
                       <div className="col-md">
                         <h4>Mode</h4>
                         <ControlledRadio spec={fields.mode} />
@@ -296,10 +296,9 @@ export class BuildConfigurator extends React.Component<Props, State> {
                           )}
                         </Connect>
                       </div>
-                    </div>,
+                    </div>
 
                     <Connect
-                      key="toolbar"
                       state={({ build }: { build: BuildConfig }) => ({
                         mode: build.modes.byId[build.mode].id,
                       })}
@@ -315,8 +314,8 @@ export class BuildConfigurator extends React.Component<Props, State> {
                           <BuildScript configDownload={this.configDownload} />
                         )
                       }
-                    </Connect>,
-                  ]
+                    </Connect>
+                  </>
                 ) : (
                   <div className="row">
                     <BuildBundler progress={this.state.progress} cancel={this.downloadAbort} />

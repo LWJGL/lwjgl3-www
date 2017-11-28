@@ -36,25 +36,23 @@ export const BuildPlatform = () => (
     actions={{ togglePlatform }}
   >
     {({ platforms, natives, selected, hide }, { togglePlatform }) =>
-      hide
-        ? null
-        : [
-            <h4 key="h4" className="mt-3">
-              Natives
-            </h4>,
-            <div key="controls" className="custom-controls-stacked">
-              {platforms.map(platform => (
-                <Checkbox
-                  key={platform}
-                  icon={getIcon(platform)}
-                  label={natives[platform].title}
-                  checked={selected[platform]}
-                  value={platform}
-                  onChange={togglePlatform}
-                />
-              ))}
-            </div>,
-          ]
+      hide ? null : (
+        <>
+          <h4 className="mt-3">Natives</h4>
+          <div className="custom-controls-stacked">
+            {platforms.map(platform => (
+              <Checkbox
+                key={platform}
+                icon={getIcon(platform)}
+                label={natives[platform].title}
+                checked={selected[platform]}
+                value={platform}
+                onChange={togglePlatform}
+              />
+            ))}
+          </div>
+        </>
+      )
     }
   </Connect>
 );

@@ -9,25 +9,26 @@ import { Footer } from './Footer';
 import { Home, Guide, Download, Customize, Browse, Source, License } from '../routes';
 import { Miss404 } from '../routes/miss404';
 
-export const Layout = () => [
-  <Helmet key="helmet" titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />,
-  <Route key="header" render={({ location: { pathname } }) => <Header pathname={pathname} />} />,
+export const Layout = () => (
+  <>
+    <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
+    <Route render={({ location: { pathname } }) => <Header pathname={pathname} />} />
 
-  <Switch key="router">
-    <Route path="/" exact={true} strict={true} component={Home} />
-    <Route path="/guide" sensitive={true} exact={true} strict={true} component={Guide} />
-    <Route path="/download" sensitive={true} exact={true} strict={true} component={Download} />
-    <Route path="/customize" sensitive={true} exact={true} strict={true} component={Customize} />
-    <Route path="/browse" sensitive={true} exact={true} strict={true} component={Browse} />
-    <Route path="/source" sensitive={true} exact={true} strict={true} component={Source} />
-    <Route path="/license" sensitive={true} exact={true} strict={true} component={License} />
-    <Route component={Miss404} />
-  </Switch>,
+    <Switch>
+      <Route path="/" exact={true} strict={true} component={Home} />
+      <Route path="/guide" sensitive={true} exact={true} strict={true} component={Guide} />
+      <Route path="/download" sensitive={true} exact={true} strict={true} component={Download} />
+      <Route path="/customize" sensitive={true} exact={true} strict={true} component={Customize} />
+      <Route path="/browse" sensitive={true} exact={true} strict={true} component={Browse} />
+      <Route path="/source" sensitive={true} exact={true} strict={true} component={Source} />
+      <Route path="/license" sensitive={true} exact={true} strict={true} component={License} />
+      <Route component={Miss404} />
+    </Switch>
 
-  <Route
-    key="footer"
-    render={props =>
-      props.location.pathname !== '/customize' && props.location.pathname !== '/browse' ? <Footer /> : null
-    }
-  />,
-];
+    <Route
+      render={props =>
+        props.location.pathname !== '/customize' && props.location.pathname !== '/browse' ? <Footer /> : null
+      }
+    />
+  </>
+);
