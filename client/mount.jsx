@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
 import { render } from 'react-dom';
-import store from './store';
-import App from './containers/App';
+import { store } from './store';
+import { App } from './containers/App';
 import './services/ga';
 
-export default function() {
+export function mount() {
   // Render React
   const rootEl = document.getElementById('lwjgl-app');
 

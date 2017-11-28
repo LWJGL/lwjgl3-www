@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import { NavLink } from 'react-router-dom';
-import LazyImg from '~/components/LazyImg';
+import { LazyImg } from '~/components/LazyImg';
 
-const Footer = () => (
+export const Footer = () => (
   <footer>
     <section className="container">
       <nav className="row">
@@ -103,5 +103,3 @@ const Footer = () => (
     </section>
   </footer>
 );
-
-export default Footer;

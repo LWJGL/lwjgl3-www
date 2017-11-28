@@ -2,8 +2,8 @@
 import * as React from 'react';
 import { toggleArtifact } from '../reducer';
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
-import Checkbox from '~/components/Checkbox';
-import Connect from '~/store/Connect';
+import { Checkbox } from '~/components/Checkbox';
+import { Connect } from '~/store/Connect';
 import cc from 'classcat';
 
 import IconWindows from 'react-icons/fa/windows';
@@ -36,7 +36,7 @@ type Props = {|
   id: string,
 |};
 
-const BuildArtifact = ({ id }: Props) => (
+export const BuildArtifact = ({ id }: Props) => (
   <Connect
     state={({ build }: { build: BuildConfig }) => {
       const artifact = build.artifacts.byId[id];
@@ -88,5 +88,3 @@ const BuildArtifact = ({ id }: Props) => (
     }}
   </Connect>
 );
-
-export default BuildArtifact;

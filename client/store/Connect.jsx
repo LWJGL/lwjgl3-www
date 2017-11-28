@@ -2,8 +2,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators, type ActionCreator, type ActionCreators, type Dispatch, type DispatchAPI } from 'redux';
-import store from './';
-//$FlowFixMe
+import { store } from './';
 import shallowEqual from 'fbjs/lib/shallowEqual';
 
 type Actions = {
@@ -24,7 +23,7 @@ type Context = {
   connectParent: Connect,
 };
 
-class Connect extends React.Component<Props<*>, *> {
+export class Connect extends React.Component<Props<*>, *> {
   // Nest subscriptions of descendant components, so that we can
   // ensure the ancestor components re-render before descendants.
   listeners = [];
@@ -137,5 +136,3 @@ class Connect extends React.Component<Props<*>, *> {
     return null;
   }
 }
-
-export default Connect;

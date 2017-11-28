@@ -1,12 +1,12 @@
 // @flow
 import { createStore, compose, applyMiddleware } from 'redux';
-import createReducer from './createReducer';
+import { createReducer } from './createReducer';
 import reduxThunk from 'redux-thunk';
-import breakpointMiddeware from './middleware/breakpoint';
+import { breakpointMiddleware } from './middleware/breakpoint';
 
 import type { Store } from 'redux';
 
-const middleware = [reduxThunk, breakpointMiddeware];
+const middleware = [reduxThunk, breakpointMiddleware];
 const composed = [];
 
 if (process.env.NODE_ENV !== 'production') {
@@ -16,7 +16,7 @@ if (process.env.NODE_ENV !== 'production') {
   }
 }
 
-const store = createStore(createReducer(), compose(applyMiddleware(...middleware), ...composed));
+export const store = createStore(createReducer(), compose(applyMiddleware(...middleware), ...composed));
 
 if (process.env.NODE_ENV !== 'production') {
   // Enable Webpack hot module replacement for global reducers
@@ -26,5 +26,3 @@ if (process.env.NODE_ENV !== 'production') {
     });
   }
 }
-
-export default store;

@@ -5,7 +5,7 @@ type Props = {
   location: 'string',
 };
 
-class ScrollToMe extends React.Component<Props> {
+export class ScrollToMe extends React.Component<Props> {
   el: ?HTMLDivElement;
 
   componentDidMount() {
@@ -32,5 +32,3 @@ class ScrollToMe extends React.Component<Props> {
     return <div ref={this.getRef} />;
   }
 }
-
-export default ScrollToMe;

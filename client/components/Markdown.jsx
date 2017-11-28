@@ -11,7 +11,7 @@ type Props = {
   options?: RemarkableOptions | RemarkableSettings,
 };
 
-const Markdown = ({ tag = 'div', source, children, options, ...rest }: Props) => {
+export const Markdown = ({ tag = 'div', source, children, options, ...rest }: Props) => {
   const Container = tag;
   const md = new Remarkable(options);
 
@@ -31,5 +31,3 @@ const Markdown = ({ tag = 'div', source, children, options, ...rest }: Props) =>
     </Container>
   );
 };
-
-export default Markdown;

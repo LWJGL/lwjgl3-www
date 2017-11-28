@@ -13,7 +13,7 @@ const FileActions = styled('td')`
   text-align: right;
 `;
 
-const File = (props: Props) => {
+export const File = (props: Props) => {
   const url = `https://build.lwjgl.org/${props.path}`;
 
   return (
@@ -31,5 +31,3 @@ const File = (props: Props) => {
     </tr>
   );
 };
-
-export default File;

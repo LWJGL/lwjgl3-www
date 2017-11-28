@@ -17,7 +17,7 @@ type Props = {|
   loadPath: string => void,
 |};
 
-class Folder extends React.PureComponent<Props> {
+export class Folder extends React.PureComponent<Props> {
   clickHandle = () => {
     this.props.loadPath(this.props.path);
   };
@@ -35,5 +35,3 @@ class Folder extends React.PureComponent<Props> {
     );
   }
 }
-
-export default Folder;

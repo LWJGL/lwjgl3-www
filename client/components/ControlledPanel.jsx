@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 
 type Props = {|
   predicate: (state: Object) => boolean,
@@ -12,7 +12,7 @@ type ConnectedProps = {|
   hidden: boolean,
 |};
 
-const Panel = ({ children, className, predicate }: Props) => (
+export const ControlledPanel = ({ children, className, predicate }: Props) => (
   <Connect
     state={state => ({
       hidden: !predicate(state),
@@ -21,5 +21,3 @@ const Panel = ({ children, className, predicate }: Props) => (
     {({ hidden }: ConnectedProps) => (hidden ? null : children)}
   </Connect>
 );
-
-export default Panel;

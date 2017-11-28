@@ -1,7 +1,7 @@
 // @flow
 /*:: import * as React from 'react'; */
 import Loadable from 'react-loadable';
-import LoadingPage from '../components/LoadingPage';
+import { LoadingPage } from '../components/LoadingPage';
 
 type PromiseReactModule = () => Promise<{ default: React.ComponentType<any> }>;
 

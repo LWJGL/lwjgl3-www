@@ -2,14 +2,14 @@
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import Header from './Header';
-import Footer from './Footer';
+import { Header } from './Header';
+import { Footer } from './Footer';
 
 // Routes
 import { Home, Guide, Download, Customize, Browse, Source, License } from '../routes';
-import Miss404 from '../routes/miss404';
+import { Miss404 } from '../routes/miss404';
 
-const Layout = () => [
+export const Layout = () => [
   <Helmet key="helmet" titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />,
   <Route key="header" render={({ location: { pathname } }) => <Header pathname={pathname} />} />,
 
@@ -31,5 +31,3 @@ const Layout = () => [
     }
   />,
 ];
-
-export default Layout;

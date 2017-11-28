@@ -82,7 +82,7 @@ export const storeContents = (path: string, contents: Folder): StoreContentsActi
 
 // Reducer
 
-export default function fileBrowserReducer(
+export function fileBrowserReducer(
   state: State = {
     contents: {
       '/': {

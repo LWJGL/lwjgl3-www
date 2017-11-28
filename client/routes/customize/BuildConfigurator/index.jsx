@@ -7,27 +7,27 @@ import { saveAs } from 'file-saver';
 import areEqual from 'fbjs/lib/areEqual';
 
 import { register } from '~/store/asyncReducers';
-import store from '~/store';
-import Connect from '~/store/Connect';
+import { store } from '~/store';
+import { Connect } from '~/store/Connect';
 
-import reducer, { configLoad } from './reducer';
-import fields, { isBuildRelease, hasLanguageOption, isBuildSelected } from './fields';
+import { buildConfiguratorReducer, configLoad } from './reducer';
+import { fields, isBuildRelease, hasLanguageOption, isBuildSelected } from './fields';
 import { getConfig, fetchManifest, getBuild, getFiles, getAddons, downloadFiles, abortDownload } from './bundler';
 import { MODE_ZIP, BUILD_RELEASE } from './constants';
 
-import ControlledPanel from '~/components/ControlledPanel';
-import ControlledRadio from '~/components/ControlledRadio';
-import ControlledCheckbox from '~/components/ControlledCheckbox';
-import ControlledToggle from '~/components/ControlledToggle';
+import { ControlledPanel } from '~/components/ControlledPanel';
+import { ControlledRadio } from '~/components/ControlledRadio';
+import { ControlledCheckbox } from '~/components/ControlledCheckbox';
+import { ControlledToggle } from '~/components/ControlledToggle';
 
-import BuildConfigArea from './components/BuildConfigArea';
-import BuildType from './components/BuildType';
-import BuildPlatform from './components/BuildPlatform';
-import BuildAddon from './components/BuildAddon';
-import BuildArtifact from './components/BuildArtifact';
-import BuildScript from './components/BuildScript';
-import BuildBundler from './components/BuildBundler';
-import BuildToolbar from './components/BuildToolbar';
+import { BuildConfigArea } from './components/BuildConfigArea';
+import { BuildType } from './components/BuildType';
+import { BuildPlatform } from './components/BuildPlatform';
+import { BuildAddon } from './components/BuildAddon';
+import { BuildArtifact } from './components/BuildArtifact';
+import { BuildScript } from './components/BuildScript';
+import { BuildBundler } from './components/BuildBundler';
+import { BuildToolbar } from './components/BuildToolbar';
 
 import IconDownload from 'react-icons/md/file-download';
 
@@ -43,7 +43,7 @@ type State = {
   progress: Array<string>,
 };
 
-class BuildConfigurator extends React.Component<Props, State> {
+export class BuildConfigurator extends React.Component<Props, State> {
   static firstLoad = true;
   unsubscribe: () => void;
   prevSave: BuildConfigStored | null = null;
@@ -57,7 +57,7 @@ class BuildConfigurator extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     if (BuildConfigurator.firstLoad) {
-      register('build', reducer);
+      register('build', buildConfiguratorReducer);
       // Only restore once, use redux store for subsequent mounts
       BuildConfigurator.firstLoad = false;
       const restore = localStorage.getItem(STORAGE_KEY);
@@ -330,5 +330,3 @@ class BuildConfigurator extends React.Component<Props, State> {
     );
   }
 }
-
-export default BuildConfigurator;

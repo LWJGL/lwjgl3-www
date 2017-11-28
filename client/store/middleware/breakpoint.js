@@ -8,7 +8,7 @@ import { breakpoints } from '~/theme';
  * Falls back to window.onresize on older browsers
  * TODO: Deprecate onresize for older browsers
  */
-export default function breakpointMiddleware({ dispatch, getState }: MiddlewareAPI<*, *>) {
+export function breakpointMiddleware({ dispatch, getState }: MiddlewareAPI<*, *>) {
   function resizeHandle(i) {
     if (i === undefined) {
       const current = getCurrent();

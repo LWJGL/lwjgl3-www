@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
 import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
 import Loadable from 'react-loadable';
-import Logo from './Logo';
+import { Logo } from './Logo';
 
 const HeroBox = styled('section')`
   margin-top: -4rem;
@@ -77,7 +77,7 @@ const Canvas = Loadable({
   loading: () => null,
 });
 
-class Hero extends React.Component<{||}, { supportsWebGL: boolean }> {
+export class HomeHero extends React.Component<{||}, { supportsWebGL: boolean }> {
   state = {
     supportsWebGL: false,
   };
@@ -108,5 +108,3 @@ class Hero extends React.Component<{||}, { supportsWebGL: boolean }> {
     );
   }
 }
-
-export default Hero;

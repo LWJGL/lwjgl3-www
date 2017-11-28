@@ -8,7 +8,7 @@ type Props = {
   disabled: boolean,
 };
 
-class Radio extends React.Component<Props> {
+export class Radio extends React.Component<Props> {
   static defaultProps = {
     disabled: false,
   };
@@ -40,5 +40,3 @@ class Radio extends React.Component<Props> {
     );
   }
 }
-
-export default Radio;

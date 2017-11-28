@@ -1,5 +1,6 @@
 // @flow
 import { IS_IE } from '~/services/ua';
+import { forceHide } from '../containers/Header';
 
 let prevScroll = 0;
 let cb: Function | null = null;
@@ -15,7 +16,7 @@ const getScrollTop = () => {
   return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
 };
 
-const init = () => {
+export const init = () => {
   prevScroll = getScrollTop();
 };
 
@@ -59,7 +60,7 @@ const end = () => {
   }
 };
 
-const play = (fn?: Function) => {
+export const play = (fn?: Function) => {
   if (fn) {
     cb = fn;
   }
@@ -101,4 +102,20 @@ const flip = () => {
   animating = true;
 };
 
-export default { init, play };
+export const scrollToElement = (el: HTMLElement, cb?: Function) => {
+  init();
+  forceHide();
+
+  if (el.scrollIntoViewIfNeeded !== undefined) {
+    // $FlowFixMe
+    el.scrollIntoViewIfNeeded();
+  } else if (el.scrollIntoView !== undefined) {
+    el.scrollIntoView({
+      behavior: 'instant',
+    });
+  } else {
+    window.scroll(0, el.getBoundingClientRect().top + window.pageYOffset - 100);
+  }
+
+  play(cb);
+};

@@ -20,7 +20,7 @@ type Props = {
   srcSet?: string,
 };
 
-class LazyImg extends React.PureComponent<Props, Props> {
+export class LazyImg extends React.PureComponent<Props, Props> {
   static io: IntersectionObserver | null = null;
   static map: WeakMap<?HTMLImageElement, LazyImg> = new WeakMap();
   static mapCount: number = 0;
@@ -85,5 +85,3 @@ class LazyImg extends React.PureComponent<Props, Props> {
     return <img ref={this.getRef} src={this.state.src} srcSet={this.state.srcSet || null} {...rest} />;
   }
 }
-
-export default LazyImg;

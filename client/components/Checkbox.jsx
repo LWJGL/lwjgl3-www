@@ -11,7 +11,7 @@ type Props = {
   icon?: React$Element<*>,
 };
 
-class Checkbox extends React.PureComponent<Props> {
+export class Checkbox extends React.PureComponent<Props> {
   static defaultProps = {
     checked: false,
     disabled: false,
@@ -46,5 +46,3 @@ class Checkbox extends React.PureComponent<Props> {
     );
   }
 }
-
-export default Checkbox;

@@ -1,6 +1,6 @@
 // @flow
 // import loadJS from 'fg-loadjs';
-import mount from './mount';
+import { mount } from './mount';
 
 // Webpack manifest
 if (process.env.NODE_ENV === 'production') {

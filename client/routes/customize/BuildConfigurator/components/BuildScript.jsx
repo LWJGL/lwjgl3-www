@@ -3,9 +3,9 @@ import * as React from 'react';
 import { MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
 import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition } from '../types';
 import type { BreakPointState } from '~/store/reducers/breakpoint';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 
-import BuildToolbar from './BuildToolbar';
+import { BuildToolbar } from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
 import IconCopy from 'react-icons/md/content-copy';
 
@@ -28,7 +28,7 @@ type Props = {|
   configDownload: Function,
 |};
 
-class BuildScript extends React.Component<Props> {
+export class BuildScript extends React.Component<Props> {
   script: ?HTMLPreElement;
 
   copyToClipboard = () => {
@@ -369,5 +369,3 @@ function generateIvy(props: ConnectedProps) {
 
   return script;
 }
-
-export default BuildScript;

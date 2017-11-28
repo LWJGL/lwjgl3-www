@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
-import PageView from '~/containers/PageView';
+import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import FaGithub from 'react-icons/fa/github';
-import BuildBadge from './BuildBadge';
+import { BuildBadge } from './BuildBadge';
 
 const SourceRoute = (props: ContextRouter) => (
   <PageView {...props}>

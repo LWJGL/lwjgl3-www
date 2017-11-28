@@ -1,15 +1,15 @@
 // @flow
 import * as React from 'react';
-import LoaderSpinner from '~/components/LoaderSpinner';
+import { LoaderSpinner } from '~/components/LoaderSpinner';
 import { loadStatus } from '../reducer';
 import type { BUILD_TYPES } from '../types';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 
 type Props = {|
   name: BUILD_TYPES,
 |};
 
-const BuildStatus = ({ name }: Props) => (
+export const BuildStatus = ({ name }: Props) => (
   <Connect
     state={(state: Object) => ({
       status: state.build.builds.byId[name].status,
@@ -40,5 +40,3 @@ const BuildStatus = ({ name }: Props) => (
     }}
   </Connect>
 );
-
-export default BuildStatus;

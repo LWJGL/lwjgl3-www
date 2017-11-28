@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import ErrorBoundary from '../components/ErrorBoundary';
-import PageError from '../components/PageError';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { PageError } from '../components/PageError';
 
 import type { ContextRouter } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ type Props = {
   children?: React.Node,
 };
 
-class PageView extends React.Component<Props> {
+export class PageView extends React.Component<Props> {
   // Remembers last scroll positions
   // TODO: We shouldn't allow infinite keys here, implement a *shared* LRU cache
   static scrollPositions: ScrollPositions = {};
@@ -59,5 +59,3 @@ class PageView extends React.Component<Props> {
     }
   }
 }
-
-export default PageView;

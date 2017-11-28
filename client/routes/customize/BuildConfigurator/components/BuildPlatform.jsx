@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
-import Checkbox from '~/components/Checkbox';
+import { Checkbox } from '~/components/Checkbox';
 import { togglePlatform } from '../reducer';
 import type { BuildConfig } from '../types';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import type { NATIVES, Native, Platforms } from '../types';
@@ -25,7 +25,7 @@ const getIcon = (platform: NATIVES) => {
   }
 };
 
-const BuildPlatform = () => (
+export const BuildPlatform = () => (
   <Connect
     state={({ build }: { build: BuildConfig }) => ({
       platforms: build.natives.allIds,
@@ -58,5 +58,3 @@ const BuildPlatform = () => (
     }
   </Connect>
 );
-
-export default BuildPlatform;

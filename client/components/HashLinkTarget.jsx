@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { Route, type Location } from 'react-router-dom';
-import smoothScroll from '~/services/smoothscroll';
+import { init, play } from '~/services/smoothscroll';
 
 type OwnProps = {|
   id: string,
@@ -12,7 +12,7 @@ type Props = {|
   location: Location,
 |};
 
-class HashLinkTarget extends React.Component<Props> {
+export class HashLinkTargetControlled extends React.Component<Props> {
   componentDidMount() {
     if (this.props.location.hash === `#${this.props.id}`) {
       this.scrollToTarget();
@@ -32,11 +32,11 @@ class HashLinkTarget extends React.Component<Props> {
   scrollToTarget() {
     const el = document.getElementById(this.props.id);
     if (el !== null) {
-      smoothScroll.init();
+      init();
       try {
         el.scrollIntoView();
       } catch (ignore) {}
-      smoothScroll.play();
+      play();
     }
   }
 
@@ -45,8 +45,6 @@ class HashLinkTarget extends React.Component<Props> {
   }
 }
 
-const HashLinkTargetRoute = ({ id }: OwnProps) => (
-  <Route render={({ location }) => <HashLinkTarget id={id} location={location} />} />
+export const HashLinkTarget = ({ id }: OwnProps) => (
+  <Route render={({ location }) => <HashLinkTargetControlled id={id} location={location} />} />
 );
-
-export default HashLinkTargetRoute;

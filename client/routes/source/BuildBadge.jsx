@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import LazyImg from '~/components/LazyImg';
+import { LazyImg } from '~/components/LazyImg';
 
 type BadgeProps = {
   title: string,
@@ -8,7 +8,7 @@ type BadgeProps = {
   src: string,
 };
 
-const BuildBadge = ({ title, href, src }: BadgeProps) => (
+export const BuildBadge = ({ title, href, src }: BadgeProps) => (
   <tr>
     <th>{title}</th>
     <td>
@@ -18,5 +18,3 @@ const BuildBadge = ({ title, href, src }: BadgeProps) => (
     </td>
   </tr>
 );
-
-export default BuildBadge;

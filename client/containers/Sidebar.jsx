@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
 import createFocusTrap from 'focus-trap';
-import noscroll from '~/services/noscroll';
-import MainMenu from './MainMenu';
+import { on, off } from '~/services/noscroll';
+import { MainMenu } from './MainMenu';
 import IconMenu from 'react-icons/md/menu';
 import IconClose from 'react-icons/md/close';
 import { SupportsPassiveEvents } from '~/services/supports';
@@ -15,7 +15,7 @@ type State = {
   open: boolean,
 };
 
-class Sidebar extends React.PureComponent<Props, State> {
+export class Sidebar extends React.PureComponent<Props, State> {
   state = {
     open: false,
   };
@@ -58,7 +58,7 @@ class Sidebar extends React.PureComponent<Props, State> {
     */
 
     if (this.state.open) {
-      noscroll.off();
+      off();
       focusTrap.deactivate({ onDeactivate: false });
       sideContainer.removeEventListener(
         'touchstart',
@@ -72,7 +72,7 @@ class Sidebar extends React.PureComponent<Props, State> {
       );
       sideContainer.removeEventListener('touchend', this.onTouchEnd, SupportsPassiveEvents ? { passive: true } : false);
     } else {
-      noscroll.on();
+      on();
       focusTrap.activate();
       sideContainer.addEventListener(
         'touchstart',
@@ -202,5 +202,3 @@ class Sidebar extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Sidebar;

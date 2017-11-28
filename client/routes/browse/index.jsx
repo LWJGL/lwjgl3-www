@@ -1,15 +1,15 @@
 // @flow
 import * as React from 'react';
-import PageView from '~/containers/PageView';
+import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 
-import Browser from './components/Browser';
+import { Browser } from './components/Browser';
 import { register } from '~/store/asyncReducers';
-import reducer, { loadPath } from './reducer';
-import Connect from '~/store/Connect';
+import { fileBrowserReducer, loadPath } from './reducer';
+import { Connect } from '~/store/Connect';
 
-register('browser', reducer);
+register('browser', fileBrowserReducer);
 
 const BrowseRoute = (props: ContextRouter) => (
   <PageView {...props}>

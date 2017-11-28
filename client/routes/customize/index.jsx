@@ -1,10 +1,10 @@
 // @flow
 import * as React from 'react';
-import PageView from '~/containers/PageView';
+import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
-import BuildConfigurator from './BuildConfigurator';
-import store from '~/store';
+import { BuildConfigurator } from './BuildConfigurator';
+import { store } from '~/store';
 
 const CustomizeRoute = (props: ContextRouter) => (
   <PageView {...props}>

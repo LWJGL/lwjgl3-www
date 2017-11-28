@@ -1,13 +1,13 @@
 // @flow
 import * as React from 'react';
-import PageView from '~/containers/PageView';
+import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
-import HashLinkTarget from '~/components/HashLinkTarget';
-import LazyImg from '~/components/LazyImg';
-import Hero from './Hero';
+import { HashLinkTarget } from '~/components/HashLinkTarget';
+import { LazyImg } from '~/components/LazyImg';
+import { HomeHero } from './Hero';
 
 // Icons
 import IconLowLevel from 'react-icons/md/settings-input-composite';
@@ -37,7 +37,7 @@ const HomeRoute = (props: ContextRouter) => (
       />
     </Helmet>
     <main>
-      <Hero />
+      <HomeHero />
       <HashLinkTarget id="learn-more" />
 
       <section className="container py-5">

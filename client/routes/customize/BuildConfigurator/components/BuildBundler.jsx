@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import LoaderSpinner from '~/components/LoaderSpinner';
-import Connect from '~/store/Connect';
+import { LoaderSpinner } from '~/components/LoaderSpinner';
+import { Connect } from '~/store/Connect';
 import type { BuildConfig } from '../types';
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   progress: Array<string>,
 };
 
-class BuildBundler extends React.Component<Props> {
+export class BuildBundler extends React.Component<Props> {
   componentDidMount() {
     document.getElementsByClassName('config-container')[0].scrollIntoView(true);
   }
@@ -36,5 +36,3 @@ class BuildBundler extends React.Component<Props> {
     );
   }
 }
-
-export default BuildBundler;

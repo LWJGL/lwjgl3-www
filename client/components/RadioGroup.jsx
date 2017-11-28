@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import Radio from './Radio';
+import { Radio } from './Radio';
 
 type Props = {
   children?: React.ChildrenArray<React.Element<Class<Radio>>>,
@@ -9,7 +9,7 @@ type Props = {
   onChange?: (value: any) => mixed,
 };
 
-class RadioGroup extends React.PureComponent<Props> {
+export class RadioGroup extends React.PureComponent<Props> {
   static childContextTypes = {
     onChange: PropTypes.func,
     value: PropTypes.any,
@@ -32,5 +32,3 @@ class RadioGroup extends React.PureComponent<Props> {
     return <div className="custom-controls-stacked">{this.props.children}</div>;
   }
 }
-
-export default RadioGroup;

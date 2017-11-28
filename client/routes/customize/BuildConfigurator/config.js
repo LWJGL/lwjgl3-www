@@ -35,7 +35,7 @@ function getDefaultPlatform() {
   return 'windows';
 }
 
-const config: BuildConfig = {
+export const config: BuildConfig = {
   lwjgl: {},
   builds: {
     byId: {
@@ -238,7 +238,16 @@ build.allIds = Object.keys(build.byId).sort();
 config.lwjgl[build.version] = build;
 
 // Generate all other LWJGL3 builds using previous build
-const builders: Array<BuildOptionsBuilder> = [lwjgl_310, lwjgl_311, lwjgl_312, lwjgl_313, lwjgl_314, lwjgl_315, lwjgl_stable, lwjgl_nightly];
+const builders: Array<BuildOptionsBuilder> = [
+  lwjgl_310,
+  lwjgl_311,
+  lwjgl_312,
+  lwjgl_313,
+  lwjgl_314,
+  lwjgl_315,
+  lwjgl_stable,
+  lwjgl_nightly,
+];
 builders.reduce((previousBuild: BuildOptions, nextBuildConfig: BuildOptionsBuilder) => {
   const build = nextBuildConfig(previousBuild);
   build.allIds = Object.keys(build.byId).sort();
@@ -269,5 +278,3 @@ config.natives.allIds.forEach(platform => {
 });
 
 config.platform[getDefaultPlatform()] = true;
-
-export default config;

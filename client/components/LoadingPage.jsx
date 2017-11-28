@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
-import LoaderSpinner from '~/components/LoaderSpinner';
+import { LoaderSpinner } from '~/components/LoaderSpinner';
 import nprogress from 'nprogress';
 
 import type { LoadingComponentProps } from 'react-loadable';
 
-class LoadingPage extends React.Component<LoadingComponentProps> {
+export class LoadingPage extends React.Component<LoadingComponentProps> {
   static firstRoute = true;
 
   componentDidMount() {
@@ -47,5 +47,3 @@ class LoadingPage extends React.Component<LoadingComponentProps> {
     return null;
   }
 }
-
-export default LoadingPage;

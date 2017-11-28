@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 import { type Dispatch } from 'redux';
-import RadioGroup from './RadioGroup';
-import Radio from './Radio';
-import Connect from '~/store/Connect';
+import { RadioGroup } from './RadioGroup';
+import { Radio } from './Radio';
+import { Connect } from '~/store/Connect';
 
 type Props = {|
   spec: {|
@@ -27,7 +27,7 @@ type ConnectedProps = {|
   // hidden: boolean,
 |};
 
-const ControlledRadio = ({ spec }: Props) => (
+export const ControlledRadio = ({ spec }: Props) => (
   <Connect
     state={(state: Object): ConnectedProps => ({
       value: spec.value(state),
@@ -52,5 +52,3 @@ const ControlledRadio = ({ spec }: Props) => (
     )}
   </Connect>
 );
-
-export default ControlledRadio;

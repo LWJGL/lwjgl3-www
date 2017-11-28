@@ -1,4 +1,4 @@
-const sample = `import org.lwjgl.*;
+export const sample = `import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
@@ -113,5 +113,3 @@ public class HelloWorld {
 	}
 
 }`;
-
-export default sample;

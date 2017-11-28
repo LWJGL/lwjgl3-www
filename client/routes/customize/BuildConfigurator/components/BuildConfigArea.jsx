@@ -3,7 +3,7 @@ import * as React from 'react';
 import styled from 'react-emotion';
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BuildConfig } from '../types';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 
 import {
   COLOR_RELEASE,
@@ -93,7 +93,7 @@ const ConfigPanel = styled('div')`
   }
 `;
 
-const BuildConfigArea = ({ children }: { children?: React.Node }) => (
+export const BuildConfigArea = ({ children }: { children?: React.Node }) => (
   <Connect
     state={({ build }: { build: BuildConfig }) => ({
       build: build.build,
@@ -102,5 +102,3 @@ const BuildConfigArea = ({ children }: { children?: React.Node }) => (
     {({ build }) => <ConfigPanel className={build}>{children}</ConfigPanel>}
   </Connect>
 );
-
-export default BuildConfigArea;

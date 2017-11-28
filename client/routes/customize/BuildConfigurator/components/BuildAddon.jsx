@@ -3,15 +3,15 @@ import * as React from 'react';
 import { toggleAddon } from '../reducer';
 import { MODE_ZIP } from '../constants';
 import type { BuildConfig, MODES, Addon } from '../types';
-import Checkbox from '~/components/Checkbox';
-import Connect from '~/store/Connect';
+import { Checkbox } from '~/components/Checkbox';
+import { Connect } from '~/store/Connect';
 import cc from 'classcat';
 
 type Props = {|
   id: string,
 |};
 
-const BuildAddon = ({ id }: Props) => (
+export const BuildAddon = ({ id }: Props) => (
   <Connect
     state={({ build }: { build: BuildConfig }) => {
       const addon: Addon = build.addons.byId[id];
@@ -65,5 +65,3 @@ const BuildAddon = ({ id }: Props) => (
     }}
   </Connect>
 );
-
-export default BuildAddon;

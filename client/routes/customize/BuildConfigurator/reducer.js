@@ -1,5 +1,5 @@
 // @flow
-import config from './config';
+import { config } from './config';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 import type {
   BUILD_TYPES,
@@ -120,7 +120,7 @@ export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getS
 
 // Reducer
 
-export default function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
+export function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
   switch (action.type) {
     case BUILD_STATUS:
       return saveStatus({ ...state }, action.name, action.payload);

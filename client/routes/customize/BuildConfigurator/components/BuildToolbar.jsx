@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
 import { configLoad } from '../reducer';
-import store from '~/store';
-import Connect from '~/store/Connect';
+import { store } from '~/store';
+import { Connect } from '~/store/Connect';
 
 import FileSave from 'react-icons/md/archive';
 import FileOpen from 'react-icons/md/settings-backup-restore';
@@ -18,7 +18,7 @@ type State = {
   fileUI: boolean,
 };
 
-class BuildToolbar extends React.Component<Props, State> {
+export class BuildToolbar extends React.Component<Props, State> {
   state = {
     fileUI: false,
   };
@@ -97,5 +97,3 @@ class BuildToolbar extends React.Component<Props, State> {
     );
   }
 }
-
-export default BuildToolbar;

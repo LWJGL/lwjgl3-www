@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
-import Toggle from './Toggle';
+import { Toggle } from './Toggle';
 import type { Dispatch } from 'redux';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 
 type Props = {|
   spec: {|
@@ -14,7 +14,7 @@ type Props = {|
   |},
 |};
 
-const ControlledToggle = ({ spec }: Props) => (
+export const ControlledToggle = ({ spec }: Props) => (
   <Connect
     state={state => ({
       label: spec.label,
@@ -37,5 +37,3 @@ const ControlledToggle = ({ spec }: Props) => (
     )}
   </Connect>
 );
-
-export default ControlledToggle;

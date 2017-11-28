@@ -6,7 +6,7 @@ type Props = {
   loader: CSSModule,
 };
 
-class Style extends React.Component<Props> {
+export class Style extends React.Component<Props> {
   componentDidMount() {
     this.props.loader.use();
   }
@@ -19,5 +19,3 @@ class Style extends React.Component<Props> {
     return null;
   }
 }
-
-export default Style;

@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
-import Checkbox from './Checkbox';
+import { Checkbox } from './Checkbox';
 import type { Dispatch } from 'redux';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 
 type Props = {|
   spec: {|
@@ -14,7 +14,7 @@ type Props = {|
   |},
 |};
 
-const ControlledCheckbox = ({ spec }: Props) => (
+export const ControlledCheckbox = ({ spec }: Props) => (
   <Connect
     state={state => ({
       label: spec.label,
@@ -37,5 +37,3 @@ const ControlledCheckbox = ({ spec }: Props) => (
     )}
   </Connect>
 );
-
-export default ControlledCheckbox;

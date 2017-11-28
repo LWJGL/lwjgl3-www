@@ -1,14 +1,14 @@
 // @flow
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import MainMenu from './MainMenu';
-import Sidebar from './Sidebar';
+import { MainMenu } from './MainMenu';
+import { Sidebar } from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import { SupportsPassiveEvents } from '~/services/supports';
 import { css, injectGlobal } from 'emotion';
 import cc from 'classcat';
 import { COLOR_PRIMARY } from '~/theme';
-import store from '~/store';
+import { store } from '~/store';
 
 injectGlobal`
   body {
@@ -37,7 +37,13 @@ type State = {|
   desktop: boolean,
 |};
 
-class Header extends React.PureComponent<Props, State> {
+let forceHidden = false;
+
+export function forceHide() {
+  forceHidden = true;
+}
+
+export class Header extends React.PureComponent<Props, State> {
   prev = 0;
   current = 0;
   direction = 0;
@@ -115,6 +121,25 @@ class Header extends React.PureComponent<Props, State> {
     }
     this.prev = this.current;
     this.current = Math.max(0, window.pageYOffset);
+
+    if (forceHidden) {
+      if (this.current > 0) {
+        // force hide
+        if (IS_IOS) {
+          if (!this.state.hidden) {
+            this.setState({ hidden: true });
+          }
+        } else {
+          this.direction = -1;
+          const posMax = Math.max(0, this.current - this.offsetHeight);
+          if (this.prev > posMax || this.state.fixed) {
+            this.setState({ pos: posMax, fixed: false });
+          }
+        }
+      }
+      forceHidden = false;
+      return;
+    }
 
     if (this.prev - this.current < 0) {
       // We are scrolling down
@@ -198,5 +223,3 @@ class Header extends React.PureComponent<Props, State> {
     );
   }
 }
-
-export default Header;

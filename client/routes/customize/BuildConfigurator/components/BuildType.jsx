@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
 
-import BuildStatus from './BuildStatus';
+import { BuildStatus } from './BuildStatus';
 import { changeType } from '../reducer';
-import Connect from '~/store/Connect';
+import { Connect } from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
 import styled from 'react-emotion';
@@ -118,7 +118,7 @@ type ConnectedProps = {
   spec: Build,
 };
 
-const BuildType = ({ build, downloading }: Props) => (
+export const BuildType = ({ build, downloading }: Props) => (
   <Connect
     state={(state): ConnectedProps => ({
       isSelected: state.build.build === build,
@@ -147,5 +147,3 @@ const BuildType = ({ build, downloading }: Props) => (
     )}
   </Connect>
 );
-
-export default BuildType;

@@ -38,7 +38,7 @@ const breakpoint: BreakPointState = {
   xl: 4,
 };
 
-export default function breakpointReducer(
+export function breakpointReducer(
   state: BreakPointState = breakpoint,
   action: ExtractReturn<typeof resizeEvent>
 ): BreakPointState {

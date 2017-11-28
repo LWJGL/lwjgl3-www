@@ -1,13 +1,13 @@
 // @flow
 import * as React from 'react';
-import PageView from '~/containers/PageView';
+import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
-import codeSample from './sample';
+import { sample } from './sample';
 import loadJS from 'fg-loadjs';
 import { loadCSS } from 'fg-loadcss';
-import HashLinkTarget from '~/components/HashLinkTarget';
+import { HashLinkTarget } from '~/components/HashLinkTarget';
 
 type State = {
   sample: string,
@@ -15,7 +15,7 @@ type State = {
 
 class GuideRoute extends React.Component<ContextRouter, State> {
   static init = true;
-  static sample = codeSample;
+  static sample = sample;
   mounted = false;
 
   state = {
@@ -30,7 +30,7 @@ class GuideRoute extends React.Component<ContextRouter, State> {
       loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css');
       loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js', () => {
         if (window.hljs != null) {
-          GuideRoute.sample = (window.hljs: any).highlight('java', codeSample).value;
+          GuideRoute.sample = (window.hljs: any).highlight('java', sample).value;
         }
         if (!this.mounted) {
           return;

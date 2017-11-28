@@ -24,7 +24,11 @@ declare module 'fbjs/lib/Keys' {
 }
 
 declare module 'fbjs/lib/areEqual' {
-  declare export default (a: any, b: any) => boolean
+  declare export default (a: mixed, b: mixed) => boolean
+}
+
+declare module 'fbjs/lib/shallowEqual' {
+  declare export default (objA: mixed, objB: mixed) => boolean
 }
 
 declare module 'fbjs/lib/isEmail' {

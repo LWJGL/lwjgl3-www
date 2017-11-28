@@ -1,8 +1,8 @@
 // @flow
 import * as React from 'react';
-import LoaderSpinner from '~/components/LoaderSpinner';
-import Folder, { FolderName } from './Folder';
-import File from './File';
+import { LoaderSpinner } from '~/components/LoaderSpinner';
+import { Folder, FolderName } from './Folder';
+import { File } from './File';
 import IconCloud from 'react-icons/fa/cloud';
 import IconArrowRight from 'react-icons/fa/chevron-right';
 
@@ -15,7 +15,7 @@ type Props = {|
   loadPath: string => void,
 |};
 
-class Browser extends React.PureComponent<Props> {
+export class Browser extends React.PureComponent<Props> {
   componentDidMount() {
     this.props.loadPath(this.props.path);
   }
@@ -59,5 +59,3 @@ class Browser extends React.PureComponent<Props> {
     );
   }
 }
-
-export default Browser;

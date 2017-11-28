@@ -1,12 +1,9 @@
 // @flow
-
 import { createSelector } from 'reselect';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
 import type { BuildConfig, LANGUAGES } from './types';
 
 import {
-  default as reducer,
-  configLoad,
   changePreset,
   changeLanguage,
   changeVersion,
@@ -37,7 +34,7 @@ export const isBuildRelease = (state: State) => getBuild(state) === BUILD_RELEAS
 const showOSGi = (state: State) =>
   isModeNotZip(state) && isBuildRelease(state) && parseInt(getVersion(state).replace(/\./g, ''), 10) >= 312;
 
-export default {
+export const fields = {
   mode: {
     name: 'mode',
     value: getMode,

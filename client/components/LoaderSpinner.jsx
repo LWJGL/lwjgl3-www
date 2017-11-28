@@ -10,7 +10,7 @@ type Props = {
   delay?: boolean,
 };
 
-const LoaderSpinner = ({ size = 24, style, className, delay = false }: Props) => {
+export const LoaderSpinner = ({ size = 24, style, className, delay = false }: Props) => {
   const cl = { delay: delay === true };
 
   if (className) {
@@ -23,5 +23,3 @@ const LoaderSpinner = ({ size = 24, style, className, delay = false }: Props) =>
     </svg>
   );
 };
-
-export default LoaderSpinner;

@@ -3,7 +3,7 @@ import * as React from 'react';
 import Helmet from 'react-helmet';
 import type { ErrorProps } from './ErrorBoundary';
 
-class PageError extends React.Component<ErrorProps> {
+export class PageError extends React.Component<ErrorProps> {
   render() {
     return (
       <main>
@@ -18,5 +18,3 @@ class PageError extends React.Component<ErrorProps> {
     );
   }
 }
-
-export default PageError;
