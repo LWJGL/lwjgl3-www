@@ -59,12 +59,12 @@ const SourceRoute = (props: ContextRouter) => (
                 <BuildBadge
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/1"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/lwjgl3?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/lwjgl3/branch/master-linux64/2"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/lwjgl3?svg=true&branch=master-linux64&job=2"
                 />
               </tbody>
             </table>
@@ -88,12 +88,12 @@ const SourceRoute = (props: ContextRouter) => (
                 <BuildBadge
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/assimp"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/1"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/assimp?svg=true&branch=master&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/assimp"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/assimp/branch/master/2"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/assimp?svg=true&branch=master&job=2"
                 />
               </tbody>
             </table>
@@ -116,12 +116,12 @@ const SourceRoute = (props: ContextRouter) => (
                 <BuildBadge
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/bgfx"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/1"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/bgfx?svg=true&branch=master-linux&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/bgfx"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/bgfx/branch/master-linux/2"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/bgfx?svg=true&branch=master-linux&job=2"
                 />
               </tbody>
             </table>
@@ -144,12 +144,12 @@ const SourceRoute = (props: ContextRouter) => (
                 <BuildBadge
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/dyncall"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/1"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/dyncall?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/dyncall"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/dyncall/branch/master-linux64/2"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/dyncall?svg=true&branch=master-linux64&job=2"
                 />
               </tbody>
             </table>
@@ -172,12 +172,12 @@ const SourceRoute = (props: ContextRouter) => (
                 <BuildBadge
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/glfw"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/1"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/glfw?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/glfw"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/glfw/branch/master-linux64/2"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/glfw?svg=true&branch=master-linux64&job=2"
                 />
               </tbody>
             </table>
@@ -200,12 +200,12 @@ const SourceRoute = (props: ContextRouter) => (
                 <BuildBadge
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/1"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/jemalloc?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/jemalloc/branch/master-linux64/2"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/jemalloc?svg=true&branch=master-linux64&job=2"
                 />
               </tbody>
             </table>
@@ -228,12 +228,12 @@ const SourceRoute = (props: ContextRouter) => (
                 <BuildBadge
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/1"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/openal-soft?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
-                  src="https://appveyor-matrix-badges.herokuapp.com/repos/LWJGL-CI/openal-soft/branch/master-linux64/2"
+                  src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/openal-soft?svg=true&branch=master-linux64&job=2"
                 />
               </tbody>
             </table>
