@@ -37,7 +37,7 @@ export const BuildPlatform = () => (
   >
     {({ platforms, natives, selected, hide }, { togglePlatform }) =>
       hide ? null : (
-        <>
+        <React.Fragment>
           <h4 className="mt-3">Natives</h4>
           <div className="custom-controls-stacked">
             {platforms.map(platform => (
@@ -51,7 +51,7 @@ export const BuildPlatform = () => (
               />
             ))}
           </div>
-        </>
+        </React.Fragment>
       )
     }
   </Connect>

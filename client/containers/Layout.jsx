@@ -10,7 +10,7 @@ import { Home, Guide, Download, Customize, Browse, Source, License } from '../ro
 import { Miss404 } from '../routes/miss404';
 
 export const Layout = () => (
-  <>
+  <React.Fragment>
     <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
     <Route render={({ location: { pathname } }) => <Header pathname={pathname} />} />
 
@@ -30,5 +30,5 @@ export const Layout = () => (
         props.location.pathname !== '/customize' && props.location.pathname !== '/browse' ? <Footer /> : null
       }
     />
-  </>
+  </React.Fragment>
 );

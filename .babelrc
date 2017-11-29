@@ -151,9 +151,15 @@
         "@babel/transform-flow-strip-types",
 
         // React
+        [
+          "transform-react-remove-prop-types",
+          {
+            "mode": "remove",
+            "removeImport": true
+          }
+        ],
         "@babel/transform-react-constant-elements",
         "@babel/transform-react-inline-elements",
-        "transform-react-remove-prop-types",
         ["@babel/transform-react-jsx", { "useBuiltIns": true }],
 
         // Stage 2

@@ -220,7 +220,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
             <div className="col p-0">
               <BuildConfigArea>
                 {!isDownloading ? (
-                  <>
+                  <React.Fragment>
                     <div className="row pt-3">
                       <div className="col-md">
                         <h4>Mode</h4>
@@ -315,7 +315,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
                         )
                       }
                     </Connect>
-                  </>
+                  </React.Fragment>
                 ) : (
                   <div className="row">
                     <BuildBundler progress={this.state.progress} cancel={this.downloadAbort} />
