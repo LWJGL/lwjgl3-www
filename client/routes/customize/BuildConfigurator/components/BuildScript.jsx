@@ -176,8 +176,6 @@ function generateMaven(props: ConnectedProps) {
 
   if (!hardcoded) {
     script += `<properties>
-\t<maven.compiler.source>1.8</maven.compiler.source>
-\t<maven.compiler.target>1.8</maven.compiler.target>
 \t<lwjgl.version>${version}</lwjgl.version>`;
 
     addons.forEach((addon: Addon) => {
@@ -196,7 +194,7 @@ function generateMaven(props: ConnectedProps) {
     if (artifacts[artifact].natives !== undefined) {
       nativesBundle += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${
         nl2
-      }<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}<scope>runtime</scope>${
+      }<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}${
         nl1
       }</dependency>`;
     }
@@ -287,7 +285,7 @@ switch ( OperatingSystem.current() ) {
   selected.forEach(artifact => {
     script += `\n\tcompile "${groupId}:${artifact}:${v}"`;
     if (artifacts[artifact].natives !== undefined) {
-      nativesBundle += `\n\truntime "${groupId}:${artifact}:${v}:\$lwjglNatives"`;
+      nativesBundle += `\n\tcompile "${groupId}:${artifact}:${v}:\$lwjglNatives"`;
     }
   });
 
