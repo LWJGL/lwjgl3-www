@@ -24,7 +24,7 @@ const ConfigPanel = styled('div')`
 
   ${mediaBreakpointUp('lg')} {
     &.release {
-      background-color: ${`${COLOR_RELEASE_LIGHT}`};
+      background-color: ${`${COLOR_RELEASE_LIGHT.hsl()}`};
       border-color: ${COLOR_RELEASE.hsl()};
     }
     &.stable {

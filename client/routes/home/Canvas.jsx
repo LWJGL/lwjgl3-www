@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { keyframes } from 'emotion';
 import styled from 'react-emotion';
+// $FlowFixMe
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SupportsIntersectionObserver } from '~/services/supports';
 

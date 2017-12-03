@@ -55,12 +55,12 @@ export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
 export const configLoad = (payload: {}) => ({ type: CONFIG_LOAD, payload });
 
 export const storeStatus = (name: BUILD_TYPES, response: BuildStatus) => {
-  if (response.error) {
+  if (response.error !== undefined) {
     const payload: BuildStatusError = {
       error: response.error,
     };
     return { type: BUILD_STATUS, name, payload };
-  } else if (response.lastModified) {
+  } else if (response.lastModified !== undefined) {
     const payload: BuildStatusSuccess = {
       lastModified: response.lastModified,
     };
@@ -363,7 +363,7 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
   state.language = config.language;
   state.osgi = !!config.osgi;
 
-  if (config.build === BUILD_RELEASE && config.version && config.versionLatest) {
+  if (config.build === BUILD_RELEASE && config.version !== undefined && config.versionLatest !== undefined) {
     if (config.versionLatest === state.versions[1]) {
       state.version = state.versions[0];
     } else {
@@ -382,7 +382,7 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
 
   computeArtifacts(state);
 
-  if (config.preset) {
+  if (config.preset !== undefined) {
     selectPreset(state, config.preset);
   } else if (config.contents !== undefined) {
     state.preset = 'custom';

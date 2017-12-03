@@ -13,7 +13,7 @@ type Props = {
 export const LoaderSpinner = ({ size = 24, style, className, delay = false }: Props) => {
   const cl = { delay: delay === true };
 
-  if (className) {
+  if (typeof className === 'string') {
     cl[className] = true;
   }
 

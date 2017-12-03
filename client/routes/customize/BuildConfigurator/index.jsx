@@ -103,7 +103,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
       return;
     }
     const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
-    saveAs(blob, `lwjgl-${save.build}-${save.preset || 'custom'}-${save.mode}.json`);
+    saveAs(blob, `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`);
   };
 
   download = async () => {

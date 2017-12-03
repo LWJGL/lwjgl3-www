@@ -251,7 +251,7 @@ const builders: Array<BuildOptionsBuilder> = [
 builders.reduce((previousBuild: BuildOptions, nextBuildConfig: BuildOptionsBuilder) => {
   const build = nextBuildConfig(previousBuild);
   build.allIds = Object.keys(build.byId).sort();
-  config.lwjgl[build.alias || build.version] = build;
+  config.lwjgl[build.alias !== undefined ? build.alias : build.version] = build;
   return build;
 }, build);
 
@@ -264,9 +264,7 @@ config.version = config.versions[0];
 
 // Fill allIds
 config.presets.allIds = Object.keys(config.presets.byId);
-// $FlowFixMe
 config.modes.allIds = Object.keys(config.modes.byId);
-// $FlowFixMe
 config.languages.allIds = Object.keys(config.languages.byId);
 
 if (config.languages.allIds && config.languages.allIds.length) {

@@ -1,3 +1,4 @@
+// @flow
 import { hsl } from '~/theme';
 
 // Colors

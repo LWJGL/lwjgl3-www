@@ -26,8 +26,8 @@ export class Toggle extends React.PureComponent<Props> {
   render() {
     const props = this.props;
 
-    return props.hidden ? null : (
-      <label className={`custom-control custom-toggle${props.disabled ? ' custom-control-disabled' : ''}`}>
+    return props.hidden === true ? null : (
+      <label className={`custom-control custom-toggle${props.disabled === true ? ' custom-control-disabled' : ''}`}>
         <input
           type="checkbox"
           className="custom-control-input"

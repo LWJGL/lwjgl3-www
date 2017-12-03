@@ -1,9 +1,12 @@
 [ignore]
+<PROJECT_ROOT>/*.js
 <PROJECT_ROOT>/.cache-loader/.*
 <PROJECT_ROOT>/.idea/.*
 <PROJECT_ROOT>/.history/.*
 <PROJECT_ROOT>/.vscode/.*
 <PROJECT_ROOT>/public/.*
+<PROJECT_ROOT>/scripts/.*
+<PROJECT_ROOT>/server/.*
 <PROJECT_ROOT>/node_modules/babel.*
 <PROJECT_ROOT>/node_modules/emotion/.*
 <PROJECT_ROOT>/node_modules/emotion-server/.*
@@ -18,9 +21,10 @@
 
 [lints]
 all=warn
-untyped-type-import=error
-sketchy-null-bool=off
-sketchy-null-string=off
+unclear-type=off
+# untyped-type-import=error
+# sketchy-null-bool=off
+# sketchy-null-string=off
 
 [options]
 include_warnings=true

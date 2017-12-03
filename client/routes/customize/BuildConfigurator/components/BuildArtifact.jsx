@@ -65,7 +65,7 @@ export const BuildArtifact = ({ id }: Props) => (
             />
             {artifact.natives && getPlatformIcons(artifact.natives)}
             <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
-            {artifact.website && (
+            {artifact.website !== undefined && (
               <p>
                 <a href={artifact.website} target="_blank" rel="noopener">
                   {artifact.website}

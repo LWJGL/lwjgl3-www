@@ -98,7 +98,7 @@ export class BuildScript extends React.Component<Props> {
           const { mode, breakpoint: { current, sm, md } } = props;
 
           const labels = {
-            download: `DOWNLOAD ${mode.file ? mode.file.toUpperCase() : 'FILE'}`,
+            download: `DOWNLOAD ${typeof mode.file === 'string' ? mode.file.toUpperCase() : 'FILE'}`,
             copy: ' COPY TO CLIPBOARD',
           };
 
@@ -194,9 +194,7 @@ function generateMaven(props: ConnectedProps) {
     if (artifacts[artifact].natives !== undefined) {
       nativesBundle += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${
         nl2
-      }<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}${
-        nl1
-      }</dependency>`;
+      }<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}${nl1}</dependency>`;
     }
   });
 

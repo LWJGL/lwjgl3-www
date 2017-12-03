@@ -82,6 +82,6 @@ export class LazyImg extends React.PureComponent<Props, Props> {
   render() {
     // extract DOM properties to ...rest
     const { src, srcSet, ...rest } = this.props;
-    return <img ref={this.getRef} src={this.state.src} srcSet={this.state.srcSet || null} {...rest} />;
+    return <img ref={this.getRef} src={this.state.src} srcSet={this.state.srcSet} {...rest} />;
   }
 }
