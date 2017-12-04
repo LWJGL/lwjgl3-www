@@ -57,11 +57,13 @@ const SourceRoute = (props: ContextRouter) => (
                   src="https://travis-ci.org/LWJGL-CI/lwjgl3.svg?branch=master-macosx"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/lwjgl3?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/lwjgl3?svg=true&branch=master-linux64&job=2"
@@ -86,11 +88,13 @@ const SourceRoute = (props: ContextRouter) => (
                   src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master-macos"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/assimp"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/assimp?svg=true&branch=master&job=1"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/assimp"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/assimp?svg=true&branch=master&job=2"
@@ -114,11 +118,13 @@ const SourceRoute = (props: ContextRouter) => (
                   src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-macos"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/bgfx"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/bgfx?svg=true&branch=master-linux&job=1"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/bgfx"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/bgfx?svg=true&branch=master-linux&job=2"
@@ -142,11 +148,13 @@ const SourceRoute = (props: ContextRouter) => (
                   src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-macosx"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/dyncall"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/dyncall?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/dyncall"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/dyncall?svg=true&branch=master-linux64&job=2"
@@ -170,11 +178,13 @@ const SourceRoute = (props: ContextRouter) => (
                   src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-macosx"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x64"
                   href="https://ci.appveyor.com/project/LWJGL-CI/glfw"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/glfw?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
+                  width={106}
                   title="Windows x86"
                   href="https://ci.appveyor.com/project/LWJGL-CI/glfw"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/glfw?svg=true&branch=master-linux64&job=2"
@@ -199,11 +209,13 @@ const SourceRoute = (props: ContextRouter) => (
                 />
                 <BuildBadge
                   title="Windows x64"
+                  width={106}
                   href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/jemalloc?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
+                  width={106}
                   href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/jemalloc?svg=true&branch=master-linux64&job=2"
                 />
@@ -227,11 +239,13 @@ const SourceRoute = (props: ContextRouter) => (
                 />
                 <BuildBadge
                   title="Windows x64"
+                  width={106}
                   href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/openal-soft?svg=true&branch=master-linux64&job=1"
                 />
                 <BuildBadge
                   title="Windows x86"
+                  width={106}
                   href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
                   src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/openal-soft?svg=true&branch=master-linux64&job=2"
                 />

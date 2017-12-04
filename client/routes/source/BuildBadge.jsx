@@ -6,14 +6,16 @@ type BadgeProps = {
   title: string,
   href: string,
   src: string,
+  width?: number,
+  height?: number,
 };
 
-export const BuildBadge = ({ title, href, src }: BadgeProps) => (
+export const BuildBadge = ({ title, href, src, width = 90, height = 20 }: BadgeProps) => (
   <tr>
     <th>{title}</th>
     <td>
       <a href={href} target="_blank" rel="noopener">
-        <LazyImg width={90} height={20} src={src} alt={`${title} build status`} />
+        <LazyImg width={width} height={height} src={src} alt={`${title} build status`} />
       </a>
     </td>
   </tr>
