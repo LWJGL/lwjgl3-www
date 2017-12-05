@@ -31,7 +31,7 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.162.0",
+    "aws-sdk": "2.163.0",
     "body-parser": "1.18.2",
     "chalk": "2.3.0",
     "express": "5.0.0-alpha.6",
@@ -99,10 +99,10 @@
     "sass-loader": "6.0.6",
     "style-loader": "0.19.0",
     "three": "0.88.0",
-    "typescript": "2.7.0-dev.20171203",
+    "typescript": "2.7.0-dev.20171205",
     "typescript-styled-plugin": "0.2.2",
     "uglify-js": "3.2.1",
-    "webpack": "3.9.1",
+    "webpack": "4.0.0-alpha.0",
     "webpack-common-shake": "1.5.3",
     "webpack-dev-middleware": "1.12.2",
     "webpack-hot-middleware": "2.21.0",

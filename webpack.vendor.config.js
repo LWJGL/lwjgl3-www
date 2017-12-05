@@ -6,6 +6,7 @@ const DllPlugin = require('webpack/lib/DllPlugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 
 const config = {
+  mode: 'development',
   target: 'web',
   performance: {
     hints: false,

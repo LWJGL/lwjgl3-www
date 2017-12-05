@@ -10,6 +10,7 @@ const env = {
 };
 
 module.exports = {
+  mode: 'production',
   target: 'web',
   performance: {
     hints: false,

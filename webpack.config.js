@@ -23,6 +23,7 @@ const env = {
 
 const buildConfiguration = () => {
   const config = {
+    mode: PRODUCTION ? 'production' : 'development',
     target: 'web',
     node: {
       console: false,
@@ -149,7 +150,6 @@ const buildConfiguration = () => {
       });
     }
   } else {
-    const ModuleConcatenationPlugin = require('webpack/lib/optimize/ModuleConcatenationPlugin');
     const ShakePlugin = require('webpack-common-shake').Plugin;
     const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
     const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
@@ -158,7 +158,6 @@ const buildConfiguration = () => {
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
       new LodashModuleReplacementPlugin(),
-      new ModuleConcatenationPlugin(),
       new ShakePlugin({
         warnings: {
           global: true,

@@ -806,9 +806,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.162.0:
-  version "2.162.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.162.0.tgz#1b16215fc9b599ba7cd2cfe7ce050c7f934381a6"
+aws-sdk@2.163.0:
+  version "2.163.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.163.0.tgz#bf0c43878634800c5426aa0931b5683900493d92"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -1789,6 +1789,14 @@ encoding@^0.1.11:
   dependencies:
     iconv-lite "~0.4.13"
 
+enhanced-resolve@4.0.0-beta.2:
+  version "4.0.0-beta.2"
+  resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-4.0.0-beta.2.tgz#a13a9da2340712c4f3dacf27e26717e2eae69c24"
+  dependencies:
+    graceful-fs "^4.1.2"
+    memory-fs "^0.4.0"
+    tapable "^1.0.0-beta.4"
+
 enhanced-resolve@^3.4.0:
   version "3.4.1"
   resolved "https://registry.yarnpkg.com/enhanced-resolve/-/enhanced-resolve-3.4.1.tgz#0421e339fd71419b3da13d129b3979040230476e"
@@ -1886,6 +1894,13 @@ escope@^3.6.0:
   dependencies:
     es6-map "^0.1.3"
     es6-weak-map "^2.0.1"
+    esrecurse "^4.1.0"
+    estraverse "^4.1.1"
+
+eslint-scope@^3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/eslint-scope/-/eslint-scope-3.7.1.tgz#3d63c3edfda02e06e01a452ad88caacc7cdcb6e8"
+  dependencies:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
@@ -5035,9 +5050,17 @@ tabbable@^1.0.3:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/tabbable/-/tabbable-1.1.0.tgz#2c9a9c9f09db5bb0659f587d532548dd6ef2067b"
 
+tapable@1.0.0-beta.3:
+  version "1.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.0.0-beta.3.tgz#1f56bb6fec924ac9570cd8f6ff788e5bcf4808f1"
+
 tapable@^0.2.7:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.2.8.tgz#99372a5c999bf2df160afc0d74bed4f47948cd22"
+
+tapable@^1.0.0-beta.4:
+  version "1.0.0-beta.4"
+  resolved "https://registry.yarnpkg.com/tapable/-/tapable-1.0.0-beta.4.tgz#0b32094cbb6eb217f5dd049fc27c3a7e99705b9e"
 
 tar-pack@^3.4.0:
   version "3.4.1"
@@ -5153,9 +5176,9 @@ typescript-template-language-service-decorator@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-1.0.3.tgz#d3f28393d3dc0b21d4e969feefd8a73af7ca2375"
 
-typescript@2.7.0-dev.20171203:
-  version "2.7.0-dev.20171203"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20171203.tgz#14039d585f3a331e4da84d4bc7ce559ca3b51ba9"
+typescript@2.7.0-dev.20171205:
+  version "2.7.0-dev.20171205"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20171205.tgz#d64f0d7ea6b56e6a3e6351fb78e5e6edbe5f0941"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"
@@ -5374,28 +5397,27 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@3.9.1:
-  version "3.9.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.9.1.tgz#9a60aa544ed5d4d454c069e3f521aa007e02643c"
+webpack@4.0.0-alpha.0:
+  version "4.0.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.0-alpha.0.tgz#97949f332b9189182d22c6b302ee3dbe03faf96c"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
     ajv "^5.1.5"
     ajv-keywords "^2.0.0"
     async "^2.1.2"
-    enhanced-resolve "^3.4.0"
-    escope "^3.6.0"
+    enhanced-resolve "4.0.0-beta.2"
+    eslint-scope "^3.7.1"
     interpret "^1.0.0"
-    json-loader "^0.5.4"
-    json5 "^0.5.1"
     loader-runner "^2.3.0"
     loader-utils "^1.1.0"
     memory-fs "~0.4.1"
     mkdirp "~0.5.0"
     node-libs-browser "^2.0.0"
+    schema-utils "^0.4.2"
     source-map "^0.5.3"
     supports-color "^4.2.1"
-    tapable "^0.2.7"
+    tapable "1.0.0-beta.3"
     uglifyjs-webpack-plugin "^0.4.6"
     watchpack "^1.4.0"
     webpack-sources "^1.0.1"
