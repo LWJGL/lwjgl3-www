@@ -144,7 +144,10 @@ const buildConfiguration = () => {
     }
   } else {
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
-    config.plugins.push(new webpack.HashedModuleIdsPlugin());
+    config.plugins.push(
+      new webpack.HashedModuleIdsPlugin(),
+      new webpack.optimize.CommonsChunkPlugin({ name: 'webpack' })
+    );
   }
 
   return config;

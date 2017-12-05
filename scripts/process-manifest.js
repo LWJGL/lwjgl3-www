@@ -31,7 +31,7 @@ console.log(chalk`{yellow Compiling list of files & routes:}`);
 // Read webpack's manifest & chunks into memory
 const manifest = require('../public/js/webpack.manifest.json');
 // We'll us this to detect route chunks
-const routeRegExp = new RegExp('^route[-]([a-z][a-z-_/]+)\\.js$');
+const routeRegExp = new RegExp('^route[-][a-z][a-z-_/]+$');
 // We'll store files for our report here
 const fileReport = [];
 // We'll use this to store final production manifest
@@ -39,9 +39,11 @@ const productionManifest = {
   // Boot the app from here
   entry: '',
 
-  // App needs this to know where to load the other chunks from
-  // We'll serialize it later and inject inline as JavaScript (webpackManifest={})
-  chunks: {},
+  // HTML Inject webpack manifest to avoid network roundtrip
+  webpack: '',
+
+  // Keep a list of files that we need to upload on the CDN
+  files: [],
 
   // Build a map of route paths->JS files in order to preload chunks as needed
   routes: {},
@@ -50,18 +52,20 @@ const productionManifest = {
 // Store entrypoint names in an array
 const entrypoints = Object.keys(manifest.entrypoints);
 
-manifest.assets.forEach(asset => {
-  // Skip JSON files
-  if (asset.name.endsWith('json')) {
-    return;
-  }
+// For each item store chunk id, original filename, hashed filename
+// We use this to replace map in manifest.js
+const chunkFileMap = [];
 
-  out(asset.name, 'reading');
-  const originalPath = path.resolve(__dirname, '../public/js', asset.name);
+manifest.chunks.forEach(chunk => {
+  const chunkName = chunk.names[0];
+  const chunkFilename = chunk.files[0];
+
+  out(chunkName, 'reading');
+  const originalPath = path.resolve(__dirname, '../public/js', chunkFilename);
 
   const report = {
-    originalName: asset.name,
-    name: asset.name,
+    originalName: chunkFilename,
+    name: chunkFilename,
     hash: '',
     isEntry: false,
     isRoute: false,
@@ -73,8 +77,15 @@ manifest.assets.forEach(asset => {
   // Read contents
   let contents = fs.readFileSync(originalPath, { encoding: 'utf-8' });
 
+  if (chunkName === 'webpack') {
+    // Replace chunk filenames
+    chunkFileMap.forEach(item => {
+      contents = contents.replace(item.name, item.hashed);
+    });
+  }
+
   // Process with uglify-js
-  out(asset.name, 'minimizing');
+  out(chunkName, 'minimizing');
   const uglifyResult = UglifyJS.minify(contents, {
     warnings: false,
     compress: {
@@ -145,43 +156,42 @@ manifest.assets.forEach(asset => {
   contents = uglifyResult.code;
 
   // Compute hash
-  out(asset.name, 'computing hash');
+  out(chunkName, 'computing hash');
   const hash = crypto.createHash('MD5');
   hash.update(contents);
   report.hash = hash.digest('hex');
 
   // Compute gzip size
-  out(asset.name, 'measuring');
+  out(chunkName, 'measuring');
   report.size = Buffer.byteLength(contents, 'utf8');
   report.gzipSize = gzipSize.sync(contents);
+  report.name = `${chunkName}.${report.hash}.js`;
 
-  out(asset.name, 'storing');
-  if (entrypoints.indexOf(asset.chunkNames[0]) >= 0) {
-    // Mark as entrypoint
+  // Store reference so we can deploy later
+  productionManifest.files.push(report.name);
+
+  out(chunkName, 'storing');
+  if (chunkName === 'main') {
     report.isEntry = true;
-    report.name = `main.${report.hash}.js`;
-
-    // Store in productionManifest.entry
     productionManifest.entry = report.name;
+  } else if (chunkName === 'webpack') {
+    productionManifest.webpack = report.name;
   } else {
     // Detect route
-    const route = asset.name.match(routeRegExp);
+    const route = chunkName.match(routeRegExp);
     if (route !== null) {
-      // Mark as route
       report.isRoute = true;
-
-      // Use matched route name as filename prefix
-      report.name = `${route[1]}.${report.hash}.js`;
-
-      // Store in productionManifest.routes
-      productionManifest.routes[route[1]] = report.name;
-    } else {
-      // Use the chunkName for filename prefix
-      report.name = `${asset.chunkNames[0]}.${report.hash}.js`;
+      productionManifest.routes[chunkName.substr('route-'.length)] = report.name;
     }
+  }
 
-    // Store in productionManifest.chunks
-    productionManifest.chunks[`${asset.chunks[0]}`] = report.name;
+  // Push to chunkFileMap
+  if (chunkName !== 'webpack') {
+    chunkFileMap.push({
+      id: chunk.id,
+      name: chunkName,
+      hashed: `${chunkName}.${report.hash}`,
+    });
   }
 
   // Store to disk

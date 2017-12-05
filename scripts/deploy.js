@@ -15,17 +15,17 @@ AWS.config.update({ region: config.aws.region });
 // Collect files
 const files = [
   path.join(__dirname, '../public/css/', 'core.css'),
+  // TODO: Upload manifest file last to avoid reloading before the rest of the files have been uploaded
   path.join(__dirname, '../public/js/', 'manifest.json'),
-  path.join(__dirname, '../public/js/', manifest.entry),
 ];
-Object.keys(manifest.chunks).map(chunk => {
-  files.push(path.join(__dirname, '../public/js/', manifest.chunks[chunk]));
+manifest.files.map(file => {
+  files.push(path.join(__dirname, '../public/js/', file));
 });
 
 // Upload files
 const s3 = new AWS.S3();
 
-files.map(file => {
+const uploadFile = file => {
   const basename = path.basename(file);
   console.log(`Reading ${basename}`);
 
@@ -44,12 +44,12 @@ files.map(file => {
       ACL: 'public-read',
     };
 
-    if (basename.endsWith('js')) {
+    if (basename.endsWith('.js')) {
       uploadSettings.ContentType = 'text/javascript';
       uploadSettings.CacheControl = 'public,max-age=31536000,immutable';
-    } else if (basename.endsWith('json')) {
+    } else if (basename.endsWith('.json')) {
       uploadSettings.ContentType = 'application/json';
-    } else if (basename.endsWith('css')) {
+    } else if (basename.endsWith('.css')) {
       uploadSettings.ContentType = 'text/css';
     }
 
@@ -61,4 +61,6 @@ files.map(file => {
       console.log(`Done: ${basename} ETag: ${response.ETag}`);
     });
   });
-});
+};
+
+files.map(uploadFile);

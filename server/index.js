@@ -163,13 +163,9 @@ app.get('/sw.js', async (req, res) => {
     swJS = swJS.toString().replace(/VERSION/, md5.digest('hex'));
 
     // Populate service worker script with files to cache
-    const files = [`/js/${manifest.entry}`];
-    Object.values(manifest.chunks).forEach(chunk => {
-      if (chunk.startsWith('nosw-')) {
-        return;
-      }
-      files.push(`/js/${chunk}`);
-    });
+    const files = manifest.files
+      .filter(file => !file.startsWith('nosw-') && file.indexOf('webpack') === -1)
+      .map(file => `/js/${file}`);
     swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
 
     // Populate routes array
@@ -197,6 +193,7 @@ app.get('*', (req, res, next) => {
   if (app.locals.production) {
     // Set entry point
     renderOptions.entry = manifest.entry;
+    renderOptions.webpack = manifest.webpack;
 
     // Asset preloading
     // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
@@ -286,6 +283,7 @@ const downloadManifest = async cb => {
   if (argv.test) {
     manifest = require('../public/js/manifest.json');
     manifest.styles = await readFileAsync(path.join(__dirname, '../public/css', 'core.css'));
+    manifest.webpack = await readFileAsync(path.join(__dirname, '../public/js', manifest.webpack));
     cb();
     return;
   }
@@ -298,6 +296,7 @@ const downloadManifest = async cb => {
   try {
     manifest = JSON.parse(await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/manifest.json'));
     manifest.styles = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/css/core.css');
+    manifest.webpack = await request.get(`http://s3.amazonaws.com/cdn.lwjgl.org/js/${manifest.webpack}`);
   } catch (err) {
     console.error(chalk`{red failed to download manifest files: ${err.message}}`);
     process.exit(1);
