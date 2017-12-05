@@ -31,7 +31,13 @@ type Props = {|
 export class BuildScript extends React.Component<Props> {
   script: ?HTMLPreElement;
 
-  copyToClipboard = () => {
+  constructor(props: Props) {
+    super(props);
+    (this: any).getRef = this.getRef.bind(this);
+    (this: any).copyToClipboard = this.copyToClipboard.bind(this);
+  }
+
+  copyToClipboard() {
     if (window.getSelection === undefined) {
       alert('Copying to clipboard not supported!');
       return;
@@ -51,11 +57,11 @@ export class BuildScript extends React.Component<Props> {
     document.execCommand('copy');
     selection.removeAllRanges();
     alert('Script copied to clipboard.');
-  };
+  }
 
-  getRef = (el: ?HTMLPreElement) => {
+  getRef(el: ?HTMLPreElement) {
     this.script = el;
-  };
+  }
 
   render() {
     return (

@@ -22,11 +22,16 @@ export class RadioGroup extends React.PureComponent<Props> {
     };
   }
 
-  change = (value: any) => {
+  constructor(props: Props) {
+    super(props);
+    (this: any).change = this.change.bind(this);
+  }
+
+  change(value: any) {
     if (value !== this.props.value && this.props.onChange != null) {
       this.props.onChange(value);
     }
-  };
+  }
 
   render() {
     return <div className="custom-controls-stacked">{this.props.children}</div>;

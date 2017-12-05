@@ -17,11 +17,16 @@ export class Toggle extends React.PureComponent<Props> {
     hidden: false,
   };
 
-  change = () => {
+  constructor(props: Props) {
+    super(props);
+    (this: any).change = this.change.bind(this);
+  }
+
+  change() {
     if (this.props.onChange != null) {
       this.props.onChange(this.props.value);
     }
-  };
+  }
 
   render() {
     const props = this.props;

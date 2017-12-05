@@ -8,6 +8,11 @@ type Props = {
 export class ScrollToMe extends React.Component<Props> {
   el: ?HTMLDivElement;
 
+  constructor(props: Props) {
+    super(props);
+    (this: any).getRef = this.getRef.bind(this);
+  }
+
   componentDidMount() {
     this.scroll();
   }
@@ -24,9 +29,9 @@ export class ScrollToMe extends React.Component<Props> {
     }
   }
 
-  getRef = (n: ?HTMLDivElement) => {
+  getRef(n: ?HTMLDivElement) {
     this.el = n;
-  };
+  }
 
   render() {
     return <div ref={this.getRef} />;

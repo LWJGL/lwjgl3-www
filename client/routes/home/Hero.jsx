@@ -77,7 +77,10 @@ const Canvas = Loadable({
   loading: () => null,
 });
 
-export class HomeHero extends React.Component<{||}, { supportsWebGL: boolean }> {
+type Props = {||};
+type State = { supportsWebGL: boolean };
+
+export class HomeHero extends React.Component<Props, State> {
   state = {
     supportsWebGL: false,
   };

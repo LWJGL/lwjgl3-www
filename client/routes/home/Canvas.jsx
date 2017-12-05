@@ -35,7 +35,15 @@ export default class HomeCanvas extends React.Component<{||}> {
   group: Group | null = null;
   renderer: WebGLRenderer | null = null;
 
-  resizeCanvas = () => {
+  constructor() {
+    super();
+    (this: any).getRef = this.getRef.bind(this);
+    (this: any).resizeCanvas = this.resizeCanvas.bind(this);
+    (this: any).animate = this.animate.bind(this);
+    (this: any).ioCheck = this.ioCheck.bind(this);
+  }
+
+  resizeCanvas() {
     if (this.camera !== null && this.canvas != null) {
       /*::
       if ( !(this.canvas.parentNode instanceof HTMLElement) ) {
@@ -49,9 +57,9 @@ export default class HomeCanvas extends React.Component<{||}> {
       /*:: if ( this.renderer !== null ) */
       this.renderer.setSize(winW, winH, false);
     }
-  };
+  }
 
-  animate = () => {
+  animate() {
     this.rafId = requestAnimationFrame(this.animate);
 
     let time = Date.now() * 0.000015;
@@ -64,7 +72,7 @@ export default class HomeCanvas extends React.Component<{||}> {
     this.group.rotation.y = ry;
     /*:: if ( this.renderer !== null ) */
     this.renderer.render(this.scene, this.camera);
-  };
+  }
 
   stop() {
     if (this.rafId !== null) {
@@ -73,7 +81,7 @@ export default class HomeCanvas extends React.Component<{||}> {
     }
   }
 
-  ioCheck = (entries: Array<IntersectionObserverEntry>) => {
+  ioCheck(entries: Array<IntersectionObserverEntry>) {
     if (entries[0].intersectionRatio > 0) {
       if (this.rafId === null) {
         this.animate();
@@ -81,7 +89,7 @@ export default class HomeCanvas extends React.Component<{||}> {
     } else if (this.rafId !== null) {
       this.stop();
     }
-  };
+  }
 
   componentDidMount() {
     if (this.canvas == null) {
@@ -169,9 +177,9 @@ export default class HomeCanvas extends React.Component<{||}> {
     }
   }
 
-  getRef = (el: ?HTMLCanvasElement) => {
+  getRef(el: ?HTMLCanvasElement) {
     this.canvas = el;
-  };
+  }
 
   render() {
     return <Canvas innerRef={this.getRef} />;

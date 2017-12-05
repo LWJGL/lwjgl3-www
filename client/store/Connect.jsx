@@ -71,7 +71,10 @@ export class Connect extends React.Component<Props<*>, *> {
     super(props);
 
     // Map action creators and cache them to actions
-    this.actions = { dispatch: store.dispatch, ...(this.props.actions && this.mapDispatch(this.props.actions)) };
+    this.actions = {
+      dispatch: store.dispatch,
+      ...(this.props.actions && this.mapDispatch(this.props.actions)),
+    };
 
     // Compute initial state
     this.state = this.props.state(store.getState());
@@ -99,7 +102,10 @@ export class Connect extends React.Component<Props<*>, *> {
   }
 
   componentWillReceiveProps(nextProps: Props<*>) {
-    this.actions = { dispatch: store.dispatch, ...(nextProps.actions && this.mapDispatch(nextProps.actions)) };
+    this.actions = {
+      dispatch: store.dispatch,
+      ...(nextProps.actions && this.mapDispatch(nextProps.actions)),
+    };
     this.setState(nextProps.state(store.getState()));
   }
 

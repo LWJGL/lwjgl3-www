@@ -18,9 +18,14 @@ export class Radio extends React.Component<Props> {
     value: PropTypes.any,
   };
 
-  change = () => {
+  constructor(props: Props) {
+    super(props);
+    (this: any).change = this.change.bind(this);
+  }
+
+  change() {
     this.context.onChange(this.props.value);
-  };
+  }
 
   render() {
     const props = this.props;

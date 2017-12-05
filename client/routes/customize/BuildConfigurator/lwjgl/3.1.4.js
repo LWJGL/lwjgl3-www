@@ -18,7 +18,8 @@ export default (prev: BuildOptions): BuildOptions => ({
     'lwjgl-odbc': {
       id: 'lwjgl-odbc',
       title: 'ODBC bindings',
-      description: 'A C programming language interface that makes it possible for applications to access data from a variety of database management systems (DBMSs).',
+      description:
+        'A C programming language interface that makes it possible for applications to access data from a variety of database management systems (DBMSs).',
       website: 'https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc',
     },
     'lwjgl-remotery': {

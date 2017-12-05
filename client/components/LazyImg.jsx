@@ -29,6 +29,11 @@ export class LazyImg extends React.PureComponent<Props, Props> {
 
   state = {};
 
+  constructor(props: Props) {
+    super(props);
+    (this: any).getRef = this.getRef.bind(this);
+  }
+
   componentDidMount() {
     if (!SupportsIntersectionObserver) {
       this.setState({
@@ -75,9 +80,9 @@ export class LazyImg extends React.PureComponent<Props, Props> {
     this.unobserve();
   }
 
-  getRef = (n: ?HTMLImageElement) => {
+  getRef(n: ?HTMLImageElement) {
     this.el = n;
-  };
+  }
 
   render() {
     // extract DOM properties to ...rest
