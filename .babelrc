@@ -145,8 +145,6 @@
       ],
       "plugins": [
         ["emotion", { "sourceMap": false }],
-        // TODO: Remove lodash plugin when webpack 4 arrives
-        "lodash",
 
         "@babel/transform-flow-strip-types",
 

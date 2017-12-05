@@ -1,9 +1,6 @@
 'use strict';
-
+const webpack = require('webpack');
 const path = require('path');
-const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
-
 const { argv } = require('yargs');
 const config = require('./config.json');
 
@@ -72,8 +69,8 @@ const buildConfiguration = () => {
       ],
     },
     plugins: [
-      new DefinePlugin(env),
-      new LoaderOptionsPlugin({
+      new webpack.DefinePlugin(env),
+      new webpack.LoaderOptionsPlugin({
         minimize: PRODUCTION,
         debug: false,
       }),
@@ -81,10 +78,6 @@ const buildConfiguration = () => {
   };
 
   if (DEV) {
-    const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
-    const DllReferencePlugin = require('webpack/lib/DllReferencePlugin');
-    const HotModuleReplacementPlugin = require('webpack/lib/HotModuleReplacementPlugin');
-
     if (SOURCEMAP) {
       config.devtool = 'inline-source-map';
     }
@@ -96,11 +89,11 @@ const buildConfiguration = () => {
         require.resolve('react-hot-loader/patch'),
         require.resolve('webpack-hot-middleware/client')
       );
-      config.plugins.push(new HotModuleReplacementPlugin());
+      config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
     config.plugins.push(
-      new NamedModulesPlugin(),
-      new DllReferencePlugin({
+      new webpack.NamedModulesPlugin(),
+      new webpack.DllReferencePlugin({
         context: __dirname,
         manifest: require('./public/js/vendor-manifest.json'),
       })
@@ -150,46 +143,8 @@ const buildConfiguration = () => {
       });
     }
   } else {
-    const ShakePlugin = require('webpack-common-shake').Plugin;
-    const HashedModuleIdsPlugin = require('webpack/lib/HashedModuleIdsPlugin');
-    const ChunkManifestPlugin = require('chunk-manifest-webpack-plugin');
-    const LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
-
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
-    config.plugins.push(
-      new LodashModuleReplacementPlugin(),
-      new ShakePlugin({
-        warnings: {
-          global: true,
-          module: false,
-        },
-      }),
-      new HashedModuleIdsPlugin(),
-      new ChunkManifestPlugin({
-        filename: 'chunks.json',
-        manifestVariable: 'webpackManifest',
-        inlineManifest: false,
-      })
-    );
-
-    // config.stats = {
-    //   assets: true,
-    //   cached: false,
-    //   children: false,
-    //   chunks: false,
-    //   chunkModules: false,
-    //   chunkOrigins: false,
-    //   errors: false,
-    //   errorDetails: false,
-    //   hash: false,
-    //   modules: false,
-    //   publicPath: true,
-    //   reasons: false,
-    //   source: false,
-    //   timings: false,
-    //   version: false,
-    //   warnings: false,
-    // };
+    config.plugins.push(new webpack.HashedModuleIdsPlugin());
   }
 
   return config;

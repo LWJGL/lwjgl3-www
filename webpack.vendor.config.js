@@ -1,9 +1,6 @@
 'use strict';
-
+const webpack = require('webpack');
 const path = require('path');
-const DefinePlugin = require('webpack/lib/DefinePlugin');
-const DllPlugin = require('webpack/lib/DllPlugin');
-const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 
 const config = {
   mode: 'development',
@@ -70,15 +67,15 @@ const config = {
     library: '[name]',
   },
   plugins: [
-    new DefinePlugin({
+    new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('development'),
     }),
-    new DllPlugin({
+    new webpack.DllPlugin({
       context: __dirname,
       path: path.resolve(__dirname, 'public/js', 'vendor-manifest.json'),
       name: '[name]',
     }),
-    new NamedModulesPlugin(),
+    new webpack.NamedModulesPlugin(),
   ],
 };
 

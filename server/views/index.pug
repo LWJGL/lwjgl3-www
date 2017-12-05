@@ -17,9 +17,7 @@ block content
           #lwjgl-app>div>svg{display:none}
         p.text-danger Please enable JavaScript
 
-  if ( production )
-    script#manifest(type="application/json")!=webpackManifest
-  else
+  if ( development )
     script(src=`/js/vendor.js`)
   if ( msie === true)
     //- Required for React 16+

@@ -157,9 +157,9 @@ app.get('/sw.js', async (req, res) => {
     // Read service worker source code
     let swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
 
-    // Compute & update version hash
+    // Update version hash
     const md5 = crypto.createHash('MD5');
-    md5.update(manifest.chunksSerialized);
+    md5.update(JSON.stringify(manifest));
     swJS = swJS.toString().replace(/VERSION/, md5.digest('hex'));
 
     // Populate service worker script with files to cache
@@ -197,9 +197,6 @@ app.get('*', (req, res, next) => {
   if (app.locals.production) {
     // Set entry point
     renderOptions.entry = manifest.entry;
-
-    // Webpack manifest (pre-generated script ready for injection, see above)
-    renderOptions.webpackManifest = manifest.chunksSerialized;
 
     // Asset preloading
     // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
@@ -281,13 +278,6 @@ app.use((err, req, res, next) => {
 // ------------------------------------------------------------------------------
 // JS Manifest
 // ------------------------------------------------------------------------------
-const processManifest = () => {
-  // Convert chunks object to JSON so we can inject it in the page as <script>
-  if (manifest.chunks) {
-    manifest.chunksSerialized = JSON.stringify(manifest.chunks);
-  }
-};
-
 const downloadManifest = async cb => {
   if (app.locals.development) {
     cb();
@@ -296,7 +286,6 @@ const downloadManifest = async cb => {
   if (argv.test) {
     manifest = require('../public/js/manifest.json');
     manifest.styles = await readFileAsync(path.join(__dirname, '../public/css', 'core.css'));
-    processManifest();
     cb();
     return;
   }
@@ -313,7 +302,6 @@ const downloadManifest = async cb => {
     console.error(chalk`{red failed to download manifest files: ${err.message}}`);
     process.exit(1);
   }
-  processManifest();
   cb();
 };
 

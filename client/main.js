@@ -4,11 +4,6 @@ import { mount } from './mount';
 
 // Webpack manifest
 if (process.env.NODE_ENV === 'production') {
-  const manifestJson = document.getElementById('manifest');
-  if (manifestJson) {
-    window.webpackManifest = JSON.parse(manifestJson.innerHTML);
-  }
-
   // Service worker
   window.addEventListener('load', () => {
     if (navigator.serviceWorker) {
