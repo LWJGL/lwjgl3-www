@@ -85,15 +85,21 @@ export const Footer = () => (
           </ul>
         </div>
         <div className="col-sm">
-          <h3>Sponsor</h3>
-          <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external">
-            <LazyImg className="mb-2" alt="WebHotelier" src="/svg/webhotelier.svg" />
+          <h3>Sponsors</h3>
+          <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external noopener">
+            <LazyImg className="mb-4 mr-4" alt="WebHotelier" src="/svg/webhotelier.svg" height={60} />
+          </a>
+          <a href="https://www.jetbrains.com/" title="JetBrains" rel="external noopener">
+            <LazyImg alt="JetBrains" src="/svg/jetbrains-blackandwhite.svg" width={120} />
           </a>
         </div>
       </nav>
     </section>
     <section className="container copyright">
-      <p>Copyright © 2012-{new Date().getFullYear()} Lightweight Java Game Library 3</p>
+      <p>
+        LW<b>JGL</b>
+        <sup>3</sup>
+      </p>
       <p>
         Licensed under{' '}
         <NavLink ariaCurrent="page" exact={true} to="/license">

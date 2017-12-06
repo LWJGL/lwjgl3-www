@@ -100,7 +100,9 @@ export class HomeHero extends React.Component<Props, State> {
         <LogoContainer className="d-flex flex-column justify-content-center align-items-center">
           <Logo className="logo" />
           <HeroContent>
-            <h1>Lightweight Java&nbsp;Game&nbsp;Library&nbsp;3</h1>
+            <h1>
+              Lightweight <b>Java&nbsp;Game&nbsp;Library&nbsp;3</b>
+            </h1>
             <Link to="/#learn-more">
               LEARN MORE<br />
               <IconArrowDown />
