@@ -29,7 +29,7 @@ const config = {
       'prop-types',
       'fg-loadjs',
       'fg-loadcss',
-      'lodash',
+      'lodash-es',
       'fbjs',
 
       // React

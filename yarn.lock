@@ -806,9 +806,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.163.0:
-  version "2.163.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.163.0.tgz#bf0c43878634800c5426aa0931b5683900493d92"
+aws-sdk@2.164.0:
+  version "2.164.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.164.0.tgz#e3988657b7c7e96e7ca5a9ff52c90b96b4b229d9"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -2906,6 +2906,10 @@ locate-path@^2.0.0:
     p-locate "^2.0.0"
     path-exists "^3.0.0"
 
+lodash-es@4.17.4:
+  version "4.17.4"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.4.tgz#dcc1d7552e150a0640073ba9cb31d70f032950e7"
+
 lodash.assign@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.assign/-/lodash.assign-4.2.0.tgz#0d99f3ccd7a6d261d19bdaeb9245005d285808e7"
@@ -3820,9 +3824,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.0.tgz#1a7205bdb6126b30cf8c0a7b2b86997162e1ee3e"
+prettier@1.9.1:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.1.tgz#41638a0d47c1efbd1b7d5a742aaa5548eab86d70"
 
 private@^0.1.6:
   version "0.1.8"
@@ -5012,9 +5016,9 @@ typescript-template-language-service-decorator@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-1.0.3.tgz#d3f28393d3dc0b21d4e969feefd8a73af7ca2375"
 
-typescript@2.7.0-dev.20171205:
-  version "2.7.0-dev.20171205"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20171205.tgz#d64f0d7ea6b56e6a3e6351fb78e5e6edbe5f0941"
+typescript@2.7.0-dev.20171206:
+  version "2.7.0-dev.20171206"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20171206.tgz#3a7db27843a50e395201dc0e1ec8874342585823"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"
