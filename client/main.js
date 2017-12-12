@@ -2,10 +2,9 @@
 // import loadJS from 'fg-loadjs';
 import { mount } from './mount';
 
-// Webpack manifest
 if (process.env.NODE_ENV === 'production') {
-  // Service worker
   window.addEventListener('load', () => {
+    // Register service worker
     if (navigator.serviceWorker) {
       navigator.serviceWorker.register('/sw.js');
       // .then(registration => {

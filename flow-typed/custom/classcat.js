@@ -3,5 +3,5 @@ declare module 'classcat' {
     [key: string]: boolean | { [key: string]: boolean },
   };
 
-  declare export default (classes: Array<string | ClassSet> | ClassSet) => string
+  declare export default (classes: Array<string | void | ClassSet> | ClassSet) => string
 }

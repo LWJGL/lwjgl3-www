@@ -806,9 +806,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.167.0:
-  version "2.167.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.167.0.tgz#f207dff7f7e9a7883d3b69bd22513444968a36bd"
+aws-sdk@2.168.0:
+  version "2.168.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.168.0.tgz#561e0a231b8f70a2bee56ff5e508b6efff604fe3"
   dependencies:
     buffer "4.9.1"
     crypto-browserify "1.0.9"
@@ -1368,9 +1368,9 @@ cookie@0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.3.1.tgz#e7e0a1f9ef43b4c8ba925c5c5a96e806d16873bb"
 
-core-js@2.5.2:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.2.tgz#bc4648656e7dc9dc80d7d3c7bbc172d96e744e63"
+core-js@2.5.3:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.5.3.tgz#8acc38345824f16d8365b7c9b4259168e8ed603e"
 
 core-js@^1.0.0:
   version "1.2.7"
@@ -3832,9 +3832,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.1.tgz#41638a0d47c1efbd1b7d5a742aaa5548eab86d70"
+prettier@1.9.2:
+  version "1.9.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.9.2.tgz#96bc2132f7a32338e6078aeb29727178c6335827"
 
 private@^0.1.6:
   version "0.1.8"
@@ -5024,9 +5024,9 @@ typescript-template-language-service-decorator@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-1.0.3.tgz#d3f28393d3dc0b21d4e969feefd8a73af7ca2375"
 
-typescript@2.7.0-dev.20171209:
-  version "2.7.0-dev.20171209"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20171209.tgz#f0e038b1603217b48cdd98b376f728d46012129c"
+typescript@2.7.0-dev.20171212:
+  version "2.7.0-dev.20171212"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.0-dev.20171212.tgz#e46f0735832d78d91376f248758ae1e55600ab7b"
 
 ua-parser-js@^0.7.9:
   version "0.7.17"
