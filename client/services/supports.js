@@ -5,7 +5,7 @@
 let supportsPassive: boolean = false;
 
 try {
-  //$FlowFixMe
+  // $FlowFixMe
   let opts = Object.defineProperty({}, 'passive', {
     get: function() {
       supportsPassive = true;

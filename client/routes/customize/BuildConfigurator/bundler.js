@@ -40,7 +40,7 @@ export function getConfig({ build }: { build: BuildConfig }): BuildConfigStored 
     build: build.build,
     mode: build.mode,
     selectedAddons: build.selectedAddons,
-    //$FlowFixMe
+    // $FlowFixMe
     platform: keepChecked(build.platform),
     descriptions: build.descriptions,
     compact: build.compact,
@@ -258,7 +258,7 @@ export function downloadFiles(
           f += 1;
           log(`${f}/${FILES_TOTAL} - ${path}`);
           const download = await fetchFile(path, abortSignal);
-          //$FlowFixMe
+          // $FlowFixMe
           jszip.file(download.filename, download.payload, { binary: true });
         }
         resolve();
