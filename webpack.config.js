@@ -31,6 +31,9 @@ const buildConfiguration = () => {
       Buffer: false,
       setImmediate: false,
     },
+    optimization: {
+      minimize: false,
+    },
     performance: {
       hints: false,
     },
@@ -54,6 +57,10 @@ const buildConfiguration = () => {
     },
     module: {
       rules: [
+        {
+          include: [path.resolve('node_modules', 'lodash'), path.resolve('node_modules', 'lodash-es')],
+          sideEffects: false,
+        },
         {
           test: /\.(js|jsx)$/,
           include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],

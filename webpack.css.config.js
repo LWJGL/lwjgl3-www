@@ -12,6 +12,9 @@ const env = {
 module.exports = {
   mode: 'production',
   target: 'web',
+  optimization: {
+    minimize: false,
+  },
   performance: {
     hints: false,
   },
