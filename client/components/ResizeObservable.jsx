@@ -1,13 +1,6 @@
 // @flow
 import * as React from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-
-type Entry = {
-  +contentRect: {
-    +width: number,
-    +height: number,
-  },
-};
+import ResizeObserver, { type Entry } from 'resize-observer-polyfill';
 
 type Props = {
   children: (width: number, height: number) => React.Node,
@@ -30,7 +23,9 @@ export default class ResizeObservable extends React.Component<Props, State> {
 
   componentDidMount() {
     this.observer = new ResizeObserver(this.handleResize.bind(this));
-    this.observer.observe(this.el);
+    if (this.el != null) {
+      this.observer.observe(this.el);
+    }
   }
 
   componentWillUnmount() {
