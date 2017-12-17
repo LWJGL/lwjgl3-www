@@ -95,7 +95,7 @@ const buildConfiguration = () => {
 
     // WebPack Hot Middleware client & HMR plugins
     if (HMR) {
-      // config.module.rules[0].use.unshift('react-hot-loader/webpack');
+      // config.module.rules[1].use.unshift('react-hot-loader/webpack');
       config.entry.main.unshift(
         require.resolve('react-hot-loader/patch'),
         require.resolve('webpack-hot-middleware/client')
@@ -110,7 +110,7 @@ const buildConfiguration = () => {
       })
     );
 
-    config.module.rules[0].use.unshift('cache-loader');
+    config.module.rules[1].use.unshift('cache-loader');
 
     if (argv.css) {
       config.module.rules.push({
