@@ -58,7 +58,11 @@ const buildConfiguration = () => {
     module: {
       rules: [
         {
-          include: [path.resolve('node_modules', 'lodash'), path.resolve('node_modules', 'lodash-es')],
+          include: [
+            path.resolve('node_modules', 'lodash-es'),
+            path.resolve('node_modules', 'react-router/es'),
+            path.resolve('node_modules', 'react-router-dom/es'),
+          ],
           sideEffects: false,
         },
         {
