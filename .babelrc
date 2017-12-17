@@ -166,11 +166,12 @@
 
         // Stage 3
         ["@babel/proposal-object-rest-spread", { "useBuiltIns": true }],
-        /*
         // "@babel/proposal-async-generator-functions",
 
-        // State 4
+        // ES2015
+        ["@babel/transform-for-of", { "assumeArray": true, }],
 
+        /*
         // ES2015
         "@babel/check-constants",
         ["@babel/transform-arrow-functions", { "spec": false }],
@@ -180,7 +181,6 @@
         ["@babel/transform-computed-properties", { "loose": true }],
         ["@babel/transform-destructuring", { "loose": true }],
         "@babel/transform-duplicate-keys",
-        ["@babel/transform-for-of", { "loose": true }],
         "@babel/transform-function-name",
         "@babel/transform-literals",
         "@babel/transform-object-super",
