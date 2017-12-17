@@ -65,12 +65,11 @@ if (app.locals.development) {
 
   app.use(
     require('webpack-dev-middleware')(webpackCompiler, {
-      noInfo: true,
+      lazy: false,
+      logLevel: 'info', // One of: trace, debug, info, warn, error, silent
+      logTime: false,
       publicPath: webpackConfig.output.publicPath,
-      stats: {
-        colors: true,
-        reasons: false,
-      },
+      stats: 'minimal', // One of: errors-only, minimal, none, normal, detailed, verbose
     })
   );
 
