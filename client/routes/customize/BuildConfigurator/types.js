@@ -38,19 +38,19 @@ export type Mode = {|
   file?: string,
 |};
 
-export type Builds = {|
-  byId: {|
+export type Builds = {
+  byId: {
     [BUILD_TYPES]: Build,
-  |},
+  },
   allIds: Array<BUILD_TYPES>,
-|};
+};
 
-export type Modes = {|
-  byId: {|
+export type Modes = {
+  byId: {
     [id: MODES]: Mode,
-  |},
+  },
   allIds: Array<MODES>,
-|};
+};
 
 export type Native = {|
   id: NATIVES,
