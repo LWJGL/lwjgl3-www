@@ -27,7 +27,7 @@ export default class HomeCanvas extends React.Component<{||}> {
   canvas: ?HTMLCanvasElement;
 
   io: IntersectionObserver | null = null;
-  rafId: number | null = null;
+  rafId: AnimationFrameID | null = null;
   scene: Scene = null;
   camera: PerspectiveCamera | null = null;
   geometry: BoxGeometry | null = null;
