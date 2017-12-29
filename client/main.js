@@ -19,6 +19,13 @@ if (process.env.NODE_ENV === 'production') {
       //   console.warn('Service workers are not supported.');
     }
   });
+
+  // Prevent web app install banner from being displayed automatically
+  // https://developers.google.com/web/fundamentals/app-install-banners/#defer_or_cancel
+  window.addEventListener('beforeinstallprompt', e => {
+    e.preventDefault();
+    return false;
+  });
 } else if (CSSMODULES) {
   // Inject global styles, this enables HMR for SASS
   const styles = require('./styles/layout.scss');
