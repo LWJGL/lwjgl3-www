@@ -58,7 +58,7 @@ const config = {
       // Dev
       'ansi-html',
       'html-entities',
-      'react-proxy',
+      'react-stand-in',
     ],
   },
   output: {

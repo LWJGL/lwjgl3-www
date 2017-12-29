@@ -23,14 +23,3 @@ export const Customize = AR(() => import(/* webpackChunkName: "route-customize" 
 export const Browse = AR(() => import(/* webpackChunkName: "route-browse" */ './browse'));
 export const Source = AR(() => import(/* webpackChunkName: "route-source" */ './source'));
 export const License = AR(() => import(/* webpackChunkName: "route-license" */ './license'));
-
-// Force import during development to enable Hot-Module Replacement
-if (process.env.NODE_ENV === 'development' && !ASYNC_ROUTES) {
-  require('./home');
-  require('./guide');
-  require('./download');
-  require('./customize');
-  require('./browse');
-  require('./source');
-  require('./license');
-}

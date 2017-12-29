@@ -338,4 +338,5 @@ const HomeRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-export default HomeRoute;
+import { hot } from 'react-hot-loader';
+export default hot(module)(HomeRoute);

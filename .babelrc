@@ -197,7 +197,7 @@
 
         // ES2017
         // "@babel/transform-async-to-generator"
-      */
+        */
 
         // https://github.com/MatAtBread/fast-async
         // async/await using Promises instead of (Re)generator

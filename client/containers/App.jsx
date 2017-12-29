@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Layout } from './Layout';
+import { hot } from 'react-hot-loader';
 
 // Pull common modules that we want preloaded in the main chunk
 import 'emotion';
@@ -11,8 +12,10 @@ import './PageView';
 
 const supportsHistory = 'pushState' in window.history;
 
-export const App = () => (
+const AppComponent = () => (
   <BrowserRouter forceRefresh={!supportsHistory} keyLength={12}>
     <Layout />
   </BrowserRouter>
 );
+
+export const App = hot(module)(AppComponent);

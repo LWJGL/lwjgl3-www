@@ -93,13 +93,9 @@ const buildConfiguration = () => {
       config.devtool = 'inline-source-map';
     }
 
-    // WebPack Hot Middleware client & HMR plugins
     if (HMR) {
-      // config.module.rules[1].use.unshift('react-hot-loader/webpack');
-      config.entry.main.unshift(
-        require.resolve('react-hot-loader/patch'),
-        require.resolve('webpack-hot-middleware/client')
-      );
+      // Enable Hot Module Replacement
+      config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
     config.plugins.push(

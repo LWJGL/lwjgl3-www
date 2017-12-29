@@ -258,4 +258,5 @@ const SourceRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-export default SourceRoute;
+import { hot } from 'react-hot-loader';
+export default hot(module)(SourceRoute);
