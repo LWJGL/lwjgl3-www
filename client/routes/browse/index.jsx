@@ -18,7 +18,7 @@ const BrowseRoute = (props: ContextRouter) => (
       <meta name="description" content="Browse LWJGL files" />
     </Helmet>
     <main>
-      <section className="container px-0" style={{ margin: '-1rem auto' }}>
+      <section className="container-fluid px-0" style={{ margin: '-1rem auto 0 auto' }}>
         <Connect
           state={state => ({
             ...state.browser.contents[state.browser.path],

@@ -32,15 +32,6 @@ a.btn {
   }
 }
 
-// Do not show pointer cursor on disabled controls
-.custom-control.custom-control-disabled {
-  cursor: not-allowed;
-}
-// Make disabled controls more visibles
-.custom-control-input:disabled:checked ~ .custom-control-indicator {
-  background-color: #aaa;
-}
-
 .area-dark-secondary {
   color: white;
 }

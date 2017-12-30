@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { uniqueId } from 'lodash-es';
 import PropTypes from 'prop-types';
 
 type Props = {
@@ -18,8 +19,11 @@ export class Radio extends React.Component<Props> {
     value: PropTypes.any,
   };
 
+  htmlForId: string;
+
   constructor(props: Props) {
     super(props);
+    this.htmlForId = uniqueId('radio');
     (this: any).change = this.change.bind(this);
   }
 
@@ -31,17 +35,19 @@ export class Radio extends React.Component<Props> {
     const props = this.props;
 
     return (
-      <label className={`custom-control custom-radio${props.disabled ? ' custom-control-disabled' : ''}`}>
+      <div className="custom-control custom-radio">
         <input
           type="radio"
+          id={this.htmlForId}
           className="custom-control-input"
           disabled={props.disabled}
           checked={this.context.value === props.value}
           onChange={this.change}
         />
-        <span className="custom-control-indicator" />
-        <span className="custom-control-description">{props.label}</span>
-      </label>
+        <label className="custom-control-label" htmlFor={this.htmlForId}>
+          {props.label}
+        </label>
+      </div>
     );
   }
 }

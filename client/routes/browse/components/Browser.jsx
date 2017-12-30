@@ -29,33 +29,35 @@ export class Browser extends React.PureComponent<Props> {
     const path = this.props.path === '/' ? '' : this.props.path;
 
     return (
-      <table className="table mb-0">
-        <thead className="thead-default">
-          <tr>
-            <th colSpan={2}>
-              <IconCloud /> &nbsp;lwjgl/{path}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {parent && (
+      <div className="table-responsive-md">
+        <table className="table mb-0">
+          <thead className="thead-light">
             <tr>
-              <FolderName scope="row" onClick={this.goBack} colSpan={2}>
-                &hellip;
-              </FolderName>
-            </tr>
-          )}
-          {folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} loadPath={loadPath} />)}
-          {files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} loadPath={loadPath} />)}
-          {loading && (
-            <tr>
-              <th scope="row" colSpan={2}>
-                <LoaderSpinner />
+              <th colSpan={2}>
+                <IconCloud /> &nbsp;lwjgl/{path}
               </th>
             </tr>
-          )}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {parent && (
+              <tr>
+                <FolderName scope="row" onClick={this.goBack} colSpan={2}>
+                  &hellip;
+                </FolderName>
+              </tr>
+            )}
+            {folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} loadPath={loadPath} />)}
+            {files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} loadPath={loadPath} />)}
+            {loading && (
+              <tr>
+                <th scope="row" colSpan={2}>
+                  <LoaderSpinner />
+                </th>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     );
   }
 }

@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import { uniqueId } from 'lodash-es';
 
 type Props = {
   label: string,
@@ -17,8 +18,11 @@ export class Toggle extends React.PureComponent<Props> {
     hidden: false,
   };
 
+  htmlForId: string;
+
   constructor(props: Props) {
     super(props);
+    this.htmlForId = uniqueId('toggle');
     (this: any).change = this.change.bind(this);
   }
 
@@ -32,17 +36,19 @@ export class Toggle extends React.PureComponent<Props> {
     const props = this.props;
 
     return props.hidden === true ? null : (
-      <label className={`custom-control custom-toggle${props.disabled === true ? ' custom-control-disabled' : ''}`}>
+      <div className="custom-control custom-toggle">
         <input
           type="checkbox"
+          id={this.htmlForId}
           className="custom-control-input"
           disabled={props.disabled}
           checked={props.checked}
           onChange={this.change}
         />
-        <span className="custom-control-indicator" />
-        <span className="custom-control-description">{props.label}</span>
-      </label>
+        <label className="custom-control-label" htmlFor={this.htmlForId}>
+          {props.label}
+        </label>
+      </div>
     );
   }
 }
