@@ -114,7 +114,6 @@ manifest.chunks.forEach(chunk => {
       if_return: true,
       inline: true,
       join_vars: true,
-      cascade: true,
       collapse_vars: true,
       reduce_vars: true,
       warnings: false,
