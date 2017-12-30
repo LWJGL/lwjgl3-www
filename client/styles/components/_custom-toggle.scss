@@ -19,12 +19,13 @@
       background-color: $custom-control-indicator-checked-color;
       border-radius: 1rem;
       transition: transform 0.2s;
+      cursor: pointer;
     }
   }
 
   .custom-control-input:checked ~ .custom-control-label {
     &::after {
-      // left: 0.35rem;
+      // left: 0.345rem;
       transform: translate(0.35rem, 0.345rem);
     }
   }
