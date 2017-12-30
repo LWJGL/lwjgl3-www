@@ -1,30 +1,31 @@
 .custom-toggle {
   .custom-control-label {
-    &::before {
+    &:before {
       width: 1.5rem;
       left: -0.25rem;
-      @include border-radius(1rem);
       background: darken($custom-control-indicator-bg, 10%);
-      transition: background-color 0.2s;
     }
 
-    &::after {
+    &:after {
       width: 0.8rem;
       height: 0.8rem;
       // top: 0.345rem;
       // left: -0.155rem;
       top: 0;
       left: 0;
-      transform: translate(-0.155rem, 0.345rem);
+      transform: translate(-0.13rem, 0.345rem);
       background-color: $custom-control-indicator-checked-color;
-      border-radius: 1rem;
-      transition: transform 0.2s;
-      cursor: pointer;
+    }
+
+    &:after,
+    &:before {
+      @include border-radius(1rem);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
   }
 
   .custom-control-input:checked ~ .custom-control-label {
-    &::after {
+    &:after {
       // left: 0.345rem;
       transform: translate(0.35rem, 0.345rem);
     }
