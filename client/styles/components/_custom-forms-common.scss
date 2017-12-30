@@ -2,7 +2,15 @@ span[type='button'] {
   appearance: none;
 }
 
+// Remove padding from control container (see below)
+.custom-control {
+  padding-left: 0;
+}
+
 .custom-control-label {
+  // Add padding so we make the entire area clickable
+  padding-left: $custom-control-gutter;
+  // Prevent label selection (happens when clicking checkboxes very fast)
   user-select: none;
 }
 
