@@ -6,9 +6,12 @@
 <PROJECT_ROOT>/.vscode/.*
 <PROJECT_ROOT>/public/.*
 <PROJECT_ROOT>/node_modules/babel.*
+<PROJECT_ROOT>/node_modules/editions/.*
 <PROJECT_ROOT>/node_modules/emotion/.*
 <PROJECT_ROOT>/node_modules/emotion-server/.*
 <PROJECT_ROOT>/node_modules/emotion-utils/.*
+<PROJECT_ROOT>/node_modules/create-emotion/.*
+<PROJECT_ROOT>/node_modules/create-emotion-styled/.*
 <PROJECT_ROOT>/node_modules/react-emotion/node_modules/.*
 <PROJECT_ROOT>/node_modules/postcss.*
 .*/fbjs/.*

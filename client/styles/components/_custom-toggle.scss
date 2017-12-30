@@ -5,22 +5,27 @@
       left: -0.25rem;
       @include border-radius(1rem);
       background: darken($custom-control-indicator-bg, 10%);
+      transition: background-color 0.2s;
     }
 
     &::after {
       width: 0.8rem;
       height: 0.8rem;
-      top: 0.345rem;
-      left: -0.155rem;
+      // top: 0.345rem;
+      // left: -0.155rem;
+      top: 0;
+      left: 0;
+      transform: translate(-0.155rem, 0.345rem);
       background-color: $custom-control-indicator-checked-color;
       border-radius: 1rem;
-      transition: left 0.2s;
+      transition: transform 0.2s;
     }
   }
 
   .custom-control-input:checked ~ .custom-control-label {
     &::after {
-      left: 0.35rem;
+      // left: 0.35rem;
+      transform: translate(0.35rem, 0.345rem);
     }
   }
 }
