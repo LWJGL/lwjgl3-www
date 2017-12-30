@@ -32,12 +32,11 @@ if (process.env.NODE_ENV === 'production') {
   styles.use();
 
   // Unregister service workers if found
-  // TODO: test me
-  if (navigator.serviceWorker) {
-    navigator.serviceWorker.getRegistrations().then(registrations => {
-      registrations.forEach(registration => registration.unregister());
-    });
-  }
+  // if (navigator.serviceWorker) {
+  //   navigator.serviceWorker.getRegistrations().then(registrations => {
+  //     registrations.forEach(registration => registration.unregister());
+  //   });
+  // }
 }
 
 // We want to handle scroll restoration on our own
