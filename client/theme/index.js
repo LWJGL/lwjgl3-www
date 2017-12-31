@@ -46,8 +46,6 @@ export const COLOR_DANGER = COLOR_RED;
 export const COLOR_LIGHT = COLOR_GRAY_100;
 export const COLOR_DARK = COLOR_GRAY_800;
 
-export const COLOR_CUSTOM_CONTROL_INDICATOR_BG = COLOR_GRAY_300;
-
 // Set a specific jump point for requesting color jumps
 export const COLOR_INTERVAL = 0.08; // 8%
 
@@ -86,3 +84,9 @@ export const SPACER_5 = '3rem';
 
 export const COLOR_BODY_BG = COLOR_WHITE;
 export const COLOR_BODY_COLOR = COLOR_GRAY_900;
+
+// Custom Controls
+
+export const COLOR_CUSTOM_CONTROL_INDICATOR_BG = COLOR_GRAY_300;
+export const COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_COLOR = COLOR_WHITE;
+export const COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG = COLOR_BLUE;

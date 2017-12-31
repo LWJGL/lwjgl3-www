@@ -2,16 +2,18 @@
 import * as React from 'react';
 import { uniqueId } from 'lodash-es';
 import styled from 'react-emotion';
-import { COLOR_WHITE, COLOR_CUSTOM_CONTROL_INDICATOR_BG } from '~/theme';
+import { COLOR_WHITE, COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
+
+const COLOR_TOGGLE_INDICATOR_BG = COLOR_CUSTOM_CONTROL_INDICATOR_BG.darken(10);
 
 const Label = styled('label')`
-  &:before {
+  &::before {
     width: 1.5rem;
     left: -0.25rem;
-    background: ${COLOR_CUSTOM_CONTROL_INDICATOR_BG.darken(10).css()};
+    background: ${COLOR_TOGGLE_INDICATOR_BG.css()};
   }
 
-  &:after {
+  &::after {
     width: 0.8rem;
     height: 0.8rem;
     top: 0;
@@ -20,16 +22,28 @@ const Label = styled('label')`
     background-color: ${COLOR_WHITE.css()};
   }
 
-  &:after,
-  &:before {
+  &::after,
+  &::before {
     border-radius: 1rem;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 `;
 
 const Input = styled('input')`
-  &:checked ~ ${Label}:after {
+  &:checked ~ ${Label}::after {
     transform: translate(0.35rem, 0.345rem);
+  }
+  &:active ~ ${Label}::after {
+    width: 0.95rem;
+  }
+  &:checked:active ~ ${Label}::after {
+    transform: translate(0.22rem, 0.345rem);
+  }
+  &:active ~ ${Label}::before {
+    background-color: ${COLOR_TOGGLE_INDICATOR_BG.css()};
+  }
+  &:checked:active ~ ${Label}::before {
+    background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.css()};
   }
 `;
 
