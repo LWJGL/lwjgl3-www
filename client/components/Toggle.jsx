@@ -4,46 +4,62 @@ import { uniqueId } from 'lodash-es';
 import styled from 'react-emotion';
 import { COLOR_WHITE, COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 
-const COLOR_TOGGLE_INDICATOR_BG = COLOR_CUSTOM_CONTROL_INDICATOR_BG.darken(10);
+const COLOR_TOGGLE_INDICATOR_CHECKED_BG = COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.lighten(30);
+const COLOR_TOGGLE_INDICATOR_BG = COLOR_CUSTOM_CONTROL_INDICATOR_BG.s(0);
 
 const Label = styled('label')`
   &::before {
     width: 1.5rem;
+    margin-top: 0.2rem;
+    height: 0.7rem;
     left: -0.25rem;
-    background: ${COLOR_TOGGLE_INDICATOR_BG.css()};
+    background-color: ${COLOR_TOGGLE_INDICATOR_BG.css()};
+    box-shadow: inset 0 0.25rem 0.25rem rgba(0, 0, 0, 0.1) !important;
   }
 
   &::after {
-    width: 0.8rem;
-    height: 0.8rem;
-    top: 0;
-    left: 0;
-    transform: translate(-0.13rem, 0.345rem);
-    background-color: ${COLOR_WHITE.css()};
+    width: 1rem;
+    height: 1rem;
+    top: 0.3rem;
+    left: -0.3rem;
+    background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.s(0).css()};
   }
 
   &::after,
   &::before {
-    border-radius: 1rem;
+    border-radius: 2rem;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 `;
 
 const Input = styled('input')`
   &:checked ~ ${Label}::after {
-    transform: translate(0.35rem, 0.345rem);
+    left: 0.3rem;
+    background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.css()};
+  }
+  &:checked ~ ${Label}::before {
+    background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
   }
   &:active ~ ${Label}::after {
-    width: 0.95rem;
+    width: 1.15rem;
+  }
+  &:focus ~ ${Label}::after {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
   &:checked:active ~ ${Label}::after {
-    transform: translate(0.22rem, 0.345rem);
+    left: 0.1rem;
   }
   &:active ~ ${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_BG.css()};
   }
   &:checked:active ~ ${Label}::before {
-    background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.css()};
+    background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
+  }
+  &:disabled ~ ${Label}::after {
+    display: none;
+  }
+  &:checked:disabled ~ ${Label}::before {
+    background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
   }
 `;
 
