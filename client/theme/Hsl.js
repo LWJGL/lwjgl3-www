@@ -213,6 +213,51 @@ export class Hsl {
     return new Hsl(h, s * 100, l * 100);
   }
 
+  /*
+  getBrightness() {
+    const [red, blue, green] = this.toRGB();
+    return (red * 299 + blue * 587 + green * 114) / 1000;
+  }
+
+  isDark() {
+    return this.getBrightness() < 128;
+  }
+
+  isLight() {
+    return !this.isDark();
+  }
+
+  getLuminance() {
+    //http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
+    const [red, blue, green] = this.toRGB();
+    const RsRGB = red / 255;
+    const GsRGB = blue / 255;
+    const BsRGB = green / 255;
+
+    let R, G, B;
+
+    if (RsRGB <= 0.03928) {
+      R = RsRGB / 12.92;
+    } else {
+      R = Math.pow((RsRGB + 0.055) / 1.055, 2.4);
+    }
+
+    if (GsRGB <= 0.03928) {
+      G = GsRGB / 12.92;
+    } else {
+      G = Math.pow((GsRGB + 0.055) / 1.055, 2.4);
+    }
+
+    if (BsRGB <= 0.03928) {
+      B = BsRGB / 12.92;
+    } else {
+      B = Math.pow((BsRGB + 0.055) / 1.055, 2.4);
+    }
+
+    return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+  }
+  */
+
   css() {
     return this.alpha < 1.0
       ? `hsla(${this.hue}, ${this.saturation}%, ${this.lightness}%, ${this.alpha})`
