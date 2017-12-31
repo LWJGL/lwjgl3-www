@@ -16,6 +16,8 @@ import {
   BORDER_RADIUS,
 } from '../theme';
 
+import { Hsl } from '~/theme';
+
 const ConfigPanel = styled('div')`
   position: relative;
   z-index: 0;
@@ -24,16 +26,16 @@ const ConfigPanel = styled('div')`
 
   ${mediaBreakpointUp('lg')} {
     &.release {
-      background-color: ${`${COLOR_RELEASE_LIGHT.hsl()}`};
-      border-color: ${COLOR_RELEASE.hsl()};
+      background-color: ${`${COLOR_RELEASE_LIGHT.css()}`};
+      border-color: ${COLOR_RELEASE.css()};
     }
     &.stable {
-      background-color: ${COLOR_STABLE_LIGHT.hsl()};
-      border-color: ${COLOR_STABLE.hsl()};
+      background-color: ${COLOR_STABLE_LIGHT.css()};
+      border-color: ${COLOR_STABLE.css()};
     }
     &.nightly {
-      background-color: ${COLOR_NIGHTLY_LIGHT.hsl()};
-      border-color: ${COLOR_NIGHTLY.hsl()};
+      background-color: ${COLOR_NIGHTLY_LIGHT.css()};
+      border-color: ${COLOR_NIGHTLY.css()};
     }
     margin-top: 1rem;
     border-width: 2px;
@@ -71,7 +73,7 @@ const ConfigPanel = styled('div')`
   }
 
   .download-toolbar {
-    background: ${COLOR_PRIMARY.l(COLOR_PRIMARY.lightness + 5).hsl()};
+    background: ${COLOR_PRIMARY.lighten(15).css()};
     padding: 1rem 0;
     text-align: center;
     position: fixed;

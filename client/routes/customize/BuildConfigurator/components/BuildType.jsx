@@ -21,7 +21,7 @@ import {
 } from '../theme';
 
 const BuildBox = styled('div')`
-  border: 2px solid ${COLOR_PRIMARY.hsl()};
+  border: 2px solid ${COLOR_PRIMARY.css()};
   padding: 1rem;
   border-radius: ${BORDER_RADIUS};
   text-align: center;
@@ -36,24 +36,24 @@ const BuildBox = styled('div')`
   }
 
   > p {
-    color: ${COLOR_PRIMARY.hsl()};
+    color: ${COLOR_PRIMARY.css()};
     margin: 0;
   }
 
   &.release {
-    background-color: ${COLOR_RELEASE_LIGHT.hsl()};
-    border-color: ${COLOR_RELEASE.hsl()};
-    color: ${COLOR_RELEASE.hsl()};
+    background-color: ${COLOR_RELEASE_LIGHT.css()};
+    border-color: ${COLOR_RELEASE.css()};
+    color: ${COLOR_RELEASE.css()};
   }
   &.stable {
-    background-color: ${COLOR_STABLE_LIGHT.hsl()};
-    border-color: ${COLOR_STABLE.hsl()};
-    color: ${COLOR_STABLE.hsl()};
+    background-color: ${COLOR_STABLE_LIGHT.css()};
+    border-color: ${COLOR_STABLE.css()};
+    color: ${COLOR_STABLE.css()};
   }
   &.nightly {
-    background-color: ${COLOR_NIGHTLY_LIGHT.hsl()};
-    border-color: ${COLOR_NIGHTLY.hsl()};
-    color: ${COLOR_NIGHTLY.hsl()};
+    background-color: ${COLOR_NIGHTLY_LIGHT.css()};
+    border-color: ${COLOR_NIGHTLY.css()};
+    color: ${COLOR_NIGHTLY.css()};
   }
   &.locked {
     opacity: 0.5;

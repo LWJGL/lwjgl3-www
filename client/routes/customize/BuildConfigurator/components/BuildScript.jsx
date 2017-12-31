@@ -194,13 +194,9 @@ function generateMaven(props: ConnectedProps) {
   script += `<dependencies>`;
 
   selected.forEach(artifact => {
-    script += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${
-      nl2
-    }<version>${v}</version>${nl1}</dependency>`;
+    script += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`;
     if (artifacts[artifact].natives !== undefined) {
-      nativesBundle += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${
-        nl2
-      }<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}${nl1}</dependency>`;
+      nativesBundle += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}${nl1}</dependency>`;
     }
   });
 
@@ -227,17 +223,9 @@ function generateMaven(props: ConnectedProps) {
   }
 
   script += `\n\n<profiles>
-\t<profile>${nl2}<id>lwjgl-natives-linux</id>${nl2}<activation>${nl3}<os><family>unix</family></os>${nl2}</activation>${
-    nl2
-  }<properties>${nl3}<lwjgl.natives>natives-linux</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-macos</id>${nl2}<activation>${nl3}<os><family>mac</family></os>${nl2}</activation>${
-    nl2
-  }<properties>${nl3}<lwjgl.natives>natives-macos</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-windows</id>${nl2}<activation>${nl3}<os><family>windows</family></os>${
-    nl2
-  }</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-windows</lwjgl.natives>${nl2}</properties>${
-    nl1
-  }</profile>
+\t<profile>${nl2}<id>lwjgl-natives-linux</id>${nl2}<activation>${nl3}<os><family>unix</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-linux</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+\t<profile>${nl2}<id>lwjgl-natives-macos</id>${nl2}<activation>${nl3}<os><family>mac</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-macos</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+\t<profile>${nl2}<id>lwjgl-natives-windows</id>${nl2}<activation>${nl3}<os><family>windows</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-windows</lwjgl.natives>${nl2}</properties>${nl1}</profile>
 </profiles>
 `;
 
@@ -350,11 +338,7 @@ function generateIvy(props: ConnectedProps) {
     if (artifacts[artifact].natives === undefined) {
       script += `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}"/>`;
     } else {
-      script += `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${
-        artifact
-      }" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="\${lwjgl.natives}"/>${
-        nl2
-      }</dependency>`;
+      script += `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="\${lwjgl.natives}"/>${nl2}</dependency>`;
     }
   });
 

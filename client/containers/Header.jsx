@@ -19,7 +19,7 @@ injectGlobal`
 
 const HEADER_CLASSNAME = 'site-header';
 const styleOpaque = css`
-  background-color: ${COLOR_PRIMARY.hsl()};
+  background-color: ${COLOR_PRIMARY.css()};
 `;
 const styleHome = css`
   transition: background-color 0.5s ease-out;
