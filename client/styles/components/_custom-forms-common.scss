@@ -12,6 +12,10 @@ span[type='button'] {
   padding-left: $custom-control-gutter;
   // Prevent label selection (happens when clicking checkboxes very fast)
   user-select: none;
+  // Animate value change
+  // &::before {
+  //   transition: background-color 0.1s ease-out;
+  // }
 }
 
 .custom-control-input:disabled:checked ~ .custom-control-label:before {

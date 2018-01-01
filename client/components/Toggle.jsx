@@ -15,39 +15,43 @@ const Label = styled('label')`
     left: -0.25rem;
     background-color: ${COLOR_TOGGLE_INDICATOR_BG.css()};
     box-shadow: inset 0 0.25rem 0.25rem rgba(0, 0, 0, 0.1) !important;
+    will-change: background-color;
   }
 
   &::after {
     width: 1rem;
     height: 1rem;
-    top: 0.3rem;
-    left: -0.3rem;
+    transform-origin: center;
     background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.s(0).css()};
+    will-change: transform, background-color;
   }
 
   &::after,
   &::before {
     border-radius: 2rem;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.333s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.6s ease-out;
   }
 `;
 
 const Input = styled('input')`
+  &:focus ~ ${Label}::after {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+  & ~ ${Label}::after {
+    transform: translate(-0.3rem, 0.05rem);
+  }
+  &:active ~ ${Label}::after {
+    transform: translate(-0.2rem, 0.05rem) scale(1.1, 1);
+  }
   &:checked ~ ${Label}::after {
-    left: 0.3rem;
+    transform: translate(0.3rem, 0.05rem);
     background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.css()};
   }
   &:checked ~ ${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
   }
-  &:active ~ ${Label}::after {
-    width: 1.15rem;
-  }
-  &:focus ~ ${Label}::after {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-  }
   &:checked:active ~ ${Label}::after {
-    left: 0.1rem;
+    transform: translate(0.2rem, 0.05rem) scale(1.1, 1);
   }
   &:active ~ ${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_BG.css()};
