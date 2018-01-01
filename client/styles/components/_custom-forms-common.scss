@@ -18,10 +18,16 @@ span[type='button'] {
   // }
 }
 
-.custom-control-input:disabled:checked ~ .custom-control-label:before {
-  // background-color: $custom-control-indicator-disabled-bg;
-  // Increase contrast
-  background-color: $custom-select-disabled-color;
+.custom-control-input {
+  &:disabled:checked ~ .custom-control-label:before {
+    // background-color: $custom-control-indicator-disabled-bg;
+    // Increase contrast
+    background-color: $custom-select-disabled-color;
+  }
+  // Render focus ring also when active
+  &:active ~ .custom-control-label::before {
+    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
 }
 
 .custom-controls-stacked {

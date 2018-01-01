@@ -29,19 +29,16 @@ const Label = styled('label')`
   &::after,
   &::before {
     border-radius: 2rem;
-    transition: all 0.333s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.6s ease-out;
+    transition: transform 0.333s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.6s ease-out;
   }
 `;
 
 const Input = styled('input')`
-  &:focus ~ ${Label}::after {
+  &:active ~ ${Label}::after, &:focus ~ ${Label}::after {
     box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
   & ~ ${Label}::after {
     transform: translate(-0.3rem, 0.05rem);
-  }
-  &:active ~ ${Label}::after {
-    transform: translate(-0.2rem, 0.05rem) scale(1.1, 1);
   }
   &:checked ~ ${Label}::after {
     transform: translate(0.3rem, 0.05rem);
@@ -49,9 +46,6 @@ const Input = styled('input')`
   }
   &:checked ~ ${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
-  }
-  &:checked:active ~ ${Label}::after {
-    transform: translate(0.2rem, 0.05rem) scale(1.1, 1);
   }
   &:active ~ ${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_BG.css()};
