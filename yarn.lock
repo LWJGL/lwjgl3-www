@@ -740,6 +740,10 @@ argparse@^1.0.7:
   dependencies:
     sprintf-js "~1.0.2"
 
+argv@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/argv/-/argv-0.0.2.tgz#ecbd16f8949b157183711b1bda334f37840185ab"
+
 arr-diff@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/arr-diff/-/arr-diff-2.0.0.tgz#8f3b827f955a8bd669697e4a4256ac3ceae356cf"
@@ -2038,6 +2042,14 @@ code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
 
+codecov@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/codecov/-/codecov-3.0.0.tgz#c273b8c4f12945723e8dc9d25803d89343e5f28e"
+  dependencies:
+    argv "0.0.2"
+    request "2.81.0"
+    urlgrey "0.4.4"
+
 color-convert@^1.3.0, color-convert@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.0.tgz#1accf97dd739b983bf994d56fec8f95853641b7a"
@@ -3239,7 +3251,7 @@ global-prefix@^1.0.1:
     is-windows "^1.0.1"
     which "^1.2.14"
 
-global@^4.3.0:
+global@^4.3.0, global@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
   dependencies:
@@ -5061,9 +5073,9 @@ postcss-load-plugins@^2.3.0:
     cosmiconfig "^2.1.1"
     object-assign "^4.1.0"
 
-postcss-loader@2.0.9:
-  version "2.0.9"
-  resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-2.0.9.tgz#001fdf7bfeeb159405ee61d1bb8e59b528dbd309"
+postcss-loader@2.0.10:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/postcss-loader/-/postcss-loader-2.0.10.tgz#090db0540140bd56a7a7f717c41bc29aeef4c674"
   dependencies:
     loader-utils "^1.1.0"
     postcss "^6.0.0"
@@ -6890,6 +6902,10 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+urlgrey@0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/urlgrey/-/urlgrey-0.4.4.tgz#892fe95960805e85519f1cd4389f2cb4cbb7652f"
+
 util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
@@ -7018,19 +7034,21 @@ webpack-addons@^1.1.5:
   dependencies:
     jscodeshift "^0.4.0"
 
-webpack-cli@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-2.0.1.tgz#67b559c5c049fdba01ac12e1cd700850d88c4f15"
+webpack-cli@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/webpack-cli/-/webpack-cli-2.0.2.tgz#669c0984e8d3d743b59c9f759666e7fe7a25c736"
   dependencies:
     babel-code-frame "^6.22.0"
     babel-core "^6.25.0"
     babel-preset-env "^1.6.1"
     babel-preset-stage-3 "^6.24.1"
     chalk "^2.0.1"
+    codecov "^3.0.0"
     cross-spawn "^5.1.0"
     diff "^3.3.0"
     enhanced-resolve "^3.4.1"
     glob-all "^3.1.0"
+    global "^4.3.2"
     global-modules "^1.0.0"
     got "^7.1.0"
     inquirer "^3.2.0"
@@ -7089,9 +7107,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@4.0.0-alpha.2:
-  version "4.0.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.0-alpha.2.tgz#1d3e9e39fc9a23ca178efb3e273fb3dcc019cf69"
+webpack@4.0.0-alpha.3:
+  version "4.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.0-alpha.3.tgz#7138567754af201b08669a603bdbe7b0df96fc39"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
