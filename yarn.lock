@@ -7107,9 +7107,9 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.5.3"
 
-webpack@4.0.0-alpha.3:
-  version "4.0.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.0-alpha.3.tgz#7138567754af201b08669a603bdbe7b0df96fc39"
+webpack@4.0.0-alpha.4:
+  version "4.0.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.0.0-alpha.4.tgz#55e7eb97c5b7fb0f2527d7acf07f63fc05cfd821"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
