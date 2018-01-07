@@ -1919,9 +1919,9 @@ clap@^1.0.9:
   dependencies:
     chalk "^1.1.3"
 
-classcat@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/classcat/-/classcat-1.1.1.tgz#df8d7598cdc62bf268eb2184bf69d129718730a3"
+classcat@1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/classcat/-/classcat-1.1.2.tgz#2d63246a12d536b83e2cfb6e433913fa457b8211"
 
 clean-css@^3.3.0:
   version "3.4.28"
