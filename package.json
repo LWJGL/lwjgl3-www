@@ -99,7 +99,7 @@
     "three": "0.89.0",
     "typescript": "2.7.0-insiders.20171214",
     "typescript-styled-plugin": "0.2.2",
-    "uglify-js": "3.3.4",
+    "uglify-js": "3.3.5",
     "webpack": "4.0.0-alpha.3",
     "webpack-cli": "2.0.2",
     "webpack-dev-middleware": "2.0.3",
