@@ -150,7 +150,25 @@ app.get('/build/:build/:version', routeBuild);
 
 // Legacy re-directs
 app.get('/license.php', (req, res) => res.redirect(301, '/license'));
+app.get('/demos.php', (req, res) => {
+  res.redirect(302, 'http://legacy.lwjgl.org/demos.php.html');
+});
+app.get('/download.php', (req, res) => res.redirect(301, '/download'));
+app.get('/credits.php', (req, res) => res.redirect(301, '/#credits'));
+app.get('/projects.php', (req, res) => {
+  res.redirect(302, 'http://legacy.lwjgl.org/projects.php.html');
+});
+app.get('/links.php', (req, res) => {
+  res.redirect(302, 'http://wiki.lwjgl.org/wiki/Links_and_Resources.html');
+});
+app.get('/forum/*', (req, res) => {
+  res.redirect(302, `http://forum.lwjgl.org${req.originalUrl.replace(/^\/forum/, '')}`);
+});
+app.get('/wiki/*', (req, res) => {
+  res.redirect(302, `http://wiki.lwjgl.org${req.originalUrl.replace(/^\/wiki/, '')}`);
+});
 
+// Service Worker
 app.get('/sw.js', async (req, res) => {
   if (serviceWorkerCache === null) {
     // Read service worker source code

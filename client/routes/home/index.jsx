@@ -274,6 +274,8 @@ const HomeRoute = (props: ContextRouter) => (
         </section>
       </BindingsDiv>
 
+      <HashLinkTarget id="credits" />
+
       <section className="container pt-5 pb-3">
         <div className="row justify-content-center">
           <div className="col-md-9">
