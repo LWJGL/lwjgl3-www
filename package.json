@@ -97,7 +97,7 @@
     "sass-loader": "6.0.6",
     "style-loader": "0.19.1",
     "three": "0.89.0",
-    "typescript": "2.7.0-insiders.20171214",
+    "typescript": "2.7.0-insiders.20180108",
     "typescript-styled-plugin": "0.2.2",
     "uglify-js": "3.3.5",
     "webpack": "4.0.0-alpha.4",
