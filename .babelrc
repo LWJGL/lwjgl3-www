@@ -18,9 +18,6 @@
 
         // Stage 3
         ["@babel/proposal-object-rest-spread", { "useBuiltIns": true }],
-
-        // ES2015 -- Move this to production-only when browsers add support for class properties (see above)
-        ["@babel/transform-classes", { "loose": true }]
       ]
     },
     "production": {
