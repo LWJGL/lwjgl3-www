@@ -1,13 +1,15 @@
 // @flow
 import * as React from 'react';
-import { init, play } from '~/services/smoothscroll';
 import IconArrowUpward from 'react-icons/md/arrow-upward';
 
 const scrollTopTop = (e: SyntheticEvent<HTMLLinkElement>) => {
   e.preventDefault();
-  init();
-  window.scroll(0, 0);
-  play();
+  // $FlowFixMe
+  document.documentElement.scrollIntoView({
+    behavior: 'smooth',
+    block: 'start',
+    inline: 'start',
+  });
 };
 
 export const BackToTop = () => (

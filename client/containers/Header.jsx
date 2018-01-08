@@ -37,11 +37,13 @@ type State = {|
   desktop: boolean,
 |};
 
+/*
 let forceHidden = false;
 
 export function forceHide() {
   forceHidden = true;
 }
+*/
 
 export class Header extends React.PureComponent<Props, State> {
   prev = 0;
@@ -122,6 +124,7 @@ export class Header extends React.PureComponent<Props, State> {
     this.prev = this.current;
     this.current = Math.max(0, window.pageYOffset);
 
+    /*
     if (forceHidden) {
       if (this.current > 0) {
         // force hide
@@ -140,6 +143,7 @@ export class Header extends React.PureComponent<Props, State> {
       forceHidden = false;
       return;
     }
+    */
 
     if (this.prev - this.current < 0) {
       // We are scrolling down

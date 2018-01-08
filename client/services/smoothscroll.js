@@ -11,13 +11,9 @@ let supportsAnimationEvents = IS_IE ? 0 : -1;
 
 declare var document;
 
-const getScrollTop = () => {
-  const doc = document.documentElement;
-  return (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-};
-
 export const init = () => {
-  prevScroll = getScrollTop();
+  forceHide();
+  prevScroll = window.pageYOffset;
 };
 
 const reset = e => {
@@ -68,7 +64,7 @@ export const play = (fn?: Function) => {
 };
 
 const flip = () => {
-  let scrollOffset = getScrollTop() - prevScroll;
+  let scrollOffset = window.pageYOffset - prevScroll;
 
   if (animating) {
     animating = false;
@@ -104,7 +100,6 @@ const flip = () => {
 
 export const scrollToElement = (el: HTMLElement, cb?: Function) => {
   init();
-  forceHide();
 
   if (el.scrollIntoViewIfNeeded !== undefined) {
     // $FlowFixMe
