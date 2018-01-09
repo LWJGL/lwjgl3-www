@@ -1,5 +1,5 @@
 // @flow
-import immer from 'immer/es5';
+import produce from 'immer/es5';
 import { config } from './config';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 import type {
@@ -122,7 +122,7 @@ export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getS
 // Reducer
 
 export function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
-  return immer(state, (draft: BuildConfig) => {
+  return produce(state, (draft: BuildConfig) => {
     switch (action.type) {
       case BUILD_STATUS:
         saveStatus(draft, action.name, action.payload);

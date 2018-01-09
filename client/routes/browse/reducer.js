@@ -1,7 +1,7 @@
 // @flow
 import type { Dispatch } from 'redux';
 import { HTTP_OK } from '~/services/http_status_codes';
-import immer from 'immer/es5';
+import produce from 'immer/es5';
 
 // State
 
@@ -96,7 +96,7 @@ export function fileBrowserReducer(
   },
   action: Action
 ): State {
-  return immer(state, (draft: State) => {
+  return produce(state, (draft: State) => {
     switch (action.type) {
       case STORE_CONTENTS:
         const folder = draft.contents[action.path];
