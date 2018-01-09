@@ -40,7 +40,7 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "10.1.0"
+    "yargs": "10.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.37",
@@ -75,7 +75,7 @@
     "focus-trap": "2.4.2",
     "gzip-size": "4.1.0",
     "http-proxy-middleware": "0.17.4",
-    "immer": "0.3.0",
+    "immer": "0.3.1",
     "jszip": "3.1.5",
     "lodash-es": "4.17.4",
     "node-sass": "4.7.2",
@@ -88,7 +88,7 @@
     "react-dom": "16.2.0",
     "react-emotion": "9.0.0-1",
     "react-helmet": "5.2.0",
-    "react-hot-loader": "4.0.0-beta.12",
+    "react-hot-loader": "4.0.0-beta.13",
     "react-icons": "2.2.7",
     "react-loadable": "5.3.1",
     "react-router-dom": "4.2.2",

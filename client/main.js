@@ -1,6 +1,9 @@
 // @flow
-// import loadJS from 'fg-loadjs';
 import { mount } from './mount';
+import { setAutoFreeze } from 'immer/es5';
+// import loadJS from 'fg-loadjs';
+
+setAutoFreeze(false);
 
 if (process.env.NODE_ENV === 'production') {
   window.addEventListener('load', () => {
