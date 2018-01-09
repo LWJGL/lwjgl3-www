@@ -31,7 +31,7 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.177.0",
+    "aws-sdk": "2.178.0",
     "body-parser": "1.18.2",
     "chalk": "2.3.0",
     "express": "5.0.0-alpha.6",
@@ -75,6 +75,7 @@
     "focus-trap": "2.4.2",
     "gzip-size": "4.1.0",
     "http-proxy-middleware": "0.17.4",
+    "immer": "0.3.0",
     "jszip": "3.1.5",
     "lodash-es": "4.17.4",
     "node-sass": "4.7.2",
@@ -117,6 +118,7 @@
     "compile": "cross-env NODE_ENV=production webpack --progress --color --display-error-details --verbose",
     "production": "cross-env NODE_ENV=production webpack --bail --progress --json > ./public/js/webpack.manifest.json",
     "manifest": "node ./scripts/process-manifest.js",
+    "release-js": "yarn run production && yarn run manifest",
     "release": "yarn run styles && yarn run production && yarn run manifest",
     "deploy": "node ./scripts/deploy.js",
     "format": "prettier --write \"{client,server,scripts}/**/*.js*\"",

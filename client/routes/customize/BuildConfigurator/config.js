@@ -122,7 +122,6 @@ export const config: BuildConfig = {
       none: {
         id: 'none',
         title: 'None',
-        artifacts: ['lwjgl'],
       },
       custom: {
         id: 'custom',
@@ -135,34 +134,18 @@ export const config: BuildConfig = {
       'getting-started': {
         id: 'getting-started',
         title: 'Getting Started',
-        artifacts: [
-          'lwjgl',
-          'lwjgl-assimp',
-          'lwjgl-bgfx',
-          'lwjgl-glfw',
-          'lwjgl-nanovg',
-          'lwjgl-nuklear',
-          'lwjgl-openal',
-          'lwjgl-opengl',
-          'lwjgl-par',
-          'lwjgl-stb',
-          'lwjgl-vulkan',
-        ],
       },
       'minimal-opengl': {
         id: 'minimal-opengl',
         title: 'Minimal OpenGL',
-        artifacts: ['lwjgl', 'lwjgl-assimp', 'lwjgl-glfw', 'lwjgl-openal', 'lwjgl-stb', 'lwjgl-opengl'],
       },
       'minimal-opengles': {
         id: 'minimal-opengles',
         title: 'Minimal OpenGL ES',
-        artifacts: ['lwjgl', 'lwjgl-assimp', 'lwjgl-glfw', 'lwjgl-openal', 'lwjgl-stb', 'lwjgl-egl', 'lwjgl-opengles'],
       },
       'minimal-vulkan': {
         id: 'minimal-vulkan',
         title: 'Minimal Vulkan',
-        artifacts: ['lwjgl', 'lwjgl-assimp', 'lwjgl-glfw', 'lwjgl-openal', 'lwjgl-stb', 'lwjgl-vulkan'],
       },
     },
     allIds: [],

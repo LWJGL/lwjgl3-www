@@ -1,11 +1,13 @@
 // @flow
 import type { Dispatch } from 'redux';
 import { HTTP_OK } from '~/services/http_status_codes';
+import immer from 'immer/es5';
 
 // State
 
 type Folder = {|
-  parent: Folder | null,
+  path: string,
+  parent: string | null,
   loading: boolean,
   files: Array<string>,
   folders: Array<string>,
@@ -52,14 +54,11 @@ async function fetchContents(path: string) {
   return await response.json();
 }
 
-export const loadPath = (path: string) => async (dispatch: Dispatch<*>, getState: () => Object) => {
+export const loadPath = (path: string) => async (dispatch: Dispatch<*>, getState: Function) => {
   dispatch({ type: BROWSER_LOAD, path });
 
   const browser: State = getState().browser;
-  const data = {
-    path: browser.path,
-    ...browser.contents[browser.path],
-  };
+  const data = browser.contents[browser.path];
 
   if (!data.loading) {
     // Already cached!
@@ -86,6 +85,7 @@ export function fileBrowserReducer(
   state: State = {
     contents: {
       '/': {
+        path: '/',
         parent: null,
         loading: false,
         files: [],
@@ -96,45 +96,31 @@ export function fileBrowserReducer(
   },
   action: Action
 ): State {
-  switch (action.type) {
-    case STORE_CONTENTS:
-      return {
-        ...state,
-        contents: {
-          ...state.contents,
-          [action.path]: {
-            ...state.contents[action.path],
-            loading: false,
-            files: action.contents.files || [],
-            folders: action.contents.folders || [],
-          },
-        },
-      };
+  return immer(state, (draft: State) => {
+    switch (action.type) {
+      case STORE_CONTENTS:
+        const folder = draft.contents[action.path];
+        folder.loading = false;
+        folder.files = action.contents.files || [];
+        folder.folders = action.contents.folders || [];
+        return;
 
-    case BROWSER_LOAD:
-      if (state.path !== action.path) {
-        if (state.contents[action.path]) {
-          // Go back to a path we have already loaded
-          return { ...state, path: action.path };
-        } else {
-          // Load a new path
-          return {
-            ...state,
-            path: action.path,
-            contents: {
-              ...state.contents,
-              [action.path]: {
-                parent: state.path,
-                loading: true,
-                files: [],
-                folders: [],
-              },
-            },
-          };
+      case BROWSER_LOAD:
+        if (state.path !== action.path) {
+          draft.path = action.path;
+
+          if (state.contents[action.path] === undefined) {
+            // We haven't loaded this folder before, init it
+            draft.contents[action.path] = {
+              path: action.path,
+              parent: state.path,
+              loading: true,
+              files: [],
+              folders: [],
+            };
+          }
         }
-      }
-      break;
-  }
-
-  return state;
+        break;
+    }
+  });
 }

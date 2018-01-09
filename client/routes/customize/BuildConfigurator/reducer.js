@@ -1,4 +1,5 @@
 // @flow
+import immer from 'immer/es5';
 import { config } from './config';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 import type {
@@ -121,105 +122,114 @@ export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getS
 // Reducer
 
 export function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
-  switch (action.type) {
-    case BUILD_STATUS:
-      return saveStatus({ ...state }, action.name, action.payload);
+  return immer(state, (draft: BuildConfig) => {
+    switch (action.type) {
+      case BUILD_STATUS:
+        saveStatus(draft, action.name, action.payload);
+        break;
 
-    case SELECT_TYPE:
-      return selectBuild({ ...state }, action.build !== state.build ? action.build : null);
+      case SELECT_TYPE:
+        selectBuild(draft, action.build !== state.build ? action.build : null);
+        break;
 
-    case SELECT_MODE:
-      if (state.build !== BUILD_STABLE && state.mode !== action.mode) {
-        return selectMode({ ...state }, action.mode);
-      }
-      break;
-
-    case TOGGLE_DESCRIPTIONS:
-      return { ...state, descriptions: action.descriptions };
-
-    case TOGGLE_COMPACT:
-      if (state.mode === MODE_MAVEN || state.mode === MODE_IVY) {
-        return { ...state, compact: action.compact };
-      }
-      break;
-
-    case TOGGLE_HARDCODED:
-      if (state.mode !== MODE_ZIP) {
-        return { ...state, hardcoded: action.hardcoded };
-      }
-      break;
-
-    case TOGGLE_JAVADOC:
-      if (state.mode === MODE_ZIP) {
-        return { ...state, javadoc: action.javadoc };
-      }
-      break;
-
-    case TOGGLE_SOURCE:
-      if (state.mode === MODE_ZIP) {
-        return { ...state, source: action.source };
-      }
-      break;
-
-    case TOGGLE_OSGI:
-      if (state.mode !== MODE_ZIP && state.build === BUILD_RELEASE) {
-        return { ...state, osgi: action.osgi };
-      }
-      break;
-
-    case SELECT_PRESET:
-      if (state.preset !== action.preset) {
-        return selectPreset({ ...state }, action.preset);
-      }
-      break;
-
-    case SELECT_LANGUAGE:
-      // not implemented
-      break;
-
-    case TOGGLE_PLATFORM:
-      if (state.mode === MODE_ZIP) {
-        const selections = state.natives.allIds.reduce(
-          (previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0),
-          0
-        );
-        if (selections > 1 || state.platform[action.platform] === false) {
-          return computeArtifacts({
-            ...state,
-            platform: { ...state.platform, [action.platform]: !state.platform[action.platform] },
-          });
+      case SELECT_MODE:
+        if (state.build !== BUILD_STABLE && state.mode !== action.mode) {
+          selectMode(draft, action.mode);
         }
-      }
-      break;
+        break;
 
-    case SELECT_VERSION:
-      if (state.build === BUILD_RELEASE && state.version !== action.version) {
-        return selectVersion({ ...state }, action.version);
-      }
-      break;
+      case TOGGLE_DESCRIPTIONS:
+        draft.descriptions = action.descriptions;
+        break;
 
-    case TOGGLE_ARTIFACT:
-      if (action.artifact !== 'lwjgl') {
-        return doToggleArtifact({ ...state }, action.artifact);
-      }
-      break;
+      case TOGGLE_COMPACT:
+        if (state.mode === MODE_MAVEN || state.mode === MODE_IVY) {
+          draft.compact = action.compact;
+        }
+        break;
 
-    case TOGGLE_ADDON:
-      return doToggleAddon({ ...state }, action.addon);
+      case TOGGLE_HARDCODED:
+        if (state.mode !== MODE_ZIP) {
+          draft.hardcoded = action.hardcoded;
+        }
+        break;
 
-    case CONFIG_LOAD:
-      return loadConfig({ ...state }, action.payload);
-  }
+      case TOGGLE_JAVADOC:
+        if (state.mode === MODE_ZIP) {
+          draft.javadoc = action.javadoc;
+        }
+        break;
 
-  return state;
+      case TOGGLE_SOURCE:
+        if (state.mode === MODE_ZIP) {
+          draft.source = action.source;
+        }
+        break;
+
+      case TOGGLE_OSGI:
+        if (state.mode !== MODE_ZIP && state.build === BUILD_RELEASE) {
+          draft.osgi = action.osgi;
+        }
+        break;
+
+      case SELECT_PRESET:
+        if (state.preset !== action.preset) {
+          selectPreset(draft, action.preset);
+        }
+        break;
+
+      // case SELECT_LANGUAGE:
+      //   break;
+
+      case TOGGLE_PLATFORM:
+        if (state.mode === MODE_ZIP) {
+          const selections = state.natives.allIds.reduce(
+            (previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0),
+            0
+          );
+          if (selections > 1 || state.platform[action.platform] === false) {
+            draft.platform[action.platform] = !state.platform[action.platform];
+            computeArtifacts(draft);
+          }
+        }
+        break;
+
+      case SELECT_VERSION:
+        if (state.build === BUILD_RELEASE && state.version !== action.version) {
+          selectVersion(draft, action.version);
+        }
+        break;
+
+      case TOGGLE_ARTIFACT:
+        if (action.artifact !== 'lwjgl') {
+          doToggleArtifact(draft, action.artifact);
+        }
+        break;
+
+      case TOGGLE_ADDON:
+        doToggleAddon(draft, action.addon);
+        break;
+
+      case CONFIG_LOAD:
+        loadConfig(draft, action.payload);
+        break;
+    }
+  });
 }
 
 const computeArtifacts = (state: BuildConfig) => {
   if (state.build === null) {
     return;
   }
+
   state.artifacts = state.lwjgl[state.build === BUILD_RELEASE && state.version !== null ? state.version : state.build];
+
+  // reset state
   state.availability = {};
+  state.presets.allIds.forEach(preset => {
+    state.presets.byId[preset].artifacts = [];
+  });
+
   state.artifacts.allIds.forEach(it => {
     const artifact = state.artifacts.byId[it];
 
@@ -228,6 +238,14 @@ const computeArtifacts = (state: BuildConfig) => {
       artifact.natives === undefined ||
       artifact.natives.length === config.natives.allIds.length ||
       artifact.natives.some((platform: NATIVES) => !!state.platform[platform]);
+
+    if (state.availability[it] && artifact.presets !== undefined) {
+      // Populate presets
+      artifact.presets.forEach(preset => {
+        // $FlowFixMe
+        state.presets.byId[preset].artifacts.push(it);
+      });
+    }
   });
 
   if (state.preset !== 'custom') {
@@ -239,8 +257,6 @@ const computeArtifacts = (state: BuildConfig) => {
       state.mode = MODE_ZIP;
     }
   }
-
-  return state;
 };
 
 const selectBuild = (state: BuildConfig, build: BUILD_TYPES | null) => {
@@ -248,20 +264,16 @@ const selectBuild = (state: BuildConfig, build: BUILD_TYPES | null) => {
   if (build !== null) {
     computeArtifacts(state);
   }
-
-  return state;
 };
 
 const selectVersion = (state: BuildConfig, version: string) => {
   state.version = version;
   computeArtifacts(state);
-  return state;
 };
 
 const selectMode = (state: BuildConfig, mode: MODES) => {
   state.mode = mode;
   computeArtifacts(state);
-  return state;
 };
 
 const selectPreset = (state: BuildConfig, preset: string) => {
@@ -274,12 +286,10 @@ const selectPreset = (state: BuildConfig, preset: string) => {
   state.preset = preset;
 
   if (preset === 'all') {
-    state.contents = { ...state.contents };
     state.artifacts.allIds.forEach(artifact => {
       state.contents[artifact] = true;
     });
   } else if (preset !== 'custom') {
-    state.contents = { ...state.contents };
     state.artifacts.allIds.forEach(artifact => {
       state.contents[artifact] = false;
     });
@@ -289,12 +299,10 @@ const selectPreset = (state: BuildConfig, preset: string) => {
       });
     }
   }
-
-  return state;
 };
 
 const doToggleArtifact = (state: BuildConfig, artifact: string) => {
-  state.contents = { ...state.contents, [artifact]: !state.contents[artifact] };
+  state.contents[artifact] = !state.contents[artifact];
 
   // MATCH PRESET
   // collect selected artifacts in an Array
@@ -302,10 +310,10 @@ const doToggleArtifact = (state: BuildConfig, artifact: string) => {
 
   if (selected.length === state.artifacts.allIds.length) {
     state.preset = 'all';
-    return state;
+    return;
   } else if (selected.length === 1) {
     state.preset = 'none';
-    return state;
+    return;
   }
 
   // match selected artifacts with a preset
@@ -333,23 +341,19 @@ const doToggleArtifact = (state: BuildConfig, artifact: string) => {
   if (!presetFoundMatch) {
     state.preset = 'custom';
   }
-
-  return state;
 };
 
 const doToggleAddon = (state: BuildConfig, addon: string) => {
   if (state.selectedAddons.includes(addon)) {
     state.selectedAddons = state.selectedAddons.filter(it => it !== addon);
   } else {
-    state.selectedAddons = [...state.selectedAddons, addon];
+    state.selectedAddons.push(addon);
   }
-
-  return state;
 };
 
 const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
   if (config.build === null) {
-    return state;
+    return;
   }
 
   state.build = config.build;
@@ -397,11 +401,8 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
   } else {
     selectPreset(state, 'getting-started');
   }
-
-  return state;
 };
 
 const saveStatus = (state: BuildConfig, name: BUILD_TYPES, payload: BuildStatus) => {
   state.builds.byId[name].status = payload;
-  return state;
 };

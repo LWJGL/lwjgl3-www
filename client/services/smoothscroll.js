@@ -1,4 +1,4 @@
-// @flow
+// @noflow
 import { IS_IE } from '~/services/ua';
 import { forceHide } from '../containers/Header';
 

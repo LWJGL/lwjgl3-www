@@ -14,6 +14,7 @@ export default (prev: BuildOptions): BuildOptions => ({
         'A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.',
       natives: NATIVE_ALL,
       website: 'https://github.com/bkaradzic/bgfx',
+      presets: ['getting-started'],
     },
     'lwjgl-lmdb': {
       id: 'lwjgl-lmdb',
@@ -29,6 +30,7 @@ export default (prev: BuildOptions): BuildOptions => ({
       description: 'A minimal state immediate mode graphical user interface toolkit.',
       natives: NATIVE_ALL,
       website: 'https://github.com/vurtun/nuklear',
+      presets: ['getting-started'],
     },
     'lwjgl-tinyfd': {
       id: 'lwjgl-tinyfd',

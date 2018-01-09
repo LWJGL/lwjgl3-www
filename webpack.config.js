@@ -67,7 +67,11 @@ const buildConfiguration = () => {
         },
         {
           test: /\.(js|jsx)$/,
-          include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
+          include: [
+            path.resolve(__dirname, 'client'),
+            path.resolve(__dirname, 'node_modules/react-icons'),
+            path.resolve(__dirname, 'node_modules/immer'),
+          ],
           use: [
             {
               loader: 'babel-loader',

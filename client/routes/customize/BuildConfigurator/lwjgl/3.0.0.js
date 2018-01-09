@@ -13,6 +13,7 @@ export default (): BuildOptions => ({
       description: 'The LWJGL core library.',
       natives: NATIVE_ALL,
       required: true,
+      presets: ['none', 'getting-started', 'minimal-opengl', 'minimal-opengles', 'minimal-vulkan'],
     },
     'lwjgl-egl': {
       id: 'lwjgl-egl',
@@ -20,6 +21,7 @@ export default (): BuildOptions => ({
       description:
         'An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native platform window system.',
       website: 'https://www.khronos.org/egl',
+      presets: ['minimal-opengles'],
     },
     'lwjgl-glfw': {
       id: 'lwjgl-glfw',
@@ -28,6 +30,7 @@ export default (): BuildOptions => ({
         'An multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.',
       natives: NATIVE_ALL,
       website: 'http://www.glfw.org/',
+      presets: ['getting-started', 'minimal-opengl', 'minimal-opengles', 'minimal-vulkan'],
     },
     'lwjgl-jawt': {
       id: 'lwjgl-jawt',
@@ -50,6 +53,7 @@ export default (): BuildOptions => ({
         'A small antialiased vector graphics rendering library for OpenGL. Also includes <a href="https://github.com/memononen/nanosvg">NanoSVG</a>, a simple SVG parser (3.1.4+).',
       natives: NATIVE_ALL,
       website: 'https://github.com/memononen/nanovg',
+      presets: ['getting-started'],
     },
     'lwjgl-nfd': {
       id: 'lwjgl-nfd',
@@ -65,6 +69,7 @@ export default (): BuildOptions => ({
         'A cross-platform 3D audio API appropriate for use with gaming applications and many other types of audio applications.',
       natives: NATIVE_ALL,
       website: 'https://www.openal.org/',
+      presets: ['getting-started', 'minimal-opengl', 'minimal-opengles', 'minimal-vulkan'],
     },
     'lwjgl-opencl': {
       id: 'lwjgl-opencl',
@@ -79,6 +84,7 @@ export default (): BuildOptions => ({
       description:
         'The most widely adopted 2D and 3D graphics API in the industry, bringing thousands of applications to a wide variety of computer platforms.',
       website: 'https://www.opengl.org/',
+      presets: ['getting-started', 'minimal-opengl'],
     },
     'lwjgl-opengles': {
       id: 'lwjgl-opengles',
@@ -86,6 +92,7 @@ export default (): BuildOptions => ({
       description:
         'A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including consoles, phones, appliances and vehicles.',
       website: 'https://www.khronos.org/opengles/',
+      presets: ['minimal-opengles'],
     },
     'lwjgl-ovr': {
       id: 'lwjgl-ovr',
@@ -100,6 +107,7 @@ export default (): BuildOptions => ({
       description: 'Generate parametric surfaces and other simple shapes.',
       natives: NATIVE_ALL,
       website: 'http://github.prideout.net/shapes',
+      presets: ['getting-started'],
     },
     'lwjgl-sse': {
       id: 'lwjgl-sse',
@@ -114,6 +122,7 @@ export default (): BuildOptions => ({
       description: 'Single-file public domain libraries for fonts, images, ogg vorbis files and more.',
       natives: NATIVE_ALL,
       website: 'https://github.com/nothings/stb',
+      presets: ['getting-started', 'minimal-opengl', 'minimal-opengles', 'minimal-vulkan'],
     },
     'lwjgl-vulkan': {
       id: 'lwjgl-vulkan',
@@ -121,6 +130,7 @@ export default (): BuildOptions => ({
       description:
         'A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.',
       website: 'https://www.khronos.org/vulkan/',
+      presets: ['getting-started', 'minimal-vulkan'],
     },
     'lwjgl-xxhash': {
       id: 'lwjgl-xxhash',

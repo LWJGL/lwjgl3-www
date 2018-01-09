@@ -17,7 +17,7 @@
         ["@babel/proposal-class-properties", { "spec": false }],
 
         // Stage 3
-        ["@babel/proposal-object-rest-spread", { "useBuiltIns": true }],
+        ["@babel/proposal-object-rest-spread", { "useBuiltIns": true }]
       ]
     },
     "production": {

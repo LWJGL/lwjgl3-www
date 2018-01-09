@@ -13,6 +13,7 @@ export default (prev: BuildOptions): BuildOptions => ({
       description: 'A portable Open Source library to import various well-known 3D model formats in a uniform manner.',
       natives: NATIVE_ALL,
       website: 'http://www.assimp.org/',
+      presets: ['getting-started', 'minimal-opengl', 'minimal-opengles', 'minimal-vulkan'],
     },
     'lwjgl-opengl': {
       ...prev.byId['lwjgl-opengl'],

@@ -11,6 +11,7 @@ export type BindingDefinition = {
   required?: boolean,
   natives?: Array<NATIVES>,
   website?: string,
+  presets?: Array<string>,
 };
 
 export type BuildOptions = {

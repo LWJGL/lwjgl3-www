@@ -868,12 +868,13 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.177.0:
-  version "2.177.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.177.0.tgz#d5fbf1f82bab250e55153699b030b44f687f600b"
+aws-sdk@2.178.0:
+  version "2.178.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.178.0.tgz#e8257adde039cad2a1ac0abd278d172b6c39a9c7"
   dependencies:
     buffer "4.9.1"
-    crypto-browserify "1.0.9"
+    create-hash "^1.1.3"
+    create-hmac "^1.1.6"
     events "^1.1.1"
     jmespath "0.15.0"
     querystring "0.2.0"
@@ -2246,7 +2247,7 @@ create-emotion@^9.0.0-1:
     stylis "^3.3.2"
     stylis-rule-sheet "^0.0.5"
 
-create-hash@^1.1.0, create-hash@^1.1.2:
+create-hash@^1.1.0, create-hash@^1.1.2, create-hash@^1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/create-hash/-/create-hash-1.1.3.tgz#606042ac8b9262750f483caddab0f5819172d8fd"
   dependencies:
@@ -2255,7 +2256,7 @@ create-hash@^1.1.0, create-hash@^1.1.2:
     ripemd160 "^2.0.0"
     sha.js "^2.4.0"
 
-create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
+create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4, create-hmac@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/create-hmac/-/create-hmac-1.1.6.tgz#acb9e221a4e17bdb076e90657c42b93e3726cf06"
   dependencies:
@@ -2299,10 +2300,6 @@ cryptiles@3.x.x:
   resolved "https://registry.yarnpkg.com/cryptiles/-/cryptiles-3.1.2.tgz#a89fbb220f5ce25ec56e8c4aa8a4fd7b5b0d29fe"
   dependencies:
     boom "5.x.x"
-
-crypto-browserify@1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/crypto-browserify/-/crypto-browserify-1.0.9.tgz#cc5449685dfb85eb11c9828acc7cb87ab5bbfcc0"
 
 crypto-browserify@^3.11.0:
   version "3.11.1"
@@ -3610,6 +3607,10 @@ iferr@^0.1.5:
 immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
+
+immer@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-0.3.0.tgz#d5a2c38952366d93f81c9cddc2d4e9f3f9f761f6"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
