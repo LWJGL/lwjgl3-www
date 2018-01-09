@@ -15,11 +15,10 @@ export default class ResizeObservable extends React.Component<Props, State> {
   observer: ?ResizeObserver;
   el: ?HTMLElement;
 
-  constructor(props: Props) {
-    super(props);
-    this.state = { width: 0, height: 0 };
-    (this: any).handleRef = this.handleRef.bind(this);
-  }
+  state = {
+    width: 0,
+    height: 0,
+  };
 
   componentDidMount() {
     this.observer = new ResizeObserver(this.handleResize.bind(this));
@@ -40,6 +39,7 @@ export default class ResizeObservable extends React.Component<Props, State> {
     this.setState({ width, height });
   }
 
+  handleRef = this.handleRef.bind(this);
   handleRef(elem: ?HTMLElement) {
     this.el = elem;
   }

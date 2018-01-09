@@ -18,11 +18,7 @@ type Props = {|
 |};
 
 export class Folder extends React.PureComponent<Props> {
-  constructor(props: Props) {
-    super(props);
-    (this: any).clickHandle = this.clickHandle.bind(this);
-  }
-
+  clickHandle = this.clickHandle.bind(this);
   clickHandle() {
     this.props.loadPath(this.props.path);
   }

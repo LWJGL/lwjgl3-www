@@ -45,7 +45,7 @@ type State = {
 
 export class BuildConfigurator extends React.Component<Props, State> {
   static firstLoad = true;
-  unsubscribe: () => void;
+  unsubscribe: Function;
   prevSave: BuildConfigStored | null = null;
   mounted: boolean = false;
 
@@ -54,12 +54,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
     progress: [],
   };
 
-  constructor(props: Props) {
-    super(props);
-    (this: any).configDownload = this.configDownload.bind(this);
-    (this: any).download = this.download.bind(this);
-    (this: any).downloadAbort = this.downloadAbort.bind(this);
-
+  componentWillMount() {
     if (BuildConfigurator.firstLoad) {
       register('build', buildConfiguratorReducer);
       // Only restore once, use redux store for subsequent mounts
@@ -101,6 +96,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
   abortController: AbortController | null = null;
   abortSignal: AbortSignal | null = null;
 
+  configDownload = this.configDownload.bind(this);
   configDownload() {
     const save = getConfig(store.getState());
     if (save === null) {
@@ -110,6 +106,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
     saveAs(blob, `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`);
   }
 
+  download = this.download.bind(this);
   async download() {
     if (!JSZip.support.blob) {
       alert(`We're sorry, your browser is not capable of downloading and bundling files.`);
@@ -173,6 +170,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
     this.downloadComplete();
   }
 
+  downloadAbort = this.downloadAbort.bind(this);
   downloadAbort(e: SyntheticEvent<HTMLButtonElement>) {
     this.downloadCancel();
   }

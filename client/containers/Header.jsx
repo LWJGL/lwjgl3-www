@@ -59,23 +59,19 @@ export class Header extends React.PureComponent<Props, State> {
     return breakpoint.current > breakpoint.md;
   }
 
-  storeListener = () => {
+  storeListener() {
     this.setState({ desktop: this.isDesktop() });
-  };
-
-  constructor(props: Props) {
-    super(props);
-
-    this.unsubscribe = store.subscribe(this.storeListener);
-
-    this.state = {
-      pos: 0,
-      top: true,
-      fixed: false,
-      hidden: false,
-      desktop: this.isDesktop(),
-    };
   }
+
+  unsubscribe = store.subscribe(this.storeListener.bind(this));
+
+  state = {
+    pos: 0,
+    top: true,
+    fixed: false,
+    hidden: false,
+    desktop: this.isDesktop(),
+  };
 
   componentDidMount() {
     // Cache menu height to avoid touching the DOM on every tick

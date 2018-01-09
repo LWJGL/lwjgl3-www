@@ -24,16 +24,6 @@ type Context = {
 };
 
 export class Connect extends React.Component<Props<*>, *> {
-  // Nest subscriptions of descendant components, so that we can
-  // ensure the ancestor components re-render before descendants.
-  listeners = [];
-
-  // Only top-level <Connect /> needs to subscribe to the store
-  storeUnsubscribe: Function;
-
-  // Cache mapDispatchToProps, re-compute only when props change
-  actions: Actions;
-
   // Parent will be undefined for top-level <Connect />
   static contextTypes = {
     connectParent: PropTypes.object,
@@ -51,9 +41,10 @@ export class Connect extends React.Component<Props<*>, *> {
   }
 
   // Fired when redux state changes
-  storeListener = () => {
+  storeListener = this.storeListener.bind(this);
+  storeListener() {
     this.setState(this.props.state(store.getState()));
-  };
+  }
 
   // Wraps action creators with dispatch
   // A. Supports passing a function, first argument is the store's dispatch
@@ -67,24 +58,37 @@ export class Connect extends React.Component<Props<*>, *> {
     return bindActionCreators(actions, store.dispatch);
   }
 
-  constructor(props: Props<*>, context: Context) {
-    super(props);
+  // Nest subscriptions of descendant components, so that we can
+  // ensure the ancestor components re-render before descendants.
+  listeners = [];
 
-    // Map action creators and cache them to actions
-    this.actions = {
-      dispatch: store.dispatch,
-      ...(this.props.actions && this.mapDispatch(this.props.actions)),
-    };
+  // Only top-level <Connect /> needs to subscribe to the store
+  storeUnsubscribe: Function;
 
-    // Compute initial state
-    this.state = this.props.state(store.getState());
+  // Cache mapDispatchToProps, re-compute only when props change
+  actions: Actions = {
+    dispatch: store.dispatch,
+    ...(this.props.actions && this.mapDispatch(this.props.actions)),
+  };
 
-    if (context.connectParent === undefined) {
+  // Compute initial state
+  state = this.props.state(store.getState());
+
+  componentWillMount() {
+    if (this.context.connectParent === undefined) {
       // This is a top-level Connect, subscribe to the store directly
       this.storeUnsubscribe = store.subscribe(this.storeListener);
     } else {
       // This is a descendant Connect, subscribe to its parent
-      context.connectParent.subscribe(this.storeListener);
+      this.context.connectParent.subscribe(this.storeListener);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.context.connectParent === undefined) {
+      this.storeUnsubscribe();
+    } else {
+      this.context.connectParent.unsubscribe(this.storeListener);
     }
   }
 
@@ -107,14 +111,6 @@ export class Connect extends React.Component<Props<*>, *> {
       ...(nextProps.actions && this.mapDispatch(nextProps.actions)),
     };
     this.setState(nextProps.state(store.getState()));
-  }
-
-  componentWillUnmount() {
-    if (this.context.connectParent === undefined) {
-      this.storeUnsubscribe();
-    } else {
-      this.context.connectParent.unsubscribe(this.storeListener);
-    }
   }
 
   subscribe(listener: typeof Connect.prototype.storeListener) {

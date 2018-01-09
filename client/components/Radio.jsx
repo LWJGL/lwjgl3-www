@@ -19,14 +19,9 @@ export class Radio extends React.Component<Props> {
     value: PropTypes.any,
   };
 
-  htmlForId: string;
+  htmlForId: string = uniqueId('radio');
 
-  constructor(props: Props) {
-    super(props);
-    this.htmlForId = uniqueId('radio');
-    (this: any).change = this.change.bind(this);
-  }
-
+  change = this.change.bind(this);
   change() {
     this.context.onChange(this.props.value);
   }

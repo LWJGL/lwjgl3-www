@@ -31,12 +31,7 @@ type Props = {|
 export class BuildScript extends React.Component<Props> {
   script: ?HTMLPreElement;
 
-  constructor(props: Props) {
-    super(props);
-    (this: any).getRef = this.getRef.bind(this);
-    (this: any).copyToClipboard = this.copyToClipboard.bind(this);
-  }
-
+  copyToClipboard = this.copyToClipboard.bind(this);
   copyToClipboard() {
     if (window.getSelection === undefined) {
       alert('Copying to clipboard not supported!');
@@ -59,6 +54,7 @@ export class BuildScript extends React.Component<Props> {
     alert('Script copied to clipboard.');
   }
 
+  getRef = this.getRef.bind(this);
   getRef(el: ?HTMLPreElement) {
     this.script = el;
   }

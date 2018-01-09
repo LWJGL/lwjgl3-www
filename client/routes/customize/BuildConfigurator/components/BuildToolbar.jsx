@@ -23,16 +23,12 @@ export class BuildToolbar extends React.Component<Props, State> {
     fileUI: false,
   };
 
-  constructor(props: Props) {
-    super(props);
-    (this: any).toggleFileUI = this.toggleFileUI.bind(this);
-    (this: any).handleFile = this.handleFile.bind(this);
-  }
-
+  toggleFileUI = this.toggleFileUI.bind(this);
   toggleFileUI() {
     this.setState({ fileUI: !this.state.fileUI });
   }
 
+  handleFile = this.handleFile.bind(this);
   handleFile(e: SyntheticInputEvent<HTMLInputElement>) {
     const files = e.target.files;
 

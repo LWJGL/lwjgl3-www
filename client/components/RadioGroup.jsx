@@ -22,11 +22,7 @@ export class RadioGroup extends React.PureComponent<Props> {
     };
   }
 
-  constructor(props: Props) {
-    super(props);
-    (this: any).change = this.change.bind(this);
-  }
-
+  change = this.change.bind(this);
   change(value: any) {
     if (value !== this.props.value && this.props.onChange != null) {
       this.props.onChange(value);

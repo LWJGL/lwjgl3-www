@@ -19,13 +19,8 @@ export class Checkbox extends React.PureComponent<Props> {
     hidden: false,
   };
 
-  htmlForId: string;
-
-  constructor(props: Props) {
-    super(props);
-    this.htmlForId = uniqueId('checkbox');
-    (this: any).change = this.change.bind(this);
-  }
+  htmlForId: string = uniqueId('checkbox');
+  change = this.change.bind(this);
 
   change() {
     if (this.props.onChange) {

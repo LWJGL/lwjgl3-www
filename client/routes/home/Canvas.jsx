@@ -35,13 +35,10 @@ export default class HomeCanvas extends React.Component<{||}> {
   group: Group | null = null;
   renderer: WebGLRenderer | null = null;
 
-  constructor() {
-    super();
-    (this: any).getRef = this.getRef.bind(this);
-    (this: any).resizeCanvas = this.resizeCanvas.bind(this);
-    (this: any).animate = this.animate.bind(this);
-    (this: any).ioCheck = this.ioCheck.bind(this);
-  }
+  getRef = this.getRef.bind(this);
+  resizeCanvas = this.resizeCanvas.bind(this);
+  animate = this.animate.bind(this);
+  ioCheck = this.ioCheck.bind(this);
 
   resizeCanvas() {
     if (this.camera !== null && this.canvas != null) {

@@ -28,11 +28,7 @@ export class LazyImg extends React.PureComponent<Props, Props> {
   observed: boolean = false;
 
   state = {};
-
-  constructor(props: Props) {
-    super(props);
-    (this: any).getRef = this.getRef.bind(this);
-  }
+  getRef = this.getRef.bind(this);
 
   componentDidMount() {
     if (!SupportsIntersectionObserver) {

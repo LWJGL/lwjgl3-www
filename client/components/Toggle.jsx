@@ -77,14 +77,9 @@ export class Toggle extends React.PureComponent<Props> {
     hidden: false,
   };
 
-  htmlForId: string;
+  htmlForId = uniqueId('toggle');
 
-  constructor(props: Props) {
-    super(props);
-    this.htmlForId = uniqueId('toggle');
-    (this: any).change = this.change.bind(this);
-  }
-
+  change = this.change.bind(this);
   change() {
     if (this.props.onChange != null) {
       this.props.onChange(this.props.value);
