@@ -39,7 +39,7 @@ const helmetConfig = production => {
       maxAge: 365 * 24 * 60 * 60,
       includeSubDomains: false,
       // TODO: includeSubDomains must be true for preloading to be approved
-      preload: true,
+      preload: false,
       setIf: (req, res) => req.hostname === 'www.lwjgl.org',
     };
   }
