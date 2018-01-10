@@ -133,8 +133,8 @@ app.use(
         case '/sitemap.xml':
         case '/browserconfig.xml':
           res.set({
-            'Cache-Control': 'private, no-cache, no-store, must-revalidate',
-            Pragma: 'no-cache',
+            'Cache-Control': 'private, max-age=0',
+            Expires: '-1',
           });
           break;
         default:
@@ -265,8 +265,8 @@ app.get('*', (req, res, next) => {
 
   res
     .set({
-      'Cache-Control': 'private, no-cache, no-store, must-revalidate',
-      Pragma: 'no-cache',
+      'Cache-Control': 'private, max-age=0',
+      Expires: '-1',
     })
     .render('index', renderOptions);
 });
