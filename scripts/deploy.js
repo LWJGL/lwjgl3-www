@@ -29,7 +29,7 @@ async function uploadFile(file, basename) {
   };
 
   if (basename.endsWith('.js')) {
-    uploadSettings.ContentType = 'text/javascript';
+    uploadSettings.ContentType = 'text/javascript; charset=utf-8';
     uploadSettings.CacheControl = 'public,max-age=31536000,immutable';
   } else if (basename.endsWith('.json')) {
     uploadSettings.ContentType = 'application/json';

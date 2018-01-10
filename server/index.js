@@ -53,11 +53,20 @@ app.disable('x-powered-by');
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...cloudFrontSubnets]);
 
 // ------------------------------------------------------------------------------
+// Configure Content-Type
+// ------------------------------------------------------------------------------
+express.static.mime.define(
+  {
+    'text/javascript; charset=utf-8': ['js'],
+    'application/json; charset=utf-8': ['json'],
+    'application/manifest+json; charset=utf-8': ['webmanifest'],
+  },
+  true
+);
+
+// ------------------------------------------------------------------------------
 // Middleware
 // ------------------------------------------------------------------------------
-app.use(helmet(helmetConfig(app.locals.production)));
-app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
-
 if (app.locals.development) {
   const webpack = require('webpack');
   const webpackConfig = require('../webpack.config');
@@ -108,17 +117,34 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
+
 // Static Assets
 app.use(
   express.static(path.join(__dirname, '../public'), {
     index: false,
-    setHeaders: res => {
-      // Send immutable Cache-Control flag
-      // https://bitsup.blogspot.com/2016/05/cache-control-immutable.html
-      res.set('Cache-Control', 'public,max-age=31536000,immutable');
+    etag: true,
+    immutable: true,
+    lastModified: true,
+    maxAge: 365 * 24 * 60 * 60 * 1000,
+    setHeaders: (res, path, stat) => {
+      switch (res.req.url) {
+        case '/manifest.webmanifest':
+        case '/sitemap.xml':
+        case '/browserconfig.xml':
+          res.set({
+            'Cache-Control': 'private, no-cache, no-store, must-revalidate',
+            Pragma: 'no-cache',
+          });
+          break;
+        default:
+          res.set('Cache-Control', 'public, max-age=31536000, immutable');
+      }
     },
   })
 );
+
+app.use(helmet(helmetConfig(app.locals.production)));
 
 // Redownloads and parses JS manifest from S3
 app.get('/dev/reload', (req, res) => {
@@ -193,12 +219,7 @@ app.get('/sw.js', async (req, res) => {
     serviceWorkerCache = swJS;
   }
 
-  res
-    .type('text/javascript')
-    // .set({
-    //   'Cache-Control': 'max-age=30',
-    // })
-    .send(serviceWorkerCache);
+  res.type('text/javascript').send(serviceWorkerCache);
 });
 
 // App
@@ -242,12 +263,21 @@ app.get('*', (req, res, next) => {
       break;
   }
 
-  res.render('index', renderOptions);
+  res
+    .set({
+      'Cache-Control': 'private, no-cache, no-store, must-revalidate',
+      Pragma: 'no-cache',
+    })
+    .render('index', renderOptions);
 });
 
 // Page not found
 app.use((req, res) => {
-  res.status(404);
+  res
+    .set({
+      'Cache-Control': 'max-age=30',
+    })
+    .status(404);
 
   if (req.is('json')) {
     res.json({ error: 'Not found' });
@@ -259,7 +289,11 @@ app.use((req, res) => {
 
 // Error handling
 app.use((err, req, res, next) => {
-  res.status(500);
+  res
+    .set({
+      'Cache-Control': 'max-age=5',
+    })
+    .status(500);
 
   if (req.is('json')) {
     // JSON
