@@ -11,6 +11,16 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.lwjgl.org/customize</loc>
+    <changefreq>Daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://www.lwjgl.org/browse</loc>
+    <changefreq>Daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
     <loc>https://www.lwjgl.org/guide</loc>
     <changefreq>Daily</changefreq>
     <priority>0.8</priority>
