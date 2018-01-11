@@ -166,12 +166,23 @@ export const config: BuildConfig = {
       steamworks4j: {
         id: 'steamworks4j',
         title: 'steamworks4j',
-        description: 'A library that allows Java applications to access the Steamworks C++ API.',
+        description: 'Access the Steamworks C++ API using Java. Client library, sufficient for most uses.',
         website: 'http://code-disaster.github.io/steamworks4j/',
         maven: {
           groupId: 'com.code-disaster.steamworks4j',
           artifactId: 'steamworks4j',
-          version: '1.6.2',
+          version: '1.7.0',
+        },
+      },
+      "steamworks4j-server": {
+        id: 'steamworks4j-server',
+        title: 'steamworks4j-server',
+        description: 'Access the Steamworks C++ API using Java. Server library, if you need to support game servers or encrypted app tickets.',
+        website: 'http://code-disaster.github.io/steamworks4j/',
+        maven: {
+          groupId: 'com.code-disaster.steamworks4j',
+          artifactId: 'steamworks4j-server',
+          version: '1.7.0',
         },
       },
       'lwjglx-debug': {
@@ -187,7 +198,7 @@ export const config: BuildConfig = {
         },
       },
     },
-    allIds: ['joml', 'lwjglx-debug', 'steamworks4j'],
+    allIds: ['joml', 'lwjglx-debug', 'steamworks4j', 'steamworks4j-server'],
   },
 
   // UI State
