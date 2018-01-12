@@ -47,7 +47,8 @@ const buildConfiguration = () => {
       publicPath: '/js/',
     },
     resolve: {
-      extensions: ['.js', '.jsx'],
+      extensions: ['.mjs', '.js', '.jsx', '.json'],
+      mainFields: ['module', 'jsnext:main', 'main'],
       symlinks: false,
       alias: {
         '~': path.resolve(__dirname, './client'),
@@ -66,7 +67,7 @@ const buildConfiguration = () => {
           sideEffects: false,
         },
         {
-          test: /\.(js|jsx)$/,
+          test: /\.(js|mjs|jsx)$/,
           include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
           use: [
             {
