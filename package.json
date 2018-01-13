@@ -31,7 +31,7 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.180.0",
+    "aws-sdk": "2.181.0",
     "body-parser": "1.18.2",
     "chalk": "2.3.0",
     "express": "5.0.0-alpha.6",
@@ -114,8 +114,9 @@
     "watch": "nodemon --watch server server/index.js",
     "styles": "cross-env NODE_ENV=production webpack --config webpack.css.config.js",
     "vendor": "webpack --config webpack.vendor.config.js --bail --progress --color",
-    "bundle": "cross-env NODE_ENV=development webpack --progress --json > ./public/js/webpack.dev.manifest.json",
-    "compile": "cross-env NODE_ENV=production webpack --progress --color --display-error-details --verbose",
+    "bundle-dev": "cross-env NODE_ENV=development webpack --progress --json > webpack.dev.manifest.json",
+    "bundle-prod": "cross-env NODE_ENV=production webpack --progress --json > webpack.manifest.json",
+    "bundle-verbose": "cross-env NODE_ENV=production webpack --progress --color --display-error-details --verbose",
     "production": "cross-env NODE_ENV=production webpack --bail --progress --json > ./public/js/webpack.manifest.json",
     "manifest": "node ./scripts/process-manifest.js",
     "release-js": "yarn run production && yarn run manifest",

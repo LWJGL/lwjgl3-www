@@ -30,18 +30,21 @@ const config = {
       'fg-loadjs',
       'fg-loadcss',
       'lodash-es',
-      'fbjs',
+      'fbjs/lib/areEqual',
+      'fbjs/lib/shallowEqual',
+      'immer/es5',
 
       // React
       'react-helmet',
       'react-router',
       'react-router-dom',
       'react-loadable',
+      'react-hot-loader',
 
       // State management
       'redux',
       'redux-thunk',
-      'reselect',
+      'reselect/es',
 
       // UI
       'emotion',
