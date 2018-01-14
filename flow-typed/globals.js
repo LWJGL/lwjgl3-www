@@ -14,29 +14,3 @@ declare var module: {
     accept(path: string, callback: () => void): void,
   },
 };
-
-// TODO: Remove this when Flow adds support
-declare var Intl: {
-  NumberFormat: Function,
-};
-
-// TODO: Remove this when IntersectionObserver definition is fixed
-// https://github.com/facebook/flow/pull/4664
-declare class IntersectionObserver {
-  constructor(callback: IntersectionObserverCallback, options?: IntersectionObserverOptions): IntersectionObserver;
-  observe(target: HTMLElement): void;
-  unobserve(target: HTMLElement): void;
-  takeRecords(): Array<IntersectionObserverEntry>;
-  disconnect(): void;
-}
-
-declare class AbortSignal {
-  +aborted: boolean;
-  onabort: Event;
-}
-
-declare class AbortController {
-  constructor(): AbortController;
-  signal: AbortSignal;
-  abort(): void;
-}
