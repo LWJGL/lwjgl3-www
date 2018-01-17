@@ -1,5 +1,5 @@
 // @flow
-import produce from 'immer/es5';
+import produce from 'immer';
 import { config } from './config';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 import type {

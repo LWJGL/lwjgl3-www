@@ -1,6 +1,6 @@
 // @flow
 import { mount } from './mount';
-import { setAutoFreeze } from 'immer/es5';
+import { setAutoFreeze } from 'immer';
 // import loadJS from 'fg-loadjs';
 
 setAutoFreeze(false);

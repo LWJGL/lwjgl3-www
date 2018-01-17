@@ -5,9 +5,7 @@ const path = require('path');
 const config = {
   mode: 'development',
   target: 'web',
-  performance: {
-    hints: false,
-  },
+  // devtool: 'inline-source-map',
   node: {
     console: false,
     global: true,
@@ -17,7 +15,17 @@ const config = {
     Buffer: false,
     setImmediate: false,
   },
-  devtool: 'inline-source-map',
+  optimization: {
+    minimize: false,
+  },
+  performance: {
+    hints: false,
+  },
+  resolve: {
+    extensions: ['.mjs', '.js', '.jsx', '.json'],
+    mainFields: ['module', 'jsnext:main', 'main'],
+    symlinks: false,
+  },
   entry: {
     vendor: [
       // Polyfills
@@ -32,7 +40,7 @@ const config = {
       'lodash-es',
       'fbjs/lib/areEqual',
       'fbjs/lib/shallowEqual',
-      'immer/es5',
+      'immer',
 
       // React
       'react-helmet',

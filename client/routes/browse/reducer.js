@@ -1,7 +1,7 @@
 // @flow
 import type { Dispatch } from 'redux';
 import { HTTP_OK } from '~/services/http_status_codes';
-import produce from 'immer/es5';
+import produce from 'immer';
 
 // State
 

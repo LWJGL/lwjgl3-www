@@ -7,7 +7,6 @@ import { hot } from 'react-hot-loader';
 // Pull common modules that we want preloaded in the main chunk
 import 'emotion';
 import 'react-emotion';
-// import 'immer/es5';
 // import '~/store/Connect';
 import './PageView';
 
