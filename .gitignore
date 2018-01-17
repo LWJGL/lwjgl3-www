@@ -6,6 +6,7 @@
 /.cache-loader
 /public/js/*.js*
 /public/css/*.css
+/*.manifest.json
 *.log
 
 # IDE files
