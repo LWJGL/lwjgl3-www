@@ -31,7 +31,7 @@
     "ie >= 10"
   ],
   "dependencies": {
-    "aws-sdk": "2.183.0",
+    "aws-sdk": "2.184.0",
     "body-parser": "1.18.2",
     "chalk": "2.3.0",
     "express": "5.0.0-alpha.6",
@@ -57,7 +57,7 @@
     "babel-loader": "8.0.0-beta.0",
     "babel-plugin-emotion": "9.0.0-2",
     "babel-plugin-transform-react-remove-prop-types": "0.4.12",
-    "bootstrap": "4.0.0-beta.3",
+    "bootstrap": "4.0.0",
     "cache-loader": "1.2.0",
     "classcat": "1.1.2",
     "cli-table": "0.3.1",
