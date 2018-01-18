@@ -16,7 +16,7 @@ import {
   BORDER_RADIUS,
 } from '../theme';
 
-import { Hsl } from '~/theme';
+import { lighten } from '~/theme/color';
 
 const ConfigPanel = styled('div')`
   position: relative;
@@ -73,7 +73,7 @@ const ConfigPanel = styled('div')`
   }
 
   .download-toolbar {
-    background: ${COLOR_PRIMARY.lighten(15).css()};
+    background: ${lighten(COLOR_PRIMARY, 15).css()};
     padding: 1rem 0;
     text-align: center;
     position: fixed;

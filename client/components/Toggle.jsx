@@ -4,8 +4,10 @@ import { uniqueId } from 'lodash-es';
 import styled from 'react-emotion';
 import { COLOR_WHITE, COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 
-const COLOR_TOGGLE_INDICATOR_CHECKED_BG = COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.lighten(30);
-const COLOR_TOGGLE_INDICATOR_BG = COLOR_CUSTOM_CONTROL_INDICATOR_BG.s(0);
+import { lighten, setSaturation } from '~/theme/color';
+
+const COLOR_TOGGLE_INDICATOR_CHECKED_BG = lighten(COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, 30);
+const COLOR_TOGGLE_INDICATOR_BG = setSaturation(COLOR_CUSTOM_CONTROL_INDICATOR_BG, 0);
 
 const Label = styled('label')`
   &::before {
@@ -22,7 +24,7 @@ const Label = styled('label')`
     width: 1rem;
     height: 1rem;
     transform-origin: center;
-    background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.s(0).css()};
+    background-color: ${setSaturation(COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, 0).css()};
     will-change: transform, background-color;
   }
 
