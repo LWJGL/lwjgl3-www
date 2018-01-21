@@ -96,7 +96,10 @@ const buildConfiguration = () => {
 
     if (HMR) {
       // Enable Hot Module Replacement
-      config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
+      config.entry.main.unshift(
+        require.resolve('webpack-hot-middleware/client')
+        // path.resolve(__dirname, 'client/services/react-perf-devtool.js')
+      );
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
     config.plugins.push(
