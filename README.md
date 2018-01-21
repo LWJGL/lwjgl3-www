@@ -114,6 +114,7 @@ yarn watch
 --s3proxy => Proxies S3 images _(for testing production)_
 --css => Enables CSS modules in development mode _(for SCSS HMR)_
 --sourcemap => Enables inline source-maps
+--react-perf => Enables react-perf-devtool in dev mode
 
 Flag usage example:
 

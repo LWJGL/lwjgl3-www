@@ -90,28 +90,38 @@ const buildConfiguration = () => {
   };
 
   if (DEV) {
+    // Enable source maps
     if (SOURCEMAP) {
       config.devtool = 'inline-source-map';
     }
 
+    // Enable react-perf-devtool support
+    if (argv.reactPerf === true) {
+      config.entry.main.unshift(path.resolve(__dirname, 'client/services/react-perf-devtool.js'));
+    }
+
+    // Enable Hot Module Replacement
     if (HMR) {
-      // Enable Hot Module Replacement
-      config.entry.main.unshift(
-        require.resolve('webpack-hot-middleware/client')
-        // path.resolve(__dirname, 'client/services/react-perf-devtool.js')
-      );
+      config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
+
+    console.log(config.entry.main);
+
     config.plugins.push(
+      // Display relative path of the module when HMR is enabled
       new webpack.NamedModulesPlugin(),
+      // Load pre-built dependencies
       new webpack.DllReferencePlugin({
         context: __dirname,
         manifest: require('./public/js/vendor-manifest.json'),
       })
     );
 
+    // Enable cache-loader for faster builds
     config.module.rules[1].use.unshift('cache-loader');
 
+    // Enable CSS HMR instead of loading CSS pre-built from disk
     if (argv.css) {
       config.module.rules.push({
         test: /\.scss?$/,
@@ -154,9 +164,13 @@ const buildConfiguration = () => {
       });
     }
   } else {
+    // Load core-js polyfills first
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
+      // Base hashes on the relative path of modules
       new webpack.HashedModuleIdsPlugin(),
+      // Extract the webpack bootstrap logic into a separate file
+      // We then inline those file contents in our HTML
       new webpack.optimize.CommonsChunkPlugin({ name: 'webpack' })
     );
   }
