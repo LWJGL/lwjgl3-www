@@ -5,7 +5,7 @@ import { setAutoFreeze } from 'immer';
 
 setAutoFreeze(false);
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && window.isSecureContext) {
   window.addEventListener('load', () => {
     // Register service worker
     if (navigator.serviceWorker) {
