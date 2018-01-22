@@ -33,6 +33,17 @@ const buildConfiguration = () => {
     },
     optimization: {
       minimize: false,
+      // Extract the webpack bootstrap logic into a separate file
+      // We then inline those file contents in our HTML
+      runtimeChunk: PRODUCTION,
+      splitChunks: {
+        chunks: 'async',
+        minSize: 48000,
+        minChunks: 2,
+        maxAsyncRequests: 3,
+        maxInitialRequests: 2,
+        name: true,
+      },
     },
     performance: {
       hints: false,
@@ -109,8 +120,6 @@ const buildConfiguration = () => {
     console.log(config.entry.main);
 
     config.plugins.push(
-      // Display relative path of the module when HMR is enabled
-      new webpack.NamedModulesPlugin(),
       // Load pre-built dependencies
       new webpack.DllReferencePlugin({
         context: __dirname,
@@ -168,10 +177,7 @@ const buildConfiguration = () => {
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
       // Base hashes on the relative path of modules
-      new webpack.HashedModuleIdsPlugin(),
-      // Extract the webpack bootstrap logic into a separate file
-      // We then inline those file contents in our HTML
-      new webpack.optimize.CommonsChunkPlugin({ name: 'webpack' })
+      new webpack.HashedModuleIdsPlugin()
     );
   }
 

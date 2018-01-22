@@ -86,7 +86,6 @@ const config = {
       path: path.resolve(__dirname, 'public/js', 'vendor-manifest.json'),
       name: '[name]',
     }),
-    new webpack.NamedModulesPlugin(),
   ],
 };
 

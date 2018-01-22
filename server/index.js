@@ -207,7 +207,7 @@ app.get('/sw.js', async (req, res) => {
 
     // Populate service worker script with files to cache
     const files = manifest.files
-      .filter(file => !file.startsWith('nosw-') && file.indexOf('webpack') === -1)
+      .filter(file => !file.startsWith('nosw-') && file.indexOf('main-runtime') === -1)
       .map(file => `/js/${file}`);
     swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
 

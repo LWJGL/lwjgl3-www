@@ -77,7 +77,7 @@ manifest.chunks.forEach(chunk => {
   // Read contents
   let contents = fs.readFileSync(originalPath, { encoding: 'utf-8' });
 
-  if (chunkName === 'webpack') {
+  if (chunkName === 'main-runtime') {
     // Replace chunk filenames
     chunkFileMap.forEach(item => {
       contents = contents.replace(item.name, item.hashed);
@@ -96,7 +96,7 @@ manifest.chunks.forEach(chunk => {
       // unsafe: true,
       unsafe_comps: true,
       unsafe_comps: true,
-      unsafe_Func: true,
+      unsafe_Function: true,
       unsafe_math: false,
       unsafe_proto: true,
       unsafe_regexp: true,
@@ -173,7 +173,7 @@ manifest.chunks.forEach(chunk => {
   if (chunkName === 'main') {
     report.isEntry = true;
     productionManifest.entry = report.name;
-  } else if (chunkName === 'webpack') {
+  } else if (chunkName === 'main-runtime') {
     productionManifest.webpack = report.name;
   } else {
     // Detect route
@@ -185,7 +185,7 @@ manifest.chunks.forEach(chunk => {
   }
 
   // Push to chunkFileMap
-  if (chunkName !== 'webpack') {
+  if (chunkName !== 'main-runtime') {
     chunkFileMap.push({
       id: chunk.id,
       name: chunkName,

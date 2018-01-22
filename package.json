@@ -40,7 +40,7 @@
     "request": "2.83.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.4.5",
-    "yargs": "10.1.2"
+    "yargs": "11.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.38",
@@ -59,7 +59,7 @@
     "babel-plugin-transform-react-remove-prop-types": "0.4.12",
     "bootstrap": "4.0.0",
     "cache-loader": "1.2.0",
-    "classcat": "1.1.2",
+    "classcat": "1.1.3",
     "cli-table": "0.3.1",
     "core-js": "2.5.3",
     "cross-env": "5.1.3",
@@ -91,7 +91,7 @@
     "react-hot-loader": "4.0.0-beta.16",
     "react-icons": "2.2.7",
     "react-loadable": "5.3.1",
-    "react-perf-devtool": "3.0.2",
+    "react-perf-devtool": "3.0.4-beta1",
     "react-router-dom": "4.2.2",
     "redux": "4.0.0-beta.1",
     "redux-thunk": "2.2.0",
@@ -102,7 +102,7 @@
     "typescript": "2.7.0-rc",
     "typescript-styled-plugin": "0.4.0",
     "uglify-js": "3.3.8",
-    "webpack": "4.0.0-alpha.4",
+    "webpack": "4.0.0-alpha.5",
     "webpack-bundle-analyzer": "2.9.2",
     "webpack-cli": "2.0.4",
     "webpack-dev-middleware": "2.0.4",
