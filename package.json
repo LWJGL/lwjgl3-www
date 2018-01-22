@@ -101,7 +101,7 @@
     "three": "0.89.0",
     "typescript": "2.7.0-rc",
     "typescript-styled-plugin": "0.4.0",
-    "uglify-js": "3.3.8",
+    "uglify-es": "3.3.8",
     "webpack": "4.0.0-alpha.5",
     "webpack-bundle-analyzer": "2.9.2",
     "webpack-cli": "2.0.4",

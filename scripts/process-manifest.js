@@ -22,7 +22,7 @@ function out(name, status) {
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-const UglifyJS = require('uglify-js');
+const uglify = require('uglify-es');
 const gzipSize = require('gzip-size');
 const chalk = require('chalk');
 
@@ -86,67 +86,26 @@ manifest.chunks.forEach(chunk => {
 
   // Process with uglify-js
   out(chunkName, 'minimizing');
-  const uglifyResult = UglifyJS.minify(contents, {
-    warnings: false,
+  const uglifyResult = uglify.minify(contents, {
     compress: {
-      sequences: true,
-      properties: true,
-      dead_code: true,
-      drop_debugger: true,
-      // unsafe: true,
-      unsafe_comps: true,
+      drop_console: true,
+      inline: true,
+      keep_fargs: false,
+      keep_infinity: true,
+      passes: 2,
+      pure_getters: true,
       unsafe_comps: true,
       unsafe_Function: true,
-      unsafe_math: false,
       unsafe_proto: true,
       unsafe_regexp: true,
-      conditionals: true,
-      comparisons: true,
-      evaluate: true,
-      booleans: true,
-      typeofs: true,
-      loops: true,
-      unused: true,
-      toplevel: false,
-      top_retain: [],
-      hoist_funs: true,
-      hoist_vars: false,
-      if_return: true,
-      inline: true,
-      join_vars: true,
-      collapse_vars: true,
-      reduce_vars: true,
-      warnings: false,
-      negate_iife: false,
-      pure_getters: true,
-      pure_funcs: null,
-      drop_console: true,
-      expression: false,
-      keep_fargs: false,
-      keep_fnames: false,
-      passes: 2,
-      keep_infinity: true,
-      side_effects: true,
     },
     mangle: true,
-    output: {
-      ascii_only: false,
-      beautify: false,
-      bracketize: false,
-      comments: false,
-      indent_level: 2,
-      indent_start: 0,
-      keep_quoted_props: false,
-      max_line_len: false,
-      preamble: null,
-      preserve_line: false,
-      quote_keys: false,
-      quote_style: 0,
-      semicolons: true,
-      shebang: false,
-      wrap_iife: true,
-    },
     sourceMap: false,
+    ecma: 5,
+    ie8: false,
+    safari10: true,
+    toplevel: true,
+    warnings: 'verbose',
   });
   if (uglifyResult.error) {
     console.error(uglifyResult.error);
