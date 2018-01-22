@@ -14,6 +14,7 @@
 <PROJECT_ROOT>/node_modules/create-emotion-styled/.*
 <PROJECT_ROOT>/node_modules/react-emotion/node_modules/.*
 <PROJECT_ROOT>/node_modules/postcss.*
+<PROJECT_ROOT>/node_modules/immer/.*
 .*/fbjs/.*
 
 [include]
