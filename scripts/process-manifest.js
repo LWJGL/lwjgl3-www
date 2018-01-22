@@ -56,7 +56,27 @@ const entrypoints = Object.keys(manifest.entrypoints);
 // We use this to replace map in manifest.js
 const chunkFileMap = [];
 
-manifest.chunks.forEach(chunk => {
+// Guarantee that we will process main last and main-runtime 2nd from last
+const chunkPriority = {
+  'main-runtime': 1,
+  main: 2,
+};
+
+const chunkSort = (a, b) => {
+  const aOrder = chunkPriority[a.names[0]] || 0;
+  const bOrder = chunkPriority[b.names[0]] || 0;
+
+  if (aOrder < bOrder) {
+    return -1;
+  }
+  if (aOrder > bOrder) {
+    return 1;
+  }
+  return 0;
+};
+
+// Process chunks
+manifest.chunks.sort(chunkSort).forEach(chunk => {
   const chunkName = chunk.names[0];
   const chunkFilename = chunk.files[0];
 
@@ -84,7 +104,7 @@ manifest.chunks.forEach(chunk => {
     });
   }
 
-  // Process with uglify-js
+  // Process with uglify-es
   out(chunkName, 'minimizing');
   const uglifyResult = uglify.minify(contents, {
     compress: {
