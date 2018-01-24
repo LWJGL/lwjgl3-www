@@ -38,9 +38,9 @@ const buildConfiguration = () => {
       runtimeChunk: PRODUCTION,
       splitChunks: {
         chunks: 'async',
-        minSize: 48000,
+        minSize: 1024 * 1024,
         minChunks: 2,
-        maxAsyncRequests: 3,
+        maxAsyncRequests: 4,
         maxInitialRequests: 2,
         name: true,
       },
