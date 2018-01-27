@@ -5,12 +5,12 @@ import nprogress from 'nprogress';
 
 import type { LoadingComponentProps } from 'react-loadable';
 
-export class LoadingPage extends React.Component<LoadingComponentProps> {
-  static firstRoute = true;
+let firstRoute = true;
 
-  componentDidMount() {
-    if (LoadingPage.firstRoute) {
-      LoadingPage.firstRoute = false;
+export class LoadingPage extends React.Component<LoadingComponentProps> {
+  static start() {
+    if (firstRoute) {
+      firstRoute = false;
       nprogress.configure({
         showSpinner: false,
       });
@@ -19,10 +19,22 @@ export class LoadingPage extends React.Component<LoadingComponentProps> {
     }
   }
 
-  componentWillUnmount() {
+  static done() {
     if (nprogress.isStarted()) {
       nprogress.done();
     }
+  }
+
+  componentDidMount() {
+    LoadingPage.start();
+  }
+
+  componentWillUnmount() {
+    LoadingPage.done();
+  }
+
+  componentWillReceiveProps(nextProps: LoadingComponentProps) {
+    LoadingPage.done();
   }
 
   render() {
