@@ -1,0 +1,37 @@
+// @flow
+/**
+ * Concats strings or object with boolean keys and returns a class value
+ * This function is more than 2x faster than https://github.com/JedWatson/classnames
+ * with the difference that we don't flatten arrays and ignore number values.
+ *
+ * To flatten an array destructure at the call, e.g.: cc(...arr)
+ *
+ * Examples:
+ *  cc('fa', 'fa-check') => "fa fa-check"
+ *  cc('fa' {'fa-check':true,'fa-spin':isSpinning}) => "fa fa-check fa-spin"
+ *  cc(...['fa','fa-check'], 'fa-spin', {'bg-danger':hasError}) => "fa fa-check fa-spin bg-danger"
+ * @param {*} args
+ */
+function classConcat(...args: Array<string | void | { [classname: string]: any }>): string {
+  let result = '';
+
+  for (let i = 0; i < args.length; i += 1) {
+    let cl = args[i];
+    if (cl != null) {
+      if (typeof cl === 'string') {
+        result += (result && ' ') + cl;
+      } else if (typeof cl === 'object') {
+        const keys = Object.keys(cl);
+        for (let k = 0; k < keys.length; k += 1) {
+          if (cl[keys[k]] === true) {
+            result += (result && ' ') + keys[k];
+          }
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
+export { classConcat as cc };

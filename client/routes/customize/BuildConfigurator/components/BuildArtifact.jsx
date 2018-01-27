@@ -4,7 +4,7 @@ import { toggleArtifact } from '../reducer';
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import { Checkbox } from '~/components/Checkbox';
 import { Connect } from '~/store/Connect';
-import cc from 'classcat';
+import { cc } from '~/theme';
 
 import IconWindows from 'react-icons/fa/windows';
 import IconLinux from 'react-icons/fa/linux';
@@ -55,7 +55,7 @@ export const BuildArtifact = ({ id }: Props) => (
     {({ artifact, checked, disabled, showDescriptions }, { toggleArtifact }) => {
       if (showDescriptions) {
         return (
-          <div className={cc(['artifact', { 'text-muted': disabled }])}>
+          <div className={cc('artifact', { 'text-muted': disabled })}>
             <Checkbox
               value={artifact.id}
               label={artifact.title}

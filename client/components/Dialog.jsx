@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import cc from 'classcat';
+import { cc } from '~/theme';
 import { Overlay } from './Overlay';
 
 type DialogProps = {
@@ -25,7 +25,7 @@ export class Dialog extends React.PureComponent<DialogProps, void> {
     const { className, children, fixed, ...rest } = this.props;
     return (
       <Overlay {...rest}>
-        <div className={cc(['dialog', { 'dialog-fixed': fixed }, className])}>{children}</div>
+        <div className={cc('dialog', { 'dialog-fixed': fixed }, className)}>{children}</div>
       </Overlay>
     );
   }

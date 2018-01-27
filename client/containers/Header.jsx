@@ -6,8 +6,7 @@ import { Sidebar } from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import { SupportsPassiveEvents } from '~/services/supports';
 import { css, injectGlobal } from 'emotion';
-import cc from 'classcat';
-import { COLOR_PRIMARY } from '~/theme';
+import { COLOR_PRIMARY, cc } from '~/theme';
 import { store } from '~/store';
 
 injectGlobal`
@@ -193,16 +192,13 @@ export class Header extends React.PureComponent<Props, State> {
     return (
       <header
         role="navigation"
-        className={cc([
-          HEADER_CLASSNAME,
-          {
-            [styleHome]: isHome,
-            [styleOpaque]: !isHome || !top,
-            alt: IS_IOS,
-            fixed,
-            hidden,
-          },
-        ])}
+        className={cc(HEADER_CLASSNAME, {
+          [styleHome]: isHome,
+          [styleOpaque]: !isHome || !top,
+          alt: IS_IOS,
+          fixed,
+          hidden,
+        })}
         style={{ top: pos }}
       >
         <nav className="container-fluid">

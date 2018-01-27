@@ -11,7 +11,7 @@ export function elementIsOrContains(element: HTMLElement, testElement: HTMLEleme
  * The return value will be positive if `a` is longer than `b`, negative if the opposite is true,
  * and zero if their lengths are equal.
  */
-export function arrayLengthCompare(a: any[] = [], b: any[] = []) {
+export function arrayLengthCompare(a: Array<any> = [], b: Array<any> = []) {
   return a.length - b.length;
 }
 
@@ -25,7 +25,7 @@ export function approxEqual(a: number, b: number, tolerance: number = 0.00001) {
 
 /** Clamps the given number between min and max values. Returns value if within range, or closest bound. */
 export function clamp(val: number, min: number, max: number) {
-  if (max < min) {
+  if (process.env.NODE_ENV === 'development' && max < min) {
     throw new Error('min > max');
   }
   return Math.min(Math.max(val, min), max);

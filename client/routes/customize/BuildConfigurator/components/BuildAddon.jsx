@@ -5,7 +5,7 @@ import { MODE_ZIP } from '../constants';
 import type { BuildConfig, MODES, Addon } from '../types';
 import { Checkbox } from '~/components/Checkbox';
 import { Connect } from '~/store/Connect';
-import cc from 'classcat';
+import { cc } from '~/theme';
 
 type Props = {|
   id: string,
@@ -33,7 +33,7 @@ export const BuildAddon = ({ id }: Props) => (
 
       if (showDescriptions) {
         return (
-          <div className={cc(['artifact', { 'text-muted': disabled }])}>
+          <div className={cc('artifact', { 'text-muted': disabled })}>
             <Checkbox
               value={addon.id}
               label={label}

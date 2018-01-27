@@ -7,9 +7,8 @@ import { Connect } from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
 import styled from 'react-emotion';
-import cc from 'classcat';
 import IconClose from 'react-icons/md/close';
-import { mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
+import { cc, mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import {
   COLOR_RELEASE,
   COLOR_RELEASE_LIGHT,
@@ -130,14 +129,11 @@ export const BuildType = ({ build, downloading }: Props) => (
     {({ isSelected, isActive, spec }, { changeType }) => (
       <BuildBox
         onClick={downloading ? null : changeType.bind(this, build)}
-        className={cc([
-          build,
-          {
-            locked: downloading && !isSelected,
-            selected: isSelected,
-            active: isActive,
-          },
-        ])}
+        className={cc(build, {
+          locked: downloading && !isSelected,
+          selected: isSelected,
+          active: isActive,
+        })}
       >
         <h2>{spec.title}</h2>
         <p>{spec.description}</p>

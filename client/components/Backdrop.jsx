@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import cc from 'classcat';
+import { cc } from '~/theme';
 
 type Props = {
   className?: string,
@@ -22,6 +22,6 @@ export class Backdrop extends React.PureComponent<Props, State> {
   }
 
   render() {
-    return <div className={cc(['overlay-backdrop', this.props.className, { open: this.state.mounted }])} />;
+    return <div className={cc('overlay-backdrop', this.props.className, { open: this.state.mounted })} />;
   }
 }
