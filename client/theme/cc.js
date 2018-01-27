@@ -16,14 +16,19 @@ function classConcat(...args: Array<string | void | { [classname: string]: any }
   let result = '';
 
   for (let i = 0; i < args.length; i += 1) {
-    let cl = args[i];
-    if (cl != null) {
-      if (typeof cl === 'string') {
-        result += (result && ' ') + cl;
-      } else if (typeof cl === 'object') {
-        const keys = Object.keys(cl);
-        for (let k = 0; k < keys.length; k += 1) {
-          if (cl[keys[k]] === true) {
+    let obj = args[i];
+    if (obj != null) {
+      if (typeof obj === 'string') {
+        result += (result && ' ') + obj;
+      } else if (typeof obj === 'object') {
+        // for (let key in obj) {
+        //   if (obj.hasOwnProperty(key) && obj[key] === true) {
+        //     result += (result && ' ') + key;
+        //   }
+        // }
+        const keys = Object.keys(obj);
+        for (let k = 0, len = keys.length; k < len; k += 1) {
+          if (obj[keys[k]] === true) {
             result += (result && ' ') + keys[k];
           }
         }
