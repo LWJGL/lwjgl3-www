@@ -93,9 +93,11 @@ class GuideRoute extends React.Component<ContextRouter, State> {
               <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.4.-Bindings-FAQ">Bindings FAQ</a> and{' '}
               <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.5.-Troubleshooting">Troubleshooting</a> pages are
               especially useful. For more code examples, see the{' '}
-              <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/samples/src/test/java/org/lwjgl/demo">LWJGL samples</a> and the{' '}
-              <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository (nightly build required). For
-              porting existing LWJGL 2 code to LWJGL 3, see the{' '}
+              <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/samples/src/test/java/org/lwjgl/demo">
+                LWJGL samples
+              </a>{' '}
+              and the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository (nightly build
+              required). For porting existing LWJGL 2 code to LWJGL 3, see the{' '}
               <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>
               .
             </p>

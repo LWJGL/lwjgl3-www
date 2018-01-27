@@ -47,7 +47,6 @@ const config = {
       'react-router',
       'react-router-dom',
       'react-loadable',
-      'react-hot-loader',
 
       // State management
       'redux',

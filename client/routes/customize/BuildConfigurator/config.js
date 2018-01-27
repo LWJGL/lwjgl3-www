@@ -174,10 +174,11 @@ export const config: BuildConfig = {
           version: '1.7.0',
         },
       },
-      "steamworks4j-server": {
+      'steamworks4j-server': {
         id: 'steamworks4j-server',
         title: 'steamworks4j-server',
-        description: 'Access the Steamworks C++ API using Java. Server library, if you need to support game servers or encrypted app tickets.',
+        description:
+          'Access the Steamworks C++ API using Java. Server library, if you need to support game servers or encrypted app tickets.',
         website: 'http://code-disaster.github.io/steamworks4j/',
         maven: {
           groupId: 'com.code-disaster.steamworks4j',
