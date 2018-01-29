@@ -30,6 +30,11 @@
     "ios >= 7",
     "ie >= 10"
   ],
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
   "dependencies": {
     "aws-sdk": "2.188.0",
     "body-parser": "1.18.2",
@@ -64,9 +69,9 @@
     "core-js": "2.5.3",
     "cross-env": "5.1.3",
     "css-loader": "0.28.9",
+    "cssnano": "4.0.0-rc.2",
     "emotion": "9.0.0-2",
     "exports-loader": "0.6.4",
-    "extract-text-webpack-plugin": "3.0.2",
     "fast-async": "6.3.0",
     "fbjs": "0.9.0-alpha.2",
     "fg-loadcss": "2.0.1",
@@ -101,7 +106,7 @@
     "three": "0.89.0",
     "typescript": "2.8.0-insiders.20180127",
     "typescript-styled-plugin": "0.4.0",
-    "uglify-es": "3.3.8",
+    "uglify-es": "3.3.9",
     "webpack": "4.0.0-beta.0",
     "webpack-bundle-analyzer": "2.9.2",
     "webpack-cli": "2.0.4",
@@ -114,7 +119,7 @@
     "test-production": "cross-env NODE_ENV=production node server --test --s3proxy --nocache --pretty",
     "run-production": "cross-env NODE_ENV=production node server --s3proxy",
     "watch": "nodemon --watch server server/index.js",
-    "styles": "cross-env NODE_ENV=production webpack --config webpack.css.config.js",
+    "styles": "node ./scripts/build-styles.js",
     "vendor": "webpack --config webpack.vendor.config.js --bail --progress --color",
     "bundle-analyzer-dev": "cross-env NODE_ENV=development webpack --progress --json > webpack-dev.manifest.json && webpack-bundle-analyzer webpack-dev.manifest.json",
     "bundle-analyzer-prod": "cross-env NODE_ENV=production webpack --progress --json > webpack-prod.manifest.json && webpack-bundle-analyzer webpack-prod.manifest.json",

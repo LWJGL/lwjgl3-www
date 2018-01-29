@@ -109,6 +109,8 @@ if (app.locals.development || argv.s3proxy) {
 // Routing
 // ------------------------------------------------------------------------------
 
+// Redirect requests from http://lwjgl.org/* to https://www.lwjgl.org/
+// TODO: Use a reverse-proxy for this
 app.use((req, res, next) => {
   if (req.hostname === 'lwjgl.org') {
     res.redirect(301, `https://www.lwjgl.org${req.originalUrl}`);
@@ -117,9 +119,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
-
 // Static Assets
+// TODO: Use a reverse-proxy for these
+app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 app.use(
   express.static(path.join(__dirname, '../public'), {
     index: false,
@@ -143,6 +145,31 @@ app.use(
     },
   })
 );
+
+if (app.locals.development) {
+  // Allow source access in development
+  // Required for Sass source maps to be resolved by browsers when HMR is off
+  app.use(
+    '/client',
+    express.static(path.join(__dirname, '../client'), {
+      index: false,
+      etag: true,
+      immutable: false,
+      lastModified: true,
+      maxAge: -1,
+    })
+  );
+  app.use(
+    '/node_modules',
+    express.static(path.join(__dirname, '../node_modules'), {
+      index: false,
+      etag: true,
+      immutable: false,
+      lastModified: true,
+      maxAge: -1,
+    })
+  );
+}
 
 app.use(helmet(helmetConfig(app.locals.production)));
 

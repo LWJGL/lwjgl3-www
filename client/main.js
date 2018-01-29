@@ -2,7 +2,7 @@
 import { mount } from './mount';
 // import loadJS from 'fg-loadjs';
 
-if (process.env.NODE_ENV === 'production' && window.isSecureContext) {
+if ((process.env.NODE_ENV === 'production' || SWTEST) && window.isSecureContext) {
   window.addEventListener('load', () => {
     // Register service worker
     if (navigator.serviceWorker) {

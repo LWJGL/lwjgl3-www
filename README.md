@@ -86,7 +86,7 @@ yarn
 
 ```bash
 yarn vendor
-yarn styles
+yarn styles --sourcemap
 ```
 
 3. To start the server in dev mode:
@@ -107,14 +107,15 @@ yarn watch
 
 ### CLI flags
 
---nohmr => Disables Hot Module Reloading (HMR)
---async => Enables async routes
+--nohmr => Disables Hot Module Reloading & React Hot Loading (HMR & RHL)
+--async => Enables async routes in dev mode
+--css => Enables CSS modules in dev mode _(enables Sass HMR)_
+--sourcemap => Enables inline JS source-maps
+--react-perf => Enables react-perf-devtool in dev mode
+--sw => Enable serviceWorker registration in secureContexts _(for testing production)_
 --nocache => Disables Pug view caching _(for testing production)_
 --pretty => Pretty prints HTML _(for testing production)_
 --s3proxy => Proxies S3 images _(for testing production)_
---css => Enables CSS modules in development mode _(for SCSS HMR)_
---sourcemap => Enables inline source-maps
---react-perf => Enables react-perf-devtool in dev mode
 
 Flag usage example:
 
@@ -131,7 +132,7 @@ SSL Termination happens on the CDN (using a certificate issued by AWS Certificat
 
 The production process involves the following steps:
 
-* Compile core SCSS files with webpack (_sass-loader -> postcss-loader -> css-loader -> ExtractTextPlugin_)
+* Compile core SCSS files (_node-sass -> postcss -> autoprefixer -> cssnano_)
 * Compile JS files with webpack (_babel_) and store the manifest on disk
 * Process the manifest:
   * Read the webpack manifest and compile list of files & routes

@@ -16,6 +16,7 @@ const env = {
   NOHMR: String(HMR === false),
   CSSMODULES: String(DEV && argv.css !== undefined),
   ASYNC_ROUTES: String(argv.async !== undefined),
+  SWTEST: String(argv.sw !== undefined),
 };
 
 const buildConfiguration = () => {
@@ -143,20 +144,8 @@ const buildConfiguration = () => {
               url: false,
               import: false,
               modules: false,
-              // CSSNano Options
-              minimize: {
-                // safe: true,
-                colormin: false,
-                calc: false,
-                zindex: false,
-                discardComments: {
-                  removeAll: true,
-                },
-              },
-              sourceMap: false,
-              camelCase: false,
               importLoaders: 2,
-              localIdentName: '[local]_[hash:base64:7]',
+              // localIdentName: '[local]_[hash:base64:7]',
             },
           },
           'postcss-loader',
