@@ -15,12 +15,13 @@ Notable features:
 * Proximity based route preloading (see /download page)
 * Build Customizer with smart download queue & client-side ZIP generator
 * Hot reloading using React Hot Loader
-* Optional hot reloading for SASS
+* Optional hot reloading for Sass
 * Very fast dev builds using DllReferencePlugin
 * Custom webpack manifest parsing + code minification
 * Custom render-prop <Connect /> component for Redux
-* CSS-in-JS (Emotion) in combination with custom Bootstrap build (SASS)
+* CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
 * fast-async instead of regenerator
+* [Flow](https://flow.org/) static type checking
 
 ## Dependencies
 
@@ -33,7 +34,7 @@ Build status icons are loaded directly from travis-ci.org and appveyor.com.
 Other LWJGL subdomains:
 
 * The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www). A static copy of the old LWJGL website is now hosted directly from S3
-* The blog is [Ghost](https://ghost.org/).
+* The blog is powered by [Ghost](https://ghost.org/).
 * The forum is [SMF](http://www.simplemachines.org/).
 * The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/). A static copy of the old LWJGL wiki is now hosted directly from S3.
 
@@ -45,12 +46,8 @@ Other LWJGL subdomains:
 
 ## Development Prerequisites
 
-* **Yarn**
-* **Nodemon**
-
-```bash
-npm -g i nodemon yarn
-```
+* [Yarn](https://yarnpkg.com/en/)
+* [Nodemon](https://nodemon.io/)
 
 ## App Configuration
 
@@ -61,7 +58,7 @@ Additional settings are automatically populated when the project is built for pr
 {
   "port": 8080,
   "hostname": "www.lwjgl.org",
-  "analytics_tracking_id": "UA-XXXXXXX-X",
+  "analytics_tracking_id": "UA-83518-1",
   "aws": {
     "accessKeyId": "",
     "secretAccessKey": "",
@@ -97,9 +94,7 @@ node server
 yarn start
 ```
 
-For watching and auto-reloading the server we use [nodemon](http://nodemon.io/).
-
-Monitor for /server changes and auto-restart with:
+_OPTIONAL_: Monitor for /server changes & auto-restart with:
 
 ```bash
 yarn watch
@@ -107,17 +102,19 @@ yarn watch
 
 ### CLI flags
 
---nohmr => Disables Hot Module Reloading & React Hot Loading (HMR & RHL)
---async => Enables async routes in dev mode
---css => Enables CSS modules in dev mode _(enables Sass HMR)_
---sourcemap => Enables inline JS source-maps
---react-perf => Enables react-perf-devtool in dev mode
---sw => Enable serviceWorker registration in secureContexts _(for testing production)_
---nocache => Disables Pug view caching _(for testing production)_
---pretty => Pretty prints HTML _(for testing production)_
---s3proxy => Proxies S3 images _(for testing production)_
+```bash
+--nohmr # Disables Hot Module Reloading & React Hot Loading (HMR & RHL)
+--async # Enables async routes in dev mode
+--css # Enables CSS modules in dev mode (enables Sass HMR)
+--sourcemap # Enables inline JS source-maps
+--react-perf # Enables react-perf-devtool in dev mode
+--sw # Enable serviceWorker registration in secureContexts (for testing production)
+--nocache # Disables Pug view caching (for testing production)
+--pretty # Pretty prints HTML (for testing production)_
+--s3proxy # Proxies S3 images (for testing production)
+```
 
-Flag usage example:
+Flag usage examples:
 
 ```bash
 node server --css
@@ -132,15 +129,17 @@ SSL Termination happens on the CDN (using a certificate issued by AWS Certificat
 
 The production process involves the following steps:
 
-* Compile core SCSS files (_node-sass -> postcss -> autoprefixer -> cssnano_)
+* Compile SCSS files (_node-sass -> postcss -> autoprefixer -> cssnano_)
 * Compile JS files with webpack (_babel_) and store the manifest on disk
 * Process the manifest:
   * Read the webpack manifest and compile list of files & routes
-  * Process each file with uglify-js
+  * Process each file with uglify-es
   * Compute hashes of final files
   * Store each production file on disk
   * Generate production manifest that also needs to be shipped
   * Generate & print file size report
+* Deploy files to S3
+* Start or reload node app
 
 ### Build for production
 
@@ -223,13 +222,9 @@ forever start forever.json
 
 We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following plugins:
 
-* flow-for-vscode
-* Prettier
-
-Other useful plugins:
-
-* npm Intellisense
-* SCSS IntelliSense
+* Flow Language Support
+* Prettier - Code formatter
+* vscode-styled-components
 
 We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab).
 In VS Code add the following in the user settings:
@@ -242,23 +237,24 @@ In VS Code add the following in the user settings:
 
 Recommended VS Code **Workspace Settings**:
 
+* enable Prettier's format-on-save
+* exclude generated files
+* disable built-in JS support because we rely on Flow
+* enable typescript for styled components Intellisense support
+
 ```json
 {
   "editor.formatOnSave": true,
   "files.exclude": {
     "**/.vscode": true,
-    "**/.history": true,
     "**/.cache-loader": true,
-    "**/public/js/*.js*": true,
-    "**/public/css/*.css*": true
-  },
-  "files.associations": {
-    "*.mjs": "javascript",
-    "**/client/**/*.jsx": "javascriptreact"
+    "**/public/js/*": true,
+    "**/public/css/*": true
   },
   "javascript.format.enable": false,
   "javascript.nameSuggestions": false,
   "javascript.referencesCodeLens.enabled": false,
-  "javascript.validate.enable": false
+  "javascript.validate.enable": false,
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
 ```
