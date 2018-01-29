@@ -81,17 +81,21 @@ const ConfigPanel = styled('div')`
     bottom: 0;
     width: 100%;
 
+    .container {
+      text-align: left;
+    }
+
     .btn + .btn {
       margin-left: 0.5rem;
     }
 
-    &.file {
+    /* &.file {
       .custom-file {
         height: auto;
         margin-right: 1rem;
         text-align: left !important;
       }
-    }
+    } */
   }
 `;
 

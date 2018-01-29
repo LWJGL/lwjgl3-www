@@ -52,14 +52,16 @@ export class BuildToolbar extends React.Component<Props, State> {
   render() {
     if (this.state.fileUI) {
       return (
-        <div className="download-toolbar file">
-          <label className="custom-file">
-            <input type="file" className="custom-file-input" accept=".json" onChange={this.handleFile} />
-            <span className="custom-file-control" />
-          </label>
-          <button className="btn btn-light" onClick={this.toggleFileUI}>
-            Cancel
-          </button>
+        <div className="download-toolbar">
+          <div className="container d-flex">
+            <div className="custom-file mx-2">
+              <input type="file" className="custom-file-input" accept=".json" onChange={this.handleFile} />
+              <label class="custom-file-label" />
+            </div>
+            <button className="btn btn-outline-light mx-2" onClick={this.toggleFileUI}>
+              Cancel
+            </button>
+          </div>
         </div>
       );
     }
