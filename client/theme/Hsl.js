@@ -6,7 +6,7 @@ export class Hsl {
   alpha: number;
 
   constructor(hue: number, saturation: number, lightness: number, alpha: number = 1) {
-    if (process.env.NODE_ENV !== 'production') {
+    if (!FLAG_PRODUCTION) {
       if (hue < 0 || hue > 360) {
         throw new Error(`Invalid hue (0-360): ${hue}`);
       }

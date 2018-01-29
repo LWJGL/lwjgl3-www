@@ -112,7 +112,7 @@ if (app.locals.development || argv.s3proxy) {
 // Redirect requests from http://lwjgl.org/* to https://www.lwjgl.org/
 // TODO: Use a reverse-proxy for this
 app.use((req, res, next) => {
-  if (req.hostname === 'lwjgl.org') {
+  if (req.hostname !== 'www.lwjgl.org') {
     res.redirect(301, `https://www.lwjgl.org${req.originalUrl}`);
     return;
   }

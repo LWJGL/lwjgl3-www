@@ -25,7 +25,7 @@ export function approxEqual(a: number, b: number, tolerance: number = 0.00001) {
 
 /** Clamps the given number between min and max values. Returns value if within range, or closest bound. */
 export function clamp(val: number, min: number, max: number) {
-  if (process.env.NODE_ENV === 'development' && max < min) {
+  if (!FLAG_PRODUCTION && max < min) {
     throw new Error('min > max');
   }
   return Math.min(Math.max(val, min), max);

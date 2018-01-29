@@ -52,7 +52,7 @@ export class PageView extends React.Component<Props> {
     // TODO: Use error boundary but find a way to re-render on hot reload
     // TODO: Custom rendering of errors
     // TODO: Steal ideas from create-react-app's react-error-overlay (e.g. open file in editor)
-    if (process.env.NODE_ENV === 'development') {
+    if (!FLAG_PRODUCTION) {
       return this.props.children;
     } else {
       return <ErrorBoundary render={PageError}>{this.props.children}</ErrorBoundary>;

@@ -25,7 +25,7 @@ export function hsl(hue: number, saturation: number, lightness: number, alpha?: 
 */
 
 export function setHue(color: Hsl, value: number) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (!FLAG_PRODUCTION) {
     if (value < 0 || value > 360) {
       throw new Error(`Invalid hue (0-360): ${value}`);
     }
@@ -35,7 +35,7 @@ export function setHue(color: Hsl, value: number) {
 }
 
 export function setSaturation(color: Hsl, value: number) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (!FLAG_PRODUCTION) {
     if (value < 0 || value > 100) {
       throw new Error(`Invalid saturation (0-100): ${value}`);
     }
@@ -45,7 +45,7 @@ export function setSaturation(color: Hsl, value: number) {
 }
 
 export function setLightness(color: Hsl, value: number) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (!FLAG_PRODUCTION) {
     if (value < 0 || value > 100) {
       throw new Error(`Invalid lightness (0-100): ${value}`);
     }
@@ -55,7 +55,7 @@ export function setLightness(color: Hsl, value: number) {
 }
 
 export function setAlpha(color: Hsl, value: number) {
-  if (process.env.NODE_ENV !== 'production') {
+  if (!FLAG_PRODUCTION) {
     if (value < 0 || value > 1) {
       throw new Error(`Invalid alpha (0.0-1.0): ${value}`);
     }

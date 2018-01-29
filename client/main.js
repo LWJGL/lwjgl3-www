@@ -2,7 +2,7 @@
 import { mount } from './mount';
 // import loadJS from 'fg-loadjs';
 
-if ((process.env.NODE_ENV === 'production' || SWTEST) && window.isSecureContext) {
+if (FLAG_PRODUCTION && (!FLAG_PRODUCTION_TEST || FLAG_SW_TEST) && window.isSecureContext) {
   window.addEventListener('load', () => {
     // Register service worker
     if (navigator.serviceWorker) {
@@ -26,7 +26,7 @@ if ((process.env.NODE_ENV === 'production' || SWTEST) && window.isSecureContext)
     e.preventDefault();
     return false;
   });
-} else if (CSSMODULES) {
+} else if (FLAG_CSSMODULES) {
   // Inject global styles, this enables HMR for SASS
   const styles = require('./styles/layout.scss');
   styles.use();

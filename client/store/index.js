@@ -9,7 +9,7 @@ import type { Store } from 'redux';
 const middleware = [reduxThunk, breakpointMiddleware];
 const composed = [];
 
-if (process.env.NODE_ENV !== 'production') {
+if (!FLAG_PRODUCTION) {
   if (window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ !== undefined) {
     // https://github.com/zalmoxisus/redux-devtools-extension
     composed.push(window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__());
@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 export const store = createStore(createReducer(), compose(applyMiddleware(...middleware), ...composed));
 
-if (process.env.NODE_ENV !== 'production') {
+if (!FLAG_PRODUCTION) {
   // Enable Webpack hot module replacement for global reducers
   if (module.hot) {
     module.hot.accept('./createReducer', () => {

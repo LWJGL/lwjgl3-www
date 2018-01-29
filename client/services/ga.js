@@ -5,10 +5,8 @@ import loadJS from 'fg-loadjs';
 let firstCall = true;
 
 const track = function(command: string, ...fields: Array<any>): void {
-  if (process.env.NODE_ENV === 'production' && firstCall) {
-    if (document.location.hostname === HOSTNAME) {
-      loadJS('https://www.google-analytics.com/analytics.js');
-    }
+  if (FLAG_PRODUCTION && !FLAG_PRODUCTION_TEST && firstCall) {
+    loadJS('https://www.google-analytics.com/analytics.js');
     firstCall = false;
   }
 

@@ -57,7 +57,6 @@ Additional settings are automatically populated when the project is built for pr
 ```json
 {
   "port": 8080,
-  "hostname": "www.lwjgl.org",
   "analytics_tracking_id": "UA-83518-1",
   "aws": {
     "accessKeyId": "",
@@ -103,15 +102,20 @@ yarn watch
 ### CLI flags
 
 ```bash
---nohmr # Disables Hot Module Reloading & React Hot Loading (HMR & RHL)
---async # Enables async routes in dev mode
 --css # Enables CSS modules in dev mode (enables Sass HMR)
 --sourcemap # Enables inline JS source-maps
 --react-perf # Enables react-perf-devtool in dev mode
---sw # Enable serviceWorker registration in secureContexts (for testing production)
---nocache # Disables Pug view caching (for testing production)
---pretty # Pretty prints HTML (for testing production)_
---s3proxy # Proxies S3 images (for testing production)
+```
+
+The following flags are used for testing production builds locally.
+NODE_ENV environment variable must be set to "production".
+
+```
+--test # Enables production test mode (loads assets from disk instead of S3)
+--sw # Enable Service Worker registration in secureContexts, requires --test
+--nocache # Disables Pug view caching
+--pretty # Pretty prints HTML
+--s3proxy # Proxies S3 images
 ```
 
 Flag usage examples:

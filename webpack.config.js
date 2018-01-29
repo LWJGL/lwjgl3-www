@@ -11,12 +11,11 @@ const SOURCEMAP = argv.sourcemap !== undefined;
 
 const env = {
   'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
-  HOSTNAME: JSON.stringify(config.hostname),
   ANALYTICS_TRACKING_ID: JSON.stringify(config.analytics_tracking_id),
-  NOHMR: String(HMR === false),
-  CSSMODULES: String(DEV && argv.css !== undefined),
-  ASYNC_ROUTES: String(argv.async !== undefined),
-  SWTEST: String(argv.sw !== undefined),
+  FLAG_PRODUCTION: String(PRODUCTION),
+  FLAG_PRODUCTION_TEST: String(PRODUCTION && argv.test !== undefined),
+  FLAG_SW_TEST: String(argv.sw !== undefined),
+  FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
 };
 
 const buildConfiguration = () => {
