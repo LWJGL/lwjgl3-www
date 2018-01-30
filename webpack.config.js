@@ -81,6 +81,7 @@ const buildConfiguration = () => {
           test: /\.(js|mjs|jsx)$/,
           include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
           use: [
+            'cache-loader',
             {
               loader: 'babel-loader',
               options: {
@@ -126,9 +127,6 @@ const buildConfiguration = () => {
         manifest: require('./public/js/vendor-manifest.json'),
       })
     );
-
-    // Enable cache-loader for faster builds
-    config.module.rules[1].use.unshift('cache-loader');
 
     // Enable CSS HMR instead of loading CSS pre-built from disk
     if (argv.css) {
