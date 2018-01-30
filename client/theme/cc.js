@@ -21,15 +21,9 @@ function classConcat(...args: Array<string | void | { [classname: string]: any }
       if (typeof obj === 'string') {
         result += (result && ' ') + obj;
       } else if (typeof obj === 'object') {
-        // for (let key in obj) {
-        //   if (obj.hasOwnProperty(key) && obj[key] === true) {
-        //     result += (result && ' ') + key;
-        //   }
-        // }
-        const keys = Object.keys(obj);
-        for (let k = 0, len = keys.length; k < len; k += 1) {
-          if (obj[keys[k]] === true) {
-            result += (result && ' ') + keys[k];
+        for (let key in obj) {
+          if (obj.hasOwnProperty(key) && obj[key] === true) {
+            result += (result && ' ') + key;
           }
         }
       }
