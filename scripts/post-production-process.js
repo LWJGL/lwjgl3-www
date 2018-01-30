@@ -30,12 +30,12 @@ process.on('message', chunk => {
   // Read contents
   let contents = fs.readFileSync(originalPath, { encoding: 'utf-8' });
 
-  // if (chunkName === 'main-runtime') {
-  //   // Replace chunk filenames
-  //   chunkFileMap.forEach(item => {
-  //     contents = contents.replace(item.name, item.hashed);
-  //   });
-  // }
+  if (chunkName === 'main-runtime') {
+    // Replace chunk filenames
+    chunk.chunkFileMap.forEach(item => {
+      contents = contents.replace(item.name, item.hashed);
+    });
+  }
 
   // Process with uglify-es
   const uglifyResult = uglify.minify(contents, {

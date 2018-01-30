@@ -7,9 +7,10 @@ const { fork } = require('child_process');
 const Sema = require('async-sema');
 
 /*
-  TODO: The same way we remember deployed files we should remember hashes of source files.
-        This will allow us to skip processing of chunks that haven't changed at all and
-        make release process even faster.
+  TODO:
+    The same way we remember deployed files we should remember hashes of source files.
+    This will allow us to skip processing of chunks that haven't changed at all and
+    make release process even faster.
 */
 
 async function main() {
@@ -40,39 +41,29 @@ async function main() {
   // We use this to replace map in manifest.js
   const chunkFileMap = [];
 
-  // Process chunks
-  const chunks = [];
-  let runtimeChunk;
+  // Hold Promises of jobs currently running
+  const childMap = {};
 
-  manifest.chunks.forEach(chunk => {
-    if (chunk.names[0] === 'main-runtime') {
-      runtimeChunk = chunk;
-    } else {
-      chunks.push(chunk);
-    }
-  });
-
-  // Paralle processing of chunks
-  const jobMap = {};
-
-  function processChunk(job, chunk) {
+  function processChunk(child, data) {
     return new Promise((resolve, reject) => {
-      jobMap[job.pid] = {
-        resolve,
-        reject,
+      childMap[child.pid] = {
+        resolve, // Call when msg.type === 'done'
+        reject, // Call when msg.type === 'error'
       };
 
-      job.send(chunk);
+      // Begin job execution
+      child.send(data);
     });
   }
 
-  function jobMessage(msg) {
+  // Handle forked process messages
+  function receiveChildMessage(msg) {
     switch (msg.type) {
       case 'done':
-        jobMap[msg.pid].resolve(msg.report);
+        childMap[msg.pid].resolve(msg.report);
         break;
       case 'error':
-        jobMap[msg.pid].reject(msg.error);
+        childMap[msg.pid].reject(msg.error);
         break;
       case 'manifest-file':
         productionManifest.files.push(msg.name);
@@ -91,38 +82,52 @@ async function main() {
         break;
     }
 
-    jobMap[msg.pid] = null;
+    childMap[msg.pid] = null;
   }
 
-  // Create process pool -- {CPU_CORES} chunks at a time
+  // Create process pool -- We will process {CPU_CORES} chunks at a time
   const pool = new Sema(Math.max(os.cpus().length, 2), {
     initFn: () => {
-      const frk = fork('scripts/post-production-process.js');
-      frk.on('message', jobMessage);
-      return frk;
+      const child = fork('scripts/post-production-process.js');
+      child.on('message', receiveChildMessage);
+      return child;
     },
   });
 
+  let runtimeChunk;
+
   await Promise.all(
-    chunks.map(async chunk => {
+    manifest.chunks.map(async chunk => {
+      if (chunk.names[0] === 'main-runtime') {
+        // Skip & process last
+        runtimeChunk = chunk;
+        return;
+      }
       // Get next available from pool
-      const job = await pool.v();
+      const child = await pool.v();
       // Run process
-      const report = await processChunk(job, chunk);
+      const report = await processChunk(child, chunk);
       // Return to pool
-      pool.p(job);
+      pool.p(child);
       // Add result to files report
       fileReport.push(report);
     })
   );
 
-  // Drain forks
-  (await pool.drain()).map(job => job.disconnect());
-
   // Process main-runtime last
+  await (async () => {
+    const child = await pool.v();
+    runtimeChunk.chunkFileMap = chunkFileMap;
+    const report = await processChunk(child, runtimeChunk);
+    pool.p(child);
+    fileReport.push(report);
+  })();
+
+  // Drain forks
+  (await pool.drain()).map(child => child.disconnect());
 
   // Store production manifest
-  // fs.writeFileSync(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
+  fs.writeFileSync(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
 
   // Done!
   return fileReport;
