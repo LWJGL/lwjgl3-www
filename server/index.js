@@ -293,6 +293,7 @@ app.get('*', (req, res, next) => {
   res
     .set({
       'Cache-Control': 'private, max-age=0',
+      'Content-Language': 'en',
       Expires: '-1',
     })
     .render('index', renderOptions);
