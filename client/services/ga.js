@@ -5,7 +5,7 @@ import loadJS from 'fg-loadjs';
 let firstCall = true;
 
 const track = function(command: string, ...fields: Array<any>): void {
-  if (FLAG_PRODUCTION && !FLAG_PRODUCTION_TEST && firstCall) {
+  if (FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org' && firstCall) {
     loadJS('https://www.google-analytics.com/analytics.js');
     firstCall = false;
   }

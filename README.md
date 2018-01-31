@@ -112,7 +112,6 @@ NODE_ENV environment variable must be set to "production".
 
 ```
 --test # Enables production test mode (loads assets from disk instead of S3)
---sw # Enable Service Worker registration in secureContexts, requires --test
 --nocache # Disables Pug view caching
 --pretty # Pretty prints HTML
 --s3proxy # Proxies S3 images

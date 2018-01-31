@@ -1,7 +1,7 @@
 // @flow
 import { mount } from './mount';
 
-if (FLAG_PRODUCTION && (!FLAG_PRODUCTION_TEST || FLAG_SW_TEST) && window.isSecureContext) {
+if (FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org' && window.isSecureContext) {
   window.addEventListener('load', () => {
     // Register service worker
     if (navigator.serviceWorker) {

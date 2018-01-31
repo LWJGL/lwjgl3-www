@@ -13,8 +13,6 @@ const env = {
   'process.env.NODE_ENV': DEV ? JSON.stringify('development') : JSON.stringify('production'),
   ANALYTICS_TRACKING_ID: JSON.stringify(config.analytics_tracking_id),
   FLAG_PRODUCTION: String(PRODUCTION),
-  FLAG_PRODUCTION_TEST: String(PRODUCTION && argv.test !== undefined),
-  FLAG_SW_TEST: String(argv.sw !== undefined),
   FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
 };
 
