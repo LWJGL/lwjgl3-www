@@ -2,7 +2,7 @@
   "env": {
     "development": {
       "plugins": [
-        ["emotion", { "sourceMap": true }],
+        ["emotion", { "sourceMap": true, "autoLabel": true }],
         "react-hot-loader/babel",
         "@babel/transform-flow-strip-types",
 
@@ -141,7 +141,7 @@
         ]
       ],
       "plugins": [
-        ["emotion", { "sourceMap": false }],
+        "emotion",
         "react-hot-loader/babel",
 
         "@babel/transform-flow-strip-types",
