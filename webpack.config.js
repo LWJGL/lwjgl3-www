@@ -118,8 +118,6 @@ const buildConfiguration = () => {
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
 
-    console.log(config.entry.main);
-
     config.plugins.push(
       // Load pre-built dependencies
       new webpack.DllReferencePlugin({
@@ -142,7 +140,6 @@ const buildConfiguration = () => {
               import: false,
               modules: false,
               importLoaders: 2,
-              // localIdentName: '[local]_[hash:base64:7]',
             },
           },
           'postcss-loader',

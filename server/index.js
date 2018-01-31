@@ -140,7 +140,7 @@ app.use(
           });
           break;
         default:
-          res.set('Cache-Control', 'public, max-age=31536000, immutable');
+          res.set('Cache-Control', 'public,max-age=31536000,immutable');
       }
     },
   })
@@ -251,9 +251,7 @@ app.get('/sw.js', async (req, res) => {
 
 // App
 app.get('*', (req, res, next) => {
-  const renderOptions = {
-    msie: req.headers['user-agent'].indexOf('MSIE') >= 0,
-  };
+  const renderOptions = {};
 
   if (app.locals.production) {
     // Set entry point

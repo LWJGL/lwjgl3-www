@@ -1,6 +1,5 @@
 // @flow
 import { mount } from './mount';
-// import loadJS from 'fg-loadjs';
 
 if (FLAG_PRODUCTION && (!FLAG_PRODUCTION_TEST || FLAG_SW_TEST) && window.isSecureContext) {
   window.addEventListener('load', () => {
@@ -45,14 +44,6 @@ if ('scrollRestoration' in window.history) {
 }
 
 const bootPromises: Array<Promise<any>> = [];
-
-// if (!('classList' in HTMLElement.prototype)) {
-//   bootPromises.push(
-//     new Promise(resolve => {
-//       loadJS('https://cdn.polyfill.io/v2/polyfill.min.js?flags=gated&features=Element.prototype.classList', resolve);
-//     })
-//   );
-// }
 
 if (!('fetch' in window)) {
   bootPromises.push(import(/* webpackChunkName: "nosw-fetch" */ 'whatwg-fetch'));
