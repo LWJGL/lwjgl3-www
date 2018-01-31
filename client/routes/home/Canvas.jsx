@@ -127,6 +127,8 @@ export default class HomeCanvas extends React.Component<{||}> {
       canvas: this.canvas,
       antialias: window.devicePixelRatio === 1,
       alpha: true,
+      powerPreference: 'low-power',
+      depth: false,
     });
     if (window.devicePixelRatio !== undefined) {
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
