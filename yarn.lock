@@ -3120,6 +3120,10 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
+flow-bin@^0.64.0:
+  version "0.64.0"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.64.0.tgz#ddd3fb3b183ab1ab35a5d5dec9caf5ebbcded167"
+
 flow-parser@^0.*:
   version "0.64.0"
   resolved "https://registry.yarnpkg.com/flow-parser/-/flow-parser-0.64.0.tgz#858664ef2246880f9a81b05e69fbd308a1b865c9"
@@ -3744,11 +3748,12 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
 
-immer@0.8.5:
-  version "0.8.5"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-0.8.5.tgz#181e85c3f83c464ed8eb410f2c5cdf9801f04f85"
+immer@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-1.0.0.tgz#74023a3370e32cbf470e4c7a3267245d892496b9"
   dependencies:
     cpx "^1.5.0"
+    flow-bin "^0.64.0"
 
 imurmurhash@^0.1.4:
   version "0.1.4"

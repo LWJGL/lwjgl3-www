@@ -81,7 +81,7 @@
     "focus-trap": "2.4.2",
     "gzip-size": "4.1.0",
     "http-proxy-middleware": "0.17.4",
-    "immer": "0.8.5",
+    "immer": "1.0.0",
     "jszip": "3.1.5",
     "lodash-es": "4.17.4",
     "node-sass": "4.7.2",
