@@ -57,10 +57,12 @@ export const fields = {
     action: changePreset,
     options: createSelector(
       (state: State) => state.build.presets,
-      presets =>
-        presets.allIds.map(preset => ({
-          value: preset,
-          label: presets.byId[preset].title,
+      (state: State) => state.build.preset,
+      (presets, preset) =>
+        presets.allIds.map(presetId => ({
+          value: presetId,
+          label: presets.byId[presetId].title,
+          disabled: preset !== presetId && presetId === 'custom',
         }))
     ),
   },

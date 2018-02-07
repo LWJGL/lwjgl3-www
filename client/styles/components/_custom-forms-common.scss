@@ -15,6 +15,9 @@
 }
 
 .custom-control-input {
+  &:disabled ~ .custom-control-label {
+    color: silver;
+  }
   &:disabled:checked ~ .custom-control-label:before {
     // background-color: $custom-control-indicator-disabled-bg;
     // Increase contrast
