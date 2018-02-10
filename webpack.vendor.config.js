@@ -66,8 +66,7 @@ const config = {
 
       // Dev
       'ansi-html',
-      'html-entities',
-      'react-stand-in',
+      'html-entities'
     ],
   },
   output: {
