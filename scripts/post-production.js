@@ -98,7 +98,7 @@ async function main() {
 
   await Promise.all(
     manifest.chunks.map(async chunk => {
-      if (chunk.names[0] === 'main-runtime') {
+      if (chunk.names[0] === 'runtime~main') {
         // Skip & process last
         runtimeChunk = chunk;
         return;
@@ -114,7 +114,7 @@ async function main() {
     })
   );
 
-  // Process main-runtime last
+  // Process runtime~main last
   await (async () => {
     const child = await pool.v();
     runtimeChunk.chunkFileMap = chunkFileMap;

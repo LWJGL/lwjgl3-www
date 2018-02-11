@@ -30,7 +30,7 @@ process.on('message', chunk => {
   // Read contents
   let contents = fs.readFileSync(originalPath, { encoding: 'utf-8' });
 
-  if (chunkName === 'main-runtime') {
+  if (chunkName === 'runtime~main') {
     // Replace chunk filenames
     chunk.chunkFileMap.forEach(item => {
       contents = contents.replace(item.name, item.hashed);
@@ -92,7 +92,7 @@ process.on('message', chunk => {
       type: 'manifest-entry',
       name: report.name,
     });
-  } else if (chunkName === 'main-runtime') {
+  } else if (chunkName === 'runtime~main') {
     process.send({
       type: 'manifest-webpack',
       name: report.name,
@@ -111,7 +111,7 @@ process.on('message', chunk => {
   }
 
   // Push to chunkFileMap
-  if (chunkName !== 'main-runtime') {
+  if (chunkName !== 'runtime~main') {
     process.send({
       type: 'manifest-chunk',
       file: {
