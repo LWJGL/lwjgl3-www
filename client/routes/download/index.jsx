@@ -2,8 +2,9 @@
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { Head } from '~/components/Head';
+import { Title } from '~/components/Title';
 
 import IconGithub from 'react-icons/fa/github';
 import IconCustomize from 'react-icons/fa/check-square-o';
@@ -13,10 +14,8 @@ import { Customize, Browse } from '../';
 
 const DownloadRoute = (props: ContextRouter) => (
   <PageView {...props}>
-    <Helmet>
-      <title>Download</title>
-      <meta name="description" content="Download LWJGL 3" />
-    </Helmet>
+    <Title>Download</Title>
+    <Head tag="meta" name="description" content="Download LWJGL 3" />
     <main>
       <section className="container pb-4">
         <h1>

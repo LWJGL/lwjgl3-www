@@ -2,9 +2,10 @@
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
 import styled from 'react-emotion';
+import { Head } from '~/components/Head';
+import { Title } from '~/components/Title';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
@@ -30,12 +31,12 @@ const BindingsDiv = styled('div')`
 
 const HomeRoute = (props: ContextRouter) => (
   <PageView {...props}>
-    <Helmet>
-      <meta
-        name="description"
-        content="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
-      />
-    </Helmet>
+    <Title />
+    <Head
+      tag="meta"
+      name="description"
+      content="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
+    />
     <main>
       <HomeHero />
       <HashLinkTarget id="learn-more" />

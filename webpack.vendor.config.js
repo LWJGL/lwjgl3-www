@@ -43,7 +43,6 @@ const config = {
       'immer',
 
       // React
-      'react-helmet',
       'react-router',
       'react-router-dom',
       'react-loadable',
@@ -66,7 +65,7 @@ const config = {
 
       // Dev
       'ansi-html',
-      'html-entities'
+      'html-entities',
     ],
   },
   output: {

@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
@@ -11,7 +10,6 @@ import { Miss404 } from '../routes/miss404';
 
 export const Layout = () => (
   <React.Fragment>
-    <Helmet titleTemplate="%s - LWJGL" defaultTitle="LWJGL - Lightweight Java Game Library" />
     <Route render={({ location: { pathname } }) => <Header pathname={pathname} />} />
 
     <Switch>

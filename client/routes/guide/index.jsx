@@ -2,8 +2,9 @@
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
-import Helmet from 'react-helmet';
 import { Link } from 'react-router-dom';
+import { Head } from '~/components/Head';
+import { Title } from '~/components/Title';
 import { sample } from './sample';
 import loadJS from 'fg-loadjs';
 import { loadCSS } from 'fg-loadcss';
@@ -47,10 +48,8 @@ class GuideRoute extends React.Component<ContextRouter, State> {
   render() {
     return (
       <PageView {...this.props}>
-        <Helmet>
-          <title>Get started with LWJGL 3</title>
-          <meta name="description" content="This guide will help you get started with LWJGL 3" />
-        </Helmet>
+        <Title>Get started with LWJGL 3</Title>
+        <Head tag="meta" name="description" content="This guide will help you get started with LWJGL 3" />
         <main>
           <section className="container">
             <h1>

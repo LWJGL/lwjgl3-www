@@ -2,16 +2,15 @@
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
-import Helmet from 'react-helmet';
+import { Title } from '~/components/Title';
+import { Head } from '~/components/Head';
 import FaGithub from 'react-icons/fa/github';
 import { BuildBadge } from './BuildBadge';
 
 const SourceRoute = (props: ContextRouter) => (
   <PageView {...props}>
-    <Helmet>
-      <title>Source & Build Status</title>
-      <meta name="description" content="Links to LWJGL Github repository and build status matrix" />
-    </Helmet>
+    <Title>Source & Build Status</Title>
+    <Head tag="meta" name="description" content="Links to LWJGL Github repository and build status matrix" />
     <main>
       <section className="container pb-5">
         <h1>

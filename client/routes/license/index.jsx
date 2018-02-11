@@ -2,14 +2,13 @@
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
-import Helmet from 'react-helmet';
+import { Head } from '~/components/Head';
+import { Title } from '~/components/Title';
 
 const LicenseRoute = (props: ContextRouter) => (
   <PageView {...props}>
-    <Helmet>
-      <title>License</title>
-      <meta name="description" content="LWJGL is licensed under BSD" />
-    </Helmet>
+    <Title>License</Title>
+    <Head tag="meta" name="description" content="LWJGL is licensed under BSD" />
     <main>
       <section className="container">
         <h1>Lightweight Java Game Library License</h1>
