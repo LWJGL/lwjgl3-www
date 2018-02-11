@@ -74,7 +74,7 @@ export class Connect extends React.Component<Props<*>, *> {
   // Compute initial state
   state = this.props.state(store.getState());
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (this.context.connectParent === undefined) {
       // This is a top-level Connect, subscribe to the store directly
       this.storeUnsubscribe = store.subscribe(this.storeListener);
@@ -105,7 +105,7 @@ export class Connect extends React.Component<Props<*>, *> {
     return !isEqual;
   }
 
-  componentWillReceiveProps(nextProps: Props<*>) {
+  UNSAFE_componentWillReceiveProps(nextProps: Props<*>) {
     this.actions = {
       dispatch: store.dispatch,
       ...(nextProps.actions && this.mapDispatch(nextProps.actions)),

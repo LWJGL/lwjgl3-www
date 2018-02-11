@@ -27,7 +27,7 @@ export class HashLinkTargetControlled extends React.Component<Props> {
     }
   }
 
-  componentWillReceiveProps({ location, id }: Props) {
+  UNSAFE_componentWillReceiveProps({ location, id }: Props) {
     if (location.hash !== this.props.location.hash) {
       if (location.hash === `#${id}`) {
         if (this.props.location.hash === '') {

@@ -58,7 +58,7 @@ export class Trap extends React.PureComponent<TrapProps> {
     return this.trap;
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.returnFocus = document.activeElement;
   }
 

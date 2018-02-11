@@ -33,7 +33,7 @@ export class LoadingPage extends React.Component<LoadingComponentProps> {
     LoadingPage.done();
   }
 
-  componentWillReceiveProps(nextProps: LoadingComponentProps) {
+  UNSAFE_componentWillReceiveProps(nextProps: LoadingComponentProps) {
     LoadingPage.done();
   }
 

@@ -5,7 +5,7 @@
 <PROJECT_ROOT>/.history/.*
 <PROJECT_ROOT>/.vscode/.*
 <PROJECT_ROOT>/public/.*
-<PROJECT_ROOT>/node_modules/babel.*
+<PROJECT_ROOT>/node_modules/@babel/.*
 <PROJECT_ROOT>/node_modules/editions/.*
 <PROJECT_ROOT>/node_modules/emotion/.*
 <PROJECT_ROOT>/node_modules/emotion-server/.*

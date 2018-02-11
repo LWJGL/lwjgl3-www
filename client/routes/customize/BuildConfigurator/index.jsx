@@ -54,7 +54,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
     progress: [],
   };
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     if (BuildConfigurator.firstLoad) {
       register('build', buildConfiguratorReducer);
       // Only restore once, use redux store for subsequent mounts
