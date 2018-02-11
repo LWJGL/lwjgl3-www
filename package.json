@@ -105,7 +105,6 @@
     "style-loader": "0.20.1",
     "thread-loader": "1.1.2",
     "three": "0.89.0",
-    "typescript": "2.8.0-insiders.20180127",
     "typescript-styled-plugin": "0.4.0",
     "uglify-es": "3.3.10",
     "webpack": "4.0.0-beta.1",
