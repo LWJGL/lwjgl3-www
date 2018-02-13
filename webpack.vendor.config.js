@@ -74,9 +74,6 @@ const config = {
     library: '[name]',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }),
     new webpack.DllPlugin({
       context: __dirname,
       path: path.resolve(__dirname, 'public/js', 'vendor-manifest.json'),
