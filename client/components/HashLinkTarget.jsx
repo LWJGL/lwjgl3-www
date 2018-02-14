@@ -27,8 +27,9 @@ export class HashLinkTargetControlled extends React.Component<Props> {
     }
   }
 
-  componentDidUpdate({ location: { hash: prevHash } }: Props) {
+  componentDidUpdate(prevProps: Props) {
     const currentHash = this.props.location.hash;
+    const prevHash = prevProps.location.hash;
     if (prevHash !== currentHash) {
       if (currentHash === `#${this.props.id}`) {
         if (prevHash === '') {
