@@ -43,6 +43,8 @@ type State = {
   progress: Array<string>,
 };
 
+register('build', buildConfiguratorReducer);
+
 export class BuildConfigurator extends React.Component<Props, State> {
   static firstLoad = true;
   unsubscribe: Function;
@@ -54,9 +56,10 @@ export class BuildConfigurator extends React.Component<Props, State> {
     progress: [],
   };
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
+    this.mounted = true;
+
     if (BuildConfigurator.firstLoad) {
-      register('build', buildConfiguratorReducer);
       // Only restore once, use redux store for subsequent mounts
       BuildConfigurator.firstLoad = false;
       const restore = localStorage.getItem(STORAGE_KEY);
@@ -65,10 +68,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
         store.dispatch(configLoad(this.prevSave));
       }
     }
-  }
 
-  componentDidMount() {
-    this.mounted = true;
     this.unsubscribe = store.subscribe(
       debounce(() => {
         const save = getConfig(store.getState());
@@ -203,6 +203,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
 
   render() {
     const { isDownloading } = this.state;
+    console.log('render');
 
     return (
       <div className="config-container" style={{ position: 'relative' }}>
