@@ -6,11 +6,10 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import areEqual from 'fbjs/lib/areEqual';
 
-import { register } from '~/store/asyncReducers';
 import { store } from '~/store';
 import { Connect } from '~/store/Connect';
 
-import { buildConfiguratorReducer, configLoad } from './reducer';
+import { configLoad } from './reducer';
 import { fields, isBuildRelease, hasLanguageOption, isBuildSelected } from './fields';
 import { getConfig, fetchManifest, getBuild, getFiles, getAddons, downloadFiles, abortDownload } from './bundler';
 import { MODE_ZIP, BUILD_RELEASE } from './constants';
@@ -42,8 +41,6 @@ type State = {
   isDownloading: boolean,
   progress: Array<string>,
 };
-
-register('build', buildConfiguratorReducer);
 
 export class BuildConfigurator extends React.Component<Props, State> {
   static firstLoad = true;

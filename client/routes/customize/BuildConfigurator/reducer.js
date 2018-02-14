@@ -1,5 +1,6 @@
 // @flow
 import produce from 'immer';
+import { register } from '~/store/asyncReducers';
 import { config } from './config';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
 import type {
@@ -121,7 +122,7 @@ export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getS
 
 // Reducer
 
-export function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
+function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
   return produce(state, (draft: BuildConfig) => {
     switch (action.type) {
       case BUILD_STATUS:
@@ -406,3 +407,6 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
 const saveStatus = (state: BuildConfig, name: BUILD_TYPES, payload: BuildStatus) => {
   state.builds.byId[name].status = payload;
 };
+
+// Self-register reducer on module load
+register('build', buildConfiguratorReducer);
