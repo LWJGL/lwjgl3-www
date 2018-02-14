@@ -29,6 +29,7 @@ export class Trap extends React.PureComponent<TrapProps> {
 
   trap: ?HTMLDivElement;
   returnFocus: HTMLElement | null;
+  mounted: boolean = false;
 
   getTrap = (ref: ?HTMLDivElement) => {
     this.trap = ref;
@@ -36,6 +37,10 @@ export class Trap extends React.PureComponent<TrapProps> {
 
   render() {
     const { className, role, children } = this.props;
+    if (!this.mounted) {
+      // Capture previously focused element before mounting
+      this.returnFocus = document.activeElement;
+    }
     return (
       <div ref={this.getTrap} className={className} role={role} tabIndex={-1}>
         {children}
@@ -58,11 +63,8 @@ export class Trap extends React.PureComponent<TrapProps> {
     return this.trap;
   };
 
-  UNSAFE_componentWillMount() {
-    this.returnFocus = document.activeElement;
-  }
-
   componentDidMount() {
+    this.mounted = true;
     if (this.trap == null) {
       return;
     }
@@ -85,6 +87,7 @@ export class Trap extends React.PureComponent<TrapProps> {
   }
 
   componentWillUnmount() {
+    this.mounted = false;
     this.focusTrap.deactivate({ onDeactivate: false });
 
     if (this.prevTrap) {
