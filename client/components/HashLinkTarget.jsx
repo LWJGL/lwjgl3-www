@@ -27,10 +27,11 @@ export class HashLinkTargetControlled extends React.Component<Props> {
     }
   }
 
-  UNSAFE_componentWillReceiveProps({ location, id }: Props) {
-    if (location.hash !== this.props.location.hash) {
-      if (location.hash === `#${id}`) {
-        if (this.props.location.hash === '') {
+  componentDidUpdate({ location: { hash: prevHash } }: Props) {
+    const currentHash = this.props.location.hash;
+    if (prevHash !== currentHash) {
+      if (currentHash === `#${this.props.id}`) {
+        if (prevHash === '') {
           defaultScrollPos = [window.pageXOffset, window.pageYOffset];
         }
         scrolling = true;
