@@ -33,10 +33,6 @@ export class LoadingPage extends React.Component<LoadingComponentProps> {
     LoadingPage.done();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps: LoadingComponentProps) {
-    LoadingPage.done();
-  }
-
   render() {
     const { isLoading, pastDelay, timedOut, error } = this.props;
 
@@ -47,6 +43,7 @@ export class LoadingPage extends React.Component<LoadingComponentProps> {
         </div>
       );
     } else if (error || timedOut) {
+      LoadingPage.done();
       return (
         <div className="text-center" style={{ padding: '5rem 0' }}>
           <h1 className="display-4 text-danger">Failed to load page</h1>
