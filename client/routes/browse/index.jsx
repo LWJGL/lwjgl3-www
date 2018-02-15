@@ -3,6 +3,7 @@ import * as React from 'react';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import { Head } from '~/components/Head';
+import { Title } from '~/components/Title';
 
 import { Browser } from './components/Browser';
 import { register } from '~/store/asyncReducers';
@@ -13,7 +14,7 @@ register('browser', fileBrowserReducer);
 
 const BrowseRoute = (props: ContextRouter) => (
   <PageView {...props}>
-    <Head tag="tilte">Browse</Head>
+    <Title>Browse</Title>
     <Head tag="meta" name="description" content="Browse LWJGL files" />
     <main>
       <section className="container-fluid px-0" style={{ margin: '-1rem auto 0 auto' }}>
