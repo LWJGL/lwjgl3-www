@@ -5,7 +5,7 @@ const DEV = !PRODUCTION;
 
 const config = {
   plugins: [
-    DEV ? ['emotion', { sourceMap: true, autoLabel: true }] : ['emotion'],
+    DEV ? ['emotion', { sourceMap: true, autoLabel: true }] : ['emotion', { hoist: true }],
     'react-hot-loader/babel',
     '@babel/transform-flow-strip-types',
 
