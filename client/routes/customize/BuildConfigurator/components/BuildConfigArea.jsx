@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import styled from 'react-emotion';
-import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
+import { css } from 'emotion';
+import { cc, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BuildConfig } from '../types';
 import { Connect } from '~/store/Connect';
 
@@ -18,7 +18,7 @@ import {
 
 import { lighten } from '~/theme/color';
 
-const ConfigPanel = styled('div')`
+const ConfigPanel = css`
   position: relative;
   z-index: 0;
   margin-bottom: 66px;
@@ -88,14 +88,6 @@ const ConfigPanel = styled('div')`
     .btn + .btn {
       margin-left: 0.5rem;
     }
-
-    /* &.file {
-      .custom-file {
-        height: auto;
-        margin-right: 1rem;
-        text-align: left !important;
-      }
-    } */
   }
 `;
 
@@ -105,6 +97,6 @@ export const BuildConfigArea = ({ children }: { children?: React.Node }) => (
       build: build.build,
     })}
   >
-    {({ build }) => <ConfigPanel className={build}>{children}</ConfigPanel>}
+    {({ build }) => <div className={cc(ConfigPanel, build)}>{children}</div>}
   </Connect>
 );

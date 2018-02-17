@@ -103,5 +103,6 @@ const DownloadRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-import { hot } from 'react-hot-loader';
-export default hot(module)(DownloadRoute);
+// import { hot } from 'react-hot-loader';
+// export default hot(module)(DownloadRoute);
+export default DownloadRoute;

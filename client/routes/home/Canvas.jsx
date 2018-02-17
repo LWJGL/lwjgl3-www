@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
-import { keyframes } from 'emotion';
-import styled from 'react-emotion';
+import { css, keyframes } from 'emotion';
 // $FlowFixMe
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SupportsIntersectionObserver } from '~/services/supports';
@@ -15,7 +14,7 @@ to {
 }
 `;
 
-const Canvas = styled('canvas')`
+const Canvas = css`
   position: absolute;
   z-index: 0;
   width: 100%;
@@ -180,6 +179,6 @@ export default class HomeCanvas extends React.Component<{||}> {
   }
 
   render() {
-    return <Canvas innerRef={this.getRef} />;
+    return <canvas className={Canvas} ref={this.getRef} />;
   }
 }

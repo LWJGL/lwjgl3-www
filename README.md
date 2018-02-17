@@ -105,6 +105,8 @@ yarn watch
 --css # Enables CSS modules in dev mode (enables Sass HMR)
 --sourcemap # Enables inline JS source-maps
 --react-perf # Enables react-perf-devtool in dev mode
+--nohmr # Disables Webpack Hot Module Reloading
+--rhl # Enables React-Hot-Loader (requires HMR)
 ```
 
 The following flags are used for testing production builds locally.

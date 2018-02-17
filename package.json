@@ -92,7 +92,6 @@
     "query-string": "5.1.0",
     "react": "16.4.0-alpha.7926752",
     "react-dom": "16.4.0-alpha.7926752",
-    "react-emotion": "9.0.1",
     "react-hot-loader": "4.0.0-beta.22",
     "react-icons": "2.2.7",
     "react-loadable": "5.3.1",

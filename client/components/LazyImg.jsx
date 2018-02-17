@@ -44,7 +44,7 @@ export class LazyImg extends React.PureComponent<Props, Props> {
         // Lazily create IO
         LazyImg.io = new IntersectionObserver(observeEntries, {
           threshold: 0,
-          rootMargin: '100px',
+          rootMargin: '400px',
         });
       }
 

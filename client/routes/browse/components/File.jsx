@@ -1,15 +1,15 @@
 // @flow
 import * as React from 'react';
-import styled from 'react-emotion';
+import { css } from 'emotion';
 
 type Props = {
   path: string,
 };
 
-const FileTitle = styled('td')`
+const WordBreakAll = css`
   word-break: break-all;
 `;
-const FileActions = styled('td')`
+const TextRight = css`
   text-align: right;
 `;
 
@@ -18,16 +18,16 @@ export const File = (props: Props) => {
 
   return (
     <tr>
-      <FileTitle>
+      <td className={WordBreakAll}>
         <b>{props.path.split('/').pop()}</b>
         <br />
         <small>{url}</small>
-      </FileTitle>
-      <FileActions>
+      </td>
+      <td className={TextRight}>
         <a download={true} href={url} className="btn btn-sm btn-outline-info">
           Download
         </a>
-      </FileActions>
+      </td>
     </tr>
   );
 };

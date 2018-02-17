@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
-import styled from 'react-emotion';
+import { css } from 'emotion';
 import IconFolder from 'react-icons/md/folder';
 
-export const FolderName = styled('th')`
+export const FolderTH = css`
   cursor: pointer;
   user-select: none;
   &:hover {
@@ -29,9 +29,9 @@ export class Folder extends React.PureComponent<Props> {
 
     return (
       <tr>
-        <FolderName colSpan={2} onClick={this.clickHandle}>
+        <th className={FolderTH} colSpan={2} onClick={this.clickHandle}>
           <IconFolder /> {name}
-        </FolderName>
+        </th>
       </tr>
     );
   }

@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { uniqueId } from 'lodash-es';
-import styled from 'react-emotion';
+import { css } from 'emotion';
 import { COLOR_WHITE, COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 
 import { lighten, setSaturation } from '~/theme/color';
@@ -9,7 +9,7 @@ import { lighten, setSaturation } from '~/theme/color';
 const COLOR_TOGGLE_INDICATOR_CHECKED_BG = lighten(COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, 30);
 const COLOR_TOGGLE_INDICATOR_BG = setSaturation(COLOR_CUSTOM_CONTROL_INDICATOR_BG, 0);
 
-const Label = styled('label')`
+const Label = css`
   &::before {
     width: 1.5rem;
     margin-top: 0.2rem;
@@ -35,30 +35,30 @@ const Label = styled('label')`
   }
 `;
 
-const Input = styled('input')`
-  &:active ~ ${Label}::after, &:focus ~ ${Label}::after {
+const Input = css`
+  &:active ~ .${Label}::after, &:focus ~ .${Label}::after {
     box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
   }
-  & ~ ${Label}::after {
+  & ~ .${Label}::after {
     transform: translate(-0.3rem, 0.05rem);
   }
-  &:checked ~ ${Label}::after {
+  &:checked ~ .${Label}::after {
     transform: translate(0.3rem, 0.05rem);
     background-color: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.css()};
   }
-  &:checked ~ ${Label}::before {
+  &:checked ~ .${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
   }
-  &:active ~ ${Label}::before {
+  &:active ~ .${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_BG.css()};
   }
-  &:checked:active ~ ${Label}::before {
+  &:checked:active ~ .${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
   }
-  &:disabled ~ ${Label}::after {
+  &:disabled ~ .${Label}::after {
     display: none;
   }
-  &:checked:disabled ~ ${Label}::before {
+  &:checked:disabled ~ .${Label}::before {
     background-color: ${COLOR_TOGGLE_INDICATOR_CHECKED_BG.css()};
   }
 `;
@@ -93,17 +93,17 @@ export class Toggle extends React.PureComponent<Props> {
 
     return props.hidden === true ? null : (
       <div className="custom-control">
-        <Input
-          className="custom-control-input"
+        <input
+          className={`${Input} custom-control-input`}
           type="checkbox"
           id={this.htmlForId}
           disabled={props.disabled}
           checked={props.checked}
           onChange={this.change}
         />
-        <Label className="custom-control-label" htmlFor={this.htmlForId}>
+        <label className={`${Label} custom-control-label`} htmlFor={this.htmlForId}>
           {props.label}
-        </Label>
+        </label>
       </div>
     );
   }

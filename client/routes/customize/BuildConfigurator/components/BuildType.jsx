@@ -6,7 +6,7 @@ import { changeType } from '../reducer';
 import { Connect } from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
-import styled from 'react-emotion';
+import { css } from 'emotion';
 import IconClose from 'react-icons/md/close';
 import { cc, mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import {
@@ -19,7 +19,7 @@ import {
   BORDER_RADIUS,
 } from '../theme';
 
-const BuildBox = styled('div')`
+const BuildBox = css`
   border: 2px solid ${COLOR_PRIMARY.css()};
   padding: 1rem;
   border-radius: ${BORDER_RADIUS};
@@ -127,9 +127,9 @@ export const BuildType = ({ build, downloading }: Props) => (
     actions={{ changeType }}
   >
     {({ isSelected, isActive, spec }, { changeType }) => (
-      <BuildBox
+      <div
         onClick={downloading ? null : changeType.bind(this, build)}
-        className={cc(build, {
+        className={cc(BuildBox, build, {
           locked: downloading && !isSelected,
           selected: isSelected,
           active: isActive,
@@ -139,7 +139,7 @@ export const BuildType = ({ build, downloading }: Props) => (
         <p>{spec.description}</p>
         <BuildStatus name={spec.id} />
         {isSelected ? <IconClose /> : null}
-      </BuildBox>
+      </div>
     )}
   </Connect>
 );

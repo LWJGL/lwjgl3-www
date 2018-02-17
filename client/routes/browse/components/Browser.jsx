@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { LoaderSpinner } from '~/components/LoaderSpinner';
-import { Folder, FolderName } from './Folder';
+import { Folder, FolderTH } from './Folder';
 import { File } from './File';
 import IconCloud from 'react-icons/fa/cloud';
 import IconArrowRight from 'react-icons/fa/chevron-right';
@@ -41,9 +41,9 @@ export class Browser extends React.PureComponent<Props> {
           <tbody>
             {parent && (
               <tr>
-                <FolderName scope="row" onClick={this.goBack} colSpan={2}>
+                <th className={FolderTH} scope="row" onClick={this.goBack} colSpan={2}>
                   &hellip;
-                </FolderName>
+                </th>
               </tr>
             )}
             {folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} loadPath={loadPath} />)}

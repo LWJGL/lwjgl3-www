@@ -54,7 +54,6 @@ const config = {
 
       // UI
       'emotion',
-      'react-emotion',
       'focus-trap',
       'nprogress',
 

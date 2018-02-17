@@ -3,7 +3,7 @@ import * as React from 'react';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import styled from 'react-emotion';
+import { css } from 'emotion';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
@@ -21,7 +21,7 @@ import IconGLFW from 'react-icons/md/videogame-asset';
 import IconGitHub from 'react-icons/fa/github';
 import IconMoreApi from 'react-icons/md/battery-unknown';
 
-const BindingsDiv = styled('div')`
+const BindingsDiv = css`
   .svg-icon,
   img {
     font-size: 4rem;
@@ -84,7 +84,7 @@ const HomeRoute = (props: ContextRouter) => (
         </div>
       </section>
 
-      <BindingsDiv className="area-dark">
+      <div className={`area-dark ${BindingsDiv}`}>
         <section className="container py-5 text-center features">
           <h1>Main Features</h1>
 
@@ -273,7 +273,7 @@ const HomeRoute = (props: ContextRouter) => (
             </div>
           </div>
         </section>
-      </BindingsDiv>
+      </div>
 
       <HashLinkTarget id="credits" />
 
@@ -341,5 +341,6 @@ const HomeRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-import { hot } from 'react-hot-loader';
-export default hot(module)(HomeRoute);
+// import { hot } from 'react-hot-loader';
+// export default hot(module)(HomeRoute);
+export default HomeRoute;

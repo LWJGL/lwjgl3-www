@@ -1,12 +1,12 @@
 // @flow
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'react-emotion';
+import { css } from 'emotion';
 import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
 import Loadable from 'react-loadable';
 import { Logo } from './Logo';
 
-const HeroBox = styled('section')`
+const HeroBox = css`
   margin-top: -4rem;
   background: linear-gradient(
     to top left,
@@ -25,7 +25,7 @@ const HeroBox = styled('section')`
   position: relative;
 `;
 
-const LogoContainer = styled('div')`
+const LogoContainer = css`
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -41,7 +41,7 @@ const LogoContainer = styled('div')`
   }
 `;
 
-const HeroContent = styled('div')`
+const HeroContent = css`
   text-align: center;
   padding: 0 2rem;
   color: white;
@@ -95,11 +95,11 @@ export class HomeHero extends React.Component<Props, State> {
 
   render() {
     return (
-      <HeroBox>
+      <section className={HeroBox}>
         {this.state.supportsWebGL ? <Canvas /> : null}
-        <LogoContainer className="d-flex flex-column justify-content-center align-items-center">
+        <div className={`${LogoContainer} d-flex flex-column justify-content-center align-items-center`}>
           <Logo className="logo" />
-          <HeroContent>
+          <div className={HeroContent}>
             <h1>
               Lightweight <b>Java&nbsp;Game&nbsp;Library&nbsp;3</b>
             </h1>
@@ -107,9 +107,9 @@ export class HomeHero extends React.Component<Props, State> {
               LEARN MORE<br />
               <IconArrowDown />
             </Link>
-          </HeroContent>
-        </LogoContainer>
-      </HeroBox>
+          </div>
+        </div>
+      </section>
     );
   }
 }

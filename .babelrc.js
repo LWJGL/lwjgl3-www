@@ -1,12 +1,15 @@
+const { argv } = require('yargs');
 const { NODE_ENV } = process.env;
 const browsers = ['chrome >= 40', 'firefox >= 32', 'safari >= 6', 'edge >= 12', 'ios >= 7', 'ie >= 10'];
 const PRODUCTION = NODE_ENV === 'production';
 const DEV = !PRODUCTION;
+const RHL = argv.rhl !== undefined;
+const SOURCEMAP = argv.sourcemap !== undefined;
 
 const config = {
   plugins: [
-    DEV ? ['emotion', { sourceMap: true, autoLabel: true }] : ['emotion', { hoist: true }],
-    'react-hot-loader/babel',
+    DEV ? ['emotion', { sourceMap: SOURCEMAP, autoLabel: true }] : ['emotion', { hoist: true }],
+    RHL && 'react-hot-loader/babel',
     '@babel/transform-flow-strip-types',
 
     // React

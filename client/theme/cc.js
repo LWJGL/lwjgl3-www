@@ -12,7 +12,7 @@
  *  cc(...['fa','fa-check'], 'fa-spin', {'bg-danger':hasError}) => "fa fa-check fa-spin bg-danger"
  * @param {*} args
  */
-function classConcat(...args: Array<string | void | { [classname: string]: any }>): string {
+function classConcat(...args: Array<string | null | void | { [classname: string]: any }>): string {
   let result = '';
 
   for (let i = 0; i < args.length; i += 1) {
