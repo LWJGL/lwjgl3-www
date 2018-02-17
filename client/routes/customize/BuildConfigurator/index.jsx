@@ -200,7 +200,6 @@ export class BuildConfigurator extends React.Component<Props, State> {
 
   render() {
     const { isDownloading } = this.state;
-    console.log('render');
 
     return (
       <div className="config-container" style={{ position: 'relative' }}>

@@ -13,6 +13,7 @@
 <PROJECT_ROOT>/node_modules/create-emotion/.*
 <PROJECT_ROOT>/node_modules/create-emotion-styled/.*
 <PROJECT_ROOT>/node_modules/react-emotion/.*
+<PROJECT_ROOT>/node_modules/babel-plugin-emotion/.*
 <PROJECT_ROOT>/node_modules/postcss.*
 .*/fbjs/.*
 

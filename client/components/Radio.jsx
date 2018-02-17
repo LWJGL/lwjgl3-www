@@ -1,29 +1,21 @@
 // @flow
 import * as React from 'react';
 import { uniqueId } from 'lodash-es';
-import PropTypes from 'prop-types';
 
 type Props = {
   value: any,
   label: string,
   disabled: boolean,
+  checked: boolean,
+  onChange: (value: any) => void,
 };
 
-export class Radio extends React.Component<Props> {
-  static defaultProps = {
-    disabled: false,
-  };
-
-  static contextTypes = {
-    onChange: PropTypes.func,
-    value: PropTypes.any,
-  };
-
+export class Radio extends React.PureComponent<Props> {
   htmlForId: string = uniqueId('radio');
 
   change = this.change.bind(this);
   change() {
-    this.context.onChange(this.props.value);
+    this.props.onChange(this.props.value);
   }
 
   render() {
@@ -36,7 +28,7 @@ export class Radio extends React.Component<Props> {
           id={this.htmlForId}
           className="custom-control-input"
           disabled={props.disabled}
-          checked={this.context.value === props.value}
+          checked={props.checked}
           onChange={this.change}
         />
         <label className="custom-control-label" htmlFor={this.htmlForId}>

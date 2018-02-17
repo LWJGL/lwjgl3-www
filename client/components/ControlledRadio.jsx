@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { type Dispatch } from 'redux';
-import { RadioGroup } from './RadioGroup';
 import { Radio } from './Radio';
 import { Connect } from '~/store/Connect';
 
@@ -39,16 +38,18 @@ export const ControlledRadio = ({ spec }: Props) => (
     })}
   >
     {({ value, options /*, hidden*/ }, { select }): React.Node => (
-      <RadioGroup value={value} onChange={select}>
+      <div className="custom-controls-stacked">
         {options.map((radio: Option, i: number) => (
           <Radio
             key={`${spec.name}-${typeof radio.value === 'string' ? radio.value : i}`}
             value={radio.value}
+            checked={radio.value === value}
+            onChange={select}
             label={radio.label}
             disabled={radio.disabled}
           />
         ))}
-      </RadioGroup>
+      </div>
     )}
   </Connect>
 );
