@@ -5,7 +5,6 @@ import type { ContextRouter } from 'react-router-dom';
 import { BuildConfigurator } from './BuildConfigurator';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
-import { store } from '~/store';
 
 const CustomizeRoute = (props: ContextRouter) => (
   <PageView {...props}>
