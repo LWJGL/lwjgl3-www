@@ -29,7 +29,8 @@ type Props = {|
 |};
 
 export class BuildScript extends React.Component<Props> {
-  script: ?HTMLPreElement;
+  //$FlowFixMe
+  preRef = React.createRef();
 
   copyToClipboard = this.copyToClipboard.bind(this);
   copyToClipboard() {
@@ -42,8 +43,9 @@ export class BuildScript extends React.Component<Props> {
       selection.removeAllRanges();
     }
     const range = document.createRange();
-    if (this.script) {
-      range.selectNode(this.script);
+    const pre = this.preRef.value;
+    if (pre !== null) {
+      range.selectNode(pre);
     } else {
       alert('Failed to copy text');
       return;
@@ -52,11 +54,6 @@ export class BuildScript extends React.Component<Props> {
     document.execCommand('copy');
     selection.removeAllRanges();
     alert('Script copied to clipboard.');
-  }
-
-  getRef = this.getRef.bind(this);
-  getRef(el: ?HTMLPreElement) {
-    this.script = el;
   }
 
   render() {
@@ -118,7 +115,7 @@ export class BuildScript extends React.Component<Props> {
               <h2 className="mt-1">
                 <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
               </h2>
-              <pre ref={this.getRef} className="m-0">
+              <pre ref={this.preRef} className="m-0">
                 <code>{script}</code>
               </pre>
               <BuildToolbar configDownload={this.props.configDownload}>

@@ -25,16 +25,23 @@ export class Sidebar extends React.PureComponent<Props, State> {
   startX: number = 0;
   currentX: number = 0;
   focusTrap: FocusTrap;
-  closeButton: ?HTMLButtonElement;
-  slidingMenu: ?HTMLDivElement;
-  sideContainer: ?HTMLDivElement;
+
+  //$FlowFixMe
+  closeButtonRef = React.createRef();
+  //$FlowFixMe
+  slidingMenuRef = React.createRef();
+  //$FlowFixMe
+  sideContainerRef = React.createRef();
 
   componentDidMount() {
     this.mounted = true;
-    if (this.slidingMenu && this.closeButton) {
-      this.focusTrap = createFocusTrap(this.slidingMenu, {
+    const slidingMenu: HTMLDivElement | null = this.slidingMenuRef.value;
+    const closeButton: HTMLButtonElement | null = this.closeButtonRef.value;
+
+    if (slidingMenu !== null && closeButton !== null) {
+      this.focusTrap = createFocusTrap(slidingMenu, {
         onDeactivate: this.onToggle,
-        initialFocus: this.closeButton,
+        initialFocus: closeButton,
         // clickOutsideDeactivates: true
       });
     }
@@ -49,7 +56,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
   }
 
   onToggle = (/*evt*/) => {
-    const { focusTrap, sideContainer } = this;
+    const { focusTrap, sideContainerRef: { value: sideContainer } } = this;
 
     /*::
     if (focusTrap == null || sideContainer == null) {
@@ -90,17 +97,11 @@ export class Sidebar extends React.PureComponent<Props, State> {
   };
 
   onTouchStart = (evt: TouchEvent): void => {
-    /*::
-    if (this.sideContainer == null) {
-      return;
-    }
-    */
-
     this.startX = evt.touches[0].pageX;
     this.currentX = this.startX;
 
     this.touchingSideNav = true;
-    this.sideContainer.classList.add('touching');
+    this.sideContainerRef.value.classList.add('touching');
     requestAnimationFrame(this.update);
   };
 
@@ -113,18 +114,13 @@ export class Sidebar extends React.PureComponent<Props, State> {
 
   onTouchEnd = () => {
     if (this.touchingSideNav) {
-      /*::
-      if (this.sideContainer == null) {
-        return;
-      }
-      */
       this.touchingSideNav = false;
 
-      const translateX = this.currentX - this.startX;
-      this.sideContainer.style.transform = '';
-      this.sideContainer.classList.remove('touching');
+      const sideContainer = this.sideContainerRef.value;
+      sideContainer.style.transform = '';
+      sideContainer.classList.remove('touching');
 
-      if (translateX > 0) {
+      if (this.currentX - this.startX > 0) {
         this.onToggle();
       }
     }
@@ -143,31 +139,14 @@ export class Sidebar extends React.PureComponent<Props, State> {
       translateX = 0;
     }
 
-    /*::
-    if (this.sideContainer == null) {
-      return;
-    }
-    */
-    this.sideContainer.style.transform = `translateX(${translateX}px)`;
-  };
-
-  getRefSliding = (el: ?HTMLDivElement) => {
-    this.slidingMenu = el;
-  };
-
-  getRefSlidingOverlay = (el: ?HTMLDivElement) => {
-    this.sideContainer = el;
-  };
-
-  getRefCloseBtn = (el: ?HTMLButtonElement) => {
-    this.closeButton = el;
+    this.sideContainerRef.value.style.transform = `translateX(${translateX}px)`;
   };
 
   render() {
     let isOpen = this.state.open;
 
     return (
-      <div ref={this.getRefSliding} className={`col sliding-menu${isOpen ? ' open' : ''}`}>
+      <div ref={this.slidingMenuRef} className={`col sliding-menu${isOpen ? ' open' : ''}`}>
         <button
           type="button"
           className="btn-link sliding-menu-icon"
@@ -179,7 +158,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
         </button>
         <div className="sliding-menu-overlay" onClick={this.onToggle} />
         <div
-          ref={this.getRefSlidingOverlay}
+          ref={this.sideContainerRef}
           className="sliding-menu-container"
           role="menu"
           aria-hidden={!isOpen}
@@ -187,7 +166,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
         >
           <div className="text-right">
             <button
-              ref={this.getRefCloseBtn}
+              ref={this.closeButtonRef}
               type="button"
               className="btn-link sliding-menu-icon"
               onClick={this.onToggle}

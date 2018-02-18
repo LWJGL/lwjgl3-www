@@ -23,7 +23,8 @@ const Canvas = css`
 `;
 
 export default class HomeCanvas extends React.Component<{||}> {
-  canvas: ?HTMLCanvasElement;
+  //$FlowFixMe
+  canvasRef = React.createRef();
 
   io: IntersectionObserver | null = null;
   rafId: AnimationFrameID | null = null;
@@ -34,20 +35,21 @@ export default class HomeCanvas extends React.Component<{||}> {
   group: Group | null = null;
   renderer: WebGLRenderer | null = null;
 
-  getRef = this.getRef.bind(this);
   resizeCanvas = this.resizeCanvas.bind(this);
   animate = this.animate.bind(this);
   ioCheck = this.ioCheck.bind(this);
 
   resizeCanvas() {
-    if (this.camera !== null && this.canvas != null) {
-      /*::
-      if ( !(this.canvas.parentNode instanceof HTMLElement) ) {
-        return;
-      }
-      */
-      const winW = this.canvas.parentNode.offsetWidth;
-      const winH = this.canvas.parentNode.offsetHeight;
+    const canvas: ?HTMLCanvasElement = this.canvasRef.value;
+    /*::
+    if ( canvas == null || !(canvas.parentNode instanceof HTMLElement) ) {
+      return;
+    }
+    */
+
+    if (this.camera !== null && canvas != null) {
+      const winW = canvas.parentNode.offsetWidth;
+      const winH = canvas.parentNode.offsetHeight;
       this.camera.aspect = winW / winH;
       this.camera.updateProjectionMatrix();
       /*:: if ( this.renderer !== null ) */
@@ -88,16 +90,17 @@ export default class HomeCanvas extends React.Component<{||}> {
   }
 
   componentDidMount() {
-    if (this.canvas == null) {
+    const canvas: ?HTMLCanvasElement = this.canvasRef.value;
+    if (canvas == null) {
       return;
     }
     /*::
-      if ( !(this.canvas.parentNode instanceof HTMLElement) ) {
-        return;
-      }
+    if ( !(canvas.parentNode instanceof HTMLElement) ) {
+      return;
+    }
     */
-    const winW = this.canvas.parentNode.offsetWidth;
-    const winH = this.canvas.parentNode.offsetHeight;
+    const winW = canvas.parentNode.offsetWidth;
+    const winH = canvas.parentNode.offsetHeight;
 
     this.camera = new PerspectiveCamera(60, winW / winH, 100, 10000);
     this.camera.position.z = 1500;
@@ -123,7 +126,7 @@ export default class HomeCanvas extends React.Component<{||}> {
     this.scene.add(this.group);
 
     this.renderer = new WebGLRenderer({
-      canvas: this.canvas,
+      canvas: canvas,
       antialias: window.devicePixelRatio === 1,
       alpha: true,
       powerPreference: 'low-power',
@@ -139,7 +142,7 @@ export default class HomeCanvas extends React.Component<{||}> {
     if (SupportsIntersectionObserver) {
       this.io = new IntersectionObserver(this.ioCheck);
       /*:: if ( this.canvas != null ) */
-      this.io.observe(this.canvas);
+      this.io.observe(canvas);
     }
 
     window.addEventListener('resize', this.resizeCanvas);
@@ -147,7 +150,6 @@ export default class HomeCanvas extends React.Component<{||}> {
 
   componentWillUnmount() {
     this.stop();
-    this.canvas = null;
     window.removeEventListener('resize', this.resizeCanvas);
 
     if (this.io !== null) {
@@ -174,11 +176,7 @@ export default class HomeCanvas extends React.Component<{||}> {
     }
   }
 
-  getRef(el: ?HTMLCanvasElement) {
-    this.canvas = el;
-  }
-
   render() {
-    return <canvas className={Canvas} ref={this.getRef} />;
+    return <canvas className={Canvas} ref={this.canvasRef} />;
   }
 }
