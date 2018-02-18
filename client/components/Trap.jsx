@@ -27,13 +27,11 @@ export class Trap extends React.PureComponent<TrapProps> {
   prevTrap: FocusTrap;
   static lastTrap: FocusTrap | null = null;
 
-  trap: ?HTMLDivElement;
   returnFocus: HTMLElement | null;
   mounted: boolean = false;
 
-  getTrap = (ref: ?HTMLDivElement) => {
-    this.trap = ref;
-  };
+  //$FlowFixMe
+  divRef = React.createRef();
 
   render() {
     const { className, role, children } = this.props;
@@ -42,37 +40,39 @@ export class Trap extends React.PureComponent<TrapProps> {
       this.returnFocus = document.activeElement;
     }
     return (
-      <div ref={this.getTrap} className={className} role={role} tabIndex={-1}>
+      <div ref={this.divRef} className={className} role={role} tabIndex={-1}>
         {children}
       </div>
     );
   }
 
   findFocusable = (): ?HTMLElement => {
+    const trap = this.divRef.value;
     if (!this.props.autoFocus) {
-      return this.trap;
+      return trap;
     }
-    if (this.trap != null) {
-      let el = this.trap.querySelector(
+    if (trap != null) {
+      let el = trap.querySelector(
         '[autofocus],input:not([type="hidden"]):not([disabled]):not([readonly]),select,textarea,button,[tabindex]:not([tabindex="-1"])'
       );
       if (el !== null) {
         return el;
       }
     }
-    return this.trap;
+    return trap;
   };
 
   componentDidMount() {
     this.mounted = true;
-    if (this.trap == null) {
+    const trap = this.divRef.value;
+    if (trap == null) {
       return;
     }
     if (Trap.lastTrap !== null) {
       this.prevTrap = Trap.lastTrap;
       this.prevTrap.pause();
     }
-    this.focusTrap = createFocusTrap(this.trap, {
+    this.focusTrap = createFocusTrap(trap, {
       onDeactivate: this.props.onClose,
       initialFocus: this.findFocusable,
       escapeDeactivates: this.props.escapeDeactivates,

@@ -24,11 +24,11 @@ export class LazyImg extends React.PureComponent<Props, Props> {
   static io: IntersectionObserver | null = null;
   static map: WeakMap<?HTMLImageElement, LazyImg> = new WeakMap();
   static mapCount: number = 0;
-  el: ?HTMLImageElement;
   observed: boolean = false;
 
   state = {};
-  getRef = this.getRef.bind(this);
+  //$FlowFixMe
+  imgRef = React.createRef();
 
   componentDidMount() {
     if (!SupportsIntersectionObserver) {
@@ -39,7 +39,9 @@ export class LazyImg extends React.PureComponent<Props, Props> {
       return;
     }
 
-    if (this.el != null) {
+    const el: ?HTMLImageElement = this.imgRef.value;
+
+    if (el != null) {
       if (LazyImg.io === null) {
         // Lazily create IO
         LazyImg.io = new IntersectionObserver(observeEntries, {
@@ -48,8 +50,8 @@ export class LazyImg extends React.PureComponent<Props, Props> {
         });
       }
 
-      LazyImg.io.observe(this.el);
-      LazyImg.map.set(this.el, this);
+      LazyImg.io.observe(el);
+      LazyImg.map.set(el, this);
       this.observed = true;
       LazyImg.mapCount += 1;
     }
@@ -59,9 +61,11 @@ export class LazyImg extends React.PureComponent<Props, Props> {
     if (this.observed) {
       this.observed = false;
 
-      if (this.el != null && LazyImg.io !== null) {
-        LazyImg.io.unobserve(this.el);
-        LazyImg.map.delete(this.el);
+      const el: ?HTMLImageElement = this.imgRef.value;
+
+      if (el != null && LazyImg.io !== null) {
+        LazyImg.io.unobserve(el);
+        LazyImg.map.delete(el);
         LazyImg.mapCount -= 1;
 
         if (LazyImg.mapCount === 0) {
@@ -76,13 +80,9 @@ export class LazyImg extends React.PureComponent<Props, Props> {
     this.unobserve();
   }
 
-  getRef(n: ?HTMLImageElement) {
-    this.el = n;
-  }
-
   render() {
     // extract DOM properties to ...rest
     const { src, srcSet, ...rest } = this.props;
-    return <img ref={this.getRef} src={this.state.src} srcSet={this.state.srcSet} {...rest} />;
+    return <img ref={this.imgRef} src={this.state.src} srcSet={this.state.srcSet} {...rest} />;
   }
 }

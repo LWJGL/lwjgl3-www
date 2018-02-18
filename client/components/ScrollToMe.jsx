@@ -6,8 +6,6 @@ type Props = {
 };
 
 export class ScrollToMe extends React.Component<Props> {
-  el: ?HTMLDivElement;
-
   componentDidMount() {
     this.scroll();
   }
@@ -19,17 +17,15 @@ export class ScrollToMe extends React.Component<Props> {
   }
 
   scroll() {
-    if (this.el != null) {
-      window.scrollTo(0, this.el.offsetTop);
+    if (this.divRef.value != null) {
+      window.scrollTo(0, this.divRef.value.offsetTop);
     }
   }
 
-  getRef = this.getRef.bind(this);
-  getRef(n: ?HTMLDivElement) {
-    this.el = n;
-  }
+  //$FlowFixMe
+  divRef = React.createRef();
 
   render() {
-    return <div ref={this.getRef} />;
+    return <div ref={this.divRef} />;
   }
 }

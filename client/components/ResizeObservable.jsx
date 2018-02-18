@@ -13,7 +13,8 @@ type State = {
 
 export default class ResizeObservable extends React.Component<Props, State> {
   observer: ?ResizeObserver;
-  el: ?HTMLElement;
+  //$FlowFixMe
+  handleRef = React.createRef();
 
   state = {
     width: 0,
@@ -22,8 +23,8 @@ export default class ResizeObservable extends React.Component<Props, State> {
 
   componentDidMount() {
     this.observer = new ResizeObserver(this.handleResize.bind(this));
-    if (this.el != null) {
-      this.observer.observe(this.el);
+    if (this.handleRef.value != null) {
+      this.observer.observe(this.handleRef.value);
     }
   }
 
@@ -37,11 +38,6 @@ export default class ResizeObservable extends React.Component<Props, State> {
   handleResize(entries: $ReadOnlyArray<Entry>) {
     const { width, height } = entries[0].contentRect;
     this.setState({ width, height });
-  }
-
-  handleRef = this.handleRef.bind(this);
-  handleRef(elem: ?HTMLElement) {
-    this.el = elem;
   }
 
   render() {
