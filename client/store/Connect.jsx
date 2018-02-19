@@ -15,8 +15,7 @@ type mapDispatchToProps = ActionCreators<*, *> | ((dispatch: Dispatch<*>) => Act
 type Props<S> = {
   state: (state: Object) => S,
   actions?: mapDispatchToProps,
-  render?: (state: S, actions: Actions) => React.Node,
-  children?: (state: S, actions: Actions) => React.Node,
+  children: (state: S, actions: Actions) => React.Node,
 };
 
 type Context = {
@@ -128,13 +127,6 @@ export class Connect extends React.Component<Props<*>, *> {
   }
 
   render() {
-    if (this.props.render !== undefined) {
-      // render prop, takes precedence
-      return this.props.render(this.state, this.actions);
-    } else if (this.props.children !== undefined) {
-      // function-as-children
-      return this.props.children(this.state, this.actions);
-    }
-    return null;
+    return this.props.children(this.state, this.actions);
   }
 }
