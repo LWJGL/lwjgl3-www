@@ -4,7 +4,6 @@ import { Connect } from '~/store/Connect';
 
 type Props = {|
   predicate: (state: Object) => boolean,
-  className?: string,
   children?: React.Node,
 |};
 
@@ -12,7 +11,7 @@ type ConnectedProps = {|
   hidden: boolean,
 |};
 
-export const ControlledPanel = ({ children, className, predicate }: Props) => (
+export const ControlledPanel = ({ children, predicate }: Props) => (
   <Connect
     state={state => ({
       hidden: !predicate(state),
