@@ -1,8 +1,6 @@
 // @flow
-import { combineReducers } from 'redux';
+import { combineReducers, type Reducer } from 'redux';
 import { breakpointReducer } from './reducers/breakpoint';
-
-import type { Reducer } from 'redux';
 
 type AsyncReducers = {
   [_: string]: Reducer<*, *>,
