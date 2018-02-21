@@ -13,6 +13,7 @@ const env = {
   ANALYTICS_TRACKING_ID: JSON.stringify(config.analytics_tracking_id),
   FLAG_PRODUCTION: String(PRODUCTION),
   FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
+  FLAG_REDUXLOGGER: String(DEV && argv.reduxLogger !== undefined),
 };
 
 const buildConfiguration = () => {
