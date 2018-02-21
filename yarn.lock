@@ -902,9 +902,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.197.0:
-  version "2.197.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.197.0.tgz#986e3749f4d1944c6253d7824aa8035efb1db0e4"
+aws-sdk@2.199.0:
+  version "2.199.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.199.0.tgz#94c2484b030f299dda494c94bacc4f66e4b32de9"
   dependencies:
     buffer "4.9.1"
     events "^1.1.1"
@@ -2554,6 +2554,10 @@ decompress-response@^3.2.0:
   dependencies:
     mimic-response "^1.0.0"
 
+deep-diff@^0.3.5:
+  version "0.3.8"
+  resolved "https://registry.yarnpkg.com/deep-diff/-/deep-diff-0.3.8.tgz#c01de63efb0eec9798801d40c7e0dae25b582c84"
+
 deep-extend@^0.4.0, deep-extend@~0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.4.2.tgz#48b699c27e334bf89f10892be432f6e4c7d34a7f"
@@ -3635,9 +3639,13 @@ hoek@4.x.x:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/hoek/-/hoek-4.2.0.tgz#72d9d0754f7fe25ca2d01ad8f8f9a9449a89526d"
 
-hoist-non-react-statics@^2.3.0, hoist-non-react-statics@^2.3.1:
+hoist-non-react-statics@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.3.1.tgz#343db84c6018c650778898240135a1420ee22ce0"
+
+hoist-non-react-statics@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.0.tgz#d2ca2dfc19c5a91c5a6615ce8e564ef0347e2a40"
 
 home-or-tmp@^2.0.0:
   version "2.0.0"
@@ -3755,9 +3763,9 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
 
-immer@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-1.0.3.tgz#2276ddb775e45a5d573b36168b4272f8db4fd000"
+immer@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-1.1.0.tgz#24c0b84eb51180e743484fe3873aacd6c5f4fed9"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -5735,7 +5743,7 @@ promise@^7.0.1, promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@15.6.0, prop-types@^15.5.0, prop-types@^15.5.4, prop-types@^15.5.8, prop-types@^15.6.0:
+prop-types@^15.5.0, prop-types@^15.5.4, prop-types@^15.6.0:
   version "15.6.0"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.0.tgz#ceaf083022fc46b4a35f69e13ef75aed0d639856"
   dependencies:
@@ -5983,13 +5991,6 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-chartjs-2@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-2.7.0.tgz#14925143f7e5c59dc631d0d8279255b031c5561a"
-  dependencies:
-    lodash "^4.17.4"
-    prop-types "^15.5.8"
-
 react-dom@16.4.0-alpha.7926752:
   version "16.4.0-alpha.7926752"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.4.0-alpha.7926752.tgz#e825504a975456ce2fa989fabdfdf2f30c7d7c3b"
@@ -5999,13 +6000,13 @@ react-dom@16.4.0-alpha.7926752:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-hot-loader@4.0.0-beta.22:
-  version "4.0.0-beta.22"
-  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.0.0-beta.22.tgz#a0596395dc46c416c52ea9c7565bd2e8ff3ca964"
+react-hot-loader@4.0.0-rc.0:
+  version "4.0.0-rc.0"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.0.0-rc.0.tgz#54d931dafeface5119c741d44ccc3e75fbb432e8"
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"
-    hoist-non-react-statics "^2.3.1"
+    hoist-non-react-statics "^2.5.0"
     prop-types "^15.6.0"
     shallowequal "^1.0.2"
 
@@ -6025,11 +6026,9 @@ react-loadable@5.3.1:
   dependencies:
     prop-types "^15.5.0"
 
-react-perf-devtool@3.1.3-beta.3:
-  version "3.1.3-beta.3"
-  resolved "https://registry.yarnpkg.com/react-perf-devtool/-/react-perf-devtool-3.1.3-beta.3.tgz#404781a6eef72f482398210caf598b43fbbedcf1"
-  dependencies:
-    react-chartjs-2 "^2.7.0"
+react-perf-devtool@3.1.3-beta.4:
+  version "3.1.3-beta.4"
+  resolved "https://registry.yarnpkg.com/react-perf-devtool/-/react-perf-devtool-3.1.3-beta.4.tgz#0c1cef84925d440e7a43e5b61609ee9ac6de04f4"
 
 react-router-dom@4.2.2:
   version "4.2.2"
@@ -6190,6 +6189,12 @@ reduce-function-call@^1.0.1:
   resolved "https://registry.yarnpkg.com/reduce-function-call/-/reduce-function-call-1.0.2.tgz#5a200bf92e0e37751752fe45b0ab330fd4b6be99"
   dependencies:
     balanced-match "^0.4.2"
+
+redux-logger@3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-3.0.6.tgz#f7555966f3098f3c88604c449cf0baf5778274bf"
+  dependencies:
+    deep-diff "^0.3.5"
 
 redux-thunk@2.2.0:
   version "2.2.0"
