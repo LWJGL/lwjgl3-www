@@ -104,6 +104,8 @@ const buildConfiguration = () => {
     // Enable source maps
     if (SOURCEMAP) {
       config.devtool = 'inline-source-map';
+    } else {
+      config.devtool = 'cheap-module-source-map';
     }
 
     // Enable react-perf-devtool support
