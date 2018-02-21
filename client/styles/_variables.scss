@@ -19,6 +19,11 @@ $display2-size: 3.5rem;
 $display3-size: 3rem;
 $display4-size: 2.5rem;
 
+// Transitions
+$transition-ease: cubic-bezier(0.4, 1, 0.75, 0.9);
+$transition-ease-bounce: cubic-bezier(0.54, 1.12, 0.38, 1.11);
+$transition-duration: 100ms;
+
 // Colors
 
 $lwjgl-primary: #1b2426;

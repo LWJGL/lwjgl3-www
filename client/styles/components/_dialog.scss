@@ -1,0 +1,98 @@
+.dialog {
+  /*
+  &.scale-enter,
+  &.scale-appear,
+  &.scale-exit {
+    transition-duration: ($transition-duration * 3);
+    transition-timing-function: $transition-ease-bounce;
+    transition-property: opacity, transform;
+  }
+
+  &.scale-enter,
+  &.scale-appear {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  &.scale-enter.scale-enter-active,
+  &.scale-appear.scale-appear-active {
+    opacity: 1;
+    transform: scale(1);
+    // Hide scrollbar while scaling up or down
+    overflow: hidden !important;
+  }
+  &.scale-exit {
+    opacity: 1;
+    transform: scale(1);
+    &.scale-exit-active {
+      opacity: 0;
+      transform: scale(0.1);
+      // Hide scrollbar while scaling up or down
+      overflow: hidden !important;
+    }
+  }
+  */
+
+  &.dialog-fixed {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    z-index: $zindex-modal;
+  }
+
+  .dialog-content {
+    padding: $modal-inner-padding;
+    background: $modal-content-bg;
+    // @include border-radius($border-radius);
+    // border: $modal-content-border-width solid $modal-content-border-color;
+    box-shadow: $modal-content-box-shadow-xs;
+
+    @include media-breakpoint-up(sm) {
+      box-shadow: $modal-content-box-shadow-sm-up;
+    }
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  .dialog-footer {
+    margin: 0 (-$modal-inner-padding);
+    padding: $modal-inner-padding $modal-inner-padding 0 $modal-inner-padding;
+    border-top: 1px solid $modal-footer-border-color;
+    text-align: right;
+  }
+
+  .dialog-header {
+    margin: (-$modal-inner-padding) (-$modal-inner-padding) $modal-inner-padding (-$modal-inner-padding);
+    padding: ($modal-inner-padding/2) $modal-inner-padding;
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+
+    h3 {
+      @include overflow-ellipsis();
+      flex: 1 1 auto;
+      margin: 0;
+      line-height: inherit;
+      font-weight: 300;
+    }
+  }
+
+  .dialog-close-button {
+    flex: 0 0 auto;
+    cursor: pointer;
+
+    .svg-icon {
+      margin-left: 1rem;
+      font-size: 24px;
+      &:hover {
+        color: rgba(255, 255, 255, 0.65);
+      }
+    }
+  }
+}

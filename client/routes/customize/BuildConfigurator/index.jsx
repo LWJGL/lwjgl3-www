@@ -18,6 +18,7 @@ import { ControlledPanel } from '~/components/ControlledPanel';
 import { ControlledRadio } from '~/components/ControlledRadio';
 import { ControlledCheckbox } from '~/components/ControlledCheckbox';
 import { ControlledToggle } from '~/components/ControlledToggle';
+import { ScreenLock } from '~/components/ScreenLock';
 
 import { BuildConfigArea } from './components/BuildConfigArea';
 import { BuildType } from './components/BuildType';
@@ -199,10 +200,18 @@ export class BuildConfigurator extends React.Component<Props, State> {
   }
 
   render() {
-    const { isDownloading } = this.state;
+    const { isDownloading, progress } = this.state;
 
     return (
       <div className="config-container" style={{ position: 'relative' }}>
+        <ScreenLock isOpen={isDownloading} backdropClassName="dark">
+          <div className="container">
+            <div className="row">
+              <BuildBundler progress={progress} cancel={this.downloadAbort} />
+            </div>
+          </div>
+        </ScreenLock>
+
         <div className="row">
           <div className="col-lg p-0 px-lg-3">
             <BuildType build="release" downloading={isDownloading} />
@@ -218,108 +227,100 @@ export class BuildConfigurator extends React.Component<Props, State> {
           <div className="row">
             <div className="col p-0">
               <BuildConfigArea>
-                {!isDownloading ? (
-                  <React.Fragment>
-                    <div className="row pt-3">
-                      <div className="col-md">
-                        <h4>Mode</h4>
-                        <ControlledRadio spec={fields.mode} />
+                <div className="row pt-3">
+                  <div className="col-md">
+                    <h4>Mode</h4>
+                    <ControlledRadio spec={fields.mode} />
 
-                        <h4 className="mt-3">Options</h4>
-                        <div className="custom-controls-stacked">
-                          <ControlledToggle spec={fields.descriptions} />
-                          <ControlledCheckbox spec={fields.source} />
-                          <ControlledCheckbox spec={fields.javadoc} />
-                          <ControlledToggle spec={fields.hardcoded} />
-                          <ControlledToggle spec={fields.compact} />
-                          <ControlledToggle spec={fields.osgi} />
-                        </div>
-
-                        <BuildPlatform />
-
-                        <ControlledPanel predicate={hasLanguageOption}>
-                          <h4 className="mt-3">Language</h4>
-                          <ControlledRadio spec={fields.language} />
-                        </ControlledPanel>
-                      </div>
-                      <div className="col-md">
-                        <h4>Presets</h4>
-                        <ControlledRadio spec={fields.preset} />
-
-                        <h4 className="mt-3">Addons</h4>
-                        <Connect
-                          state={({ build }: { build: BuildConfig }) => ({
-                            addons: build.addons.allIds,
-                          })}
-                        >
-                          {({ addons }) => (
-                            <div className="custom-controls-stacked">
-                              {addons.map(it => <BuildAddon key={it} id={it} />)}
-                            </div>
-                          )}
-                        </Connect>
-
-                        <ControlledPanel predicate={isBuildRelease}>
-                          <h4 className="mt-3">Version</h4>
-                          <ControlledRadio spec={fields.version} />
-                          <Connect
-                            state={({ build }: { build: BuildConfig }) => ({
-                              version: build.version,
-                            })}
-                          >
-                            {({ version }) => (
-                              <p>
-                                <a
-                                  href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
-                                  style={{ fontSize: '80%' }}
-                                >
-                                  release notes for {version}
-                                </a>
-                              </p>
-                            )}
-                          </Connect>
-                        </ControlledPanel>
-                      </div>
-
-                      <div className="col-md-6">
-                        <h4>Contents</h4>
-                        <Connect
-                          state={({ build }: { build: BuildConfig }) => ({
-                            artifacts: build.artifacts.allIds,
-                          })}
-                        >
-                          {({ artifacts }) => (
-                            <div className="custom-controls-stacked">
-                              {artifacts.map(it => <BuildArtifact key={it} id={it} />)}
-                            </div>
-                          )}
-                        </Connect>
-                      </div>
+                    <h4 className="mt-3">Options</h4>
+                    <div className="custom-controls-stacked">
+                      <ControlledToggle spec={fields.descriptions} />
+                      <ControlledCheckbox spec={fields.source} />
+                      <ControlledCheckbox spec={fields.javadoc} />
+                      <ControlledToggle spec={fields.hardcoded} />
+                      <ControlledToggle spec={fields.compact} />
+                      <ControlledToggle spec={fields.osgi} />
                     </div>
 
+                    <BuildPlatform />
+
+                    <ControlledPanel predicate={hasLanguageOption}>
+                      <h4 className="mt-3">Language</h4>
+                      <ControlledRadio spec={fields.language} />
+                    </ControlledPanel>
+                  </div>
+                  <div className="col-md">
+                    <h4>Presets</h4>
+                    <ControlledRadio spec={fields.preset} />
+
+                    <h4 className="mt-3">Addons</h4>
                     <Connect
                       state={({ build }: { build: BuildConfig }) => ({
-                        mode: build.modes.byId[build.mode].id,
+                        addons: build.addons.allIds,
                       })}
                     >
-                      {({ mode }) =>
-                        mode === MODE_ZIP ? (
-                          <BuildToolbar configDownload={this.configDownload}>
-                            <button className="btn btn-success" onClick={this.download}>
-                              <IconDownload /> DOWNLOAD ZIP
-                            </button>
-                          </BuildToolbar>
-                        ) : (
-                          <BuildScript configDownload={this.configDownload} />
-                        )
-                      }
+                      {({ addons }) => (
+                        <div className="custom-controls-stacked">
+                          {addons.map(it => <BuildAddon key={it} id={it} />)}
+                        </div>
+                      )}
                     </Connect>
-                  </React.Fragment>
-                ) : (
-                  <div className="row">
-                    <BuildBundler progress={this.state.progress} cancel={this.downloadAbort} />
+
+                    <ControlledPanel predicate={isBuildRelease}>
+                      <h4 className="mt-3">Version</h4>
+                      <ControlledRadio spec={fields.version} />
+                      <Connect
+                        state={({ build }: { build: BuildConfig }) => ({
+                          version: build.version,
+                        })}
+                      >
+                        {({ version }) => (
+                          <p>
+                            <a
+                              href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
+                              style={{ fontSize: '80%' }}
+                            >
+                              release notes for {version}
+                            </a>
+                          </p>
+                        )}
+                      </Connect>
+                    </ControlledPanel>
                   </div>
-                )}
+
+                  <div className="col-md-6">
+                    <h4>Contents</h4>
+                    <Connect
+                      state={({ build }: { build: BuildConfig }) => ({
+                        artifacts: build.artifacts.allIds,
+                      })}
+                    >
+                      {({ artifacts }) => (
+                        <div className="custom-controls-stacked">
+                          {artifacts.map(it => <BuildArtifact key={it} id={it} />)}
+                        </div>
+                      )}
+                    </Connect>
+                  </div>
+                </div>
+
+                <Connect
+                  state={({ build }: { build: BuildConfig }) => ({
+                    mode: build.modes.byId[build.mode].id,
+                  })}
+                >
+                  {({ mode }) =>
+                    mode === MODE_ZIP ? (
+                      <BuildToolbar configDownload={this.configDownload}>
+                        <button className="btn btn-success" onClick={this.download}>
+                          <IconDownload /> DOWNLOAD ZIP
+                        </button>
+                      </BuildToolbar>
+                    ) : (
+                      <BuildScript configDownload={this.configDownload} />
+                    )
+                  }
+                </Connect>
               </BuildConfigArea>
             </div>
           </div>

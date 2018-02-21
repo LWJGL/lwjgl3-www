@@ -10,13 +10,9 @@ type Props = {
 };
 
 export class BuildBundler extends React.Component<Props> {
-  componentDidMount() {
-    document.getElementsByClassName('config-container')[0].scrollIntoView(true);
-  }
-
   render() {
     return (
-      <div className="col">
+      <div className="col text-left">
         <div className="text-center">
           <LoaderSpinner size={32} className="my-3" />
           <h4>Generating ZIP bundle. Please wait...</h4>
@@ -26,7 +22,7 @@ export class BuildBundler extends React.Component<Props> {
             </button>
           </p>
         </div>
-        <pre>
+        <pre style={{ color: 'white', height: '50vh', overflow: 'auto' }}>
           {this.props.progress
             .slice(0)
             .reverse()

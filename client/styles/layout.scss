@@ -9,6 +9,9 @@
 // @import 'variables-more';
 @import 'animations-common';
 
+// Mixins
+@import 'mixins/default';
+
 // ----------------------------------------------------------------------------------------------------------------
 // BOOTSTRAP
 // ----------------------------------------------------------------------------------------------------------------
@@ -60,6 +63,11 @@
 @import 'components/svg-icon';
 @import 'components/loader';
 @import 'components/nprogress';
+@import 'components/overlay';
+@import 'components/dialog';
+// @import 'components/dialog-alert';
+// @import 'components/dialog-modal';
+@import 'components/dialog-lock';
 
 // ----------------------------------------------------------------------------------------------------------------
 // THEME

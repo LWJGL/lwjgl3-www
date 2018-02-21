@@ -1,0 +1,12 @@
+.dialog-lock {
+  &.dialog-fixed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dialog-naked {
+    text-align: center;
+    color: white;
+  }
+}
