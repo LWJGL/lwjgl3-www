@@ -49,8 +49,9 @@ const config = {
 
       // State management
       'redux',
+      'redux-logger',
       'redux-thunk',
-      'reselect/es',
+      'reselect',
 
       // UI
       'emotion',

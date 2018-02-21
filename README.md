@@ -107,6 +107,7 @@ yarn watch
 --react-perf # Enables react-perf-devtool in dev mode
 --nohmr # Disables Webpack Hot Module Reloading
 --rhl # Enables React-Hot-Loader (requires HMR)
+--redux-logger # Enables Logger for Redux
 ```
 
 The following flags are used for testing production builds locally.
