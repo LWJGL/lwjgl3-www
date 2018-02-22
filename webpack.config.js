@@ -80,7 +80,7 @@ const buildConfiguration = () => {
           include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
           use: [
             'cache-loader',
-            // 'thread-loader',
+            'thread-loader',
             {
               loader: 'babel-loader',
               options: {

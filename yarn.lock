@@ -902,9 +902,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.199.0:
-  version "2.199.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.199.0.tgz#94c2484b030f299dda494c94bacc4f66e4b32de9"
+aws-sdk@2.201.0:
+  version "2.201.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.201.0.tgz#7a4528262d9097abe37ebf4e6bf9d1851db47003"
   dependencies:
     buffer "4.9.1"
     events "^1.1.1"
@@ -2351,9 +2351,9 @@ css-declaration-sorter@^2.0.1:
     timsort "^0.3.0"
     write-file-stdout "0.0.2"
 
-css-loader@0.28.9:
-  version "0.28.9"
-  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.9.tgz#68064b85f4e271d7ce4c48a58300928e535d1c95"
+css-loader@0.28.10:
+  version "0.28.10"
+  resolved "https://registry.yarnpkg.com/css-loader/-/css-loader-0.28.10.tgz#40282e79230f7bcb4e483efa631d670b735ebf42"
   dependencies:
     babel-code-frame "^6.26.0"
     css-selector-tokenizer "^0.7.0"
@@ -3763,9 +3763,9 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
 
-immer@1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-1.1.0.tgz#24c0b84eb51180e743484fe3873aacd6c5f4fed9"
+immer@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-1.1.1.tgz#4ab9a89b68f8c48e73f382ffb8b224c73e0c6890"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -7100,9 +7100,9 @@ text-table@^0.2.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/textextensions/-/textextensions-2.1.0.tgz#1be0dc2a0dc244d44be8a09af6a85afb93c4dbc3"
 
-thread-loader@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/thread-loader/-/thread-loader-1.1.2.tgz#45dd1af01d8e421e6002b3c19358650cb9a42518"
+thread-loader@1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/thread-loader/-/thread-loader-1.1.4.tgz#80f2594af201e3a33669f419acd41a900fcc6c2f"
   dependencies:
     async "^2.3.0"
     loader-runner "^2.3.0"
@@ -7574,9 +7574,9 @@ webpack-cli@2.0.6:
     yeoman-environment "^2.0.0"
     yeoman-generator "https://github.com/ev1stensberg/generator.git#Feature-getArgument"
 
-webpack-dev-middleware@2.0.5:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-2.0.5.tgz#2a1d07afb599e1993033d72c2181ec2344c15e31"
+webpack-dev-middleware@2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-2.0.6.tgz#a51692801e8310844ef3e3790e1eacfe52326fd4"
   dependencies:
     loud-rejection "^1.6.0"
     memory-fs "~0.4.1"
