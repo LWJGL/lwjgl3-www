@@ -214,13 +214,13 @@ export class BuildConfigurator extends React.Component<Props, State> {
 
         <div className="row">
           <div className="col-lg p-0 px-lg-3">
-            <BuildType build="release" downloading={isDownloading} />
+            <BuildType build="release" />
           </div>
           <div className="col-lg p-0">
-            <BuildType build="stable" downloading={isDownloading} />
+            <BuildType build="stable" />
           </div>
           <div className="col-lg p-0 px-lg-3">
-            <BuildType build="nightly" downloading={isDownloading} />
+            <BuildType build="nightly" />
           </div>
         </div>
         <ControlledPanel predicate={isBuildSelected}>

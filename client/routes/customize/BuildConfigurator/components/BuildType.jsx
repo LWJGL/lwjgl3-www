@@ -2,7 +2,7 @@
 import * as React from 'react';
 
 import { BuildStatus } from './BuildStatus';
-import { changeType } from '../reducer';
+import { changeType, loadStatus } from '../reducer';
 import { Connect } from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
@@ -54,10 +54,6 @@ const BuildBox = css`
     border-color: ${COLOR_NIGHTLY.css()};
     color: ${COLOR_NIGHTLY.css()};
   }
-  &.locked {
-    opacity: 0.5;
-    filter: saturate(0%);
-  }
 
   &:hover {
     > h2 {
@@ -108,7 +104,6 @@ const BuildBox = css`
 
 type Props = {
   build: BUILD_TYPES,
-  downloading: boolean,
 };
 
 type ConnectedProps = {
@@ -117,29 +112,35 @@ type ConnectedProps = {
   spec: Build,
 };
 
-export const BuildType = ({ build, downloading }: Props) => (
-  <Connect
-    state={(state): ConnectedProps => ({
-      isSelected: state.build.build === build,
-      isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
-      spec: state.build.builds.byId[build],
-    })}
-    actions={{ changeType }}
-  >
-    {({ isSelected, isActive, spec }, { changeType }) => (
-      <div
-        onClick={downloading ? null : changeType.bind(this, build)}
-        className={cc(BuildBox, build, {
-          locked: downloading && !isSelected,
-          selected: isSelected,
-          active: isActive,
+export class BuildType extends React.PureComponent<Props> {
+  render() {
+    const { build } = this.props;
+
+    return (
+      <Connect
+        state={(state): ConnectedProps => ({
+          isSelected: state.build.build === build,
+          isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
+          spec: state.build.builds.byId[build],
+          status: state.build.builds.byId[build].status,
         })}
+        actions={{ changeType, loadStatus }}
       >
-        <h2>{spec.title}</h2>
-        <p>{spec.description}</p>
-        <BuildStatus name={spec.id} />
-        {isSelected ? <IconClose /> : null}
-      </div>
-    )}
-  </Connect>
-);
+        {({ isSelected, isActive, status, spec }, { changeType, loadStatus }) => (
+          <div
+            onClick={changeType.bind(this, build)}
+            className={cc(BuildBox, build, {
+              selected: isSelected,
+              active: isActive,
+            })}
+          >
+            <h2>{spec.title}</h2>
+            <p>{spec.description}</p>
+            <BuildStatus name={spec.id} status={status} loadStatus={loadStatus} />
+            {isSelected ? <IconClose /> : null}
+          </div>
+        )}
+      </Connect>
+    );
+  }
+}

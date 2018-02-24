@@ -1,42 +1,37 @@
 // @flow
 import * as React from 'react';
 import { LoaderSpinner } from '~/components/LoaderSpinner';
-import { loadStatus } from '../reducer';
-import type { BUILD_TYPES } from '../types';
-import { Connect } from '~/store/Connect';
+import type { BUILD_TYPES, BuildStatus as BuildStatusType } from '../types';
 
 type Props = {|
   name: BUILD_TYPES,
+  status: BuildStatusType | null,
+  loadStatus: (name: string) => void,
 |};
 
-export const BuildStatus = ({ name }: Props) => (
-  <Connect
-    state={(state: Object) => ({
-      status: state.build.builds.byId[name].status,
-    })}
-    actions={{
-      loadStatus,
-    }}
-  >
-    {({ status }, { loadStatus }) => {
-      if (status === null) {
-        loadStatus(name);
-        return (
-          <p className="my-0">
-            <LoaderSpinner size={16} />
-            <br />
-            <br />
-          </p>
-        );
-      }
+export class BuildStatus extends React.PureComponent<Props> {
+  componentDidMount() {
+    const { name, status, loadStatus } = this.props;
+    if (status === null) {
+      loadStatus(name);
+    }
+  }
 
-      return (
-        <p className="my-0">
-          {status.error ? <span className="text-danger">{status.error}</span> : status.version}
-          <br />
-          {status.lastModified ? status.lastModified : <br />}
-        </p>
-      );
-    }}
-  </Connect>
-);
+  render() {
+    const { name, status } = this.props;
+
+    return status === null ? (
+      <p className="my-0">
+        <LoaderSpinner size={16} />
+        <br />
+        <br />
+      </p>
+    ) : (
+      <p className="my-0">
+        {status.error !== undefined ? <span className="text-danger">{status.error}</span> : status.version}
+        <br />
+        {status.lastModified !== undefined ? status.lastModified : <br />}
+      </p>
+    );
+  }
+}

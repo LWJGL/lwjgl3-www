@@ -53,15 +53,9 @@ export class PageView extends React.Component<Props> {
     // TODO: Custom rendering of errors
     // TODO: Steal ideas from create-react-app's react-error-overlay (e.g. open file in editor)
     if (!FLAG_PRODUCTION) {
-      // $FlowFixMe
-      return <React.unstable_AsyncMode>{this.props.children}</React.unstable_AsyncMode>;
+      return this.props.children;
     } else {
-      return (
-        <ErrorBoundary render={PageError}>
-          {/* $FlowFixMe */}
-          <React.unstable_AsyncMode>{this.props.children}</React.unstable_AsyncMode>
-        </ErrorBoundary>
-      );
+      return <ErrorBoundary render={PageError}>{this.props.children}</ErrorBoundary>;
     }
   }
 }
