@@ -31,7 +31,7 @@ import { BuildToolbar } from './components/BuildToolbar';
 
 import IconDownload from 'react-icons/md/file-download';
 
-import type { BuildConfig, BuildConfigStored, NATIVES } from './types';
+import type { BuildConfig, BuildConfigStored } from './types';
 import type { GenerateOptions } from 'jszip';
 
 const STORAGE_KEY = 'lwjgl-build-config';

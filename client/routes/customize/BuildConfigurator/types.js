@@ -10,6 +10,7 @@ export type BindingDefinition = {
   description: string,
   required?: boolean,
   natives?: Array<NATIVES>,
+  nativesOptional?: boolean,
   website?: string,
   presets?: Array<string>,
 };

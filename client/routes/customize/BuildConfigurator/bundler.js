@@ -97,6 +97,7 @@ export function getBuild({ build }: { build: BuildConfig }): SelectedBuildConfig
 
     return (
       spec.natives === undefined ||
+      spec.nativesOptional === true ||
       spec.natives.length === platformCount ||
       spec.natives.some(platform => selectedPlatforms[platform])
     );
