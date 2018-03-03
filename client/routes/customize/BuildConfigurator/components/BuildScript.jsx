@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
-import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition, Platforms } from '../types';
+import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition, Platforms, NATIVES } from '../types';
 import type { BreakPointState } from '~/store/reducers/breakpoint';
 import { Connect } from '~/store/Connect';
 
@@ -20,7 +20,7 @@ type ConnectedProps = {|
   compact: boolean,
   osgi: boolean,
   platform: Platforms,
-  platformSingle?: string,
+  platformSingle: NATIVES | null,
   artifacts: { [string]: BindingDefinition },
   selected: Array<string>,
   addons: Array<Addon>,
@@ -29,6 +29,24 @@ type ConnectedProps = {|
 type Props = {|
   configDownload: Function,
 |};
+
+function getSelectedPlatforms(build: BuildConfig): NATIVES | null {
+  let i = 0;
+  let result = null;
+
+  for (let i = 0; i < build.natives.allIds.length; i += 1) {
+    const p = build.natives.allIds[i];
+    if (build.platform[p]) {
+      if (result === null) {
+        result = p;
+      } else {
+        return null; // more than one platforms selected
+      }
+    }
+  }
+
+  return result;
+}
 
 export class BuildScript extends React.Component<Props> {
   //$FlowFixMe
@@ -62,19 +80,6 @@ export class BuildScript extends React.Component<Props> {
     return (
       <Connect
         state={({ build, breakpoint }: { build: BuildConfig, breakpoint: BreakPointState }): ConnectedProps => {
-          // Platforms
-          let platformSingle: ?string = null;
-          for (let p in build.platform) {
-            if (build.platform[p]) {
-              if (platformSingle === null) {
-                platformSingle = p;
-              } else {
-                platformSingle = null; // more than one platforms selected
-                break;
-              }
-            }
-          }
-
           // Artifacts
           const selected: Array<string> = [];
 
@@ -103,7 +108,7 @@ export class BuildScript extends React.Component<Props> {
             compact: build.compact,
             osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
             platform: build.platform,
-            platformSingle: platformSingle,
+            platformSingle: getSelectedPlatforms(build),
             artifacts: build.artifacts.byId,
             selected,
             addons,
@@ -180,19 +185,19 @@ function generateScript(mode: MODES, props: ConnectedProps): string {
 }
 
 function generateDependencies(
-    selected: Array<string>,
-    artifacts: { [string]: BindingDefinition },
-    platform: Platforms,
-    generateJava: (string, boolean) => string,
-    generateNative: (string) => string,
+  selected: Array<string>,
+  artifacts: { [string]: BindingDefinition },
+  platform: Platforms,
+  generateJava: (string, boolean) => string,
+  generateNative: string => string
 ): string {
-  let script = ''
+  let script = '';
   let nativesBundle = '';
 
   selected.forEach(artifact => {
     let natives = artifacts[artifact].natives;
     let hasEnabledNativePlatform = natives !== undefined && natives.some(it => platform[it]);
-    if (natives !== undefined && !hasEnabledNativePlatform && !artifacts[artifact].nativesOptional) {
+    if (natives !== undefined && !hasEnabledNativePlatform && artifacts[artifact].nativesOptional !== true) {
       return;
     }
     script += generateJava(artifact, hasEnabledNativePlatform);
@@ -212,7 +217,7 @@ function generateMaven(props: ConnectedProps) {
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
-  const classifier = !hardcoded || platformSingle == null ? '\${lwjgl.natives}' : `natives-${platformSingle}`;
+  const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
 
   let script = '';
   if (!hardcoded) {
@@ -224,7 +229,7 @@ function generateMaven(props: ConnectedProps) {
     });
 
     if (platformSingle !== null) {
-        script += `\n\t<lwjgl.natives>natives-${platformSingle}</lwjgl.natives>`;
+      script += `\n\t<lwjgl.natives>natives-${platformSingle}</lwjgl.natives>`;
     }
 
     script += `\n</properties>\n\n`;
@@ -251,10 +256,14 @@ function generateMaven(props: ConnectedProps) {
   script += `<dependencies>`;
 
   script += generateDependencies(
-      selected, artifacts, platform,
-      (artifact) => `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`,
-      (artifact) => `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl2}${nl1}</dependency>`,
-  )
+    selected,
+    artifacts,
+    platform,
+    artifact =>
+      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`,
+    artifact =>
+      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl2}${nl1}</dependency>`
+  );
 
   addons.forEach((addon: Addon) => {
     const maven = addon.maven;
@@ -273,7 +282,7 @@ function generateGradle(props: ConnectedProps) {
   const version = getVersion(props.version, build);
   const v = hardcoded ? version : '$lwjglVersion';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
-  const classifier = !hardcoded || platformSingle == null ? '\$lwjglNatives' : `natives-${platformSingle}`;
+  const classifier = !hardcoded || platformSingle == null ? '$lwjglNatives' : `natives-${platformSingle}`;
 
   let script = platformSingle === null ? 'import org.gradle.internal.os.OperatingSystem\n\n' : '';
 
@@ -288,7 +297,7 @@ function generateGradle(props: ConnectedProps) {
     script += '\n\n';
   }
   if (platformSingle === null) {
-      script += `switch ( OperatingSystem.current() ) {
+    script += `switch ( OperatingSystem.current() ) {
 \tcase OperatingSystem.WINDOWS:
 \t\tproject.ext.lwjglNatives = "natives-windows"
 \t\tbreak
@@ -301,21 +310,23 @@ function generateGradle(props: ConnectedProps) {
 }\n\n`;
   }
 
-    script += `repositories {
+  script += `repositories {
 \tmavenCentral()`;
-    if (build !== BUILD_RELEASE) {
-      script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
-    }
+  if (build !== BUILD_RELEASE) {
+    script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
+  }
   script += `
 }
 
 dependencies {`;
 
   script += generateDependencies(
-      selected, artifacts, platform,
-      (artifact) => `\n\tcompile "${groupId}:${artifact}:${v}"`,
-      (artifact) => `\n\tcompile "${groupId}:${artifact}:${v}:${classifier}"`,
-  )
+    selected,
+    artifacts,
+    platform,
+    artifact => `\n\tcompile "${groupId}:${artifact}:${v}"`,
+    artifact => `\n\tcompile "${groupId}:${artifact}:${v}:${classifier}"`
+  );
 
   addons.forEach((addon: Addon) => {
     const maven = addon.maven;
@@ -338,7 +349,7 @@ function generateIvy(props: ConnectedProps) {
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
-  const classifier = !hardcoded || platformSingle == null ? '\${lwjgl.natives}' : `natives-${platformSingle}`;
+  const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
 
   if (!hardcoded || build !== BUILD_RELEASE) script += `\t<!-- Add to ivysettings.xml -->\n`;
 
@@ -350,7 +361,7 @@ function generateIvy(props: ConnectedProps) {
     });
 
     if (platformSingle !== null) {
-        script += `\n\t<property name="lwjgl.natives" value="natives-${platformSingle}"/>`;
+      script += `\n\t<property name="lwjgl.natives" value="natives-${platformSingle}"/>`;
     }
     script += '\n\n';
   }
@@ -366,7 +377,7 @@ function generateIvy(props: ConnectedProps) {
   }
 
   if (platformSingle === null) {
-      script += `\t<!-- Add to build.xml -->
+    script += `\t<!-- Add to build.xml -->
 \t<condition property="lwjgl.natives" value="natives-windows">${nl2}<os family="Windows"/>${nl1}</condition>
 \t<condition property="lwjgl.natives" value="natives-linux">${nl2}<os name="Linux"/>${nl1}</condition>
 \t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>\n\n`;
@@ -376,12 +387,15 @@ function generateIvy(props: ConnectedProps) {
 \t<dependencies>`;
 
   script += generateDependencies(
-      selected, artifacts, platform,
-      (artifact, hasEnabledNativePlatform) => hasEnabledNativePlatform
-          ? `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="${classifier}"/>${nl2}</dependency>`
-          : `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}"/>`,
-      (artifact) => '',
-  )
+    selected,
+    artifacts,
+    platform,
+    (artifact, hasEnabledNativePlatform) =>
+      hasEnabledNativePlatform
+        ? `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="${classifier}"/>${nl2}</dependency>`
+        : `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}"/>`,
+    artifact => ''
+  );
 
   addons.forEach((addon: Addon) => {
     const maven = addon.maven;
