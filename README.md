@@ -246,7 +246,6 @@ Recommended VS Code **Workspace Settings**:
 * enable Prettier's format-on-save
 * exclude generated files
 * disable built-in JS support because we rely on Flow
-* enable typescript for styled components Intellisense support
 
 ```json
 {
@@ -260,7 +259,6 @@ Recommended VS Code **Workspace Settings**:
   "javascript.format.enable": false,
   "javascript.nameSuggestions": false,
   "javascript.referencesCodeLens.enabled": false,
-  "javascript.validate.enable": false,
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  "javascript.validate.enable": false
 }
 ```
