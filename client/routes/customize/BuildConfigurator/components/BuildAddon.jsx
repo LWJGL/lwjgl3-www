@@ -1,8 +1,7 @@
 // @flow
 import * as React from 'react';
 import { toggleAddon } from '../reducer';
-import { MODE_ZIP } from '../constants';
-import type { BuildConfig, MODES, Addon } from '../types';
+import type { BuildConfig, Addon } from '../types';
 import { Checkbox } from '~/components/Checkbox';
 import { Connect } from '~/store/Connect';
 import { cc } from '~/theme';

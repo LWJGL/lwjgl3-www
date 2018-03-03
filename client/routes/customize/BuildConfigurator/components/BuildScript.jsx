@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import { MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
-import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition } from '../types';
+import { MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
+import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition, Platforms } from '../types';
 import type { BreakPointState } from '~/store/reducers/breakpoint';
 import { Connect } from '~/store/Connect';
 
@@ -19,6 +19,8 @@ type ConnectedProps = {|
   hardcoded: boolean,
   compact: boolean,
   osgi: boolean,
+  platform: Platforms,
+  platformSingle?: string,
   artifacts: { [string]: BindingDefinition },
   selected: Array<string>,
   addons: Array<Addon>,
@@ -60,6 +62,19 @@ export class BuildScript extends React.Component<Props> {
     return (
       <Connect
         state={({ build, breakpoint }: { build: BuildConfig, breakpoint: BreakPointState }): ConnectedProps => {
+          // Platforms
+          let platformSingle: ?string = null;
+          for (let p in build.platform) {
+            if (build.platform[p]) {
+              if (platformSingle === null) {
+                platformSingle = p;
+              } else {
+                platformSingle = null; // more than one platforms selected
+                break;
+              }
+            }
+          }
+
           // Artifacts
           const selected: Array<string> = [];
 
@@ -87,6 +102,8 @@ export class BuildScript extends React.Component<Props> {
             hardcoded: build.hardcoded,
             compact: build.compact,
             osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
+            platform: build.platform,
+            platformSingle: platformSingle,
             artifacts: build.artifacts.byId,
             selected,
             addons,
@@ -162,17 +179,42 @@ function generateScript(mode: MODES, props: ConnectedProps): string {
   }
 }
 
-function generateMaven(props: ConnectedProps) {
-  const { build, hardcoded, compact, osgi, artifacts, selected, addons } = props;
-  const version = getVersion(props.version, build);
-  let script = '';
+function generateDependencies(
+    selected: Array<string>,
+    artifacts: { [string]: BindingDefinition },
+    platform: Platforms,
+    generateJava: (string, boolean) => string,
+    generateNative: (string) => string,
+): string {
+  let script = ''
   let nativesBundle = '';
+
+  selected.forEach(artifact => {
+    let natives = artifacts[artifact].natives;
+    let hasEnabledNativePlatform = natives !== undefined && natives.some(it => platform[it]);
+    if (natives !== undefined && !hasEnabledNativePlatform && !artifacts[artifact].nativesOptional) {
+      return;
+    }
+    script += generateJava(artifact, hasEnabledNativePlatform);
+    if (hasEnabledNativePlatform) {
+      nativesBundle += generateNative(artifact);
+    }
+  });
+
+  return script + nativesBundle;
+}
+
+function generateMaven(props: ConnectedProps) {
+  const { build, hardcoded, compact, osgi, platform, platformSingle, artifacts, selected, addons } = props;
+  const version = getVersion(props.version, build);
   const v = hardcoded ? version : '${lwjgl.version}';
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
+  const classifier = !hardcoded || platformSingle == null ? '\${lwjgl.natives}' : `natives-${platformSingle}`;
 
+  let script = '';
   if (!hardcoded) {
     script += `<properties>
 \t<lwjgl.version>${version}</lwjgl.version>`;
@@ -181,19 +223,38 @@ function generateMaven(props: ConnectedProps) {
       script += `\n\t<${addon.id}.version>${addon.maven.version}</${addon.id}.version>`;
     });
 
+    if (platformSingle !== null) {
+        script += `\n\t<lwjgl.natives>natives-${platformSingle}</lwjgl.natives>`;
+    }
+
     script += `\n</properties>\n\n`;
+  }
+  if (platformSingle === null) {
+    script += `<profiles>
+\t<profile>${nl2}<id>lwjgl-natives-linux</id>${nl2}<activation>${nl3}<os><family>unix</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-linux</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+\t<profile>${nl2}<id>lwjgl-natives-macos</id>${nl2}<activation>${nl3}<os><family>mac</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-macos</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+\t<profile>${nl2}<id>lwjgl-natives-windows</id>${nl2}<activation>${nl3}<os><family>windows</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-windows</lwjgl.natives>${nl2}</properties>${nl1}</profile>
+</profiles>\n\n`;
+  }
+
+  if (build !== BUILD_RELEASE) {
+    script += `<repositories>
+\t<repository>
+\t\t<id>sonatype-snapshots</id>
+\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+\t\t<releases><enabled>false</enabled></releases>
+\t\t<snapshots><enabled>true</enabled></snapshots>
+\t</repository>
+</repositories>\n\n`;
   }
 
   script += `<dependencies>`;
 
-  selected.forEach(artifact => {
-    script += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`;
-    if (artifacts[artifact].natives !== undefined) {
-      nativesBundle += `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>\${lwjgl.natives}</classifier>${nl2}${nl1}</dependency>`;
-    }
-  });
-
-  script += nativesBundle;
+  script += generateDependencies(
+      selected, artifacts, platform,
+      (artifact) => `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`,
+      (artifact) => `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl2}${nl1}</dependency>`,
+  )
 
   addons.forEach((addon: Addon) => {
     const maven = addon.maven;
@@ -204,38 +265,30 @@ function generateMaven(props: ConnectedProps) {
 
   script += `\n</dependencies>`;
 
-  if (build !== BUILD_RELEASE) {
-    script += `\n\n<repositories>
-\t<repository>
-\t\t<id>sonatype-snapshots</id>
-\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-\t\t<releases><enabled>false</enabled></releases>
-\t\t<snapshots><enabled>true</enabled></snapshots>
-\t</repository>
-</repositories>`;
-  }
-
-  script += `\n\n<profiles>
-\t<profile>${nl2}<id>lwjgl-natives-linux</id>${nl2}<activation>${nl3}<os><family>unix</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-linux</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-macos</id>${nl2}<activation>${nl3}<os><family>mac</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-macos</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-windows</id>${nl2}<activation>${nl3}<os><family>windows</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-windows</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-</profiles>
-`;
-
   return script;
 }
 
 function generateGradle(props: ConnectedProps) {
-  const { build, hardcoded, osgi, artifacts, selected, addons } = props;
+  const { build, hardcoded, osgi, artifacts, platform, platformSingle, selected, addons } = props;
   const version = getVersion(props.version, build);
-  let script = '';
-  let nativesBundle = '';
   const v = hardcoded ? version : '$lwjglVersion';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
+  const classifier = !hardcoded || platformSingle == null ? '\$lwjglNatives' : `natives-${platformSingle}`;
 
-  script += `import org.gradle.internal.os.OperatingSystem
+  let script = platformSingle === null ? 'import org.gradle.internal.os.OperatingSystem\n\n' : '';
 
-switch ( OperatingSystem.current() ) {
+  if (!hardcoded) {
+    script += `project.ext.lwjglVersion = "${version}"`;
+    addons.forEach((addon: Addon) => {
+      script += `\nproject.ext.${addon.id}Version = "${addon.maven.version}"`;
+    });
+    if (platformSingle !== null) {
+      script += `\nproject.ext.lwjglNatives = "natives-${platformSingle}"`;
+    }
+    script += '\n\n';
+  }
+  if (platformSingle === null) {
+      script += `switch ( OperatingSystem.current() ) {
 \tcase OperatingSystem.WINDOWS:
 \t\tproject.ext.lwjglNatives = "natives-windows"
 \t\tbreak
@@ -246,35 +299,23 @@ switch ( OperatingSystem.current() ) {
 \t\tproject.ext.lwjglNatives = "natives-macos"
 \t\tbreak
 }\n\n`;
-
-  if (!hardcoded) {
-    script += `project.ext.lwjglVersion = "${version}"\n`;
-    addons.forEach((addon: Addon) => {
-      script += `project.ext.${addon.id}Version = "${addon.maven.version}"\n`;
-    });
-    script += `\n`;
   }
 
-  script += `repositories {`;
-
-  if (build === BUILD_RELEASE || addons.length) {
-    script += `\n\tmavenCentral()`;
-  }
-  if (build !== BUILD_RELEASE) {
-    script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
-  }
-  script += `\n}\n\n`;
-
-  script += `dependencies {`;
-
-  selected.forEach(artifact => {
-    script += `\n\tcompile "${groupId}:${artifact}:${v}"`;
-    if (artifacts[artifact].natives !== undefined) {
-      nativesBundle += `\n\tcompile "${groupId}:${artifact}:${v}:\$lwjglNatives"`;
+    script += `repositories {
+\tmavenCentral()`;
+    if (build !== BUILD_RELEASE) {
+      script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
     }
-  });
+  script += `
+}
 
-  script += nativesBundle;
+dependencies {`;
+
+  script += generateDependencies(
+      selected, artifacts, platform,
+      (artifact) => `\n\tcompile "${groupId}:${artifact}:${v}"`,
+      (artifact) => `\n\tcompile "${groupId}:${artifact}:${v}:${classifier}"`,
+  )
 
   addons.forEach((addon: Addon) => {
     const maven = addon.maven;
@@ -289,53 +330,58 @@ switch ( OperatingSystem.current() ) {
 }
 
 function generateIvy(props: ConnectedProps) {
-  const { build, hardcoded, osgi, compact, artifacts, selected, addons } = props;
+  const { build, hardcoded, osgi, compact, artifacts, platform, platformSingle, selected, addons } = props;
   const version = getVersion(props.version, build);
   let script = '';
-  let nativesBundle = '';
   const v = hardcoded ? version : '${lwjgl.version}';
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
+  const classifier = !hardcoded || platformSingle == null ? '\${lwjgl.natives}' : `natives-${platformSingle}`;
 
-  if (!hardcoded || build !== BUILD_RELEASE) script += `\t<!-- Add to ivysettings.xml -->`;
+  if (!hardcoded || build !== BUILD_RELEASE) script += `\t<!-- Add to ivysettings.xml -->\n`;
+
+  if (!hardcoded) {
+    script += `\t<property name="lwjgl.version" value="${version}"/>`;
+
+    addons.forEach((addon: Addon) => {
+      script += `\n\t<property name="${addon.id}.version" value="${addon.maven.version}"/>`;
+    });
+
+    if (platformSingle !== null) {
+        script += `\n\t<property name="lwjgl.natives" value="natives-${platformSingle}"/>`;
+    }
+    script += '\n\n';
+  }
 
   if (build !== BUILD_RELEASE) {
-    script += `\n\t<settings defaultResolver="maven-with-snapshots"/>
+    script += `\t<settings defaultResolver="maven-with-snapshots"/>
 \t<resolvers>
 \t\t<chain name="maven-with-snapshots">
 \t\t\t<ibiblio name="sonatype-snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>
 \t\t\t<ibiblio name="maven-central" m2compatible="true"/>
 \t\t</chain>
-\t</resolvers>`;
+\t</resolvers>\n\n`;
   }
 
-  if (!hardcoded) {
-    script += `\n\t<property name="lwjgl.version" value="${version}"/>`;
-
-    addons.forEach((addon: Addon) => {
-      script += `\n\t<property name="${addon.id}.version" value="${addon.maven.version}"/>`;
-    });
-  }
-
-  script += `\n\t<!-- Add to build.xml -->
+  if (platformSingle === null) {
+      script += `\t<!-- Add to build.xml -->
 \t<condition property="lwjgl.natives" value="natives-windows">${nl2}<os family="Windows"/>${nl1}</condition>
 \t<condition property="lwjgl.natives" value="natives-linux">${nl2}<os name="Linux"/>${nl1}</condition>
-\t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
+\t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>\n\n`;
+  }
 
-  script += `\n\t<!-- Add to ivy.xml (xmlns:m="http://ant.apache.org/ivy/maven") -->
+  script += `\t<!-- Add to ivy.xml (xmlns:m="http://ant.apache.org/ivy/maven") -->
 \t<dependencies>`;
 
-  selected.forEach(artifact => {
-    if (artifacts[artifact].natives === undefined) {
-      script += `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}"/>`;
-    } else {
-      script += `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="\${lwjgl.natives}"/>${nl2}</dependency>`;
-    }
-  });
-
-  script += nativesBundle;
+  script += generateDependencies(
+      selected, artifacts, platform,
+      (artifact, hasEnabledNativePlatform) => hasEnabledNativePlatform
+          ? `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="${classifier}"/>${nl2}</dependency>`
+          : `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}"/>`,
+      (artifact) => '',
+  )
 
   addons.forEach((addon: Addon) => {
     const maven = addon.maven;
