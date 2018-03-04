@@ -106,11 +106,11 @@
     "three": "0.90.0",
     "typescript-styled-plugin": "0.6.0",
     "uglify-es": "3.3.10",
-    "webpack": "4.0.1",
+    "webpack": "4.1.0",
     "webpack-bundle-analyzer": "2.11.1",
     "webpack-cli": "2.0.10",
     "webpack-dev-middleware": "2.0.6",
-    "webpack-hot-middleware": "2.21.1",
+    "webpack-hot-middleware": "2.21.2",
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
