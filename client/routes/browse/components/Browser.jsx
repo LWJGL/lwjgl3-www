@@ -6,55 +6,159 @@ import { File } from './File';
 import IconCloud from 'react-icons/fa/cloud';
 import IconArrowRight from 'react-icons/fa/chevron-right';
 
-type Props = {|
+import { HTTP_OK } from '~/services/http_status_codes';
+
+type FolderData = {|
   path: string,
-  parent: string,
-  folders: Array<string>,
   files: Array<string>,
-  loading: boolean,
-  loadPath: string => void,
+  folders: Array<string>,
 |};
 
-export class Browser extends React.PureComponent<Props> {
-  componentDidMount() {
-    this.props.loadPath(this.props.path);
+type Props = {||};
+
+type State = {
+  path: string | null,
+  contents: FolderData | null,
+};
+
+type ContentCache = {
+  [path: string]: FolderData,
+};
+
+async function fetchContents(path: string): Promise<FolderData> {
+  const response = await fetch(`/list?path=${path}`);
+  if (response.status !== HTTP_OK) {
+    throw response.statusText;
+  }
+  const data = await response.json();
+  data.path = path;
+  if (!data.folders) {
+    data.folders = [];
   }
 
-  goBack = () => {
-    this.props.loadPath(this.props.parent);
+  contentCache[path] = data;
+  return data;
+}
+
+type ContentsProps = {
+  path: string,
+  changePath: string => void,
+  contents: FolderData | null,
+};
+
+function Contents({ path, changePath, contents }: ContentsProps) {
+  if (contents === null) {
+    return (
+      <tr>
+        <td>
+          <LoaderSpinner />
+        </td>
+      </tr>
+    );
+  }
+
+  const { folders, files } = contents;
+
+  return (
+    <React.Fragment>
+      {folders.map(folder => {
+        const fullPath = `${path}${folder}`;
+        return <Folder key={fullPath} path={fullPath} loadPath={() => changePath(fullPath)} />;
+      })}
+      {files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} />)}
+    </React.Fragment>
+  );
+}
+
+let prevPath = '';
+
+const contentCache: ContentCache = {
+  '': {
+    path: '',
+    files: [],
+    folders: ['release/', 'stable/', 'nightly/'],
+  },
+};
+
+export class Browser extends React.Component<Props, State> {
+  state = {
+    path: null,
+    contents: null,
   };
 
-  render() {
-    const { parent, folders, files, loading, loadPath } = this.props;
-    const path = this.props.path === '/' ? '' : this.props.path;
+  mounted: boolean = false;
 
+  async loadData() {
+    const path = this.state.path;
+    if (path === null) {
+      return;
+    }
+    const contents = await fetchContents(path);
+    // Make sure we haven't unmounted or changed path while waiting for the resposne
+    if (this.mounted && path === this.state.path) {
+      this.setState({ contents });
+    }
+  }
+
+  changePath = (path: string) => {
+    if (contentCache[path] !== undefined) {
+      this.setState({ path, contents: contentCache[path] });
+    } else {
+      this.setState({ path, contents: null }, this.loadData);
+    }
+  };
+
+  componentDidUpdate() {
+    if (this.state.path !== null) {
+      prevPath = this.state.path;
+    }
+  }
+
+  componentDidMount() {
+    this.mounted = true;
+    this.setState({ path: prevPath, contents: contentCache[prevPath] });
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
+  render() {
+    const { path, contents } = this.state;
+
+    if (path === null) {
+      return null;
+    }
+
+    let parent = null;
+    if (path !== '') {
+      const parts = path.substr(0, path.length - 2).split('/');
+      parts.pop();
+      parent = parts.join('/');
+
+      if (parent.length) {
+        parent += '/';
+      }
+    }
     return (
       <div className="table-responsive-md">
         <table className="table mb-0">
           <thead className="thead-light">
             <tr>
               <th colSpan={2}>
-                <IconCloud /> &nbsp;lwjgl/{path}
+                <IconCloud /> &nbsp;lwjgl/{this.state.path}
               </th>
             </tr>
           </thead>
           <tbody>
-            {parent && (
+            {parent !== null && (
               <tr>
-                <th className={FolderTH} scope="row" onClick={this.goBack} colSpan={2}>
+                <th className={FolderTH} scope="row" onClick={() => this.changePath(parent || '')} colSpan={2}>
                   &hellip;
                 </th>
               </tr>
             )}
-            {folders.map(folder => <Folder key={`${path}${folder}`} path={`${path}${folder}`} loadPath={loadPath} />)}
-            {files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} loadPath={loadPath} />)}
-            {loading && (
-              <tr>
-                <th scope="row" colSpan={2}>
-                  <LoaderSpinner />
-                </th>
-              </tr>
-            )}
+            <Contents path={path} contents={contents} changePath={this.changePath} />
           </tbody>
         </table>
       </div>

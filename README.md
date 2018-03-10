@@ -72,20 +72,20 @@ AWS credentials are only needed for deploying compiled files to S3 (@see yarn de
 
 ### Build/running in development
 
-1. To install all required npm packages:
+1.  To install all required npm packages:
 
 ```bash
 yarn
 ```
 
-2. To build vendor file(s) for development run:
+2.  To build vendor file(s) for development run:
 
 ```bash
 yarn vendor
 yarn styles --sourcemap
 ```
 
-3. To start the server in dev mode:
+3.  To start the server in dev mode:
 
 ```bash
 node server
@@ -106,7 +106,6 @@ yarn watch
 --sourcemap # Enables inline JS source-maps
 --react-perf # Enables react-perf-devtool in dev mode
 --nohmr # Disables Webpack Hot Module Reloading
---rhl # Enables React-Hot-Loader (requires HMR)
 --redux-logger # Enables Logger for Redux
 ```
 

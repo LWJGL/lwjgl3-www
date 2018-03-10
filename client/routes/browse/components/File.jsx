@@ -2,9 +2,9 @@
 import * as React from 'react';
 import { css } from 'emotion';
 
-type Props = {
+type Props = {|
   path: string,
-};
+|};
 
 const WordBreakAll = css`
   word-break: break-all;

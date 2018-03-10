@@ -15,6 +15,6 @@ const App = () => (
   </BrowserRouter>
 );
 
-// import { hot } from 'react-hot-loader';
-// export default hot(module)(App);
-export default App;
+import { hot } from 'react-hot-loader';
+export default hot(module)(App);
+// export default App;

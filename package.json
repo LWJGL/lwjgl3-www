@@ -101,7 +101,6 @@
     "redux-thunk": "2.2.0",
     "reselect": "3.0.1",
     "sass-loader": "6.0.7",
-    "simple-cache-provider": "0.3.0-alpha.0911da3",
     "style-loader": "0.20.3",
     "thread-loader": "1.1.5",
     "three": "0.90.0",

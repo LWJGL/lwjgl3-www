@@ -22,7 +22,7 @@ const Canvas = css`
   animation: ${fadeIn} 2s ease-out forwards;
 `;
 
-export default class HomeCanvas extends React.Component<{||}> {
+class HomeCanvas extends React.Component<{||}> {
   //$FlowFixMe
   canvasRef = React.createRef();
 
@@ -180,3 +180,7 @@ export default class HomeCanvas extends React.Component<{||}> {
     return <canvas className={Canvas} ref={this.canvasRef} />;
   }
 }
+
+import { hot } from 'react-hot-loader';
+export default hot(module)(HomeCanvas);
+// export default HomeCanvas;
