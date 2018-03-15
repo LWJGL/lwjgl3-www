@@ -40,7 +40,7 @@ class HomeCanvas extends React.Component<{||}> {
   ioCheck = this.ioCheck.bind(this);
 
   resizeCanvas() {
-    const canvas: ?HTMLCanvasElement = this.canvasRef.value;
+    const canvas: ?HTMLCanvasElement = this.canvasRef.current;
     /*::
     if ( canvas == null || !(canvas.parentNode instanceof HTMLElement) ) {
       return;
@@ -90,7 +90,7 @@ class HomeCanvas extends React.Component<{||}> {
   }
 
   componentDidMount() {
-    const canvas: ?HTMLCanvasElement = this.canvasRef.value;
+    const canvas: ?HTMLCanvasElement = this.canvasRef.current;
     if (canvas == null) {
       return;
     }

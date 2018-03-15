@@ -47,7 +47,7 @@ export class Trap extends React.PureComponent<TrapProps> {
   }
 
   findFocusable = (): ?HTMLElement => {
-    const trap = this.divRef.value;
+    const trap = this.divRef.current;
     if (!this.props.autoFocus) {
       return trap;
     }
@@ -64,7 +64,7 @@ export class Trap extends React.PureComponent<TrapProps> {
 
   componentDidMount() {
     this.mounted = true;
-    const trap = this.divRef.value;
+    const trap = this.divRef.current;
     if (trap == null) {
       return;
     }

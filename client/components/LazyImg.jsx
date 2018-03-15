@@ -39,7 +39,7 @@ export class LazyImg extends React.PureComponent<Props, Props> {
       return;
     }
 
-    const el: ?HTMLImageElement = this.imgRef.value;
+    const el: ?HTMLImageElement = this.imgRef.current;
 
     if (el != null) {
       if (LazyImg.io === null) {
@@ -61,7 +61,7 @@ export class LazyImg extends React.PureComponent<Props, Props> {
     if (this.observed) {
       this.observed = false;
 
-      const el: ?HTMLImageElement = this.imgRef.value;
+      const el: ?HTMLImageElement = this.imgRef.current;
 
       if (el != null && LazyImg.io !== null) {
         LazyImg.io.unobserve(el);

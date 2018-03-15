@@ -17,8 +17,8 @@ export class ScrollToMe extends React.Component<Props> {
   }
 
   scroll() {
-    if (this.divRef.value != null) {
-      window.scrollTo(0, this.divRef.value.offsetTop);
+    if (this.divRef.current != null) {
+      window.scrollTo(0, this.divRef.current.offsetTop);
     }
   }
 

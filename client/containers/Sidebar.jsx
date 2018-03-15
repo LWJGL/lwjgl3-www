@@ -35,8 +35,8 @@ export class Sidebar extends React.PureComponent<Props, State> {
 
   componentDidMount() {
     this.mounted = true;
-    const slidingMenu: HTMLDivElement | null = this.slidingMenuRef.value;
-    const closeButton: HTMLButtonElement | null = this.closeButtonRef.value;
+    const slidingMenu: HTMLDivElement | null = this.slidingMenuRef.current;
+    const closeButton: HTMLButtonElement | null = this.closeButtonRef.current;
 
     if (slidingMenu !== null && closeButton !== null) {
       this.focusTrap = createFocusTrap(slidingMenu, {
@@ -56,7 +56,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
   }
 
   onToggle = (/*evt*/) => {
-    const { focusTrap, sideContainerRef: { value: sideContainer } } = this;
+    const { focusTrap, sideContainerRef: { current: sideContainer } } = this;
 
     /*::
     if (focusTrap == null || sideContainer == null) {
@@ -101,7 +101,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
     this.currentX = this.startX;
 
     this.touchingSideNav = true;
-    this.sideContainerRef.value.classList.add('touching');
+    this.sideContainerRef.current.classList.add('touching');
     requestAnimationFrame(this.update);
   };
 
@@ -116,7 +116,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
     if (this.touchingSideNav) {
       this.touchingSideNav = false;
 
-      const sideContainer = this.sideContainerRef.value;
+      const sideContainer = this.sideContainerRef.current;
       sideContainer.style.transform = '';
       sideContainer.classList.remove('touching');
 
@@ -139,7 +139,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
       translateX = 0;
     }
 
-    this.sideContainerRef.value.style.transform = `translateX(${translateX}px)`;
+    this.sideContainerRef.current.style.transform = `translateX(${translateX}px)`;
   };
 
   render() {

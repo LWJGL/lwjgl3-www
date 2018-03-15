@@ -23,8 +23,8 @@ export default class ResizeObservable extends React.Component<Props, State> {
 
   componentDidMount() {
     this.observer = new ResizeObserver(this.handleResize.bind(this));
-    if (this.handleRef.value != null) {
-      this.observer.observe(this.handleRef.value);
+    if (this.handleRef.current != null) {
+      this.observer.observe(this.handleRef.current);
     }
   }
 

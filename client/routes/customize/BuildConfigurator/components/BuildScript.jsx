@@ -63,7 +63,7 @@ export class BuildScript extends React.Component<Props> {
       selection.removeAllRanges();
     }
     const range = document.createRange();
-    const pre = this.preRef.value;
+    const pre = this.preRef.current;
     if (pre !== null) {
       range.selectNode(pre);
     } else {
