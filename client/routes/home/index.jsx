@@ -49,10 +49,11 @@ const HomeRoute = (props: ContextRouter) => (
           <div className="col-md-10">
             <p>
               LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
-              development of graphics (<a href="https://www.opengl.org/">OpenGL</a>, <a href="https://www.khronos.org/vulkan/">Vulkan</a>),
-              audio (<a href="http://www.openal.org/">OpenAL</a>) and parallel computing (<a href="https://www.khronos.org/opencl/">OpenCL</a>)
-              applications. This access is direct and high-performance, yet also wrapped in a type-safe and
-              user-friendly layer, appropriate for the Java ecosystem.
+              development of graphics (<a href="https://www.opengl.org/">OpenGL</a>,{' '}
+              <a href="https://www.khronos.org/vulkan/">Vulkan</a>), audio (<a href="http://www.openal.org/">OpenAL</a>)
+              and parallel computing (<a href="https://www.khronos.org/opencl/">OpenCL</a>) applications. This access is
+              direct and high-performance, yet also wrapped in a type-safe and user-friendly layer, appropriate for the
+              Java ecosystem.
             </p>
 
             <p>
@@ -214,9 +215,7 @@ const HomeRoute = (props: ContextRouter) => (
           <div className="row">
             <div className="col-md py-3">
               <LazyImg width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" />
-              <h3>
-                LibOVR Bindings
-              </h3>
+              <h3>LibOVR Bindings</h3>
               <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
             </div>
             <div className="col-md py-3">
@@ -279,7 +278,11 @@ const HomeRoute = (props: ContextRouter) => (
             <h1>Contributors</h1>
             <p>
               This project exists thanks to all the people who{' '}
-              <a href="https://github.com/LWJGL/lwjgl3/blob/master/.github/CONTRIBUTING.md" target="_blank" rel="noopener">
+              <a
+                href="https://github.com/LWJGL/lwjgl3/blob/master/.github/CONTRIBUTING.md"
+                target="_blank"
+                rel="noopener"
+              >
                 contribute
               </a>.
             </p>
@@ -335,6 +338,6 @@ const HomeRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-import { hot } from 'react-hot-loader';
-export default hot(module)(HomeRoute);
-// export default HomeRoute;
+// import { hot } from 'react-hot-loader';
+// export default hot(module)(HomeRoute);
+export default HomeRoute;

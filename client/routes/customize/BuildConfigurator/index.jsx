@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { createSelector } from 'reselect';
 import { debounce } from 'lodash-es';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';

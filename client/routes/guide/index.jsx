@@ -252,6 +252,6 @@ class GuideRoute extends React.Component<ContextRouter, State> {
   }
 }
 
-import { hot } from 'react-hot-loader';
-export default hot(module)(GuideRoute);
-// export default GuideRoute;
+// import { hot } from 'react-hot-loader';
+// export default hot(module)(GuideRoute);
+export default GuideRoute;

@@ -59,6 +59,6 @@ const LicenseRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-import { hot } from 'react-hot-loader';
-export default hot(module)(LicenseRoute);
-// export default LicenseRoute;
+// import { hot } from 'react-hot-loader';
+// export default hot(module)(LicenseRoute);
+export default LicenseRoute;

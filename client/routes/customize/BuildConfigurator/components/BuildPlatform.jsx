@@ -34,7 +34,7 @@ export const BuildPlatform = () => (
     })}
     actions={{ togglePlatform }}
   >
-    {({ platforms, natives, selected }, { togglePlatform }) =>
+    {({ platforms, natives, selected }, { togglePlatform }) => (
       <React.Fragment>
         <h4 className="mt-3">Natives</h4>
         <div className="custom-controls-stacked">
@@ -50,6 +50,6 @@ export const BuildPlatform = () => (
           ))}
         </div>
       </React.Fragment>
-    }
+    )}
   </Connect>
 );

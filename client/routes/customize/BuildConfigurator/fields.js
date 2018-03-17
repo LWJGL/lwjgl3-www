@@ -1,5 +1,4 @@
 // @flow
-import { createSelector } from 'reselect';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
 import type { BuildConfig, LANGUAGES } from './types';
 
@@ -39,62 +38,47 @@ export const fields = {
     name: 'mode',
     value: getMode,
     action: changeMode,
-    options: createSelector(
-      (state: State) => state.build.modes,
-      (state: State) => state.build.build,
-      (modes, build) => {
-        return modes.allIds.map(mode => ({
-          value: mode,
-          label: modes.byId[mode].title,
-          disabled: build === BUILD_STABLE && mode !== MODE_ZIP,
-        }));
-      }
-    ),
+    options: ({ build: { modes, build } }: State) =>
+      modes.allIds.map(mode => ({
+        value: mode,
+        label: modes.byId[mode].title,
+        disabled: build === BUILD_STABLE && mode !== MODE_ZIP,
+      })),
   },
   preset: {
     name: 'preset',
     value: getPreset,
     action: changePreset,
-    options: createSelector(
-      (state: State) => state.build.presets,
-      (state: State) => state.build.preset,
-      (presets, preset) =>
-        presets.allIds.map(presetId => ({
-          value: presetId,
-          label: presets.byId[presetId].title,
-          disabled: preset !== presetId && presetId === 'custom',
-        }))
-    ),
+    options: ({ build: { presets, preset } }: State) =>
+      presets.allIds.map(presetId => ({
+        value: presetId,
+        label: presets.byId[presetId].title,
+        disabled: preset !== presetId && presetId === 'custom',
+      })),
   },
   language: {
     name: 'language',
     value: getLanguage,
     action: changeLanguage,
-    options: createSelector(
-      (state: State) => state.build.languages,
-      languages =>
-        languages.allIds.map((lang: LANGUAGES) => ({
-          value: lang,
-          label: languages.byId[lang].title,
-          disabled: lang !== 'groovy',
-        }))
-    ),
+    options: ({ build: { languages } }: State) =>
+      languages.allIds.map((lang: LANGUAGES) => ({
+        value: lang,
+        label: languages.byId[lang].title,
+        disabled: lang !== 'groovy',
+      })),
   },
   version: {
     name: 'version',
     value: getVersion,
     action: changeVersion,
-    options: createSelector(
-      (state: State) => state.build.versions,
-      versions =>
-        versions.map(version => {
-          return {
-            value: version,
-            label: version,
-            disabled: version === '3.0.0',
-          };
-        })
-    ),
+    options: ({ build: { versions } }: State) =>
+      versions.map(version => {
+        return {
+          value: version,
+          label: version,
+          disabled: version === '3.0.0',
+        };
+      }),
   },
   descriptions: {
     label: 'Show descriptions',

@@ -1044,9 +1044,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.210.0:
-  version "2.210.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.210.0.tgz#5aac0d77205926699262a11b3d22031af9de667c"
+aws-sdk@2.211.0:
+  version "2.211.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.211.0.tgz#902b7525e76ff9fa72cd038b73b8a47c8c671a62"
   dependencies:
     buffer "4.9.1"
     events "^1.1.1"
@@ -4090,9 +4090,9 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
 
-immer@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/immer/-/immer-1.1.3.tgz#9d5ac1daaeadd64c587d8dae3515fc1452ea0e1e"
+immer@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/immer/-/immer-1.2.0.tgz#06a0dd9a8f8061258149f4c609250e1e5a32ffbc"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -4987,6 +4987,12 @@ mem@^1.1.0:
   resolved "https://registry.yarnpkg.com/mem/-/mem-1.1.0.tgz#5edd52b485ca1d900fe64895505399a0dfa45f76"
   dependencies:
     mimic-fn "^1.0.0"
+
+memoize-state@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/memoize-state/-/memoize-state-1.2.2.tgz#ad25d1044a3c5fc3421d36bbe7aabaaa664979aa"
+  dependencies:
+    proxyequal "^1.4.1"
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -6342,6 +6348,12 @@ proxy-addr@~2.0.2:
     forwarded "~0.1.2"
     ipaddr.js "1.6.0"
 
+proxyequal@^1.4.1:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/proxyequal/-/proxyequal-1.4.2.tgz#6487426444bc1e11226277775b116025aa87140c"
+  dependencies:
+    search-trie "^1.0.0"
+
 prr@~1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/prr/-/prr-1.0.1.tgz#d3fc114ba06995a45ec6893f484ceb1d78f5f476"
@@ -7053,10 +7065,6 @@ requires-port@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/requires-port/-/requires-port-1.0.0.tgz#925d2601d39ac485e091cf0da5c6e694dc3dcaff"
 
-reselect@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
-
 resolve-cwd@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/resolve-cwd/-/resolve-cwd-2.0.0.tgz#00a9f7387556e27038eae232caa372a6a59b665a"
@@ -7237,6 +7245,10 @@ scss-tokenizer@^0.2.3:
   dependencies:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
+
+search-trie@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/search-trie/-/search-trie-1.0.0.tgz#9529e727a2267a5c9ef0c6910ef5a6e2de9bf188"
 
 "semver@2 || 3 || 4 || 5", semver@^5.3.0, semver@^5.4.1, semver@^5.5.0:
   version "5.5.0"

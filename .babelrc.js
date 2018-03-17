@@ -8,7 +8,7 @@ const SOURCEMAP = argv.sourcemap !== undefined;
 const config = {
   plugins: [
     DEV ? ['emotion', { sourceMap: SOURCEMAP, autoLabel: true }] : ['emotion', { hoist: true }],
-    'react-hot-loader/babel',
+    // 'react-hot-loader/babel',
     '@babel/transform-flow-strip-types',
 
     // React

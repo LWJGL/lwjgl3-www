@@ -180,6 +180,6 @@ class HomeCanvas extends React.Component<{||}> {
   }
 }
 
-import { hot } from 'react-hot-loader';
-export default hot(module)(HomeCanvas);
-// export default HomeCanvas;
+// import { hot } from 'react-hot-loader';
+// export default hot(module)(HomeCanvas);
+export default HomeCanvas;

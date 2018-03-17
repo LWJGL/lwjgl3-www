@@ -62,7 +62,7 @@ export class Header extends React.PureComponent<Props, State> {
     this.setState({ desktop: this.isDesktop() });
   }
 
-  unsubscribe = store.subscribe(this.storeListener.bind(this));
+  // unsubscribe = store.subscribe(this.storeListener.bind(this));
 
   state = {
     pos: 0,

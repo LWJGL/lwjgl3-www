@@ -18,6 +18,6 @@ const BrowseRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-import { hot } from 'react-hot-loader';
-export default hot(module)(BrowseRoute);
-// export default BrowseRoute;
+// import { hot } from 'react-hot-loader';
+// export default hot(module)(BrowseRoute);
+export default BrowseRoute;

@@ -51,7 +51,6 @@ const config = {
       'redux',
       'redux-logger',
       'redux-thunk',
-      'reselect',
 
       // UI
       'emotion',
