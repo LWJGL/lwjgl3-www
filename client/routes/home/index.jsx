@@ -228,7 +228,7 @@ const HomeRoute = (props: ContextRouter) => (
               <h3>Customization & Utilities</h3>
               <p>
                 Use <a href="http://www.dyncall.org/">dyncall</a> to call functions from any native library, use{' '}
-                <a href="http://www.canonware.com/jemalloc">jemalloc</a> for efficient and tunable memory management,
+                <a href="http://jemalloc.net/">jemalloc</a> for efficient and tunable memory management,
                 use the <a href="https://github.com/nothings/stb">stb</a> collection of libraries for texture loading,
                 font rendering and much more.
               </p>
