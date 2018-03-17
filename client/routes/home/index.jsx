@@ -326,8 +326,6 @@ const HomeRoute = (props: ContextRouter) => (
             </p>
 
             <p className="text-center">
-              <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Why-a-new-version">Why replace LWJGL 2?</a>
-              <br />
               <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">Migration Guide</a>
             </p>
           </div>
