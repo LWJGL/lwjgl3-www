@@ -49,11 +49,9 @@ const HomeRoute = (props: ContextRouter) => (
           <div className="col-md-10">
             <p>
               LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
-              development of graphics (<a href="https://www.opengl.org/">OpenGL</a>), audio (<a href="http://www.openal.org/">
-                OpenAL
-              </a>) and parallel computing (
-              <a href="https://www.khronos.org/opencl/">OpenCL</a>
-              ) applications. This access is direct and high-performance, yet also wrapped in a type-safe and
+              development of graphics (<a href="https://www.opengl.org/">OpenGL</a>, <a href="https://www.khronos.org/vulkan/">Vulkan</a>),
+              audio (<a href="http://www.openal.org/">OpenAL</a>) and parallel computing (<a href="https://www.khronos.org/opencl/">OpenCL</a>)
+              applications. This access is direct and high-performance, yet also wrapped in a type-safe and
               user-friendly layer, appropriate for the Java ecosystem.
             </p>
 
@@ -124,9 +122,7 @@ const HomeRoute = (props: ContextRouter) => (
               <h3>Community</h3>
               <p>
                 Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up for a
-                chat? Drop by our <a href="irc://irc.freenode.net/lwjgl">IRC channel</a>
-                <br />
-                (#LWJGL on freenode).
+                chat? Join our <a href="https://slack.lwjgl.org/">Slack team</a>
               </p>
             </div>
             <div className="col-md py-3">
@@ -219,7 +215,7 @@ const HomeRoute = (props: ContextRouter) => (
             <div className="col-md py-3">
               <LazyImg width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" />
               <h3>
-                LibOVR Bindings <small>(beta)</small>
+                LibOVR Bindings
               </h3>
               <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
             </div>
@@ -232,7 +228,7 @@ const HomeRoute = (props: ContextRouter) => (
               <IconUtilities />
               <h3>Customization & Utilities</h3>
               <p>
-                Use <a href="https://sourceware.org/libffi/">libffi</a> to call functions from any native library, use{' '}
+                Use <a href="http://www.dyncall.org/">dyncall</a> to call functions from any native library, use{' '}
                 <a href="http://www.canonware.com/jemalloc">jemalloc</a> for efficient and tunable memory management,
                 use the <a href="https://github.com/nothings/stb">stb</a> collection of libraries for texture loading,
                 font rendering and much more.
@@ -248,7 +244,7 @@ const HomeRoute = (props: ContextRouter) => (
               <h3>Your favorite API here!</h3>
               <p>
                 Think LWJGL should have bindings to your favorite API? Let us know or{' '}
-                <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.5.-The-Generator">contribute it</a> yourself!
+                <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.3.-The-Generator">contribute it</a> yourself!
               </p>
 
               <hr />
@@ -283,7 +279,7 @@ const HomeRoute = (props: ContextRouter) => (
             <h1>Contributors</h1>
             <p>
               This project exists thanks to all the people who{' '}
-              <a href="https://github.com/LWJGL/lwjgl3/blob/master/CONTRIBUTING.md" target="_blank" rel="noopener">
+              <a href="https://github.com/LWJGL/lwjgl3/blob/master/.github/CONTRIBUTING.md" target="_blank" rel="noopener">
                 contribute
               </a>.
             </p>

@@ -217,8 +217,7 @@ class GuideRoute extends React.Component<ContextRouter, State> {
             <p>
               OpenGL is a massive API with long history and hundreds of extensions. Learning it from scratch is no easy
               undertaking, but you can start from its <a href="https://www.opengl.org/documentation/">documentation</a>
-              . The
-              <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.
+              . The <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.
             </p>
 
             <h2>OpenCL</h2>
