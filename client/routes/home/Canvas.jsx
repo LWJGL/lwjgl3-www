@@ -141,7 +141,6 @@ class HomeCanvas extends React.Component<{||}> {
 
     if (SupportsIntersectionObserver) {
       this.io = new IntersectionObserver(this.ioCheck);
-      /*:: if ( this.canvas != null ) */
       this.io.observe(canvas);
     }
 
