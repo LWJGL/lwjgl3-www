@@ -1,6 +1,6 @@
 // @flow
 import { hsl } from './color';
-export { mediaBreakpointUp, mediaBreakpointDown, breakpoints } from './media';
+export { mediaBreakpointUp, mediaBreakpointDown } from './media';
 export { cc } from './cc';
 
 // For Bootstrap 4 variables see https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss
