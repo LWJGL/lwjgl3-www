@@ -7,7 +7,7 @@ import { IS_IOS } from '~/services/ua';
 import { SupportsPassiveEvents } from '~/services/supports';
 import { css, injectGlobal } from 'emotion';
 import { COLOR_PRIMARY, cc } from '~/theme';
-import { store } from '~/store';
+import { Breakpoint } from '../components/Breakpoint';
 
 injectGlobal`
   body {
@@ -51,15 +51,16 @@ export class Header extends React.PureComponent<Props, State> {
   ticking = false;
   offsetHeight = 0;
   mounted = false;
-  unsubscribe: Function;
+  // unsubscribe: Function;
 
   isDesktop() {
-    const breakpoint = store.getState().breakpoint;
-    return breakpoint.current > breakpoint.md;
+    return true;
+    // const breakpoint = store.getState().breakpoint;
+    // return breakpoint.current > breakpoint.md;
   }
 
   storeListener() {
-    this.setState({ desktop: this.isDesktop() });
+    // this.setState({ desktop: this.isDesktop() });
   }
 
   // unsubscribe = store.subscribe(this.storeListener.bind(this));
@@ -86,7 +87,7 @@ export class Header extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
-    this.unsubscribe();
+    // this.unsubscribe();
     window.removeEventListener('scroll', this.onScroll, SupportsPassiveEvents ? { passive: true } : false);
     this.mounted = false;
   }
@@ -208,11 +209,15 @@ export class Header extends React.PureComponent<Props, State> {
                 LW<b>JGL</b> 3
               </Link>
             </div>
-            {this.state.desktop === true ? (
-              <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
-            ) : (
-              <Sidebar />
-            )}
+            <Breakpoint>
+              {media =>
+                media.current > media.breakpoints.md ? (
+                  <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
+                ) : (
+                  <Sidebar />
+                )
+              }
+            </Breakpoint>
           </div>
         </nav>
       </header>

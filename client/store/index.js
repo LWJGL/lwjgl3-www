@@ -2,11 +2,9 @@
 import { createStore, compose, applyMiddleware } from 'redux';
 import { createReducer } from './createReducer';
 import reduxThunk from 'redux-thunk';
-import { breakpointMiddleware } from './middleware/breakpoint';
-
 import type { Store } from 'redux';
 
-const middleware = [reduxThunk, breakpointMiddleware];
+const middleware = [reduxThunk];
 
 if (!FLAG_PRODUCTION && FLAG_REDUXLOGGER) {
   //$FlowFixMe

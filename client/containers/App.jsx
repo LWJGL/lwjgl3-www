@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Layout } from './Layout';
-import { Provider } from '../store/Provider';
+import { BreakpointProvider } from '../components/Breakpoint';
 
 // Pull common modules that we want preloaded in the main chunk
 import 'emotion';
@@ -11,11 +11,11 @@ import './PageView';
 const supportsHistory = 'pushState' in window.history;
 
 const App = () => (
-  <Provider>
+  <BreakpointProvider>
     <BrowserRouter forceRefresh={!supportsHistory} keyLength={12}>
       <Layout />
     </BrowserRouter>
-  </Provider>
+  </BreakpointProvider>
 );
 
 // import { hot } from 'react-hot-loader';
