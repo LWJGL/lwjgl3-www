@@ -2,8 +2,8 @@
 import * as React from 'react';
 import { MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
 import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition, Platforms, NATIVES } from '../types';
-import type { BreakPointState } from '~/store/reducers/breakpoint';
 import { Connect } from '~/store/Connect';
+import { Breakpoint } from '~/components/Breakpoint';
 
 import { BuildToolbar } from './BuildToolbar';
 import IconDownload from 'react-icons/md/file-download';
@@ -12,7 +12,6 @@ import IconCopy from 'react-icons/md/content-copy';
 const ALLOW_DOWNLOAD = window.btoa !== undefined;
 
 type ConnectedProps = {|
-  breakpoint: BreakPointState,
   build: null | BUILD_TYPES,
   mode: Mode,
   version: string,
@@ -78,92 +77,95 @@ export class BuildScript extends React.Component<Props> {
 
   render() {
     return (
-      <Connect
-        state={({ build, breakpoint }: { build: BuildConfig, breakpoint: BreakPointState }): ConnectedProps => {
-          // Artifacts
-          const selected: Array<string> = [];
+      <Breakpoint>
+        {({ current, breakpoints: { sm, md } }) => (
+          <Connect
+            state={({ build }: { build: BuildConfig }): ConnectedProps => {
+              // Artifacts
+              const selected: Array<string> = [];
 
-          build.artifacts.allIds.forEach(artifact => {
-            if (build.contents[artifact] && build.availability[artifact]) {
-              selected.push(artifact);
-            }
-          });
+              build.artifacts.allIds.forEach(artifact => {
+                if (build.contents[artifact] && build.availability[artifact]) {
+                  selected.push(artifact);
+                }
+              });
 
-          // Addons
-          const addons: Array<Addon> = [];
-          build.selectedAddons.forEach((id: string) => {
-            const addon = build.addons.byId[id];
-            if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
-              return;
-            }
-            addons.push(build.addons.byId[id]);
-          });
+              // Addons
+              const addons: Array<Addon> = [];
+              build.selectedAddons.forEach((id: string) => {
+                const addon = build.addons.byId[id];
+                if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
+                  return;
+                }
+                addons.push(build.addons.byId[id]);
+              });
 
-          return {
-            breakpoint,
-            build: build.build,
-            mode: build.modes.byId[build.mode],
-            version: build.artifacts.version,
-            hardcoded: build.hardcoded,
-            compact: build.compact,
-            osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
-            platform: build.platform,
-            platformSingle: getSelectedPlatforms(build),
-            artifacts: build.artifacts.byId,
-            selected,
-            addons,
-          };
-        }}
-      >
-        {(props: ConnectedProps) => {
-          const { mode, breakpoint: { current, sm, md } } = props;
+              return {
+                build: build.build,
+                mode: build.modes.byId[build.mode],
+                version: build.artifacts.version,
+                hardcoded: build.hardcoded,
+                compact: build.compact,
+                osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
+                platform: build.platform,
+                platformSingle: getSelectedPlatforms(build),
+                artifacts: build.artifacts.byId,
+                selected,
+                addons,
+              };
+            }}
+          >
+            {(props: ConnectedProps) => {
+              const { mode } = props;
 
-          const labels = {
-            download: `DOWNLOAD ${typeof mode.file === 'string' ? mode.file.toUpperCase() : 'FILE'}`,
-            copy: ' COPY TO CLIPBOARD',
-          };
+              const labels = {
+                download: `DOWNLOAD ${typeof mode.file === 'string' ? mode.file.toUpperCase() : 'FILE'}`,
+                copy: ' COPY TO CLIPBOARD',
+              };
 
-          if (current < sm) {
-            labels.download = 'DOWNLOAD';
-            labels.copy = '';
-          } else if (current < md) {
-            labels.copy = ' COPY';
-          }
+              if (current < sm) {
+                labels.download = 'DOWNLOAD';
+                labels.copy = '';
+              } else if (current < md) {
+                labels.copy = ' COPY';
+              }
 
-          const script = generateScript(mode.id, props);
+              const script = generateScript(mode.id, props);
 
-          return (
-            <div>
-              <h2 className="mt-1">
-                <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
-              </h2>
-              <pre ref={this.preRef} className="m-0">
-                <code>{script}</code>
-              </pre>
-              <BuildToolbar configDownload={this.props.configDownload}>
-                <a
-                  className="btn btn-success"
-                  download={mode.file}
-                  href={`data:${mime(mode)};base64,${btoa(script)}`}
-                  disabled={ALLOW_DOWNLOAD}
-                  title={`Download ${mode.id} code snippet`}
-                >
-                  <IconDownload /> {labels.download}
-                </a>
-                <button
-                  className="btn btn-success"
-                  onClick={this.copyToClipboard}
-                  disabled={!document.execCommand}
-                  title="Copy to clipboard"
-                >
-                  <IconCopy />
-                  {labels.copy}
-                </button>
-              </BuildToolbar>
-            </div>
-          );
-        }}
-      </Connect>
+              return (
+                <div>
+                  <h2 className="mt-1">
+                    <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
+                  </h2>
+                  <pre ref={this.preRef} className="m-0">
+                    <code>{script}</code>
+                  </pre>
+                  <BuildToolbar configDownload={this.props.configDownload}>
+                    <a
+                      className="btn btn-success"
+                      download={mode.file}
+                      href={`data:${mime(mode)};base64,${btoa(script)}`}
+                      disabled={ALLOW_DOWNLOAD}
+                      title={`Download ${mode.id} code snippet`}
+                    >
+                      <IconDownload /> {labels.download}
+                    </a>
+                    <button
+                      className="btn btn-success"
+                      onClick={this.copyToClipboard}
+                      disabled={!document.execCommand}
+                      title="Copy to clipboard"
+                    >
+                      <IconCopy />
+                      {labels.copy}
+                    </button>
+                  </BuildToolbar>
+                </div>
+              );
+            }}
+          </Connect>
+        )}
+      </Breakpoint>
     );
   }
 }

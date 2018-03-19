@@ -9,6 +9,7 @@ import type { BUILD_TYPES, Build } from '../types';
 import { css } from 'emotion';
 import IconClose from 'react-icons/md/close';
 import { cc, mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
+import { Breakpoint } from '~/components/Breakpoint';
 import {
   COLOR_RELEASE,
   COLOR_RELEASE_LIGHT,
@@ -117,30 +118,34 @@ export class BuildType extends React.PureComponent<Props> {
     const { build } = this.props;
 
     return (
-      <Connect
-        state={(state): ConnectedProps => ({
-          isSelected: state.build.build === build,
-          isActive: state.breakpoint.current < state.breakpoint.lg && state.build.build !== null,
-          spec: state.build.builds.byId[build],
-          status: state.build.builds.byId[build].status,
-        })}
-        actions={{ changeType, loadStatus }}
-      >
-        {({ isSelected, isActive, status, spec }, { changeType, loadStatus }) => (
-          <div
-            onClick={changeType.bind(this, build)}
-            className={cc(BuildBox, build, {
-              selected: isSelected,
-              active: isActive,
+      <Breakpoint>
+        {({ current, breakpoints: { lg } }) => (
+          <Connect
+            state={(state): ConnectedProps => ({
+              isSelected: state.build.build === build,
+              isActive: current < lg && state.build.build !== null,
+              spec: state.build.builds.byId[build],
+              status: state.build.builds.byId[build].status,
             })}
+            actions={{ changeType, loadStatus }}
           >
-            <h2>{spec.title}</h2>
-            <p>{spec.description}</p>
-            <BuildStatus name={spec.id} status={status} loadStatus={loadStatus} />
-            {isSelected ? <IconClose /> : null}
-          </div>
+            {({ isSelected, isActive, status, spec }, { changeType, loadStatus }) => (
+              <div
+                onClick={changeType.bind(this, build)}
+                className={cc(BuildBox, build, {
+                  selected: isSelected,
+                  active: isActive,
+                })}
+              >
+                <h2>{spec.title}</h2>
+                <p>{spec.description}</p>
+                <BuildStatus name={spec.id} status={status} loadStatus={loadStatus} />
+                {isSelected ? <IconClose /> : null}
+              </div>
+            )}
+          </Connect>
         )}
-      </Connect>
+      </Breakpoint>
     );
   }
 }
