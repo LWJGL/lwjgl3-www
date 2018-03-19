@@ -3,11 +3,10 @@ import * as React from 'react';
 import { configLoad } from '../reducer';
 import { store } from '~/store';
 import { Connect } from '~/store/Connect';
+import { Breakpoint } from '~/components/Breakpoint';
 
 import FileSave from 'react-icons/md/archive';
 import FileOpen from 'react-icons/md/settings-backup-restore';
-
-import type { BreakPointState } from '~/store/reducers/breakpoint';
 
 type Props = {|
   configDownload: () => void,
@@ -67,13 +66,8 @@ export class BuildToolbar extends React.Component<Props, State> {
     }
 
     return (
-      <Connect
-        state={({ breakpoint }: { breakpoint: BreakPointState }) => ({
-          current: breakpoint.current,
-          sm: breakpoint.sm,
-        })}
-      >
-        {({ current, sm }, { configLoad }) => {
+      <Breakpoint>
+        {({ current, breakpoints: { sm } }) => {
           const showLabels = current > sm;
           return (
             <div className="download-toolbar">
@@ -97,7 +91,7 @@ export class BuildToolbar extends React.Component<Props, State> {
             </div>
           );
         }}
-      </Connect>
+      </Breakpoint>
     );
   }
 }

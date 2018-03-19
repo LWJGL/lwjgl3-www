@@ -1,6 +1,5 @@
 // @flow
 import { combineReducers, type Reducer } from 'redux';
-import { breakpointReducer } from './reducers/breakpoint';
 
 type AsyncReducers = {
   [_: string]: Reducer<*, *>,
@@ -8,7 +7,7 @@ type AsyncReducers = {
 
 export function createReducer(asyncReducers: ?AsyncReducers): Reducer<any, any> {
   const reducers = {
-    breakpoint: breakpointReducer,
+    blank: () => ({}),
     ...asyncReducers,
   };
 
