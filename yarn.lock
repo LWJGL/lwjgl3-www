@@ -4988,11 +4988,11 @@ mem@^1.1.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-memoize-state@1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/memoize-state/-/memoize-state-1.2.2.tgz#ad25d1044a3c5fc3421d36bbe7aabaaa664979aa"
+memoize-state@1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/memoize-state/-/memoize-state-1.3.2.tgz#2bb2dec1844f5dc5c7cc3e52870a96ed310e65c1"
   dependencies:
-    proxyequal "^1.4.1"
+    proxyequal "^1.5.0"
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -6348,9 +6348,9 @@ proxy-addr@~2.0.2:
     forwarded "~0.1.2"
     ipaddr.js "1.6.0"
 
-proxyequal@^1.4.1:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/proxyequal/-/proxyequal-1.4.2.tgz#6487426444bc1e11226277775b116025aa87140c"
+proxyequal@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/proxyequal/-/proxyequal-1.5.0.tgz#634909ae7441860b5f23486218acc00018126562"
   dependencies:
     search-trie "^1.0.0"
 
