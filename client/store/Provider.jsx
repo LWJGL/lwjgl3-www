@@ -18,11 +18,10 @@ export class Provider extends React.Component<Props, State> {
   unsubscribe: Function | null = null;
 
   updateState = () => {
-    const storeState = store.getState();
-
-    if (storeState !== this.state) {
-      this.setState(storeState);
-    }
+    this.setState(prevState => {
+      const nextState = store.getState();
+      return nextState === prevState ? null : nextState;
+    });
   };
 
   componentDidMount() {
