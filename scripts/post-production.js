@@ -104,11 +104,11 @@ async function main() {
         return;
       }
       // Get next available from pool
-      const child = await pool.v();
+      const child = await pool.acquire();
       // Run process
       const report = await processChunk(child, chunk);
       // Return to pool
-      pool.p(child);
+      pool.release(child);
       // Add result to files report
       fileReport.push(report);
     })
@@ -116,10 +116,10 @@ async function main() {
 
   // Process runtime~main last
   await (async () => {
-    const child = await pool.v();
+    const child = await pool.acquire();
     runtimeChunk.chunkFileMap = chunkFileMap;
     const report = await processChunk(child, runtimeChunk);
-    pool.p(child);
+    pool.release(child);
     fileReport.push(report);
   })();
 
