@@ -161,7 +161,7 @@ export const config: BuildConfig = {
         maven: {
           groupId: 'org.joml',
           artifactId: 'joml',
-          version: '1.9.8',
+          version: '1.9.9',
         },
       },
       steamworks4j: {
