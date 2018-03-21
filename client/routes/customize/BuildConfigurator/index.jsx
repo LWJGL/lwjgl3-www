@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { debounce } from 'lodash-es';
 import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
+import saveAs from 'file-saver';
 import areEqual from 'fbjs/lib/areEqual';
 
 import { store } from '~/store';

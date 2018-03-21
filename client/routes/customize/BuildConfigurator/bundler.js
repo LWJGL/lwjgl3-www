@@ -1,6 +1,5 @@
 // @flow
 import JSZip from 'jszip';
-import { saveAs } from 'file-saver';
 
 import { HTTP_OK } from '~/services/http_status_codes';
 import { BUILD_RELEASE } from './constants';
