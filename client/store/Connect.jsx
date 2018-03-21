@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { bindActionCreators, type ActionCreators, type Dispatch } from 'redux';
 import { store } from './';
-import shallowEqual from 'fbjs/lib/shallowEqual';
+// import shallowEqual from 'fbjs/lib/shallowEqual';
 import { StoreContext } from './Context';
 import memoize from 'memoize-state';
 
