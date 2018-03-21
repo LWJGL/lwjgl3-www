@@ -58,7 +58,6 @@ const config = {
       'nprogress',
 
       // Route-specific
-      'file-saver',
       'jszip',
       'three',
 

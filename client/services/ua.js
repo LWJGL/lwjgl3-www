@@ -2,7 +2,7 @@
 let ua = navigator.userAgent;
 
 // export const IS_CHROME = /Chrome/.test(ua);
-// export const IS_SAFARI = !IS_CHROME && /Safari/.test(ua);
+// export const IS_SAFARI = window.safari !== undefined;
 // export const IS_IE: boolean = ua.indexOf('MSIE ') !== -1 || ua.indexOf('Trident/') !== -1;
 // export const IS_MOBILE: boolean = ua.indexOf('Mobi') !== -1;
 
