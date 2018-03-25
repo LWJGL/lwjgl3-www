@@ -264,7 +264,7 @@ function generateMaven(props: ConnectedProps) {
     artifact =>
       `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`,
     artifact =>
-      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl2}${nl1}</dependency>`
+      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl1}</dependency>`
   );
 
   addons.forEach((addon: Addon) => {
