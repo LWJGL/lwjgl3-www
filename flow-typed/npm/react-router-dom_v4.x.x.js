@@ -30,7 +30,7 @@ declare module 'react-router-dom' {
     children?: React$Node,
     exact?: boolean,
     strict?: boolean,
-    ariaCurrent?:
+    'aria-current'?:
       | 'page' // represents the current page within a set of pages;
       | 'step' // represents the current step within a process;
       | 'location' // represents the current location within an environment or context;

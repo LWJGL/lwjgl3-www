@@ -11,32 +11,32 @@ export const Footer = () => (
           <h3>About</h3>
           <ul className="list-unstyled">
             <li>
-              <NavLink ariaCurrent="page" exact={true} to="/">
+              <NavLink aria-current="page" exact={true} to="/">
                 Home
               </NavLink>
             </li>
             <li>
-              <NavLink ariaCurrent="page" exact={true} to="/guide">
+              <NavLink aria-current="page" exact={true} to="/guide">
                 Get Started
               </NavLink>
             </li>
             <li>
-              <NavLink ariaCurrent="page" exact={true} to="/download">
+              <NavLink aria-current="page" exact={true} to="/download">
                 Download
               </NavLink>
             </li>
             <li>
-              <NavLink ariaCurrent="page" exact={true} to="/customize">
+              <NavLink aria-current="page" exact={true} to="/customize">
                 Customize
               </NavLink>
             </li>
             <li>
-              <NavLink ariaCurrent="page" exact={true} to="/source">
+              <NavLink aria-current="page" exact={true} to="/source">
                 Source
               </NavLink>
             </li>
             <li>
-              <NavLink ariaCurrent="page" exact={true} to="/license">
+              <NavLink aria-current="page" exact={true} to="/license">
                 License
               </NavLink>
             </li>
@@ -102,7 +102,7 @@ export const Footer = () => (
       </p>
       <p>
         Licensed under{' '}
-        <NavLink ariaCurrent="page" exact={true} to="/license">
+        <NavLink aria-current="page" exact={true} to="/license">
           BSD
         </NavLink>
       </p>
