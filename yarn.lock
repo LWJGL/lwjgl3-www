@@ -1068,9 +1068,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.215.1:
-  version "2.215.1"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.215.1.tgz#e9837dd5a0c26ad3be99c9b41f4f5458f5a30b8f"
+aws-sdk@2.216.1:
+  version "2.216.1"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.216.1.tgz#9dbf964206d722240507cc60d46e8d3bae9c34f0"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -5859,6 +5859,10 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+ms@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ms/-/ms-2.1.1.tgz#30a5864eb3ebb0a66f2ebe6d727af06a09d86e0a"
+
 multimatch@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/multimatch/-/multimatch-2.1.0.tgz#9c7906a22fb4c02919e2f5f75161b4cdbd4b2a2b"
@@ -7374,9 +7378,9 @@ react-perf-devtool@3.1.3-beta.4:
   version "3.1.3-beta.4"
   resolved "https://registry.yarnpkg.com/react-perf-devtool/-/react-perf-devtool-3.1.3-beta.4.tgz#0c1cef84925d440e7a43e5b61609ee9ac6de04f4"
 
-react-router-dom@4.3.0-rc.1:
-  version "4.3.0-rc.1"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.0-rc.1.tgz#8d6a934ed979ea4b2c2760efef79009e8ac7bb82"
+react-router-dom@4.3.0-rc.2:
+  version "4.3.0-rc.2"
+  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.3.0-rc.2.tgz#3dcf892b4c92b918227210dd7bf5d7c4848b4ed8"
   dependencies:
     history "^4.7.2"
     invariant "^2.2.2"
@@ -8066,13 +8070,13 @@ serialize-javascript@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.4.0.tgz#7c958514db6ac2443a8abc062dc9f7886a7f6005"
 
-serve-favicon@2.4.5:
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/serve-favicon/-/serve-favicon-2.4.5.tgz#49d9a46863153a9240691c893d2b0e7d85d6d436"
+serve-favicon@2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/serve-favicon/-/serve-favicon-2.5.0.tgz#935d240cdfe0f5805307fdfe967d88942a2cbcf0"
   dependencies:
     etag "~1.8.1"
     fresh "0.5.2"
-    ms "2.0.0"
+    ms "2.1.1"
     parseurl "~1.3.2"
     safe-buffer "5.1.1"
 
@@ -9234,9 +9238,9 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.3.0.tgz#0b0c1e211311b3995dd25aed47ab46ea658be070"
+webpack@4.4.1:
+  version "4.4.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.4.1.tgz#b0105789890c28bfce9f392623ef5850254328a4"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^3.0.0"
