@@ -80,7 +80,7 @@ export const Footer = () => (
               <a href="http://javadoc.lwjgl.org/">JavaDoc</a>
             </li>
             <li>
-              <a href="https://slack.lwjgl.org/">Slack</a>
+              <a href="http://slack.lwjgl.org/">Slack</a>
             </li>
           </ul>
         </div>

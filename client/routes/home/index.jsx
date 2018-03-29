@@ -123,7 +123,7 @@ const HomeRoute = (props: ContextRouter) => (
               <h3>Community</h3>
               <p>
                 Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up for a
-                chat? Join our <a href="https://slack.lwjgl.org/">Slack team</a>
+                chat? Join our <a href="http://slack.lwjgl.org/">Slack team</a>
               </p>
             </div>
             <div className="col-md py-3">
@@ -228,9 +228,9 @@ const HomeRoute = (props: ContextRouter) => (
               <h3>Customization & Utilities</h3>
               <p>
                 Use <a href="http://www.dyncall.org/">dyncall</a> to call functions from any native library, use{' '}
-                <a href="http://jemalloc.net/">jemalloc</a> for efficient and tunable memory management,
-                use the <a href="https://github.com/nothings/stb">stb</a> collection of libraries for texture loading,
-                font rendering and much more.
+                <a href="http://jemalloc.net/">jemalloc</a> for efficient and tunable memory management, use the{' '}
+                <a href="https://github.com/nothings/stb">stb</a> collection of libraries for texture loading, font
+                rendering and much more.
               </p>
             </div>
           </div>
