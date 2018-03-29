@@ -2610,9 +2610,9 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-subscription@0.1.0-rc.0:
-  version "0.1.0-rc.0"
-  resolved "https://registry.yarnpkg.com/create-subscription/-/create-subscription-0.1.0-rc.0.tgz#cd8fc3e6609d9a2fca32f87d4917f1f7151ef15f"
+create-subscription@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/create-subscription/-/create-subscription-0.1.0.tgz#1c05edfbb1aa0c96d72edd45f8398ed49123c0f0"
   dependencies:
     fbjs "^0.8.16"
 
@@ -7335,9 +7335,9 @@ rc@^1.1.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@16.3.0-rc.0:
-  version "16.3.0-rc.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.0-rc.0.tgz#18282bcc98496197877b9365467362caf74b8e45"
+react-dom@16.3.0:
+  version "16.3.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.3.0.tgz#b318e52184188ecb5c3e81117420cca40618643e"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -7364,9 +7364,9 @@ react-icons@2.2.7:
   dependencies:
     react-icon-base "2.1.0"
 
-react-is@next:
-  version "16.3.0-alpha.3"
-  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.3.0-alpha.3.tgz#0960d927b2b17154897139c6329aa958e29a86c2"
+react-is@16.3.0:
+  version "16.3.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.3.0.tgz#f0e8bfd8c09b480dd610b8639d9ed65c13601224"
 
 react-loadable@5.3.1:
   version "5.3.1"
@@ -7401,9 +7401,9 @@ react-router@^4.3.0-rc.1:
     prop-types "^15.6.0"
     warning "^3.0.0"
 
-react@16.3.0-rc.0:
-  version "16.3.0-rc.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.3.0-rc.0.tgz#07ddbe3ef14b910038576ef4afb29793d9e20f84"
+react@16.3.0:
+  version "16.3.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.3.0.tgz#fc5a01c68f91e9b38e92cf83f7b795ebdca8ddff"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
