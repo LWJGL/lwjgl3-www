@@ -60,7 +60,7 @@ export const BuildArtifact = ({ id }: Props) => (
               value={artifact.id}
               label={artifact.title}
               disabled={disabled}
-              checked={checked && !disabled}
+              checked={checked}
               onChange={toggleArtifact}
             />
             {artifact.natives && getPlatformIcons(artifact.natives)}
