@@ -43,9 +43,9 @@ export const BuildArtifact = ({ id }: Props) => (
 
       return {
         artifact,
-        checked: build.availability[artifact.id] !== undefined && build.contents[artifact.id],
+        checked: build.contents[artifact.id] && build.availability[artifact.id],
         showDescriptions: build.descriptions,
-        disabled: build.availability[artifact.id] === undefined || artifact.required === true,
+        disabled: artifact.required === true || !build.availability[artifact.id],
       };
     }}
     actions={{

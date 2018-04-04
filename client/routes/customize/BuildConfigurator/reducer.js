@@ -233,7 +233,6 @@ const computeArtifacts = (state: BuildConfig) => {
     const artifact = state.artifacts.byId[it];
 
     state.availability[it] =
-      state.mode !== MODE_ZIP ||
       artifact.natives === undefined ||
       artifact.natives.length === config.natives.allIds.length ||
       artifact.natives.some((platform: NATIVES) => !!state.platform[platform]);
