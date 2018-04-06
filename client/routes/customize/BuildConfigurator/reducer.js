@@ -234,6 +234,7 @@ const computeArtifacts = (state: BuildConfig) => {
 
     state.availability[it] =
       artifact.natives === undefined ||
+      artifact.nativesOptional === true ||
       artifact.natives.length === config.natives.allIds.length ||
       artifact.natives.some((platform: NATIVES) => !!state.platform[platform]);
 
