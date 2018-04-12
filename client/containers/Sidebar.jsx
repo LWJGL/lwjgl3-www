@@ -56,7 +56,10 @@ export class Sidebar extends React.PureComponent<Props, State> {
   }
 
   onToggle = (/*evt*/) => {
-    const { focusTrap, sideContainerRef: { current: sideContainer } } = this;
+    const {
+      focusTrap,
+      sideContainerRef: { current: sideContainer },
+    } = this;
 
     /*::
     if (focusTrap == null || sideContainer == null) {

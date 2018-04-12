@@ -20,7 +20,10 @@ export class PageView extends React.Component<Props> {
   static scrollPositions: ScrollPositions = {};
 
   componentDidMount() {
-    const { history: { action }, location: { key = 'root', pathname, search } } = this.props;
+    const {
+      history: { action },
+      location: { key = 'root', pathname, search },
+    } = this.props;
     let scrollToTop: boolean = this.props.location.hash.length === 0;
 
     // Track in Google Analytics
@@ -43,7 +46,9 @@ export class PageView extends React.Component<Props> {
 
   componentWillUnmount() {
     // Remember scroll position so we can restore if we return to this view via browser history
-    const { location: { key = 'root' } } = this.props;
+    const {
+      location: { key = 'root' },
+    } = this.props;
     // RouteModule.scrollPositions[key] = [window.scrollX, window.scrollY];  // <-- Only supported in CSSOM browsers
     PageView.scrollPositions[key] = [window.pageXOffset, window.pageYOffset]; // IE9+ pageXOffset is alias of scrollX
   }
