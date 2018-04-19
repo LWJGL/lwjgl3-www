@@ -23,7 +23,6 @@ const Canvas = css`
 `;
 
 class HomeCanvas extends React.Component<{||}> {
-  //$FlowFixMe
   canvasRef = React.createRef();
 
   io: IntersectionObserver | null = null;

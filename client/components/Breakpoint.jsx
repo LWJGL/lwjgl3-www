@@ -2,8 +2,10 @@
 import * as React from 'react';
 import { breakpoints, breakpointIndex } from '../theme/media';
 
-//$FlowFixMe
-const BreakpointContext = React.createContext(null);
+const BreakpointContext = React.createContext({
+  current: breakpointIndex.lg,
+  breakpoints: breakpointIndex,
+});
 
 export const Breakpoint = BreakpointContext.Consumer;
 
@@ -13,6 +15,7 @@ type Props = {
 
 type State = {
   current: number,
+  breakpoints: typeof breakpointIndex,
 };
 
 export class BreakpointProvider extends React.Component<Props, State> {

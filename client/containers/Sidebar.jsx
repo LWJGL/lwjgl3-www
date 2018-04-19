@@ -26,11 +26,8 @@ export class Sidebar extends React.PureComponent<Props, State> {
   currentX: number = 0;
   focusTrap: FocusTrap;
 
-  //$FlowFixMe
   closeButtonRef = React.createRef();
-  //$FlowFixMe
   slidingMenuRef = React.createRef();
-  //$FlowFixMe
   sideContainerRef = React.createRef();
 
   componentDidMount() {
@@ -104,7 +101,9 @@ export class Sidebar extends React.PureComponent<Props, State> {
     this.currentX = this.startX;
 
     this.touchingSideNav = true;
-    this.sideContainerRef.current.classList.add('touching');
+    if (this.sideContainerRef.current !== null) {
+      this.sideContainerRef.current.classList.add('touching');
+    }
     requestAnimationFrame(this.update);
   };
 
@@ -120,8 +119,10 @@ export class Sidebar extends React.PureComponent<Props, State> {
       this.touchingSideNav = false;
 
       const sideContainer = this.sideContainerRef.current;
-      sideContainer.style.transform = '';
-      sideContainer.classList.remove('touching');
+      if (sideContainer !== null) {
+        sideContainer.style.transform = '';
+        sideContainer.classList.remove('touching');
+      }
 
       if (this.currentX - this.startX > 0) {
         this.onToggle();
@@ -142,7 +143,9 @@ export class Sidebar extends React.PureComponent<Props, State> {
       translateX = 0;
     }
 
-    this.sideContainerRef.current.style.transform = `translateX(${translateX}px)`;
+    if (this.sideContainerRef.current !== null) {
+      this.sideContainerRef.current.style.transform = `translateX(${translateX}px)`;
+    }
   };
 
   render() {

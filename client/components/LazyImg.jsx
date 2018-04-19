@@ -27,7 +27,6 @@ export class LazyImg extends React.PureComponent<Props, Props> {
   observed: boolean = false;
 
   state = {};
-  //$FlowFixMe
   imgRef = React.createRef();
 
   componentDidMount() {

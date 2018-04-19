@@ -13,7 +13,6 @@ type State = {
 
 export default class ResizeObservable extends React.Component<Props, State> {
   observer: ?ResizeObserver;
-  //$FlowFixMe
   handleRef = React.createRef();
 
   state = {

@@ -22,7 +22,6 @@ export class ScrollToMe extends React.Component<Props> {
     }
   }
 
-  //$FlowFixMe
   divRef = React.createRef();
 
   render() {

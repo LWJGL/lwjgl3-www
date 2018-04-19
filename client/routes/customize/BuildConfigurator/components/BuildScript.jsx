@@ -48,7 +48,6 @@ function getSelectedPlatforms(build: BuildConfig): NATIVES | null {
 }
 
 export class BuildScript extends React.Component<Props> {
-  //$FlowFixMe
   preRef = React.createRef();
 
   copyToClipboard = this.copyToClipboard.bind(this);

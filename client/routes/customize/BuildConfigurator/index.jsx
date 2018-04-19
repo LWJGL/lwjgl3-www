@@ -69,14 +69,19 @@ export class BuildConfigurator extends React.Component<Props, State> {
     this.unsubscribe = store.subscribe(
       debounce(() => {
         const save = getConfig(store.getState());
-        if (save !== null) {
-          if (this.prevSave === null || !areEqual(this.prevSave, save)) {
-            this.prevSave = save;
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+        if (save === null) {
+          if (this.prevSave !== null) {
+            this.prevSave = null;
+            localStorage.removeItem(STORAGE_KEY);
           }
-        } else if (this.prevSave !== null) {
-          this.prevSave = null;
-          localStorage.removeItem(STORAGE_KEY);
+          return;
+        }
+
+        // Save to local storage
+        // * NOTE: We deep compare because it is faster than serializing & storing on disk every time
+        if (this.prevSave === null || !areEqual(this.prevSave, save)) {
+          this.prevSave = save;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
         }
       }, 500)
     );

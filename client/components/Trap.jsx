@@ -30,7 +30,6 @@ export class Trap extends React.PureComponent<TrapProps> {
   returnFocus: HTMLElement | null;
   mounted: boolean = false;
 
-  //$FlowFixMe
   divRef = React.createRef();
 
   render() {

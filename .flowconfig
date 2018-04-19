@@ -15,6 +15,7 @@
 <PROJECT_ROOT>/node_modules/react-emotion/.*
 <PROJECT_ROOT>/node_modules/babel-plugin-emotion/.*
 <PROJECT_ROOT>/node_modules/postcss.*
+<PROJECT_ROOT>/node_modules/chalk.*
 .*/fbjs/.*
 
 [include]
