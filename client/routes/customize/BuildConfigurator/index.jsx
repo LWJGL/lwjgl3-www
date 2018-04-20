@@ -44,7 +44,7 @@ type State = {
 
 export class BuildConfigurator extends React.Component<Props, State> {
   static firstLoad = true;
-  unsubscribe: Function;
+  unsubscribe: () => void;
   prevSave: BuildConfigStored | null = null;
   mounted: boolean = false;
 

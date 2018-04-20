@@ -4,9 +4,9 @@ import { uniqueId } from 'lodash-es';
 
 type Props = {
   label: string,
-  value?: any,
+  value?: mixed,
   checked?: boolean,
-  onChange?: (value: any) => mixed,
+  onChange?: (value: mixed) => mixed,
   disabled?: boolean,
   hidden?: boolean,
   icon?: React$Element<*>,
