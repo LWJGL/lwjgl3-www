@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const uglify = require('uglify-es');
+// const minify = require('babel-minify');
 const gzipSize = require('gzip-size');
 const chalk = require('chalk');
 
@@ -69,6 +70,28 @@ process.on('message', chunk => {
     return;
   }
   contents = uglifyResult.code;
+
+  // // Process with babel-minify
+  // try {
+  //   const minified = minify(
+  //     contents,
+  //     {
+  //       removeConsole: true,
+  //       removeDebugger: true,
+  //     },
+  //     {
+  //       sourceMaps: false,
+  //     }
+  //   );
+  //   contents = minified.code;
+  // } catch (err) {
+  //   process.send({
+  //     pid: process.pid,
+  //     type: 'error',
+  //     error: err.message,
+  //   });
+  //   return;
+  // }
 
   // Compute hash
   const hash = crypto.createHash('MD5');
