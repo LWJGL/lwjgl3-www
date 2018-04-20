@@ -9,12 +9,12 @@ const config = {
   plugins: [
     DEV ? ['emotion', { sourceMap: SOURCEMAP, autoLabel: true }] : ['emotion', { hoist: true }],
     // 'react-hot-loader/babel',
-    '@babel/transform-flow-strip-types',
+    '@babel/plugin-transform-flow-strip-types',
 
     // React
-    DEV && '@babel/transform-react-jsx-self',
-    DEV && '@babel/transform-react-jsx-source',
-    DEV && '@babel/transform-react-display-name',
+    DEV && '@babel/plugin-transform-react-jsx-self',
+    DEV && '@babel/plugin-transform-react-jsx-source',
+    DEV && '@babel/plugin-transform-react-display-name',
     PRODUCTION && [
       'transform-react-remove-prop-types',
       {
@@ -22,57 +22,72 @@ const config = {
         removeImport: true,
       },
     ],
-    PRODUCTION && '@babel/transform-react-constant-elements',
-    PRODUCTION && '@babel/transform-react-inline-elements',
-    ['@babel/transform-react-jsx', { useBuiltIns: true }],
+    PRODUCTION && '@babel/plugin-transform-react-constant-elements',
+    PRODUCTION && '@babel/plugin-transform-react-inline-elements',
+    ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],
 
-    // Stage 2
-    '@babel/syntax-dynamic-import',
-    ['@babel/proposal-class-properties', { spec: false }],
+    // Stage-1
+    // '@babel/plugin-proposal-export-default-from',
+    // '@babel/plugin-proposal-logical-assignment-operators',
+    '@babel/plugin-proposal-optional-chaining',
+    // '@babel/plugin-proposal-pipeline-operator',
+    // '@babel/plugin-proposal-nullish-coalescing-operator',
+    // '@babel/plugin-proposal-do-expressions',
 
-    // Stage 3
-    ['@babel/proposal-object-rest-spread', { useBuiltIns: true }],
-    // "@babel/proposal-async-generator-functions",
+    // Stage-2
+    // '@babel/plugin-proposal-decorators',
+    // '@babel/plugin-proposal-function-sent',
+    '@babel/plugin-proposal-export-namespace-from',
+    '@babel/plugin-proposal-numeric-separator',
+    // '@babel/plugin-proposal-throw-expressions',
+
+    // Stage-3
+    '@babel/plugin-syntax-dynamic-import',
+    // "@babel/plugin-syntax-import-meta",
+    PRODUCTION && '@babel/plugin-proposal-async-generator-functions',
+    ['@babel/plugin-proposal-class-properties', { spec: false }],
+    ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
+    '@babel/plugin-proposal-optional-catch-binding',
+    // "@babel/plugin-proposal-unicode-property-regex",
+
+    // ES2017
+    PRODUCTION && '@babel/plugin-transform-async-to-generator',
+
+    // ES2016
+    // "@babel/plugin-transform-exponentiation-operator",
 
     /*
     // ES2015
-    "@babel/check-constants",
-    ["@babel/transform-arrow-functions", { "spec": false }],
-    "@babel/transform-block-scoped-functions",
-    "@babel/transform-block-scoping",
-    ["@babel/transform-classes", { "loose": true }],
-    ["@babel/transform-computed-properties", { "loose": true }],
-    ["@babel/transform-destructuring", { "loose": true }],
-    "@babel/transform-duplicate-keys",
-    ["@babel/transform-for-of", { "loose": true }],
-    "@babel/transform-function-name",
-    "@babel/transform-literals",
-    "@babel/transform-object-super",
-    ["@babel/transform-parameters", { "loose": true }],
-    "@babel/transform-shorthand-properties",
-    ["@babel/transform-spread", { "loose": true }],
-    // "@babel/sticky-regex",
-    ["@babel/transform-template-literals", { "spec": false, "loose": true }],
-    "@babel/transform-typeof-symbol",
-    "@babel/transform-new-target",
-    // ["@babel/transform-regenerator", { "async": false, "asyncGenerators": false }],
-    // "@babel/unicode-regex"
-
-    // ES2016
-    "@babel/transform-exponentiation-operator",
-
-    // ES2017
-    // "@babel/transform-async-to-generator"
+    ["@babel/plugin-transform-template-literals", { "spec": false, "loose": true }],
+    "@babel/plugin-transform-literals",
+    "@babel/plugin-transform-function-name",
+    ["@babel/plugin-transform-arrow-functions", { "spec": false }],
+    "@babel/plugin-transform-block-scoped-functions",
+    ["@babel/plugin-transform-classes", { "loose": true }],
+    "@babel/plugin-transform-object-super",
+    "@babel/plugin-transform-shorthand-properties",
+    "@babel/plugin-transform-duplicate-keys",
+    ["@babel/plugin-transform-computed-properties", { "loose": true }],
+    ["@babel/plugin-transform-for-of", { "loose": true }],
+    "@babel/plugin-transform-sticky-regex",
+    "@babel/plugin-transform-unicode-regex"
+    ["@babel/plugin-transform-spread", { "loose": true }],
+    ["@babel/plugin-transform-parameters", { "loose": true }],
+    ["@babel/plugin-transform-destructuring", { "loose": true }],
+    "@babel/plugin-transform-block-scoping",
+    "@babel/plugin-transform-typeof-symbol",
+    "@babel/plugin-transform-instanceof",
     */
+    PRODUCTION && ['@babel/plugin-transform-regenerator', { async: false, asyncGenerators: false, generators: true }],
 
     // https://github.com/MatAtBread/fast-async
     // async/await using Promises instead of (Re)generator
-    PRODUCTION && [
-      'module:fast-async',
-      {
-        spec: true,
-      },
-    ],
+    // PRODUCTION && [
+    //   'module:fast-async',
+    //   {
+    //     spec: true,
+    //   },
+    // ],
   ].filter(Boolean),
 };
 
@@ -92,10 +107,6 @@ if (NODE_ENV === 'production') {
           browsers,
         },
         exclude: [
-          'transform-sticky-regex',
-          'transform-unicode-regex',
-          'transform-async-to-generator',
-          'transform-regenerator',
           'es6.typed.array-buffer',
           'es6.typed.data-view',
           'es6.typed.int8-array',
