@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { css } from 'emotion';
-import IconArrowDown from 'react-icons/md/keyboard-arrow-down';
+import { MdKeyboardArrowDown } from '~/components/icons/md/keyboard-arrow-down';
 import Loadable from 'react-loadable';
 import { Logo } from './Logo';
 
@@ -105,7 +105,7 @@ export class HomeHero extends React.Component<Props, State> {
             </h1>
             <Link to="/#learn-more">
               LEARN MORE<br />
-              <IconArrowDown />
+              <MdKeyboardArrowDown />
             </Link>
           </div>
         </div>

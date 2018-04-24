@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { css } from 'emotion';
-import IconFolder from 'react-icons/md/folder';
+import { MdFolder } from '~/components/icons/md/folder';
 
 export const FolderTH = css`
   cursor: pointer;
@@ -30,7 +30,7 @@ export class Folder extends React.PureComponent<Props> {
     return (
       <tr>
         <th className={FolderTH} colSpan={2} onClick={this.clickHandle}>
-          <IconFolder /> {name}
+          <MdFolder /> {name}
         </th>
       </tr>
     );

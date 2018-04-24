@@ -11,15 +11,15 @@ import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
 
 // Icons
-import IconLowLevel from 'react-icons/md/settings-input-composite';
-import IconObjectiveC from 'react-icons/fa/apple';
-import IconDocumentation from 'react-icons/md/library-books';
-import IconUtilities from 'react-icons/md/widgets';
-import IconCommunity from 'react-icons/md/forum';
-import IconCrossPlatform from 'react-icons/md/devices';
-import IconGLFW from 'react-icons/md/videogame-asset';
-import IconGitHub from 'react-icons/fa/github';
-import IconMoreApi from 'react-icons/md/battery-unknown';
+import { FaGithub } from '~/components/icons/fa/github';
+import { FaApple } from '~/components/icons/fa/apple';
+import { MdSettingsInputComposite } from '~/components/icons/md/settings-input-composite';
+import { MdLibraryBooks } from '~/components/icons/md/library-books';
+import { MdWidgets } from '~/components/icons/md/widgets';
+import { MdForum } from '~/components/icons/md/forum';
+import { MdDevices } from '~/components/icons/md/devices';
+import { MdVideogameAsset } from '~/components/icons/md/videogame-asset';
+import { MdBatteryUnknown } from '~/components/icons/md/battery-unknown';
 
 const BindingsDiv = css`
   .svg-icon,
@@ -89,7 +89,7 @@ const HomeRoute = (props: ContextRouter) => (
 
           <div className="row">
             <div className="col-md py-3">
-              <IconLowLevel />
+              <MdSettingsInputComposite />
               <h3>Low-level Bindings</h3>
               <p>
                 Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance and a
@@ -97,7 +97,7 @@ const HomeRoute = (props: ContextRouter) => (
               </p>
             </div>
             <div className="col-md py-3">
-              <IconGitHub />
+              <FaGithub />
               <h3>Open Source</h3>
               <p>
                 LWJGL is available under a <Link to="/license">BSD license</Link>. Visit our{' '}
@@ -106,7 +106,7 @@ const HomeRoute = (props: ContextRouter) => (
               </p>
             </div>
             <div className="col-md py-3">
-              <IconDocumentation />
+              <MdLibraryBooks />
               <h3>Built-in Documentation</h3>
               <p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
             </div>
@@ -114,12 +114,12 @@ const HomeRoute = (props: ContextRouter) => (
 
           <div className="row">
             <div className="col-md py-3">
-              <IconCrossPlatform />
+              <MdDevices />
               <h3>Cross-platform</h3>
               <p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
             </div>
             <div className="col-md py-3">
-              <IconCommunity />
+              <MdForum />
               <h3>Community</h3>
               <p>
                 Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up for a
@@ -127,7 +127,7 @@ const HomeRoute = (props: ContextRouter) => (
               </p>
             </div>
             <div className="col-md py-3">
-              <IconGLFW />
+              <MdVideogameAsset />
               <h3>GLFW Bindings</h3>
               <p>
                 Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts.
@@ -219,12 +219,12 @@ const HomeRoute = (props: ContextRouter) => (
               <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
             </div>
             <div className="col-md py-3">
-              <IconObjectiveC />
+              <FaApple />
               <h3>Objective-C Bindings</h3>
               <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on macOS.</p>
             </div>
             <div className="col-md py-3">
-              <IconUtilities />
+              <MdWidgets />
               <h3>Customization & Utilities</h3>
               <p>
                 Use <a href="http://www.dyncall.org/">dyncall</a> to call functions from any native library, use{' '}
@@ -238,7 +238,7 @@ const HomeRoute = (props: ContextRouter) => (
           <div className="row">
             <div className="col pt-3">
               <div className="mb-3">
-                <IconMoreApi style={{ fontSize: '6rem' }} color="yellow" />
+                <MdBatteryUnknown style={{ fontSize: '6rem' }} color="yellow" />
               </div>
               <h3>Your favorite API here!</h3>
               <p>

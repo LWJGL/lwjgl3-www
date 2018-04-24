@@ -4,22 +4,20 @@ import { Checkbox } from '~/components/Checkbox';
 import { togglePlatform } from '../reducer';
 import type { BuildConfig } from '../types';
 import { Connect } from '~/store/Connect';
-
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import type { NATIVES } from '../types';
-
-import IconWindows from 'react-icons/fa/windows';
-import IconLinux from 'react-icons/fa/linux';
-import IconMacos from 'react-icons/fa/apple';
+import { FaLinux } from '~/components/icons/fa/linux';
+import { FaWindows } from '~/components/icons/fa/windows';
+import { FaApple } from '~/components/icons/fa/apple';
 
 const getIcon = (platform: NATIVES) => {
   switch (platform) {
     case NATIVE_WIN:
-      return <IconWindows />;
+      return <FaWindows />;
     case NATIVE_MAC:
-      return <IconMacos />;
+      return <FaApple />;
     case NATIVE_LINUX:
-      return <IconLinux />;
+      return <FaLinux />;
     default:
       return undefined;
   }

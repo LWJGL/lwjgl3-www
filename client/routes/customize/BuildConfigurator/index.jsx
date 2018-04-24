@@ -28,7 +28,7 @@ import { BuildScript } from './components/BuildScript';
 import { BuildBundler } from './components/BuildBundler';
 import { BuildToolbar } from './components/BuildToolbar';
 
-import IconDownload from 'react-icons/md/file-download';
+import { MdFileDownload } from '~/components/icons/md/file-download';
 
 import type { BuildConfig, BuildConfigStored } from './types';
 import type { GenerateOptions } from 'jszip';
@@ -317,7 +317,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
                     mode === MODE_ZIP ? (
                       <BuildToolbar configDownload={this.configDownload}>
                         <button className="btn btn-success" onClick={this.download}>
-                          <IconDownload /> DOWNLOAD ZIP
+                          <MdFileDownload /> DOWNLOAD ZIP
                         </button>
                       </BuildToolbar>
                     ) : (

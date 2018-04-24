@@ -36,10 +36,10 @@ const buildConfiguration = () => {
       runtimeChunk: PRODUCTION,
       splitChunks: {
         chunks: 'async',
-        minSize: 1024 * 1024,
+        minSize: 1024 * 512, // 1 KiB
         minChunks: 2,
-        maxAsyncRequests: 4,
-        maxInitialRequests: 2,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 1,
         name: true,
       },
     },
@@ -61,8 +61,6 @@ const buildConfiguration = () => {
       symlinks: false,
       alias: {
         '~': path.resolve(__dirname, './client'),
-        // Load our custom version of react-icon-base
-        'react-icon-base$': path.resolve(__dirname, 'client/components/Icon.jsx'),
       },
     },
     module: {
@@ -76,7 +74,7 @@ const buildConfiguration = () => {
         },
         {
           test: /\.(js|mjs|jsx)$/,
-          include: [path.resolve(__dirname, 'client'), path.resolve(__dirname, 'node_modules/react-icons')],
+          include: [path.resolve(__dirname, 'client')],
           use: [
             'cache-loader',
             'thread-loader',

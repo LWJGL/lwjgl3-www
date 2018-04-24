@@ -2,7 +2,6 @@
 import * as React from 'react';
 import { Dialog } from './Dialog';
 import { Trap } from './Trap';
-import IconClose from 'react-icons/md/close';
 
 type ModalProps = {
   children: React.Node,

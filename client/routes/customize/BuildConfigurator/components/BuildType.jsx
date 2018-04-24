@@ -7,7 +7,7 @@ import { Connect } from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
 import { css } from 'emotion';
-import IconClose from 'react-icons/md/close';
+import { MdClose } from '~/components/icons/md/close';
 import { cc, mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import { Breakpoint } from '~/components/Breakpoint';
 import {
@@ -140,7 +140,7 @@ export class BuildType extends React.PureComponent<Props> {
                 <h2>{spec.title}</h2>
                 <p>{spec.description}</p>
                 <BuildStatus name={spec.id} status={status} loadStatus={loadStatus} />
-                {isSelected ? <IconClose /> : null}
+                {isSelected ? <MdClose /> : null}
               </div>
             )}
           </Connect>

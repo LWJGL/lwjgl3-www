@@ -1,13 +1,11 @@
 // @flow
 import * as React from 'react';
-import createFocusTrap from 'focus-trap';
+import createFocusTrap, { type FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
-import IconMenu from 'react-icons/md/menu';
-import IconClose from 'react-icons/md/close';
+import { MdMenu } from '~/components/icons/md/menu';
+import { MdClose } from '~/components/icons/md/close';
 import { SupportsPassiveEvents } from '~/services/supports';
-
-import type { FocusTrap } from 'focus-trap';
 
 type Props = {};
 
@@ -160,7 +158,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
           aria-hidden={isOpen}
           title="Open navigation menu"
         >
-          <IconMenu />
+          <MdMenu />
         </button>
         <div className="sliding-menu-overlay" onClick={this.onToggle} />
         <div
@@ -178,7 +176,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
               onClick={this.onToggle}
               title="Close navigation menu"
             >
-              <IconClose />
+              <MdClose />
             </button>
           </div>
           <MainMenu className="list-unstyled" onClick={this.onToggle} />

@@ -4,7 +4,7 @@ import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import { Title } from '~/components/Title';
 import { Head } from '~/components/Head';
-import FaGithub from 'react-icons/fa/github';
+import { FaGithub } from '~/components/icons/fa/github';
 import { BuildBadge } from './BuildBadge';
 
 const SourceRoute = (props: ContextRouter) => (

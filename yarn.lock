@@ -44,16 +44,6 @@
     source-map "^0.5.0"
     trim-right "^1.0.1"
 
-"@babel/generator@^7.0.0-beta.44":
-  version "7.0.0-beta.44"
-  resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.0.0-beta.44.tgz#c7e67b9b5284afcf69b309b50d7d37f3e5033d42"
-  dependencies:
-    "@babel/types" "7.0.0-beta.44"
-    jsesc "^2.5.1"
-    lodash "^4.2.0"
-    source-map "^0.5.0"
-    trim-right "^1.0.1"
-
 "@babel/helper-annotate-as-pure@7.0.0-beta.46":
   version "7.0.0-beta.46"
   resolved "https://registry.yarnpkg.com/@babel/helper-annotate-as-pure/-/helper-annotate-as-pure-7.0.0-beta.46.tgz#4cd76d5c93409ea01d31be66395a3b98a372792e"
@@ -135,13 +125,6 @@
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.46.tgz#8bd2e1fcfae883d28149a350e31ce606aa24eda6"
   dependencies:
     "@babel/types" "7.0.0-beta.46"
-    lodash "^4.2.0"
-
-"@babel/helper-module-imports@^7.0.0-beta.44":
-  version "7.0.0-beta.44"
-  resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.0.0-beta.44.tgz#60edc68cdf17e13eaca5be813c96127303085133"
-  dependencies:
-    "@babel/types" "7.0.0-beta.44"
     lodash "^4.2.0"
 
 "@babel/helper-module-transforms@7.0.0-beta.46":
@@ -839,14 +822,6 @@
 "@babel/types@7.0.0-beta.32":
   version "7.0.0-beta.32"
   resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.32.tgz#c317d0ecc89297b80bbcb2f50608e31f6452a5ff"
-  dependencies:
-    esutils "^2.0.2"
-    lodash "^4.2.0"
-    to-fast-properties "^2.0.0"
-
-"@babel/types@7.0.0-beta.44":
-  version "7.0.0-beta.44"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.0.0-beta.44.tgz#6b1b164591f77dec0a0342aca995f2d046b3a757"
   dependencies:
     esutils "^2.0.2"
     lodash "^4.2.0"
@@ -1893,7 +1868,7 @@ babylon@^6.17.3, babylon@^6.18.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.18.0.tgz#af2f3b88fa6f5c1e4c634d1a0f8eac4f55b395e3"
 
-babylon@^7.0.0-beta.30, babylon@^7.0.0-beta.44:
+babylon@^7.0.0-beta.30:
   version "7.0.0-beta.44"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-7.0.0-beta.44.tgz#89159e15e6e30c5096e22d738d8c0af8a0e8ca1d"
 
@@ -3586,16 +3561,6 @@ extsprintf@1.3.0:
 extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
-
-fast-async@7.0.5:
-  version "7.0.5"
-  resolved "https://registry.yarnpkg.com/fast-async/-/fast-async-7.0.5.tgz#627bdab60268df91954df7ee2a5044083bac6097"
-  dependencies:
-    "@babel/generator" "^7.0.0-beta.44"
-    "@babel/helper-module-imports" "^7.0.0-beta.44"
-    babylon "^7.0.0-beta.44"
-    nodent-runtime "^3.2.1"
-    nodent-transform "^3.2.2"
 
 fast-deep-equal@^1.0.0:
   version "1.1.0"
@@ -6164,14 +6129,6 @@ node-sass@4.8.3:
     stdout-stream "^1.4.0"
     "true-case-path" "^1.0.2"
 
-nodent-runtime@^3.2.1:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/nodent-runtime/-/nodent-runtime-3.2.1.tgz#9e2755d85e39f764288f0d4752ebcfe3e541e00e"
-
-nodent-transform@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/nodent-transform/-/nodent-transform-3.2.2.tgz#10b1b7a9977400fc3dab4d39f5c0d0c8b7d1a7e8"
-
 nomnom@^1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/nomnom/-/nomnom-1.8.1.tgz#2151f722472ba79e50a76fc125bb8c8f2e4dc2a7"
@@ -7476,16 +7433,6 @@ react-hot-loader@4.1.2:
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.2"
     shallowequal "^1.0.2"
-
-react-icon-base@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-icon-base/-/react-icon-base-2.1.0.tgz#a196e33fdf1e7aaa1fda3aefbb68bdad9e82a79d"
-
-react-icons@2.2.7:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-2.2.7.tgz#d7860826b258557510dac10680abea5ca23cf650"
-  dependencies:
-    react-icon-base "2.1.0"
 
 react-is@16.3.2:
   version "16.3.2"

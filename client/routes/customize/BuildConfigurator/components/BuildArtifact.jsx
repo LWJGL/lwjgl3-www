@@ -5,10 +5,9 @@ import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import { Checkbox } from '~/components/Checkbox';
 import { Connect } from '~/store/Connect';
 import { cc } from '~/theme';
-
-import IconWindows from 'react-icons/fa/windows';
-import IconLinux from 'react-icons/fa/linux';
-import IconMacos from 'react-icons/fa/apple';
+import { FaLinux } from '~/components/icons/fa/linux';
+import { FaWindows } from '~/components/icons/fa/windows';
+import { FaApple } from '~/components/icons/fa/apple';
 
 const getPlatformIcons = platforms => {
   return (
@@ -17,11 +16,11 @@ const getPlatformIcons = platforms => {
       {platforms.map(platform => {
         switch (platform) {
           case NATIVE_WIN:
-            return <IconWindows key="fa-win" />;
+            return <FaWindows key="fa-win" />;
           case NATIVE_MAC:
-            return <IconMacos key="fa-mac" />;
+            return <FaApple key="fa-mac" />;
           case NATIVE_LINUX:
-            return <IconLinux key="fa-linux" />;
+            return <FaLinux key="fa-linux" />;
           default:
             return null;
         }

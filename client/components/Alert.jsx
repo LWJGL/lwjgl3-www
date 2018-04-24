@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { Dialog } from './Dialog';
 import { Trap } from './Trap';
-import IconClose from 'react-icons/md/close';
+import { MdClose } from './icons/md/close';
 
 type DialogType = 'primary' | 'success' | 'info' | 'warning' | 'danger';
 
@@ -32,7 +32,7 @@ export class Alert extends React.PureComponent<AlertProps, void> {
               <div className={`dialog-header bg-${type}`}>
                 <h3>{title}</h3>
                 <div className="dialog-close-button">
-                  <IconClose onClick={onClose} />
+                  <MdClose onClick={onClose} />
                 </div>
               </div>
             )}
