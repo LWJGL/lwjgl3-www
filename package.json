@@ -24,11 +24,11 @@
   },
   "browserslist": [
     "chrome >= 40",
-    "firefox >= 32",
-    "safari >= 6",
+    "firefox >= 34",
+    "safari >= 8",
     "edge >= 12",
-    "ios >= 7",
-    "ie >= 10"
+    "ios >= 9",
+    "ie >= 11"
   ],
   "postcss": {
     "plugins": {

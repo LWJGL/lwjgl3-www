@@ -1,6 +1,5 @@
 const { argv } = require('yargs');
 const { NODE_ENV } = process.env;
-const browsers = ['chrome >= 40', 'firefox >= 32', 'safari >= 6', 'edge >= 12', 'ios >= 7', 'ie >= 10'];
 const PRODUCTION = NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 const SOURCEMAP = argv.sourcemap !== undefined;
@@ -103,9 +102,6 @@ if (NODE_ENV === 'production') {
         debug: false,
         useBuiltIns: 'entry',
         shippedProposals: true,
-        targets: {
-          browsers,
-        },
         exclude: [
           'es6.typed.array-buffer',
           'es6.typed.data-view',
