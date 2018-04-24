@@ -7,7 +7,7 @@ import type { RemarkableOptions, RemarkableSettings } from 'remarkable';
 type Props = {
   tag: string,
   source?: string,
-  children?: React$Element<*>,
+  children?: React.Node,
   options?: RemarkableOptions | RemarkableSettings,
 };
 

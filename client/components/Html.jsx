@@ -4,7 +4,7 @@ import * as React from 'react';
 type Props = {
   tag?: string,
   source?: string,
-  children?: React$Element<*>,
+  children?: React.Node,
   props?: $Shape<HTMLElement>,
 };
 

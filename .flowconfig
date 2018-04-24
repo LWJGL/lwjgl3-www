@@ -34,7 +34,7 @@ include_warnings=true
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
 esproposal.optional_chaining=ignore
-esproposal.export_star_as=true
+esproposal.export_star_as=enable
 experimental.const_params=true
 munge_underscores=true
 module.system=node
@@ -45,6 +45,6 @@ module.file_ext=.mjs
 # Webpack alias
 module.name_mapper='^~' -> '<PROJECT_ROOT>/client'
 # Stub all react-icons to <Icon />
-module.name_mapper='^react-icons/.*'->'<PROJECT_ROOT>/client/components/Icon.jsx'
+#module.name_mapper='^react-icon-base'->'<PROJECT_ROOT>/client/components/Icon.jsx'
 # Stub SCSS files to avoid Flow errors
 module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/client/services/CSSModule.js'
