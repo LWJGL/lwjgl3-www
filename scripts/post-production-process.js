@@ -34,7 +34,7 @@ process.on('message', chunk => {
   if (chunkName === 'runtime~main') {
     // Replace chunk filenames
     chunk.chunkFileMap.forEach(item => {
-      contents = contents.replace(item.name, item.hashed);
+      contents = contents.replace(`"${item.name}"`, `"${item.hashed}"`);
     });
   }
 
