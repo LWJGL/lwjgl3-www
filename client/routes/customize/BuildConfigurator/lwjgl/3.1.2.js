@@ -9,7 +9,7 @@ export default (prev: BuildOptions): BuildOptions => ({
     ...prev.byId,
     'lwjgl-openvr': {
       id: 'lwjgl-openvr',
-      title: 'OpenVR bindings',
+      title: 'OpenVR',
       description:
         'OpenVR is an API and runtime that allows access to VR hardware from multiple vendors without requiring that applications have specific knowledge of the hardware they are targeting.',
       natives: NATIVE_ALL,
@@ -17,14 +17,14 @@ export default (prev: BuildOptions): BuildOptions => ({
     },
     'lwjgl-tinyexr': {
       id: 'lwjgl-tinyexr',
-      title: 'Tiny OpenEXR bindings',
+      title: 'Tiny OpenEXR',
       description: 'A small library to load and save OpenEXR(.exr) images.',
       natives: NATIVE_ALL,
       website: 'https://github.com/syoyo/tinyexr',
     },
     'lwjgl-yoga': {
       id: 'lwjgl-yoga',
-      title: 'Yoga bindings',
+      title: 'Yoga',
       description: 'An open-source, cross-platform layout library that implements Flexbox.',
       natives: NATIVE_ALL,
       website: 'https://facebook.github.io/yoga/',

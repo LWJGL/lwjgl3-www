@@ -9,7 +9,7 @@ export default (prev: BuildOptions): BuildOptions => ({
     ...prev.byId,
     'lwjgl-tootle': {
       id: 'lwjgl-tootle',
-      title: 'AMD Tootle bindings',
+      title: 'AMD Tootle',
       description:
         'AMD Tootle (Triangle Order Optimization Tool) is a 3D triangle mesh optimization library that improves on existing mesh preprocessing techniques.',
       natives: NATIVE_ALL,

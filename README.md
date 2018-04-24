@@ -20,7 +20,7 @@ Notable features:
 * Custom webpack manifest parsing + code minification
 * Custom render-prop <Connect /> component for Redux
 * CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
-* fast-async instead of regenerator
+* <del>fast-async instead of regenerator</del>
 * [Flow](https://flow.org/) static type checking
 
 ## Dependencies

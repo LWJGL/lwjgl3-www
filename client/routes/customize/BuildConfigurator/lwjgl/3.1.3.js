@@ -9,7 +9,7 @@ export default (prev: BuildOptions): BuildOptions => ({
     ...prev.byId,
     'lwjgl-rpmalloc': {
       id: 'lwjgl-rpmalloc',
-      title: 'rpmalloc bindings',
+      title: 'rpmalloc',
       description:
         'A public domain cross platform lock free thread caching 16-byte aligned memory allocator implemented in C.',
       natives: NATIVE_ALL,
