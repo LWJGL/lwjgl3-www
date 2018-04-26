@@ -66,13 +66,6 @@ const buildConfiguration = () => {
     module: {
       rules: [
         {
-          include: [
-            path.resolve('node_modules', 'react-router/es'),
-            path.resolve('node_modules', 'react-router-dom/es'),
-          ],
-          sideEffects: false,
-        },
-        {
           test: /\.(js|mjs|jsx)$/,
           include: [path.resolve(__dirname, 'client')],
           use: [
