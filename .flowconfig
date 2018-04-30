@@ -6,16 +6,7 @@
 <PROJECT_ROOT>/.vscode/.*
 <PROJECT_ROOT>/public/.*
 <PROJECT_ROOT>/node_modules/@babel/.*
-<PROJECT_ROOT>/node_modules/editions/.*
-<PROJECT_ROOT>/node_modules/emotion/.*
-<PROJECT_ROOT>/node_modules/emotion-server/.*
-<PROJECT_ROOT>/node_modules/emotion-utils/.*
-<PROJECT_ROOT>/node_modules/create-emotion/.*
-<PROJECT_ROOT>/node_modules/create-emotion-styled/.*
-<PROJECT_ROOT>/node_modules/react-emotion/.*
-<PROJECT_ROOT>/node_modules/babel-plugin-emotion/.*
-<PROJECT_ROOT>/node_modules/postcss.*
-<PROJECT_ROOT>/node_modules/chalk.*
+<PROJECT_ROOT>/node_modules/@emotion/.*
 .*/fbjs/.*
 
 [include]

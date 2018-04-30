@@ -1,12 +1,14 @@
 // @flow
+// @jsx jsx
 import * as React from 'react';
+import jsx from '@emotion/jsx';
+import css from '@emotion/css';
 
 import { BuildStatus } from './BuildStatus';
 import { changeType, loadStatus } from '../reducer';
 import { Connect } from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
-import { css } from 'emotion';
 import { MdClose } from '~/components/icons/md/close';
 import { cc, mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import { Breakpoint } from '~/components/Breakpoint';
@@ -132,7 +134,8 @@ export class BuildType extends React.PureComponent<Props> {
             {({ isSelected, isActive, status, spec }, { changeType, loadStatus }) => (
               <div
                 onClick={changeType.bind(this, build)}
-                className={cc(BuildBox, build, {
+                css={BuildBox}
+                className={cc(build, {
                   selected: isSelected,
                   active: isActive,
                 })}
