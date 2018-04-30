@@ -1,6 +1,8 @@
 // @flow
+// @jsx jsx
 import * as React from 'react';
-import { css } from 'emotion';
+import jsx from '@emotion/jsx';
+import css from '@emotion/css';
 import { cc, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BuildConfig } from '../types';
 import { Connect } from '~/store/Connect';
@@ -97,6 +99,10 @@ export const BuildConfigArea = ({ children }: { children?: React.Node }) => (
       build: build.build,
     })}
   >
-    {({ build }) => <div className={cc(ConfigPanel, build)}>{children}</div>}
+    {({ build }) => (
+      <div css={ConfigPanel} className={build}>
+        {children}
+      </div>
+    )}
   </Connect>
 );

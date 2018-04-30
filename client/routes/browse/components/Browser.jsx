@@ -153,7 +153,7 @@ export class Browser extends React.Component<Props, State> {
           <tbody>
             {parent !== null && (
               <tr>
-                <th className={FolderTH} scope="row" onClick={() => this.changePath(parent || '')} colSpan={2}>
+                <th css={FolderTH} scope="row" onClick={() => this.changePath(parent || '')} colSpan={2}>
                   &hellip;
                 </th>
               </tr>

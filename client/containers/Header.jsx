@@ -1,27 +1,23 @@
 // @flow
+// @jsx jsx
 import * as React from 'react';
+import jsx from '@emotion/jsx';
+import css from '@emotion/css';
+import Global from '@emotion/global';
 import { Link } from 'react-router-dom';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import { SupportsPassiveEvents } from '~/services/supports';
-import { css, injectGlobal } from 'emotion';
 import { COLOR_PRIMARY, cc } from '~/theme';
 import { Breakpoint } from '../components/Breakpoint';
 
-injectGlobal`
-  body {
-    padding-top: 4rem;
-    overflow-y: scroll;
-  }
-`;
-
 const HEADER_CLASSNAME = 'site-header';
-const styleOpaque = css`
-  background-color: ${COLOR_PRIMARY.css()};
-`;
 const styleHome = css`
   transition: background-color 0.5s ease-out;
+`;
+const styleOpaque = css`
+  background-color: ${COLOR_PRIMARY.css()};
 `;
 
 type Props = {|
@@ -191,36 +187,45 @@ export class Header extends React.PureComponent<Props, State> {
     const isHome = this.props.pathname === '/';
 
     return (
-      <header
-        role="navigation"
-        className={cc(HEADER_CLASSNAME, {
-          [styleHome]: isHome,
-          [styleOpaque]: !isHome || !top,
-          alt: IS_IOS,
-          fixed,
-          hidden,
-        })}
-        style={{ top: pos }}
-      >
-        <nav className="container-fluid">
-          <div className="row">
-            <div className="col col-auto">
-              <Link to="/">
-                LW<b>JGL</b> 3
-              </Link>
+      <React.Fragment>
+        <Global
+          css={css`
+            body {
+              padding-top: 4rem;
+              overflow-y: scroll;
+            }
+          `}
+        />
+        <header
+          role="navigation"
+          css={[isHome && styleHome, (!isHome || !top) && styleOpaque]}
+          className={cc(HEADER_CLASSNAME, {
+            alt: IS_IOS,
+            fixed,
+            hidden,
+          })}
+          style={{ top: pos }}
+        >
+          <nav className="container-fluid">
+            <div className="row">
+              <div className="col col-auto">
+                <Link to="/">
+                  LW<b>JGL</b> 3
+                </Link>
+              </div>
+              <Breakpoint>
+                {media =>
+                  media.current > media.breakpoints.md ? (
+                    <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
+                  ) : (
+                    <Sidebar />
+                  )
+                }
+              </Breakpoint>
             </div>
-            <Breakpoint>
-              {media =>
-                media.current > media.breakpoints.md ? (
-                  <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
-                ) : (
-                  <Sidebar />
-                )
-              }
-            </Breakpoint>
-          </div>
-        </nav>
-      </header>
+          </nav>
+        </header>
+      </React.Fragment>
     );
   }
 }

@@ -1,6 +1,9 @@
 // @flow
+// @jsx jsx
 import * as React from 'react';
-import { css } from 'emotion';
+import jsx from '@emotion/jsx';
+import css from '@emotion/css';
+
 import { MdFolder } from '~/components/icons/md/folder';
 
 export const FolderTH = css`
@@ -29,7 +32,7 @@ export class Folder extends React.PureComponent<Props> {
 
     return (
       <tr>
-        <th className={FolderTH} colSpan={2} onClick={this.clickHandle}>
+        <th css={FolderTH} colSpan={2} onClick={this.clickHandle}>
           <MdFolder /> {name}
         </th>
       </tr>

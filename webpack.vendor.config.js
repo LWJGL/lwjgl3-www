@@ -53,7 +53,6 @@ const config = {
       'redux-thunk',
 
       // UI
-      'emotion',
       'focus-trap',
       'nprogress',
 

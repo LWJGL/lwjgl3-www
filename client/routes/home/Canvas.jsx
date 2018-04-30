@@ -1,25 +1,28 @@
 // @flow
+// @jsx jsx
 import * as React from 'react';
-import { css, keyframes } from 'emotion';
+import jsx from '@emotion/jsx';
+import css from '@emotion/css';
+import keyframes from '@emotion/keyframes';
 // $FlowFixMe
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SupportsIntersectionObserver } from '~/services/supports';
 
-const fadeIn = keyframes`
-from {
-  opacity: 0;
-}
-to {
-  opacity: 0.175;
-}
-`;
+const fadeIn = keyframes(css`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.175;
+  }
+`);
 
 const Canvas = css`
   position: absolute;
   z-index: 0;
   width: 100%;
   height: 100%;
-  animation: ${fadeIn} 2s ease-out forwards;
+  animation: ${fadeIn.name} 2s ease-out forwards;
 `;
 
 class HomeCanvas extends React.Component<{||}> {
@@ -175,7 +178,7 @@ class HomeCanvas extends React.Component<{||}> {
   }
 
   render() {
-    return <canvas className={Canvas} ref={this.canvasRef} />;
+    return <canvas css={[Canvas, fadeIn.styles]} ref={this.canvasRef} />;
   }
 }
 

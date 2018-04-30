@@ -1,9 +1,11 @@
 // @flow
+// @jsx jsx
 import * as React from 'react';
+import jsx from '@emotion/jsx';
+import css from '@emotion/css';
 import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { css } from 'emotion';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
@@ -20,14 +22,6 @@ import { MdForum } from '~/components/icons/md/forum';
 import { MdDevices } from '~/components/icons/md/devices';
 import { MdVideogameAsset } from '~/components/icons/md/videogame-asset';
 import { MdBatteryUnknown } from '~/components/icons/md/battery-unknown';
-
-const BindingsDiv = css`
-  .svg-icon,
-  img {
-    font-size: 4rem;
-    margin: 1rem 0 2rem 0;
-  }
-`;
 
 const HomeRoute = (props: ContextRouter) => (
   <PageView {...props}>
@@ -83,7 +77,16 @@ const HomeRoute = (props: ContextRouter) => (
         </div>
       </section>
 
-      <div className={`area-dark ${BindingsDiv}`}>
+      <div
+        css={css`
+          .svg-icon,
+          img {
+            font-size: 4rem;
+            margin: 1rem 0 2rem 0;
+          }
+        `}
+        className="area-dark"
+      >
         <section className="container py-5 text-center features">
           <h1>Main Features</h1>
 
