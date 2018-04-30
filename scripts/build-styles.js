@@ -1,12 +1,12 @@
-const fs = require('fs');
 const path = require('path');
+const util = require('util');
+const fs = require('fs');
+const writeFileAsync = util.promisify(fs.writeFile);
 const sass = require('node-sass');
 const postcss = require('postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const { argv } = require('yargs');
-const util = require('util');
-const writeFileAsync = util.promisify(fs.writeFile);
 
 /*
   1. Render Sass to CSS

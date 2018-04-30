@@ -4,14 +4,20 @@
 }
 
 .custom-control-label {
-  // Add padding so we make the entire area clickable
+  // Add padding so we make the entire area clickable,
+  // otherwise pixels between checkbox and label not clickable
   padding-left: $custom-control-gutter;
   // Prevent label selection (happens when clicking checkboxes very fast)
   user-select: none;
   // Animate value change
-  // &::before {
-  //   transition: background-color 0.1s ease-out;
-  // }
+  input:not(:focus) ~ &::before {
+    transition: background-color 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+}
+
+.custom-control-label::before,
+.custom-control-label::after {
+  left: 0;
 }
 
 .custom-control-input {
