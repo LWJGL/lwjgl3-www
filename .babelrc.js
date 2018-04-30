@@ -21,7 +21,7 @@ const config = {
       },
     ],
     PRODUCTION && '@babel/plugin-transform-react-constant-elements',
-    PRODUCTION && '@babel/plugin-transform-react-inline-elements',
+    // PRODUCTION && '@babel/plugin-transform-react-inline-elements',
     ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],
 
     // Stage-1
