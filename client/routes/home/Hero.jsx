@@ -1,7 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import jsx from '@emotion/jsx';
+import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { Link } from 'react-router-dom';
 import { MdKeyboardArrowDown } from '~/components/icons/md/keyboard-arrow-down';
