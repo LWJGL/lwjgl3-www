@@ -43,7 +43,7 @@ if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';
 }
 
-const bootPromises: Array<Promise<any>> = [];
+const bootPromises: Array<Promise<*>> = [];
 
 if (!('fetch' in window)) {
   bootPromises.push(import(/* webpackChunkName: "nosw-fetch" */ 'whatwg-fetch'));

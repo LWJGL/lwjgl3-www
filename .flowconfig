@@ -16,17 +16,25 @@
 [lints]
 all=warn
 unclear-type=off
-# untyped-type-import=error
-# sketchy-null-bool=off
-# sketchy-null-string=off
+inexact-spread=off
+
+[strict]
+nonstrict-import
+unclear-type
+unsafe-getters-setters
+untyped-import
+untyped-type-import
+sketchy-null
+inexact-spread
 
 [options]
 include_warnings=true
 esproposal.class_instance_fields=enable
 esproposal.class_static_fields=enable
-esproposal.optional_chaining=ignore
+esproposal.optional_chaining=enable
 esproposal.export_star_as=enable
 experimental.const_params=true
+experimental.well_formed_exports=true
 munge_underscores=true
 module.system=node
 module.use_strict=true

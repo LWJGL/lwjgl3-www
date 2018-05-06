@@ -28,7 +28,7 @@ type ConnectedProps = {|
 
 export const ControlledRadio = ({ spec }: Props) => (
   <Connect
-    state={(state: Object): ConnectedProps => ({
+    state={(state: any): ConnectedProps => ({
       value: spec.value(state),
       options: spec.options(state),
       // hidden: spec.hidden !== undefined && spec.hidden(state),
