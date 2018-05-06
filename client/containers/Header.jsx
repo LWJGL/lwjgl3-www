@@ -1,9 +1,8 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import jsx from '@emotion/jsx';
+import { jsx, Global } from '@emotion/core';
 import css from '@emotion/css';
-import Global from '@emotion/global';
 import { Link } from 'react-router-dom';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';

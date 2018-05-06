@@ -1,7 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import jsx from '@emotion/jsx';
+import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import keyframes from '@emotion/keyframes';
 // $FlowFixMe
