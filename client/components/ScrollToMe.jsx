@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 type Props = {
   location: 'string',
@@ -18,7 +19,11 @@ export class ScrollToMe extends React.Component<Props> {
 
   scroll() {
     if (this.divRef.current != null) {
-      window.scrollTo(0, this.divRef.current.offsetTop);
+      scrollIntoView(this.divRef.current, {
+        behavior: 'smooth',
+        block: 'start',
+        inline: 'start',
+      });
     }
   }
 

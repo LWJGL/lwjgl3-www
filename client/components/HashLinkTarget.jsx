@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import { Route, type Location } from 'react-router-dom';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 type OwnProps = {|
   id: string,
@@ -40,12 +41,13 @@ export class HashLinkTargetControlled extends React.Component<Props> {
       } else if (!scrolling) {
         scrolling = true;
         if (defaultScrollPos[1] === 0) {
-          // $FlowFixMe
-          document.documentElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start',
-            inline: 'start',
-          });
+          if (document.body != null) {
+            scrollIntoView(document.body, {
+              behavior: 'smooth',
+              block: 'start',
+              inline: 'start',
+            });
+          }
         } else {
           window.scroll.apply(window, defaultScrollPos);
         }
@@ -57,7 +59,7 @@ export class HashLinkTargetControlled extends React.Component<Props> {
   scrollToTarget() {
     const el = document.getElementById(this.props.id);
     if (el !== null) {
-      el.scrollIntoView({
+      scrollIntoView(el, {
         behavior: 'smooth',
         block: 'start',
         inline: 'start',

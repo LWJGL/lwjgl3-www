@@ -53,6 +53,7 @@ const config = {
       'redux-thunk',
 
       // UI
+      'scroll-into-view-if-needed',
       'focus-trap',
       'nprogress',
 

@@ -1,6 +1,7 @@
 // @noflow
 import { IS_IE } from '~/services/ua';
 import { forceHide } from '../containers/Header';
+import scrollIntoView from 'scroll-into-view-if-needed';
 
 let prevScroll = 0;
 let cb: Function | null = null;
@@ -101,16 +102,10 @@ const flip = () => {
 export const scrollToElement = (el: HTMLElement, cb?: Function) => {
   init();
 
-  if (el.scrollIntoViewIfNeeded !== undefined) {
-    // $FlowFixMe
-    el.scrollIntoViewIfNeeded();
-  } else if (el.scrollIntoView !== undefined) {
-    el.scrollIntoView({
-      behavior: 'instant',
-    });
-  } else {
-    window.scroll(0, el.getBoundingClientRect().top + window.pageYOffset - 100);
-  }
+  scrollIntoView(el, {
+    scrollMode: 'if-needed',
+    behavior: 'instant',
+  });
 
   play(cb);
 };
