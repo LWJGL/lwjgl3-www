@@ -3,8 +3,8 @@ import * as React from 'react';
 import { LoaderSpinner } from '~/components/LoaderSpinner';
 import { Folder, FolderTH } from './Folder';
 import { File } from './File';
-import { FaCloud } from '~/components/icons/fa/cloud';
-import { FaChevronRight } from '~/components/icons/fa/chevron-right';
+import IconCloud from '~/components/icons/md/Cloud';
+import IconChevronRight from '~/components/icons/md/ChevronRight';
 
 import { HTTP_OK } from '~/services/http_status_codes';
 
@@ -146,7 +146,7 @@ export class Browser extends React.Component<Props, State> {
           <thead className="thead-light">
             <tr>
               <th colSpan={2}>
-                <FaCloud /> &nbsp;lwjgl/{this.state.path}
+                <IconCloud /> &nbsp;lwjgl/{this.state.path}
               </th>
             </tr>
           </thead>

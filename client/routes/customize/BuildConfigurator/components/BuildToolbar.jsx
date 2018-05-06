@@ -4,8 +4,8 @@ import { configLoad } from '../reducer';
 import { store } from '~/store';
 import { Connect } from '~/store/Connect';
 import { Breakpoint } from '~/components/Breakpoint';
-import { MdArchive } from '~/components/icons/md/archive';
-import { MdSettingsBackupRestore } from '~/components/icons/md/settings-backup-restore';
+import IconArchive from '~/components/icons/md/Archive';
+import IconSettingsBackupRestore from '~/components/icons/md/SettingsBackupRestore';
 
 type Props = {|
   configDownload: () => void,
@@ -76,7 +76,7 @@ export class BuildToolbar extends React.Component<Props, State> {
                 title="Load configuration file (JSON)"
                 onClick={this.toggleFileUI}
               >
-                <MdSettingsBackupRestore />
+                <IconSettingsBackupRestore />
                 {showLabels ? ` Load config` : null}
               </button>
               <button
@@ -84,7 +84,7 @@ export class BuildToolbar extends React.Component<Props, State> {
                 title="Save configuration (in JSON)"
                 onClick={this.props.configDownload}
               >
-                <MdArchive />
+                <IconArchive />
                 {showLabels ? ` Save config` : null}
               </button>
             </div>

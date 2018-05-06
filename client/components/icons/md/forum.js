@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
-import { Icon, type Props } from '../Icon';
+import { Icon, type Props } from '~/components/icons/Icon';
 
-export const MdForum = (props: Props) => (
-  <Icon viewBox="0 0 40 40" {...props}>
-    <g>
-      <path d="m28.4 20q0 0.7-0.5 1.2t-1.3 0.4h-16.6l-6.6 6.8v-23.4q0-0.7 0.4-1.2t1.2-0.4h21.6q0.7 0 1.3 0.4t0.5 1.2v15z m6.6-10q0.7 0 1.2 0.5t0.4 1.1v25l-6.6-6.6h-18.4q-0.7 0-1.1-0.5t-0.5-1.1v-3.4h21.6v-15h3.4z" />
-    </g>
-  </Icon>
-);
+export default function Forum(props: Props) {
+  return (
+    <Icon viewBox="0 0 24 24" {...props}>
+      <path d="M21 6h-2v9H6v2c0 .55.45 1 1 1h11l4 4V7c0-.55-.45-1-1-1zm-4 6V3c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v14l4-4h10c.55 0 1-.45 1-1z" />
+    </Icon>
+  );
+}

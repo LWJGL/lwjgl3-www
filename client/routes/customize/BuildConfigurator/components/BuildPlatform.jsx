@@ -6,18 +6,18 @@ import type { BuildConfig } from '../types';
 import { Connect } from '~/store/Connect';
 import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import type { NATIVES } from '../types';
-import { FaLinux } from '~/components/icons/fa/linux';
-import { FaWindows } from '~/components/icons/fa/windows';
-import { FaApple } from '~/components/icons/fa/apple';
+import IconApple from '~/components/icons/fa/brands/Apple';
+import IconLinux from '~/components/icons/fa/brands/Linux';
+import IconWindows from '~/components/icons/fa/brands/Windows';
 
 const getIcon = (platform: NATIVES) => {
   switch (platform) {
     case NATIVE_WIN:
-      return <FaWindows />;
+      return <IconWindows />;
     case NATIVE_MAC:
-      return <FaApple />;
+      return <IconApple />;
     case NATIVE_LINUX:
-      return <FaLinux />;
+      return <IconLinux />;
     default:
       return undefined;
   }

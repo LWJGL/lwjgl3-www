@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 
-import { FaGithub } from '~/components/icons/fa/github';
-import { FaCheckSquareO as IconCustomize } from '~/components/icons/fa/check-square-o';
-import { MdFolder } from '~/components/icons/md/folder';
+import IconGithub from '~/components/icons/fa/brands/Github';
+import IconCustomize from '~/components/icons/md/CheckBox';
+import IconFolder from '~/components/icons/md/Folder';
 
 import { Customize, Browse } from '../';
 
@@ -32,7 +32,7 @@ const DownloadRoute = (props: ContextRouter) => (
                 target="_blank"
                 rel="noopener"
               >
-                <FaGithub /> Download from Github
+                <IconGithub /> Download from Github
               </a>
             </p>
           </div>
@@ -60,7 +60,7 @@ const DownloadRoute = (props: ContextRouter) => (
             <p>Or you can browse and download individual LWJGL artifacts:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/browse">
-                <MdFolder /> Browse LWJGL files
+                <IconFolder /> Browse LWJGL files
               </Link>
             </p>
           </div>

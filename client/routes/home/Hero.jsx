@@ -4,7 +4,7 @@ import * as React from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { Link } from 'react-router-dom';
-import { MdKeyboardArrowDown } from '~/components/icons/md/keyboard-arrow-down';
+import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
 import Loadable from 'react-loadable';
 import { Logo } from './Logo';
 
@@ -126,7 +126,7 @@ export class HomeHero extends React.Component<Props, State> {
             </h1>
             <Link to="/#learn-more">
               LEARN MORE<br />
-              <MdKeyboardArrowDown />
+              <IconKeyboardArrowDown />
             </Link>
           </HeroContent>
         </LogoContainer>

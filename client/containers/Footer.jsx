@@ -90,7 +90,7 @@ export const Footer = () => (
             <LazyImg className="mb-4 mr-4" alt="WebHotelier" src="/svg/webhotelier.svg" height={60} />
           </a>
           <a href="https://www.jetbrains.com/" title="JetBrains" rel="external noopener">
-            <LazyImg alt="JetBrains" src="/svg/jetbrains-blackandwhite.svg" width={120} />
+            <LazyImg alt="JetBrains" src="/svg/jetbrains-blackandwhite.svg" width={100} />
           </a>
         </div>
       </nav>

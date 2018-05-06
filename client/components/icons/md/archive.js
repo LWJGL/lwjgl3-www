@@ -1,13 +1,11 @@
 // @flow
 import * as React from 'react';
-import { Icon, type Props } from '../Icon';
+import { Icon, type Props } from '~/components/icons/Icon';
 
-export const MdArchive = (props: Props) => (
-  <Icon viewBox="0 0 40 40" {...props}>
-    <g>
-      <path d="m8.5 8.4h23l-1.6-1.8h-20z m11.5 20.7l9.1-9.1h-5.7v-3.4h-6.8v3.4h-5.7z m14.2-20.3c0.5 0.5 0.8 1.3 0.8 2.1v20.7c0 1.8-1.6 3.4-3.4 3.4h-23.2c-1.8 0-3.4-1.6-3.4-3.4v-20.7c0-0.8 0.3-1.6 0.8-2.1l2.2-2.9c0.5-0.5 1.2-0.9 2-0.9h20c0.8 0 1.5 0.4 2 0.9z" />
-    </g>
-  </Icon>
-);
-
-export default MdArchive;
+export default function Archive(props: Props) {
+  return (
+    <Icon viewBox="0 0 24 24" {...props}>
+      <path d="M20.54 5.23l-1.39-1.68C18.88 3.21 18.47 3 18 3H6c-.47 0-.88.21-1.16.55L3.46 5.23C3.17 5.57 3 6.02 3 6.5V19c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6.5c0-.48-.17-.93-.46-1.27zM12 17.5L6.5 12H10v-2h4v2h3.5L12 17.5zM5.12 5l.81-1h12l.94 1H5.12z" />
+    </Icon>
+  );
+}

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 
-import { MdFolder } from '~/components/icons/md/folder';
+import IconFolder from '~/components/icons/md/Folder';
 
 export const FolderTH = css`
   cursor: pointer;
@@ -33,7 +33,7 @@ export class Folder extends React.PureComponent<Props> {
     return (
       <tr>
         <th css={FolderTH} colSpan={2} onClick={this.clickHandle}>
-          <MdFolder /> {name}
+          <IconFolder /> {name}
         </th>
       </tr>
     );

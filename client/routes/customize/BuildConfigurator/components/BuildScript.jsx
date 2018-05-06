@@ -6,8 +6,8 @@ import { Connect } from '~/store/Connect';
 import { Breakpoint } from '~/components/Breakpoint';
 
 import { BuildToolbar } from './BuildToolbar';
-import { MdFileDownload } from '~/components/icons/md/file-download';
-import { MdContentCopy } from '~/components/icons/md/content-copy';
+import IconFileDownload from '~/components/icons/md/FileDownload';
+import IconContentCopy from '~/components/icons/md/ContentCopy';
 
 const ALLOW_DOWNLOAD = window.btoa !== undefined;
 
@@ -147,7 +147,7 @@ export class BuildScript extends React.Component<Props> {
                       disabled={ALLOW_DOWNLOAD}
                       title={`Download ${mode.id} code snippet`}
                     >
-                      <MdFileDownload /> {labels.download}
+                      <IconFileDownload /> {labels.download}
                     </a>
                     <button
                       className="btn btn-success"
@@ -155,7 +155,7 @@ export class BuildScript extends React.Component<Props> {
                       disabled={!document.execCommand}
                       title="Copy to clipboard"
                     >
-                      <MdContentCopy />
+                      <IconContentCopy />
                       {labels.copy}
                     </button>
                   </BuildToolbar>

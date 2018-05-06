@@ -9,7 +9,7 @@ import { changeType, loadStatus } from '../reducer';
 import { Connect } from '~/store/Connect';
 import type { BUILD_TYPES, Build } from '../types';
 
-import { MdClose } from '~/components/icons/md/close';
+import IconClose from '~/components/icons/md/Close';
 import { cc, mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import { Breakpoint } from '~/components/Breakpoint';
 import {
@@ -143,7 +143,7 @@ export class BuildType extends React.PureComponent<Props> {
                 <h2>{spec.title}</h2>
                 <p>{spec.description}</p>
                 <BuildStatus name={spec.id} status={status} loadStatus={loadStatus} />
-                {isSelected ? <MdClose /> : null}
+                {isSelected ? <IconClose /> : null}
               </div>
             )}
           </Connect>

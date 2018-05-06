@@ -4,7 +4,7 @@ import { PageView } from '~/containers/PageView';
 import type { ContextRouter } from 'react-router-dom';
 import { Title } from '~/components/Title';
 import { Head } from '~/components/Head';
-import { FaGithub } from '~/components/icons/fa/github';
+import IconGithub from '~/components/icons/fa/brands/Github';
 import { BuildBadge } from './BuildBadge';
 
 const SourceRoute = (props: ContextRouter) => (
@@ -20,7 +20,7 @@ const SourceRoute = (props: ContextRouter) => (
         <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
         <p>
           <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3">
-            <FaGithub /> Github Repository
+            <IconGithub /> Github Repository
           </a>
           <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/releases">
             Release notes
