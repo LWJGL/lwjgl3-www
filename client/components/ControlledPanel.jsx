@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Connect } from '~/store/Connect';
 
 type Props = {|
-  predicate: (state: Object) => boolean,
+  predicate: (state: any) => boolean,
   children?: React.Node,
 |};
 

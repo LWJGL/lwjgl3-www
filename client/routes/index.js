@@ -3,9 +3,9 @@
 import Loadable from 'react-loadable';
 import { LoadingPage } from '../components/LoadingPage';
 
-type PromiseReactModule = () => Promise<{ default: React.ComponentType<any> }>;
+type PromiseReactModule = () => Promise<{ default: React.ComponentType<*> }>;
 
-const AR = function(loader: PromiseReactModule): React.ComponentType<any> {
+const AR = function(loader: PromiseReactModule): React.ComponentType<*> {
   return Loadable({
     loader,
     delay: 2000,
