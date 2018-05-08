@@ -42,14 +42,14 @@ const config = {
     // Stage-3
     '@babel/plugin-syntax-dynamic-import',
     // '@babel/plugin-syntax-import-meta',
-    PRODUCTION && '@babel/plugin-proposal-async-generator-functions',
+    // PRODUCTION && '@babel/plugin-proposal-async-generator-functions',
     ['@babel/plugin-proposal-class-properties', { spec: false }],
     ['@babel/plugin-proposal-object-rest-spread', { useBuiltIns: true }],
     '@babel/plugin-proposal-optional-catch-binding',
     // '@babel/plugin-proposal-unicode-property-regex',
 
     // ES2017
-    PRODUCTION && '@babel/plugin-transform-async-to-generator',
+    // PRODUCTION && '@babel/plugin-transform-async-to-generator',
 
     // ES2016
     // '@babel/plugin-transform-exponentiation-operator',
@@ -75,16 +75,16 @@ const config = {
     '@babel/plugin-transform-typeof-symbol',
     '@babel/plugin-transform-instanceof',
     */
-    PRODUCTION && ['@babel/plugin-transform-regenerator', { async: false, asyncGenerators: false, generators: true }],
+    // PRODUCTION && ['@babel/plugin-transform-regenerator', { async: false, asyncGenerators: false, generators: true }],
 
     // https://github.com/MatAtBread/fast-async
     // async/await using Promises instead of (Re)generator
-    // PRODUCTION && [
-    //   'module:fast-async',
-    //   {
-    //     spec: true,
-    //   },
-    // ],
+    PRODUCTION && [
+      'module:fast-async',
+      {
+        spec: true,
+      },
+    ],
   ].filter(Boolean),
 };
 
@@ -101,8 +101,10 @@ if (NODE_ENV === 'production') {
         useBuiltIns: 'entry',
         shippedProposals: true,
         exclude: [
-          // 'transform-async-to-generator',
-          // 'transform-regenerator',
+          'transform-sticky-regex',
+          'transform-unicode-regex',
+          'transform-async-to-generator',
+          'transform-regenerator',
           'es6.typed.array-buffer',
           'es6.typed.data-view',
           'es6.typed.int8-array',
@@ -117,7 +119,7 @@ if (NODE_ENV === 'production') {
           // 'es6.map',
           // 'es6.set',
           // 'es6.weak-map',
-          // 'es6.weak-set',
+          'es6.weak-set', // WARNING: IE11 doesn't support it by we don't use it anyway
           'es6.reflect.apply',
           'es6.reflect.construct',
           'es6.reflect.define-property',
@@ -133,19 +135,19 @@ if (NODE_ENV === 'production') {
           'es6.reflect.set-prototype-of',
           // 'es6.promise',
           // 'es6.symbol',
-          // 'es6.object.freeze',
-          // 'es6.object.seal',
-          // 'es6.object.prevent-extensions',
-          // 'es6.object.is-frozen',
-          // 'es6.object.is-sealed',
-          // 'es6.object.is-extensible',
-          // 'es6.object.get-own-property-descriptor',
-          // 'es6.object.get-prototype-of',
-          // 'es6.object.keys',
-          // 'es6.object.get-own-property-names',
+          'es6.object.freeze',
+          'es6.object.seal',
+          'es6.object.prevent-extensions',
+          'es6.object.is-frozen',
+          'es6.object.is-sealed',
+          'es6.object.is-extensible',
+          'es6.object.get-own-property-descriptor',
+          'es6.object.get-prototype-of',
+          'es6.object.keys',
+          'es6.object.get-own-property-names',
           // 'es6.object.assign',
           // 'es6.object.is',
-          // 'es6.object.set-prototype-of',
+          'es6.object.set-prototype-of',
           // 'es6.function.name',
           // 'es6.string.raw',
           // 'es6.string.from-code-point',
@@ -154,11 +156,11 @@ if (NODE_ENV === 'production') {
           // 'es6.string.starts-with',
           // 'es6.string.ends-with',
           // 'es6.string.includes',
-          // 'es6.regexp.flags',
-          // 'es6.regexp.match',
-          // 'es6.regexp.replace',
-          // 'es6.regexp.split',
-          // 'es6.regexp.search',
+          'es6.regexp.flags',
+          'es6.regexp.match',
+          'es6.regexp.replace',
+          'es6.regexp.split',
+          'es6.regexp.search',
           // 'es6.array.from',
           // 'es6.array.of',
           // 'es6.array.copy-within',
