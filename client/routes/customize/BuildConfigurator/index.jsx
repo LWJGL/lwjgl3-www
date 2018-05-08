@@ -91,12 +91,9 @@ export class BuildConfigurator extends React.Component<Props, State> {
     this.mounted = false;
     this.unsubscribe();
     if (this.state.isDownloading) {
-      this.downloadCancel();
+      this.downloadAbort();
     }
   }
-
-  abortController: AbortController | null = null;
-  abortSignal: AbortSignal | null = null;
 
   configDownload = this.configDownload.bind(this);
   configDownload() {
@@ -115,14 +112,6 @@ export class BuildConfigurator extends React.Component<Props, State> {
       return;
     }
 
-    if (window.AbortController !== undefined) {
-      this.abortController = new AbortController();
-      this.abortSignal = this.abortController.signal;
-      // this.abortSignal.addEventListener('abort', () => {
-      //   console.log('AbortController cancelled fetch: ' + this.abortSignal.aborted);
-      // });
-    }
-
     this.setState({
       isDownloading: true,
       progress: ['Downloading file manifest'],
@@ -133,8 +122,8 @@ export class BuildConfigurator extends React.Component<Props, State> {
     let manifest;
     try {
       manifest = await fetchManifest(path);
-    } catch (e) {
-      this.downloadCancel(e.message);
+    } catch (err) {
+      this.downloadCancel(err.message);
       return;
     }
 
@@ -148,11 +137,9 @@ export class BuildConfigurator extends React.Component<Props, State> {
 
     const zip = new JSZip();
     try {
-      await downloadFiles(files, zip, this.downloadLog.bind(this), this.abortSignal);
+      await downloadFiles(files, zip, this.downloadLog.bind(this));
     } catch (err) {
-      if (err.message !== 'Aborted') {
-        this.downloadCancel(err.message);
-      }
+      this.downloadCancel(err.name !== 'AbortError' ? err.message : undefined);
       return;
     }
 
@@ -174,14 +161,13 @@ export class BuildConfigurator extends React.Component<Props, State> {
 
   downloadAbort = this.downloadAbort.bind(this);
   downloadAbort(e: SyntheticEvent<HTMLButtonElement>) {
-    this.downloadCancel();
+    // This will cause an AbortController signal to fire.
+    // Firing the signal will reject the fetch promise which will then be caught
+    // and downloadCancel(err.message) will fire
+    abortDownload();
   }
 
   downloadCancel(msg: ?string) {
-    abortDownload();
-    if (this.abortController !== null) {
-      this.abortController.abort();
-    }
     if (this.mounted) {
       this.downloadComplete();
     }

@@ -64,6 +64,7 @@
     "@emotion/jsx": "0.7.0",
     "@emotion/keyframes": "0.7.0",
     "@emotion/style": "0.7.0",
+    "abortcontroller-polyfill": "1.1.9",
     "async-sema": "2.0.0",
     "autoprefixer": "8.4.1",
     "babel-loader": "8.0.0-beta.2",
@@ -95,7 +96,7 @@
     "query-string": "6.1.0",
     "react": "16.3.2",
     "react-dom": "16.3.2",
-    "react-hot-loader": "4.1.2",
+    "react-hot-loader": "4.1.3",
     "react-loadable": "5.4.0",
     "react-perf-devtool": "3.1.3-beta.4",
     "react-router-dom": "4.3.0-rc.3",
@@ -114,7 +115,7 @@
     "webpack-cli": "2.1.3",
     "webpack-dev-middleware": "3.1.3",
     "webpack-hot-middleware": "2.22.1",
-    "whatwg-fetch": "2.0.4"
+    "yetch": "0.0.1"
   },
   "resolutions": {
     "upath": "1.0.5"

@@ -28,9 +28,6 @@ const config = {
   },
   entry: {
     vendor: [
-      // Polyfills
-      'whatwg-fetch',
-
       // Core
       'react',
       'react-dom',

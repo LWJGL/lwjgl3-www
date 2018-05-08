@@ -147,7 +147,8 @@ const buildConfiguration = () => {
       });
     }
   } else {
-    // Load core-js polyfills first
+    // Load core-js polyfill first
+    // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
       // Base hashes on the relative path of modules

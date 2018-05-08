@@ -7,6 +7,9 @@
 <PROJECT_ROOT>/public/.*
 <PROJECT_ROOT>/node_modules/@babel/.*
 <PROJECT_ROOT>/node_modules/@emotion/.*
+<PROJECT_ROOT>/node_modules/@webassemblyjs/.*
+<PROJECT_ROOT>/node_modules/webassemblyjs/.*
+<PROJECT_ROOT>/node_modules/editions/.*
 .*/fbjs/.*
 
 [include]

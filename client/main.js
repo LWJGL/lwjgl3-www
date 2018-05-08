@@ -43,14 +43,15 @@ if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';
 }
 
-const bootPromises: Array<Promise<*>> = [];
+// const bootPromises: Array<Promise<*>> = [];
 
-if (!('fetch' in window)) {
-  bootPromises.push(import(/* webpackChunkName: "nosw-fetch" */ 'whatwg-fetch'));
-}
+// if (!('fetch' in window)) {
+//   bootPromises.push(import(/* webpackChunkName: "nosw-fetch" */ 'whatwg-fetch'));
+// }
 
-if (bootPromises.length) {
-  Promise.all(bootPromises).then(mount);
-} else {
-  mount();
-}
+// if (bootPromises.length) {
+//   Promise.all(bootPromises).then(mount);
+// } else {
+//   mount();
+// }
+mount();

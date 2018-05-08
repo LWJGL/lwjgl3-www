@@ -211,7 +211,7 @@ export function getAddons(addons: AddonSelection, source: boolean, javadoc: bool
   return files;
 }
 
-async function fetchFile(path: string, abortSignal: AbortSignal | null): Promise<Download> {
+async function fetchFile(path: string, abortSignal: AbortSignal): Promise<Download> {
   let response = await fetch(`https://build.lwjgl.org/${path}`, {
     method: 'GET',
     mode: 'cors',
@@ -228,38 +228,45 @@ async function fetchFile(path: string, abortSignal: AbortSignal | null): Promise
   };
 }
 
-let userAborted = false;
+let abortController: AbortController | null = null;
 
 export function abortDownload() {
-  userAborted = true;
+  if (abortController !== null) {
+    abortController.abort();
+  }
 }
 
-export function downloadFiles(
-  files: Array<string>,
-  jszip: JSZip,
-  log: (msg: string) => void,
-  abortSignal: AbortSignal | null
-): Promise<Array<void>> {
+export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: string) => void): Promise<Array<void>> {
   const FILES_TOTAL = files.length;
   const PARALLEL_DOWNLOADS = Math.min(8, FILES_TOTAL);
   // $FlowFixMe
   const queue: Iterator<string> = files[Symbol.iterator]();
   const channels: Array<Promise<void>> = [];
   let f = 0;
-  userAborted = false;
+
+  abortController = new AbortController();
+  // abortController.signal.addEventListener('abort', () => {
+  //   console.log('AbortController cancelled fetch: ' + this.abortSignal.aborted);
+  // });
 
   for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
     channels.push(
       new Promise(async (resolve, reject) => {
         for (let path of queue) {
-          if (userAborted) {
-            return reject(new Error('Aborted'));
-          }
           f += 1;
           log(`${f}/${FILES_TOTAL} - ${path}`);
-          const download = await fetchFile(path, abortSignal);
-          // $FlowFixMe
-          jszip.file(download.filename, download.payload, { binary: true });
+          try {
+            if (abortController === null) {
+              reject(new Error('Aborted'));
+              return;
+            }
+            const download = await fetchFile(path, abortController.signal);
+            // $FlowFixMe
+            jszip.file(download.filename, download.payload, { binary: true });
+          } catch (err) {
+            reject(err);
+            return;
+          }
         }
         resolve();
       })
