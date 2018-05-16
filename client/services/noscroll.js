@@ -19,33 +19,42 @@ export const getScrollbarSize = (): number => {
 export const on = (): void => {
   stackCnt += 1;
   if (stackCnt === 1) {
-    // $FlowFixMe
-    if (document.body.scrollHeight > window.innerHeight) {
+    const body = document.body;
+    const header = document.querySelector('header.site-header');
+    if (body == null) {
+      return;
+    }
+    if (body.scrollHeight > window.innerHeight) {
       let size = getScrollbarSize();
       if (size > 0) {
-        // $FlowFixMe
-        document.body.style.paddingRight = size + 'px';
-        document.getElementsByTagName('header')[0].style.paddingRight = size + 'px';
+        body.style.paddingRight = size + 'px';
+        if (header) {
+          header.style.paddingRight = size + 'px';
+        }
       }
     }
-    // $FlowFixMe
-    document.body.style.overflowY = 'hidden';
-    // $FlowFixMe
-    document.body.style.overflowX = 'hidden';
+    body.style.overflowY = 'hidden';
+    body.style.overflowX = 'hidden';
   }
 };
 
 export const off = (): void => {
   stackCnt -= 1;
   if (stackCnt === 0) {
-    if (scrollbarSize > 0) {
-      // $FlowFixMe
-      document.body.style.paddingRight = '0';
-      document.getElementsByTagName('header')[0].style.paddingRight = '0';
+    const body = document.body;
+    const header = document.querySelector('header.site-header');
+
+    if (body == null) {
+      return;
     }
-    // $FlowFixMe
-    document.body.style.overflowY = 'visible';
-    // $FlowFixMe
-    document.body.style.overflowX = 'auto';
+
+    if (scrollbarSize > 0) {
+      body.style.paddingRight = '0';
+      if (header) {
+        header.style.paddingRight = '0';
+      }
+    }
+    body.style.overflowY = 'visible';
+    body.style.overflowX = 'auto';
   }
 };
