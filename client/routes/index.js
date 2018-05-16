@@ -1,11 +1,11 @@
 // @flow
 /*:: import * as React from 'react'; */
-import Loadable from 'react-loadable';
+import Loadable, { type ReactLoadable } from 'react-loadable';
 import { LoadingPage } from '../components/LoadingPage';
 
-type PromiseReactModule = () => Promise<{ default: React.ComponentType<*> }>;
+type PromiseReactModule = () => Promise<{ default: React.ComponentType<any> }>;
 
-const AR = function(loader: PromiseReactModule): React.ComponentType<*> {
+const AR = function(loader: PromiseReactModule): ReactLoadable {
   return Loadable({
     loader,
     delay: 2000,

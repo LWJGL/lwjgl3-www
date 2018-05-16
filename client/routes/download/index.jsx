@@ -36,13 +36,7 @@ const DownloadRoute = (props: ContextRouter) => (
               </a>
             </p>
           </div>
-          <div
-            className="col-md-12 col-lg-4"
-            onMouseOver={() =>
-              // $FlowFixMe
-              Customize.preload()
-            }
-          >
+          <div className="col-md-12 col-lg-4" onMouseOver={() => Customize.preload()}>
             <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-dark" to="/customize">
@@ -50,13 +44,7 @@ const DownloadRoute = (props: ContextRouter) => (
               </Link>
             </p>
           </div>
-          <div
-            className="col-md-12 col-lg-4"
-            onMouseOver={() =>
-              // $FlowFixMe
-              Browse.preload()
-            }
-          >
+          <div className="col-md-12 col-lg-4" onMouseOver={() => Browse.preload()}>
             <p>Or you can browse and download individual LWJGL artifacts:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/browse">

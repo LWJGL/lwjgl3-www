@@ -10,7 +10,7 @@ declare module 'react-loadable' {
 
   declare export type LoadingComponent = React.ComponentType<LoadingComponentProps>;
 
-  declare type ReactLoadable = <Props: {}>(opts: {
+  declare export type ReactLoadable = <Props: {}>(opts: {
     loader: () => Promise<React.ComponentType<Props>>,
     loading: LoadingComponent,
     render?: (loaded: React.ComponentType<Props>, props: Props) => React.Element<any>,
@@ -18,5 +18,5 @@ declare module 'react-loadable' {
     timeout?: number,
   }) => React.ComponentType<Props>;
 
-  declare export default ReactLoadable
+  declare export default ReactLoadable;
 }
