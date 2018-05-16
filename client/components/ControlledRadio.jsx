@@ -33,7 +33,7 @@ export const ControlledRadio = ({ spec }: Props) => (
       options: spec.options(state),
       // hidden: spec.hidden !== undefined && spec.hidden(state),
     })}
-    actions={(dispatch: Dispatch<*>) => ({
+    actions={(dispatch: Dispatch<any>) => ({
       select: (value: any) => dispatch(spec.action(value)),
     })}
   >

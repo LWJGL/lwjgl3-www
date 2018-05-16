@@ -7,11 +7,11 @@ import { StoreContext } from './Context';
 import memoize from 'memoize-state';
 
 type Actions = {
-  dispatch: Dispatch<*>,
+  dispatch: Dispatch<any>,
   [string]: <A, B>(...args: Array<A>) => B,
 };
 
-type mapDispatchToProps = ActionCreators<*, *> | ((dispatch: Dispatch<*>) => Actions);
+type mapDispatchToProps = ActionCreators<any, any> | ((dispatch: Dispatch<any>) => Actions);
 
 // Wraps action creators with dispatch
 // A. Supports passing a function, first argument is the store's dispatch
@@ -38,7 +38,7 @@ type PropsSlice<S> = {
   actions?: mapDispatchToProps,
 };
 
-export class Slice extends React.Component<PropsSlice<*>, *> {
+export class Slice extends React.Component<PropsSlice<any>, any> {
   // Cache actions
   actions: Actions = {
     dispatch: store.dispatch,
@@ -50,13 +50,13 @@ export class Slice extends React.Component<PropsSlice<*>, *> {
     result: null,
   };
 
-  static getDerivedStateFromProps(nextProps: PropsSlice<*>, prevState: *) {
+  static getDerivedStateFromProps(nextProps: PropsSlice<any>, prevState: any) {
     const result = prevState.selector(nextProps.storeState);
     // return shallowEqual(prevState, nextState) ? null : nextState;
     return prevState.result === result ? null : { result };
   }
 
-  shouldComponentUpdate(nextProps: PropsSlice<*>, nextState: *) {
+  shouldComponentUpdate(nextProps: PropsSlice<any>, nextState: any) {
     return nextState.result !== this.state.result;
   }
 
@@ -65,7 +65,7 @@ export class Slice extends React.Component<PropsSlice<*>, *> {
   }
 }
 
-export function Connect(props: Props<*>) {
+export function Connect(props: Props<any>) {
   const { children, state, actions } = props;
   return (
     <StoreContext.Consumer>

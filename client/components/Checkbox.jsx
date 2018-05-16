@@ -9,7 +9,7 @@ type Props = {
   onChange?: (value: mixed) => mixed,
   disabled?: boolean,
   hidden?: boolean,
-  icon?: React$Element<*>,
+  icon?: React.Node,
 };
 
 export class Checkbox extends React.PureComponent<Props> {
@@ -42,8 +42,8 @@ export class Checkbox extends React.PureComponent<Props> {
           onChange={this.change}
         />
         <label className="custom-control-label" htmlFor={this.htmlForId}>
-          {props.icon ? props.icon : null}
-          {props.icon ? ' ' : null}
+          {props.icon}
+          {props.icon != null ? ' ' : null}
           {props.label}
         </label>
       </div>

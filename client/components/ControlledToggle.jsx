@@ -22,7 +22,7 @@ export const ControlledToggle = ({ spec }: Props) => (
       disabled: spec.disabled != null && spec.disabled(state),
       hidden: spec.hidden != null && spec.hidden(state),
     })}
-    actions={(dispatch: Dispatch<*>) => ({
+    actions={(dispatch: Dispatch<any>) => ({
       handleClick: (value: boolean) => dispatch(spec.action(value)),
     })}
   >
