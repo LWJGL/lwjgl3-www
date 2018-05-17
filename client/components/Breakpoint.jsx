@@ -19,40 +19,19 @@ type State = {
 };
 
 export class BreakpointProvider extends React.Component<Props, State> {
+  // Holds matchMedia matchers
+  matchers: Array<MediaQueryList> = [];
+
+  // Holds matchMedia matcher eventListeners
+  listeners: Array<MediaQueryListListener> = [];
+
   state = {
-    current: this.getCurrent(),
-    breakpoints: breakpointIndex,
-  };
+    current: (() => {
+      const last = breakpoints.length - 1;
+      let current = breakpointIndex.lg;
 
-  matchers = [];
-  listeners = [];
-
-  getCurrent() {
-    const w = window.innerWidth;
-
-    // let i = breakpoints.length - 1;
-    let i = 4;
-    while (i > 0) {
-      if (w >= breakpoints[i]) {
-        break;
-      }
-      i -= 1;
-    }
-
-    return i;
-  }
-
-  mediaQueryListener(current: number, event: MediaQueryListEvent) {
-    if (event.matches) {
-      this.setState({ current });
-    }
-  }
-
-  componentDidMount() {
-    if (window.matchMedia) {
-      // const last = breakpoints.length - 1;
-      const last = 4;
-
+      // Create matchMedia event listeners for each breakpoint
+      // Check for matches and return current value
       breakpoints.forEach((limit, i) => {
         let mediaQuery;
         if (i === 0) {
@@ -64,18 +43,37 @@ export class BreakpointProvider extends React.Component<Props, State> {
         }
 
         const mqr = window.matchMedia(mediaQuery);
-        const listener = this.mediaQueryListener.bind(this, i);
-        mqr.addListener(listener);
+        if (mqr.matches) {
+          current = i;
+        }
         this.matchers.push(mqr);
-        this.listeners.push(listener);
       });
+
+      return current;
+    })(),
+    breakpoints: breakpointIndex,
+  };
+
+  mediaQueryListener(current: number, event: MediaQueryListEvent) {
+    if (event.matches) {
+      this.setState({ current });
     }
+  }
+
+  componentDidMount() {
+    this.matchers.forEach((matcher, i) => {
+      const listener = this.mediaQueryListener.bind(this, i);
+      matcher.addListener(listener);
+      this.listeners.push(listener);
+    });
   }
 
   componentWillUnmount() {
     this.matchers.forEach((matcher, i) => {
       matcher.removeListener(this.listeners[i]);
     });
+    this.matchers = [];
+    this.listeners = [];
   }
 
   render() {
