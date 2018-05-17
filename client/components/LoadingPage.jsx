@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { LoaderSpinner } from '~/components/LoaderSpinner';
 import nprogress from 'nprogress';
-import type { LoadingComponentProps } from 'loadable-components';
+import type { AsyncRenderProps } from '../services/renderAsync';
 
 type State = {
   pastDelay: boolean,
@@ -33,12 +33,20 @@ function stop() {
   }
 }
 
-export class LoadingPage extends React.Component<LoadingComponentProps, State> {
+export class LoadingPage extends React.Component<AsyncRenderProps, State> {
+  isMounted: boolean = false;
   state = {
     pastDelay: false,
     // timedOut: false,
   };
-  delayTimeout = setTimeout(() => this.setState({ pastDelay: true }), LOADING_DELAY);
+
+  delayTimeout: TimeoutID | null = null;
+
+  fireTimeout = () => {
+    if (this.isMounted) {
+      this.setState({ pastDelay: true });
+    }
+  };
 
   cleanup() {
     if (this.delayTimeout !== null) {
@@ -48,17 +56,20 @@ export class LoadingPage extends React.Component<LoadingComponentProps, State> {
   }
 
   componentDidMount() {
+    this.delayTimeout = setTimeout(this.fireTimeout, LOADING_DELAY);
+    this.isMounted = true;
     // Start spinner
     start();
   }
 
   componentWillUnmount() {
+    this.isMounted = false;
     // Make sure we stop timer & spinner
     stop();
     this.cleanup();
   }
 
-  componentDidUpdate(prevProps: LoadingComponentProps) {
+  componentDidUpdate(prevProps: AsyncRenderProps) {
     // If re-renders (either because it's we're past delay or because it threw an error), stop timer & spinner
     if (!FLAG_PRODUCTION && prevProps.error !== this.props.error) {
       console.error(this.props.error);

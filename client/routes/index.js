@@ -1,24 +1,21 @@
 // @flow
 import * as React from 'react';
-import loadable from 'loadable-components';
-import type { ReactComponentModulePromise, Loadable } from 'loadable-components';
+import { renderAsync, type ComponentImport, type AsyncRenderOptions } from '../services/renderAsync';
 import { LoadingPage /*, LOADING_TIMEOUT*/ } from '../components/LoadingPage';
 // import { timeout } from 'promise-timeout';
 
-const loadableOptions = {
-  render: ({ Component, error, loading, ownProps }) => {
-    if (loading || error) {
-      return <LoadingPage error={error} />;
-    }
+const render = ({ Component, error, loading, ownProps }: AsyncRenderOptions): React.Node => {
+  if (Component !== null) {
     return <Component {...ownProps} />;
-  },
+  }
+  return <LoadingPage error={error} />;
 };
 
-const AsyncRoute = (loader: ReactComponentModulePromise): Loadable =>
-  loadable(
+const AsyncRoute = (loader: ComponentImport) =>
+  renderAsync(
     // timeout(loader, LOADING_TIMEOUT)
     loader,
-    loadableOptions
+    render
   );
 
 // Import causes routes to be code-split

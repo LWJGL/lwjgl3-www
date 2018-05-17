@@ -5,7 +5,7 @@ import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { Link } from 'react-router-dom';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
-import loadable from 'loadable-components';
+import { renderAsync, type AsyncRender } from '~/services/renderAsync';
 import { Logo } from './Logo';
 
 const HeroBox = ({ children }) => (
@@ -93,24 +93,46 @@ const HeroContent = ({ children }) => (
   </div>
 );
 
-const Canvas = loadable(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'), {
-  render: ({ Component, error, loading, ownProps }) => {
-    return loading || error ? null : <Component {...ownProps} />;
-  },
-});
+const Canvas = renderAsync(
+  () => import(/* webpackChunkName: "home$canvas" */ './Canvas'),
+  ({ Component, error, loading, ownProps }) => {
+    return Component !== null ? <Component {...ownProps} /> : null;
+  }
+);
 
 type Props = {||};
 type State = { supportsWebGL: boolean };
 
 export class HomeHero extends React.Component<Props, State> {
+  static supportsWebGL: boolean = false;
+
   state = {
-    supportsWebGL: false,
+    supportsWebGL: HomeHero.supportsWebGL,
   };
 
   componentDidMount() {
+    // Check prefers-reduced-motion
+    const preferesReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
+    if (preferesReducedMotion) {
+      return;
+    }
+
+    // Check supportsWebGL first because that means connection dropped after
+    // we have already loaded threejs
+    //$FlowFixMe
+    if (!this.state.supportsWebGL && navigator.connection !== undefined) {
+      //$FlowFixMe
+      switch (navigator.connection.effectiveType) {
+        case 'slow-2g':
+        case '2g':
+          return;
+      }
+    }
+
     // detect WebGL support
     const cnv = document.createElement('canvas');
     if (cnv.getContext('webgl') != null || cnv.getContext('experimental-webgl') != null) {
+      HomeHero.supportsWebGL = true;
       this.setState({ supportsWebGL: true });
     }
   }

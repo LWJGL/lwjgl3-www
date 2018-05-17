@@ -42,7 +42,6 @@ const config = {
       // React
       'react-router',
       'react-router-dom',
-      'loadable-components',
 
       // State management
       'redux',
