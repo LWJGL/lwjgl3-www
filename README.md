@@ -138,7 +138,7 @@ The production process involves the following steps:
 * Compile JS files with webpack (_babel_) and store the manifest on disk
 * Process the manifest:
   * Read the webpack manifest and compile list of files & routes
-  * Process each file with uglify-es
+  * Process each file with terser
   * Compute hashes of final files
   * Store each production file on disk
   * Generate production manifest that also needs to be shipped

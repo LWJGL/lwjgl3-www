@@ -2,7 +2,7 @@
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-const uglify = require('uglify-es');
+const terser = require('terser');
 // const minify = require('babel-minify');
 const gzipSize = require('gzip-size');
 const chalk = require('chalk');
@@ -38,8 +38,8 @@ process.on('message', chunk => {
     });
   }
 
-  // Process with uglify-es
-  const uglifyResult = uglify.minify(contents, {
+  // Process with terser
+  const terserResult = terser.minify(contents, {
     compress: {
       drop_console: true,
       inline: true,
@@ -61,15 +61,15 @@ process.on('message', chunk => {
     warnings: 'verbose',
   });
 
-  if (uglifyResult.error) {
+  if (terserResult.error) {
     process.send({
       pid: process.pid,
       type: 'error',
-      error: uglifyResult.error,
+      error: terserResult.error,
     });
     return;
   }
-  contents = uglifyResult.code;
+  contents = terserResult.code;
 
   // // Process with babel-minify
   // try {
