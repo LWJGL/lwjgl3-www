@@ -76,45 +76,45 @@ export class BuildScript extends React.Component<Props> {
 
   render() {
     return (
-      <Breakpoint>
-        {({ current, breakpoints: { sm, md } }) => (
-          <Connect
-            state={({ build }: { build: BuildConfig }): ConnectedProps => {
-              // Artifacts
-              const selected: Array<string> = [];
+      <Connect
+        state={({ build }: { build: BuildConfig }): ConnectedProps => {
+          // Artifacts
+          const selected: Array<string> = [];
 
-              build.artifacts.allIds.forEach(artifact => {
-                if (build.contents[artifact] && build.availability[artifact]) {
-                  selected.push(artifact);
-                }
-              });
+          build.artifacts.allIds.forEach(artifact => {
+            if (build.contents[artifact] && build.availability[artifact]) {
+              selected.push(artifact);
+            }
+          });
 
-              // Addons
-              const addons: Array<Addon> = [];
-              build.selectedAddons.forEach((id: string) => {
-                const addon = build.addons.byId[id];
-                if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
-                  return;
-                }
-                addons.push(build.addons.byId[id]);
-              });
+          // Addons
+          const addons: Array<Addon> = [];
+          build.selectedAddons.forEach((id: string) => {
+            const addon = build.addons.byId[id];
+            if (addon.modes !== undefined && addon.modes.indexOf(build.mode) === -1) {
+              return;
+            }
+            addons.push(build.addons.byId[id]);
+          });
 
-              return {
-                build: build.build,
-                mode: build.modes.byId[build.mode],
-                version: build.artifacts.version,
-                hardcoded: build.hardcoded,
-                compact: build.compact,
-                osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
-                platform: build.platform,
-                platformSingle: getSelectedPlatforms(build),
-                artifacts: build.artifacts.byId,
-                selected,
-                addons,
-              };
-            }}
-          >
-            {(props: ConnectedProps) => {
+          return {
+            build: build.build,
+            mode: build.modes.byId[build.mode],
+            version: build.artifacts.version,
+            hardcoded: build.hardcoded,
+            compact: build.compact,
+            osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
+            platform: build.platform,
+            platformSingle: getSelectedPlatforms(build),
+            artifacts: build.artifacts.byId,
+            selected,
+            addons,
+          };
+        }}
+      >
+        {(props: ConnectedProps) => (
+          <Breakpoint>
+            {({ current, breakpoints: { sm, md } }) => {
               const { mode } = props;
 
               const labels = {
@@ -162,9 +162,9 @@ export class BuildScript extends React.Component<Props> {
                 </div>
               );
             }}
-          </Connect>
+          </Breakpoint>
         )}
-      </Breakpoint>
+      </Connect>
     );
   }
 }

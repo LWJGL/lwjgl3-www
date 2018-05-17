@@ -7,7 +7,7 @@ import css from '@emotion/css';
 import { BuildStatus } from './BuildStatus';
 import { changeType, loadStatus } from '../reducer';
 import { Connect } from '~/store/Connect';
-import type { BUILD_TYPES, Build } from '../types';
+import type { BUILD_TYPES, Build, BuildStatus as BuildStatusType } from '../types';
 
 import IconClose from '~/components/icons/md/Close';
 import { cc, mediaBreakpointDown, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
@@ -110,9 +110,10 @@ type Props = {
 };
 
 type ConnectedProps = {
+  buildSelected: boolean,
   isSelected: boolean,
-  isActive: boolean,
   spec: Build,
+  status: BuildStatusType | null,
 };
 
 export class BuildType extends React.PureComponent<Props> {
@@ -120,24 +121,24 @@ export class BuildType extends React.PureComponent<Props> {
     const { build } = this.props;
 
     return (
-      <Breakpoint>
-        {({ current, breakpoints: { lg } }) => (
-          <Connect
-            state={(state): ConnectedProps => ({
-              isSelected: state.build.build === build,
-              isActive: current < lg && state.build.build !== null,
-              spec: state.build.builds.byId[build],
-              status: state.build.builds.byId[build].status,
-            })}
-            actions={{ changeType, loadStatus }}
-          >
-            {({ isSelected, isActive, status, spec }, { changeType, loadStatus }) => (
+      <Connect
+        state={(state): ConnectedProps => ({
+          buildSelected: state.build.build !== null,
+          isSelected: state.build.build === build,
+          status: state.build.builds.byId[build].status,
+          spec: state.build.builds.byId[build],
+        })}
+        actions={{ changeType, loadStatus }}
+      >
+        {({ buildSelected, isSelected, status, spec }, { changeType, loadStatus }) => (
+          <Breakpoint>
+            {({ current, breakpoints: { lg } }) => (
               <div
                 onClick={changeType.bind(this, build)}
                 css={BuildBox}
                 className={cc(build, {
                   selected: isSelected,
-                  active: isActive,
+                  active: buildSelected && current < lg,
                 })}
               >
                 <h2>{spec.title}</h2>
@@ -146,9 +147,9 @@ export class BuildType extends React.PureComponent<Props> {
                 {isSelected ? <IconClose /> : null}
               </div>
             )}
-          </Connect>
+          </Breakpoint>
         )}
-      </Breakpoint>
+      </Connect>
     );
   }
 }
