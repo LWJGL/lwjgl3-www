@@ -19,6 +19,4 @@ const App = () => (
   </BreakpointProvider>
 );
 
-// import { hot } from 'react-hot-loader';
-// export default hot(module)(App);
 export default App;

@@ -5,7 +5,7 @@ import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { Link } from 'react-router-dom';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
-import Loadable from 'react-loadable';
+import loadable from 'loadable-components';
 import { Logo } from './Logo';
 
 const HeroBox = ({ children }) => (
@@ -93,9 +93,10 @@ const HeroContent = ({ children }) => (
   </div>
 );
 
-const Canvas = Loadable({
-  loader: () => import(/* webpackChunkName: "home$canvas" */ './Canvas'),
-  loading: () => null,
+const Canvas = loadable(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'), {
+  render: ({ Component, error, loading, ownProps }) => {
+    return loading || error ? null : <Component {...ownProps} />;
+  },
 });
 
 type Props = {||};

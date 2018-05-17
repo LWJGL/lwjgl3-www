@@ -21,6 +21,4 @@ const CustomizeRoute = (props: ContextRouter) => (
   </PageView>
 );
 
-// import { hot } from 'react-hot-loader';
-// export default hot(module)(CustomizeRoute);
 export default CustomizeRoute;

@@ -2,12 +2,13 @@ const { argv } = require('yargs');
 const { NODE_ENV } = process.env;
 const PRODUCTION = NODE_ENV === 'production';
 const DEV = !PRODUCTION;
+const HMR = argv.nohmr === undefined;
 const SOURCEMAP = argv.sourcemap !== undefined;
 
 const config = {
   plugins: [
-    // 'react-hot-loader/babel',
     '@babel/plugin-transform-flow-strip-types',
+    DEV && HMR && 'react-hot-loader/babel',
 
     // React
     DEV && '@babel/plugin-transform-react-jsx-self',

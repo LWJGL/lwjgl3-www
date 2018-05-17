@@ -16,6 +16,11 @@ const env = {
   FLAG_REDUXLOGGER: String(DEV && argv.reduxLogger !== undefined),
 };
 
+const replaceRHL = () =>
+  new webpack.NormalModuleReplacementPlugin(/RHL/, result => {
+    result.request = result.request.replace(/RHL/, 'containers/App');
+  });
+
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
@@ -107,6 +112,8 @@ const buildConfiguration = () => {
     if (HMR) {
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    } else {
+      config.plugins.push(replaceRHL());
     }
 
     config.plugins.push(
@@ -151,6 +158,7 @@ const buildConfiguration = () => {
     // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
     config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
     config.plugins.push(
+      replaceRHL(),
       // Base hashes on the relative path of modules
       new webpack.HashedModuleIdsPlugin()
     );

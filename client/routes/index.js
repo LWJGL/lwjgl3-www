@@ -1,25 +1,32 @@
 // @flow
-/*:: import * as React from 'react'; */
-import Loadable, { type ReactLoadable } from 'react-loadable';
-import { LoadingPage } from '../components/LoadingPage';
+import * as React from 'react';
+import loadable from 'loadable-components';
+import type { ReactComponentModulePromise, Loadable } from 'loadable-components';
+import { LoadingPage /*, LOADING_TIMEOUT*/ } from '../components/LoadingPage';
+// import { timeout } from 'promise-timeout';
 
-type PromiseReactModule = () => Promise<{ default: React.ComponentType<any> }>;
-
-const AR = function(loader: PromiseReactModule): ReactLoadable {
-  return Loadable({
-    loader,
-    delay: 2000,
-    timeout: 30000,
-    loading: LoadingPage,
-  });
+const loadableOptions = {
+  render: ({ Component, error, loading, ownProps }) => {
+    if (loading || error) {
+      return <LoadingPage error={error} />;
+    }
+    return <Component {...ownProps} />;
+  },
 };
+
+const AsyncRoute = (loader: ReactComponentModulePromise): Loadable =>
+  loadable(
+    // timeout(loader, LOADING_TIMEOUT)
+    loader,
+    loadableOptions
+  );
 
 // Import causes routes to be code-split
 // We have to specify each route name/path in order to be statically analyzed by webpack
-export const Home = AR(() => import(/* webpackChunkName: "route-home" */ './home'));
-export const Guide = AR(() => import(/* webpackChunkName: "route-guide" */ './guide'));
-export const Download = AR(() => import(/* webpackChunkName: "route-download" */ './download'));
-export const Customize = AR(() => import(/* webpackChunkName: "route-customize" */ './customize'));
-export const Browse = AR(() => import(/* webpackChunkName: "route-browse" */ './browse'));
-export const Source = AR(() => import(/* webpackChunkName: "route-source" */ './source'));
-export const License = AR(() => import(/* webpackChunkName: "route-license" */ './license'));
+export const Home = AsyncRoute(() => import(/* webpackChunkName: "route-home" */ './home'));
+export const Guide = AsyncRoute(() => import(/* webpackChunkName: "route-guide" */ './guide'));
+export const Download = AsyncRoute(() => import(/* webpackChunkName: "route-download" */ './download'));
+export const Customize = AsyncRoute(() => import(/* webpackChunkName: "route-customize" */ './customize'));
+export const Browse = AsyncRoute(() => import(/* webpackChunkName: "route-browse" */ './browse'));
+export const Source = AsyncRoute(() => import(/* webpackChunkName: "route-source" */ './source'));
+export const License = AsyncRoute(() => import(/* webpackChunkName: "route-license" */ './license'));

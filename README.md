@@ -20,7 +20,7 @@ Notable features:
 * Custom webpack manifest parsing + code minification
 * Custom render-prop <Connect /> component for Redux
 * CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
-* <del>fast-async instead of regenerator</del>
+* fast-async instead of regenerator
 * [Flow](https://flow.org/) static type checking
 
 ## Dependencies
@@ -105,7 +105,7 @@ yarn watch
 --css # Enables CSS modules in dev mode (enables Sass HMR)
 --sourcemap # Enables inline JS source-maps
 --react-perf # Enables react-perf-devtool in dev mode
---nohmr # Disables Webpack Hot Module Reloading
+--nohmr # Disables Webpack Hot Module Replacement & React Hot Loader
 --redux-logger # Enables Logger for Redux
 ```
 
