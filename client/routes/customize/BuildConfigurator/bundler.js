@@ -228,8 +228,11 @@ async function fetchFile(path: string, abortSignal?: AbortSignal) {
 }
 
 let abortController: AbortController | null = null;
+let abortSignal: boolean = false;
 
 export function abortDownload() {
+  abortSignal = true;
+
   if (abortController !== null) {
     abortController.abort();
   }
@@ -242,6 +245,7 @@ export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: str
   const queue: Iterator<string> = files[Symbol.iterator]();
   const channels: Array<Promise<void>> = [];
   let f = 0;
+  abortSignal = false;
 
   if (window.AbortController !== undefined) {
     abortController = new AbortController();
@@ -257,6 +261,11 @@ export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: str
           f += 1;
           log(`${f}/${FILES_TOTAL} - ${path}`);
           try {
+            if (abortSignal) {
+              const err = new Error();
+              err.name = 'AbortError';
+              throw err;
+            }
             const download = await fetchFile(path, abortController?.signal);
             jszip.file(download.filename, download.payload, { binary: true });
           } catch (err) {

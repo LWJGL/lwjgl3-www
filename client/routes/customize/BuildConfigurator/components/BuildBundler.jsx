@@ -1,7 +1,6 @@
 // @flow
 import * as React from 'react';
 import { LoaderSpinner } from '~/components/LoaderSpinner';
-import { Connect } from '~/store/Connect';
 
 type Props = {
   cancel: (e: SyntheticEvent<HTMLButtonElement>) => void,
