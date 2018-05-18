@@ -20,7 +20,7 @@ if (FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org' && window.
   });
 
   // Prevent web app install banner from being displayed automatically
-  // https://developers.google.com/web/fundamentals/app-install-banners/#defer_or_cancel
+  // ? https://developers.google.com/web/fundamentals/app-install-banners/#defer_or_cancel
   window.addEventListener('beforeinstallprompt', e => {
     e.preventDefault();
     return false;
