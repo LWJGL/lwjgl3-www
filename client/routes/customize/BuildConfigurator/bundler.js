@@ -19,11 +19,6 @@ type SelectedBuildConfig = {
   addons: AddonSelection,
 };
 
-type Download = {
-  payload: Blob,
-  filename: string,
-};
-
 function keepChecked(src: Object): Array<string> {
   // Keep only checked items to avoid phantom selections
   // when new items (bindings,addons,platforms) are added
@@ -211,19 +206,23 @@ export function getAddons(addons: AddonSelection, source: boolean, javadoc: bool
   return files;
 }
 
-async function fetchFile(path: string, abortSignal: AbortSignal): Promise<Download> {
-  let response = await fetch(`https://build.lwjgl.org/${path}`, {
+async function fetchFile(path: string, abortSignal?: AbortSignal) {
+  const fetchOptions = {
     method: 'GET',
     mode: 'cors',
-    signal: abortSignal,
-  });
+  };
+  if (abortSignal !== undefined) {
+    //$FlowFixMe
+    fetchOptions.signal = abortSignal;
+  }
+  let response = await fetch(`https://build.lwjgl.org/${path}`, fetchOptions);
 
   if (response.status !== HTTP_OK) {
     throw response.statusText;
   }
 
   return {
-    payload: await response.blob(),
+    payload: response.blob(),
     filename: path.split('/').pop(),
   };
 }
@@ -238,16 +237,18 @@ export function abortDownload() {
 
 export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: string) => void): Promise<Array<void>> {
   const FILES_TOTAL = files.length;
-  const PARALLEL_DOWNLOADS = Math.min(8, FILES_TOTAL);
+  const PARALLEL_DOWNLOADS = Math.min(6, FILES_TOTAL);
   // $FlowFixMe
   const queue: Iterator<string> = files[Symbol.iterator]();
   const channels: Array<Promise<void>> = [];
   let f = 0;
 
-  abortController = new AbortController();
-  // abortController.signal.addEventListener('abort', () => {
-  //   console.log('AbortController cancelled fetch: ' + this.abortSignal.aborted);
-  // });
+  if (window.AbortController !== undefined) {
+    abortController = new AbortController();
+    // abortController.signal.addEventListener('abort', () => {
+    //   console.log('AbortController cancelled fetch: ' + this.abortSignal.aborted);
+    // });
+  }
 
   for (let i = 0; i < PARALLEL_DOWNLOADS; i += 1) {
     channels.push(
@@ -256,12 +257,7 @@ export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: str
           f += 1;
           log(`${f}/${FILES_TOTAL} - ${path}`);
           try {
-            if (abortController === null) {
-              reject(new Error('Aborted'));
-              return;
-            }
-            const download = await fetchFile(path, abortController.signal);
-            // $FlowFixMe
+            const download = await fetchFile(path, abortController?.signal);
             jszip.file(download.filename, download.payload, { binary: true });
           } catch (err) {
             reject(err);
