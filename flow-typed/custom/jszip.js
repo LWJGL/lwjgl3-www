@@ -74,29 +74,29 @@ declare module 'jszip' {
 
   declare class JSZip {
     constructor(): void;
-    file: (name: string) => ZipObject;
-    file: (regex: RegExp) => Array<ZipObject>;
-    file: (name: string, data: string, options?: Options) => this;
-    file: (name: string, data: ArrayBuffer, options?: Options) => this;
-    file: (name: string, data: Uint8Array, options?: Options) => this;
-    file: (name: string, data: Buffer, options?: Options) => this;
-    file: (name: string, data: Blob, options?: Options) => this;
-    file: (name: string, data: Promise<any>, options?: Options) => this;
+    file(name: string): ZipObject;
+    file(regex: RegExp): Array<ZipObject>;
+    file(name: string, data: string, options?: Options): this;
+    file(name: string, data: ArrayBuffer, options?: Options): this;
+    file(name: string, data: Uint8Array, options?: Options): this;
+    file(name: string, data: Buffer, options?: Options): this;
+    file(name: string, data: Blob, options?: Options): this;
+    file(name: string, data: Promise<any>, options?: Options): this;
 
-    folder: (name: string) => this;
-    folder: (name: RegExp) => Array<ZipObject>;
+    folder(name: string): this;
+    folder(name: RegExp): Array<ZipObject>;
 
-    forEach: (callback: (relativePath: string, file: ZipObject) => void) => void;
-    filter: (predicate: (relativePath: string, file: ZipObject) => void) => Array<ZipObject>;
+    forEach(callback: (relativePath: string, file: ZipObject) => void): void;
+    filter(predicate: (relativePath: string, file: ZipObject) => void): Array<ZipObject>;
 
-    remove: (name: string) => this;
+    remove(name: string): this;
 
-    generateAsync: (options: GenerateOptions, onUpdate?: (metadata: Metadata) => void) => Promise<any>;
-    generateInternalStream: (options: GenerateOptions) => StreamHelper;
+    generateAsync(options: GenerateOptions, onUpdate?: (metadata: Metadata) => void): Promise<any>;
+    generateInternalStream(options: GenerateOptions): StreamHelper;
 
-    loadAsync: (data: string, options: LoadOptions) => Promise<any>;
+    loadAsync(data: string, options: LoadOptions): Promise<any>;
 
-    static loadAsync: (data: string, options: LoadOptions) => Promise<any>;
+    static loadAsync(data: string, options: LoadOptions): Promise<any>;
 
     static support: {
       +arraybuffer: boolean,
@@ -113,5 +113,5 @@ declare module 'jszip' {
     static +version: string;
   }
 
-  declare export default Class<JSZip>
+  declare export default Class<JSZip>;
 }

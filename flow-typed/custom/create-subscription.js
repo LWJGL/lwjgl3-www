@@ -16,7 +16,7 @@ declare module 'create-subscription' {
       subscribe: (source: Property, callback: (value: Value | void) => void) => Unsubscribe,
     |}>
   ): React.ComponentType<{
-    children: (value: Value | void) => React$Node,
+    children: (value: Value | void) => React.Node,
     source: Property,
   }>;
 }

@@ -17,5 +17,5 @@ declare module 'react-helmet' {
     >,
   };
 
-  declare export default Class<React$Component<HelmetProps>>
+  declare export default Class<React.ComponentType<HelmetProps>>;
 }
