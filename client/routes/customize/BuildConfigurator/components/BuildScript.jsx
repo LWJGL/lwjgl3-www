@@ -189,11 +189,13 @@ function generateDependencies(
   selected: Array<string>,
   artifacts: { [string]: BindingDefinition },
   platform: Platforms,
-  generateJava: (string, boolean) => string,
-  generateNative: string => string
+  osgi: boolean,
+  generateJava: (string, string, boolean) => string,
+  generateNative: (string, string) => string
 ): string {
   let script = '';
   let nativesBundle = '';
+  const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
   selected.forEach(artifact => {
     let natives = artifacts[artifact].natives;
@@ -201,9 +203,12 @@ function generateDependencies(
     if (natives !== undefined && !hasEnabledNativePlatform && artifacts[artifact].nativesOptional !== true) {
       return;
     }
-    script += generateJava(artifact, hasEnabledNativePlatform);
+    const artifactId = osgi
+      ? `org.lwjgl.${artifact === 'lwjgl' ? artifact : artifact.substring('lwjgl-'.length)}`
+      : artifact;
+    script += generateJava(groupId, artifactId, hasEnabledNativePlatform);
     if (hasEnabledNativePlatform) {
-      nativesBundle += generateNative(artifact);
+      nativesBundle += generateNative(groupId, artifactId);
     }
   });
 
@@ -217,7 +222,6 @@ function generateMaven(props: ConnectedProps) {
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
-  const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
   const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
 
   let script = '';
@@ -260,10 +264,11 @@ function generateMaven(props: ConnectedProps) {
     selected,
     artifacts,
     platform,
-    artifact =>
-      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`,
-    artifact =>
-      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifact}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl1}</dependency>`
+    osgi,
+    (groupId, artifactId, hasEnabledNativePlatform) =>
+      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifactId}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`,
+    (groupId, artifactId) =>
+      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifactId}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl1}</dependency>`
   );
 
   addons.forEach((addon: Addon) => {
@@ -282,7 +287,6 @@ function generateGradle(props: ConnectedProps) {
   const { build, hardcoded, osgi, artifacts, platform, platformSingle, selected, addons } = props;
   const version = getVersion(props.version, build);
   const v = hardcoded ? version : '$lwjglVersion';
-  const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
   const classifier = !hardcoded || platformSingle == null ? '$lwjglNatives' : `natives-${platformSingle}`;
 
   let script = platformSingle === null ? 'import org.gradle.internal.os.OperatingSystem\n\n' : '';
@@ -325,8 +329,9 @@ dependencies {`;
     selected,
     artifacts,
     platform,
-    artifact => `\n\tcompile "${groupId}:${artifact}:${v}"`,
-    artifact => `\n\tcompile "${groupId}:${artifact}:${v}:${classifier}"`
+    osgi,
+    (groupId, artifactId, hasEnabledNativePlatform) => `\n\tcompile "${groupId}:${artifactId}:${v}"`,
+    (groupId, artifactId) => `\n\tcompile "${groupId}:${artifactId}:${v}:${classifier}"`
   );
 
   addons.forEach((addon: Addon) => {
@@ -349,7 +354,6 @@ function generateIvy(props: ConnectedProps) {
   const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
-  const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
   const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
 
   if (!hardcoded || build !== BUILD_RELEASE) script += `\t<!-- Add to ivysettings.xml -->\n`;
@@ -391,11 +395,12 @@ function generateIvy(props: ConnectedProps) {
     selected,
     artifacts,
     platform,
-    (artifact, hasEnabledNativePlatform) =>
+    osgi,
+    (groupId, artifactId, hasEnabledNativePlatform) =>
       hasEnabledNativePlatform
-        ? `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}">${nl3}<artifact name="${artifact}" type="jar"/>${nl3}<artifact name="${artifact}" type="jar" m:classifier="${classifier}"/>${nl2}</dependency>`
-        : `\n\t\t<dependency org="${groupId}" name="${artifact}" rev="${v}"/>`,
-    artifact => ''
+        ? `\n\t\t<dependency org="${groupId}" name="${artifactId}" rev="${v}">${nl3}<artifact name="${artifactId}" type="jar"/>${nl3}<artifact name="${artifactId}" type="jar" m:classifier="${classifier}"/>${nl2}</dependency>`
+        : `\n\t\t<dependency org="${groupId}" name="${artifactId}" rev="${v}"/>`,
+    (groupId, artifactId) => ''
   );
 
   addons.forEach((addon: Addon) => {
