@@ -207,7 +207,7 @@ function generateDependencies(
       ? `org.lwjgl.${artifact === 'lwjgl' ? artifact : artifact.substring('lwjgl-'.length)}`
       : artifact;
     script += generateJava(groupId, artifactId, hasEnabledNativePlatform);
-    if (hasEnabledNativePlatform) {
+    if (!osgi && hasEnabledNativePlatform) {
       nativesBundle += generateNative(groupId, artifactId);
     }
   });
