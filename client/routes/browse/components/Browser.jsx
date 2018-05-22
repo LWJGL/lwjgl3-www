@@ -1,5 +1,7 @@
 // @flow
+// @jsx jsx
 import * as React from 'react';
+import { jsx } from '@emotion/core';
 import { LoaderSpinner } from '~/components/LoaderSpinner';
 import { Folder, FolderTH } from './Folder';
 import { File } from './File';
@@ -94,6 +96,12 @@ export class Browser extends React.Component<Props, State> {
       return;
     }
     const contents = await fetchContents(path);
+    if (contents.files === undefined) {
+      contents.files = [];
+    }
+    if (contents.folders === undefined) {
+      contents.folders = [];
+    }
     // Make sure we haven't unmounted or changed path while waiting for the resposne
     if (this.mounted && path === this.state.path) {
       this.setState({ contents });
