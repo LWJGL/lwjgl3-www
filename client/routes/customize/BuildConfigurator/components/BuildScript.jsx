@@ -219,46 +219,46 @@ function generateMaven(props: ConnectedProps) {
   const { build, hardcoded, compact, osgi, platform, platformSingle, artifacts, selected, addons } = props;
   const version = getVersion(props.version, build);
   const v = hardcoded ? version : '${lwjgl.version}';
-  const nl1 = compact ? '' : '\n\t';
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
+  const nl4 = compact ? '' : '\n\t\t\t\t';
   const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
 
   let script = '';
   if (!hardcoded) {
-    script += `<properties>
-\t<lwjgl.version>${version}</lwjgl.version>`;
+    script += `\t<properties>
+\t\t<lwjgl.version>${version}</lwjgl.version>`;
 
     addons.forEach((addon: Addon) => {
-      script += `\n\t<${addon.id}.version>${addon.maven.version}</${addon.id}.version>`;
+      script += `\n\t\t<${addon.id}.version>${addon.maven.version}</${addon.id}.version>`;
     });
 
     if (platformSingle !== null) {
-      script += `\n\t<lwjgl.natives>natives-${platformSingle}</lwjgl.natives>`;
+      script += `\n\t\t<lwjgl.natives>natives-${platformSingle}</lwjgl.natives>`;
     }
 
-    script += `\n</properties>\n\n`;
+    script += `\n\t</properties>\n\n`;
   }
   if (platformSingle === null) {
-    script += `<profiles>
-\t<profile>${nl2}<id>lwjgl-natives-linux</id>${nl2}<activation>${nl3}<os><family>unix</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-linux</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-macos</id>${nl2}<activation>${nl3}<os><family>mac</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-macos</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-\t<profile>${nl2}<id>lwjgl-natives-windows</id>${nl2}<activation>${nl3}<os><family>windows</family></os>${nl2}</activation>${nl2}<properties>${nl3}<lwjgl.natives>natives-windows</lwjgl.natives>${nl2}</properties>${nl1}</profile>
-</profiles>\n\n`;
+    script += `\t<profiles>
+\t\t<profile>${nl3}<id>lwjgl-natives-linux</id>${nl3}<activation>${nl4}<os><family>unix</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-linux</lwjgl.natives>${nl3}</properties>${nl2}</profile>
+\t\t<profile>${nl3}<id>lwjgl-natives-macos</id>${nl3}<activation>${nl4}<os><family>mac</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-macos</lwjgl.natives>${nl3}</properties>${nl2}</profile>
+\t\t<profile>${nl3}<id>lwjgl-natives-windows</id>${nl3}<activation>${nl4}<os><family>windows</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-windows</lwjgl.natives>${nl3}</properties>${nl2}</profile>
+\t</profiles>\n\n`;
   }
 
   if (build !== BUILD_RELEASE) {
-    script += `<repositories>
-\t<repository>
-\t\t<id>sonatype-snapshots</id>
-\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-\t\t<releases><enabled>false</enabled></releases>
-\t\t<snapshots><enabled>true</enabled></snapshots>
-\t</repository>
-</repositories>\n\n`;
+    script += `\t<repositories>
+\t\t<repository>
+\t\t\t<id>sonatype-snapshots</id>
+\t\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+\t\t\t<releases><enabled>false</enabled></releases>
+\t\t\t<snapshots><enabled>true</enabled></snapshots>
+\t\t</repository>
+\t</repositories>\n\n`;
   }
 
-  script += `<dependencies>`;
+  script += `\t<dependencies>`;
 
   script += generateDependencies(
     selected,
@@ -266,19 +266,19 @@ function generateMaven(props: ConnectedProps) {
     platform,
     osgi,
     (groupId, artifactId, hasEnabledNativePlatform) =>
-      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifactId}</artifactId>${nl2}<version>${v}</version>${nl1}</dependency>`,
+      `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${nl3}<version>${v}</version>${nl2}</dependency>`,
     (groupId, artifactId) =>
-      `\n\t<dependency>${nl2}<groupId>${groupId}</groupId>${nl2}<artifactId>${artifactId}</artifactId>${nl2}<version>${v}</version>${nl2}<classifier>${classifier}</classifier>${nl1}</dependency>`
+      `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${nl3}<version>${v}</version>${nl3}<classifier>${classifier}</classifier>${nl2}</dependency>`
   );
 
   addons.forEach((addon: Addon) => {
     const maven = addon.maven;
-    script += `\n\t<dependency>${nl2}<groupId>${maven.groupId}</groupId>${nl2}<artifactId>${
+    script += `\n\t\t<dependency>${nl3}<groupId>${maven.groupId}</groupId>${nl3}<artifactId>${
       maven.artifactId
-    }</artifactId>${nl2}<version>${hardcoded ? maven.version : `\${${addon.id}.version}`}</version>${nl1}</dependency>`;
+    }</artifactId>${nl3}<version>${hardcoded ? maven.version : `\${${addon.id}.version}`}</version>${nl2}</dependency>`;
   });
 
-  script += `\n</dependencies>`;
+  script += `\n\t</dependencies>`;
 
   return script;
 }
