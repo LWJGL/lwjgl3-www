@@ -2,7 +2,7 @@
 import produce from 'immer';
 import { register } from '~/store/asyncReducers';
 import { config } from './config';
-import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_IVY } from './constants';
+import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
 import type {
   BUILD_TYPES,
   NATIVES,
@@ -180,8 +180,11 @@ function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
         }
         break;
 
-      // case SELECT_LANGUAGE:
-      //   break;
+      case SELECT_LANGUAGE:
+        if (state.mode === MODE_GRADLE) {
+          draft.language = action.language;
+        }
+        break;
 
       case TOGGLE_PLATFORM:
         const selections = state.natives.allIds.reduce(
