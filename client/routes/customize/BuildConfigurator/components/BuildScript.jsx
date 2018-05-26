@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { MODE_MAVEN, MODE_GRADLE, MODE_IVY, BUILD_RELEASE } from '../constants';
+import { MODE_MAVEN, MODE_GRADLE, MODE_IVY, LANGUAGE_GROOVY, BUILD_RELEASE } from '../constants';
 import type { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition, Platforms, NATIVES } from '../types';
 import { Connect } from '~/store/Connect';
 import { Breakpoint } from '~/components/Breakpoint';
@@ -18,6 +18,7 @@ type ConnectedProps = {|
   hardcoded: boolean,
   compact: boolean,
   osgi: boolean,
+  language: string,
   platform: Platforms,
   platformSingle: NATIVES | null,
   artifacts: { [string]: BindingDefinition },
@@ -104,6 +105,7 @@ export class BuildScript extends React.Component<Props> {
             hardcoded: build.hardcoded,
             compact: build.compact,
             osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
+            language: build.language,
             platform: build.platform,
             platformSingle: getSelectedPlatforms(build),
             artifacts: build.artifacts.byId,
@@ -284,25 +286,36 @@ function generateMaven(props: ConnectedProps) {
 }
 
 function generateGradle(props: ConnectedProps) {
-  const { build, hardcoded, osgi, artifacts, platform, platformSingle, selected, addons } = props;
+  const { build, hardcoded, osgi, language, artifacts, platform, platformSingle, selected, addons } = props;
   const version = getVersion(props.version, build);
-  const v = hardcoded ? version : '$lwjglVersion';
-  const classifier = !hardcoded || platformSingle == null ? '$lwjglNatives' : `natives-${platformSingle}`;
 
   let script = platformSingle === null ? 'import org.gradle.internal.os.OperatingSystem\n\n' : '';
 
   if (!hardcoded) {
-    script += `project.ext.lwjglVersion = "${version}"`;
-    addons.forEach((addon: Addon) => {
-      script += `\nproject.ext.${addon.id}Version = "${addon.maven.version}"`;
-    });
-    if (platformSingle !== null) {
-      script += `\nproject.ext.lwjglNatives = "natives-${platformSingle}"`;
+    if (language === LANGUAGE_GROOVY) {
+      script += `project.ext.lwjglVersion = "${version}"`;
+      addons.forEach((addon: Addon) => {
+        script += `\nproject.ext.${addon.id}Version = "${addon.maven.version}"`;
+      });
+      if (platformSingle !== null) {
+        script += `\nproject.ext.lwjglNatives = "natives-${platformSingle}"`;
+      }
+    } else {
+      script += `val lwjglVersion = "${version}"`;
+      addons.forEach((addon: Addon) => {
+        const v = addon.id.indexOf('-') === -1 ? `${addon.id}Version` : `\`${addon.id}Version\``;
+        script += `\nval ${v} = "${addon.maven.version}"`;
+      });
+      if (platformSingle !== null) {
+        script += `\nval lwjglNatives = "natives-${platformSingle}"`;
+      }
     }
+
     script += '\n\n';
   }
   if (platformSingle === null) {
-    script += `switch ( OperatingSystem.current() ) {
+    if (language === LANGUAGE_GROOVY) {
+      script += `switch ( OperatingSystem.current() ) {
 \tcase OperatingSystem.WINDOWS:
 \t\tproject.ext.lwjglNatives = "natives-windows"
 \t\tbreak
@@ -313,33 +326,66 @@ function generateGradle(props: ConnectedProps) {
 \t\tproject.ext.lwjglNatives = "natives-macos"
 \t\tbreak
 }\n\n`;
+    } else {
+      script += `val lwjglNatives = when (OperatingSystem.current()) {
+\tOperatingSystem.LINUX   -> "natives-linux"
+\tOperatingSystem.MAC_OS  -> "natives-macos"
+\tOperatingSystem.WINDOWS -> "natives-windows"
+\telse -> throw Error("Unrecognized or unsupported Operating system. Please set \"lwjglNatives\" manually")
+}\n\n`;
+    }
   }
 
   script += `repositories {
 \tmavenCentral()`;
   if (build !== BUILD_RELEASE) {
-    script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
+    if (language === LANGUAGE_GROOVY) {
+      script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
+    } else {
+      script += `\n\tmaven("https://oss.sonatype.org/content/repositories/snapshots/")`;
+    }
   }
   script += `
 }
 
 dependencies {`;
 
-  script += generateDependencies(
-    selected,
-    artifacts,
-    platform,
-    osgi,
-    (groupId, artifactId, hasEnabledNativePlatform) => `\n\tcompile "${groupId}:${artifactId}:${v}"`,
-    (groupId, artifactId) => `\n\tcompile "${groupId}:${artifactId}:${v}:${classifier}"`
-  );
+  if (language === LANGUAGE_GROOVY) {
+    const v = hardcoded ? version : '$lwjglVersion';
+    const classifier = !hardcoded || platformSingle == null ? '$lwjglNatives' : `natives-${platformSingle}`;
+    script += generateDependencies(
+      selected,
+      artifacts,
+      platform,
+      osgi,
+      (groupId, artifactId, hasEnabledNativePlatform) => `\n\tcompile "${groupId}:${artifactId}:${v}"`,
+      (groupId, artifactId) => `\n\tcompile "${groupId}:${artifactId}:${v}:${classifier}"`
+    );
 
-  addons.forEach((addon: Addon) => {
-    const maven = addon.maven;
-    script += `\n\tcompile "${maven.groupId}:${maven.artifactId}:${
-      hardcoded ? maven.version : `\${${addon.id}Version}`
-    }"`;
-  });
+    addons.forEach((addon: Addon) => {
+      const maven = addon.maven;
+      script += `\n\tcompile "${maven.groupId}:${maven.artifactId}:${
+        hardcoded ? maven.version : `\${${addon.id}Version}`
+      }"`;
+    });
+  } else {
+    const v = hardcoded ? `"${version}"` : 'lwjglVersion';
+    const classifier = !hardcoded || platformSingle == null ? 'lwjglNatives' : `"natives-${platformSingle}"`;
+    script += generateDependencies(
+      selected,
+      artifacts,
+      platform,
+      osgi,
+      (groupId, artifactId, hasEnabledNativePlatform) => `\n\tcompile("${groupId}", "${artifactId}", ${v})`,
+      (groupId, artifactId) => `\n\tcompile("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
+    );
+
+    addons.forEach((addon: Addon) => {
+      const maven = addon.maven;
+      const v = addon.id.indexOf('-') === -1 ? `${addon.id}Version` : `\`${addon.id}Version\``;
+      script += `\n\tcompile("${maven.groupId}", "${maven.artifactId}", ${hardcoded ? `"${maven.version}"` : v})`;
+    });
+  }
 
   script += `\n}`;
 
