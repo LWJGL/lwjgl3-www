@@ -1,5 +1,5 @@
 {
   "greatest": true,
   "upgradeAll": true,
-  "reject": ["react", "react-dom", "react-is", "core-js"]
+  "reject": ["core-js"]
 }
