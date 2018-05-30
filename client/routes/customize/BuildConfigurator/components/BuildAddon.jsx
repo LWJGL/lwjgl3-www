@@ -28,7 +28,7 @@ export const BuildAddon = ({ id }: Props) => (
   >
     {({ addon, mode, checked, showDescriptions }, { toggleAddon }) => {
       const label: string = `${addon.title} v${addon.maven.version}`;
-      const disabled = addon.modes !== undefined && addon.modes.indexOf(mode) === -1;
+      const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
 
       if (showDescriptions) {
         return (
@@ -37,7 +37,7 @@ export const BuildAddon = ({ id }: Props) => (
               value={addon.id}
               label={label}
               disabled={disabled}
-              checked={checked && !disabled}
+              checked={!disabled && checked}
               onChange={toggleAddon}
             />
             <p>{addon.description}</p>
@@ -56,7 +56,7 @@ export const BuildAddon = ({ id }: Props) => (
             value={addon.id}
             label={label}
             disabled={disabled}
-            checked={checked && !disabled}
+            checked={!disabled && checked}
             onChange={toggleAddon}
           />
         );

@@ -63,7 +63,7 @@ export const fields = {
     options: ({ build: { languages } }: State) =>
       languages.allIds.map((lang: LANGUAGES) => ({
         value: lang,
-        label: languages.byId[lang].title
+        label: languages.byId[lang].title,
       })),
   },
   version: {
