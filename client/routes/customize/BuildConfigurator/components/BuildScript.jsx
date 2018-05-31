@@ -376,14 +376,14 @@ dependencies {`;
       artifacts,
       platform,
       osgi,
-      (groupId, artifactId, hasEnabledNativePlatform) => `\n\tcompile("${groupId}", "${artifactId}", ${v})`,
-      (groupId, artifactId) => `\n\tcompile("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
+      (groupId, artifactId, hasEnabledNativePlatform) => `\n\t"compile"("${groupId}", "${artifactId}", ${v})`,
+      (groupId, artifactId) => `\n\t"compile"("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
     );
 
     addons.forEach((addon: Addon) => {
       const maven = addon.maven;
       const v = addon.id.indexOf('-') === -1 ? `${addon.id}Version` : `\`${addon.id}Version\``;
-      script += `\n\tcompile("${maven.groupId}", "${maven.artifactId}", ${hardcoded ? `"${maven.version}"` : v})`;
+      script += `\n\t"compile"("${maven.groupId}", "${maven.artifactId}", ${hardcoded ? `"${maven.version}"` : v})`;
     });
   }
 
