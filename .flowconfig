@@ -41,9 +41,6 @@ experimental.well_formed_exports=true
 munge_underscores=true
 module.system=node
 module.use_strict=true
-module.file_ext=.js
-module.file_ext=.jsx
-module.file_ext=.mjs
 # Webpack alias
 module.name_mapper='^~' -> '<PROJECT_ROOT>/client'
 # Stub all react-icons to <Icon />
