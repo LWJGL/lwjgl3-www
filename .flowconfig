@@ -43,7 +43,5 @@ module.system=node
 module.use_strict=true
 # Webpack alias
 module.name_mapper='^~' -> '<PROJECT_ROOT>/client'
-# Stub all react-icons to <Icon />
-#module.name_mapper='^react-icon-base'->'<PROJECT_ROOT>/client/components/Icon.jsx'
 # Stub SCSS files to avoid Flow errors
 module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/client/services/CSSModule.js'
