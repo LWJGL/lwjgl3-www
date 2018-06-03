@@ -69,7 +69,7 @@ export function rotate(color: Hsl, degrees: number) {
   if (hue > 360) {
     hue = hue % 360;
   } else if (hue < 0) {
-    hue = 360 + hue % -360;
+    hue = 360 + (hue % -360);
   }
   return setHue(color, hue);
 }
@@ -141,7 +141,7 @@ export function toRGB(color: Hsl) {
   const rgb = [0, 0, 0];
 
   for (let i = 0; i < 3; i += 1) {
-    let t3 = h + 1 / 3 * -(i - 1);
+    let t3 = h + (1 / 3) * -(i - 1);
     if (t3 < 0) {
       t3++;
     }

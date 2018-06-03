@@ -41,12 +41,7 @@ experimental.well_formed_exports=true
 munge_underscores=true
 module.system=node
 module.use_strict=true
-module.file_ext=.js
-module.file_ext=.jsx
-module.file_ext=.mjs
 # Webpack alias
 module.name_mapper='^~' -> '<PROJECT_ROOT>/client'
-# Stub all react-icons to <Icon />
-#module.name_mapper='^react-icon-base'->'<PROJECT_ROOT>/client/components/Icon.jsx'
 # Stub SCSS files to avoid Flow errors
 module.name_mapper.extension='scss' -> '<PROJECT_ROOT>/client/services/CSSModule.js'

@@ -6,7 +6,6 @@ import { BreakpointProvider } from '../components/Breakpoint';
 
 // Pull common modules that we want preloaded in the main chunk
 import '../components/icons/Icon';
-import 'scroll-into-view-if-needed';
 import './PageView';
 
 const supportsHistory = 'pushState' in window.history;

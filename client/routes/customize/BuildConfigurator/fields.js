@@ -64,7 +64,6 @@ export const fields = {
       languages.allIds.map((lang: LANGUAGES) => ({
         value: lang,
         label: languages.byId[lang].title,
-        disabled: lang !== 'groovy',
       })),
   },
   version: {
