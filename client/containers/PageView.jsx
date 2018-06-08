@@ -56,8 +56,8 @@ export class PageView extends React.Component<Props> {
     // TODO: Steal ideas from create-react-app's react-error-overlay (e.g. open file in editor)
     if (!FLAG_PRODUCTION) {
       //$FlowFixMe
-      return <React.StrictMode>{this.props.children}</React.StrictMode>;
-      // return this.props.children;
+      // return <React.StrictMode>{this.props.children}</React.StrictMode>;
+      return this.props.children;
     } else {
       return <ErrorBoundary render={PageError}>{this.props.children}</ErrorBoundary>;
     }

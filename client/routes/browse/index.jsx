@@ -10,11 +10,9 @@ const BrowseRoute = (props: RouteProps) => (
   <PageView location={props.location}>
     <Title>Browse</Title>
     <Head tag="meta" name="description" content="Browse LWJGL files" />
-    <main>
-      <section className="container-fluid px-0" style={{ margin: '-1rem auto 0 auto' }}>
-        <Browser />
-      </section>
-    </main>
+    <section className="container-fluid px-0" style={{ margin: '-1rem auto 0 auto' }}>
+      <Browser />
+    </section>
   </PageView>
 );
 

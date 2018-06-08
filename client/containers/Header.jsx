@@ -20,8 +20,7 @@ const styleOpaque = css`
 `;
 
 type Props = {|
-  path: string,
-  location?: Location,
+  isHome: boolean,
 |};
 
 type State = {|
@@ -184,7 +183,7 @@ export class Header extends React.PureComponent<Props, State> {
 
   render() {
     const { pos, top, fixed, hidden } = this.state;
-    const isHome = this.props.location !== undefined && this.props.location.pathname === '/';
+    const isHome = this.props.isHome;
 
     return (
       <React.Fragment>

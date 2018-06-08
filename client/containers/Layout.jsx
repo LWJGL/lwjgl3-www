@@ -11,10 +11,8 @@ import { Miss404 } from '../routes/miss404';
 export const Layout = () => {
   return (
     <React.Fragment>
-      <Router primary={false}>
-        <Header path="/*" />
-      </Router>
-      <Router>
+      <Location>{({ location }) => <Header isHome={location.pathname === '/'} />}</Location>
+      <Router component="main">
         <Home path="/" />
         <Guide path="/guide" />
         <Download path="/download" />
