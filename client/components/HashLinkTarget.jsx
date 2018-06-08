@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Route, type Location } from 'react-router-dom';
+import { Location, type RouterLocation } from '@reach/router';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
 type OwnProps = {|
@@ -9,7 +9,7 @@ type OwnProps = {|
 
 type Props = {|
   ...OwnProps,
-  location: Location,
+  location: RouterLocation,
 |};
 
 // Remember position before we clicked on a HashLink
@@ -74,5 +74,5 @@ export class HashLinkTargetControlled extends React.Component<Props> {
 }
 
 export const HashLinkTarget = ({ id }: OwnProps) => (
-  <Route render={({ location }) => <HashLinkTargetControlled id={id} location={location} />} />
+  <Location>{({ location }) => <HashLinkTargetControlled id={id} location={location} />}</Location>
 );

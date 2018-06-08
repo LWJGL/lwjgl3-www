@@ -938,6 +938,17 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.0.tgz#932393ab7bc1ec4558f27577d7f26c49500acd4d"
 
+"@reach/router@1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.0.10.tgz#945e902f0ca61945c694ab37aa214bf8a9c22952"
+  dependencies:
+    create-react-context "^0.2.1"
+    invariant "^2.2.3"
+    prop-types "^15.6.1"
+    query-string "4.2.2"
+    react-lifecycles-compat "^3.0.4"
+    warning "^3.0.0"
+
 "@types/babel-types@*", "@types/babel-types@^7.0.0":
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/@types/babel-types/-/babel-types-7.0.1.tgz#1405e5396968c4302994b0161ce405b72b874257"
@@ -1368,9 +1379,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.252.1:
-  version "2.252.1"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.252.1.tgz#4ce45b16dc408883e20a564bd86270c67f25bb60"
+aws-sdk@2.253.1:
+  version "2.253.1"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.253.1.tgz#5ca10d7115562fc40adedc35c4d99703f8fe5f9c"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -2310,7 +2321,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.2, create-hmac@^1.1.4:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-create-react-context@^0.2.2:
+create-react-context@^0.2.1:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/create-react-context/-/create-react-context-0.2.2.tgz#9836542f9aaa22868cd7d4a6f82667df38019dca"
   dependencies:
@@ -3663,16 +3674,6 @@ hide-powered-by@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/hide-powered-by/-/hide-powered-by-1.0.0.tgz#4a85ad65881f62857fc70af7174a1184dccce32b"
 
-history@^4.7.2:
-  version "4.7.2"
-  resolved "https://registry.yarnpkg.com/history/-/history-4.7.2.tgz#22b5c7f31633c5b8021c7f4a8a954ac139ee8d5b"
-  dependencies:
-    invariant "^2.2.1"
-    loose-envify "^1.2.0"
-    resolve-pathname "^2.2.0"
-    value-equal "^0.4.0"
-    warning "^3.0.0"
-
 hmac-drbg@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/hmac-drbg/-/hmac-drbg-1.0.1.tgz#d2745701025a6c775a6c545793ed502fc0c649a1"
@@ -3905,7 +3906,7 @@ interpret@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.1.0.tgz#7ed1b1410c6a0e0f78cf95d3b8440c63f78b8614"
 
-invariant@^2.2.0, invariant@^2.2.1, invariant@^2.2.2, invariant@^2.2.4:
+invariant@^2.2.0, invariant@^2.2.2, invariant@^2.2.3:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   dependencies:
@@ -4194,10 +4195,6 @@ is-utf8@^0.2.0:
 is-windows@^1.0.0, is-windows@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/is-windows/-/is-windows-1.0.2.tgz#d1850eb9791ecd18e6182ce12a30f396634bb19d"
-
-isarray@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
 
 isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
   version "1.0.0"
@@ -4831,7 +4828,7 @@ longest@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/longest/-/longest-1.0.1.tgz#30a0b2da38f73770e8294a0d22e6625ed77d0097"
 
-loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.2.0, loose-envify@^1.3.1:
+loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
@@ -5591,12 +5588,6 @@ path-parse@^1.0.5:
 path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
-
-path-to-regexp@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
-  dependencies:
-    isarray "0.0.1"
 
 path-type@^1.0.0:
   version "1.1.0"
@@ -6399,6 +6390,13 @@ qs@~6.3.0:
   version "6.3.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.3.2.tgz#e75bd5f6e268122a2a0e0bda630b2550c166502c"
 
+query-string@4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.2.2.tgz#888a6fcb6f76070ba39f2f3025c87099defa1645"
+  dependencies:
+    object-assign "^4.1.0"
+    strict-uri-encode "^1.0.0"
+
 query-string@6.1.0:
   version "6.1.0"
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.1.0.tgz#01e7d69f6a0940dac67a937d6c6325647aa4532a"
@@ -6499,28 +6497,6 @@ react-lifecycles-compat@^3.0.4:
 react-perf-devtool@3.1.3-beta.4:
   version "3.1.3-beta.4"
   resolved "https://registry.yarnpkg.com/react-perf-devtool/-/react-perf-devtool-3.1.3-beta.4.tgz#0c1cef84925d440e7a43e5b61609ee9ac6de04f4"
-
-react-router-dom@4.4.0-alpha.0:
-  version "4.4.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/react-router-dom/-/react-router-dom-4.4.0-alpha.0.tgz#355f058fe508f2a80ebe9716ed6c72e5945d3e9f"
-  dependencies:
-    history "^4.7.2"
-    invariant "^2.2.4"
-    loose-envify "^1.3.1"
-    prop-types "^15.6.1"
-    react-router "^4.4.0-alpha.0"
-
-react-router@^4.4.0-alpha.0:
-  version "4.4.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/react-router/-/react-router-4.4.0-alpha.0.tgz#156654c7c37bf29648e520d7a999abcbe0d07951"
-  dependencies:
-    create-react-context "^0.2.2"
-    history "^4.7.2"
-    hoist-non-react-statics "^2.5.0"
-    invariant "^2.2.4"
-    loose-envify "^1.3.1"
-    path-to-regexp "^1.7.0"
-    prop-types "^15.6.1"
 
 react@16.4.0:
   version "16.4.0"
@@ -6818,10 +6794,6 @@ resolve-cwd@^2.0.0:
 resolve-from@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/resolve-from/-/resolve-from-3.0.0.tgz#b22c7af7d9d6881bc8b6e653335eebcb0a188748"
-
-resolve-pathname@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/resolve-pathname/-/resolve-pathname-2.2.0.tgz#7e9ae21ed815fd63ab189adeee64dc831eefa879"
 
 resolve-url@^0.2.1:
   version "0.2.1"
@@ -7870,10 +7842,6 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
-
-value-equal@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/value-equal/-/value-equal-0.4.0.tgz#c5bdd2f54ee093c04839d71ce2e4758a6890abc7"
 
 vary@~1.1.1, vary@~1.1.2:
   version "1.1.2"

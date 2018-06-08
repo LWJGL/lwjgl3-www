@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from '@reach/router';
 import { LazyImg } from '~/components/LazyImg';
 
 export const Footer = () => (
@@ -11,34 +11,22 @@ export const Footer = () => (
           <h3>About</h3>
           <ul className="list-unstyled">
             <li>
-              <NavLink aria-current="page" exact={true} to="/">
-                Home
-              </NavLink>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <NavLink aria-current="page" exact={true} to="/guide">
-                Get Started
-              </NavLink>
+              <Link to="/guide">Get Started</Link>
             </li>
             <li>
-              <NavLink aria-current="page" exact={true} to="/download">
-                Download
-              </NavLink>
+              <Link to="/download">Download</Link>
             </li>
             <li>
-              <NavLink aria-current="page" exact={true} to="/customize">
-                Customize
-              </NavLink>
+              <Link to="/customize">Customize</Link>
             </li>
             <li>
-              <NavLink aria-current="page" exact={true} to="/source">
-                Source
-              </NavLink>
+              <Link to="/source">Source</Link>
             </li>
             <li>
-              <NavLink aria-current="page" exact={true} to="/license">
-                License
-              </NavLink>
+              <Link to="/license">License</Link>
             </li>
           </ul>
         </div>
@@ -101,10 +89,7 @@ export const Footer = () => (
         <sup>3</sup>
       </p>
       <p>
-        Licensed under{' '}
-        <NavLink aria-current="page" exact={true} to="/license">
-          BSD
-        </NavLink>
+        Licensed under <Link to="/license">BSD</Link>
       </p>
     </section>
   </footer>

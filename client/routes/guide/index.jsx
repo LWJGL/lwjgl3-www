@@ -1,8 +1,7 @@
 // @flow
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
-import type { ContextRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, type RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 import { sample } from './sample';
@@ -14,7 +13,7 @@ type State = {
   sample: string,
 };
 
-class GuideRoute extends React.Component<ContextRouter, State> {
+class GuideRoute extends React.Component<RouteProps, State> {
   static init = true;
   static sample = sample;
   mounted = false;
@@ -47,7 +46,7 @@ class GuideRoute extends React.Component<ContextRouter, State> {
 
   render() {
     return (
-      <PageView {...this.props}>
+      <PageView location={this.props.location}>
         <Title>Get started with LWJGL 3</Title>
         <Head tag="meta" name="description" content="This guide will help you get started with LWJGL 3" />
         <main>

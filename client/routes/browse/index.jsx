@@ -1,13 +1,13 @@
 // @flow
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
-import type { ContextRouter } from 'react-router-dom';
+import type { RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 import { Browser } from './components/Browser';
 
-const BrowseRoute = (props: ContextRouter) => (
-  <PageView {...props}>
+const BrowseRoute = (props: RouteProps) => (
+  <PageView location={props.location}>
     <Title>Browse</Title>
     <Head tag="meta" name="description" content="Browse LWJGL files" />
     <main>

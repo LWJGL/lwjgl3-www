@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import { Layout } from './Layout';
 import { BreakpointProvider } from '../components/Breakpoint';
 
@@ -12,9 +11,7 @@ const supportsHistory = 'pushState' in window.history;
 
 const App = () => (
   <BreakpointProvider>
-    <BrowserRouter forceRefresh={!supportsHistory} keyLength={12}>
-      <Layout />
-    </BrowserRouter>
+    <Layout />
   </BreakpointProvider>
 );
 

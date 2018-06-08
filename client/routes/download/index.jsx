@@ -1,8 +1,7 @@
 // @flow
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
-import type { ContextRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, type RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 
@@ -12,8 +11,8 @@ import IconFolder from '~/components/icons/md/Folder';
 
 import { Customize, Browse } from '../';
 
-const DownloadRoute = (props: ContextRouter) => (
-  <PageView {...props}>
+const DownloadRoute = (props: RouteProps) => (
+  <PageView location={props.location}>
     <Title>Download</Title>
     <Head tag="meta" name="description" content="Download LWJGL 3" />
     <main>

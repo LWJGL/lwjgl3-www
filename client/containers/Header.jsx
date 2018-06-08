@@ -1,9 +1,9 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import { jsx, Global } from '@emotion/core';
+import { jsx } from '@emotion/core';
 import css from '@emotion/css';
-import { Link } from 'react-router-dom';
+import { Link } from '@reach/router';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 import { IS_IOS } from '~/services/ua';
@@ -20,7 +20,8 @@ const styleOpaque = css`
 `;
 
 type Props = {|
-  pathname: string,
+  path: string,
+  location?: Location,
 |};
 
 type State = {|
@@ -183,18 +184,10 @@ export class Header extends React.PureComponent<Props, State> {
 
   render() {
     const { pos, top, fixed, hidden } = this.state;
-    const isHome = this.props.pathname === '/';
+    const isHome = this.props.location !== undefined && this.props.location.pathname === '/';
 
     return (
       <React.Fragment>
-        <Global
-          css={css`
-            body {
-              padding-top: 4rem;
-              overflow-y: scroll;
-            }
-          `}
-        />
         <header
           role="navigation"
           css={[isHome && styleHome, (!isHome || !top) && styleOpaque]}

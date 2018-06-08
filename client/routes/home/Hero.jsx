@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
-import { Link } from 'react-router-dom';
+import { Link } from '@reach/router';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
 import { renderAsync, type AsyncRender } from '~/services/renderAsync';
 import { Logo } from './Logo';

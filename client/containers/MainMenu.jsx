@@ -1,36 +1,42 @@
 // @flow
 import * as React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from '@reach/router';
 
 type Props = {
   onClick?: (e: Event) => any,
   rest?: {},
 };
 
+const isActive = ({ isCurrent }) => {
+  return isCurrent ? { className: 'active' } : null;
+};
+
+const NavLink = props => <Link getProps={isActive} {...props} />;
+
 export const MainMenu = ({ onClick, ...rest }: Props) => (
   <ul {...rest} role="navigation" aria-label="Main Menu">
     <li>
-      <NavLink aria-current="page" activeClassName="active" exact={true} onClick={onClick} to="/">
+      <NavLink onClick={onClick} to="/">
         HOME
       </NavLink>
     </li>
     <li>
-      <NavLink aria-current="page" activeClassName="active" exact={true} onClick={onClick} to="/guide">
+      <NavLink onClick={onClick} to="/guide">
         GET STARTED
       </NavLink>
     </li>
     <li>
-      <NavLink aria-current="page" activeClassName="active" exact={true} onClick={onClick} to="/download">
+      <NavLink onClick={onClick} to="/download">
         DOWNLOAD
       </NavLink>
     </li>
     <li>
-      <NavLink aria-current="page" activeClassName="active" exact={true} onClick={onClick} to="/customize">
+      <NavLink onClick={onClick} to="/customize">
         CUSTOMIZE
       </NavLink>
     </li>
     <li>
-      <NavLink aria-current="page" activeClassName="active" exact={true} onClick={onClick} to="/source">
+      <NavLink onClick={onClick} to="/source">
         SOURCE
       </NavLink>
     </li>

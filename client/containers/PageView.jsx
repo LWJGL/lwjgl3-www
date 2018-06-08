@@ -3,14 +3,14 @@ import * as React from 'react';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { PageError } from '../components/PageError';
 
-import type { ContextRouter } from 'react-router-dom';
+import type { RouterLocation } from '@reach/router';
 
 type ScrollPositions = {
   [key: string]: Array<number>,
 };
 
 type Props = {
-  ...ContextRouter,
+  location: RouterLocation,
   children?: React.Node,
 };
 
@@ -21,7 +21,6 @@ export class PageView extends React.Component<Props> {
 
   componentDidMount() {
     const {
-      history: { action },
       location: { key = 'root', pathname, search },
     } = this.props;
     let scrollToTop: boolean = this.props.location.hash.length === 0;
@@ -29,13 +28,11 @@ export class PageView extends React.Component<Props> {
     // Track in Google Analytics
     window.ga('send', 'pageview', `${pathname}${search}`);
 
-    // POP means user is going forward or backward in history, restore previous scroll position
-    if (action === 'POP') {
-      const pos = PageView.scrollPositions[key];
-      if (pos) {
-        window.scroll(pos[0], pos[1]);
-        scrollToTop = false;
-      }
+    // If we have previously stored the same key, restore scroll position
+    const pos = PageView.scrollPositions[key];
+    if (pos !== undefined) {
+      window.scroll(pos[0], pos[1]);
+      scrollToTop = false;
     }
 
     if (scrollToTop) {
@@ -58,8 +55,9 @@ export class PageView extends React.Component<Props> {
     // TODO: Custom rendering of errors
     // TODO: Steal ideas from create-react-app's react-error-overlay (e.g. open file in editor)
     if (!FLAG_PRODUCTION) {
-      // return <React.StrictMode>{this.props.children}</React.StrictMode>;
-      return this.props.children;
+      //$FlowFixMe
+      return <React.StrictMode>{this.props.children}</React.StrictMode>;
+      // return this.props.children;
     } else {
       return <ErrorBoundary render={PageError}>{this.props.children}</ErrorBoundary>;
     }

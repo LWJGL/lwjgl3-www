@@ -4,8 +4,7 @@ import * as React from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { PageView } from '~/containers/PageView';
-import type { ContextRouter } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import { Link, type RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
@@ -23,8 +22,8 @@ import IconDevices from '~/components/icons/md/Devices';
 import IconVideogameAsset from '~/components/icons/md/VideogameAsset';
 import IconBatteryUnknown from '~/components/icons/md/BatteryUnknown';
 
-const HomeRoute = (props: ContextRouter) => (
-  <PageView {...props}>
+const HomeRoute = (props: RouteProps) => (
+  <PageView location={props.location}>
     <Title />
     <Head
       tag="meta"

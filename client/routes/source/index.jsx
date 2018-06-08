@@ -1,14 +1,14 @@
 // @flow
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
-import type { ContextRouter } from 'react-router-dom';
+import type { RouteProps } from '@reach/router';
 import { Title } from '~/components/Title';
 import { Head } from '~/components/Head';
 import IconGithub from '~/components/icons/fa/brands/Github';
 import { BuildBadge } from './BuildBadge';
 
-const SourceRoute = (props: ContextRouter) => (
-  <PageView {...props}>
+const SourceRoute = (props: RouteProps) => (
+  <PageView location={props.location}>
     <Title>Source & Build Status</Title>
     <Head tag="meta" name="description" content="Links to LWJGL Github repository and build status matrix" />
     <main>

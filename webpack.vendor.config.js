@@ -40,8 +40,7 @@ const config = {
       'immer',
 
       // React
-      'react-router',
-      'react-router-dom',
+      '@reach/router',
 
       // State management
       'redux',

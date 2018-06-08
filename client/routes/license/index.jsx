@@ -1,12 +1,12 @@
 // @flow
 import * as React from 'react';
 import { PageView } from '~/containers/PageView';
-import type { ContextRouter } from 'react-router-dom';
+import type { RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 
-const LicenseRoute = (props: ContextRouter) => (
-  <PageView {...props}>
+const LicenseRoute = (props: RouteProps) => (
+  <PageView location={props.location}>
     <Title>License</Title>
     <Head tag="meta" name="description" content="LWJGL is licensed under BSD" />
     <main>
