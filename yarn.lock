@@ -938,9 +938,9 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.0.tgz#932393ab7bc1ec4558f27577d7f26c49500acd4d"
 
-"@reach/router@1.0.10":
-  version "1.0.10"
-  resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.0.10.tgz#945e902f0ca61945c694ab37aa214bf8a9c22952"
+"@reach/router@1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.0.11.tgz#4e407e2de88f55b7d4eeb5154a08569a81b150bc"
   dependencies:
     create-react-context "^0.2.1"
     invariant "^2.2.3"

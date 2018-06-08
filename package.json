@@ -64,7 +64,7 @@
     "@emotion/jsx": "0.7.0",
     "@emotion/keyframes": "0.9.0",
     "@emotion/style": "0.8.0",
-    "@reach/router": "1.0.10",
+    "@reach/router": "1.0.11",
     "async-sema": "2.1.0",
     "autoprefixer": "8.6.1",
     "babel-loader": "8.0.0-beta.3",
