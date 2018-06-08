@@ -11,7 +11,7 @@ import { Miss404 } from '../routes/miss404';
 export const Layout = () => {
   return (
     <React.Fragment>
-      <Router>
+      <Router primary={false}>
         <Header path="/*" />
       </Router>
       <Router>
