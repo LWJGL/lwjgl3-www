@@ -4,8 +4,14 @@ import loadJS from 'fg-loadjs';
 // Use this to load GA on demand
 let firstCall = true;
 
+const DNT = navigator.doNotTrack === 1 || window.doNotTrack === 1;
+const ENABLE_TRACKING = FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org';
+
 const track = function(command: string, ...fields: Array<any>): void {
-  if (FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org' && firstCall) {
+  if (DNT) {
+    return;
+  }
+  if (ENABLE_TRACKING && firstCall) {
     loadJS('https://www.google-analytics.com/analytics.js');
     firstCall = false;
   }
