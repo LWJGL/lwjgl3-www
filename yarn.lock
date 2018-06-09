@@ -938,9 +938,9 @@
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@emotion/utils/-/utils-0.7.0.tgz#932393ab7bc1ec4558f27577d7f26c49500acd4d"
 
-"@reach/router@1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.0.11.tgz#4e407e2de88f55b7d4eeb5154a08569a81b150bc"
+"@reach/router@1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@reach/router/-/router-1.1.0.tgz#6cc8ae03527ab8b48417337f5a34aef0c45eb0ac"
   dependencies:
     create-react-context "^0.2.1"
     invariant "^2.2.3"
@@ -1384,9 +1384,9 @@ autoprefixer@^6.3.1:
     postcss "^5.2.16"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.253.1:
-  version "2.253.1"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.253.1.tgz#5ca10d7115562fc40adedc35c4d99703f8fe5f9c"
+aws-sdk@2.254.1:
+  version "2.254.1"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.254.1.tgz#70d0a97bac0d5e8ceaf36ddb6b3651f01da4790e"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -6170,9 +6170,9 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@1.13.4:
-  version "1.13.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.4.tgz#31bbae6990f13b1093187c731766a14036fa72e6"
+prettier@1.13.5:
+  version "1.13.5"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.13.5.tgz#7ae2076998c8edce79d63834e9b7b09fead6bfd0"
 
 pretty-format@^22.4.3:
   version "22.4.3"
@@ -6486,9 +6486,9 @@ react-dom@16.4.0:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
-react-hot-loader@4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.3.0.tgz#3d417797acd6f78bd0291ee225828f5dd78a3829"
+react-hot-loader@4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.3.1.tgz#47f59fe09b97ec655e77a1f90819785eda513a86"
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"
@@ -6946,9 +6946,9 @@ schema-utils@^0.4.0, schema-utils@^0.4.2, schema-utils@^0.4.4, schema-utils@^0.4
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-scroll-into-view-if-needed@2.2.4:
-  version "2.2.4"
-  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.4.tgz#c8fa32e28dd29a0315e604e94ca23e03936319a5"
+scroll-into-view-if-needed@2.2.5:
+  version "2.2.5"
+  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.5.tgz#5fd36641877c46a3a1e2f284768c5f28fe1e77bc"
 
 scss-tokenizer@^0.2.3:
   version "0.2.3"
