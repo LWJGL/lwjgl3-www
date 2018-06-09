@@ -7,8 +7,6 @@ import { BreakpointProvider } from '../components/Breakpoint';
 import '../components/icons/Icon';
 import './PageView';
 
-const supportsHistory = 'pushState' in window.history;
-
 const App = () => (
   <BreakpointProvider>
     <Layout />
