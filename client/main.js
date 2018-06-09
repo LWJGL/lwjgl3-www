@@ -38,11 +38,6 @@ if (FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org' && window.
   // }
 }
 
-// We want to handle scroll restoration on our own
-if ('scrollRestoration' in window.history) {
-  window.history.scrollRestoration = 'manual';
-}
-
 const bootPromises: Array<Promise<any>> = [];
 
 if (!('fetch' in window)) {

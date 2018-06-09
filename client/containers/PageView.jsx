@@ -6,6 +6,11 @@ import type { RouterLocation } from '@reach/router';
 
 // Store scroll position when leaving a route, restore if we return back to it
 
+const SCROLL_RESTORATION = 'scrollRestoration' in window.history;
+if (SCROLL_RESTORATION) {
+  window.history.scrollRestoration = 'manual';
+}
+
 type ScrollPosition = {
   x: number,
   y: number,
@@ -30,37 +35,41 @@ export class PageView extends React.Component<Props> {
     // Track in Google Analytics
     window.ga('send', 'pageview', `${pathname}${search}`);
 
-    // If we have previously stored the same key, restore scroll position
-    const entry = scrollEntries.get(key);
-    if (entry !== undefined) {
-      // Restore scroll position
-      window.scroll(entry.x, entry.y);
-    } else if (this.props.location.hash.length === 0) {
-      // Scroll to top of viewport
-      window.scroll(0, 0);
+    if (SCROLL_RESTORATION) {
+      // If we have previously stored the same key, restore scroll position
+      const entry = scrollEntries.get(key);
+      if (entry !== undefined) {
+        // Restore scroll position
+        window.scroll(entry.x, entry.y);
+      } else if (this.props.location.hash.length === 0) {
+        // Scroll to top of viewport
+        window.scroll(0, 0);
+      }
     }
   }
 
   componentWillUnmount() {
-    // Remember scroll position so we can restore if we return to this view via browser history
-    // * [window.scrollX, window.scrollY];  // <-- Only supported in CSSOM browsers
-    // * [window.pageXOffset, window.pageYOffset]; // IE9+ pageXOffset is alias of scrollX
-    const {
-      location: { key = 'root' },
-    } = this.props;
+    if (SCROLL_RESTORATION) {
+      // Remember scroll position so we can restore if we return to this view via browser history
+      // * [window.scrollX, window.scrollY];  // <-- Only supported in CSSOM browsers
+      // * [window.pageXOffset, window.pageYOffset]; // IE9+ pageXOffset is alias of scrollX
+      const {
+        location: { key = 'root' },
+      } = this.props;
 
-    // Add entry
-    scrollEntries.set(key, { x: window.pageXOffset, y: window.pageYOffset });
+      // Add entry
+      scrollEntries.set(key, { x: window.pageXOffset, y: window.pageYOffset });
 
-    // Drop oldest entry if we exceeded maximum number of entries
-    if (scrollEntries.size > MAX_SCROLL_ENTRIES) {
-      // * The keys() method returns a new Iterator object that contains the keys for each element in the Map object in **insertion** order.
-      // * Therefore, the first value returned by the Iterator will be the oldest scroll entry that we need to drop.
-      //$FlowFixMe
-      scrollEntries.delete(scrollEntries.keys().next().value);
+      // Drop oldest entry if we exceeded maximum number of entries
+      if (scrollEntries.size > MAX_SCROLL_ENTRIES) {
+        // * The keys() method returns a new Iterator object that contains the keys for each element in the Map object in **insertion** order.
+        // * Therefore, the first value returned by the Iterator will be the oldest scroll entry that we need to drop.
+        //$FlowFixMe
+        scrollEntries.delete(scrollEntries.keys().next().value);
+      }
+
+      // console.table(Array.from(scrollEntries.keys()));
     }
-
-    // console.table(Array.from(scrollEntries.keys()));
   }
 
   render() {
