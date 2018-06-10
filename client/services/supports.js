@@ -20,3 +20,7 @@ export const SupportsPassiveEvents = supportsPassive;
 
 export const SupportsIntersectionObserver: boolean =
   typeof window !== 'undefined' && window.IntersectionObserver !== undefined;
+
+// Touch
+
+// export const supportsTouch = navigator.maxTouchPoints > 1;
