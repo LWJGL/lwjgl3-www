@@ -21,9 +21,9 @@ html(lang="en-US" dir="ltr")
     link(rel="icon" type="image/png" href="/img/fav/favicon-16x16.png" sizes="16x16")
     link(rel="icon" type="image/png" href="/img/fav/favicon-32x32.png" sizes="32x32")
     link(rel="manifest" href="/manifest.webmanifest")
-    if ( styles !== undefined )
+    if ( css === true )
+      link(rel="stylesheet" href=`/css/${styles}`)
+    else
       style!=styles
-    else if ( css === true )
-      link(rel="stylesheet" href="/css/core.css")
   body
     block content

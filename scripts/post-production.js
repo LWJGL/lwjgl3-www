@@ -7,6 +7,9 @@ const { fork } = require('child_process');
 const Sema = require('async-sema');
 
 /*
+  * POST PRODUCTION:
+  *
+
   TODO:
     The same way we remember deployed files we should remember hashes of source files.
     This will allow us to skip processing of chunks that haven't changed at all and
@@ -21,6 +24,24 @@ async function main() {
 
   // Read webpack's manifest & chunks into memory
   const manifest = require('../public/js/webpack.manifest.json');
+
+  // Build a map that contains each chunk
+  // For each chunk we save its filename, id, and size
+  const assetMap = new Map();
+  manifest.assets.forEach(asset => {
+    assetMap.set(asset.chunks[0], {
+      id: asset.chunks[0],
+      name: asset.chunkNames[0],
+      file: asset.name,
+      size: asset.size,
+    });
+  });
+
+  const entryChunkId = manifest.entrypoints.main.chunks[0];
+
+  console.dir(assetMap);
+  console.log(entryChunkId);
+  process.exit(0);
 
   // We'll use this to store final production manifest
   const productionManifest = {
