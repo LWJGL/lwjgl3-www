@@ -35,17 +35,30 @@ const buildConfiguration = () => {
       setImmediate: false,
     },
     optimization: {
+      // We minimize manually in a separate step
       minimize: false,
-      // Extract the webpack bootstrap logic into a separate file
-      // We then inline those file contents in our HTML
-      runtimeChunk: PRODUCTION,
+      // Include runtime chunk in entry
+      runtimeChunk: false,
+      noEmitOnErrors: true,
       splitChunks: {
         chunks: 'async',
-        minSize: 1024 * 512, // 1 KiB
-        minChunks: 2,
+        minSize: 1024 * 5, // 5 KiB
+        minChunks: 1,
         maxAsyncRequests: 5,
-        maxInitialRequests: 1,
+        maxInitialRequests: 3,
+        automaticNameDelimiter: '~',
         name: true,
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
+          },
+        },
       },
     },
     performance: {
