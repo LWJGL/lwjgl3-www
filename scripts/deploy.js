@@ -1,11 +1,12 @@
+//@flow
 'use strict';
-
 const fs = require('fs');
 const { promisify } = require('util');
 const crypto = require('crypto');
 const path = require('path');
 const config = require('../config.json');
 const manifest = require('../public/js/manifest.json');
+//$FlowFixMe
 const AWS = require('aws-sdk');
 AWS.config.credentials = new AWS.Credentials({
   accessKeyId: config.aws.accessKeyId,
@@ -17,11 +18,22 @@ const s3 = new AWS.S3();
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-async function uploadFile(file, basename) {
+/*::
+type UploadSettings = {
+  Bucket: string,
+  Key: string,
+  Body: any,
+  ACL: 'public-read',
+  ContentType?: string,
+  CacheControl?: string,
+}
+*/
+
+async function uploadFile(file /*: string */, basename /*: string */) {
   const contents = await readFile(file, { encoding: 'utf-8' });
   const folder = basename.endsWith('css') ? 'css' : 'js';
 
-  const uploadSettings = {
+  const uploadSettings /*: UploadSettings*/ = {
     Bucket: 'cdn.lwjgl.org',
     Key: `${folder}/${basename}`,
     Body: contents,
@@ -53,8 +65,14 @@ async function uploadFile(file, basename) {
   return hash.digest('hex');
 }
 
+/*::
+type Deployed = {
+  [string]: string
+}
+*/
+
 async function main() {
-  let deployed = null;
+  let deployed /*: Deployed | null*/ = null;
   let hashMap = {};
 
   try {
@@ -62,32 +80,24 @@ async function main() {
   } catch (e) {}
 
   // Collect files
-  const bundle = [
-    path.join(__dirname, '../public/css/', 'core.css'),
-    path.join(__dirname, '../public/js/', 'manifest.json'),
-  ];
-  manifest.files.map(file => {
-    bundle.push(path.join(__dirname, '../public/js/', file));
-  });
+  const bundle = Object.keys(manifest.assets).map(id =>
+    path.join(__dirname, `../public/${id === 'css' ? 'css' : 'js'}/`, manifest.assets[id])
+  );
 
   // Keep only new files
-  const files =
+  const files /*: Array<string>*/ =
     deployed === null
       ? bundle
       : bundle.filter(file => {
           const basename = path.basename(file);
-          if (deployed[basename]) {
-            // do not upload pre-hashed files if they exist in deploy.json
-            if (basename.split('.').length > 2) {
-              return false;
+          if (deployed !== null && deployed[basename] !== undefined) {
+            if (basename === 'manifest.json') {
+              // Check file hash
+              const MD5 = crypto.createHash('MD5');
+              MD5.update(fs.readFileSync(file, { encoding: 'utf-8' }));
+              return deployed[basename] !== MD5.digest('hex');
             }
-            // also check file hash (for css, manifest, etc)
-            const hash = crypto.createHash('MD5');
-            hash.update(fs.readFileSync(file, { encoding: 'utf-8' }));
-
-            if (deployed[basename] == hash.digest('hex')) {
-              return false;
-            }
+            return false;
           }
           return true;
         });
@@ -101,6 +111,7 @@ async function main() {
   const FILES_TOTAL = files.length;
   const PARALLEL_DOWNLOADS = Math.min(4, FILES_TOTAL);
 
+  //$FlowFixMe
   const queue = files[Symbol.iterator]();
   const channels = [];
   let f = 0;
