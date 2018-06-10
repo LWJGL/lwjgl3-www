@@ -1,42 +1,27 @@
+//@flow
 'use strict';
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
+//$FlowFixMe
 const terser = require('terser');
 // const minify = require('babel-minify');
+//$FlowFixMe
 const gzipSize = require('gzip-size');
 const chalk = require('chalk');
 
-// We'll us this to detect route chunks
-const routeRegExp = new RegExp('^route[-][a-z][a-z-_/]+$');
+/*::
+declare var process: child_process$ChildProcess;
+import type { Asset } from './post-production';
+*/
 
-process.on('message', chunk => {
-  const chunkName = chunk.names[0];
-  const chunkFilename = chunk.files[0];
-  console.log(`Processing ${chunkName}`);
+process.on('message', (asset /*: Asset*/) => {
+  console.log(`Processing ${asset.name}`);
 
-  const originalPath = path.resolve(__dirname, '../public/js', chunkFilename);
-
-  const report = {
-    originalName: chunkFilename,
-    name: chunkFilename,
-    hash: '',
-    isEntry: false,
-    isRoute: false,
-    originalSize: fs.statSync(originalPath).size,
-    size: 0,
-    gzipSize: 0,
-  };
+  const originalPath = path.resolve(__dirname, '../public/js', asset.file);
 
   // Read contents
   let contents = fs.readFileSync(originalPath, { encoding: 'utf-8' });
-
-  if (chunkName === 'runtime~main') {
-    // Replace chunk filenames
-    chunk.chunkFileMap.forEach(item => {
-      contents = contents.replace(`"${item.name}"`, `"${item.hashed}"`);
-    });
-  }
 
   // Process with terser
   const terserResult = terser.minify(contents, {
@@ -144,64 +129,29 @@ process.on('message', chunk => {
   // Compute hash
   const hash = crypto.createHash('MD5');
   hash.update(contents);
-  report.hash = hash.digest('hex');
+  asset.hash = hash.digest('hex');
 
   // Compute gzip size
-  report.size = Buffer.byteLength(contents, 'utf8');
-  report.gzipSize = gzipSize.sync(contents);
-  report.name = `${chunkName}.${report.hash}.js`;
+  asset.size = Buffer.byteLength(contents, 'utf8');
+  asset.gzipSize = gzipSize.sync(contents);
 
-  // Store reference so we can deploy later
-  process.send({
-    type: 'manifest-file',
-    name: report.name,
-  });
-
-  if (chunkName === 'main') {
-    report.isEntry = true;
-    process.send({
-      type: 'manifest-entry',
-      name: report.name,
-    });
-  } else if (chunkName === 'runtime~main') {
-    process.send({
-      type: 'manifest-webpack',
-      name: report.name,
-    });
+  if (asset.name === 'main') {
+    asset.cdn = 'main.minified.js';
+  } else if (asset.route === true || asset.name.indexOf('~') === -1) {
+    asset.cdn = `${asset.name}.${asset.hash}.js`;
   } else {
-    // Detect route
-    const route = chunkName.match(routeRegExp);
-    if (route !== null) {
-      report.isRoute = true;
-      process.send({
-        type: 'manifest-route',
-        route: chunkName.substr('route-'.length),
-        name: report.name,
-      });
-    }
-  }
-
-  // Push to chunkFileMap
-  if (chunkName !== 'runtime~main') {
-    process.send({
-      type: 'manifest-chunk',
-      file: {
-        id: chunk.id,
-        name: chunkName,
-        hashed: `${chunkName}.${report.hash}`,
-      },
-    });
+    asset.cdn = `chunk.${asset.hash}.js`;
   }
 
   // Store to disk
-  fs.writeFileSync(path.resolve(__dirname, '../public/js', report.name), contents);
+  fs.writeFileSync(path.resolve(__dirname, '../public/js', asset.cdn), contents);
 
   // Done!
-  console.log(chalk`{green Completed ${chunkName}}`);
+  console.log(chalk`{green Completed ${asset.name}}`);
   process.send({
     pid: process.pid,
     type: 'done',
-    report,
+    asset,
   });
 });
 

@@ -1,14 +1,31 @@
+//@flow
 'use strict';
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
 const chalk = require('chalk');
 const { fork } = require('child_process');
+//$FlowFixMe
 const Sema = require('async-sema');
+const crypto = require('crypto');
+//$FlowFixMe
+const gzipSize = require('gzip-size');
 
 /*
-  * POST PRODUCTION:
-  *
+  POST PRODUCTION:
+
+  * Build a list of assets by reading webpack manifest
+  * Detect entry point
+  * Mark route assets
+    * For each route asset, store its chunk dependencies
+    * We must be able to add preload headers for all deps when navigating to a route
+    * e.g. entry point + route + route deps...
+  * Process each asset in parallel
+  * Generate application manifest
+    * Store assets that need to be uploaded to the CDN
+    * Store entrypoint
+    * Store chunk dependencies for each route
+  * Display report
 
   TODO:
     The same way we remember deployed files we should remember hashes of source files.
@@ -16,51 +33,89 @@ const Sema = require('async-sema');
     make release process even faster.
 */
 
-async function main() {
-  console.log(chalk`{yellow Compiling list of files & routes:}`);
+// We'll us this to detect route chunks
+const routeRegExp = new RegExp('^route[-][a-z][a-z-_/]+$');
 
-  // We'll store files for our report here
-  const fileReport = [];
+/*::
+type ProductionManifest = {
+  entry: number,
+  routes: {
+    [string]: Array<number>,
+  },
+  assets: {
+    [string]: string,
+  }
+};
+
+export type Asset = {
+  id: number | string,
+  name: string,
+  file: string,
+  cdn: string,
+  route: boolean,
+  hash: string,
+  originalSize: number,
+  size: number,
+  gzipSize: number,
+}
+
+type AssetMap = Map<string|number, Asset>;
+*/
+
+async function main() /*: Promise<{productionManifest:ProductionManifest, assetMap:AssetMap}>*/ {
+  console.log(chalk`{yellow Compiling list of files & routes:}`);
 
   // Read webpack's manifest & chunks into memory
   const manifest = require('../public/js/webpack.manifest.json');
 
-  // Build a map that contains each chunk
-  // For each chunk we save its filename, id, and size
-  const assetMap = new Map();
-  manifest.assets.forEach(asset => {
-    assetMap.set(asset.chunks[0], {
-      id: asset.chunks[0],
-      name: asset.chunkNames[0],
-      file: asset.name,
-      size: asset.size,
-    });
-  });
-
-  const entryChunkId = manifest.entrypoints.main.chunks[0];
-
-  console.dir(assetMap);
-  console.log(entryChunkId);
-  process.exit(0);
-
   // We'll use this to store final production manifest
-  const productionManifest = {
+  const productionManifest /*: ProductionManifest */ = {
     // Boot the app from here
-    entry: '',
+    entry: manifest.entrypoints.main.chunks[0],
 
-    // HTML Inject webpack manifest to avoid network roundtrip
-    webpack: '',
+    // Build a map of route paths->assets in order to preload chunks as needed
+    routes: {},
 
     // Keep a list of files that we need to upload on the CDN
-    files: [],
-
-    // Build a map of route paths->JS files in order to preload chunks as needed
-    routes: {},
+    assets: {},
   };
 
-  // For each item store chunk id, original filename, hashed filename
-  // We use this to replace map in manifest.js
-  const chunkFileMap = [];
+  // Build a map that contains each chunk
+  // For each chunk we save its filename, id, and size
+  const assetMap /*: AssetMap */ = new Map();
+  manifest.assets.forEach(record => {
+    const name = record.chunkNames[0];
+    const asset /*: Asset */ = {
+      id: record.chunks[0],
+      name,
+      file: record.name,
+      cdn: record.name,
+      route: name.indexOf('~') === -1 && name.match(/^route[-]/) !== null,
+      hash: '',
+      originalSize: record.size,
+      size: 0,
+      gzipSize: 0,
+    };
+
+    // Add to asset map
+    assetMap.set(asset.id, asset);
+
+    // Use pre-minified filename (will be replaced later). This is useful for debugging
+    productionManifest.assets[asset.id + ''] = asset.file;
+  });
+
+  // Append route chunk dependencies
+  Object.keys(manifest.namedChunkGroups).forEach(chunkName => {
+    const groupData = manifest.namedChunkGroups[chunkName];
+    const asset = assetMap.get(groupData.chunks.slice(-1)[0]);
+    if (asset !== undefined && asset.route === true) {
+      productionManifest.routes[asset.name.substr('route-'.length)] = groupData.chunks.reverse();
+    }
+  });
+
+  /*
+    ! BEGIN PARALLEL PROCESSING
+  */
 
   // Hold Promises of jobs currently running
   const childMap = {};
@@ -81,25 +136,10 @@ async function main() {
   function receiveChildMessage(msg) {
     switch (msg.type) {
       case 'done':
-        childMap[msg.pid].resolve(msg.report);
+        childMap[msg.pid].resolve(msg.asset);
         break;
       case 'error':
         childMap[msg.pid].reject(msg.error);
-        break;
-      case 'manifest-file':
-        productionManifest.files.push(msg.name);
-        break;
-      case 'manifest-entry':
-        productionManifest.entry = msg.name;
-        break;
-      case 'manifest-webpack':
-        productionManifest.webpack = msg.name;
-        break;
-      case 'manifest-route':
-        productionManifest.routes[msg.route] = msg.name;
-        break;
-      case 'manifest-chunk':
-        chunkFileMap.push(msg.file);
         break;
     }
 
@@ -118,49 +158,97 @@ async function main() {
   let runtimeChunk;
 
   await Promise.all(
-    manifest.chunks.map(async chunk => {
-      if (chunk.names[0] === 'runtime~main') {
-        // Skip & process last
-        runtimeChunk = chunk;
-        return;
-      }
+    Array.from(assetMap.keys()).map(async chunkId => {
       // Get next available from pool
       const child = await pool.acquire();
       // Run process
-      const report = await processChunk(child, chunk);
+      const asset = await processChunk(child, assetMap.get(chunkId));
+
+      // Update asset & manifest
+      assetMap.set(chunkId, asset);
+      productionManifest.assets[chunkId + ''] = asset.cdn;
+
       // Return to pool
       pool.release(child);
-      // Add result to files report
-      fileReport.push(report);
     })
   );
 
-  // Process runtime~main last
-  await (async () => {
-    const child = await pool.acquire();
-    runtimeChunk.chunkFileMap = chunkFileMap;
-    const report = await processChunk(child, runtimeChunk);
-    pool.release(child);
-    fileReport.push(report);
-  })();
-
   // Drain forks
   (await pool.drain()).map(child => child.disconnect());
+
+  // Replace entrypoint filenames with CDN version and update hash
+  const entry = assetMap.get(productionManifest.entry);
+  if (entry !== undefined) {
+    let entryContents = fs.readFileSync(path.resolve(__dirname, `../public/js/${entry.cdn}`), { encoding: 'utf-8' });
+
+    Array.from(assetMap.keys()).forEach(chunkId => {
+      //0:"route-browse~route-customize~route-download~route-guide~route-home~route-license~route-source"
+      //0:"asset.hash"
+      if (chunkId !== productionManifest.entry) {
+        let asset = assetMap.get(chunkId);
+        if (asset !== undefined) {
+          entryContents = entryContents.replace(`${chunkId}:"${asset.name}"`, `${chunkId}:"${asset.cdn.slice(0, -3)}"`);
+        }
+      }
+    });
+
+    const hash = crypto.createHash('MD5');
+    hash.update(entryContents);
+    entry.hash = hash.digest('hex');
+    entry.size = Buffer.byteLength(entryContents, 'utf8');
+    entry.gzipSize = gzipSize.sync(entryContents);
+    entry.cdn = `main.${entry.hash}.js`;
+
+    productionManifest.assets[entry.id + ''] = entry.cdn;
+    fs.writeFileSync(path.resolve(__dirname, `../public/js/${entry.cdn}`), entryContents);
+  }
+
+  // Hash and append core.css
+  (() => {
+    let contents = fs.readFileSync(path.resolve(__dirname, '../public/css/core.css'), { encoding: 'utf-8' });
+    const MD5 = crypto.createHash('MD5');
+    MD5.update(contents);
+    const hash = MD5.digest('hex');
+    const size = Buffer.byteLength(contents, 'utf8');
+
+    const asset /*: Asset*/ = {
+      id: 'css',
+      name: 'core',
+      file: 'core.css',
+      cdn: `core.${hash}.css`,
+      route: false,
+      hash: hash,
+      originalSize: size,
+      size,
+      gzipSize: gzipSize.sync(contents),
+    };
+
+    productionManifest.assets['css'] = asset.cdn;
+    assetMap.set('css', asset);
+    fs.writeFileSync(path.resolve(__dirname, `../public/css/${asset.cdn}`), contents);
+  })();
+
+  // Append manifest.json to deployment assets
+  productionManifest.assets['manifest'] = 'manifest.json';
 
   // Store production manifest
   fs.writeFileSync(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
 
   // Done!
-  return fileReport;
+  return { productionManifest, assetMap };
+}
+
+function ellipsis(str /*:string*/, maxlength /*:number*/ = 25) {
+  if (str.length > maxlength) {
+    return str.substr(0, maxlength) + '...';
+  }
+  return str;
 }
 
 main()
-  .catch(e => {
-    console.log(e);
-    process.exit(1);
-  })
-  .then(fileReport => {
+  .then(({ productionManifest, assetMap }) => {
     // Print file report
+    //$FlowFixMe
     const CliTable = require('cli-table');
     const prettyBytes = require('./prettyBytes');
     const formatSize = require('./formatSize');
@@ -177,26 +265,27 @@ main()
     });
 
     // Add rows
-    fileReport.forEach(asset => {
+    Array.from(assetMap.values()).forEach((asset /*: Asset*/) => {
       sumOriginal += asset.originalSize;
       sum += asset.size;
       sumGzip += asset.gzipSize;
 
       const row = [];
+      const isEntry = productionManifest.entry === asset.id || asset.id === 'css';
 
-      if (asset.isEntry) {
-        row.push(chalk`{cyan > ${asset.originalName}}`);
-      } else if (asset.isRoute) {
-        row.push(asset.originalName);
+      if (isEntry) {
+        row.push(chalk`{cyan > ${asset.name}}`);
+      } else if (asset.route) {
+        row.push(asset.name);
       } else {
-        row.push(`* ${asset.originalName}`);
+        row.push(`* ${ellipsis(asset.name)}`);
       }
 
       row.push(
         asset.hash,
         prettyBytes(asset.originalSize),
-        formatSize(asset.size, false, asset.isEntry, false),
-        formatSize(asset.gzipSize, true, asset.isEntry, false)
+        formatSize(asset.size, false, isEntry, false),
+        formatSize(asset.gzipSize, true, isEntry, false)
       );
 
       tbl.push(row);
@@ -207,4 +296,8 @@ main()
 
     // Print report
     console.log(tbl.toString());
+  })
+  .catch(e => {
+    console.log(e);
+    process.exit(1);
   });

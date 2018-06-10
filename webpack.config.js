@@ -42,7 +42,7 @@ const buildConfiguration = () => {
       noEmitOnErrors: true,
       splitChunks: {
         chunks: 'async',
-        minSize: 1024 * 5, // 5 KiB
+        minSize: 1024 * 30,
         minChunks: 1,
         maxAsyncRequests: 5,
         maxInitialRequests: 3,
