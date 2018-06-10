@@ -39,6 +39,7 @@
     "aws-sdk": "2.254.1",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
+    "compression": "1.7.2",
     "express": "5.0.0-alpha.6",
     "helmet": "3.12.1",
     "pug": "2.0.3",

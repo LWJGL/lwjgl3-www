@@ -5,6 +5,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const express = require('express');
+const compression = require('compression');
 const helmet = require('helmet');
 const favicon = require('serve-favicon');
 const { argv } = require('yargs');
@@ -49,6 +50,7 @@ app.set('views', __dirname + '/views');
 app.enable('case sensitive routing');
 app.enable('strict routing');
 app.disable('x-powered-by');
+app.use(compression());
 
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...cloudFrontSubnets]);
 
