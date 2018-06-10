@@ -7,14 +7,14 @@ const chunkMap = (routes, path) => {
   const route = parts.join('-');
 
   if (!route.length) {
-    return [routes.home];
+    return routes.home;
   } else if (routes[route]) {
-    return [routes[route]];
+    return routes[route];
   } else if (routes[`${route}-home`]) {
-    return [routes[`${route}-home`]];
+    return routes[`${route}-home`];
   }
 
-  return [];
+  return null;
 };
 
 module.exports = chunkMap;

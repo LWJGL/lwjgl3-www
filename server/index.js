@@ -35,7 +35,7 @@ const config = require('../config.json');
 app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
 
-const CSS_MODE = app.locals.development ? (argv.css ? 'HMR' : 'LINK') : 'INLINE';
+const CSS_MODE = app.locals.development && argv.css ? 'HMR' : 'LINK';
 let manifest = {};
 let serviceWorkerCache = null;
 
@@ -257,37 +257,34 @@ app.get('*', (req, res, next) => {
 
   if (app.locals.production) {
     // Set entry point
-    renderOptions.entry = manifest.entry;
-    renderOptions.webpack = manifest.webpack;
+    renderOptions.entry = manifest.assets[manifest.entry];
 
     // Asset preloading
     // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
     // To disable PUSH, append "; nopush"
     // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
-    res.set(
-      'Link',
-      [
-        // Push entry script first, we need to start loading as soon as possible
-        // because we need it immediately
-        renderOptions.entry,
 
-        // Append chunk of important routes to the preload list
-        // Logic can be customized as needed. Can get complicated for recursive routes
-        // or routes deep in site's hierarchy, so not always worth it
-        ...chunkMap(manifest.routes, req.path),
-      ].map((script /*: string*/) => `\</js/${script}\>; rel=preload; as=script`)
-    );
+    // Push entries, we need to start loading as soon as possible
+    const preload = [
+      `\</css/${manifest.assets.css}\>; rel=preload; as=style`,
+      `\</js/${renderOptions.entry}\>; rel=preload; as=script`,
+    ];
+
+    // Append chunk of important routes to the preload list
+    // Logic can be customized as needed. Can get complicated for recursive routes
+    // or routes deep in site's hierarchy, so not always worth it
+    const routes = chunkMap(manifest.routes, req.path);
+    if (routes !== null) {
+      preload.push.apply(preload, routes.map(id => `\</js/${manifest.assets[id + '']}\>; rel=preload; as=script`));
+    }
+
+    res.set('Link', preload);
   } else {
     renderOptions.entry = 'main.js';
   }
 
-  switch (CSS_MODE) {
-    case 'INLINE':
-      renderOptions.styles = manifest.styles;
-      break;
-    case 'LINK':
-      renderOptions.css = true;
-      break;
+  if (CSS_MODE === 'LINK') {
+    renderOptions.css = manifest.assets.css;
   }
 
   res
@@ -361,8 +358,6 @@ const downloadManifest = async cb => {
   }
   if (argv.test) {
     manifest = require('../public/js/manifest.json');
-    manifest.styles = await readFileAsync(path.join(__dirname, '../public/css', 'core.css'));
-    manifest.webpack = await readFileAsync(path.join(__dirname, '../public/js', manifest.webpack));
     cb();
     return;
   }
@@ -374,8 +369,6 @@ const downloadManifest = async cb => {
 
   try {
     manifest = JSON.parse(await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/manifest.json'));
-    manifest.styles = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/css/core.css');
-    manifest.webpack = await request.get(`http://s3.amazonaws.com/cdn.lwjgl.org/js/${manifest.webpack}`);
   } catch (err) {
     console.error(chalk`{red failed to download manifest files: ${err.message}}`);
     process.exit(1);

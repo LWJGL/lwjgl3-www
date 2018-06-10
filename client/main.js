@@ -42,7 +42,7 @@ const bootPromises: Array<Promise<any>> = [];
 
 if (!('fetch' in window)) {
   //$FlowFixMe
-  bootPromises.push(import(/* webpackChunkName: "nosw-fetch" */ 'whatwg-fetch'));
+  bootPromises.push(import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch'));
 }
 
 if (bootPromises.length) {
