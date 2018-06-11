@@ -41,14 +41,14 @@ const LogoContainer = ({ children }) => (
       z-index: 1;
       width: 100%;
       height: 100vh;
-      transform: translateY(2rem);
-      opacity: 0;
-      animation: present-yourself 1s ease forwards;
 
       .logo {
         display: block;
         max-width: 700px;
         margin: 2rem;
+        transform: translateY(2rem);
+        opacity: 0;
+        animation: present-yourself 1s ease forwards;
         @media (max-height: 420px) {
           max-width: 75%;
         }
