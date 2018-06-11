@@ -229,19 +229,26 @@ app.get('/sw.js', async (req, res) => {
     // Read service worker source code
     let swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
 
-    // Update version hash
-    const md5 = crypto.createHash('MD5');
-    md5.update(JSON.stringify(manifest));
-    swJS = swJS.toString().replace(/VERSION/, md5.digest('hex'));
+    // Update version hash - detects changes to build or to the service worker itself
+    const MD5 = crypto.createHash('MD5');
+    MD5.update(swJS);
+    MD5.update(JSON.stringify(manifest));
+    swJS = swJS.toString().replace(/VERSION/, MD5.digest('hex'));
 
     // Populate service worker script with files to cache
-    const files = manifest.files
-      .filter(file => !file.startsWith('nosw-') && file.indexOf('main-runtime') === -1)
-      .map(file => `/js/${file}`);
+    const files = ['/', `/css/${manifest.assets.css}`, `/js/${manifest.assets[manifest.entry]}`];
     swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
 
-    // Populate routes array
-    const routes = Object.keys(manifest.routes).map((route /*: string*/) => (route === 'home' ? '/' : `/${route}`));
+    // SW must know route paths to always serve index.html
+    const routes = Object.keys(manifest.routes).map((route /*: string*/) => {
+      if (route === 'home') {
+        return '/';
+      } else if (route.endsWith('-home')) {
+        return `/${route.slice(0, -'-home'.length).replace(/[-]/g, '/')}/`;
+      } else {
+        return `/${route.replace(/[-]/g, '/')}`;
+      }
+    });
     swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
 
     // Store SW script source so we can serve immediately
