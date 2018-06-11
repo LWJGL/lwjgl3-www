@@ -182,12 +182,13 @@ async function main() /*: Promise<{productionManifest:ProductionManifest, assetM
     let entryContents = fs.readFileSync(path.resolve(__dirname, `../public/js/${entry.cdn}`), { encoding: 'utf-8' });
 
     Array.from(assetMap.keys()).forEach(chunkId => {
-      //0:"route-browse~route-customize~route-download~route-guide~route-home~route-license~route-source"
-      //0:"asset.hash"
       if (chunkId !== productionManifest.entry) {
         let asset = assetMap.get(chunkId);
         if (asset !== undefined) {
-          entryContents = entryContents.replace(`${chunkId}:"${asset.name}"`, `${chunkId}:"${asset.cdn.slice(0, -3)}"`);
+          entryContents = entryContents.replace(
+            new RegExp(`["]?${chunkId}["]?[:]["]${asset.name}["]`),
+            `${chunkId}:"${asset.cdn.slice(0, -3)}"`
+          );
         }
       }
     });
