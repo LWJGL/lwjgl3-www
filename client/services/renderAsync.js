@@ -19,7 +19,10 @@ export type AsyncRenderProps = {
 };
 export type AsyncRender = (options: AsyncRenderOptions) => React.Node;
 
-export function renderAsync(getComponent: ComponentImport, renderComponent: AsyncRender) {
+const defaultRender = ({ Component, ownProps }: AsyncRenderOptions): React.Node =>
+  Component !== null ? <Component {...ownProps} /> : null;
+
+export function renderAsync(getComponent: ComponentImport, renderComponent: AsyncRender = defaultRender) {
   class Async extends React.Component<Props, State> {
     static Component = null;
     static loadingPromise = null;
