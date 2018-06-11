@@ -186,7 +186,7 @@ async function main() /*: Promise<{productionManifest:ProductionManifest, assetM
         let asset = assetMap.get(chunkId);
         if (asset !== undefined) {
           entryContents = entryContents.replace(
-            new RegExp(`["]?${chunkId}["]?[:]["]${asset.name}["]`),
+            new RegExp(`["]?${chunkId}["]?[:]["]${asset.name.replace(/[$]/g, '[$]')}["]`),
             `${chunkId}:"${asset.cdn.slice(0, -3)}"`
           );
         }

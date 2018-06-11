@@ -20,6 +20,7 @@ const Msg = ({ onClick, closeToast }) => (
 
 class ServiceWorkerNotification extends React.Component<Props, void> {
   componentDidMount() {
+    //$FlowFixMe
     toast(<Msg onClick={this.props.update} />);
   }
 
