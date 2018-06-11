@@ -7,6 +7,12 @@ import { Footer } from './Footer';
 import { Router, Location } from '@reach/router';
 import { Home, Guide, Download, Customize, Browse, Source, License } from '../routes';
 import { Miss404 } from '../routes/miss404';
+import { ServiceWorkerConsumer } from '../components/ServiceWorker';
+import { renderAsync } from '../services/renderAsync';
+
+const ServiceWorkerNotification = renderAsync(() =>
+  import(/* webpackChunkName: "sw-notif" */ '../components/ServiceWorkerNotification')
+);
 
 export const Layout = () => {
   return (
@@ -25,6 +31,9 @@ export const Layout = () => {
       <Location>
         {({ location }) => (location.pathname !== '/customize' && location.pathname !== '/browse' ? <Footer /> : null)}
       </Location>
+      <ServiceWorkerConsumer>
+        {({ updatePending, update }) => (updatePending ? <ServiceWorkerNotification update={update} /> : null)}
+      </ServiceWorkerConsumer>
     </React.Fragment>
   );
 };

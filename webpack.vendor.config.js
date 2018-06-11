@@ -51,6 +51,7 @@ const config = {
       'scroll-into-view-if-needed',
       'focus-trap',
       'nprogress',
+      'react-toastify',
 
       // Route-specific
       'jszip',
