@@ -18,13 +18,13 @@ const ServiceWorkerContext = React.createContext({
 
 export const ServiceWorkerConsumer = ServiceWorkerContext.Consumer;
 
-const SW_SUPPORTED = navigator.serviceWorker !== undefined && window.isSecureContext;
+// const SW_SUPPORTED = navigator.serviceWorker !== undefined && window.isSecureContext;
 
-// const SW_SUPPORTED =
-//   FLAG_PRODUCTION &&
-//   navigator.serviceWorker !== undefined &&
-//   window.isSecureContext &&
-//   document.location.hostname === 'www.lwjgl.org';
+const SW_SUPPORTED =
+  FLAG_PRODUCTION &&
+  navigator.serviceWorker !== undefined &&
+  window.isSecureContext &&
+  document.location.hostname === 'www.lwjgl.org';
 
 if (SW_SUPPORTED) {
   // Prevent web app install banner from being displayed automatically
