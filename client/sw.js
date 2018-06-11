@@ -2,7 +2,7 @@ const CACHEPREFIX = 'lwjgl-static-';
 const CACHENAME = CACHEPREFIX + 'VERSION';
 const FILES = [];
 const ROUTES = [];
-const WHITELIST = [/^\/(img|svg)\//];
+const WHITELIST = [/^\/(js|css|img|svg)\//];
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
@@ -39,7 +39,7 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   const req = new URL(event.request.url);
 
-  if (ROUTES.indexOf(req.pathname) !== -1 && req.pathname !== '/') {
+  if (event.request.method === 'GET' && ROUTES.indexOf(req.pathname) !== -1 && req.pathname !== '/') {
     // Always use homepage cache for all other pages (since we have client-side routing)
     const rewriteReq = new Request('/', {
       method: event.request.method,
@@ -52,7 +52,7 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
-  // cache first, fall back to network
+  // ask cache first, fall back to network
   event.respondWith(
     caches.match(event.request).then(function(response) {
       if (response) {
@@ -79,4 +79,10 @@ self.addEventListener('fetch', function(event) {
       });
     })
   );
+});
+
+self.addEventListener('message', function(event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
