@@ -1,41 +1,10 @@
 // @flow
 import { mount } from './mount';
 
-if (FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org' && window.isSecureContext) {
-  window.addEventListener('load', () => {
-    // Register service worker
-    if (navigator.serviceWorker) {
-      navigator.serviceWorker.register('/sw.js');
-      // .then(registration => {
-      //   // Registration was successful
-      //   console.log('ServiceWorker registration successful with scope: ', registration.scope);
-      // })
-      // .catch(err => {
-      //   // registration failed :(
-      //   console.error('ServiceWorker registration failed: ', err);
-      // });
-      // } else {
-      //   console.warn('Service workers are not supported.');
-    }
-  });
-
-  // Prevent web app install banner from being displayed automatically
-  // ? https://developers.google.com/web/fundamentals/app-install-banners/#defer_or_cancel
-  window.addEventListener('beforeinstallprompt', e => {
-    e.preventDefault();
-    return false;
-  });
-} else if (FLAG_CSSMODULES) {
+if (FLAG_CSSMODULES) {
   // Inject global styles, this enables HMR for SASS
   const styles = require('./styles/layout.scss');
   styles.use();
-
-  // Unregister service workers if found
-  // if (navigator.serviceWorker) {
-  //   navigator.serviceWorker.getRegistrations().then(registrations => {
-  //     registrations.forEach(registration => registration.unregister());
-  //   });
-  // }
 }
 
 const bootPromises: Array<Promise<any>> = [];
