@@ -7,14 +7,6 @@ const WHITELIST = [/^\/(js|css|img|svg)\//];
 self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open(CACHENAME).then(function(cache) {
-      FILES.unshift(
-        new Request('/', {
-          method: 'GET',
-          headers: {
-            Accept: 'text/html',
-          },
-        })
-      );
       return cache.addAll(FILES);
     })
   );
@@ -37,40 +29,45 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  const req = new URL(event.request.url);
+  const url = new URL(event.request.url);
+  let req = event.request;
 
-  if (event.request.method === 'GET' && ROUTES.indexOf(req.pathname) !== -1 && req.pathname !== '/') {
-    // Always use homepage cache for all other pages (since we have client-side routing)
-    const rewriteReq = new Request('/', {
-      method: event.request.method,
-      headers: event.request.headers,
-    });
-
-    caches.match(rewriteReq).then(function(response) {
-      return response || fetch(event.request);
-    });
+  if (req.method !== 'GET' || url.hostname.indexOf('.lwjgl.') === -1) {
+    event.respondWith(fetch(req));
     return;
   }
 
-  // ask cache first, fall back to network
   event.respondWith(
-    caches.match(event.request).then(function(response) {
+    caches.match(req).then(function(response) {
       if (response) {
         return response;
       }
 
-      return fetch(event.request).then(function(response) {
+      if (req.mode === 'navigate' && url.pathname !== '/' && ROUTES.indexOf(url.pathname) !== -1) {
+        return caches
+          .open(CACHENAME)
+          .then(function(cache) {
+            return cache.match('/');
+          })
+          .then(function(result) {
+            if (result === undefined) {
+              return fetch(req);
+            }
+            return result;
+          });
+      }
+
+      return fetch(req).then(function(response) {
         const shouldCache =
-          event.request.method === 'GET' &&
           response.ok &&
           response.type === 'basic' &&
           WHITELIST.some(function(exp) {
-            return exp.test(req.pathname);
+            return exp.test(url.pathname);
           });
 
         if (shouldCache) {
           return caches.open(CACHENAME).then(function(cache) {
-            cache.put(event.request, response.clone());
+            cache.put(req, response.clone());
             return response;
           });
         } else {

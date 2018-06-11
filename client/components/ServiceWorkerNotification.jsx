@@ -13,7 +13,7 @@ const Msg = ({ onClick, closeToast }) => (
       Update to latest version
     </button>
     <button className="btn btn-outline-dark btn-sm" onClick={closeToast}>
-      Close
+      Later
     </button>
   </div>
 );
