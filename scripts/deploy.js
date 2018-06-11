@@ -47,6 +47,7 @@ async function uploadFile(file /*: string */, basename /*: string */) {
     uploadSettings.ContentType = 'application/json';
   } else if (basename.endsWith('.css')) {
     uploadSettings.ContentType = 'text/css';
+    uploadSettings.CacheControl = 'public,max-age=31536000,immutable';
   }
 
   const response = await new Promise((resolve, reject) => {
