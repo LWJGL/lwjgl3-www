@@ -15,6 +15,8 @@ declare var process: child_process$ChildProcess;
 import type { Asset } from './post-production';
 */
 
+const MINIFY = true;
+
 process.on('message', (asset /*: Asset*/) => {
   console.log(`Processing ${asset.name}`);
 
@@ -23,28 +25,29 @@ process.on('message', (asset /*: Asset*/) => {
   // Read contents
   let contents = fs.readFileSync(originalPath, { encoding: 'utf-8' });
 
-  // Process with terser
-  const terserResult = terser.minify(contents, {
-    compress: {
-      defaults: false,
-      arrows: true,
-      arguments: true,
-      booleans: true,
-      collapse_vars: true,
-      comparisons: true,
-      computed_props: true,
-      conditionals: true,
-      dead_code: true,
-      drop_console: true,
-      drop_debugger: true,
-      evaluate: true,
-      expression: false,
-      // global_defs: {},
-      hoist_funs: true,
-      hoist_props: true,
-      hoist_vars: false,
-      if_return: true,
-      /*
+  if (MINIFY) {
+    // Process with terser
+    const terserResult = terser.minify(contents, {
+      compress: {
+        defaults: false,
+        arrows: true,
+        arguments: true,
+        booleans: true,
+        collapse_vars: true,
+        comparisons: true,
+        computed_props: true,
+        conditionals: true,
+        dead_code: true,
+        drop_console: true,
+        drop_debugger: true,
+        evaluate: true,
+        expression: false,
+        // global_defs: {},
+        hoist_funs: true,
+        hoist_props: true,
+        hoist_vars: false,
+        if_return: true,
+        /*
       false -- same as 0
       0 -- disabled inlining
       1 -- inline simple functions
@@ -52,57 +55,58 @@ process.on('message', (asset /*: Asset*/) => {
       3 -- inline functions with arguments and variables
       true -- same as 3
       */
-      inline: 1,
-      join_vars: true,
-      keep_classnames: false,
-      keep_fargs: false,
-      keep_fnames: false,
-      keep_infinity: true,
-      loops: true,
-      module: false,
-      negate_iife: true,
-      passes: 2,
-      properties: true,
-      pure_funcs: null,
-      pure_getters: true,
-      reduce_funcs: true,
-      reduce_vars: true,
-      sequences: true,
-      side_effects: true,
-      switches: true,
-      toplevel: false,
-      top_retain: null,
-      typeofs: true,
-      unsafe: false,
-      unsafe_arrows: false,
-      unsafe_comps: true,
-      unsafe_Function: true,
-      unsafe_math: false,
-      unsafe_methods: false,
-      unsafe_proto: true,
-      unsafe_regexp: true,
-      unsafe_undefined: false,
-      unused: true,
-      warnings: false,
-    },
-    mangle: true,
-    sourceMap: false,
-    ecma: 5,
-    ie8: false,
-    safari10: true,
-    toplevel: true,
-    warnings: 'verbose',
-  });
-
-  if (terserResult.error) {
-    process.send({
-      pid: process.pid,
-      type: 'error',
-      error: terserResult.error,
+        inline: 1,
+        join_vars: true,
+        keep_classnames: false,
+        keep_fargs: false,
+        keep_fnames: false,
+        keep_infinity: true,
+        loops: true,
+        module: false,
+        negate_iife: true,
+        passes: 2,
+        properties: true,
+        pure_funcs: null,
+        pure_getters: true,
+        reduce_funcs: true,
+        reduce_vars: true,
+        sequences: true,
+        side_effects: true,
+        switches: true,
+        toplevel: false,
+        top_retain: null,
+        typeofs: true,
+        unsafe: false,
+        unsafe_arrows: false,
+        unsafe_comps: true,
+        unsafe_Function: true,
+        unsafe_math: false,
+        unsafe_methods: false,
+        unsafe_proto: true,
+        unsafe_regexp: true,
+        unsafe_undefined: false,
+        unused: true,
+        warnings: false,
+      },
+      mangle: true,
+      sourceMap: false,
+      ecma: 5,
+      ie8: false,
+      safari10: true,
+      toplevel: true,
+      warnings: 'verbose',
     });
-    return;
+
+    if (terserResult.error) {
+      process.send({
+        pid: process.pid,
+        type: 'error',
+        error: terserResult.error,
+      });
+      return;
+    }
+    contents = terserResult.code;
   }
-  contents = terserResult.code;
 
   // // Process with babel-minify
   // try {
