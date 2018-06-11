@@ -226,33 +226,37 @@ app.get('/wiki/*', (req, res) => {
 // Service Worker
 app.get('/sw.js', async (req, res) => {
   if (serviceWorkerCache === null) {
-    // Read service worker source code
-    let swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
+    if (app.locals.production) {
+      // Read service worker source code
+      let swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
 
-    // Update version hash - detects changes to build or to the service worker itself
-    const MD5 = crypto.createHash('MD5');
-    MD5.update(swJS);
-    MD5.update(JSON.stringify(manifest));
-    swJS = swJS.toString().replace(/VERSION/, MD5.digest('hex'));
+      // Update version hash - detects changes to build or to the service worker itself
+      const MD5 = crypto.createHash('MD5');
+      MD5.update(swJS);
+      MD5.update(JSON.stringify(manifest));
+      swJS = swJS.toString().replace(/VERSION/, MD5.digest('hex'));
 
-    // Populate service worker script with files to cache
-    const files = ['/', `/css/${manifest.assets.css}`, `/js/${manifest.assets[manifest.entry]}`];
-    swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
+      // Populate service worker script with files to cache
+      const files = ['/', `/css/${manifest.assets.css}`, `/js/${manifest.assets[manifest.entry]}`];
+      swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
 
-    // SW must know route paths to always serve index.html
-    const routes = Object.keys(manifest.routes).map((route /*: string*/) => {
-      if (route === 'home') {
-        return '/';
-      } else if (route.endsWith('-home')) {
-        return `/${route.slice(0, -'-home'.length).replace(/[-]/g, '/')}/`;
-      } else {
-        return `/${route.replace(/[-]/g, '/')}`;
-      }
-    });
-    swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
+      // SW must know route paths to always serve index.html
+      const routes = Object.keys(manifest.routes).map((route /*: string*/) => {
+        if (route === 'home') {
+          return '/';
+        } else if (route.endsWith('-home')) {
+          return `/${route.slice(0, -'-home'.length).replace(/[-]/g, '/')}/`;
+        } else {
+          return `/${route.replace(/[-]/g, '/')}`;
+        }
+      });
+      swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
 
-    // Store SW script source so we can serve immediately
-    serviceWorkerCache = swJS;
+      // Store SW script source so we can serve immediately
+      serviceWorkerCache = swJS;
+    } else {
+      serviceWorkerCache = await readFileAsync(path.join(__dirname, '../client', 'sw-destroy.js'));
+    }
   }
 
   res.type('text/javascript').send(serviceWorkerCache);
@@ -263,8 +267,8 @@ app.get('*', (req, res, next) => {
   const renderOptions = {};
 
   if (app.locals.production) {
-    // Set entry point
     renderOptions.entry = manifest.assets[manifest.entry];
+    renderOptions.css = manifest.assets.css;
 
     // Asset preloading
     // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
@@ -288,10 +292,9 @@ app.get('*', (req, res, next) => {
     res.set('Link', preload);
   } else {
     renderOptions.entry = 'main.js';
-  }
-
-  if (CSS_MODE === 'LINK') {
-    renderOptions.css = manifest.assets.css;
+    if (CSS_MODE === 'LINK') {
+      renderOptions.css = 'core.css';
+    }
   }
 
   res
