@@ -32,7 +32,7 @@ self.addEventListener('fetch', function(event) {
   const url = new URL(event.request.url);
   let req = event.request;
 
-  if (req.method !== 'GET' || url.hostname.indexOf('.lwjgl.') === -1) {
+  if (req.method !== 'GET' || url.hostname !== self.location.origin) {
     event.respondWith(fetch(req));
     return;
   }
