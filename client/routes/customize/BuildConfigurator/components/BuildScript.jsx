@@ -331,7 +331,7 @@ function generateGradle(props: ConnectedProps) {
 \tOperatingSystem.LINUX   -> "natives-linux"
 \tOperatingSystem.MAC_OS  -> "natives-macos"
 \tOperatingSystem.WINDOWS -> "natives-windows"
-\telse -> throw Error("Unrecognized or unsupported Operating system. Please set \"lwjglNatives\" manually")
+\telse -> throw Error("Unrecognized or unsupported Operating system. Please set \\"lwjglNatives\\" manually")
 }\n\n`;
     }
   }
