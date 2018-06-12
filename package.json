@@ -36,7 +36,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.254.1",
+    "aws-sdk": "2.255.1",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.2",
@@ -65,7 +65,7 @@
     "@emotion/jsx": "0.7.0",
     "@emotion/keyframes": "0.9.0",
     "@emotion/style": "0.8.0",
-    "@reach/router": "1.1.0",
+    "@reach/router": "1.1.1",
     "async-sema": "2.1.0",
     "autoprefixer": "8.6.2",
     "babel-loader": "8.0.0-beta.3",
@@ -113,7 +113,7 @@
     "typescript-styled-plugin": "0.6.3",
     "webpack": "4.12.0",
     "webpack-bundle-analyzer": "2.13.1",
-    "webpack-cli": "3.0.3",
+    "webpack-cli": "3.0.4",
     "webpack-dev-middleware": "3.1.3",
     "webpack-hot-middleware": "2.22.2",
     "whatwg-fetch": "2.0.4"
