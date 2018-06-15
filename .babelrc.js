@@ -101,6 +101,9 @@ if (NODE_ENV === 'production') {
         debug: false,
         useBuiltIns: 'entry',
         shippedProposals: true,
+        // targets: {
+        //   esmodules: true,
+        // },
         exclude: [
           'transform-sticky-regex',
           'transform-unicode-regex',
