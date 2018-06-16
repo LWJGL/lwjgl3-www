@@ -1,6 +1,6 @@
 const { argv } = require('yargs');
-const { NODE_ENV } = process.env;
-const PRODUCTION = NODE_ENV === 'production';
+const PRODUCTION = process.env.NODE_ENV === 'production';
+const MODERN = process.env.modern === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
 const SOURCEMAP = argv.sourcemap !== undefined;
@@ -80,16 +80,17 @@ const config = {
 
     // https://github.com/MatAtBread/fast-async
     // async/await using Promises instead of (Re)generator
-    PRODUCTION && [
-      'module:fast-async',
-      {
-        spec: true,
-      },
-    ],
+    PRODUCTION &&
+      !MODERN && [
+        'module:fast-async',
+        {
+          spec: true,
+        },
+      ],
   ].filter(Boolean),
 };
 
-if (NODE_ENV === 'production') {
+if (PRODUCTION) {
   config.presets = [
     [
       '@babel/env',
@@ -101,9 +102,7 @@ if (NODE_ENV === 'production') {
         debug: false,
         useBuiltIns: 'entry',
         shippedProposals: true,
-        // targets: {
-        //   esmodules: true,
-        // },
+        ...(MODERN ? { targets: { esmodules: true } } : undefined),
         exclude: [
           'transform-sticky-regex',
           'transform-unicode-regex',
