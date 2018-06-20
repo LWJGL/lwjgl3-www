@@ -25,22 +25,9 @@ const defaultRender = ({ Component, ownProps }: AsyncRenderOptions): React.Node 
 export function renderAsync(getComponent: ComponentImport, renderComponent: AsyncRender = defaultRender) {
   class Async extends React.Component<Props, State> {
     static Component = null;
-    static loadingPromise = null;
 
-    static load() {
-      if (!Async.loadingPromise) {
-        Async.loadingPromise = getComponent()
-          .then(module => {
-            Async.Component = module.default;
-            // return module.default;
-          })
-          .catch(error => {
-            Async.loadingPromise = null;
-            throw error;
-          });
-      }
-
-      return Async.loadingPromise;
+    static preload() {
+      getComponent();
     }
 
     state = {
@@ -58,9 +45,10 @@ export function renderAsync(getComponent: ComponentImport, renderComponent: Asyn
     constructor(props: Props) {
       super(props);
 
-      if (Async.Component === null && Async.loadingPromise === null) {
-        Async.load()
-          .then(() => {
+      if (Async.Component === null) {
+        getComponent()
+          .then(module => {
+            Async.Component = module.default;
             this.safeSetState({ loading: false });
           })
           .catch(error => {
