@@ -36,7 +36,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.262.1",
+    "aws-sdk": "2.265.1",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.2",
@@ -46,7 +46,7 @@
     "request": "2.87.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.5.0",
-    "yargs": "12.0.0-candidate.0"
+    "yargs": "12.0.0"
   },
   "devDependencies": {
     "@babel/core": "7.0.0-beta.51",
@@ -67,7 +67,7 @@
     "@emotion/style": "0.8.0",
     "@reach/router": "1.1.1",
     "async-sema": "2.1.1",
-    "autoprefixer": "8.6.3",
+    "autoprefixer": "8.6.4",
     "babel-loader": "8.0.0-beta.4",
     "babel-plugin-transform-react-remove-prop-types": "0.4.13",
     "benchmark": "2.1.4",
@@ -94,7 +94,7 @@
     "node-sass": "4.9.0",
     "nprogress": "0.2.0",
     "postcss-loader": "2.1.5",
-    "prettier": "1.13.5",
+    "prettier": "1.13.6",
     "query-string": "6.1.0",
     "react": "16.4.1",
     "react-dom": "16.4.1",
@@ -105,13 +105,13 @@
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0",
     "sass-loader": "7.0.3",
-    "scroll-into-view-if-needed": "2.2.6",
+    "scroll-into-view-if-needed": "2.2.8",
     "style-loader": "0.21.0",
     "terser": "3.7.6",
     "thread-loader": "1.1.5",
-    "three": "0.93.0",
-    "typescript-styled-plugin": "0.6.3",
-    "webpack": "4.12.0",
+    "three": "0.94.0",
+    "typescript-styled-plugin": "0.7.0",
+    "webpack": "4.12.2",
     "webpack-bundle-analyzer": "2.13.1",
     "webpack-cli": "3.0.8",
     "webpack-dev-middleware": "3.1.3",
