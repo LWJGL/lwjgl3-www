@@ -105,7 +105,7 @@
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0",
     "sass-loader": "7.0.3",
-    "scroll-into-view-if-needed": "2.2.8",
+    "scroll-into-view-if-needed": "2.2.9",
     "style-loader": "0.21.0",
     "terser": "3.7.6",
     "thread-loader": "1.1.5",

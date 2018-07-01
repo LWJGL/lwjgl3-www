@@ -40,26 +40,31 @@ const buildConfiguration = () => {
       // Include runtime chunk in entry
       runtimeChunk: false,
       noEmitOnErrors: true,
-      splitChunks: {
-        chunks: 'async',
-        minSize: 1024 * 30,
-        minChunks: 1,
-        maxAsyncRequests: 5,
-        maxInitialRequests: 3,
-        automaticNameDelimiter: '~',
-        name: true,
-        cacheGroups: {
-          vendors: {
-            test: /[\\/]node_modules[\\/]/,
-            priority: -10,
+      removeAvailableModules: PRODUCTION,
+      removeEmptyChunks: PRODUCTION,
+      mergeDuplicateChunks: PRODUCTION,
+      splitChunks: DEV
+        ? false
+        : {
+            chunks: 'async',
+            minSize: 1024 * 30,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
+            cacheGroups: {
+              vendors: {
+                test: /[\\/]node_modules[\\/]/,
+                priority: -10,
+              },
+              default: {
+                minChunks: 2,
+                priority: -20,
+                reuseExistingChunk: true,
+              },
+            },
           },
-          default: {
-            minChunks: 2,
-            priority: -20,
-            reuseExistingChunk: true,
-          },
-        },
-      },
     },
     performance: {
       hints: false,
@@ -72,6 +77,7 @@ const buildConfiguration = () => {
       filename: '[name].js',
       chunkFilename: '[name].js',
       publicPath: '/js/',
+      pathinfo: false,
     },
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.json'],
