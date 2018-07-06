@@ -31,7 +31,7 @@ process.on('message', (asset /*: Asset*/) => {
       compress: {
         defaults: false,
         arrows: true,
-        arguments: true,
+        arguments: false,
         booleans: true,
         collapse_vars: true,
         comparisons: true,
