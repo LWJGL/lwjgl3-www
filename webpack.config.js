@@ -152,7 +152,6 @@ const buildConfiguration = () => {
           {
             loader: 'css-loader',
             options: {
-              root: '/',
               url: false,
               import: false,
               modules: false,
