@@ -23,13 +23,15 @@ export const Layout = () => {
         <Guide path="/guide" />
         <Download path="/download" />
         <Customize path="/customize" />
-        <Browse path="/browse" />
+        <Browse path="/browse/*" />
         <Source path="/source" />
         <License path="/license" />
         <Miss404 default />
       </Router>
       <Location>
-        {({ location }) => (location.pathname !== '/customize' && location.pathname !== '/browse' ? <Footer /> : null)}
+        {({ location }) =>
+          location.pathname !== '/customize' && !location.pathname.startsWith('/browse') ? <Footer /> : null
+        }
       </Location>
       <ServiceWorkerConsumer>
         {({ updatePending, update }) => (updatePending ? <ServiceWorkerNotification update={update} /> : null)}

@@ -7,6 +7,7 @@ import { Folder, FolderTH } from './Folder';
 import { File } from './File';
 import IconCloud from '~/components/icons/md/Cloud';
 import IconChevronRight from '~/components/icons/md/ChevronRight';
+import { Link } from '@reach/router';
 
 import { HTTP_OK } from '~/services/http_status_codes';
 
@@ -15,13 +16,6 @@ type FolderData = {|
   files: Array<string>,
   folders: Array<string>,
 |};
-
-type Props = {||};
-
-type State = {
-  path: string | null,
-  contents: FolderData | null,
-};
 
 type ContentCache = {
   [path: string]: FolderData,
@@ -32,23 +26,15 @@ async function fetchContents(path: string): Promise<FolderData> {
   if (response.status !== HTTP_OK) {
     throw response.statusText;
   }
-  const data = await response.json();
-  data.path = path;
-  if (!data.folders) {
-    data.folders = [];
-  }
-
-  contentCache[path] = data;
-  return data;
+  return await response.json();
 }
 
 type ContentsProps = {
   path: string,
-  changePath: string => void,
   contents: FolderData | null,
 };
 
-function Contents({ path, changePath, contents }: ContentsProps) {
+function Contents({ path, contents }: ContentsProps) {
   if (contents === null) {
     return (
       <tr>
@@ -60,71 +46,79 @@ function Contents({ path, changePath, contents }: ContentsProps) {
   }
 
   const { folders, files } = contents;
+  const basePath = path.length ? path + '/' : '';
 
   return (
     <React.Fragment>
       {folders.map(folder => {
-        const fullPath = `${path}${folder}`;
-        return <Folder key={fullPath} path={fullPath} loadPath={() => changePath(fullPath)} />;
+        const fullPath = `${basePath}${folder}`;
+        return <Folder key={fullPath} path={fullPath} />;
       })}
-      {files.map(file => <File key={`${path}${file}`} path={`${path}${file}`} />)}
+      {files.map(file => <File key={`${basePath}${file}`} path={`${basePath}${file}`} />)}
     </React.Fragment>
   );
 }
-
-let prevPath = '';
 
 const contentCache: ContentCache = {
   '': {
     path: '',
     files: [],
-    folders: ['release/', 'stable/', 'nightly/'],
+    folders: ['release', 'stable', 'nightly'],
   },
+};
+
+type Props = {
+  path: string,
+};
+
+type State = {
+  contents: FolderData | null,
 };
 
 export class Browser extends React.Component<Props, State> {
   state = {
-    path: null,
-    contents: null,
+    contents: contentCache[this.props.path] || null,
   };
 
   mounted: boolean = false;
 
-  async loadData() {
-    const path = this.state.path;
-    if (path === null) {
-      return;
-    }
-    const contents = await fetchContents(path);
+  async loadData(path: string) {
+    const contents = await fetchContents(path + '/');
+    contents.path = path;
     if (contents.files === undefined) {
       contents.files = [];
     }
-    if (contents.folders === undefined) {
-      contents.folders = [];
-    }
+    contents.folders =
+      contents.folders === undefined ? [] : contents.folders.map(name => name.substring(0, name.length - 1));
+
+    // Store in cache
+    contentCache[path] = contents;
+
     // Make sure we haven't unmounted or changed path while waiting for the resposne
-    if (this.mounted && path === this.state.path) {
+    if (this.mounted && path === this.props.path) {
       this.setState({ contents });
     }
   }
 
-  changePath = (path: string) => {
-    if (contentCache[path] !== undefined) {
-      this.setState({ path, contents: contentCache[path] });
-    } else {
-      this.setState({ path, contents: null }, this.loadData);
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    return {
+      contents: contentCache[nextProps.path] || null,
+    };
+  }
+
+  loadDataIfNeeded() {
+    if (this.state.contents === null) {
+      this.loadData(this.props.path);
     }
-  };
+  }
 
   componentDidUpdate() {
-    if (this.state.path !== null) {
-      prevPath = this.state.path;
-    }
+    this.loadDataIfNeeded();
   }
 
   componentDidMount() {
     this.mounted = true;
-    this.setState({ path: prevPath, contents: contentCache[prevPath] });
+    this.loadDataIfNeeded();
   }
 
   componentWillUnmount() {
@@ -132,41 +126,28 @@ export class Browser extends React.Component<Props, State> {
   }
 
   render() {
-    const { path, contents } = this.state;
+    const { path } = this.props;
+    const hasParent = path !== '';
 
-    if (path === null) {
-      return null;
-    }
-
-    let parent = null;
-    if (path !== '') {
-      const parts = path.substr(0, path.length - 2).split('/');
-      parts.pop();
-      parent = parts.join('/');
-
-      if (parent.length) {
-        parent += '/';
-      }
-    }
     return (
       <div className="table-responsive-md">
         <table className="table mb-0">
           <thead className="thead-light">
             <tr>
               <th colSpan={2}>
-                <IconCloud /> &nbsp;lwjgl/{this.state.path}
+                <IconCloud /> &nbsp;lwjgl/{path.length ? path + '/' : ''}
               </th>
             </tr>
           </thead>
           <tbody>
-            {parent !== null && (
+            {hasParent && (
               <tr>
-                <th css={FolderTH} scope="row" onClick={() => this.changePath(parent || '')} colSpan={2}>
-                  &hellip;
+                <th css={FolderTH} scope="row" colSpan={2}>
+                  <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
                 </th>
               </tr>
             )}
-            <Contents path={path} contents={contents} changePath={this.changePath} />
+            <Contents path={path} contents={this.state.contents} />
           </tbody>
         </table>
       </div>
