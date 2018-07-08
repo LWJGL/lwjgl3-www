@@ -11,5 +11,6 @@ export const Head = (props: Props) => {
   const { tag: Tag, ...rest } = props;
 
   const Comp = <Tag {...rest} />;
-  return ReactDOM.createPortal(Comp, document.head || document.getElementsByTagName('head')[0]);
+  //$FlowFixMe
+  return ReactDOM.createPortal(Comp, document.head);
 };
