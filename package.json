@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.274.1",
+    "aws-sdk": "2.275.1",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.2",
@@ -60,8 +60,8 @@
     "@babel/preset-stage-1": "7.0.0-beta.53",
     "@babel/preset-stage-2": "7.0.0-beta.53",
     "@babel/preset-stage-3": "7.0.0-beta.53",
-    "@emotion/core": "0.10.4",
-    "@emotion/css": "0.9.3",
+    "@emotion/core": "0.11.1",
+    "@emotion/css": "0.9.5",
     "@emotion/global": "0.7.0",
     "@emotion/jsx": "0.7.0",
     "@emotion/keyframes": "0.9.1",
@@ -79,7 +79,7 @@
     "create-subscription": "16.4.1",
     "cross-env": "5.2.0",
     "css-loader": "1.0.0",
-    "cssnano": "4.0.1",
+    "cssnano": "4.0.2",
     "exports-loader": "0.7.0",
     "fast-async": "7.0.6",
     "fbjs": "0.9.0-alpha.2",
