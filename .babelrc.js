@@ -122,7 +122,7 @@ if (PRODUCTION) {
           // 'es6.map',
           // 'es6.set',
           // 'es6.weak-map',
-          'es6.weak-set', // WARNING: IE11 doesn't support it by we don't use it anyway
+          // 'es6.weak-set',
           'es6.reflect.apply',
           'es6.reflect.construct',
           'es6.reflect.define-property',
