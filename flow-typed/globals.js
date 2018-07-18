@@ -13,3 +13,21 @@ declare var module: {
     accept(path: string, callback: () => void): void,
   },
 };
+
+declare class NetworkInformation {
+  +downlink: number;
+  +downlinkMax: number;
+  +effectiveType: 'slow-2g' | '2g' | '3g' | '4g';
+  +rtt: number;
+  +type: 'bluetooth' | 'cellular' | 'ethernet' | 'none' | 'wifi' | 'wimax' | 'other' | 'unknown';
+  +saveData: boolean;
+  onchange: (ev: Event) => any;
+}
+
+declare class NavigatorExtras mixins NavigatorCommon, Navigator {
+  +deviceMemory?: number;
+  msSaveOrOpenBlob?: (blob: Blob, name: string) => void;
+  connection?: NetworkInformation;
+}
+
+declare var navigator: NavigatorExtras;

@@ -17,11 +17,11 @@ function autoBOM(blob: Blob): Blob {
 let saveAsWrapped;
 
 // IE 10+ (native saveAs)
-//$FlowFixMe
 if (navigator.msSaveOrOpenBlob !== undefined) {
   saveAsWrapped = function(blob: Blob, name: string, no_auto_bom?: boolean) {
-    //$FlowFixMe
-    return navigator.msSaveOrOpenBlob(no_auto_bom !== true ? blob : autoBOM(blob), name);
+    if (navigator.msSaveOrOpenBlob !== undefined) {
+      return navigator.msSaveOrOpenBlob(no_auto_bom !== true ? blob : autoBOM(blob), name);
+    }
   };
 } else {
   const doc = window.document;
