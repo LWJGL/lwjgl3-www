@@ -114,21 +114,35 @@ export class HomeHero extends React.Component<Props, State> {
   };
 
   componentDidMount() {
-    // Check prefers-reduced-motion
+    // Skip if user prefers-reduced-motion
     const preferesReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
     if (preferesReducedMotion) {
       return;
     }
 
-    // Check supportsWebGL first because that means connection dropped after
-    // we have already loaded threejs
-    //$FlowFixMe
+    // Check device memory, skip for under 4GB
+    if (navigator.deviceMemory !== undefined && navigator.deviceMemory < 4) {
+      return;
+    }
+
+    // Check thread count, skip if probably old/less-capable CPU
+    if (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4) {
+      return;
+    }
+
+    // Check connection quality
+    // * We check supportsWebGL first because that means connection dropped after we have already loaded threejs
     if (!this.state.supportsWebGL && navigator.connection !== undefined) {
-      //$FlowFixMe
+      // Skip for slow connections
       switch (navigator.connection.effectiveType) {
         case 'slow-2g':
         case '2g':
           return;
+      }
+
+      // Skip if user opted-in into a reduced data usage mode
+      if (navigator.connection.saveData === true) {
+        return;
       }
     }
 
