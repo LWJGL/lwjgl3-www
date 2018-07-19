@@ -23,5 +23,10 @@ html(lang="en-US" dir="ltr")
     link(rel="manifest" href="/manifest.webmanifest")
     if ( css !== undefined )
       link(rel="stylesheet" href=`/css/${css}`)
+    script.
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js',new Date());
+      gtag('config','#{ga}',{send_page_view:false,transport_type:'beacon',anonymize_ip:true});
   body
     block content

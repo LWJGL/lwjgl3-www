@@ -264,7 +264,9 @@ app.get('/sw.js', async (req, res) => {
 
 // App
 app.get('*', (req, res, next) => {
-  const renderOptions = {};
+  const renderOptions = {
+    ga: config.analytics_tracking_id,
+  };
 
   if (app.locals.production) {
     renderOptions.entry = manifest.assets[manifest.entry];

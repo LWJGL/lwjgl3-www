@@ -14,6 +14,11 @@ declare var module: {
   },
 };
 
+// Google Analytics (GTAG)
+declare var dataLayer: Array<any>;
+declare var gtag: (...args: Array<any>) => void;
+
+// Navigator Extras
 declare class NetworkInformation {
   +downlink: number;
   +downlinkMax: number;
