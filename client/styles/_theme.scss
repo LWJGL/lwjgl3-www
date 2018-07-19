@@ -25,18 +25,6 @@ strong {
   font-weight: 700;
 }
 
-// Bootstrap 4 Beta 6 has invalid button colors when focused
-// TODO: Remove me
-a.btn {
-  &.btn-primary:focus,
-  &.btn-secondary:focus,
-  &.btn-success:focus,
-  &.btn-danger:focus,
-  &.btn-info:focus {
-    color: $white;
-  }
-}
-
 .area-dark-secondary {
   color: white;
 }
