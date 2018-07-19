@@ -1,38 +1,30 @@
 // @flow
 import loadJS from 'fg-loadjs';
 
-// Use this to load GA on demand
-let firstCall = true;
-
 const DNT = navigator.doNotTrack === 1 || window.doNotTrack === 1;
 const ENABLE_TRACKING = FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org';
+let firstCall = true;
 
-const track = function(command: string, ...fields: Array<any>): void {
-  if (DNT) {
-    return;
+window.dataLayer = window.dataLayer || [];
+
+export function gtag(...args: Array<any>) {
+  if (!DNT && ENABLE_TRACKING) {
+    if (firstCall) {
+      loadJS(`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS_TRACKING_ID}`);
+      firstCall = false;
+    }
+
+    window.dataLayer.push(args);
   }
-  if (ENABLE_TRACKING && firstCall) {
-    loadJS('https://www.google-analytics.com/analytics.js');
-    firstCall = false;
-  }
+}
 
-  track.q.push(arguments);
-};
+export function trackView(params: {}) {
+  gtag('config', ANALYTICS_TRACKING_ID, params);
+}
 
-track.q = [];
-track.l = 1 * new Date();
-
-window.ga = track;
-window.GoogleAnalyticsObject = 'ga';
-
-// Create primary Tracker
-track('create', ANALYTICS_TRACKING_ID, 'auto');
-
-// Uncomment to enable Remarketing, Demographics and Interest Reporting
-// track('require', 'displayfeatures');
-
-// Updates the tracker to use `navigator.sendBeacon` if available.
-track('set', 'transport', 'beacon');
-
-// Do not track view here because we'll do it in the router (see ~/container/PageView.jsx)
-// track('send', 'pageview');
+gtag('js', new Date());
+gtag('config', ANALYTICS_TRACKING_ID, {
+  send_page_view: false,
+  transport_type: 'beacon',
+  anonymize_ip: true,
+});

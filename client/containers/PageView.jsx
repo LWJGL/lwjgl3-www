@@ -3,6 +3,7 @@ import * as React from 'react';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { PageError } from '../components/PageError';
 import type { RouterLocation } from '@reach/router';
+import { trackView } from '../services/ga';
 
 // Store scroll position when leaving a route, restore if we return back to it
 
@@ -33,7 +34,9 @@ export class PageView extends React.Component<Props> {
     } = this.props;
 
     // Track in Google Analytics
-    window.ga('send', 'pageview', `${pathname}${search}`);
+    trackView({
+      page_path: `${pathname}${search}`,
+    });
 
     if (SCROLL_RESTORATION) {
       // If we have previously stored the same key, restore scroll position
