@@ -68,7 +68,7 @@ const ProgressStyle = css`
       animation: ${indeterminateStrokeAnimation.name} 1.8s ease-in-out infinite;
       ${indeterminateStrokeAnimation.styles};
       stroke-dasharray: 80px, 200px;
-      stroke-dashoffset: 0px; /* Add the unit to fix a Edge 16 and below bug. */
+      stroke-dashoffset: 0px;
     }
   }
 `;

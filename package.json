@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.276.1",
+    "aws-sdk": "2.277.1",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
@@ -106,7 +106,7 @@
     "redux-logger": "3.0.6",
     "redux-thunk": "2.3.0",
     "sass-loader": "7.0.3",
-    "scroll-into-view-if-needed": "2.2.13",
+    "scroll-into-view-if-needed": "2.2.14",
     "style-loader": "0.21.0",
     "terser": "3.8.0",
     "thread-loader": "1.1.5",
