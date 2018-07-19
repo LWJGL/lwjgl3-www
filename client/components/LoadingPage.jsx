@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { LoaderSpinner } from '~/components/LoaderSpinner';
+import { CircularProgress } from '~/components/CircularProgress';
 import nprogress from 'nprogress';
 import type { AsyncRenderProps } from '../services/renderAsync';
 
@@ -90,7 +90,7 @@ export class LoadingPage extends React.Component<AsyncRenderProps, State> {
       </div>
     ) : (
       <div className="text-center" style={{ padding: '5rem 0', minHeight: 'calc(100vh - 4rem)' }}>
-        {pastDelay ? <LoaderSpinner size={128} /> : null}
+        {pastDelay ? <CircularProgress size={128} thickness={2} /> : null}
       </div>
     );
   }

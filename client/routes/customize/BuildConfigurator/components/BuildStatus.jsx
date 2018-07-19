@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { LoaderSpinner } from '~/components/LoaderSpinner';
+import { CircularProgress } from '~/components/CircularProgress';
 import type { BUILD_TYPES, BuildStatus as BuildStatusType } from '../types';
 
 type Props = {|
@@ -22,7 +22,7 @@ export class BuildStatus extends React.PureComponent<Props> {
 
     return status === null ? (
       <p className="my-0">
-        <LoaderSpinner size={16} />
+        <CircularProgress size={24} thickness={8} style={{ color: 'hsla(0, 0%, 0%, 0.5)' }} />
         <br />
         <br />
       </p>

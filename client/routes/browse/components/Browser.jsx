@@ -2,12 +2,12 @@
 // @jsx jsx
 import * as React from 'react';
 import { jsx } from '@emotion/core';
-import { LoaderSpinner } from '~/components/LoaderSpinner';
 import { Folder, FolderTH } from './Folder';
 import { File } from './File';
 import IconCloud from '~/components/icons/md/Cloud';
 import IconChevronRight from '~/components/icons/md/ChevronRight';
 import { Link } from '@reach/router';
+import { CircularProgress } from '~/components/CircularProgress';
 
 import { HTTP_OK } from '~/services/http_status_codes';
 
@@ -39,7 +39,7 @@ function Contents({ path, contents }: ContentsProps) {
     return (
       <tr>
         <td>
-          <LoaderSpinner />
+          <CircularProgress size={24} thickness={8} />
         </td>
       </tr>
     );
