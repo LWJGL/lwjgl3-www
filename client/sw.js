@@ -61,9 +61,10 @@ self.addEventListener('fetch', function(event) {
         const shouldCache =
           response.ok &&
           response.type === 'basic' &&
-          WHITELIST.some(function(exp) {
-            return exp.test(url.pathname);
-          });
+          (url.pathname === '/' ||
+            WHITELIST.some(function(exp) {
+              return exp.test(url.pathname);
+            }));
 
         if (shouldCache) {
           return caches.open(CACHENAME).then(function(cache) {
