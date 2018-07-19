@@ -32,7 +32,7 @@ self.addEventListener('fetch', function(event) {
   const url = new URL(event.request.url);
   let req = event.request;
 
-  if (req.method !== 'GET' || url.hostname !== self.location.origin) {
+  if (req.method !== 'GET' || url.hostname !== self.location.hostname) {
     event.respondWith(fetch(req));
     return;
   }
@@ -61,10 +61,9 @@ self.addEventListener('fetch', function(event) {
         const shouldCache =
           response.ok &&
           response.type === 'basic' &&
-          (url.pathname === '/' ||
-            WHITELIST.some(function(exp) {
-              return exp.test(url.pathname);
-            }));
+          WHITELIST.some(function(exp) {
+            return exp.test(url.pathname);
+          });
 
         if (shouldCache) {
           return caches.open(CACHENAME).then(function(cache) {

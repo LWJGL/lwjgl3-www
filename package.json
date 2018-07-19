@@ -127,6 +127,7 @@
     "test-production": "cross-env NODE_ENV=production node server --test --s3proxy --nocache --pretty",
     "run-production": "cross-env NODE_ENV=production node server --s3proxy",
     "watch": "nodemon --watch server server/index.js",
+    "watch-production": "cross-env NODE_ENV=production nodemon --watch server server/index.js --test --s3proxy --nocache --pretty",
     "styles": "node ./scripts/build-styles.js",
     "vendor": "webpack --config webpack.vendor.config.js --bail --progress",
     "bundle-analyzer-dev": "cross-env NODE_ENV=development webpack --progress --json > webpack-dev.manifest.json && webpack-bundle-analyzer webpack-dev.manifest.json",
