@@ -16,10 +16,10 @@ const env = {
   FLAG_REDUXLOGGER: String(DEV && argv.reduxLogger !== undefined),
 };
 
-const replaceRHL = () =>
-  new webpack.NormalModuleReplacementPlugin(/RHL/, result => {
-    result.request = result.request.replace(/RHL/, 'containers/App');
-  });
+function disableRHL(config) {
+  // Replace ./client/RHL.js with ./client/container/App.jsx
+  config.resolve.alias[path.resolve(__dirname, 'client/RHL.js')] = path.resolve(__dirname, 'client/containers/App.jsx');
+}
 
 const buildConfiguration = () => {
   const config = {
@@ -127,12 +127,12 @@ const buildConfiguration = () => {
       config.entry.main.unshift(path.resolve(__dirname, 'client/services/react-perf-devtool.js'));
     }
 
-    // Enable Hot Module Replacement
     if (HMR) {
+      // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     } else {
-      config.plugins.push(replaceRHL());
+      disableRHL(config);
     }
 
     config.plugins.push(
@@ -172,14 +172,16 @@ const buildConfiguration = () => {
       });
     }
   } else {
-    // Load core-js polyfill first
-    // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
-    config.entry.main.unshift(path.resolve(__dirname, 'client/services/polyfill.js'));
+    config.entry.main.unshift(
+      // Load core-js polyfill first
+      // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
+      path.resolve(__dirname, 'client/services/polyfill.js')
+    );
     config.plugins.push(
-      replaceRHL(),
       // Base hashes on the relative path of modules
       new webpack.HashedModuleIdsPlugin()
     );
+    disableRHL(config);
   }
 
   return config;
