@@ -7,6 +7,7 @@ declare var FLAG_PRODUCTION: boolean;
 declare var FLAG_CSSMODULES: boolean;
 declare var FLAG_REDUXLOGGER: boolean;
 declare var ANALYTICS_TRACKING_ID: string;
+declare var HOSTNAME_PRODUCTION: string;
 
 declare var module: {
   hot: {

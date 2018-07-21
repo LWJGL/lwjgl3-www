@@ -24,7 +24,7 @@ const SW_SUPPORTED =
   FLAG_PRODUCTION &&
   navigator.serviceWorker !== undefined &&
   window.isSecureContext &&
-  document.location.hostname === 'www.lwjgl.org';
+  document.location.hostname === HOSTNAME_PRODUCTION;
 
 if (SW_SUPPORTED) {
   // Prevent web app install banner from being displayed automatically

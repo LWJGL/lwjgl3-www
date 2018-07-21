@@ -14,6 +14,7 @@ const env = {
   FLAG_PRODUCTION: String(PRODUCTION),
   FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
   FLAG_REDUXLOGGER: String(DEV && argv.reduxLogger !== undefined),
+  HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
 function disableRHL(config) {

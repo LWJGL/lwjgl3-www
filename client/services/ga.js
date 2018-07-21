@@ -2,7 +2,7 @@
 import loadJS from 'fg-loadjs';
 
 const DNT = navigator.doNotTrack === 1 || window.doNotTrack === 1;
-const ENABLE_TRACKING = FLAG_PRODUCTION && document.location.hostname === 'www.lwjgl.org';
+const ENABLE_TRACKING = FLAG_PRODUCTION && document.location.hostname === HOSTNAME_PRODUCTION;
 let firstCall = true;
 
 export function analytics(...args: Array<any>) {
