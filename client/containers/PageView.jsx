@@ -6,7 +6,6 @@ import type { RouterLocation } from '@reach/router';
 import { trackView } from '../services/ga';
 
 // Store scroll position when leaving a route, restore if we return back to it
-
 const SCROLL_RESTORATION = 'scrollRestoration' in window.history;
 if (SCROLL_RESTORATION) {
   window.history.scrollRestoration = 'manual';

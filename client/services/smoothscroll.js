@@ -1,4 +1,3 @@
-// @noflow
 import { IS_IE } from '~/services/ua';
 import { forceHide } from '../containers/Header';
 import scrollIntoView from 'scroll-into-view-if-needed';

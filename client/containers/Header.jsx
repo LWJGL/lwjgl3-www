@@ -28,16 +28,7 @@ type State = {|
   top: boolean,
   fixed: boolean,
   hidden: boolean,
-  desktop: boolean,
 |};
-
-/*
-let forceHidden = false;
-
-export function forceHide() {
-  forceHidden = true;
-}
-*/
 
 export class Header extends React.PureComponent<Props, State> {
   prev = 0;
@@ -46,26 +37,12 @@ export class Header extends React.PureComponent<Props, State> {
   ticking = false;
   offsetHeight = 0;
   mounted = false;
-  // unsubscribe: Function;
-
-  isDesktop() {
-    return true;
-    // const breakpoint = store.getState().breakpoint;
-    // return breakpoint.current > breakpoint.md;
-  }
-
-  storeListener() {
-    // this.setState({ desktop: this.isDesktop() });
-  }
-
-  // unsubscribe = store.subscribe(this.storeListener.bind(this));
 
   state = {
     pos: 0,
     top: true,
     fixed: false,
     hidden: false,
-    desktop: this.isDesktop(),
   };
 
   componentDidMount() {
@@ -114,27 +91,6 @@ export class Header extends React.PureComponent<Props, State> {
     }
     this.prev = this.current;
     this.current = Math.max(0, window.pageYOffset);
-
-    /*
-    if (forceHidden) {
-      if (this.current > 0) {
-        // force hide
-        if (IS_IOS) {
-          if (!this.state.hidden) {
-            this.setState({ hidden: true });
-          }
-        } else {
-          this.direction = -1;
-          const posMax = Math.max(0, this.current - this.offsetHeight);
-          if (this.prev > posMax || this.state.fixed) {
-            this.setState({ pos: posMax, fixed: false });
-          }
-        }
-      }
-      forceHidden = false;
-      return;
-    }
-    */
 
     if (this.prev - this.current < 0) {
       // We are scrolling down
@@ -186,37 +142,35 @@ export class Header extends React.PureComponent<Props, State> {
     const isHome = this.props.isHome;
 
     return (
-      <React.Fragment>
-        <header
-          role="navigation"
-          css={[isHome && styleHome, (!isHome || !top) && styleOpaque]}
-          className={cc(HEADER_CLASSNAME, {
-            alt: IS_IOS,
-            fixed,
-            hidden,
-          })}
-          style={{ top: pos }}
-        >
-          <nav className="container-fluid">
-            <div className="row">
-              <div className="col col-auto">
-                <Link to="/">
-                  LW<b>JGL</b> 3
-                </Link>
-              </div>
-              <Breakpoint>
-                {media =>
-                  media.current > media.breakpoints.md ? (
-                    <MainMenu className="main-menu-horizontal list-unstyled col" role="menu" />
-                  ) : (
-                    <Sidebar />
-                  )
-                }
-              </Breakpoint>
+      <header
+        role="navigation"
+        css={[isHome && styleHome, (!isHome || !top) && styleOpaque]}
+        className={cc(HEADER_CLASSNAME, {
+          alt: IS_IOS,
+          fixed,
+          hidden,
+        })}
+        style={{ top: pos }}
+      >
+        <nav className="container-fluid">
+          <div className="row">
+            <div className="col col-auto">
+              <Link to="/">
+                LW<b>JGL</b> 3
+              </Link>
             </div>
-          </nav>
-        </header>
-      </React.Fragment>
+            <Breakpoint>
+              {media =>
+                media.current > media.breakpoints.md ? (
+                  <MainMenu className="main-menu-horizontal list-unstyled col" />
+                ) : (
+                  <Sidebar />
+                )
+              }
+            </Breakpoint>
+          </div>
+        </nav>
+      </header>
     );
   }
 }

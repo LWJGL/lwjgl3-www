@@ -1,8 +1,7 @@
 // @flow
 import * as React from 'react';
 import { renderAsync, type ComponentImport, type AsyncRenderOptions } from '../services/renderAsync';
-import { LoadingPage /*, LOADING_TIMEOUT*/ } from '../components/LoadingPage';
-// import { timeout } from 'promise-timeout';
+import { LoadingPage } from '../components/LoadingPage';
 
 const render = ({ Component, error, loading, ownProps }: AsyncRenderOptions): React.Node => {
   if (Component !== null) {
@@ -13,7 +12,6 @@ const render = ({ Component, error, loading, ownProps }: AsyncRenderOptions): Re
 
 const AsyncRoute = (loader: ComponentImport) =>
   renderAsync(
-    // timeout(loader, LOADING_TIMEOUT)
     loader,
     render
   );

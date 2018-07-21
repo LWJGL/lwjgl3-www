@@ -4,7 +4,6 @@ import { Link } from '@reach/router';
 
 type Props = {
   onClick?: (e: Event) => any,
-  rest?: {},
 };
 
 const isActive = ({ isCurrent }) => {
@@ -14,7 +13,7 @@ const isActive = ({ isCurrent }) => {
 const NavLink = props => <Link getProps={isActive} {...props} />;
 
 export const MainMenu = ({ onClick, ...rest }: Props) => (
-  <ul {...rest} role="navigation" aria-label="Main Menu">
+  <ul role="navigation" aria-label="Main Menu" {...rest}>
     <li>
       <NavLink onClick={onClick} to="/">
         HOME
