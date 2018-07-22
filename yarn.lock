@@ -1357,15 +1357,15 @@ atob@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.1.tgz#ae2d5a729477f289d60dd7f96a6314a22dd6c22a"
 
-autoprefixer@9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.0.0.tgz#fce072cb3c9c61374bf6fb7d1906f630afdb2889"
+autoprefixer@9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/autoprefixer/-/autoprefixer-9.0.1.tgz#b5b74aba3fa60b4f1403729e46a6a1246f16818f"
   dependencies:
     browserslist "^4.0.1"
     caniuse-lite "^1.0.30000865"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
-    postcss "^7.0.0"
+    postcss "^7.0.1"
     postcss-value-parser "^3.2.3"
 
 aws-sdk@2.279.1:
@@ -2001,9 +2001,9 @@ compression@1.7.3:
     safe-buffer "5.1.2"
     vary "~1.1.2"
 
-compute-scroll-into-view@1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.5.tgz#dea9ce0edb17d981ea0d56e52b85c840430b91bf"
+compute-scroll-into-view@1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/compute-scroll-into-view/-/compute-scroll-into-view-1.0.7.tgz#ad8dbe51093c31d60cf6c2df497b2c077bd9e7d2"
 
 concat-map@0.0.1:
   version "0.0.1"
@@ -4177,12 +4177,12 @@ mem@^1.1.0:
   dependencies:
     mimic-fn "^1.0.0"
 
-memoize-state@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/memoize-state/-/memoize-state-1.5.1.tgz#41575cb1dfc22564d3765df047064823917adb49"
+memoize-state@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/memoize-state/-/memoize-state-2.0.0.tgz#4489596728f8f06c40dcdc180c6d54ad8783006c"
   dependencies:
     function-double "^1.0.4"
-    proxyequal "^1.6.0"
+    proxyequal "^2.0.0"
 
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
@@ -5177,9 +5177,9 @@ postcss@^6.0.0, postcss@^6.0.1, postcss@^6.0.23:
     source-map "^0.6.1"
     supports-color "^5.4.0"
 
-postcss@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.0.tgz#163f70d2fe2715c6d4a4b3d300051c1ea9594aa9"
+postcss@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-7.0.1.tgz#db20ca4fc90aa56809674eea75864148c66b67fa"
   dependencies:
     chalk "^2.4.1"
     source-map "^0.6.1"
@@ -5240,9 +5240,9 @@ proxy-addr@~2.0.3:
     forwarded "~0.1.2"
     ipaddr.js "1.6.0"
 
-proxyequal@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/proxyequal/-/proxyequal-1.6.0.tgz#34f49d234322e6af79bedf8c378a90fe27cf337e"
+proxyequal@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/proxyequal/-/proxyequal-2.0.0.tgz#d0f971810ee21bb71414430f828dc461a5190e97"
   dependencies:
     search-trie "^1.0.0"
 
@@ -5909,11 +5909,11 @@ schema-utils@^0.4.0, schema-utils@^0.4.2, schema-utils@^0.4.4, schema-utils@^0.4
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
-scroll-into-view-if-needed@2.2.14:
-  version "2.2.14"
-  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.14.tgz#a24fa92c601eb7e27430b8e20ea4c92507fe8524"
+scroll-into-view-if-needed@2.2.16:
+  version "2.2.16"
+  resolved "https://registry.yarnpkg.com/scroll-into-view-if-needed/-/scroll-into-view-if-needed-2.2.16.tgz#208232f4d7bb531130177b6c02d760d1e1796cbd"
   dependencies:
-    compute-scroll-into-view "1.0.5"
+    compute-scroll-into-view "1.0.7"
 
 scss-tokenizer@^0.2.3:
   version "0.2.3"
