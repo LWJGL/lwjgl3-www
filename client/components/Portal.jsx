@@ -19,17 +19,7 @@ export class Portal extends React.Component<Props, void> {
       this.targetElement = document.body.appendChild(document.createElement('div'));
     }
 
-    return this.targetElement !== null
-      ? ReactDOM.createPortal(
-          React.Children.count(this.props.children) === 1 ? (
-            this.props.children
-          ) : (
-            <React.Fragment>{this.props.children}</React.Fragment>
-          ),
-          // $FlowFixMe
-          this.targetElement
-        )
-      : null;
+    return this.targetElement !== null ? ReactDOM.createPortal(this.props.children, this.targetElement) : null;
   }
 
   componentWillUnmount() {
