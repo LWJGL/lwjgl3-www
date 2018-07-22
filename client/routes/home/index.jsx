@@ -25,10 +25,12 @@ import IconBatteryUnknown from '~/components/icons/md/BatteryUnknown';
 const HomeRoute = (props: RouteProps) => (
   <PageView location={props.location}>
     <Title />
-    <Head
-      name="description"
-      content="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
-    />
+    <Head>
+      <meta
+        name="description"
+        content="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
+      />
+    </Head>
     <HomeHero />
     <HashLinkTarget id="learn-more" />
 
