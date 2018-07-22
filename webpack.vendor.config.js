@@ -66,6 +66,7 @@ const config = {
     path: path.resolve(__dirname, 'public/js'),
     filename: '[name].js',
     library: '[name]',
+    crossOriginLoading: 'anonymous',
   },
   plugins: [
     new webpack.DllPlugin({

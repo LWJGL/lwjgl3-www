@@ -116,6 +116,8 @@ const buildConfiguration = () => {
   };
 
   if (DEV) {
+    config.output.crossOriginLoading = 'anonymous';
+
     // Enable source maps
     if (SOURCEMAP) {
       config.devtool = 'inline-source-map';

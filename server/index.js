@@ -81,6 +81,7 @@ if (app.locals.development) {
       logTime: false,
       publicPath: webpackConfig.output.publicPath,
       stats: 'minimal', // One of: errors-only, minimal, none, normal, detailed, verbose
+      headers: { 'Access-Control-Allow-Origin': '*' },
     })
   );
 
@@ -132,6 +133,9 @@ app.use(
     lastModified: true,
     maxAge: 365 * 24 * 60 * 60 * 1000,
     setHeaders: (res, path, stat) => {
+      if (app.locals.development) {
+        res.set('Access-Control-Allow-Origin', '*');
+      }
       switch (res.req.url) {
         case '/manifest.webmanifest':
         case '/sitemap.xml':

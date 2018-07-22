@@ -20,6 +20,6 @@ block content
   if ( production )
     script(src=`/js/${entry}` async)
   else
-    script(src=`/js/vendor.js`)
-    script(src=`/js/${entry}`)
+    script(src=`/js/vendor.js` crossorigin="anonymous")
+    script(src=`/js/${entry}` crossorigin="anonymous")
 
