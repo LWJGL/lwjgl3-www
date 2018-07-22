@@ -8,6 +8,7 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
 const SOURCEMAP = argv.sourcemap !== undefined;
+const DLL = argv.nodll === undefined;
 
 const env = {
   ANALYTICS_TRACKING_ID: JSON.stringify(config.analytics_tracking_id),
@@ -138,13 +139,15 @@ const buildConfiguration = () => {
       disableRHL(config);
     }
 
-    config.plugins.push(
-      // Load pre-built dependencies
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest: require('./public/js/vendor-manifest.json'),
-      })
-    );
+    if (DLL) {
+      config.plugins.push(
+        // Load pre-built dependencies
+        new webpack.DllReferencePlugin({
+          context: __dirname,
+          manifest: require('./public/js/vendor-manifest.json'),
+        })
+      );
+    }
 
     // Enable CSS HMR instead of loading CSS pre-built from disk
     if (argv.css) {
