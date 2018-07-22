@@ -28,7 +28,7 @@ export class Alert extends React.PureComponent<AlertProps, void> {
       <Dialog className="dialog-alert" isOpen={isOpen} portal={true}>
         <Trap className="dialog-content" role="alertdialog" onClose={onClose}>
           {title != null &&
-            title.length && (
+            title.length > 0 && (
               <div className={`dialog-header bg-${type}`}>
                 <h3>{title}</h3>
                 <div className="dialog-close-button">

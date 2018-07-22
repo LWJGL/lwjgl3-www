@@ -10,11 +10,7 @@ const render = ({ Component, error, loading, ownProps }: AsyncRenderOptions): Re
   return <LoadingPage error={error} />;
 };
 
-const AsyncRoute = (loader: ComponentImport) =>
-  renderAsync(
-    loader,
-    render
-  );
+const AsyncRoute = (loader: ComponentImport) => renderAsync(loader, render);
 
 // Import causes routes to be code-split
 // We have to specify each route name/path in order to be statically analyzed by webpack
