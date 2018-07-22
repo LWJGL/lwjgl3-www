@@ -5,7 +5,7 @@ type Props = {
   children?: string,
 };
 
-export class Title extends React.PureComponent<Props> {
+export class Title extends React.Component<Props> {
   componentDidMount() {
     document.title =
       this.props.children !== undefined ? `${this.props.children} - LWJGL` : 'LWJGL - Lightweight Java Game Library';
