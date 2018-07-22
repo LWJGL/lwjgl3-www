@@ -9,7 +9,9 @@ import { Browser } from './components/Browser';
 const BrowseRoute = (props: RouteProps) => (
   <PageView location={props.location}>
     <Title>Browse</Title>
-    <Head tag="meta" name="description" content="Browse LWJGL files" />
+    <Head>
+      <meta name="description" content="Browse LWJGL files" />
+    </Head>
     <section className="container-fluid px-0" style={{ margin: '-1rem auto 0 auto' }}>
       <Browser path={props['*']} />
     </section>

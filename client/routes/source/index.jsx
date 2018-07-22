@@ -10,7 +10,9 @@ import { BuildBadge } from './BuildBadge';
 const SourceRoute = (props: RouteProps) => (
   <PageView location={props.location}>
     <Title>Source & Build Status</Title>
-    <Head tag="meta" name="description" content="Links to LWJGL Github repository and build status matrix" />
+    <Head>
+      <meta name="description" content="Links to LWJGL Github repository and build status matrix" />
+    </Head>
     <section className="container pb-5">
       <h1>
         LW<b>JGL</b> Source

@@ -14,7 +14,9 @@ import { Customize, Browse } from '../';
 const DownloadRoute = (props: RouteProps) => (
   <PageView location={props.location}>
     <Title>Download</Title>
-    <Head tag="meta" name="description" content="Download LWJGL 3" />
+    <Head>
+      <meta name="description" content="Download LWJGL 3" />
+    </Head>
     <section className="container pb-4">
       <h1>
         Download LW<b>JGL</b> 3

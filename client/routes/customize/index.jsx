@@ -10,7 +10,9 @@ import { BuildConfigurator } from './BuildConfigurator';
 const CustomizeRoute = (props: RouteProps) => (
   <PageView location={props.location}>
     <Title>Customize</Title>
-    <Head tag="meta" name="description" content="Customize your LWJGL 3 build" />
+    <Head>
+      <meta name="description" content="Customize your LWJGL 3 build" />
+    </Head>
     <section className="container">
       <Provider>
         <BuildConfigurator />

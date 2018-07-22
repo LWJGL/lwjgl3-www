@@ -48,7 +48,9 @@ class GuideRoute extends React.Component<RouteProps, State> {
     return (
       <PageView location={this.props.location}>
         <Title>Get started with LWJGL 3</Title>
-        <Head tag="meta" name="description" content="This guide will help you get started with LWJGL 3" />
+        <Head>
+          <meta name="description" content="This guide will help you get started with LWJGL 3" />
+        </Head>
         <section className="container">
           <h1>
             LW<b>JGL</b> 3 Guide

@@ -2,15 +2,11 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 
-type Props = {
-  tag: string,
+type Props = {|
   children?: React.Node,
-};
+|};
 
 export const Head = (props: Props) => {
-  const { tag: Tag, ...rest } = props;
-
-  const Comp = <Tag {...rest} />;
   //$FlowFixMe
-  return ReactDOM.createPortal(Comp, document.head);
+  return ReactDOM.createPortal(<React.Fragment>{props.children}</React.Fragment>, document.head);
 };

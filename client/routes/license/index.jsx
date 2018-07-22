@@ -8,7 +8,9 @@ import { Title } from '~/components/Title';
 const LicenseRoute = (props: RouteProps) => (
   <PageView location={props.location}>
     <Title>License</Title>
-    <Head tag="meta" name="description" content="LWJGL is licensed under BSD" />
+    <Head>
+      <meta name="description" content="LWJGL is licensed under BSD" />
+    </Head>
 
     <section className="container">
       <h1>Lightweight Java Game Library License</h1>
