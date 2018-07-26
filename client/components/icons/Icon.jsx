@@ -5,9 +5,12 @@ import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 
 export type Props = {
-  style?: { ...CSSStyleDeclaration },
-  children?: React.Node,
-  props?: { [$Keys<HTMLElement>]: any },
+  [key: string]: any,
+};
+
+type IconProps = {
+  children: React.Node,
+  [key: string]: any,
 };
 
 // Based on https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4#.58pqpyl6w
@@ -28,8 +31,10 @@ const SvgIcon = css`
   }
 `;
 
-export const Icon = ({ children, style, ...props }: Props) => (
+export const Icon = ({ children, style, ...props }: IconProps) => (
   <span css={SvgIcon} className="svg-icon" style={style}>
-    <svg children={children} fill="currentColor" preserveAspectRatio="xMidYMid meet" {...props} />
+    <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" {...props}>
+      {children}
+    </svg>
   </span>
 );
