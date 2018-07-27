@@ -68,12 +68,12 @@ async function uploadFile(file /*: string */, basename /*: string */) {
 
 /*::
 type Deployed = {
-  [string]: string
+  [filename: string]: string,
 }
 */
 
 async function main() {
-  let deployed /*: Deployed | null*/ = null;
+  let deployed /*: Deployed */ = {};
   let hashMap = {};
 
   try {
@@ -81,24 +81,30 @@ async function main() {
   } catch (e) {}
 
   // Collect files
-  const bundle = Object.keys(manifest.assets).map(id =>
-    path.join(__dirname, `../public/${id === 'css' ? 'css' : 'js'}/`, manifest.assets[id])
-  );
+  const bundle /*: Set<string> */ = new Set();
+
+  Object.keys(manifest.assets).forEach(id => {
+    bundle.add(path.join(__dirname, `../public/${id === 'css' ? 'css' : 'js'}/`, manifest.assets[id]));
+  });
 
   // Keep only new files
   const files /*: Array<string>*/ =
-    deployed === null
-      ? bundle
-      : bundle.filter(file => {
+    Object.keys(deployed).length === 0
+      ? Array.from(bundle)
+      : Array.from(bundle).filter(async file => {
           const basename = path.basename(file);
-          if (deployed !== null && deployed[basename] !== undefined) {
-            if (basename === 'manifest.json') {
-              // Check file hash
-              const MD5 = crypto.createHash('MD5');
-              MD5.update(fs.readFileSync(file, { encoding: 'utf-8' }));
-              return deployed[basename] !== MD5.digest('hex');
+          if (deployed[basename]) {
+            // do not upload pre-hashed JS/CSS files if they exist in deploy.json
+            switch (path.extname(basename)) {
+              case 'js':
+              case 'css':
+                return false;
             }
-            return false;
+
+            // For other files (e.g. manifest.json) check content hash
+            const hash = crypto.createHash('MD5');
+            hash.update(await readFile(file, { encoding: 'utf-8' }));
+            return deployed[basename] !== hash.digest('hex');
           }
           return true;
         });
@@ -133,14 +139,10 @@ async function main() {
   }
 
   await Promise.all(channels);
-
-  if (deployed !== null) {
-    deployed = { ...deployed, ...hashMap };
-  } else {
-    deployed = hashMap;
-  }
-
-  await writeFile(path.join(__dirname, '../public/js/', 'deploy.json'), JSON.stringify(deployed, null, 2));
+  await writeFile(
+    path.join(__dirname, '../public/js/', 'deploy.json'),
+    JSON.stringify({ ...deployed, ...hashMap }, null, 2)
+  );
 }
 
 main();
