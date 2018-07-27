@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.281.1",
+    "aws-sdk": "2.282.1",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
@@ -109,10 +109,10 @@
     "scroll-into-view-if-needed": "2.2.16",
     "style-loader": "0.21.0",
     "terser": "3.8.1",
-    "thread-loader": "1.1.5",
+    "thread-loader": "1.2.0",
     "three": "0.94.0",
     "typescript-styled-plugin": "0.10.0",
-    "webpack": "4.16.2",
+    "webpack": "4.16.3",
     "webpack-bundle-analyzer": "2.13.1",
     "webpack-cli": "3.1.0",
     "webpack-dev-middleware": "3.1.3",

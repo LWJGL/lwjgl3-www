@@ -1368,9 +1368,9 @@ autoprefixer@9.0.1:
     postcss "^7.0.1"
     postcss-value-parser "^3.2.3"
 
-aws-sdk@2.281.1:
-  version "2.281.1"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.281.1.tgz#12ef82cf8a70a2c97c90e644038684a01cb8cc0c"
+aws-sdk@2.282.1:
+  version "2.282.1"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.282.1.tgz#3e425b76c9a98d3374c8d70660f83619f66c92fd"
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -6423,9 +6423,9 @@ terser@3.8.1:
     source-map "~0.6.1"
     source-map-support "~0.5.6"
 
-thread-loader@1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/thread-loader/-/thread-loader-1.1.5.tgz#7f9d6701f773734fff1832586779021ab8571917"
+thread-loader@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/thread-loader/-/thread-loader-1.2.0.tgz#35dedb23cf294afbbce6c45c1339b950ed17e7a4"
   dependencies:
     async "^2.3.0"
     loader-runner "^2.3.0"
@@ -6896,9 +6896,9 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@4.16.2:
-  version "4.16.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.16.2.tgz#c3e0e771adc94582e0543dd18d7436066051e885"
+webpack@4.16.3:
+  version "4.16.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.16.3.tgz#861be3176d81e7e3d71c66c8acc9bba35588b525"
   dependencies:
     "@webassemblyjs/ast" "1.5.13"
     "@webassemblyjs/helper-module-context" "1.5.13"
