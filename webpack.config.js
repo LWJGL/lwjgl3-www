@@ -183,6 +183,7 @@ const buildConfiguration = () => {
       // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
       path.resolve(__dirname, 'client/services/polyfill.js')
     );
+    // config.optimization.namedModules = true;
     config.plugins.push(
       // Base hashes on the relative path of modules
       new webpack.HashedModuleIdsPlugin()
