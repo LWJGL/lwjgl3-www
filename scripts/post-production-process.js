@@ -16,14 +16,11 @@ import type { Asset } from './post-production';
 */
 
 const MINIFY = true;
+// const MINIFY = false;
 
 process.on('message', (asset /*: Asset*/) => {
   console.log(`Processing ${asset.name}`);
-
-  const originalPath = path.resolve(__dirname, '../public/js', asset.file);
-
-  // Read contents
-  let contents = fs.readFileSync(originalPath, { encoding: 'utf-8' });
+  let contents = asset.src;
 
   if (MINIFY) {
     // Process with terser

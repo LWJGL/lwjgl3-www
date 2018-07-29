@@ -3,6 +3,9 @@
 const os = require('os');
 const path = require('path');
 const fs = require('fs');
+const { promisify } = require('util');
+const readFile = promisify(fs.readFile);
+const writeFile = promisify(fs.writeFile);
 const chalk = require('chalk');
 const { fork } = require('child_process');
 //$FlowFixMe
@@ -26,11 +29,6 @@ const gzipSize = require('gzip-size');
     * Store entrypoint
     * Store chunk dependencies for each route
   * Display report
-
-  TODO:
-    The same way we remember deployed files we should remember hashes of source files.
-    This will allow us to skip processing of chunks that haven't changed at all and
-    make release process even faster.
 */
 
 // We'll us this to detect route chunks
@@ -40,11 +38,11 @@ const routeRegExp = new RegExp('^route[-][a-z][a-z-_/]+$');
 type ProductionManifest = {
   entry: number,
   routes: {
-    [string]: Array<number>,
+    [route: string]: Array<number>,
   },
   assets: {
-    [string]: string,
-  }
+    [id: string]: string,
+  },
 };
 
 export type Asset = {
@@ -53,20 +51,61 @@ export type Asset = {
   file: string,
   cdn: string,
   route: boolean,
+  src: string,
+  hashSrc: string,
   hash: string,
   originalSize: number,
   size: number,
   gzipSize: number,
-}
+};
 
 type AssetMap = Map<string|number, Asset>;
+
+type ReportData = {
+  manifest: ProductionManifest,
+  assetMap: AssetMap,
+};
+
+type Processed = {
+  [hashSrc: string]: {
+    id: number | string,
+    name: string,
+    file: string,
+    cdn: string,
+    hash: string,
+    originalSize: number,
+    size: number,
+    gzipSize: number,
+  },
+}
 */
 
-async function main() /*: Promise<{productionManifest:ProductionManifest, assetMap:AssetMap}>*/ {
+function processedFromAsset({ id, name, file, cdn, hashSrc, hash, originalSize, size, gzipSize } /*: Asset*/) {
+  return {
+    id,
+    name,
+    file,
+    cdn,
+    hash,
+    originalSize,
+    size,
+    gzipSize,
+  };
+}
+
+async function main() /*: Promise<ReportData>*/ {
   console.log(chalk`{yellow Compiling list of files & routes:}`);
 
   // Read webpack's manifest & chunks into memory
   const manifest = require('../public/js/webpack.manifest.json');
+
+  // Remember previously post-processed files and skip
+  let processed /*: Processed */ = {};
+  let hashMap = {};
+
+  try {
+    processed = JSON.parse(await readFile(path.join(__dirname, '../public/js/processed.json')));
+  } catch (e) {}
 
   // We'll use this to store final production manifest
   const productionManifest /*: ProductionManifest */ = {
@@ -83,25 +122,55 @@ async function main() /*: Promise<{productionManifest:ProductionManifest, assetM
   // Build a map that contains each chunk
   // For each chunk we save its filename, id, and size
   const assetMap /*: AssetMap */ = new Map();
+
   manifest.assets.forEach(record => {
     const name = record.chunkNames[0];
-    const asset /*: Asset */ = {
+    const src = fs.readFileSync(path.resolve(__dirname, '../public/js', record.name), { encoding: 'utf-8' });
+    const hash = crypto.createHash('MD5');
+    hash.update(src);
+    const hashSrc = hash.digest('hex');
+
+    let asset /*: Asset */ = {
       id: record.chunks[0],
       name,
       file: record.name,
       cdn: record.name,
       route: name.indexOf('~') === -1 && name.match(/^route[-]/) !== null,
+      src,
+      hashSrc,
       hash: '',
       originalSize: record.size,
       size: 0,
       gzipSize: 0,
     };
 
+    if (processed[asset.hashSrc]) {
+      // If we have already processed this file, we can skip heavy processing
+      const previous = processed[asset.hashSrc];
+      // Check for changes & if file still exists
+      if (
+        asset.id === previous.id &&
+        asset.name === previous.name &&
+        asset.file === previous.file &&
+        fs.existsSync(path.resolve(__dirname, '../public/js', previous.cdn))
+      ) {
+        asset.cdn = previous.cdn;
+        asset.hash = previous.hash;
+        asset.size = previous.size;
+        asset.gzipSize = previous.gzipSize;
+      }
+
+      productionManifest.assets[asset.id.toString()] = asset.cdn;
+    }
+
+    // Check if we haven't processed before
+    if (asset.size === 0) {
+      // Use pre-minified filename (will be replaced later). This is useful for debugging
+      productionManifest.assets[asset.id.toString()] = asset.file;
+    }
+
     // Add to asset map
     assetMap.set(asset.id, asset);
-
-    // Use pre-minified filename (will be replaced later). This is useful for debugging
-    productionManifest.assets[asset.id + ''] = asset.file;
   });
 
   // Append route chunk dependencies
@@ -158,19 +227,25 @@ async function main() /*: Promise<{productionManifest:ProductionManifest, assetM
   let runtimeChunk;
 
   await Promise.all(
-    Array.from(assetMap.keys()).map(async chunkId => {
-      // Get next available from pool
-      const child = await pool.acquire();
-      // Run process
-      const asset = await processChunk(child, assetMap.get(chunkId));
+    Array.from(assetMap.keys())
+      .filter(chunkId => {
+        let asset = assetMap.get(chunkId);
+        return asset != null && asset.hash.length === 0;
+      })
+      .map(async chunkId => {
+        // Get next available from pool
+        const child = await pool.acquire();
+        // Run process
+        const asset = await processChunk(child, assetMap.get(chunkId));
 
-      // Update asset & manifest
-      assetMap.set(chunkId, asset);
-      productionManifest.assets[chunkId + ''] = asset.cdn;
+        // Update asset & manifest
+        assetMap.set(chunkId, asset);
+        productionManifest.assets[chunkId.toString()] = asset.cdn;
+        processed[asset.hashSrc] = processedFromAsset(asset);
 
-      // Return to pool
-      pool.release(child);
-    })
+        // Return to pool
+        pool.release(child);
+      })
   );
 
   // Drain forks
@@ -179,7 +254,7 @@ async function main() /*: Promise<{productionManifest:ProductionManifest, assetM
   // Replace entrypoint filenames with CDN version and update hash
   const entry = assetMap.get(productionManifest.entry);
   if (entry !== undefined) {
-    let entryContents = fs.readFileSync(path.resolve(__dirname, `../public/js/${entry.cdn}`), { encoding: 'utf-8' });
+    let entryContents = await readFile(path.resolve(__dirname, '../public/js/', entry.cdn), { encoding: 'utf-8' });
 
     Array.from(assetMap.keys()).forEach(chunkId => {
       if (chunkId !== productionManifest.entry) {
@@ -200,17 +275,19 @@ async function main() /*: Promise<{productionManifest:ProductionManifest, assetM
     entry.gzipSize = gzipSize.sync(entryContents);
     entry.cdn = `main.${entry.hash}.js`;
 
-    productionManifest.assets[entry.id + ''] = entry.cdn;
-    fs.writeFileSync(path.resolve(__dirname, `../public/js/${entry.cdn}`), entryContents);
+    productionManifest.assets[entry.id.toString()] = entry.cdn;
+    await writeFile(path.resolve(__dirname, `../public/js/${entry.cdn}`), entryContents);
   }
 
+  // Append manifest.json to deployment assets
+  productionManifest.assets.manifest = 'manifest.json';
+
   // Hash and append core.css
-  (() => {
-    let contents = fs.readFileSync(path.resolve(__dirname, '../public/css/core.css'), { encoding: 'utf-8' });
+  await (async () => {
+    let contents = await readFile(path.resolve(__dirname, '../public/css/core.css'), { encoding: 'utf-8' });
     const MD5 = crypto.createHash('MD5');
     MD5.update(contents);
     const hash = MD5.digest('hex');
-    const size = Buffer.byteLength(contents, 'utf8');
 
     const asset /*: Asset*/ = {
       id: 'css',
@@ -218,25 +295,50 @@ async function main() /*: Promise<{productionManifest:ProductionManifest, assetM
       file: 'core.css',
       cdn: `core.${hash}.css`,
       route: false,
-      hash: hash,
-      originalSize: size,
-      size,
-      gzipSize: gzipSize.sync(contents),
+      src: contents,
+      hashSrc: hash,
+      hash,
+      originalSize: 0,
+      size: 0,
+      gzipSize: 0,
     };
 
-    productionManifest.assets['css'] = asset.cdn;
+    if (processed[hash]) {
+      const previous = processed[hash];
+      // Check for changes & if file still exists
+      if (
+        asset.id === previous.id &&
+        asset.name === previous.name &&
+        asset.file === previous.file &&
+        fs.existsSync(path.resolve(__dirname, '../public/css', previous.cdn))
+      ) {
+        asset.originalSize = previous.originalSize;
+        asset.size = previous.size;
+        asset.gzipSize = previous.gzipSize;
+      }
+    }
+
+    if (asset.size === 0) {
+      asset.originalSize = Buffer.byteLength(contents, 'utf8');
+      asset.size = asset.originalSize;
+      asset.gzipSize = gzipSize.sync(contents);
+
+      await writeFile(path.resolve(__dirname, `../public/css/${asset.cdn}`), contents);
+      processed[asset.hashSrc] = processedFromAsset(asset);
+    }
+
+    productionManifest.assets.css = asset.cdn;
     assetMap.set('css', asset);
-    fs.writeFileSync(path.resolve(__dirname, `../public/css/${asset.cdn}`), contents);
   })();
 
-  // Append manifest.json to deployment assets
-  productionManifest.assets['manifest'] = 'manifest.json';
-
   // Store production manifest
-  fs.writeFileSync(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
+  await writeFile(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
+
+  // Remember processed files
+  await writeFile(path.resolve(__dirname, '../public/js/processed.json'), JSON.stringify(processed, null, 2));
 
   // Done!
-  return { productionManifest, assetMap };
+  return { manifest: productionManifest, assetMap };
 }
 
 function ellipsis(str /*:string*/, maxlength /*:number*/ = 25) {
@@ -247,7 +349,7 @@ function ellipsis(str /*:string*/, maxlength /*:number*/ = 25) {
 }
 
 main()
-  .then(({ productionManifest, assetMap }) => {
+  .then(({ manifest, assetMap }) => {
     // Print file report
     //$FlowFixMe
     const CliTable = require('cli-table');
@@ -272,7 +374,7 @@ main()
       sumGzip += asset.gzipSize;
 
       const row = [];
-      const isEntry = productionManifest.entry === asset.id || asset.id === 'css';
+      const isEntry = manifest.entry === asset.id || asset.id === 'css';
 
       if (isEntry) {
         row.push(chalk`{cyan > ${asset.name}}`);

@@ -91,19 +91,19 @@ async function main() {
   const files /*: Array<string>*/ =
     Object.keys(deployed).length === 0
       ? Array.from(bundle)
-      : Array.from(bundle).filter(async file => {
+      : Array.from(bundle).filter(file => {
           const basename = path.basename(file);
           if (deployed[basename]) {
             // do not upload pre-hashed JS/CSS files if they exist in deploy.json
             switch (path.extname(basename)) {
-              case 'js':
-              case 'css':
+              case '.js':
+              case '.css':
                 return false;
             }
 
             // For other files (e.g. manifest.json) check content hash
             const hash = crypto.createHash('MD5');
-            hash.update(await readFile(file, { encoding: 'utf-8' }));
+            hash.update(fs.readFileSync(file, { encoding: 'utf-8' }));
             return deployed[basename] !== hash.digest('hex');
           }
           return true;

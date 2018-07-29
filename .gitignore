@@ -5,8 +5,8 @@
 /node_modules
 /.cache-loader
 /public/**/*.map
-/public/js/*.js*
-/public/css/*.css
+/public/js/**/*.js*
+/public/css/**/*.css
 /*.manifest.json
 *.log
 
