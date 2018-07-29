@@ -85,7 +85,8 @@ export const Footer = () => (
     </section>
     <section className="container copyright">
       <p>
-        LW<b>JGL</b>
+        LW
+        <b>JGL</b>
         <sup>3</sup>
       </p>
       <p>

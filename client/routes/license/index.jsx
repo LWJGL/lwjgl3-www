@@ -20,7 +20,8 @@ const LicenseRoute = (props: RouteProps) => (
         <div className="col-lg">
           <p>
             Copyright © 2012-present Lightweight Java Game Library
-            <br />All rights reserved.
+            <br />
+            All rights reserved.
           </p>
 
           <p>

@@ -36,17 +36,20 @@ const HomeRoute = (props: RouteProps) => (
 
     <section className="container py-5">
       <h1 className="text-center">
-        What is LW<b>JGL</b> 3?
+        What is LW
+        <b>JGL</b> 3?
       </h1>
       <div className="row justify-content-center">
         <div className="col-md-10">
           <p>
-            LW<b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
+            LW
+            <b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
             development of graphics (<a href="https://www.opengl.org/">OpenGL</a>,{' '}
-            <a href="https://www.khronos.org/vulkan/">Vulkan</a>), audio (<a href="http://www.openal.org/">OpenAL</a>)
-            and parallel computing (<a href="https://www.khronos.org/opencl/">OpenCL</a>) applications. This access is
-            direct and high-performance, yet also wrapped in a type-safe and user-friendly layer, appropriate for the
-            Java ecosystem.
+            <a href="https://www.khronos.org/vulkan/">Vulkan</a>
+            ), audio (<a href="http://www.openal.org/">OpenAL</a>) and parallel computing (
+            <a href="https://www.khronos.org/opencl/">OpenCL</a>) applications. This access is direct and
+            high-performance, yet also wrapped in a type-safe and user-friendly layer, appropriate for the Java
+            ecosystem.
           </p>
 
           <p>
@@ -58,7 +61,8 @@ const HomeRoute = (props: RouteProps) => (
           </p>
 
           <p>
-            LW<b>JGL</b> is open source software and freely available at no charge.
+            LW
+            <b>JGL</b> is open source software and freely available at no charge.
           </p>
 
           <p className="text-center pt-1">
@@ -143,7 +147,8 @@ const HomeRoute = (props: RouteProps) => (
           <div className="col-md py-3">
             <LazyImg width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
             <h3>
-              Vulkan<sup>TM</sup> Bindings
+              Vulkan
+              <sup>TM</sup> Bindings
             </h3>
             <p>
               A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
@@ -159,7 +164,8 @@ const HomeRoute = (props: RouteProps) => (
               alt="OpenCL"
             />
             <h3>
-              OpenCL<sup>TM</sup> Bindings
+              OpenCL
+              <sup>TM</sup> Bindings
             </h3>
             <p>
               The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all OpenCL
@@ -180,7 +186,8 @@ const HomeRoute = (props: RouteProps) => (
           <div className="col-md py-3">
             <LazyImg width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
             <h3>
-              OpenGL<sup>®</sup> Bindings
+              OpenGL
+              <sup>®</sup> Bindings
             </h3>
             <p>
               Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions (including
@@ -192,7 +199,8 @@ const HomeRoute = (props: RouteProps) => (
           <div className="col-md py-3">
             <LazyImg width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
             <h3>
-              OpenGL<sup>®</sup> ES Bindings
+              OpenGL
+              <sup>®</sup> ES Bindings
             </h3>
             <p>
               A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
@@ -203,7 +211,8 @@ const HomeRoute = (props: RouteProps) => (
           <div className="col-md py-3">
             <LazyImg width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
             <h3>
-              EGL<sup>TM</sup> Bindings
+              EGL
+              <sup>TM</sup> Bindings
             </h3>
             <p>
               An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native platform
@@ -286,7 +295,8 @@ const HomeRoute = (props: RouteProps) => (
               rel="noopener"
             >
               contribute
-            </a>.
+            </a>
+            .
           </p>
           <p>
             <a href="https://github.com/LWJGL/lwjgl3/graphs/contributors" target="_blank" rel="noopener">
@@ -314,7 +324,8 @@ const HomeRoute = (props: RouteProps) => (
 
           <h1>Looking for LWJGL 2?</h1>
           <p>
-            LW<b>JGL</b> 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation of
+            LW
+            <b>JGL</b> 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation of
             dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang and{' '}
             <a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames. It is
             also used in popular game engines, like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and{' '}

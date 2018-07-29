@@ -53,7 +53,8 @@ class GuideRoute extends React.Component<RouteProps, State> {
         </Head>
         <section className="container">
           <h1>
-            LW<b>JGL</b> 3 Guide
+            LW
+            <b>JGL</b> 3 Guide
           </h1>
 
           <p>This guide will help you get started with LWJGL.</p>
@@ -66,8 +67,7 @@ class GuideRoute extends React.Component<RouteProps, State> {
             <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a>{' '}
             (JDK), LWJGL requires version 8 or higher. Then proceed by setting up a project in your favorite IDE and
             configuring it as described in the{' '}
-            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">Installation Guide</a>
-            .
+            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">Installation Guide</a>.
           </p>
 
           <p>
@@ -85,10 +85,9 @@ class GuideRoute extends React.Component<RouteProps, State> {
         <section className="container pt-4">
           <p>
             LWJGL comes with rich documentation, you can browse the javadoc online{' '}
-            <a href="http://javadoc.lwjgl.org/">starting here</a>
-            . For more information, FAQ, guides and tutorials visit the{' '}
-            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>
-            . The <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.3.-Memory-FAQ">Memory FAQ</a>,{' '}
+            <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information, FAQ, guides and tutorials visit
+            the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>. The{' '}
+            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.3.-Memory-FAQ">Memory FAQ</a>,{' '}
             <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.4.-Bindings-FAQ">Bindings FAQ</a> and{' '}
             <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.5.-Troubleshooting">Troubleshooting</a> pages are
             especially useful. For more code examples, see the{' '}
@@ -97,8 +96,7 @@ class GuideRoute extends React.Component<RouteProps, State> {
             </a>{' '}
             and the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository (nightly build
             required). For porting existing LWJGL 2 code to LWJGL 3, see the{' '}
-            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>
-            .
+            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>.
           </p>
 
           <HashLinkTarget id="build-instructions" />
@@ -162,7 +160,10 @@ class GuideRoute extends React.Component<RouteProps, State> {
             </li>
             <li>
               <em>
-                release/{'{'}build.version{'}'}
+                release/
+                {'{'}
+                build.version
+                {'}'}
               </em>{' '}
               – a specific previously released build
             </li>
@@ -170,8 +171,7 @@ class GuideRoute extends React.Component<RouteProps, State> {
 
           <p>
             If you are using custom binaries, or simply need to work offline, set the LWJGL_BUILD_OFFLINE environment
-            variable to one of <em>true/on/yes</em>
-            .
+            variable to one of <em>true/on/yes</em>.
           </p>
 
           <p>
@@ -183,7 +183,8 @@ class GuideRoute extends React.Component<RouteProps, State> {
         <div className="area-dark py-4">
           <section className="container">
             <h1>
-              Is LW<b>JGL</b> for me?
+              Is LW
+              <b>JGL</b> for me?
             </h1>
 
             <p>LWJGL is simple but powerful. It is not for everyone.</p>
@@ -205,8 +206,7 @@ class GuideRoute extends React.Component<RouteProps, State> {
           </p>
           <p>
             Learning GLFW is easy. It has a simple, yet powerful, API and comprehensive{' '}
-            <a href="http://www.glfw.org/docs/latest/">documentation</a>
-            .
+            <a href="http://www.glfw.org/docs/latest/">documentation</a>.
           </p>
 
           <h2>OpenGL</h2>
@@ -216,8 +216,8 @@ class GuideRoute extends React.Component<RouteProps, State> {
           </p>
           <p>
             OpenGL is a massive API with long history and hundreds of extensions. Learning it from scratch is no easy
-            undertaking, but you can start from its <a href="https://www.opengl.org/documentation/">documentation</a>
-            . The <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.
+            undertaking, but you can start from its <a href="https://www.opengl.org/documentation/">documentation</a>.
+            The <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.
           </p>
 
           <h2>OpenCL</h2>
@@ -230,8 +230,7 @@ class GuideRoute extends React.Component<RouteProps, State> {
           </p>
           <p>
             Specifications for OpenCL and its extensions can be found at the{' '}
-            <a href="https://www.khronos.org/registry/cl/">Khronos OpenCL registry</a>
-            .
+            <a href="https://www.khronos.org/registry/cl/">Khronos OpenCL registry</a>.
           </p>
 
           <h2>OpenAL</h2>
@@ -242,8 +241,8 @@ class GuideRoute extends React.Component<RouteProps, State> {
             sound sources around a listener.
           </p>
           <p>
-            LWJGL is bundled with <a href="http://kcat.strangesoft.net/openal.html">OpenAL Soft</a>
-            , an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API.
+            LWJGL is bundled with <a href="http://kcat.strangesoft.net/openal.html">OpenAL Soft</a>, an LGPL-licensed,
+            cross-platform, software implementation of the OpenAL 3D audio API.
           </p>
         </section>
       </PageView>

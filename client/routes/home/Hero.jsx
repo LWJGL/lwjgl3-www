@@ -165,7 +165,8 @@ export class HomeHero extends React.Component<Props, State> {
               Lightweight <b>Java&nbsp;Game&nbsp;Library&nbsp;3</b>
             </h1>
             <Link to="/#learn-more">
-              LEARN MORE<br />
+              LEARN MORE
+              <br />
               <IconKeyboardArrowDown />
             </Link>
           </HeroContent>

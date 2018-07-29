@@ -17,7 +17,8 @@ const scrollTopTop = (e: SyntheticEvent<HTMLLinkElement>) => {
 export const BackToTop = () => (
   <p className="text-center">
     <a className="btn btn-link" href="#" onClick={scrollTopTop}>
-      top<IconArrowUpward />
+      top
+      <IconArrowUpward />
     </a>
   </p>
 );

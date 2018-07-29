@@ -24,7 +24,9 @@ export class BuildBundler extends React.Component<Props> {
           {this.props.progress
             .slice(0)
             .reverse()
-            .map((line, i) => <div key={`log${i}`}>{line}</div>)}
+            .map((line, i) => (
+              <div key={`log${i}`}>{line}</div>
+            ))}
         </pre>
       </div>
     );

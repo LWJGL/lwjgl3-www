@@ -54,7 +54,9 @@ function Contents({ path, contents }: ContentsProps) {
         const fullPath = `${basePath}${folder}`;
         return <Folder key={fullPath} path={fullPath} />;
       })}
-      {files.map(file => <File key={`${basePath}${file}`} path={`${basePath}${file}`} />)}
+      {files.map(file => (
+        <File key={`${basePath}${file}`} path={`${basePath}${file}`} />
+      ))}
     </React.Fragment>
   );
 }
@@ -135,7 +137,8 @@ export class Browser extends React.Component<Props, State> {
           <thead className="thead-light">
             <tr>
               <th colSpan={2}>
-                <IconCloud /> &nbsp;lwjgl/{path.length ? path + '/' : ''}
+                <IconCloud /> &nbsp;lwjgl/
+                {path.length ? path + '/' : ''}
               </th>
             </tr>
           </thead>

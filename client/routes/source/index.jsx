@@ -15,7 +15,8 @@ const SourceRoute = (props: RouteProps) => (
     </Head>
     <section className="container pb-5">
       <h1>
-        LW<b>JGL</b> Source
+        LW
+        <b>JGL</b> Source
       </h1>
 
       <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>

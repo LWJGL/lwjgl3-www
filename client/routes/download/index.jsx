@@ -19,7 +19,8 @@ const DownloadRoute = (props: RouteProps) => (
     </Head>
     <section className="container pb-4">
       <h1>
-        Download LW<b>JGL</b> 3
+        Download LW
+        <b>JGL</b> 3
       </h1>
       <hr />
       <div className="row">
