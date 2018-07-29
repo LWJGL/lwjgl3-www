@@ -59,7 +59,6 @@ export class Header extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
-    // this.unsubscribe();
     window.removeEventListener('scroll', this.onScroll, SupportsPassiveEvents ? { passive: true } : false);
     this.mounted = false;
   }
@@ -156,7 +155,8 @@ export class Header extends React.PureComponent<Props, State> {
           <div className="row">
             <div className="col col-auto">
               <Link to="/">
-                LW<b>JGL</b> 3
+                LW
+                <b>JGL</b> 3
               </Link>
             </div>
             <Breakpoint>

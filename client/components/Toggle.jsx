@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
-import { uniqueId } from 'lodash-es';
+import uniqueId from 'lodash-es/uniqueId';
 import { COLOR_WHITE, COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 
 import { lighten, setSaturation } from '~/theme/color';

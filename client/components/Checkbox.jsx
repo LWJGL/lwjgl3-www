@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { uniqueId } from 'lodash-es';
+import uniqueId from 'lodash-es/uniqueId';
 
 type Props = {
   label: string,

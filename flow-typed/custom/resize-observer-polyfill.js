@@ -13,5 +13,5 @@ declare module 'resize-observer-polyfill' {
     unobserve(target: Element): void;
   }
 
-  declare export default Class<ResizeObserver>
+  declare export default Class<ResizeObserver>;
 }

@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { debounce } from 'lodash-es';
+import debounce from 'lodash-es/debounce';
 import JSZip from 'jszip';
 import { saveAs } from '~/services/file-saver';
 import areEqual from 'fbjs/lib/areEqual';
@@ -251,7 +251,9 @@ export class BuildConfigurator extends React.Component<Props, State> {
                     >
                       {({ addons }) => (
                         <div className="custom-controls-stacked">
-                          {addons.map(it => <BuildAddon key={it} id={it} />)}
+                          {addons.map(it => (
+                            <BuildAddon key={it} id={it} />
+                          ))}
                         </div>
                       )}
                     </Connect>
@@ -287,7 +289,9 @@ export class BuildConfigurator extends React.Component<Props, State> {
                     >
                       {({ artifacts }) => (
                         <div className="custom-controls-stacked">
-                          {artifacts.map(it => <BuildArtifact key={it} id={it} />)}
+                          {artifacts.map(it => (
+                            <BuildArtifact key={it} id={it} />
+                          ))}
                         </div>
                       )}
                     </Connect>
