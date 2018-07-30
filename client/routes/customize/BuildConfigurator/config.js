@@ -21,6 +21,7 @@ import lwjgl_313 from './lwjgl/3.1.3';
 import lwjgl_314 from './lwjgl/3.1.4';
 import lwjgl_315 from './lwjgl/3.1.5';
 import lwjgl_316 from './lwjgl/3.1.6';
+import lwjgl_320 from './lwjgl/3.2.0';
 import lwjgl_stable from './lwjgl/stable';
 import lwjgl_nightly from './lwjgl/nightly';
 
@@ -242,6 +243,7 @@ const builders: Array<BuildOptionsBuilder> = [
   lwjgl_314,
   lwjgl_315,
   lwjgl_316,
+  lwjgl_320,
   lwjgl_stable,
   lwjgl_nightly,
 ];
