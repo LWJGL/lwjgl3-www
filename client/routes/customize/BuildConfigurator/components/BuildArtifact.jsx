@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { toggleArtifact } from '../reducer';
-import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
+import { NATIVE_ALL, NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
 import { Checkbox } from '~/components/Checkbox';
 import { Connect } from '~/store/Connect';
 import { cc } from '~/theme';
@@ -62,7 +62,10 @@ export const BuildArtifact = ({ id }: Props) => (
               checked={checked}
               onChange={toggleArtifact}
             />
-            {artifact.natives && getPlatformIcons(artifact.natives)}
+            {artifact.natives &&
+              artifact.natives !== NATIVE_ALL &&
+              artifact.nativesOptional !== true &&
+              getPlatformIcons(artifact.natives)}
             <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
             {artifact.website !== undefined && (
               <p>

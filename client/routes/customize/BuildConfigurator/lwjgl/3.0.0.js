@@ -27,7 +27,7 @@ export default (): BuildOptions => ({
       id: 'lwjgl-glfw',
       title: 'GLFW',
       description:
-        'An multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.',
+        'A multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.',
       natives: NATIVE_ALL,
       website: 'http://www.glfw.org/',
       presets: ['getting-started', 'minimal-opengl', 'minimal-opengles', 'minimal-vulkan'],
