@@ -31,6 +31,7 @@ esproposal.optional_chaining=enable
 esproposal.export_star_as=enable
 experimental.const_params=true
 experimental.well_formed_exports=true
+experimental.cancelable_rechecks=true
 munge_underscores=true
 module.system=node
 module.use_strict=true
