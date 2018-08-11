@@ -80,6 +80,10 @@ async function main() {
     bundle.add(path.join(__dirname, `../public/${id === 'css' ? 'css' : 'js'}/`, manifest.assets[id]));
   });
 
+  // Add Service Worker files
+  bundle.add(path.join(__dirname, '../client/sw.js'));
+  bundle.add(path.join(__dirname, '../client/sw-destroy.js'));
+
   // Keep only new files
   const files /*: Array<string>*/ =
     Object.keys(deployed).length === 0

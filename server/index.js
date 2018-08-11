@@ -227,7 +227,12 @@ app.get('/sw.js', async (req, res) => {
   if (serviceWorkerCache === null) {
     if (app.locals.production) {
       // Read service worker source code
-      let swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
+      let swJS;
+      if (argv.test) {
+        swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
+      } else {
+        swJS = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js');
+      }
 
       // Update version hash - detects changes to build or to the service worker itself
       const MD5 = crypto.createHash('MD5');
@@ -251,10 +256,14 @@ app.get('/sw.js', async (req, res) => {
       });
       swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
 
-      // Store SW script source so we can serve immediately
+      // Store SW script source so we can serve from memory
       serviceWorkerCache = swJS;
     } else {
-      serviceWorkerCache = await readFileAsync(path.join(__dirname, '../client', 'sw-destroy.js'));
+      if (argv.test) {
+        serviceWorkerCache = await readFileAsync(path.join(__dirname, '../client', 'sw-destroy.js'));
+      } else {
+        serviceWorkerCache = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw-destroy.js');
+      }
     }
   }
 
