@@ -1,19 +1,18 @@
-# Private files
-/config.json
+# Docker
+docker-compose.override.yml
 
 # Generated files
-/node_modules
-/.cache-loader
-/public/**/*.map
-/public/js/**/*.js*
-/public/css/**/*.css
-/*.manifest.json
+node_modules
+.cache-loader
+public/**/*.map
+public/js/**/*.js*
+public/css/**/*.css
+*.manifest.json
 *.log
 
 # IDE files
 /.idea
 /.vscode
-/.history
 
 # OS
 .DS_Store

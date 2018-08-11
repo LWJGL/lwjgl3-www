@@ -14,15 +14,11 @@ const request = require('request-promise-native');
 const { promisify } = require('util');
 const readFileAsync = promisify(fs.readFile);
 
-// AWS
 const AWS = require('aws-sdk');
-AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
-AWS.config.update({ region: 'us-east-1' });
-
-// Lib
 const cloudFrontSubnets = require('./cloudfront-subnets.json');
 const chunkMap = require('./chunkMap');
 const helmetConfig = require('./helmetConfig');
+const globals = require('./globals.json');
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
@@ -30,7 +26,6 @@ const helmetConfig = require('./helmetConfig');
 
 const PRODUCT = 'lwjgl.org';
 const app = express();
-const config = require('../config.json');
 
 app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
@@ -43,7 +38,7 @@ let serviceWorkerCache = null;
 app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
 
-app.set('port', config.port || 80);
+app.set('port', process.env.PORT || 80);
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
@@ -269,7 +264,7 @@ app.get('/sw.js', async (req, res) => {
 // App
 app.get('*', (req, res, next) => {
   const renderOptions = {
-    ga: config.analytics_tracking_id,
+    ga: globals.google_analytics_id,
   };
 
   if (app.locals.production) {

@@ -1,0 +1,9 @@
+node_modules
+.git
+.vscode
+.idea
+flow-typed
+client
+public/**/*.map
+public/js/**/*.js*
+public/css/**/*.css

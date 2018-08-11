@@ -6,22 +6,22 @@ There is no server-side rendering because of hosting constraints.
 
 Notable features:
 
-* Client-side routing
-* Service Worker (works offline)
-* Tiny production build (entire codebase + content weights ~300KB gzipped)
-* Code splitting at route & component level
-* Scroll restoration
-* Route preloading
-* Proximity based route preloading (see /download page)
-* Build Customizer with smart download queue & client-side ZIP generator
-* Hot reloading using React Hot Loader
-* Optional hot reloading for Sass
-* Very fast dev builds using DllReferencePlugin
-* Custom webpack manifest parsing + code minification
-* Custom render-prop <Connect /> component for Redux
-* CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
-* fast-async instead of regenerator
-* [Flow](https://flow.org/) static type checking
+- Client-side routing
+- Service Worker (works offline)
+- Tiny production build (entire codebase + content weights ~300KB gzipped)
+- Code splitting at route & component level
+- Scroll restoration
+- Route preloading
+- Proximity based route preloading (see /download page)
+- Build Customizer with smart download queue & client-side ZIP generator
+- Hot reloading using React Hot Loader
+- Optional hot reloading for Sass
+- Very fast dev builds using DllReferencePlugin
+- Custom webpack manifest parsing + code minification
+- Custom render-prop <Connect /> component for Redux
+- CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
+- fast-async instead of regenerator
+- [Flow](https://flow.org/) static type checking
 
 ## Dependencies
 
@@ -33,40 +33,21 @@ Build status icons are loaded directly from travis-ci.org and appveyor.com.
 
 Other LWJGL subdomains:
 
-* The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www). A static copy of the old LWJGL website is now hosted directly from S3
-* The blog is powered by [Ghost](https://ghost.org/).
-* The forum is [SMF](http://www.simplemachines.org/).
-* The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/). A static copy of the old LWJGL wiki is now hosted directly from S3.
+- The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www). A static copy of the old LWJGL website is now hosted directly from S3
+- The blog is powered by [Ghost](https://ghost.org/).
+- The forum is [SMF](http://www.simplemachines.org/).
+- The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/). A static copy of the old LWJGL wiki is now hosted directly from S3.
 
 ## Production Requirements
 
-* [Node.js](https://nodejs.org/)
-* [Yarn](https://yarnpkg.com/)
-* [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
+- [Node.js](https://nodejs.org/)
+- [Yarn](https://yarnpkg.com/)
+- [PM2](https://github.com/Unitech/pm2) or [forever](https://github.com/foreverjs/forever)
 
 ## Development Prerequisites
 
-* [Yarn](https://yarnpkg.com/en/)
-* [Nodemon](https://nodemon.io/)
-
-## App Configuration
-
-Place a JSON file in the root directory named config.json with the following contents.
-Additional settings are automatically populated when the project is built for production.
-
-```json
-{
-  "port": 8080,
-  "analytics_tracking_id": "UA-83518-1",
-  "aws": {
-    "accessKeyId": "",
-    "secretAccessKey": "",
-    "region": "us-east-1"
-  }
-}
-```
-
-AWS credentials are only needed for deploying compiled files to S3 (@see yarn deploy)
+- [Yarn](https://yarnpkg.com/en/)
+- [Nodemon](https://nodemon.io/)
 
 ## Development
 
@@ -127,6 +108,11 @@ node server --async --nohmr
 yarn watch -- --async --nohmr
 ```
 
+### Environment variables
+
+NODE_ENV=production (default=development)
+PORT=8080 (default=80)
+
 ## Production
 
 The website is served via Amazon CloudFront using the server's hostname & port as origin.
@@ -134,17 +120,17 @@ SSL Termination happens on the CDN (using a certificate issued by AWS Certificat
 
 The production process involves the following steps:
 
-* Compile SCSS files (_node-sass -> postcss -> autoprefixer -> cssnano_)
-* Compile JS files with webpack (_babel_) and store the manifest on disk
-* Process the manifest:
-  * Read the webpack manifest and compile list of files & routes
-  * Process each file with terser
-  * Compute hashes of final files
-  * Store each production file on disk
-  * Generate production manifest that also needs to be shipped
-  * Generate & print file size report
-* Deploy files to S3
-* Start or reload node app
+- Compile SCSS files (_node-sass -> postcss -> autoprefixer -> cssnano_)
+- Compile JS files with webpack (_babel_) and store the manifest on disk
+- Process the manifest:
+  - Read the webpack manifest and compile list of files & routes
+  - Process each file with terser
+  - Compute hashes of final files
+  - Store each production file on disk
+  - Generate production manifest that also needs to be shipped
+  - Generate & print file size report
+- Deploy files to S3
+- Start or reload node app
 
 ### Build for production
 
@@ -223,13 +209,40 @@ and then run:
 forever start forever.json
 ```
 
+## Docker
+
+To build the production docker image:
+
+```bash
+docker build --rm -t lwjgl/website:latest .
+```
+
+To test the production docker image (after running release):
+
+```bash
+docker-compose up
+```
+
+In order to access AWS resources, you'll need to create a `docker-compose.override.yml` file
+and populate it with the following configuration:
+
+```yml
+version: '3.7'
+
+services:
+  lwjgl:
+    environment:
+      - AWS_ACCESS_KEY_ID=XXXXX
+      - AWS_SECRET_ACCESS_KEY=XXXXX
+```
+
 ## IDE Setup
 
 We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following plugins:
 
-* Flow Language Support
-* Prettier - Code formatter
-* vscode-styled-components
+- Flow Language Support
+- Prettier - Code formatter
+- vscode-styled-components
 
 We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab).
 In VS Code add the following in the user settings:
@@ -242,9 +255,9 @@ In VS Code add the following in the user settings:
 
 Recommended VS Code **Workspace Settings**:
 
-* enable Prettier's format-on-save
-* exclude generated files
-* disable built-in JS support because we rely on Flow
+- enable Prettier's format-on-save
+- exclude generated files
+- disable built-in JS support because we rely on Flow
 
 ```json
 {
