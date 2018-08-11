@@ -236,6 +236,12 @@ services:
       - AWS_SECRET_ACCESS_KEY=XXXXX
 ```
 
+To push the image to Docker Hub (requires access to LWJGL organization):
+
+```bash
+docker push lwjgl/website:latest
+```
+
 ## IDE Setup
 
 We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following plugins:
