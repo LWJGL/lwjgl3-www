@@ -4,16 +4,9 @@ const fs = require('fs');
 const { promisify } = require('util');
 const crypto = require('crypto');
 const path = require('path');
-const config = require('../config.json');
 const manifest = require('../public/js/manifest.json');
 //$FlowFixMe
 const AWS = require('aws-sdk');
-AWS.config.credentials = new AWS.Credentials({
-  accessKeyId: config.aws.accessKeyId,
-  secretAccessKey: config.aws.secretAccessKey,
-});
-AWS.config.update({ region: config.aws.region });
-
 const s3 = new AWS.S3();
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);

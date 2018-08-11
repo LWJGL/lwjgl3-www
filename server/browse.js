@@ -2,8 +2,6 @@
 
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-AWS.config.credentials = new AWS.SharedIniFileCredentials({ profile: 'default' });
-AWS.config.update({ region: 'us-east-1' });
 
 module.exports = (req, res, next) => {
   let isRoot = true;

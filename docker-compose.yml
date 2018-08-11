@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  lwjgl:
+    image: lwjgl/website:latest
+    ports:
+      - 80:80
+    command: node server --s3proxy --test
+    volumes:
+      - type: bind
+        source: ./public/js
+        target: /srv/public/js
+      - type: bind
+        source: ./public/css
+        target: /srv/public/css

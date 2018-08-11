@@ -1,6 +1,6 @@
 const { argv } = require('yargs');
 const PRODUCTION = process.env.NODE_ENV === 'production';
-const MODERN = process.env.modern === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
+const MODERN = process.env.MODERN === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
 const SOURCEMAP = argv.sourcemap !== undefined;

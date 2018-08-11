@@ -2,7 +2,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const { argv } = require('yargs');
-const config = require('./config.json');
+const globals = require('./server/globals.json');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
@@ -11,7 +11,7 @@ const SOURCEMAP = argv.sourcemap !== undefined;
 const DLL = argv.nodll === undefined;
 
 const env = {
-  ANALYTICS_TRACKING_ID: JSON.stringify(config.analytics_tracking_id),
+  ANALYTICS_TRACKING_ID: JSON.stringify(globals.google_analytics_id),
   FLAG_PRODUCTION: String(PRODUCTION),
   FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
   FLAG_REDUXLOGGER: String(DEV && argv.reduxLogger !== undefined),
