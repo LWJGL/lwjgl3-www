@@ -61,10 +61,10 @@ const DownloadRoute = (props: RouteProps) => (
         <h3>Build from source?</h3>
         <p>Click below if you prefer to build from source:</p>
         <p>
-          <Link className="btn btn-xs-block btn-outline-info" to="/source">
+          <Link className="btn btn-xs-block btn-info" to="/source">
             Source
           </Link>
-          <Link className="btn btn-xs-block btn-outline-info" to="/guide#build-instructions">
+          <Link className="btn btn-xs-block btn-info" to="/guide#build-instructions">
             Build instructions
           </Link>
         </p>
