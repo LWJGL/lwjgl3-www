@@ -19,7 +19,15 @@ type ScrollPosition = {
 // The maximum number of pages in the browser's session history, i.e. the maximum number of URLs you can traverse purely through the Back/Forward buttons.
 // Default value is 50 to match Firefox's default value (about:config -> browser.sessionhistory.max_entries)
 const MAX_SCROLL_ENTRIES = 50;
-const scrollEntries: Map<string, ScrollPosition> = new Map();
+const SCROLL_ENTRIES_SESSION_KEY = 'scrollEntries';
+let scrollEntries: Map<string, ScrollPosition> = new Map();
+
+if (SCROLL_RESTORATION) {
+  const scrollEntriesSession = sessionStorage.getItem(SCROLL_ENTRIES_SESSION_KEY);
+  if (scrollEntriesSession != null) {
+    scrollEntries = new Map(JSON.parse(scrollEntriesSession));
+  }
+}
 
 type Props = {
   location: RouterLocation,
@@ -27,6 +35,32 @@ type Props = {
 };
 
 export class PageView extends React.Component<Props> {
+  storeScroll() {
+    const {
+      location: { key = 'root' },
+    } = this.props;
+
+    // Add entry
+    // scrollEntries.set(key, { x: window.scrollX, y: window.scrollY });
+    scrollEntries.set(key, { x: window.pageXOffset, y: window.pageYOffset });
+
+    // Drop oldest entry if we exceeded maximum number of entries
+    if (scrollEntries.size > MAX_SCROLL_ENTRIES) {
+      // * The keys() method returns a new Iterator object that contains the keys for each element in the Map object in **insertion** order.
+      // * Therefore, the first value returned by the Iterator will be the oldest scroll entry that we need to drop.
+      //$FlowFixMe
+      scrollEntries.delete(scrollEntries.keys().next().value);
+    }
+
+    // console.table(Array.from(scrollEntries.keys()));
+  }
+
+  storeScrollEntriesInSession = this.storeScrollEntriesInSession.bind(this);
+  storeScrollEntriesInSession() {
+    this.storeScroll();
+    sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
+  }
+
   componentDidMount() {
     const {
       location: { key = 'root', pathname, search },
@@ -47,30 +81,15 @@ export class PageView extends React.Component<Props> {
         // Scroll to top of viewport
         window.scroll(0, 0);
       }
+
+      window.addEventListener('unload', this.storeScrollEntriesInSession);
     }
   }
 
   componentWillUnmount() {
     if (SCROLL_RESTORATION) {
-      // Remember scroll position so we can restore if we return to this view via browser history
-      // * [window.scrollX, window.scrollY];  // <-- Only supported in CSSOM browsers
-      // * [window.pageXOffset, window.pageYOffset]; // IE9+ pageXOffset is alias of scrollX
-      const {
-        location: { key = 'root' },
-      } = this.props;
-
-      // Add entry
-      scrollEntries.set(key, { x: window.pageXOffset, y: window.pageYOffset });
-
-      // Drop oldest entry if we exceeded maximum number of entries
-      if (scrollEntries.size > MAX_SCROLL_ENTRIES) {
-        // * The keys() method returns a new Iterator object that contains the keys for each element in the Map object in **insertion** order.
-        // * Therefore, the first value returned by the Iterator will be the oldest scroll entry that we need to drop.
-        //$FlowFixMe
-        scrollEntries.delete(scrollEntries.keys().next().value);
-      }
-
-      // console.table(Array.from(scrollEntries.keys()));
+      this.storeScroll();
+      window.removeEventListener('unload', this.storeScrollEntriesInSession);
     }
   }
 
