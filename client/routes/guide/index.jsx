@@ -77,7 +77,7 @@ class GuideRoute extends React.Component<RouteProps, State> {
         </section>
 
         <section className="py-3" style={{ backgroundColor: '#2b2b2b' }}>
-          <pre className="container" style={{ color: 'white' }}>
+          <pre className="container" style={{ color: 'white', tabSize: 4 }}>
             <code dangerouslySetInnerHTML={{ __html: this.state.sample }} />
           </pre>
         </section>
