@@ -3,7 +3,7 @@ import * as React from 'react';
 import debounce from 'lodash-es/debounce';
 import JSZip from 'jszip';
 import { saveAs } from '~/services/file-saver';
-import areEqual from 'fbjs/lib/areEqual';
+import isEqual from 'react-fast-compare';
 
 import { store } from '~/store';
 import { Connect } from '~/store/Connect';
@@ -79,7 +79,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
 
         // Save to local storage
         // * NOTE: We deep compare because it is faster than serializing & storing on disk every time
-        if (this.prevSave === null || !areEqual(this.prevSave, save)) {
+        if (this.prevSave === null || !isEqual(this.prevSave, save)) {
           this.prevSave = save;
           localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
         }

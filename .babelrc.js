@@ -7,6 +7,7 @@ const SOURCEMAP = argv.sourcemap !== undefined;
 
 const config = {
   plugins: [
+    // PRODUCTION && '@emotion/core',
     '@babel/plugin-transform-flow-strip-types',
     DEV && HMR && 'react-hot-loader/babel',
 
@@ -22,7 +23,7 @@ const config = {
       },
     ],
     PRODUCTION && '@babel/plugin-transform-react-constant-elements',
-    // PRODUCTION && '@babel/plugin-transform-react-inline-elements',
+    // PRODUCTION && '@babel/plugin-transform-react-inline-elements', // Breaks @emotion
     ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],
 
     // Stage-1

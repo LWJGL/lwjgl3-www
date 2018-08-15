@@ -35,8 +35,8 @@ const config = {
       'fg-loadjs',
       'fg-loadcss',
       'lodash-es',
-      'fbjs/lib/areEqual',
-      'fbjs/lib/shallowEqual',
+      'fbjs',
+      'react-fast-compare',
       'immer',
 
       // React
