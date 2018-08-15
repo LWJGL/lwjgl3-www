@@ -126,11 +126,6 @@ const buildConfiguration = () => {
       config.devtool = 'cheap-module-source-map';
     }
 
-    // Enable react-perf-devtool support
-    if (argv.reactPerf === true) {
-      config.entry.main.unshift(path.resolve(__dirname, 'client/services/react-perf-devtool.js'));
-    }
-
     if (HMR) {
       // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));

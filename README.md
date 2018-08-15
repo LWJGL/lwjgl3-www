@@ -85,7 +85,6 @@ yarn watch
 ```bash
 --css # Enables CSS modules in dev mode (enables Sass HMR)
 --sourcemap # Enables inline JS source-maps
---react-perf # Enables react-perf-devtool in dev mode
 --nohmr # Disables Webpack Hot Module Replacement & React Hot Loader
 --redux-logger # Enables Logger for Redux
 ```
