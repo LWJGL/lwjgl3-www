@@ -8,9 +8,9 @@
   dependencies:
     "@babel/highlight" "^7.0.0"
 
-"@babel/core@7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.0.tgz#0cb0c0fd2e78a0a2bec97698f549ae9ce0b99515"
+"@babel/core@7.0.1":
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.0.1.tgz#406658caed0e9686fa4feb5c2f3cefb6161c0f41"
   dependencies:
     "@babel/code-frame" "^7.0.0"
     "@babel/generator" "^7.0.0"
@@ -665,12 +665,6 @@
     "@babel/plugin-transform-react-jsx" "^7.0.0"
     "@babel/plugin-transform-react-jsx-self" "^7.0.0"
     "@babel/plugin-transform-react-jsx-source" "^7.0.0"
-
-"@babel/runtime@7.0.0":
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.0.0.tgz#adeb78fedfc855aa05bc041640f3f6f98e85424c"
-  dependencies:
-    regenerator-runtime "^0.12.0"
 
 "@babel/template@^7.0.0":
   version "7.0.0"
@@ -3260,7 +3254,7 @@ hmac-drbg@^1.0.0:
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.1"
 
-hoist-non-react-statics@^2.3.1, hoist-non-react-statics@^2.5.0:
+hoist-non-react-statics@^2.5.0:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-2.5.5.tgz#c5903cf409c0dfd908f388e619d86b9c1174cb47"
 
@@ -3940,7 +3934,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@4.17.10, lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@~4.17.10:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.0, lodash@^4.3.0, lodash@~4.17.10:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
 
@@ -4204,16 +4198,6 @@ mixin-object@^2.0.1:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
-
-mobx-preact@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/mobx-preact/-/mobx-preact-3.0.0.tgz#683f1805e4727570c8ece1561a25f34773b7b601"
-  dependencies:
-    hoist-non-react-statics "^2.3.1"
-
-mobx@5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.1.0.tgz#ae772ca8eb0c1dd93341ffce375f44a80050014d"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -5485,10 +5469,6 @@ regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
-regenerator-runtime@^0.12.0:
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.12.1.tgz#fa1a71544764c036f8c49b13a08b2594c9f8a0de"
-
 regenerator-transform@^0.13.3:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/regenerator-transform/-/regenerator-transform-0.13.3.tgz#264bd9ff38a8ce24b06e0636496b2c856b57bcbb"
@@ -6430,18 +6410,18 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typescript-styled-plugin@0.10.0:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/typescript-styled-plugin/-/typescript-styled-plugin-0.10.0.tgz#a840889240434b262e8a0d31c287c93e0d6000ee"
+typescript-styled-plugin@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/typescript-styled-plugin/-/typescript-styled-plugin-0.11.0.tgz#5d6045fb0c86ac8b6085341497eabe0321110da8"
   dependencies:
-    typescript-template-language-service-decorator "^1.7.0"
-    vscode-css-languageservice "^3.0.9-next.19"
-    vscode-emmet-helper "1.2.10"
-    vscode-languageserver-types "^3.8.2"
+    typescript-template-language-service-decorator "^1.7.1"
+    vscode-css-languageservice "^3.0.10"
+    vscode-emmet-helper "1.2.11"
+    vscode-languageserver-types "^3.13.0"
 
-typescript-template-language-service-decorator@^1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-1.7.0.tgz#ef32100ab20045de2ba91079d6c78a7fde7a9ff7"
+typescript-template-language-service-decorator@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-1.7.1.tgz#60f825b6b2bab725c9a73eaff65cb598e81a1bc8"
 
 ua-parser-js@^0.7.18, ua-parser-js@^0.7.9:
   version "0.7.18"
@@ -6659,28 +6639,32 @@ void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
-vscode-css-languageservice@^3.0.9-next.19:
-  version "3.0.9-next.19"
-  resolved "https://registry.yarnpkg.com/vscode-css-languageservice/-/vscode-css-languageservice-3.0.9-next.19.tgz#193b1e0aa87c28d2b0dbe6ddd655bfe10501ae68"
+vscode-css-languageservice@^3.0.10:
+  version "3.0.10"
+  resolved "https://registry.yarnpkg.com/vscode-css-languageservice/-/vscode-css-languageservice-3.0.10.tgz#71ece7e0d19227e9f21bcd5d5d928f817a7d701e"
   dependencies:
-    vscode-languageserver-types "^3.7.2"
-    vscode-nls "^3.2.2"
+    vscode-languageserver-types "^3.12.0"
+    vscode-nls "^3.2.5"
 
-vscode-emmet-helper@1.2.10:
-  version "1.2.10"
-  resolved "https://registry.yarnpkg.com/vscode-emmet-helper/-/vscode-emmet-helper-1.2.10.tgz#c4e08c721fa379f57e53c6bdf2843d4b3c830d16"
+vscode-emmet-helper@1.2.11:
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/vscode-emmet-helper/-/vscode-emmet-helper-1.2.11.tgz#4de78223666bf917eb6dc4b225b6c40f6901950c"
   dependencies:
     "@emmetio/extract-abbreviation" "0.1.6"
     jsonc-parser "^1.0.0"
     vscode-languageserver-types "^3.6.0-next.1"
 
-vscode-languageserver-types@^3.6.0-next.1, vscode-languageserver-types@^3.7.2, vscode-languageserver-types@^3.8.2:
+vscode-languageserver-types@^3.12.0, vscode-languageserver-types@^3.13.0:
+  version "3.13.0"
+  resolved "https://registry.yarnpkg.com/vscode-languageserver-types/-/vscode-languageserver-types-3.13.0.tgz#b704b024cef059f7b326611c99b9c8753c0a18b4"
+
+vscode-languageserver-types@^3.6.0-next.1:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/vscode-languageserver-types/-/vscode-languageserver-types-3.9.0.tgz#5eeb333ab65870eb92cf7fc99c33dea17e3bc347"
 
-vscode-nls@^3.2.2:
-  version "3.2.4"
-  resolved "https://registry.yarnpkg.com/vscode-nls/-/vscode-nls-3.2.4.tgz#2166b4183c8aea884d20727f5449e62be69fd398"
+vscode-nls@^3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/vscode-nls/-/vscode-nls-3.2.5.tgz#25520c1955108036dec607c85e00a522f247f1a4"
 
 warning@^3.0.0:
   version "3.0.0"
@@ -6696,12 +6680,10 @@ watchpack@^1.5.0:
     graceful-fs "^4.1.2"
     neo-async "^2.5.0"
 
-webpack-bundle-analyzer@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-3.0.1.tgz#5d54d5767265fbd862872bc5db2c0499272b3230"
+webpack-bundle-analyzer@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-3.0.2.tgz#22f19ea6d1b5a15fd7a90baae0bc0f39bd1e4d48"
   dependencies:
-    "@babel/polyfill" "7.0.0"
-    "@babel/runtime" "7.0.0"
     acorn "^5.7.3"
     bfj "^6.1.1"
     chalk "^2.4.1"
@@ -6710,10 +6692,8 @@ webpack-bundle-analyzer@3.0.1:
     express "^4.16.3"
     filesize "^3.6.1"
     gzip-size "^5.0.0"
-    lodash "4.17.10"
+    lodash "^4.17.10"
     mkdirp "^0.5.1"
-    mobx "5.1.0"
-    mobx-preact "3.0.0"
     opener "^1.5.1"
     ws "^6.0.0"
 

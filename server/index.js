@@ -309,7 +309,7 @@ app.get('*', (req, res, next) => {
 
   res
     .set({
-      'Cache-Control': 'private, max-age=0',
+      'Cache-Control': 'no-cache, no-store, no-transform, max-age=0',
       'Content-Language': 'en',
       Expires: '-1',
     })
@@ -320,7 +320,7 @@ app.get('*', (req, res, next) => {
 app.use((req, res) => {
   res
     .set({
-      'Cache-Control': 'max-age=30',
+      'Cache-Control': 'no-transform, max-age=30',
     })
     .status(404);
 
@@ -336,7 +336,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   res
     .set({
-      'Cache-Control': 'max-age=5',
+      'Cache-Control': 'no-transform, max-age=5',
     })
     .status(500);
 
