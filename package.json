@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.313.0",
+    "aws-sdk": "2.314.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
@@ -93,7 +93,7 @@
     "gzip-size": "5.0.0",
     "immer": "1.6.0",
     "jszip": "3.1.5",
-    "lodash-es": "4.17.10",
+    "lodash-es": "4.17.11",
     "memoize-state": "2.0.3",
     "node-sass": "4.9.3",
     "nprogress": "0.2.0",
@@ -102,7 +102,7 @@
     "react": "16.5.0",
     "react-dom": "16.5.0",
     "react-fast-compare": "2.0.2",
-    "react-hot-loader": "4.3.6",
+    "react-hot-loader": "4.3.7",
     "react-toastify": "4.3.1",
     "redux": "4.0.0",
     "redux-logger": "3.0.6",
@@ -115,11 +115,11 @@
     "thread-loader": "1.2.0",
     "three": "0.96.0",
     "typescript-styled-plugin": "0.11.0",
-    "webpack": "4.18.0",
+    "webpack": "4.18.1",
     "webpack-bundle-analyzer": "3.0.2",
     "webpack-cli": "3.1.0",
     "webpack-dev-middleware": "3.3.0",
-    "webpack-hot-middleware": "2.23.1",
+    "webpack-hot-middleware": "2.24.0",
     "whatwg-fetch": "3.0.0"
   },
   "resolutions": {

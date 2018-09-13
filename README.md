@@ -172,7 +172,8 @@ or place a process.json file anywhere with the following contents:
       "cwd": "/path/to/lwjgl3-www",
       "script": "./server/index.js",
       "env": {
-        "NODE_ENV": "production"
+        "NODE_ENV": "production",
+        "PORT": 7687
       }
     }
   ]
@@ -184,28 +185,6 @@ and then run:
 ```bash
 pm2 start process.json --only lwjgl-site
 pm2 save
-```
-
-### Run in production with forever
-
-Place a JSON file named forever.json in the root folder with the following contents:
-
-```json
-{
-  "uid": "lwjgl",
-  "append": true,
-  "watch": false,
-  "script": "server",
-  "sourceDir": "/path/to/lwjgl3-www",
-  "args": ["--production"],
-  "command": "node"
-}
-```
-
-and then run:
-
-```bash
-forever start forever.json
 ```
 
 ## Docker
@@ -222,8 +201,8 @@ To test the production docker image (after running release):
 docker-compose up
 ```
 
-In order to access AWS resources, you'll need to create a `docker-compose.override.yml` file
-and populate it with the following configuration:
+In order to access AWS resources in development, you'll need to create
+a `docker-compose.override.yml` file and populate it with the following configuration:
 
 ```yml
 version: '3.7'
