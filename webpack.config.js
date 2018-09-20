@@ -117,6 +117,9 @@ const buildConfiguration = () => {
   };
 
   if (DEV) {
+    // const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+    // config.plugins.push(new ErrorOverlayPlugin());
+
     config.output.crossOriginLoading = 'anonymous';
 
     // Enable source maps

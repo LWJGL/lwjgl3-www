@@ -132,13 +132,23 @@ export class Browser extends React.Component<Props, State> {
     const hasParent = path !== '';
 
     return (
-      <div className="table-responsive-md">
+      <div className="table-responsive-md mt-sm-4">
         <table className="table mb-0">
           <thead className="thead-light">
             <tr>
               <th colSpan={2}>
-                <IconCloud /> &nbsp;lwjgl/
-                {path.length ? path + '/' : ''}
+                <IconCloud /> &nbsp;
+                <Link to={'/browse'}>lwjgl</Link>
+                {path.length
+                  ? path.split('/').map((it, i, arr) => {
+                      const subpath = arr.slice(0, i + 1).join('/');
+                      return (
+                        <React.Fragment key={subpath}>
+                          /<Link to={`/browse/${subpath}`}>{it}</Link>
+                        </React.Fragment>
+                      );
+                    })
+                  : null}
               </th>
             </tr>
           </thead>

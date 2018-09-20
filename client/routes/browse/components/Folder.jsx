@@ -14,6 +14,7 @@ export const FolderTH = css`
     display: block;
     padding: 0.75rem;
     color: #333;
+    font-weight: normal;
     &:hover {
       text-decoration: none;
       background-color: #5bc0de;
