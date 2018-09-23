@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "noLib": true,
-    "target": "es6",
+    "target": "es2018",
+    "checkJs": false,
     "baseUrl": ".",
     "paths": {
       "~/*": ["./client/*"]
