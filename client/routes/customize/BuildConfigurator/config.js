@@ -173,7 +173,7 @@ export const config: BuildConfig = {
         maven: {
           groupId: 'com.code-disaster.steamworks4j',
           artifactId: 'steamworks4j',
-          version: '1.7.0',
+          version: '1.8.0',
         },
       },
       'steamworks4j-server': {
@@ -185,7 +185,7 @@ export const config: BuildConfig = {
         maven: {
           groupId: 'com.code-disaster.steamworks4j',
           artifactId: 'steamworks4j-server',
-          version: '1.7.0',
+          version: '1.8.0',
         },
       },
       'lwjglx-debug': {
