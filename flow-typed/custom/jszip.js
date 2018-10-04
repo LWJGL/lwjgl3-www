@@ -52,16 +52,14 @@ declare module 'jszip' {
 
   declare export type StreamHelperEvent = 'data' | 'end' | 'error';
 
-  declare function StreamHelperCallback(chunk: Uint8Array, metadata: Metadata): void;
-  declare function StreamHelperCallback(e: Error): void;
-  declare function StreamHelperCallback(): void;
-
-  declare type StreamHelper = {
-    on: (event: StreamHelperEvent, callback: StreamHelperCallback) => StreamHelper,
-    accumulate: (updateCallback: (metadata: Metadata) => void) => Promise<any>,
-    resume: () => StreamHelper,
-    pause: () => StreamHelper,
-  };
+  declare class StreamHelper {
+    on(event: StreamHelperEvent, callback: (chunk: Uint8Array, metadata: Metadata) => void): StreamHelper;
+    on(event: StreamHelperEvent, callback: (e: Error) => void): StreamHelper;
+    on(event: StreamHelperEvent, callback: () => void): StreamHelper;
+    accumulate(updateCallback: (metadata: Metadata) => void): Promise<any>;
+    resume(): StreamHelper;
+    pause(): StreamHelper;
+  }
 
   declare type LoadOptions = {
     base64?: boolean,

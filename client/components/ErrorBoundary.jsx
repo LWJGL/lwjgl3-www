@@ -11,7 +11,7 @@ export type ErrorProps = {
 };
 
 type Props = {
-  children: React.Node,
+  children?: React.Node,
   render: React.ComponentType<ErrorProps>,
 };
 
@@ -35,7 +35,9 @@ export class ErrorBoundary extends React.Component<Props, State> {
       const Component = this.props.render;
       const { error, info } = this.state;
       return <Component error={error} info={info} />;
+    } else {
+      const { children } = this.props;
+      return children !== undefined ? children : null;
     }
-    return this.props.children;
   }
 }

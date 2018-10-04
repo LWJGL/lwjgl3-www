@@ -94,11 +94,12 @@ export class PageView extends React.Component<Props> {
   }
 
   render() {
+    const { children } = this.props;
     if (!FLAG_PRODUCTION) {
-      // return <React.StrictMode>{this.props.children}</React.StrictMode>;
-      return this.props.children;
+      // return <React.StrictMode>{children}</React.StrictMode>;
+      return children !== undefined ? children : null;
     } else {
-      return <ErrorBoundary render={PageError}>{this.props.children}</ErrorBoundary>;
+      return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
     }
   }
 }

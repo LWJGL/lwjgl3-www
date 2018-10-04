@@ -7,7 +7,7 @@ import type { FocusTrap } from 'focus-trap';
 type TrapProps = {
   className?: string,
   role?: string,
-  children: React.Node,
+  children?: React.Node,
   onClose?: () => mixed,
   noScroll: boolean,
   autoFocus: boolean,

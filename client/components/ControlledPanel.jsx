@@ -17,6 +17,6 @@ export const ControlledPanel = ({ children, predicate }: Props) => (
       hidden: !predicate(state),
     })}
   >
-    {({ hidden }: ConnectedProps) => (hidden ? null : children)}
+    {({ hidden }: ConnectedProps) => (hidden || children === undefined ? null : children)}
   </Connect>
 );
