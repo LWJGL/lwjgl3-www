@@ -5,6 +5,11 @@
   }
 }
 
+.present-yourself {
+  opacity: 0;
+  animation: present-yourself 1s ease forwards;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;
