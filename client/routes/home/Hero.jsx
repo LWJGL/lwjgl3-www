@@ -1,12 +1,15 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
+//$FlowFixMe
+import { lazy, unstable_Suspense as Suspense } from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { Link } from '@reach/router';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
-import { renderAsync, type AsyncRender } from '~/services/renderAsync';
 import { Logo } from './Logo';
+
+const Canvas = lazy(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'));
 
 const HeroBox = ({ children }) => (
   <section
@@ -96,13 +99,6 @@ const HeroContent = ({ children }) => (
   </div>
 );
 
-const Canvas = renderAsync(
-  () => import(/* webpackChunkName: "home$canvas" */ './Canvas'),
-  ({ Component, error, loading, ownProps }) => {
-    return Component !== null ? <Component {...ownProps} /> : null;
-  }
-);
-
 type Props = {||};
 type State = { supportsWebGL: boolean };
 
@@ -157,7 +153,11 @@ export class HomeHero extends React.Component<Props, State> {
   render() {
     return (
       <HeroBox>
-        {this.state.supportsWebGL ? <Canvas /> : null}
+        {this.state.supportsWebGL ? (
+          <Suspense maxDuration={0} fallback={null}>
+            <Canvas />
+          </Suspense>
+        ) : null}
         <LogoContainer>
           <Logo className="logo" />
           <HeroContent>
