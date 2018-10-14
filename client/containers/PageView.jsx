@@ -66,11 +66,6 @@ export class PageView extends React.Component<Props> {
       location: { key = 'root', pathname, search },
     } = this.props;
 
-    // Track in Google Analytics
-    trackView({
-      page_path: `${pathname}${search}`,
-    });
-
     if (SCROLL_RESTORATION) {
       // If we have previously stored the same key, restore scroll position
       const entry = scrollEntries.get(key);
@@ -84,6 +79,11 @@ export class PageView extends React.Component<Props> {
 
       window.addEventListener('unload', this.storeScrollEntriesInSession);
     }
+
+    // Track in Google Analytics
+    trackView({
+      page_path: `${pathname}${search}`,
+    });
   }
 
   componentWillUnmount() {

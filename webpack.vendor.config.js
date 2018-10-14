@@ -31,6 +31,8 @@ const config = {
       // Core
       'react',
       'react-dom',
+      'react-cache',
+      'scheduler',
       'prop-types',
       'fg-loadjs',
       'fg-loadcss',
@@ -39,15 +41,13 @@ const config = {
       'react-fast-compare',
       'immer',
 
-      // React
-      '@reach/router',
-
       // State management
       'redux',
       'redux-logger',
       'redux-thunk',
 
       // UI
+      '@reach/router',
       'scroll-into-view-if-needed',
       'focus-trap',
 

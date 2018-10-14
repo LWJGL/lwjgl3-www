@@ -1,39 +1,9 @@
 // @flow
-import * as React from 'react';
-//$FlowFixMe
-import { lazy, unstable_Suspense as Suspense } from 'react';
-import { CircularProgress } from '../components/CircularProgress';
-
-type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
-
-const LoadingPage = () => (
-  <div className="text-center" style={{ padding: '5rem 0', minHeight: 'calc(100vh - 4rem)' }}>
-    <CircularProgress size={128} thickness={2} />
-  </div>
-);
-
-const getAsyncRoute = (loader: ComponentImport) => {
-  const AsyncRoute = lazy(loader);
-
-  class Route extends React.Component<any> {
-    static preload() {
-      loader();
-    }
-
-    render() {
-      return (
-        <Suspense maxDuration={750} fallback={<LoadingPage />}>
-          <AsyncRoute {...this.props} />
-        </Suspense>
-      );
-    }
-  }
-
-  return Route;
-};
+import { getAsyncRoute } from './getAsyncRoute';
 
 // Import causes routes to be code-split
-// We have to specify each route name/path in order to be statically analyzed by webpack
+// We have to specify each route name/path in order to be statically analyzable (see Webpack's JSON output)
+
 export const Home = getAsyncRoute(() => import(/* webpackChunkName: "route-home" */ './home'));
 export const Guide = getAsyncRoute(() => import(/* webpackChunkName: "route-guide" */ './guide'));
 export const Download = getAsyncRoute(() => import(/* webpackChunkName: "route-download" */ './download'));

@@ -1,1 +1,2 @@
-export const delay = duration => new Promise(resolve => setTimeout(resolve, duration));
+// @flow
+export const delay = (duration: number): Promise<void> => new Promise(resolve => setTimeout(resolve, duration));

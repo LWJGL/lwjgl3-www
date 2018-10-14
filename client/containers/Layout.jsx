@@ -2,6 +2,7 @@
 import * as React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { NavProgress } from '../components/NavProgress';
 
 // Routes
 import { Router, Location } from '@reach/router';
@@ -11,6 +12,7 @@ import { Miss404 } from '../routes/miss404';
 export const Layout = () => {
   return (
     <React.Fragment>
+      <NavProgress />
       <Location>{({ location }) => <Header isHome={location.pathname === '/'} />}</Location>
       <Router component="main">
         <Home path="/" />
