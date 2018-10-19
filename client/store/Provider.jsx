@@ -2,27 +2,25 @@
 import * as React from 'react';
 import { type Dispatch } from 'redux';
 import { store } from './';
-import { StoreContext } from './Context';
 
 type Props = {
   children: React.Node,
 };
 
-type State = {
-  storeState: Object,
-};
+export const StoreContext = React.createContext({});
 
-export class Provider extends React.Component<Props, State> {
+export class Provider extends React.Component<Props> {
   state = store.getState();
 
   unsubscribe: Function | null = null;
 
-  updateState = () => {
+  updateState = this.updateState.bind(this);
+  updateState() {
     this.setState(prevState => {
       const nextState = store.getState();
       return nextState === prevState ? null : nextState;
     });
-  };
+  }
 
   componentDidMount() {
     this.unsubscribe = store.subscribe(this.updateState);
