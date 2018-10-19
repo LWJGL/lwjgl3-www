@@ -11,12 +11,12 @@ type Props = {
   children: React.Node,
 };
 
-const ServiceWorkerContext = React.createContext({
+export const ServiceWorkerContext = React.createContext({
   updatePending: false,
   update: function() {},
 });
 
-export const ServiceWorkerConsumer = ServiceWorkerContext.Consumer;
+// export const ServiceWorkerConsumer = ServiceWorkerContext.Consumer;
 
 // const SW_SUPPORTED = navigator.serviceWorker !== undefined && window.isSecureContext;
 

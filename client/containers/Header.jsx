@@ -9,8 +9,8 @@ import { Sidebar } from './Sidebar';
 import { IS_IOS } from '~/services/ua';
 import { SupportsPassiveEvents } from '~/services/supports';
 import { COLOR_PRIMARY, cc } from '~/theme';
-import { Breakpoint } from '../components/Breakpoint';
-import { ServiceWorkerConsumer } from '../components/ServiceWorker';
+import { BreakpointContext } from '../components/Breakpoint';
+import { ServiceWorkerContext } from '../components/ServiceWorker';
 import CloudDownload from '../components/icons/md/CloudDownload';
 
 const HEADER_CLASSNAME = 'site-header';
@@ -32,7 +32,30 @@ type State = {|
   hidden: boolean,
 |};
 
+class ServiceWorkerUpdate extends React.Component<{}> {
+  static contextType = ServiceWorkerContext;
+
+  shouldComponentUpdate() {
+    return false;
+  }
+
+  render() {
+    const { updatePending, update } = this.context;
+    return updatePending ? (
+      <button
+        onClick={update}
+        className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
+        title="Update website to latest version"
+      >
+        <CloudDownload />
+      </button>
+    ) : null;
+  }
+}
+
 export class Header extends React.PureComponent<Props, State> {
+  static contextType = BreakpointContext;
+
   prev = 0;
   current = 0;
   direction = 0;
@@ -160,29 +183,13 @@ export class Header extends React.PureComponent<Props, State> {
                 LW
                 <b>JGL</b> 3
               </Link>
-              <ServiceWorkerConsumer>
-                {({ updatePending, update }) =>
-                  updatePending ? (
-                    <button
-                      onClick={update}
-                      className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
-                      title="Update website to latest version"
-                    >
-                      <CloudDownload />
-                    </button>
-                  ) : null
-                }
-              </ServiceWorkerConsumer>
+              <ServiceWorkerUpdate />
             </div>
-            <Breakpoint>
-              {media =>
-                media.current > media.breakpoints.md ? (
-                  <MainMenu className="main-menu-horizontal list-unstyled col" />
-                ) : (
-                  <Sidebar />
-                )
-              }
-            </Breakpoint>
+            {this.context.current > this.context.breakpoints.md ? (
+              <MainMenu className="main-menu-horizontal list-unstyled col" />
+            ) : (
+              <Sidebar />
+            )}
           </div>
         </nav>
       </header>

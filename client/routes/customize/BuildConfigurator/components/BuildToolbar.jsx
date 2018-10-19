@@ -2,8 +2,7 @@
 import * as React from 'react';
 import { configLoad } from '../reducer';
 import { store } from '~/store';
-import { Connect } from '~/store/Connect';
-import { Breakpoint } from '~/components/Breakpoint';
+import { BreakpointContext } from '~/components/Breakpoint';
 import IconArchive from '~/components/icons/md/Archive';
 import IconSettingsBackupRestore from '~/components/icons/md/SettingsBackupRestore';
 
@@ -17,6 +16,8 @@ type State = {
 };
 
 export class BuildToolbar extends React.Component<Props, State> {
+  static contextType = BreakpointContext;
+
   state = {
     fileUI: false,
   };
@@ -64,33 +65,28 @@ export class BuildToolbar extends React.Component<Props, State> {
       );
     }
 
+    const {
+      current,
+      breakpoints: { sm },
+    } = this.context;
+    const showLabels = current > sm;
+
     return (
-      <Breakpoint>
-        {({ current, breakpoints: { sm } }) => {
-          const showLabels = current > sm;
-          return (
-            <div className="download-toolbar">
-              {this.props.children}
-              <button
-                className="btn btn-outline-light"
-                title="Load configuration file (JSON)"
-                onClick={this.toggleFileUI}
-              >
-                <IconSettingsBackupRestore />
-                {showLabels ? ` Load config` : null}
-              </button>
-              <button
-                className="btn btn-outline-light"
-                title="Save configuration (in JSON)"
-                onClick={this.props.configDownload}
-              >
-                <IconArchive />
-                {showLabels ? ` Save config` : null}
-              </button>
-            </div>
-          );
-        }}
-      </Breakpoint>
+      <div className="download-toolbar">
+        {this.props.children}
+        <button className="btn btn-outline-light" title="Load configuration file (JSON)" onClick={this.toggleFileUI}>
+          <IconSettingsBackupRestore />
+          {showLabels ? ` Load config` : null}
+        </button>
+        <button
+          className="btn btn-outline-light"
+          title="Save configuration (in JSON)"
+          onClick={this.props.configDownload}
+        >
+          <IconArchive />
+          {showLabels ? ` Save config` : null}
+        </button>
+      </div>
     );
   }
 }
