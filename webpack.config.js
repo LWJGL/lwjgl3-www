@@ -9,6 +9,7 @@ const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
 const SOURCEMAP = argv.sourcemap !== undefined;
 const DLL = argv.nodll === undefined;
+// const ENABLE_PROFILING = argv.profiling !== undefined;
 
 const env = {
   ANALYTICS_TRACKING_ID: JSON.stringify(globals.google_analytics_id),
@@ -187,6 +188,11 @@ const buildConfiguration = () => {
       new webpack.HashedModuleIdsPlugin()
     );
     disableRHL(config);
+
+    // if (ENABLE_PROFILING) {
+    //   config.resolve.alias['react-dom'] = 'react-dom/profiling';
+    //   config.resolve.alias['schedule/tracing'] = 'schedule/tracing-profiling';
+    // }
   }
 
   return config;
