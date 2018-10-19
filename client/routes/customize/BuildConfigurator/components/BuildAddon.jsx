@@ -12,16 +12,12 @@ type Props = {|
 
 export const BuildAddon = ({ id }: Props) => (
   <Connect
-    state={({ build }: { build: BuildConfig }) => {
-      const addon: Addon = build.addons.byId[id];
-
-      return {
-        mode: build.mode,
-        addon,
-        checked: build.selectedAddons.includes(id),
-        showDescriptions: build.descriptions,
-      };
-    }}
+    state={({ build }: { build: BuildConfig }) => ({
+      mode: build.mode,
+      addon: build.addons.byId[id],
+      checked: build.selectedAddons.includes(id),
+      showDescriptions: build.descriptions,
+    })}
     actions={{
       toggleAddon,
     }}
