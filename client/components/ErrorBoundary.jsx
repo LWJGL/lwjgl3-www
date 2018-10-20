@@ -7,7 +7,7 @@ type ReactErrorInfo = {
 
 export type ErrorProps = {
   error: Error,
-  info: ReactErrorInfo,
+  info?: ReactErrorInfo,
 };
 
 type Props = {

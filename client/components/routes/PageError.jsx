@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import { Title } from '~/components/Title';
-import type { ErrorProps } from './ErrorBoundary';
+import { Title } from '../Title';
+import type { ErrorProps } from '../ErrorBoundary';
 
 export class PageError extends React.Component<ErrorProps> {
   render() {

@@ -3,15 +3,13 @@ import * as React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { NavProgress } from '../components/NavProgress';
-import { ErrorBoundary } from '../components/ErrorBoundary';
-import { PageError } from '../components/PageError';
 
 // Routes
 import { Router, Location } from '@reach/router';
 import { Home, Guide, Download, Customize, Browse, Source, License } from '../routes';
 import { Miss404 } from '../routes/miss404';
 
-export const Layout = () => {
+export function Layout() {
   return (
     <React.Fragment>
       <NavProgress />
@@ -33,4 +31,4 @@ export const Layout = () => {
       </Location>
     </React.Fragment>
   );
-};
+}

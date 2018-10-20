@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
-import { PageView } from '~/containers/PageView';
+import { PageView } from '~/components/routes/PageView';
 import { Link, type RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';

@@ -2,45 +2,38 @@
 // @jsx jsx
 import * as React from 'react';
 //$FlowFixMe
-import { unstable_Suspense as Suspense, Fragment, Component } from 'react';
+import { lazy, unstable_Suspense as Suspense, Fragment, Component } from 'react';
 import { createCache, createResource } from 'react-cache';
 import { unstable_scheduleCallback } from 'scheduler';
 import { delay } from '~/services/delay';
 
 import { jsx } from '@emotion/core';
-import { Folder, FolderTH } from './Folder';
+import { Folder, FolderTH, SpinnerRow } from './Folder';
 import { File } from './File';
 import { Link } from '@reach/router';
-import { CircularProgress } from '~/components/CircularProgress';
+
 import { HTTP_OK } from '~/services/http_status_codes';
 import IconCloud from '~/components/icons/md/Cloud';
 import IconChevronRight from '~/components/icons/md/ChevronRight';
 
-type Props = {
-  path: string,
-};
+// Contents Resource
 
-type FolderData = {|
+const cache = createCache();
+const BrowserContentsResource = createResource(fetchContents);
+
+type FolderData = {
   path: string,
   files: Array<string>,
   folders: Array<string>,
-|};
-
-let cache;
-function invalidateCache() {
-  cache = createCache(invalidateCache);
-}
-invalidateCache();
-
-const BrowserContentsResource = createResource(fetchContents);
+};
 
 async function fetchContents(path: string): Promise<FolderData> {
   if (path === '') {
-    return Promise.resolve({
+    return {
       path: '',
       files: [],
       folders: ['release', 'stable', 'nightly'],
-    });
+    };
   }
 
   const response = await fetch(`/list?path=${path}/`);
@@ -56,35 +49,45 @@ async function fetchContents(path: string): Promise<FolderData> {
   contents.folders =
     contents.folders === undefined ? [] : contents.folders.map(name => name.substring(0, name.length - 1));
 
-  await delay(3000);
-
-  return Promise.resolve(contents);
+  return contents;
 }
 
+// Browser
+
+type Props = {
+  path: string,
+};
+
 type State = {
-  loading: string,
   path: string,
 };
 
 export class Browser extends Component<Props, State> {
   state = {
-    loading: '',
-    path: '',
+    path: this.props.path,
   };
+
+  mounted = false;
+
+  componentDidMount() {
+    this.mounted = true;
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
 
   componentDidUpdate() {
     const { path } = this.props;
 
-    if (this.state.loading !== path) {
-      this.setState({
-        loading: path,
-      });
+    if (this.state.path !== path) {
       unstable_scheduleCallback(() => this.setState({ path }));
     }
   }
 
   render() {
-    const { path, loading } = this.state;
+    const { path: loading } = this.props;
+    const { path } = this.state;
 
     return (
       <div className="table-responsive-md mt-sm-4">
@@ -115,10 +118,13 @@ export class Browser extends Component<Props, State> {
                 </th>
               </tr>
             )}
-            {path !== loading && <Spinner />}
-            <Suspense maxDuration={2000} fallback={<Spinner />}>
-              <Contents path={path} />
-            </Suspense>
+            {path !== loading ? (
+              <Contents path={path} loading={loading} />
+            ) : (
+              <Suspense maxDuration={this.mounted ? 3200 : 0} fallback={<SpinnerRow />}>
+                <Contents path={path} />
+              </Suspense>
+            )}
           </tbody>
         </table>
       </div>
@@ -126,28 +132,24 @@ export class Browser extends Component<Props, State> {
   }
 }
 
-function Contents({ path }: Props) {
+// Browser Contents
+type ContentProps = {
+  path: string,
+  loading?: string,
+};
+
+function Contents({ path, loading }: ContentProps) {
   const { folders, files } = BrowserContentsResource.read(cache, path);
   const basePath = path.length ? path + '/' : '';
   return (
     <Fragment>
       {folders.map(folder => {
         const fullPath = `${basePath}${folder}`;
-        return <Folder key={fullPath} path={fullPath} />;
+        return <Folder key={fullPath} path={fullPath} loading={loading === fullPath} />;
       })}
       {files.map(file => (
         <File key={`${basePath}${file}`} path={`${basePath}${file}`} />
       ))}
     </Fragment>
-  );
-}
-
-function Spinner() {
-  return (
-    <tr>
-      <td>
-        <CircularProgress size={24} thickness={8} />
-      </td>
-    </tr>
   );
 }

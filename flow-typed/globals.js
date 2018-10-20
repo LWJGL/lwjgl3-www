@@ -1,3 +1,6 @@
+import * as React from 'react';
+declare type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
+
 // Helper
 type _ExtractReturn<B, F: (...args: any[]) => B> = B;
 declare type ExtractReturn<F> = _ExtractReturn<*, F>;
