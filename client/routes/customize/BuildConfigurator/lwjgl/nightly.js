@@ -10,7 +10,7 @@ export default (prev: BuildOptions): BuildOptions => ({
     ...prev.byId,
     'lwjgl-opus': {
       id: 'lwjgl-opus',
-      title: 'Opus bindings',
+      title: 'Opus',
       description: 'Opus is a totally open, royalty-free, highly versatile audio codec.',
       natives: NATIVE_ALL,
       website: 'https://opus-codec.org/',

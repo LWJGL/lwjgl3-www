@@ -104,7 +104,7 @@ export class BuildScript extends React.Component<Props> {
             version: build.artifacts.version,
             hardcoded: build.hardcoded,
             compact: build.compact,
-            osgi: build.osgi && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
+            osgi: build.osgi && build.build === BUILD_RELEASE && parseInt(build.version.replace(/\./g, ''), 10) >= 312,
             language: build.language,
             platform: build.platform,
             platformSingle: getSelectedPlatforms(build),
