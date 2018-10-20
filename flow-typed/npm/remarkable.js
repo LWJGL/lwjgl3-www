@@ -33,34 +33,34 @@ declare module 'remarkable' {
   declare type RuleFunction = (state: State, silent: boolean) => boolean;
 
   declare class Ruler {
-    at(name: string, fn: RuleFunction, options: RemarkableOptions): void,
-    before(beforeName: string, ruleName: string, fn: RuleFunction, options: RemarkableOptions): void,
-    after(afterName: string, ruleName: string, fn: RuleFunction, options: RemarkableOptions): void,
-    push(ruleName: string, fn: RuleFunction, options: RemarkableOptions): void,
-    enable(list: string | Array<string>, strict: boolean): void,
-    disable(list: string | Array<string>): void,
-    getRules(chaineName: string): Array<RuleFunction>,
+    at(name: string, fn: RuleFunction, options: RemarkableOptions): void;
+    before(beforeName: string, ruleName: string, fn: RuleFunction, options: RemarkableOptions): void;
+    after(afterName: string, ruleName: string, fn: RuleFunction, options: RemarkableOptions): void;
+    push(ruleName: string, fn: RuleFunction, options: RemarkableOptions): void;
+    enable(list: string | Array<string>, strict: boolean): void;
+    disable(list: string | Array<string>): void;
+    getRules(chaineName: string): Array<RuleFunction>;
   }
 
   declare class Renderer {
-    render(tokens: Array<Token>, options: RemarkableOptions, env: Env): string,
-    renderInline(tokens: Array<Token>, options: RemarkableOptions, env: Env): string,
+    render(tokens: Array<Token>, options: RemarkableOptions, env: Env): string;
+    renderInline(tokens: Array<Token>, options: RemarkableOptions, env: Env): string;
   }
 
   declare class Remarkable {
-    constructor(settings?: RemarkableSettings): void,
-    use<Option>(plugin: RemarkablePlugin<Option>, options?: Option): this,
-    parse(source: string, env?: Env): Array<Token>,
-    parseInline(source: string, env?: any): Array<Token>,
-    set(settings: RemarkableSettings): void,
-    render(source: string, env?: Env): string,
-    renderInline(source: string, env?: Env): string,
+    constructor(settings?: RemarkableSettings): void;
+    use<Option>(plugin: RemarkablePlugin<Option>, options?: Option): this;
+    parse(source: string, env?: Env): Array<Token>;
+    parseInline(source: string, env?: any): Array<Token>;
+    set(settings: RemarkableSettings): void;
+    render(source: string, env?: Env): string;
+    renderInline(source: string, env?: Env): string;
     //parsers
-    inline: Parser,
-    block: Parser,
-    core: Parser,
-    renderer: Renderer,
+    inline: Parser;
+    block: Parser;
+    core: Parser;
+    renderer: Renderer;
   }
 
-  declare export default typeof Remarkable
+  declare export default typeof Remarkable;
 }

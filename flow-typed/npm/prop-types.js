@@ -2,7 +2,8 @@ type $npm$propTypes$ReactPropsCheckType = (
   props: any,
   propName: string,
   componentName: string,
-  href?: string) => ?Error;
+  href?: string
+) => ?Error;
 
 declare module 'prop-types' {
   declare var array: React$PropType$Primitive<Array<any>>;
@@ -11,6 +12,7 @@ declare module 'prop-types' {
   declare var number: React$PropType$Primitive<number>;
   declare var object: React$PropType$Primitive<Object>;
   declare var string: React$PropType$Primitive<string>;
+  declare var symbol: React$PropType$Primitive<Symbol>;
   declare var any: React$PropType$Primitive<any>;
   declare var arrayOf: React$PropType$ArrayOf;
   declare var element: React$PropType$Primitive<any>; /* TODO */
@@ -22,10 +24,10 @@ declare module 'prop-types' {
   declare var shape: React$PropType$Shape;
 
   declare function checkPropTypes<V>(
-    propTypes: $Subtype<{[_: $Keys<V>]: $npm$propTypes$ReactPropsCheckType}>,
+    propTypes: $Subtype<{ [_: $Keys<V>]: $npm$propTypes$ReactPropsCheckType }>,
     values: V,
     location: string,
     componentName: string,
-    getStack: ?(() => ?string)
-  ) : void;
+    getStack: ?() => ?string
+  ): void;
 }
