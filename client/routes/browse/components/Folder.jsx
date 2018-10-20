@@ -19,6 +19,9 @@ export const FolderTH = css`
       text-decoration: none;
       background-color: #5bc0de;
       color: white;
+      svg {
+        color: white;
+      }
     }
   }
 `;
@@ -41,7 +44,7 @@ export class Folder extends React.PureComponent<Props> {
       <tr>
         <th css={FolderTH} colSpan={2}>
           <Link to={path}>
-            {loading ? <CircularProgress size={16} thickness={4} /> : <IconFolder />} {name}
+            <IconFolder /> {name} {loading && <CircularProgress size={16} thickness={4} />}
           </Link>
         </th>
       </tr>
