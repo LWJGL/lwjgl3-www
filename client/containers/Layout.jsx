@@ -16,18 +16,16 @@ export const Layout = () => {
     <React.Fragment>
       <NavProgress />
       <Location>{({ location }) => <Header isHome={location.pathname === '/'} />}</Location>
-      <ErrorBoundary render={PageError}>
-        <Router component="main">
-          <Home path="/" />
-          <Guide path="/guide" />
-          <Download path="/download" />
-          <Customize path="/customize" />
-          <Browse path="/browse/*" />
-          <Source path="/source" />
-          <License path="/license" />
-          <Miss404 default />
-        </Router>
-      </ErrorBoundary>
+      <Router component="main">
+        <Home path="/" />
+        <Guide path="/guide" />
+        <Download path="/download" />
+        <Customize path="/customize" />
+        <Browse path="/browse/*" />
+        <Source path="/source" />
+        <License path="/license" />
+        <Miss404 default />
+      </Router>
       <Location>
         {({ location }) =>
           location.pathname !== '/customize' && !location.pathname.startsWith('/browse') ? <Footer /> : null
