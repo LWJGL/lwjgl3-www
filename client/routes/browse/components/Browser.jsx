@@ -5,7 +5,6 @@ import * as React from 'react';
 import { lazy, unstable_Suspense as Suspense, Fragment, Component } from 'react';
 import { createCache, createResource } from 'react-cache';
 import { unstable_scheduleCallback } from 'scheduler';
-import { delay } from '~/services/delay';
 
 import { jsx } from '@emotion/core';
 import { Folder, FolderTH, SpinnerRow } from './Folder';
@@ -118,13 +117,9 @@ export class Browser extends Component<Props, State> {
                 </th>
               </tr>
             )}
-            {path !== loading ? (
+            <Suspense maxDuration={this.mounted ? 3200 : 0} fallback={<SpinnerRow />}>
               <Contents path={path} loading={loading} />
-            ) : (
-              <Suspense maxDuration={this.mounted ? 3200 : 0} fallback={<SpinnerRow />}>
-                <Contents path={path} />
-              </Suspense>
-            )}
+            </Suspense>
           </tbody>
         </table>
       </div>
