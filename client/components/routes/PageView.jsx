@@ -1,9 +1,9 @@
 // @flow
 import * as React from 'react';
-import { ErrorBoundary } from '../components/ErrorBoundary';
-import { PageError } from '../components/PageError';
+import { ErrorBoundary } from '../ErrorBoundary';
+import { PageError } from './PageError';
 import type { RouterLocation } from '@reach/router';
-import { trackView } from '../services/ga';
+import { trackView } from '~/services/ga';
 
 // Store scroll position when leaving a route, restore if we return back to it
 const SCROLL_RESTORATION = 'scrollRestoration' in window.history;

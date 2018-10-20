@@ -5,6 +5,7 @@ import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { Link } from '@reach/router';
 import IconFolder from '~/components/icons/md/Folder';
+import { CircularProgress } from '~/components/CircularProgress';
 
 export const FolderTH = css`
   user-select: none;
@@ -24,11 +25,15 @@ export const FolderTH = css`
 
 type Props = {
   path: string,
+  loading: boolean,
 };
 
 export class Folder extends React.PureComponent<Props> {
+  static defaultProps = {
+    loading: false,
+  };
   render() {
-    const { path } = this.props;
+    const { path, loading } = this.props;
     const parts = path.split('/');
     const name = parts[parts.length - 1];
 
@@ -36,10 +41,20 @@ export class Folder extends React.PureComponent<Props> {
       <tr>
         <th css={FolderTH} colSpan={2}>
           <Link to={path}>
-            <IconFolder /> {name}
+            {loading ? <CircularProgress size={16} thickness={4} /> : <IconFolder />} {name}
           </Link>
         </th>
       </tr>
     );
   }
+}
+
+export function SpinnerRow() {
+  return (
+    <tr>
+      <td>
+        <CircularProgress size={24} thickness={8} />
+      </td>
+    </tr>
+  );
 }

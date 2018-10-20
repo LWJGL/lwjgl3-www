@@ -25,9 +25,17 @@ const pulseAnimation = keyframes(css`
   }
 `);
 
-export function start() {
+export function start(delay: number = 0) {
   count += 1;
-  if (instance !== null && instance.mounted) {
+  if (delay > 0) {
+    setTimeout(startInstance, delay);
+  } else {
+    startInstance();
+  }
+}
+
+function startInstance() {
+  if (count > 0 && instance !== null && instance.mounted) {
     instance.start();
   }
 }
@@ -98,12 +106,14 @@ export class NavProgress extends React.Component<{||}, State> {
   }
 
   end() {
-    this.setState({ progress: 100 });
+    if (this.state.progress > 0) {
+      this.setState({ progress: 100 });
+      setTimeout(this.reset.bind(this), 400);
+    }
     if (this.trickleTimeoutId !== null) {
       clearTimeout(this.trickleTimeoutId);
       this.trickleTimeoutId = null;
     }
-    setTimeout(this.reset.bind(this), 400);
   }
 
   reset() {

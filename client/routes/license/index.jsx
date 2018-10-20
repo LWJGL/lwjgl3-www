@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { PageView } from '~/containers/PageView';
+import { PageView } from '~/components/routes/PageView';
 import type { RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
