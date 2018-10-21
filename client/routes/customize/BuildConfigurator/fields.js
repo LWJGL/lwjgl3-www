@@ -9,6 +9,7 @@ import {
   toggleHardcoded,
   toggleCompact,
   toggleJavadoc,
+  toggleIncludeJSON,
   toggleOSGi,
   toggleDescriptions,
   toggleSource,
@@ -88,6 +89,12 @@ export const fields = {
     label: 'Include source',
     checked: (state: State) => state.build.source,
     action: toggleSource,
+    hidden: isModeNotZip,
+  },
+  includeJSON: {
+    label: 'Include build config',
+    checked: (state: State) => state.build.includeJSON,
+    action: toggleIncludeJSON,
     hidden: isModeNotZip,
   },
   javadoc: {

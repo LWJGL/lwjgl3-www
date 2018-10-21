@@ -95,6 +95,10 @@ export class BuildConfigurator extends React.Component<Props, State> {
     }
   }
 
+  configJSONfilename(save) {
+    return `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`;
+  }
+
   configDownload = this.configDownload.bind(this);
   configDownload() {
     const save = getConfig(store.getState());
@@ -102,7 +106,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
       return;
     }
     const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
-    saveAs(blob, `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`);
+    saveAs(blob, this.configJSONfilename(save));
   }
 
   download = this.download.bind(this);
@@ -117,7 +121,8 @@ export class BuildConfigurator extends React.Component<Props, State> {
       progress: ['Downloading file manifest'],
     });
 
-    const { build, path, selected, platforms, source, javadoc, version, addons } = getBuild(store.getState());
+    const snapshot = store.getState();
+    const { build, path, selected, platforms, source, javadoc, includeJSON, version, addons } = getBuild(snapshot);
 
     let manifest;
     try {
@@ -133,19 +138,29 @@ export class BuildConfigurator extends React.Component<Props, State> {
       files = files.concat(getAddons(addons, source, javadoc));
     }
 
-    this.downloadLog(`Downloading ${files.length} files`);
+    const jszip = new JSZip();
 
-    const zip = new JSZip();
+    this.downloadLog(`Downloading ${files.length} files`);
     try {
-      await downloadFiles(files, zip, this.downloadLog.bind(this));
+      await downloadFiles(files, jszip, this.downloadLog.bind(this));
     } catch (err) {
       this.downloadCancel(err.name !== 'AbortError' ? err.message : undefined);
       return;
     }
 
-    this.downloadLog('Compressing files');
+    // Include JSON Config
+    if (includeJSON) {
+      const save = getConfig(snapshot);
+      const blob = new Blob([JSON.stringify(save, null, 2)], {
+        type: 'application/json',
+        endings: 'native',
+      });
+      jszip.file(this.configJSONfilename(save), blob, { binary: true });
+    }
 
-    const blob = await zip.generateAsync({
+    // Generate ZPI files
+    this.downloadLog('Compressing files');
+    const blob = await jszip.generateAsync({
       type: 'blob',
       // compression: 'DEFLATE',
       // compressionOptions: {level:6},
@@ -227,6 +242,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
                       <ControlledToggle spec={fields.descriptions} />
                       <ControlledCheckbox spec={fields.source} />
                       <ControlledCheckbox spec={fields.javadoc} />
+                      <ControlledCheckbox spec={fields.includeJSON} />
                       <ControlledToggle spec={fields.hardcoded} />
                       <ControlledToggle spec={fields.compact} />
                       <ControlledToggle spec={fields.osgi} />

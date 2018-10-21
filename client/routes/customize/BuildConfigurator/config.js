@@ -215,6 +215,7 @@ export const config: BuildConfig = {
   javadoc: true,
   source: true,
   osgi: false,
+  includeJSON: true,
   language: '',
   platform: {},
   versions: [],

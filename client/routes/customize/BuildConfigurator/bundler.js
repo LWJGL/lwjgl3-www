@@ -40,6 +40,7 @@ export function getConfig({ build }: { build: BuildConfig }): BuildConfigStored 
     compact: build.compact,
     hardcoded: build.hardcoded,
     javadoc: build.javadoc,
+    includeJSON: build.includeJSON,
     source: build.source,
     osgi: build.osgi,
     language: build.language,
@@ -109,6 +110,7 @@ export function getBuild({ build }: { build: BuildConfig }): SelectedBuildConfig
     platforms: selectedPlatforms,
     source: build.source,
     javadoc: build.javadoc,
+    includeJSON: build.includeJSON,
     version: build.version,
     addons,
   };

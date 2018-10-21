@@ -55,7 +55,7 @@ export class BuildToolbar extends React.Component<Props, State> {
           <div className="container d-flex">
             <div className="custom-file mx-2">
               <input type="file" className="custom-file-input" accept=".json" onChange={this.handleFile} />
-              <label class="custom-file-label" />
+              <label className="custom-file-label" />
             </div>
             <button className="btn btn-outline-light mx-2" onClick={this.toggleFileUI}>
               Cancel

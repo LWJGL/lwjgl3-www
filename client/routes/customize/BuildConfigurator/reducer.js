@@ -28,6 +28,7 @@ export const SELECT_VERSION = 'BUILD/SELECT_VERSION';
 export const TOGGLE_DESCRIPTIONS = 'BUILD/TOGGLE_DESCRIPTIONS';
 export const TOGGLE_SOURCE = 'BUILD/TOGGLE_SOURCE';
 export const TOGGLE_JAVADOC = 'BUILD/TOGGLE_JAVADOC';
+export const TOGGLE_INCLUDE_JSON = 'BUILD/TOGGLE_INCLUDE_JSON';
 export const TOGGLE_OSGI = 'BUILD/TOGGLE_OSGI';
 export const TOGGLE_COMPACT = 'BUILD/TOGGLE_COMPACT';
 export const TOGGLE_HARDCODED = 'BUILD/TOGGLE_HARDCODED';
@@ -48,6 +49,7 @@ export const changeVersion = (version: string) => ({ type: SELECT_VERSION, versi
 export const toggleDescriptions = (enabled: boolean) => ({ type: TOGGLE_DESCRIPTIONS, descriptions: enabled });
 export const toggleSource = (enabled: boolean) => ({ type: TOGGLE_SOURCE, source: enabled });
 export const toggleJavadoc = (enabled: boolean) => ({ type: TOGGLE_JAVADOC, javadoc: enabled });
+export const toggleIncludeJSON = (enabled: boolean) => ({ type: TOGGLE_INCLUDE_JSON, includeJSON: enabled });
 export const toggleOSGi = (enabled: boolean) => ({ type: TOGGLE_OSGI, osgi: enabled });
 export const toggleCompact = (enabled: boolean) => ({ type: TOGGLE_COMPACT, compact: enabled });
 export const toggleHardcoded = (enabled: boolean) => ({ type: TOGGLE_HARDCODED, hardcoded: enabled });
@@ -159,6 +161,12 @@ function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
       case TOGGLE_JAVADOC:
         if (state.mode === MODE_ZIP) {
           draft.javadoc = action.javadoc;
+        }
+        break;
+
+      case TOGGLE_INCLUDE_JSON:
+        if (state.mode === MODE_ZIP) {
+          draft.includeJSON = action.includeJSON;
         }
         break;
 
@@ -366,6 +374,7 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
   state.compact = config.compact;
   state.hardcoded = config.hardcoded;
   state.javadoc = config.javadoc;
+  state.includeJSON = config.includeJSON;
   state.source = config.source;
   state.language = config.language;
   state.osgi = !!config.osgi;
