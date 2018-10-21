@@ -45,7 +45,12 @@ export class Folder extends React.PureComponent<Props> {
       <tr>
         <th css={FolderTH} colSpan={2}>
           <Link to={path}>
-            <IconFolder /> {name} {loading && <CircularProgress className="ml-2" size={16} thickness={4} />}
+            <IconFolder /> {name}{' '}
+            {loading && (
+              <span className="present-yourself">
+                <CircularProgress className="ml-2" size={16} thickness={4} />
+              </span>
+            )}
           </Link>
         </th>
       </tr>
