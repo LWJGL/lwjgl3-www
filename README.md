@@ -92,7 +92,17 @@ yarn watch
 The following flags are used for testing production builds locally.
 NODE_ENV environment variable must be set to "production".
 
+```bash
+--test # Enables production test mode (loads assets from disk instead of S3)
+--nocache # Disables Pug view caching
+--pretty # Pretty prints HTML
+--s3proxy # Proxies S3 images
 ```
+
+The following flags are used for testing production builds locally.
+NODE_ENV environment variable must be set to "production".
+
+```bash
 --test # Enables production test mode (loads assets from disk instead of S3)
 --nocache # Disables Pug view caching
 --pretty # Pretty prints HTML
@@ -152,6 +162,14 @@ you can simulate and run the production build locally:
 yarn test-production
 # will download production assets from S3, only proxies request that pass through Cloudfront
 yarn run-production
+```
+
+To test the production build with [React DevTools Profiler](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html) enabled:
+
+```bash
+yarn production-profiling
+yarn post-production
+yarn test-production
 ```
 
 ### Run in production with PM2
