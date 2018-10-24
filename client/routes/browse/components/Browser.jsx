@@ -2,7 +2,7 @@
 // @jsx jsx
 import * as React from 'react';
 //$FlowFixMe
-import { lazy, unstable_Suspense as Suspense, Fragment, Component } from 'react';
+import { lazy, Suspense, Fragment, Component } from 'react';
 import { createCache, createResource } from 'react-cache';
 import { unstable_scheduleCallback } from 'scheduler';
 

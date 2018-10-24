@@ -95,7 +95,7 @@ export class BuildConfigurator extends React.Component<Props, State> {
     }
   }
 
-  configJSONfilename(save) {
+  configJSONfilename(save: BuildConfigStored) {
     return `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`;
   }
 

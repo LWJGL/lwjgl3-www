@@ -83,4 +83,4 @@ function arePropsEqual(prevProps: SliceProps, nextProps: SliceProps) {
 }
 
 //$FlowFixMe
-const Slice = React.pure(RenderSlice, arePropsEqual);
+const Slice = React.memo(RenderSlice, arePropsEqual);

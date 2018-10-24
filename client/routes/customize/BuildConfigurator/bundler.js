@@ -15,6 +15,7 @@ type SelectedBuildConfig = {
   platforms: Platforms,
   source: boolean,
   javadoc: boolean,
+  includeJSON: boolean,
   version: string,
   addons: AddonSelection,
 };

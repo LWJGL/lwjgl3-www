@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 //$FlowFixMe
-import { lazy, unstable_Suspense as Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { PageBlank } from './PageBlank';
 // import { delay } from '~/services/delay';
 

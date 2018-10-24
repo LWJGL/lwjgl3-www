@@ -2,7 +2,7 @@
 // @jsx jsx
 import * as React from 'react';
 //$FlowFixMe
-import { lazy, unstable_Suspense as Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { jsx } from '@emotion/core';
 import css from '@emotion/css';
 import { Link } from '@reach/router';
