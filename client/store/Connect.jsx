@@ -15,7 +15,7 @@ function readContext(Context, observedBits) {
 // Wraps action creators with dispatch
 // A. Supports passing a function, first argument is the store's dispatch
 // B. Supports passing an object whose values are action creators
-// @see http://redux.js.org/docs/api/bindActionCreators.html
+// @see https://redux.js.org/api/bindactioncreators
 
 type mapDispatchToProps = ActionCreators<any, any> | ((dispatch: Dispatch<any>) => Actions);
 
@@ -53,10 +53,6 @@ export class Connect extends React.Component<Props, Object> {
   static getDerivedStateFromProps(nextProps: Props, prevState: any) {
     const sliceState = nextProps.state(readContext(StoreContext));
     return shallowEqual(prevState, sliceState) ? null : sliceState;
-  }
-
-  shouldComponentUpdate() {
-    return false;
   }
 
   render() {
