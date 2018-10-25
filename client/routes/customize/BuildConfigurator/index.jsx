@@ -151,11 +151,13 @@ export class BuildConfigurator extends React.Component<Props, State> {
     // Include JSON Config
     if (includeJSON) {
       const save = getConfig(snapshot);
-      const blob = new Blob([JSON.stringify(save, null, 2)], {
-        type: 'application/json',
-        endings: 'native',
-      });
-      jszip.file(this.configJSONfilename(save), blob, { binary: true });
+      if (save !== null) {
+        const blob = new Blob([JSON.stringify(save, null, 2)], {
+          type: 'application/json',
+          endings: 'native',
+        });
+        jszip.file(this.configJSONfilename(save), blob, { binary: true });
+      }
     }
 
     // Generate ZPI files
