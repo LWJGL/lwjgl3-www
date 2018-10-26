@@ -9,7 +9,7 @@ const config = {
   plugins: [
     // PRODUCTION && '@emotion/core',
     '@babel/plugin-transform-flow-strip-types',
-    DEV && HMR && 'react-hot-loader/babel',
+    // DEV && HMR && 'react-hot-loader/babel',
 
     // React
     DEV && '@babel/plugin-transform-react-jsx-self',
