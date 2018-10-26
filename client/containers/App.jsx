@@ -10,12 +10,12 @@ import '../components/Head';
 import '../components/Title';
 import '../components/HashLinkTarget';
 
-const App = () => (
-  <ServiceWorkerProvider>
-    <BreakpointProvider>
-      <Layout />
-    </BreakpointProvider>
-  </ServiceWorkerProvider>
-);
-
-export default App;
+export default function App() {
+  return (
+    <ServiceWorkerProvider>
+      <BreakpointProvider>
+        <Layout />
+      </BreakpointProvider>
+    </ServiceWorkerProvider>
+  );
+}

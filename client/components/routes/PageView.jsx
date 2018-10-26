@@ -1,5 +1,7 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
 import type { RouterLocation } from '@reach/router';
@@ -29,77 +31,64 @@ if (SCROLL_RESTORATION) {
   }
 }
 
+function storeScroll(key) {
+  // Add entry
+  // scrollEntries.set(key, { x: window.scrollX, y: window.scrollY });
+  scrollEntries.set(key, { x: window.pageXOffset, y: window.pageYOffset });
+
+  // Drop oldest entry if we exceeded maximum number of entries
+  if (scrollEntries.size > MAX_SCROLL_ENTRIES) {
+    // * The keys() method returns a new Iterator object that contains the keys for each element in the Map object in **insertion** order.
+    // * Therefore, the first value returned by the Iterator will be the oldest scroll entry that we need to drop.
+    //$FlowFixMe
+    scrollEntries.delete(scrollEntries.keys().next().value);
+  }
+
+  // console.table(Array.from(scrollEntries.keys()));
+}
+
 type Props = {
   location: RouterLocation,
   children?: React.Node,
 };
 
-export class PageView extends React.Component<Props> {
-  storeScroll() {
-    const {
-      location: { key = 'root' },
-    } = this.props;
-
-    // Add entry
-    // scrollEntries.set(key, { x: window.scrollX, y: window.scrollY });
-    scrollEntries.set(key, { x: window.pageXOffset, y: window.pageYOffset });
-
-    // Drop oldest entry if we exceeded maximum number of entries
-    if (scrollEntries.size > MAX_SCROLL_ENTRIES) {
-      // * The keys() method returns a new Iterator object that contains the keys for each element in the Map object in **insertion** order.
-      // * Therefore, the first value returned by the Iterator will be the oldest scroll entry that we need to drop.
-      //$FlowFixMe
-      scrollEntries.delete(scrollEntries.keys().next().value);
+export function PageView({ location: { key = 'root', pathname, search, hash }, children }: Props) {
+  if (SCROLL_RESTORATION) {
+    function storeScrollEntriesInSession() {
+      storeScroll(key);
+      sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
     }
 
-    // console.table(Array.from(scrollEntries.keys()));
-  }
-
-  storeScrollEntriesInSession = this.storeScrollEntriesInSession.bind(this);
-  storeScrollEntriesInSession() {
-    this.storeScroll();
-    sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
-  }
-
-  componentDidMount() {
-    const {
-      location: { key = 'root', pathname, search },
-    } = this.props;
-
-    if (SCROLL_RESTORATION) {
+    useEffect(() => {
       // If we have previously stored the same key, restore scroll position
       const entry = scrollEntries.get(key);
       if (entry !== undefined) {
         // Restore scroll position
         window.scroll(entry.x, entry.y);
-      } else if (this.props.location.hash.length === 0) {
+      } else if (hash.length === 0) {
         // Scroll to top of viewport
         window.scroll(0, 0);
       }
 
-      window.addEventListener('unload', this.storeScrollEntriesInSession);
-    }
+      window.addEventListener('unload', storeScrollEntriesInSession);
+      return () => {
+        storeScroll(key);
+        window.removeEventListener('unload', storeScrollEntriesInSession);
+      };
+    }, []);
+  }
 
-    // Track in Google Analytics
+  // Track in Google Analytics
+  useEffect(() => {
     trackView({
       page_path: `${pathname}${search}`,
     });
-  }
+  }, []);
 
-  componentWillUnmount() {
-    if (SCROLL_RESTORATION) {
-      this.storeScroll();
-      window.removeEventListener('unload', this.storeScrollEntriesInSession);
-    }
-  }
-
-  render() {
-    const { children } = this.props;
-    if (!FLAG_PRODUCTION) {
-      // return <React.StrictMode>{children}</React.StrictMode>;
-      return children !== undefined ? children : null;
-    } else {
-      return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
-    }
+  if (!FLAG_PRODUCTION) {
+    // return <React.StrictMode>{children}</React.StrictMode>;
+    return children !== undefined ? children : null;
+  } else {
+    return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
   }
 }

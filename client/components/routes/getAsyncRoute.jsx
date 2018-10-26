@@ -24,7 +24,7 @@ export function getAsyncRoute(loader: ComponentImport) {
             setLoading(false);
           });
       }
-    });
+    }, []);
 
     if (error) {
       return <PageError error={error} />;
