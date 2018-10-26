@@ -15,6 +15,12 @@ export default (prev: BuildOptions): BuildOptions => ({
       natives: NATIVE_ALL,
       website: 'http://bulletphysics.org/',
     },
+    'lwjgl-cuda': {
+      id: 'lwjgl-cuda',
+      title: 'CUDA',
+      description: 'A parallel computing platform and programming model developed by NVIDIA for general computing on GPUs.',
+      website: 'https://developer.nvidia.com/cuda-zone/',
+    },
     'lwjgl-libdivide': {
       id: 'lwjgl-libdivide',
       title: 'libdivide',
