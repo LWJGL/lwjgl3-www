@@ -3,9 +3,9 @@ import * as React from 'react';
 // import { render } from 'react-dom';
 //$FlowFixMe
 import { createRoot } from 'react-dom';
-// import App from './containers/App';
-//$FlowFixMe
-import App from './RHL';
+import App from './containers/App';
+// //$FlowFixMe
+// import App from './RHL';
 import './services/ga';
 
 export function mount() {
