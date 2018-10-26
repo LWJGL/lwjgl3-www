@@ -1,25 +1,22 @@
 // @flow
-import * as React from 'react';
+//$FlowFixMe
+import React, { useEffect } from 'react';
 import { start, end } from '../NavProgress';
 
 type Props = {
-  delay: number,
+  delay?: number,
 };
 
-export class PageBlank extends React.Component<Props> {
-  static defaultProps = {
-    delay: 0,
-  };
+const styles = {
+  padding: '5rem 0',
+  minHeight: 'calc(100vh - 4rem)',
+};
 
-  componentDidMount() {
-    start(this.props.delay);
-  }
+export function PageBlank({ delay = 0 }: Props) {
+  useEffect(() => {
+    start(delay);
+    return end;
+  }, []);
 
-  componentWillUnmount() {
-    end();
-  }
-
-  render() {
-    return <div style={{ padding: '5rem 0', minHeight: 'calc(100vh - 4rem)' }} />;
-  }
+  return <div style={styles} />;
 }

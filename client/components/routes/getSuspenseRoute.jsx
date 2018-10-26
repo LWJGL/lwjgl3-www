@@ -5,7 +5,7 @@ import { lazy, Suspense } from 'react';
 import { PageBlank } from './PageBlank';
 // import { delay } from '~/services/delay';
 
-export const getSuspenseRoute = (loader: ComponentImport) => {
+export function getSuspenseRoute(loader: ComponentImport) {
   const LazyRoute = lazy(loader);
 
   // // Simulate network latency
@@ -14,19 +14,15 @@ export const getSuspenseRoute = (loader: ComponentImport) => {
   //   return await loader();
   // });
 
-  class SuspenseRoute extends React.Component<{}> {
-    static preload() {
-      loader();
-    }
-
-    render() {
-      return (
-        <Suspense maxDuration={200} fallback={<PageBlank />}>
-          <LazyRoute {...this.props} />
-        </Suspense>
-      );
-    }
+  function SuspenseRoute(props: {}) {
+    return (
+      <Suspense maxDuration={200} fallback={<PageBlank />}>
+        <LazyRoute {...props} />
+      </Suspense>
+    );
   }
 
+  SuspenseRoute.preload = loader;
+
   return SuspenseRoute;
-};
+}
