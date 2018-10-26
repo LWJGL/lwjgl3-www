@@ -3,9 +3,6 @@
 import React, { useState, useEffect } from 'react';
 import { PageBlank } from './PageBlank';
 import { PageError } from './PageError';
-// import { delay } from '~/services/delay';
-
-type LoadingError = Error | null;
 
 export function getAsyncRoute(loader: ComponentImport) {
   let RouteComponent = null;
