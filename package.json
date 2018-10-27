@@ -37,11 +37,11 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.343.0",
+    "aws-sdk": "2.344.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
-    "express": "5.0.0-alpha.6",
+    "express": "5.0.0-alpha.7",
     "helmet": "3.14.0",
     "http-proxy-middleware": "0.19.0",
     "pug": "2.0.3",

@@ -1,9 +1,12 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo } from 'react';
 import { Link } from '@reach/router';
 
 type Props = {
   onClick?: (e: Event) => any,
+  className?: string,
 };
 
 const isActive = ({ isCurrent }) => {
@@ -12,8 +15,8 @@ const isActive = ({ isCurrent }) => {
 
 const NavLink = props => <Link getProps={isActive} {...props} />;
 
-export const MainMenu = ({ onClick, ...rest }: Props) => (
-  <ul role="navigation" aria-label="Main Menu" {...rest}>
+export const MainMenu = memo(({ onClick, className }: Props) => (
+  <ul role="navigation" aria-label="Main Menu" className={className}>
     <li>
       <NavLink onClick={onClick} to="/">
         HOME
@@ -55,4 +58,4 @@ export const MainMenu = ({ onClick, ...rest }: Props) => (
       </a>
     </li>
   </ul>
-);
+));
