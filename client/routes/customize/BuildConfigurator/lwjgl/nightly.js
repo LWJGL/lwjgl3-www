@@ -28,6 +28,13 @@ export default (prev: BuildOptions): BuildOptions => ({
       natives: NATIVE_ALL,
       website: 'https://libdivide.com/',
     },
+    'lwjgl-meow': {
+      id: 'lwjgl-meow',
+      title: 'Meow hash',
+      description: 'An extremely fast non-cryptographic hash.',
+      natives: NATIVE_ALL,
+      website: 'https://github.com/cmuratori/meow_hash/',
+    },
     'lwjgl-opus': {
       id: 'lwjgl-opus',
       title: 'Opus',
