@@ -16,8 +16,8 @@ export function useIntersectionObserver(target: HtmlRef, root: HtmlRef, options:
       },
       {
         root: root.current,
-        rootMargin: '0px',
-        threshold: 0,
+        // rootMargin: '0px 0px 0px 0px',
+        // threshold: 0,
         ...options,
       }
     );
