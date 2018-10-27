@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 type HtmlRef = { current: null | HTMLElement };
 
-export function useIntersectionObserver(target: HtmlRef, root: HtmlRef) {
+export function useIntersectionObserver(target: HtmlRef, root: HtmlRef, options: IntersectionObserverOptions) {
   const [isIntersecting, setIntersecting] = useState(false);
 
   useEffect(() => {
@@ -15,8 +15,10 @@ export function useIntersectionObserver(target: HtmlRef, root: HtmlRef) {
         }
       },
       {
-        rootMargin: '0px',
         root: root.current,
+        rootMargin: '0px',
+        threshold: 0,
+        ...options,
       }
     );
     if (target.current) {
