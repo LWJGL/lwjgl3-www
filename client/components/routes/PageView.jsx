@@ -8,11 +8,6 @@ import type { RouterLocation } from '@reach/router';
 import { trackView } from '~/services/ga';
 
 // Store scroll position when leaving a route, restore if we return back to it
-const SCROLL_RESTORATION = 'scrollRestoration' in window.history;
-if (SCROLL_RESTORATION) {
-  window.history.scrollRestoration = 'manual';
-}
-
 type ScrollPosition = {
   x: number,
   y: number,
@@ -22,9 +17,12 @@ type ScrollPosition = {
 // Default value is 50 to match Firefox's default value (about:config -> browser.sessionhistory.max_entries)
 const MAX_SCROLL_ENTRIES = 50;
 const SCROLL_ENTRIES_SESSION_KEY = 'scrollEntries';
+const SCROLL_RESTORATION = 'scrollRestoration' in window.history;
 let scrollEntries: Map<string, ScrollPosition> = new Map();
 
 if (SCROLL_RESTORATION) {
+  window.history.scrollRestoration = 'manual';
+
   const scrollEntriesSession = sessionStorage.getItem(SCROLL_ENTRIES_SESSION_KEY);
   if (scrollEntriesSession != null) {
     scrollEntries = new Map(JSON.parse(scrollEntriesSession));
@@ -75,7 +73,7 @@ export function PageView({ location: { key = 'root', pathname, search, hash }, c
         storeScroll(key);
         window.removeEventListener('unload', storeScrollEntriesInSession);
       };
-    }, []);
+    });
   }
 
   // Track in Google Analytics
@@ -83,12 +81,11 @@ export function PageView({ location: { key = 'root', pathname, search, hash }, c
     trackView({
       page_path: `${pathname}${search}`,
     });
-  }, []);
+  });
 
-  if (!FLAG_PRODUCTION) {
-    // return <React.StrictMode>{children}</React.StrictMode>;
-    return children !== undefined ? children : null;
-  } else {
+  if (FLAG_PRODUCTION) {
     return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
+  } else {
+    return children !== undefined ? children : null;
   }
 }

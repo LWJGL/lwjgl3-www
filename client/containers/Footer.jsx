@@ -1,9 +1,11 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo } from 'react';
 import { Link } from '@reach/router';
 import { LazyImg } from '~/components/LazyImg';
 
-export const Footer = () => (
+export const Footer = memo(() => (
   <footer>
     <section className="container">
       <nav className="row">
@@ -94,4 +96,4 @@ export const Footer = () => (
       </p>
     </section>
   </footer>
-);
+));
