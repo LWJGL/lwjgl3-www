@@ -1,8 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import { jsx } from '@emotion/core';
-import css from '@emotion/css';
+import { jsx, css } from '@emotion/core';
 import { PageView } from '~/components/routes/PageView';
 import { Link, type RouteProps } from '@reach/router';
 import { Head } from '~/components/Head';

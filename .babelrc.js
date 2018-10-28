@@ -8,6 +8,7 @@ const SOURCEMAP = argv.sourcemap !== undefined;
 const config = {
   plugins: [
     // PRODUCTION && '@emotion/core',
+    'emotion',
     '@babel/plugin-transform-flow-strip-types',
     // DEV && HMR && 'react-hot-loader/babel',
 

@@ -1,8 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import { jsx } from '@emotion/core';
-import css from '@emotion/css';
+import { jsx, css } from '@emotion/core';
 
 export type Props = {
   [key: string]: any,
