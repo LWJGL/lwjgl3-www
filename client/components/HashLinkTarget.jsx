@@ -1,7 +1,10 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo, useRef, useEffect } from 'react';
 import { Location, type RouterLocation } from '@reach/router';
-import scrollIntoView from 'scroll-into-view-if-needed';
+import { scrollSmooth } from '../services/scrollSmooth';
+import { usePrevious } from '../hooks/usePrevious';
 
 type OwnProps = {|
   id: string,
@@ -9,7 +12,7 @@ type OwnProps = {|
 
 type Props = {|
   ...OwnProps,
-  location: RouterLocation,
+  hash: string,
 |};
 
 // Remember position before we clicked on a HashLink
@@ -17,62 +20,52 @@ let defaultScrollPos = [0, 0];
 // Avoid calling reset position more than once when multiple <HashLinkTarget /> are on page
 let scrolling = false;
 
-const scrollEnd = () => {
+function scrollEnd() {
   scrolling = false;
-};
+}
 
-export class HashLinkTargetControlled extends React.Component<Props> {
-  componentDidMount() {
-    if (this.props.location.hash === `#${this.props.id}`) {
-      this.scrollToTarget();
-    }
-  }
-
-  componentDidUpdate(prevProps: Props) {
-    const currentHash = this.props.location.hash;
-    const prevHash = prevProps.location.hash;
-    if (prevHash !== currentHash) {
-      if (currentHash === `#${this.props.id}`) {
-        if (prevHash === '') {
-          defaultScrollPos = [window.pageXOffset, window.pageYOffset];
-        }
-        scrolling = true;
-        this.scrollToTarget();
-      } else if (!scrolling) {
-        scrolling = true;
-        if (defaultScrollPos[1] === 0) {
-          if (document.body != null) {
-            scrollIntoView(document.body, {
-              behavior: 'smooth',
-              block: 'start',
-              inline: 'start',
-            });
-          }
-        } else {
-          window.scroll.apply(window, defaultScrollPos);
-        }
-        setTimeout(scrollEnd, 0);
-      }
-    }
-  }
-
-  scrollToTarget() {
-    const el = document.getElementById(this.props.id);
-    if (el !== null) {
-      scrollIntoView(el, {
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'start',
-      });
-      setTimeout(scrollEnd, 0);
-    }
-  }
-
-  render() {
-    return <a id={this.props.id} />;
+function scrollToTarget(el: HTMLElement) {
+  if (el != null) {
+    var rect = el.getBoundingClientRect();
+    scrollSmooth(0, rect.top + window.pageYOffset);
+    setTimeout(scrollEnd, 0);
   }
 }
 
+const HashLinkTargetControlled = memo(({ id, hash }: Props) => {
+  const el = useRef(null);
+  const prevHash = usePrevious(hash);
+
+  useEffect(
+    () => {
+      if (prevHash === undefined) {
+        // Only runs on mount
+        if (hash === `#${id}`) {
+          scrollToTarget(el.current);
+        }
+      } else {
+        // Runs on re-render
+        if (prevHash !== hash) {
+          if (hash === `#${id}`) {
+            if (prevHash === '') {
+              defaultScrollPos = [window.pageXOffset, window.pageYOffset];
+            }
+            scrolling = true;
+            scrollToTarget(el.current);
+          } else if (!scrolling) {
+            scrolling = true;
+            scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
+            setTimeout(scrollEnd, 0);
+          }
+        }
+      }
+    },
+    [id, hash]
+  );
+
+  return <a ref={el} />;
+});
+
 export const HashLinkTarget = ({ id }: OwnProps) => (
-  <Location>{({ location }) => <HashLinkTargetControlled id={id} location={location} />}</Location>
+  <Location>{({ location }) => <HashLinkTargetControlled id={id} hash={location.hash} />}</Location>
 );
