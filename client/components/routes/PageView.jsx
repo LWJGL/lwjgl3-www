@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 //$FlowFixMe
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
 import type { RouterLocation } from '@reach/router';
@@ -50,7 +50,13 @@ type Props = {
   children?: React.Node,
 };
 
-export function PageView({ location: { key = 'root', pathname, search, hash }, children }: Props) {
+function arePropsEqual({ location: prevLocation }: Props, { location: nextLocation }: Props) {
+  // EXPERIMENTAL: We want to prevent re-render when only hash changes
+  // This unfortunately also changes the key which may result in bugs
+  return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
+}
+
+export const PageView = memo(({ location: { key = 'root', pathname, search, hash }, children }: Props) => {
   if (SCROLL_RESTORATION) {
     function storeScrollEntriesInSession() {
       storeScroll(key);
@@ -73,7 +79,7 @@ export function PageView({ location: { key = 'root', pathname, search, hash }, c
         storeScroll(key);
         window.removeEventListener('unload', storeScrollEntriesInSession);
       };
-    });
+    }, []);
   }
 
   // Track in Google Analytics
@@ -81,11 +87,11 @@ export function PageView({ location: { key = 'root', pathname, search, hash }, c
     trackView({
       page_path: `${pathname}${search}`,
     });
-  });
+  }, []);
 
   if (FLAG_PRODUCTION) {
     return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
   } else {
     return children !== undefined ? children : null;
   }
-}
+}, arePropsEqual);
