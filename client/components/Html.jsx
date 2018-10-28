@@ -8,7 +8,7 @@ type Props = {
   props?: $Shape<HTMLElement>,
 };
 
-export const Html = ({ tag = 'div', source, children, ...props }: Props) => {
+export function Html({ tag = 'div', source, children, ...props }: Props) {
   const Container = tag;
   return source !== undefined ? (
     <Container {...props} dangerouslySetInnerHTML={{ __html: source }} />
@@ -20,4 +20,4 @@ export const Html = ({ tag = 'div', source, children, ...props }: Props) => {
       )}
     </Container>
   );
-};
+}
