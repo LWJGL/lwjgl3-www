@@ -1,9 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import { jsx } from '@emotion/core';
-import css from '@emotion/css';
-import keyframes from '@emotion/keyframes';
+import { jsx, css, keyframes } from '@emotion/core';
 // $FlowFixMe
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SupportsIntersectionObserver } from '~/services/supports';

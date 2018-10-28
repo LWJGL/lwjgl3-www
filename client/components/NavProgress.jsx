@@ -1,9 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import { jsx } from '@emotion/core';
-import css from '@emotion/css';
-import keyframes from '@emotion/keyframes';
+import { jsx, css, keyframes } from '@emotion/core';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 
 let instance: null | NavProgress = null;

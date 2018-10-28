@@ -3,8 +3,7 @@
 import * as React from 'react';
 //$FlowFixMe
 import { lazy, Suspense } from 'react';
-import { jsx } from '@emotion/core';
-import css from '@emotion/css';
+import { jsx, css } from '@emotion/core';
 import { Link } from '@reach/router';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
 import { Logo } from './Logo';

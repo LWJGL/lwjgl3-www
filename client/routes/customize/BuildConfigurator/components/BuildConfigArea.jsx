@@ -1,8 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import { jsx } from '@emotion/core';
-import css from '@emotion/css';
+import { jsx, css } from '@emotion/core';
 import { cc, mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import type { BuildConfig } from '../types';
 import { Connect } from '~/store/Connect';

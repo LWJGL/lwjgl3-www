@@ -1,8 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-import { jsx } from '@emotion/core';
-import css from '@emotion/css';
+import { jsx, css } from '@emotion/core';
 import { Link } from '@reach/router';
 import IconFolder from '~/components/icons/md/Folder';
 import { CircularProgress } from '~/components/CircularProgress';
