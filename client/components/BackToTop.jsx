@@ -1,24 +1,20 @@
 // @flow
 import * as React from 'react';
-import scrollIntoView from 'scroll-into-view-if-needed';
+import { scrollSmooth } from '../services/scrollSmooth';
 import IconArrowUpward from './icons/md/ArrowUpward';
 
-const scrollTopTop = (e: SyntheticEvent<HTMLLinkElement>) => {
+function scrollTopTop(e: SyntheticEvent<HTMLLinkElement>) {
   e.preventDefault();
-  if (document.body != null) {
-    scrollIntoView(document.body, {
-      behavior: 'smooth',
-      block: 'start',
-      inline: 'start',
-    });
-  }
-};
+  scrollSmooth(0, 0);
+}
 
-export const BackToTop = () => (
-  <p className="text-center">
-    <a className="btn btn-link" href="#" onClick={scrollTopTop}>
-      top
-      <IconArrowUpward />
-    </a>
-  </p>
-);
+export function BackToTop() {
+  return (
+    <p className="text-center">
+      <a className="btn btn-link" href="#" onClick={scrollTopTop}>
+        top
+        <IconArrowUpward />
+      </a>
+    </p>
+  );
+}
