@@ -1,5 +1,7 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo, useRef } from 'react';
 import uniqueId from 'lodash-es/uniqueId';
 
 type Props = {
@@ -12,41 +14,31 @@ type Props = {
   icon?: React.Node,
 };
 
-export class Checkbox extends React.PureComponent<Props> {
-  static defaultProps = {
-    checked: false,
-    disabled: false,
-    hidden: false,
-  };
+export const Checkbox = memo(
+  ({ label, value, checked = false, onChange, disabled = false, hidden = false, icon }: Props) => {
+    const htmlForId = useRef(uniqueId('checkbox'));
+    const handleChange = () => {
+      if (onChange !== undefined) {
+        onChange(value);
+      }
+    };
 
-  htmlForId: string = uniqueId('checkbox');
-  change = this.change.bind(this);
-
-  change() {
-    if (this.props.onChange) {
-      this.props.onChange(this.props.value);
-    }
-  }
-
-  render() {
-    const props: Props = this.props;
-
-    return props.hidden === true ? null : (
+    return hidden === true ? null : (
       <div className="custom-control custom-checkbox">
         <input
           type="checkbox"
-          id={this.htmlForId}
+          id={htmlForId.current}
           className="custom-control-input"
-          disabled={props.disabled}
-          checked={props.checked}
-          onChange={this.change}
+          disabled={disabled}
+          checked={checked}
+          onChange={handleChange}
         />
-        <label className="custom-control-label" htmlFor={this.htmlForId}>
-          {props.icon}
-          {props.icon != null ? ' ' : null}
-          {props.label}
+        <label className="custom-control-label" htmlFor={htmlForId.current}>
+          {icon}
+          {icon != null ? ' ' : null}
+          {label}
         </label>
       </div>
     );
   }
-}
+);

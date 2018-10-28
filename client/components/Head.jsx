@@ -6,7 +6,7 @@ type Props = {|
   children: React.Node,
 |};
 
-export const Head = (props: Props) => {
+export function Head(props: Props) {
   //$FlowFixMe
   return ReactDOM.createPortal(props.children, document.head);
-};
+}
