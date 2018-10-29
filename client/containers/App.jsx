@@ -7,7 +7,6 @@ import { MetaDescriptionProvider } from '../components/routes/MetaDescription';
 
 // Pull common modules on main bundle
 import '../components/routes/PageView';
-import '../components/Head';
 import '../components/HashLinkTarget';
 
 export default function App() {
