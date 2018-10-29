@@ -96,8 +96,6 @@ const buildConfiguration = () => {
           test: /\.(js|mjs|jsx)$/,
           include: [path.resolve(__dirname, 'client')],
           use: [
-            'cache-loader',
-            'thread-loader',
             {
               loader: 'babel-loader',
               options: {
@@ -177,6 +175,7 @@ const buildConfiguration = () => {
       });
     }
   } else {
+    config.module.rules[0].use.unshift('jsx-compress-loader');
     config.entry.main.unshift(
       // Load core-js polyfill first
       // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
@@ -194,6 +193,8 @@ const buildConfiguration = () => {
       config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
     }
   }
+
+  config.module.rules[0].use.unshift('cache-loader', 'thread-loader');
 
   return config;
 };
