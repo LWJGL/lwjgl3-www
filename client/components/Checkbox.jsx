@@ -8,7 +8,7 @@ type Props = {
   label: string,
   value?: mixed,
   checked?: boolean,
-  onChange?: (value: mixed) => mixed,
+  onChange: (value: mixed) => mixed,
   disabled?: boolean,
   hidden?: boolean,
   icon?: React.Node,
@@ -17,11 +17,7 @@ type Props = {
 export const Checkbox = memo(
   ({ label, value, checked = false, onChange, disabled = false, hidden = false, icon }: Props) => {
     const htmlForId = useRef(uniqueId('checkbox'));
-    const handleChange = () => {
-      if (onChange !== undefined) {
-        onChange(value);
-      }
-    };
+    const handleChange = () => onChange(value);
 
     return hidden === true ? null : (
       <div className="custom-control custom-checkbox">

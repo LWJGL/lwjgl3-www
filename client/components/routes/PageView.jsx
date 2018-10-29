@@ -83,11 +83,7 @@ export const PageView = memo(({ location: { key = 'root', pathname, search, hash
   }
 
   // Track in Google Analytics
-  useEffect(() => {
-    trackView({
-      page_path: `${pathname}${search}`,
-    });
-  }, []);
+  useEffect(() => void trackView({ page_path: `${pathname}${search}` }), []);
 
   if (FLAG_PRODUCTION) {
     return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;

@@ -1,5 +1,7 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo, useRef, useMutationEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 type Props = {
@@ -11,21 +13,22 @@ type Props = {
  * Use it when you need to circumvent DOM z-stacking (for dialogs, popovers, etc.).
  * Any class names passed to this element will be propagated to the new container element on document.body.
  */
-export class Portal extends React.Component<Props, void> {
-  targetElement: HTMLElement | null = null;
+export const Portal = memo(({ children }: Props) => {
+  const targetElement = useRef(null);
 
-  render() {
-    if (this.targetElement === null && document.body) {
-      this.targetElement = document.body.appendChild(document.createElement('div'));
+  useMutationEffect(() => {
+    if (targetElement.current === null) {
+      //$FlowFixMe
+      targetElement.current = document.body.appendChild(document.createElement('div'));
     }
+    return () => {
+      if (targetElement.current !== null) {
+        //$FlowFixMe
+        document.body.removeChild(targetElement.current);
+        targetElement.current = null;
+      }
+    };
+  }, []);
 
-    return this.targetElement !== null ? ReactDOM.createPortal(this.props.children, this.targetElement) : null;
-  }
-
-  componentWillUnmount() {
-    if (this.targetElement !== null && document.body) {
-      document.body.removeChild(this.targetElement);
-      this.targetElement = null;
-    }
-  }
-}
+  return ReactDOM.createPortal(children, targetElement.current);
+});

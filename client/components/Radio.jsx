@@ -1,40 +1,34 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo, useRef } from 'react';
 import uniqueId from 'lodash-es/uniqueId';
 
 type Props = {
   value: any,
   label: string,
-  disabled: boolean,
-  checked: boolean,
+  disabled?: boolean,
+  checked?: boolean,
   onChange: (value: any) => void,
 };
 
-export class Radio extends React.PureComponent<Props> {
-  htmlForId: string = uniqueId('radio');
+export const Radio = memo(({ label, value, checked = false, onChange, disabled = false }: Props) => {
+  const htmlForId = useRef(uniqueId('radio'));
+  const handleChange = () => onChange(value);
 
-  change = this.change.bind(this);
-  change() {
-    this.props.onChange(this.props.value);
-  }
-
-  render() {
-    const props = this.props;
-
-    return (
-      <div className="custom-control custom-radio">
-        <input
-          type="radio"
-          id={this.htmlForId}
-          className="custom-control-input"
-          disabled={props.disabled}
-          checked={props.checked}
-          onChange={this.change}
-        />
-        <label className="custom-control-label" htmlFor={this.htmlForId}>
-          {props.label}
-        </label>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="custom-control custom-radio">
+      <input
+        type="radio"
+        id={htmlForId.current}
+        className="custom-control-input"
+        disabled={disabled}
+        checked={checked}
+        onChange={handleChange}
+      />
+      <label className="custom-control-label" htmlFor={htmlForId.current}>
+        {label}
+      </label>
+    </div>
+  );
+});
