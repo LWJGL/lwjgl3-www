@@ -1,21 +1,18 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { useMutationEffect } from 'react';
 import type { CSSModule } from '~/services/CSSModule';
 
 type Props = {
   loader: CSSModule,
 };
 
-export class Style extends React.Component<Props> {
-  componentDidMount() {
-    this.props.loader.use();
-  }
+function Style({ loader }: Props) {
+  useMutationEffect(() => {
+    loader.use();
+    return loader.unuse;
+  });
 
-  componentWillUnmount() {
-    this.props.loader.unuse();
-  }
-
-  render() {
-    return null;
-  }
+  return null;
 }
