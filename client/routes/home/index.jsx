@@ -23,7 +23,6 @@ import IconBatteryUnknown from '~/components/icons/md/BatteryUnknown';
 
 const HomeRoute = (props: RouteProps) => (
   <PageView location={props.location}>
-    <Title />
     <Head>
       <meta
         name="description"

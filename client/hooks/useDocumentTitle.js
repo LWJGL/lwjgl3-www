@@ -2,10 +2,10 @@
 //$FlowFixMe
 import { useEffect } from 'react';
 
-export default function useDocumentTitle(title: string) {
+export function useDocumentTitle(title?: string) {
   useEffect(
     () => {
-      document.title = title;
+      document.title = title != null && title.length > 0 ? `${title} - LWJGL` : 'LWJGL - Lightweight Java Game Library';
     },
     [title]
   );
