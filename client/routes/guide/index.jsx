@@ -2,8 +2,6 @@
 import * as React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Link, type RouteProps } from '@reach/router';
-import { Head } from '~/components/Head';
-import { Title } from '~/components/Title';
 import { sample } from './sample';
 import loadJS from 'fg-loadjs';
 import { loadCSS } from 'fg-loadcss';
@@ -46,10 +44,11 @@ class GuideRoute extends React.Component<RouteProps, State> {
 
   render() {
     return (
-      <PageView location={this.props.location} title="Get started with LWJGL 3">
-        <Head>
-          <meta name="description" content="This guide will help you get started with LWJGL 3" />
-        </Head>
+      <PageView
+        location={this.props.location}
+        title="Get started with LWJGL 3"
+        description="This guide will help you get started with LWJGL 3"
+      >
         <section className="container">
           <h1>
             LW

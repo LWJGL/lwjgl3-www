@@ -1,12 +1,13 @@
 // @flow
 import * as React from 'react';
 //$FlowFixMe
-import { memo, useEffect } from 'react';
+import { memo, useEffect, useContext } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
 import type { RouterLocation } from '@reach/router';
 import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { MetaDescriptionContext } from './MetaDescription';
 
 // Store scroll position when leaving a route, restore if we return back to it
 type ScrollPosition = {
@@ -49,6 +50,7 @@ function storeScroll(key) {
 type Props = {
   location: RouterLocation,
   title?: string,
+  description?: string,
   children?: React.Node,
 };
 
@@ -58,40 +60,48 @@ function arePropsEqual({ location: prevLocation }: Props, { location: nextLocati
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
 }
 
-export const PageView = memo(({ location: { key = 'root', pathname, search, hash }, title, children }: Props) => {
-  useDocumentTitle(title);
+export const PageView = memo(
+  ({ location: { key = 'root', pathname, search, hash }, title, description, children }: Props) => {
+    // Update document title
+    useDocumentTitle(title);
 
-  if (SCROLL_RESTORATION) {
-    function storeScrollEntriesInSession() {
-      storeScroll(key);
-      sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
-    }
+    // Update META description
+    const metaDescription = useContext(MetaDescriptionContext);
+    useEffect(() => void metaDescription.setDesc(description), [description]);
 
-    useEffect(() => {
-      // If we have previously stored the same key, restore scroll position
-      const entry = scrollEntries.get(key);
-      if (entry !== undefined) {
-        // Restore scroll position
-        window.scroll(entry.x, entry.y);
-      } else if (hash.length === 0) {
-        // Scroll to top of viewport
-        window.scroll(0, 0);
+    if (SCROLL_RESTORATION) {
+      function storeScrollEntriesInSession() {
+        storeScroll(key);
+        sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
       }
 
-      window.addEventListener('unload', storeScrollEntriesInSession);
-      return () => {
-        storeScroll(key);
-        window.removeEventListener('unload', storeScrollEntriesInSession);
-      };
-    }, []);
-  }
+      useEffect(() => {
+        // If we have previously stored the same key, restore scroll position
+        const entry = scrollEntries.get(key);
+        if (entry !== undefined) {
+          // Restore scroll position
+          window.scroll(entry.x, entry.y);
+        } else if (hash.length === 0) {
+          // Scroll to top of viewport
+          window.scroll(0, 0);
+        }
 
-  // Track in Google Analytics
-  useEffect(() => void trackView({ page_path: `${pathname}${search}` }), []);
+        window.addEventListener('unload', storeScrollEntriesInSession);
+        return () => {
+          storeScroll(key);
+          window.removeEventListener('unload', storeScrollEntriesInSession);
+        };
+      }, []);
+    }
 
-  if (FLAG_PRODUCTION) {
-    return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
-  } else {
-    return children !== undefined ? children : null;
-  }
-}, arePropsEqual);
+    // Track in Google Analytics
+    useEffect(() => void trackView({ page_path: `${pathname}${search}` }), []);
+
+    if (FLAG_PRODUCTION) {
+      return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
+    } else {
+      return children !== undefined ? children : null;
+    }
+  },
+  arePropsEqual
+);
