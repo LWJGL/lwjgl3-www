@@ -1,38 +1,26 @@
 // @flow
 import * as React from 'react';
-import { type Dispatch } from 'redux';
+//$FlowFixMe
+import { useEffect, useState } from 'react';
 import { store } from './';
 
 type Props = {
   children: React.Node,
 };
 
-export const StoreContext = React.createContext({});
+export const StoreContext = React.createContext(store.getState());
 
-export class Provider extends React.Component<Props> {
-  state = store.getState();
+export function Provider({ children }: Props) {
+  const [state, setState] = useState(store.getState());
 
-  unsubscribe: Function | null = null;
-
-  updateState = this.updateState.bind(this);
-  updateState() {
-    this.setState(prevState => {
-      const nextState = store.getState();
-      return nextState === prevState ? null : nextState;
-    });
-  }
-
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(this.updateState);
-  }
-
-  componentWillUnmount() {
-    if (this.unsubscribe !== null) {
-      this.unsubscribe();
+  function updateProvider() {
+    const nextState = store.getState();
+    if (state !== nextState) {
+      setState(nextState);
     }
   }
 
-  render() {
-    return <StoreContext.Provider value={this.state}>{React.Children.only(this.props.children)}</StoreContext.Provider>;
-  }
+  useEffect(() => store.subscribe(updateProvider), []);
+
+  return <StoreContext.Provider value={state}>{React.Children.only(children)}</StoreContext.Provider>;
 }

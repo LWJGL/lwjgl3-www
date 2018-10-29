@@ -1,16 +1,12 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo, useContext, useRef } from 'react';
 import { bindActionCreators, type ActionCreators, type Dispatch } from 'redux';
 import { store } from './';
 import { StoreContext } from './Provider';
 import shallowEqual from 'fbjs/lib/shallowEqual';
 // import memoize from 'memoize-state';
-
-function readContext(Context, observedBits) {
-  //$FlowFixMe
-  const dispatcher = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner.currentDispatcher;
-  return dispatcher.readContext(Context, observedBits);
-}
 
 // Wraps action creators with dispatch
 // A. Supports passing a function, first argument is the store's dispatch
@@ -40,28 +36,24 @@ type Props = {
   children: (state: any, actions: Actions) => React.Node,
 };
 
-export class Connect extends React.Component<Props, Object> {
-  static contextType = StoreContext;
-
-  actions: Actions = {
+export function Connect(props: Props) {
+  const store = useContext(StoreContext);
+  const actions = useRef({
     dispatch: store.dispatch,
-    ...(this.props.actions && mapDispatch(this.props.actions)),
-  };
+    ...(props.actions && mapDispatch(props.actions)),
+  });
+  const state = useRef(null);
 
-  state = {};
-
-  static getDerivedStateFromProps(nextProps: Props, prevState: any) {
-    const sliceState = nextProps.state(readContext(StoreContext));
-    return shallowEqual(prevState, sliceState) ? null : sliceState;
+  const nextState = props.state(store);
+  if (!shallowEqual(state.current, nextState)) {
+    state.current = nextState;
   }
 
-  render() {
-    return (
-      <Slice state={this.state} actions={this.actions}>
-        {this.props.children}
-      </Slice>
-    );
-  }
+  return (
+    <Slice state={state.current} actions={actions.current}>
+      {props.children}
+    </Slice>
+  );
 }
 
 type SliceProps = {
@@ -70,13 +62,7 @@ type SliceProps = {
   children: (state: any, actions: Actions) => React.Node,
 };
 
-function RenderSlice(props: SliceProps) {
-  return props.children(props.state, props.actions);
-}
-
-function arePropsEqual(prevProps: SliceProps, nextProps: SliceProps) {
-  return prevProps.state === nextProps.state;
-}
-
-//$FlowFixMe
-const Slice = React.memo(RenderSlice, arePropsEqual);
+const Slice = memo(
+  (props: SliceProps) => props.children(props.state, props.actions),
+  (prevProps: SliceProps, nextProps: SliceProps) => prevProps.state === nextProps.state
+);
