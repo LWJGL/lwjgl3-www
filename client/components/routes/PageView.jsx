@@ -7,7 +7,7 @@ import { PageError } from './PageError';
 import type { RouterLocation } from '@reach/router';
 import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import { MetaDescriptionContext } from './MetaDescription';
+import { useMetaDescription } from '../../hooks/useMetaDescription';
 
 // Store scroll position when leaving a route, restore if we return back to it
 type ScrollPosition = {
@@ -66,8 +66,7 @@ export const PageView = memo(
     useDocumentTitle(title);
 
     // Update META description
-    const metaDescription = useContext(MetaDescriptionContext);
-    useEffect(() => void metaDescription.setDesc(description), [description]);
+    useMetaDescription(description);
 
     if (SCROLL_RESTORATION) {
       function storeScrollEntriesInSession() {
