@@ -7,7 +7,7 @@ import { Overlay } from './Overlay';
 
 type DialogProps = {
   children?: React.Node,
-  fixed: boolean,
+  fixed?: boolean,
   className?: string,
 
   // Overlay props

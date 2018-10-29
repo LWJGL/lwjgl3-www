@@ -1,29 +1,23 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo } from 'react';
 import { Dialog } from './Dialog';
 import { Trap } from './Trap';
 
-type ModalProps = {
+type Props = {
   children: React.Node,
-  isOpen: boolean,
+  isOpen?: boolean,
   title?: string,
   onClose?: () => mixed,
 };
 
-export class Modal extends React.PureComponent<ModalProps, void> {
-  static defaultProps = {
-    isOpen: true,
-  };
-
-  render() {
-    const { isOpen, children, title, onClose } = this.props;
-
-    return (
-      <Dialog className="dialog-modal" isOpen={isOpen} portal={true}>
-        <Trap className="dialog-content container" role="dialog" onClose={onClose}>
-          {children}
-        </Trap>
-      </Dialog>
-    );
-  }
-}
+export const Modal = memo(({ isOpen = true, children, title, onClose }: Props) => {
+  return (
+    <Dialog className="dialog-modal" isOpen={isOpen} portal={true}>
+      <Trap className="dialog-content container" role="dialog" onClose={onClose}>
+        {children}
+      </Trap>
+    </Dialog>
+  );
+});
