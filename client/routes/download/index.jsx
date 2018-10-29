@@ -12,8 +12,7 @@ import IconFolder from '~/components/icons/md/Folder';
 import { Customize, Browse } from '../';
 
 const DownloadRoute = (props: RouteProps) => (
-  <PageView location={props.location}>
-    <Title>Download</Title>
+  <PageView location={props.location} title="Download">
     <Head>
       <meta name="description" content="Download LWJGL 3" />
     </Head>

@@ -1,12 +1,13 @@
 // @flow
 import * as React from 'react';
-import { Title } from '../Title';
+import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import type { ErrorProps } from '../ErrorBoundary';
 
 export function PageError({ error, info }: ErrorProps) {
+  useDocumentTitle('An error has occured');
+
   return (
     <main>
-      <Title>An error has occured</Title>
       <section className="container text-center py-5">
         <h1>Something went wrong</h1>
         <h3 className="text-danger">Oh no! It appears that the page has crashed or failed to load.</h3>

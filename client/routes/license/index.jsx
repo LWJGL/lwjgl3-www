@@ -6,8 +6,7 @@ import { Head } from '~/components/Head';
 import { Title } from '~/components/Title';
 
 const LicenseRoute = (props: RouteProps) => (
-  <PageView location={props.location}>
-    <Title>License</Title>
+  <PageView location={props.location} title="License">
     <Head>
       <meta name="description" content="LWJGL is licensed under BSD" />
     </Head>

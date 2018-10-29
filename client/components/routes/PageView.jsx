@@ -5,7 +5,8 @@ import { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
 import type { RouterLocation } from '@reach/router';
-import { trackView } from '~/services/ga';
+import { trackView } from '../../services/ga';
+import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 // Store scroll position when leaving a route, restore if we return back to it
 type ScrollPosition = {
@@ -47,6 +48,7 @@ function storeScroll(key) {
 
 type Props = {
   location: RouterLocation,
+  title?: string,
   children?: React.Node,
 };
 
@@ -56,7 +58,9 @@ function arePropsEqual({ location: prevLocation }: Props, { location: nextLocati
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
 }
 
-export const PageView = memo(({ location: { key = 'root', pathname, search, hash }, children }: Props) => {
+export const PageView = memo(({ location: { key = 'root', pathname, search, hash }, title, children }: Props) => {
+  useDocumentTitle(title);
+
   if (SCROLL_RESTORATION) {
     function storeScrollEntriesInSession() {
       storeScroll(key);

@@ -10,7 +10,7 @@ import { Global } from '@emotion/core';
 
 const BrowseRoute = (props: RouteProps) => {
   return (
-    <PageView location={props.location}>
+    <PageView location={props.location} title="Browse">
       <Global
         styles={[
           {
@@ -20,7 +20,6 @@ const BrowseRoute = (props: RouteProps) => {
           },
         ]}
       />
-      <Title>Browse</Title>
       <Head>
         <meta name="description" content="Browse LWJGL files" />
       </Head>

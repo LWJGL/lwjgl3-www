@@ -8,8 +8,7 @@ import IconGithub from '~/components/icons/fa/brands/Github';
 import { BuildBadge } from './BuildBadge';
 
 const SourceRoute = (props: RouteProps) => (
-  <PageView location={props.location}>
-    <Title>Source & Build Status</Title>
+  <PageView location={props.location} title="Source & Build Status">
     <Head>
       <meta name="description" content="Links to LWJGL Github repository and build status matrix" />
     </Head>
