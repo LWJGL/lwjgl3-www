@@ -2,8 +2,6 @@
 import * as React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Link, type RouteProps } from '@reach/router';
-import { Head } from '~/components/Head';
-import { Title } from '~/components/Title';
 
 import IconGithub from '~/components/icons/fa/brands/Github';
 import IconCustomize from '~/components/icons/md/CheckBox';
@@ -12,10 +10,7 @@ import IconFolder from '~/components/icons/md/Folder';
 import { Customize, Browse } from '../';
 
 const DownloadRoute = (props: RouteProps) => (
-  <PageView location={props.location} title="Download">
-    <Head>
-      <meta name="description" content="Download LWJGL 3" />
-    </Head>
+  <PageView location={props.location} title="Download" description="Download LWJGL 3">
     <section className="container pb-4">
       <h1>
         Download LW

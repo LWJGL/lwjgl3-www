@@ -2,16 +2,15 @@
 import * as React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import type { RouteProps } from '@reach/router';
-import { Title } from '~/components/Title';
-import { Head } from '~/components/Head';
 import IconGithub from '~/components/icons/fa/brands/Github';
 import { BuildBadge } from './BuildBadge';
 
 const SourceRoute = (props: RouteProps) => (
-  <PageView location={props.location} title="Source & Build Status">
-    <Head>
-      <meta name="description" content="Links to LWJGL Github repository and build status matrix" />
-    </Head>
+  <PageView
+    location={props.location}
+    title="Source & Build Status"
+    description="Links to LWJGL Github repository and build status matrix"
+  >
     <section className="container pb-5">
       <h1>
         LW

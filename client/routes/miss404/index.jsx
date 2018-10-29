@@ -1,6 +1,5 @@
 // @flow
 import * as React from 'react';
-import { Title } from '../../components/Title';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 
 export const Miss404 = () => {

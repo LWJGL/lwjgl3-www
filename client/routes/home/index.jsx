@@ -4,8 +4,6 @@ import * as React from 'react';
 import { jsx, css } from '@emotion/core';
 import { PageView } from '~/components/routes/PageView';
 import { Link, type RouteProps } from '@reach/router';
-import { Head } from '~/components/Head';
-import { Title } from '~/components/Title';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
@@ -22,13 +20,10 @@ import IconVideogameAsset from '~/components/icons/md/VideogameAsset';
 import IconBatteryUnknown from '~/components/icons/md/BatteryUnknown';
 
 const HomeRoute = (props: RouteProps) => (
-  <PageView location={props.location}>
-    <Head>
-      <meta
-        name="description"
-        content="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
-      />
-    </Head>
+  <PageView
+    location={props.location}
+    description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
+  >
     <HomeHero />
     <HashLinkTarget id="learn-more" />
 
