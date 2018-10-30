@@ -14,7 +14,6 @@ type Props = {
 
 export const Radio = memo(({ label, value, checked = false, onChange, disabled = false }: Props) => {
   const htmlForId = useRef(uniqueId('radio'));
-  const handleChange = () => onChange(value);
 
   return (
     <div className="custom-control custom-radio">
@@ -24,7 +23,7 @@ export const Radio = memo(({ label, value, checked = false, onChange, disabled =
         className="custom-control-input"
         disabled={disabled}
         checked={checked}
-        onChange={handleChange}
+        onChange={() => onChange(value)}
       />
       <label className="custom-control-label" htmlFor={htmlForId.current}>
         {label}
