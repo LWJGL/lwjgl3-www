@@ -1,5 +1,4 @@
 // @flow
-import * as React from 'react';
 //$FlowFixMe
 import { useState, useLayoutEffect } from 'react';
 
