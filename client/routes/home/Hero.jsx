@@ -2,7 +2,7 @@
 // @jsx jsx
 import * as React from 'react';
 //$FlowFixMe
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { jsx, css } from '@emotion/core';
 import { Link } from '@reach/router';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
@@ -98,40 +98,43 @@ const HeroContent = ({ children }) => (
   </div>
 );
 
-type Props = {||};
-type State = { supportsWebGL: boolean };
+let supportsWebGL = -1;
 
-export class HomeHero extends React.Component<Props, State> {
-  static supportsWebGL: boolean = false;
+export function HomeHero() {
+  const [webGL, setGL] = useState(supportsWebGL === 1);
 
-  state = {
-    supportsWebGL: HomeHero.supportsWebGL,
-  };
+  useEffect(() => {
+    // If we detected WebGL before, the checks below already passed
+    if (supportsWebGL > -1) {
+      return;
+    }
 
-  componentDidMount() {
     // Skip if user prefers-reduced-motion
     const preferesReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
     if (preferesReducedMotion) {
+      supportsWebGL = 0;
       return;
     }
 
     // Check device memory, skip for under 4GB
     if (navigator.deviceMemory !== undefined && navigator.deviceMemory < 4) {
+      supportsWebGL = 0;
       return;
     }
 
     // Check thread count, skip if probably old/less-capable CPU
     if (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4) {
+      supportsWebGL = 0;
       return;
     }
 
     // Check connection quality
-    // * We check supportsWebGL first because that means connection dropped after we have already loaded threejs
-    if (!this.state.supportsWebGL && navigator.connection !== undefined) {
+    if (navigator.connection !== undefined) {
       // Skip for slow connections
       switch (navigator.connection.effectiveType) {
         case 'slow-2g':
         case '2g':
+          // ! Connection status may change, do not change supportsWebGL flag
           return;
       }
 
@@ -144,33 +147,33 @@ export class HomeHero extends React.Component<Props, State> {
     // detect WebGL support
     const cnv = document.createElement('canvas');
     if (cnv.getContext('webgl') != null || cnv.getContext('experimental-webgl') != null) {
-      HomeHero.supportsWebGL = true;
-      this.setState({ supportsWebGL: true });
+      supportsWebGL = 1;
+      setGL(true);
+    } else {
+      supportsWebGL = 0;
     }
-  }
+  }, []);
 
-  render() {
-    return (
-      <HeroBox>
-        {this.state.supportsWebGL ? (
-          <Suspense maxDuration={0} fallback={null}>
-            <Canvas />
-          </Suspense>
-        ) : null}
-        <LogoContainer>
-          <Logo className="logo" />
-          <HeroContent>
-            <h1>
-              Lightweight <b>Java&nbsp;Game&nbsp;Library&nbsp;3</b>
-            </h1>
-            <Link to="/#learn-more">
-              LEARN MORE
-              <br />
-              <IconKeyboardArrowDown />
-            </Link>
-          </HeroContent>
-        </LogoContainer>
-      </HeroBox>
-    );
-  }
+  return (
+    <HeroBox>
+      {webGL ? (
+        <Suspense maxDuration={0} fallback={null}>
+          <Canvas />
+        </Suspense>
+      ) : null}
+      <LogoContainer>
+        <Logo className="logo" />
+        <HeroContent>
+          <h1>
+            Lightweight <b>Java&nbsp;Game&nbsp;Library&nbsp;3</b>
+          </h1>
+          <Link to="/#learn-more">
+            LEARN MORE
+            <br />
+            <IconKeyboardArrowDown />
+          </Link>
+        </HeroContent>
+      </LogoContainer>
+    </HeroBox>
+  );
 }
