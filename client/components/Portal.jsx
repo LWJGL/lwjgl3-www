@@ -1,11 +1,11 @@
 // @flow
 import * as React from 'react';
 //$FlowFixMe
-import { memo, useRef, useMutationEffect } from 'react';
+import { memo, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 type Props = {
-  children: React.Node,
+  children?: React.Node,
 };
 
 /**
@@ -16,11 +16,12 @@ type Props = {
 export const Portal = memo(({ children }: Props) => {
   const targetElement = useRef(null);
 
-  useMutationEffect(() => {
-    if (targetElement.current === null) {
-      //$FlowFixMe
-      targetElement.current = document.body.appendChild(document.createElement('div'));
-    }
+  if (targetElement.current === null) {
+    //$FlowFixMe
+    targetElement.current = document.body.appendChild(document.createElement('div'));
+  }
+
+  useEffect(() => {
     return () => {
       if (targetElement.current !== null) {
         //$FlowFixMe
@@ -30,5 +31,5 @@ export const Portal = memo(({ children }: Props) => {
     };
   }, []);
 
-  return ReactDOM.createPortal(children, targetElement.current);
+  return ReactDOM.createPortal(children !== undefined ? children : null, targetElement.current);
 });

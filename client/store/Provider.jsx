@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { store } from './';
 
 type Props = {
-  children: React.Node,
+  children?: React.Node,
 };
 
 export const StoreContext = React.createContext<{}>(store.getState());

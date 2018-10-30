@@ -24,6 +24,8 @@ type State = {
 export class ErrorBoundary extends React.Component<Props, State> {
   state = {
     hasError: false,
+    error: undefined,
+    info: undefined,
   };
 
   componentDidCatch(error: Error, info: ReactErrorInfo) {
@@ -31,12 +33,12 @@ export class ErrorBoundary extends React.Component<Props, State> {
   }
 
   render() {
-    if (this.state.hasError && this.state.error !== undefined && this.state.info !== undefined) {
-      const Component = this.props.render;
-      const { error, info } = this.state;
+    const { children, render: Component } = this.props;
+    const { hasError, error, info } = this.state;
+
+    if (hasError && error !== undefined) {
       return <Component error={error} info={info} />;
     } else {
-      const { children } = this.props;
       return children !== undefined ? children : null;
     }
   }
