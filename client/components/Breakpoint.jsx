@@ -1,5 +1,7 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { useEffect, useState } from 'react';
 import { breakpoints, breakpointIndex } from '../theme/media';
 
 type Context = {
@@ -23,69 +25,61 @@ type State = {
   breakpoints: typeof breakpointIndex,
 };
 
-export class BreakpointProvider extends React.Component<Props, State> {
-  // Holds matchMedia matchers
-  matchers: Array<MediaQueryList> = [];
+const matchers: Array<MediaQueryList> = [];
+const listeners: Array<MediaQueryListListener> = [];
+let initialCurrent = breakpointIndex.lg;
 
-  // Holds matchMedia matcher eventListeners
-  listeners: Array<MediaQueryListListener> = [];
+// Create matchMedia event listeners for each breakpoint
+// Check for matches and return current value
+breakpoints.forEach((limit, i) => {
+  let mediaQuery;
+  if (i === 0) {
+    mediaQuery = `(max-width:${breakpoints[1] - 1}px)`;
+  } else if (i === breakpoints.length - 1) {
+    mediaQuery = `(min-width:${limit}px)`;
+  } else {
+    mediaQuery = `(min-width:${limit}px) and (max-width:${breakpoints[i + 1] - 1}px)`;
+  }
 
-  state = {
-    current: (() => {
-      const last = breakpoints.length - 1;
-      let current = breakpointIndex.lg;
+  const mqr = window.matchMedia(mediaQuery);
+  matchers.push(mqr);
 
-      // Create matchMedia event listeners for each breakpoint
-      // Check for matches and return current value
-      breakpoints.forEach((limit, i) => {
-        let mediaQuery;
-        if (i === 0) {
-          mediaQuery = `(max-width:${breakpoints[1] - 1}px)`;
-        } else if (i === last) {
-          mediaQuery = `(min-width:${limit}px)`;
-        } else {
-          mediaQuery = `(min-width:${limit}px) and (max-width:${breakpoints[i + 1] - 1}px)`;
-        }
+  if (mqr.matches) {
+    initialCurrent = i;
+  }
+});
 
-        const mqr = window.matchMedia(mediaQuery);
-        if (mqr.matches) {
-          current = i;
-        }
-        this.matchers.push(mqr);
-      });
+export function BreakpointProvider({ children }: Props) {
+  const [current, setCurrent] = useState(initialCurrent);
 
-      return current;
-    })(),
-    breakpoints: breakpointIndex,
-  };
-
-  mediaQueryListener(current: number, event: MediaQueryListEvent) {
-    if (event.matches) {
-      this.setState({ current });
+  useEffect(() => {
+    function mediaQueryListener(current: number, event: MediaQueryListEvent) {
+      if (event.matches) {
+        setCurrent(current);
+      }
     }
-  }
 
-  componentDidMount() {
-    this.matchers.forEach((matcher, i) => {
-      const listener = this.mediaQueryListener.bind(this, i);
+    matchers.forEach((matcher, i) => {
+      const listener = mediaQueryListener.bind(null, i);
       matcher.addListener(listener);
-      this.listeners.push(listener);
+      listeners.push(listener);
     });
-  }
 
-  componentWillUnmount() {
-    this.matchers.forEach((matcher, i) => {
-      matcher.removeListener(this.listeners[i]);
-    });
-    this.matchers = [];
-    this.listeners = [];
-  }
+    return () => {
+      matchers.forEach((matcher, i) => {
+        matcher.removeListener(listeners[i]);
+      });
+    };
+  }, []);
 
-  render() {
-    return (
-      <BreakpointContext.Provider value={this.state}>
-        {React.Children.only(this.props.children)}
-      </BreakpointContext.Provider>
-    );
-  }
+  return (
+    <BreakpointContext.Provider
+      value={{
+        current,
+        breakpoints: breakpointIndex,
+      }}
+    >
+      {React.Children.only(children)}
+    </BreakpointContext.Provider>
+  );
 }
