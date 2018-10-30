@@ -17,7 +17,6 @@ type Props = {
 export const Checkbox = memo(
   ({ label, value, checked = false, onChange, disabled = false, hidden = false, icon }: Props) => {
     const htmlForId = useRef(uniqueId('checkbox'));
-    const handleChange = () => onChange(value);
 
     return hidden === true ? null : (
       <div className="custom-control custom-checkbox">
@@ -27,7 +26,7 @@ export const Checkbox = memo(
           className="custom-control-input"
           disabled={disabled}
           checked={checked}
-          onChange={handleChange}
+          onChange={() => onChange(value)}
         />
         <label className="custom-control-label" htmlFor={htmlForId.current}>
           {icon}
