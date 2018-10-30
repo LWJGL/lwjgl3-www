@@ -6,7 +6,7 @@ import { Dialog } from './Dialog';
 import { Trap } from './Trap';
 
 type Props = {
-  children: React.Node,
+  children?: React.Node,
   isOpen?: boolean,
   title?: string,
   onClose?: () => mixed,

@@ -8,7 +8,7 @@ export type Props = {
 };
 
 type IconProps = {
-  children: React.Node,
+  children?: React.Node,
   [key: string]: any,
 };
 

@@ -6,7 +6,7 @@ import { Portal } from './Portal';
 import { Backdrop } from './Backdrop';
 
 type Props = {
-  children: React.Node,
+  children?: React.Node,
 
   isOpen?: boolean,
   portal?: boolean,

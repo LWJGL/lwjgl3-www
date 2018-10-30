@@ -17,7 +17,7 @@ export const BreakpointContext = React.createContext<Context>({
 export const Breakpoint = BreakpointContext.Consumer;
 
 type Props = {
-  children: React.Node,
+  children?: React.Node,
 };
 
 type State = {
@@ -79,7 +79,7 @@ export function BreakpointProvider({ children }: Props) {
         breakpoints: breakpointIndex,
       }}
     >
-      {React.Children.only(children)}
+      {children}
     </BreakpointContext.Provider>
   );
 }

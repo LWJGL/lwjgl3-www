@@ -30,7 +30,7 @@ declare module 'react-transition-group' {
   declare type TransitionEventCallback = (node: HTMLElement, isAppearing: boolean) => mixed;
 
   declare type TransitionProps = {
-    children: React.Node | ((status: TransitionStatus) => React.Node),
+    children?: React.Node | ((status: TransitionStatus) => React.Node),
     in?: boolean,
     mountOnEnter?: boolean,
     unmountOnExit?: boolean,

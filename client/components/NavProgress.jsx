@@ -63,7 +63,7 @@ type Context = {
 };
 
 type ProviderProps = {
-  children: React.Node,
+  children?: React.Node,
 };
 
 export const NavProgressContext = React.createContext<Context>({
