@@ -9,7 +9,7 @@ import { IS_IOS } from '~/services/ua';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { COLOR_PRIMARY, cc } from '~/theme';
 import { BreakpointContext } from '../components/Breakpoint';
-import { ServiceWorkerContext } from '../components/ServiceWorker';
+import { useServiceWorker } from '../hooks/useServiceWorker';
 import CloudDownload from '../components/icons/md/CloudDownload';
 
 const HEADER_CLASSNAME = 'site-header';
@@ -31,25 +31,18 @@ type State = {|
   hidden: boolean,
 |};
 
-class ServiceWorkerUpdate extends React.Component<{}> {
-  static contextType = ServiceWorkerContext;
+function ServiceWorkerUpdate() {
+  const [pending, update] = useServiceWorker();
 
-  shouldComponentUpdate() {
-    return false;
-  }
-
-  render() {
-    const { updatePending, update } = this.context;
-    return updatePending ? (
-      <button
-        onClick={update}
-        className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
-        title="Update website to latest version"
-      >
-        <CloudDownload />
-      </button>
-    ) : null;
-  }
+  return pending ? (
+    <button
+      onClick={update}
+      className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
+      title="Update website to latest version"
+    >
+      <CloudDownload />
+    </button>
+  ) : null;
 }
 
 export class Header extends React.PureComponent<Props, State> {
