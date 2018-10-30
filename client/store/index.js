@@ -13,7 +13,7 @@ if (!FLAG_PRODUCTION && FLAG_REDUXLOGGER) {
 
 // const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 //$FlowFixMe
-export const store = createStore(createReducer(), compose(applyMiddleware(...middleware)));
+export const store: Store<any, any, any> = createStore(createReducer(), compose(applyMiddleware(...middleware)));
 
 if (!FLAG_PRODUCTION) {
   // Enable Webpack hot module replacement for global reducers

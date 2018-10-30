@@ -1,6 +1,7 @@
 // @flow
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
 import type { BuildConfig, LANGUAGES } from './types';
+import type { RadioOptions } from '~/components/ControlledRadio';
 
 import {
   changePreset,
@@ -39,7 +40,7 @@ export const fields = {
     name: 'mode',
     value: getMode,
     action: changeMode,
-    options: ({ build: { modes, build } }: State) =>
+    options: ({ build: { modes, build } }: State): RadioOptions =>
       modes.allIds.map(mode => ({
         value: mode,
         label: modes.byId[mode].title,
@@ -50,7 +51,7 @@ export const fields = {
     name: 'preset',
     value: getPreset,
     action: changePreset,
-    options: ({ build: { presets, preset } }: State) =>
+    options: ({ build: { presets, preset } }: State): RadioOptions =>
       presets.allIds.map(presetId => ({
         value: presetId,
         label: presets.byId[presetId].title,
@@ -61,7 +62,7 @@ export const fields = {
     name: 'language',
     value: getLanguage,
     action: changeLanguage,
-    options: ({ build: { languages } }: State) =>
+    options: ({ build: { languages } }: State): RadioOptions =>
       languages.allIds.map((lang: LANGUAGES) => ({
         value: lang,
         label: languages.byId[lang].title,
@@ -71,14 +72,12 @@ export const fields = {
     name: 'version',
     value: getVersion,
     action: changeVersion,
-    options: ({ build: { versions } }: State) =>
-      versions.map(version => {
-        return {
-          value: version,
-          label: version,
-          disabled: version === '3.0.0',
-        };
-      }),
+    options: ({ build: { versions } }: State): RadioOptions =>
+      versions.map(version => ({
+        value: version,
+        label: version,
+        disabled: version === '3.0.0',
+      })),
   },
   descriptions: {
     label: 'Show descriptions',

@@ -8,7 +8,7 @@ type Props = {
   children: React.Node,
 };
 
-export const StoreContext = React.createContext(store.getState());
+export const StoreContext = React.createContext<{}>(store.getState());
 
 export function Provider({ children }: Props) {
   const [state, setState] = useState(store.getState());

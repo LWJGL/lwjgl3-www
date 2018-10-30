@@ -2,7 +2,12 @@
 import * as React from 'react';
 import { breakpoints, breakpointIndex } from '../theme/media';
 
-export const BreakpointContext = React.createContext({
+type Context = {
+  current: number,
+  breakpoints: typeof breakpointIndex,
+};
+
+export const BreakpointContext = React.createContext<Context>({
   current: breakpointIndex.lg,
   breakpoints: breakpointIndex,
 });
