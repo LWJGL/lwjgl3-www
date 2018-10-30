@@ -1,6 +1,8 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
+//$FlowFixMe
+import { memo } from 'react';
 import { jsx, css } from '@emotion/core';
 import { Link } from '@reach/router';
 import IconFolder from '~/components/icons/md/Folder';
@@ -30,32 +32,25 @@ type Props = {
   loading: boolean,
 };
 
-export class Folder extends React.PureComponent<Props> {
-  static defaultProps = {
-    loading: false,
-  };
+export const Folder = memo(({ path, loading = false }: Props) => {
+  const parts = path.split('/');
+  const name = parts[parts.length - 1];
 
-  render() {
-    const { path, loading } = this.props;
-    const parts = path.split('/');
-    const name = parts[parts.length - 1];
-
-    return (
-      <tr>
-        <th css={FolderTH} colSpan={2}>
-          <Link to={path}>
-            <IconFolder /> {name}{' '}
-            {loading && (
-              <span className="present-yourself">
-                <CircularProgress className="ml-2" size={16} thickness={4} />
-              </span>
-            )}
-          </Link>
-        </th>
-      </tr>
-    );
-  }
-}
+  return (
+    <tr>
+      <th css={FolderTH} colSpan={2}>
+        <Link to={path}>
+          <IconFolder /> {name}{' '}
+          {loading && (
+            <span className="present-yourself">
+              <CircularProgress className="ml-2" size={16} thickness={4} />
+            </span>
+          )}
+        </Link>
+      </th>
+    </tr>
+  );
+});
 
 export function SpinnerRow() {
   return (
