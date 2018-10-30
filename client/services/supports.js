@@ -14,11 +14,11 @@ try {
   window.addEventListener('test', null, opts);
 } catch (ignore) {}
 
-export const SupportsPassiveEvents = supportsPassive;
+export const SUPPORTS_PASSIVE_EVENTS = supportsPassive;
 
 // Intersection Observers
 
-export const SupportsIntersectionObserver: boolean =
+export const SUPPORTS_INTERSECTION_OBSERVER: boolean =
   typeof window !== 'undefined' && window.IntersectionObserver !== undefined;
 
 // Touch

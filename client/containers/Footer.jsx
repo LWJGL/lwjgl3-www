@@ -75,13 +75,27 @@ export const Footer = memo(() => (
           </ul>
         </div>
         <div className="col-sm">
-          <h3>Sponsors</h3>
-          <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external noopener">
-            <LazyImg className="mb-4 mr-4" alt="WebHotelier" src="/svg/webhotelier.svg" height={60} />
-          </a>
-          <a href="https://www.jetbrains.com/" title="JetBrains" rel="external noopener">
-            <LazyImg alt="JetBrains" src="/svg/jetbrains-blackandwhite.svg" width={100} />
-          </a>
+          <h3 className="mb-0">Sponsors</h3>
+          <div style={{ maxWidth: 200 }}>
+            <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external noopener">
+              <LazyImg
+                className="img-fluid mb-4 mr-5"
+                alt="WebHotelier"
+                src="/svg/webhotelier.svg"
+                width={566.9}
+                height={185.8}
+              />
+            </a>
+            <a href="https://www.jetbrains.com/" title="JetBrains" rel="external noopener">
+              <LazyImg
+                className="img-fluid mr-5"
+                alt="JetBrains"
+                src="/svg/jetbrains.svg"
+                width={260.534}
+                height={144.351}
+              />
+            </a>
+          </div>
         </div>
       </nav>
     </section>
