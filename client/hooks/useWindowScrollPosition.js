@@ -1,7 +1,7 @@
 // @flow
 //$FlowFixMe
 import { useState, useEffect } from 'react';
-import { SupportsPassiveEvents } from '~/services/supports';
+import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import throttle from 'lodash-es/throttle';
 
 export function getPosition() {
@@ -19,9 +19,9 @@ export function useWindowScrollPosition(throttleMs: number = 0) {
       setPosition(getPosition());
     }, throttleMs);
 
-    window.addEventListener('scroll', handleScroll, SupportsPassiveEvents ? { passive: true } : false);
+    window.addEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     return () => {
-      window.removeEventListener('scroll', handleScroll, SupportsPassiveEvents ? { passive: true } : false);
+      window.removeEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     };
   }, []);
 

@@ -1,5 +1,7 @@
 // @flow
 import * as React from 'react';
+//$FlowFixMe
+import { memo, useEffect, useRef } from 'react';
 import createFocusTrap from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import type { FocusTrap } from 'focus-trap';
@@ -15,96 +17,99 @@ type TrapProps = {
   clickOutsideDeactivates: boolean,
 };
 
-export class Trap extends React.PureComponent<TrapProps> {
-  static defaultProps = {
-    noScroll: true,
-    autoFocus: true,
-    escapeDeactivates: true,
-    clickOutsideDeactivates: true,
-  };
+let lastTrap: null | FocusTrap = null;
 
-  focusTrap: FocusTrap;
-  prevTrap: FocusTrap;
-  static lastTrap: FocusTrap | null = null;
+function TrapComponent({
+  className,
+  role,
+  children,
+  onClose,
+  noScroll = true,
+  autoFocus = true,
+  escapeDeactivates = true,
+  clickOutsideDeactivates = true,
+}: TrapProps) {
+  const divRef = useRef(null);
+  const isMounted = useRef(null);
+  const returnFocus = useRef(null);
 
-  returnFocus: HTMLElement | null;
-  mounted: boolean = false;
+  const focusTrap = useRef(null);
+  const prevTrap = useRef(null);
 
-  divRef = React.createRef();
-
-  render() {
-    const { className, role, children } = this.props;
-    if (!this.mounted) {
-      // Capture previously focused element before mounting
-      this.returnFocus = document.activeElement;
-    }
-    return (
-      <div ref={this.divRef} className={className} role={role} tabIndex={-1}>
-        {children}
-      </div>
-    );
-  }
-
-  findFocusable = (): ?HTMLElement => {
-    const trap = this.divRef.current;
-    if (!this.props.autoFocus) {
+  useEffect(() => {
+    function findFocusable(): ?HTMLElement {
+      const trap = divRef.current;
+      if (autoFocus && trap !== null) {
+        let el = trap.querySelector(
+          '[autofocus],input:not([type="hidden"]):not([disabled]):not([readonly]),select,textarea,button,[tabindex]:not([tabindex="-1"])'
+        );
+        if (el !== null) {
+          return el;
+        }
+      }
       return trap;
     }
-    if (trap != null) {
-      let el = trap.querySelector(
-        '[autofocus],input:not([type="hidden"]):not([disabled]):not([readonly]),select,textarea,button,[tabindex]:not([tabindex="-1"])'
-      );
-      if (el !== null) {
-        return el;
-      }
-    }
-    return trap;
-  };
 
-  componentDidMount() {
-    this.mounted = true;
-    const trap = this.divRef.current;
-    if (trap == null) {
+    isMounted.current = true;
+    const trap = divRef.current;
+    if (trap === null) {
       return;
     }
-    if (Trap.lastTrap !== null) {
-      this.prevTrap = Trap.lastTrap;
-      this.prevTrap.pause();
+
+    if (lastTrap !== null) {
+      prevTrap.current = lastTrap;
+      lastTrap.pause();
     }
-    this.focusTrap = createFocusTrap(trap, {
-      onDeactivate: this.props.onClose,
-      initialFocus: this.findFocusable,
-      escapeDeactivates: this.props.escapeDeactivates,
-      clickOutsideDeactivates: this.props.clickOutsideDeactivates,
+
+    focusTrap.current = createFocusTrap(trap, {
+      onDeactivate: onClose,
+      initialFocus: findFocusable,
+      escapeDeactivates: escapeDeactivates,
+      clickOutsideDeactivates: clickOutsideDeactivates,
       returnFocusOnDeactivate: false,
     });
-    if (this.props.noScroll) {
+
+    if (noScroll) {
       on();
     }
-    this.focusTrap.activate();
-    Trap.lastTrap = this.focusTrap;
+
+    focusTrap.current.activate();
+    lastTrap = focusTrap;
+
+    return () => {
+      isMounted.current = false;
+      focusTrap.current.deactivate({ onDeactivate: false });
+
+      if (prevTrap.current !== null) {
+        prevTrap.current.unpause();
+        lastTrap = prevTrap.current;
+      } else {
+        lastTrap = null;
+      }
+
+      if (noScroll) {
+        off();
+      }
+
+      // Return focus
+      if (returnFocus.current !== null) {
+        try {
+          returnFocus.current.focus();
+        } catch (e) {}
+        returnFocus.current = null;
+      }
+    };
+  }, []);
+
+  if (isMounted.current === null) {
+    returnFocus.current = document.activeElement;
   }
 
-  componentWillUnmount() {
-    this.mounted = false;
-    this.focusTrap.deactivate({ onDeactivate: false });
-
-    if (this.prevTrap) {
-      this.prevTrap.unpause();
-      Trap.lastTrap = this.prevTrap;
-    } else {
-      Trap.lastTrap = null;
-    }
-
-    if (this.props.noScroll) {
-      off();
-    }
-
-    if (this.returnFocus) {
-      try {
-        this.returnFocus.focus();
-      } catch (e) {}
-      this.returnFocus = null;
-    }
-  }
+  return (
+    <div ref={divRef} className={className} role={role} tabIndex={-1}>
+      {children}
+    </div>
+  );
 }
+
+export const Trap = memo(TrapComponent);

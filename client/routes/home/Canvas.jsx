@@ -4,7 +4,7 @@ import * as React from 'react';
 import { jsx, css, keyframes } from '@emotion/core';
 // $FlowFixMe
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
-import { SupportsIntersectionObserver } from '~/services/supports';
+import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
 const fadeIn = keyframes(css`
   from {
@@ -139,7 +139,7 @@ class HomeCanvas extends React.Component<{||}> {
     this.renderer.sortObjects = false;
     this.animate();
 
-    if (SupportsIntersectionObserver) {
+    if (SUPPORTS_INTERSECTION_OBSERVER) {
       this.io = new IntersectionObserver(this.ioCheck);
       this.io.observe(canvas);
     }

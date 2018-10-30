@@ -6,7 +6,7 @@ import { Link } from '@reach/router';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 import { IS_IOS } from '~/services/ua';
-import { SupportsPassiveEvents } from '~/services/supports';
+import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { COLOR_PRIMARY, cc } from '~/theme';
 import { BreakpointContext } from '../components/Breakpoint';
 import { ServiceWorkerContext } from '../components/ServiceWorker';
@@ -78,12 +78,12 @@ export class Header extends React.PureComponent<Props, State> {
       this.offsetHeight = menu.offsetHeight;
     }
 
-    window.addEventListener('scroll', this.onScroll, SupportsPassiveEvents ? { passive: true } : false);
+    window.addEventListener('scroll', this.onScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     this.mounted = true;
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, SupportsPassiveEvents ? { passive: true } : false);
+    window.removeEventListener('scroll', this.onScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     this.mounted = false;
   }
 

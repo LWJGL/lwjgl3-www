@@ -5,7 +5,7 @@ import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
 import IconMenu from '~/components/icons/md/Menu';
 import IconClose from '~/components/icons/md/Close';
-import { SupportsPassiveEvents } from '~/services/supports';
+import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 
 type Props = {};
 
@@ -68,25 +68,33 @@ export class Sidebar extends React.PureComponent<Props, State> {
       sideContainer.removeEventListener(
         'touchstart',
         this.onTouchStart,
-        SupportsPassiveEvents ? { passive: true } : false
+        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
       );
       sideContainer.removeEventListener(
         'touchmove',
         this.onTouchMove,
-        SupportsPassiveEvents ? { passive: false } : false
+        SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
       );
-      sideContainer.removeEventListener('touchend', this.onTouchEnd, SupportsPassiveEvents ? { passive: true } : false);
+      sideContainer.removeEventListener(
+        'touchend',
+        this.onTouchEnd,
+        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
+      );
     } else {
       on();
       focusTrap.activate();
       sideContainer.addEventListener(
         'touchstart',
         this.onTouchStart,
-        SupportsPassiveEvents ? { passive: true } : false
+        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
       );
       // Disable passive to avoid triggering gestures in some devices
-      sideContainer.addEventListener('touchmove', this.onTouchMove, SupportsPassiveEvents ? { passive: false } : false);
-      sideContainer.addEventListener('touchend', this.onTouchEnd, SupportsPassiveEvents ? { passive: true } : false);
+      sideContainer.addEventListener(
+        'touchmove',
+        this.onTouchMove,
+        SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
+      );
+      sideContainer.addEventListener('touchend', this.onTouchEnd, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     }
 
     if (this.mounted) {
