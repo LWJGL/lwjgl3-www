@@ -71,34 +71,43 @@ export const NavProgressContext = React.createContext<Context>({
   end: () => {},
 });
 
+let counter = 0;
+let delayTimeout: TimeoutID | null = null;
+
 export function NavProgressProvider({ children }: ProviderProps) {
-  const [count, setCount] = useState(0);
-  const delayTimeout = useRef(null);
+  const [count, setCount] = useState(counter);
 
   function start(delay: number = 0) {
-    if (delay > 0) {
-      delayTimeout.current = setTimeout(delayedStart, delay);
+    if (delay > 0 && delayTimeout !== null) {
+      delayTimeout = setTimeout(delayedStart, delay);
     } else {
-      setCount(count + 1);
+      delayedStart();
     }
   }
 
   function delayedStart() {
-    setCount(count => count + 1);
-    delayTimeout.current = null;
+    counter += 1;
+    setCount(counter);
+    cleanup();
+  }
+
+  function cleanup() {
+    if (delayTimeout !== null) {
+      clearTimeout(delayTimeout);
+      delayTimeout = null;
+      return true;
+    }
+    return false;
   }
 
   function end() {
-    if (delayTimeout.current !== null) {
-      clearTimeout(delayTimeout.current);
-      delayTimeout.current = null;
-    } else {
-      setCount(count => {
-        if (count <= 0 && !FLAG_PRODUCTION) {
-          throw new Error('Called end without first calling start');
-        }
-        return count - 1;
-      });
+    if (!cleanup()) {
+      if (counter <= 0 && !FLAG_PRODUCTION) {
+        throw new Error('Called end without first calling start');
+      }
+
+      counter -= 1;
+      setCount(counter);
     }
   }
 
@@ -117,6 +126,7 @@ export function NavProgress() {
   const { count } = useContext(NavProgressContext);
   const [progress, setProgress] = useState(0);
   const trickleTimeoutId = useRef(null);
+  const resetTimeoutId = useRef(null);
 
   useEffect(
     () => {
@@ -150,11 +160,19 @@ export function NavProgress() {
       if (count > 0) {
         if (progress === 0) {
           trickle();
+        } else if (progress === 100) {
+          // This is caused by a quick "start → end → start"
+          setProgress(0);
+          trickle();
+          if (resetTimeoutId.current !== null) {
+            clearTimeout(resetTimeoutId.current);
+            resetTimeoutId.current = null;
+          }
         }
       } else if (progress > 0) {
-        // Fill bar and wait 400ms before resetting
+        // Fill bar and wait 750ms before resetting
         setProgress(100);
-        setTimeout(reset, 750);
+        resetTimeoutId.current = setTimeout(reset, 750);
 
         // Clear tricle timeout
         if (trickleTimeoutId.current !== null) {
