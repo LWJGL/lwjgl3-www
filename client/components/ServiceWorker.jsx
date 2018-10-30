@@ -11,7 +11,12 @@ type Props = {
   children: React.Node,
 };
 
-export const ServiceWorkerContext = React.createContext({
+type Context = {
+  updatePending: boolean,
+  update: Function,
+};
+
+export const ServiceWorkerContext = React.createContext<Context>({
   updatePending: false,
   update: function() {},
 });

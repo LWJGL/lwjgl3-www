@@ -14,15 +14,17 @@ type Props = {|
   |},
 |};
 
-type Option = {|
+export type RadioOption = {|
   label: string,
   value: any,
-  disabled: boolean,
+  disabled?: boolean,
 |};
+
+export type RadioOptions = Array<RadioOption>;
 
 type ConnectedProps = {|
   value: any,
-  options: Array<Option>,
+  options: RadioOptions,
   // hidden: boolean,
 |};
 
@@ -37,16 +39,16 @@ export const ControlledRadio = ({ spec }: Props) => (
       select: (value: any) => dispatch(spec.action(value)),
     })}
   >
-    {({ value, options /*, hidden*/ }, { select }): React.Node => (
+    {({ value: selectedValue, options /*, hidden*/ }, { select }): React.Node => (
       <div className="custom-controls-stacked">
-        {options.map((radio: Option, i: number) => (
+        {options.map(({ value, label, disabled }: RadioOption, i: number) => (
           <Radio
-            key={`${spec.name}-${typeof radio.value === 'string' ? radio.value : i}`}
-            value={radio.value}
-            checked={radio.value === value}
+            key={`${spec.name}-${typeof value === 'string' ? value : i}`}
+            value={value}
+            checked={value === selectedValue}
             onChange={select}
-            label={radio.label}
-            disabled={radio.disabled}
+            label={label}
+            disabled={disabled === true}
           />
         ))}
       </div>
