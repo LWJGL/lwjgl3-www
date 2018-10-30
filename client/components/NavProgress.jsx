@@ -77,21 +77,28 @@ export function NavProgressProvider({ children }: ProviderProps) {
 
   function start(delay: number = 0) {
     if (delay > 0) {
-      delayTimeout.current = setTimeout(() => setCount(count => count + 1), delay);
+      delayTimeout.current = setTimeout(delayedStart, delay);
     } else {
       setCount(count + 1);
     }
   }
 
+  function delayedStart() {
+    setCount(count => count + 1);
+    delayTimeout.current = null;
+  }
+
   function end() {
-    if (count <= 0 && !FLAG_PRODUCTION) {
-      throw new Error('Called end without first calling start');
-    }
     if (delayTimeout.current !== null) {
       clearTimeout(delayTimeout.current);
       delayTimeout.current = null;
     } else {
-      setCount(count - 1);
+      setCount(count => {
+        if (count <= 0 && !FLAG_PRODUCTION) {
+          throw new Error('Called end without first calling start');
+        }
+        return count - 1;
+      });
     }
   }
 
