@@ -1,7 +1,7 @@
 // @flow
 //$FlowFixMe
-import React, { useEffect } from 'react';
-import { start, end } from '../NavProgress';
+import React, { useEffect, useContext } from 'react';
+import { NavProgressContext } from '../NavProgress';
 
 type Props = {
   delay?: number,
@@ -13,6 +13,8 @@ const styles = {
 };
 
 export function PageBlank({ delay = 0 }: Props) {
+  const { start, end } = useContext(NavProgressContext);
+
   useEffect(() => {
     start(delay);
     return end;
