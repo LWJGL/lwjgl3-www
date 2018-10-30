@@ -2,7 +2,7 @@
 // @jsx jsx
 import * as React from 'react';
 //$FlowFixMe
-import { lazy, Suspense, Fragment, Component } from 'react';
+import { lazy, Suspense, Fragment, useState, useEffect, useRef } from 'react';
 import { createCache, createResource } from 'react-cache';
 import { unstable_scheduleCallback } from 'scheduler';
 
@@ -52,79 +52,60 @@ async function fetchContents(path: string): Promise<FolderData> {
 }
 
 // Browser
-
 type Props = {
   path: string,
 };
 
-type State = {
-  path: string,
-};
+export function Browser({ path: loading }: Props) {
+  const [path, setPath] = useState(loading);
+  const mounted = useRef(false);
 
-export class Browser extends Component<Props, State> {
-  state = {
-    path: this.props.path,
-  };
+  useEffect(
+    () => {
+      mounted.current = true;
+      if (loading !== path) {
+        unstable_scheduleCallback(() => setPath(loading));
+      }
+    },
+    [loading]
+  );
 
-  mounted = false;
-
-  componentDidMount() {
-    this.mounted = true;
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-  }
-
-  componentDidUpdate() {
-    const { path } = this.props;
-
-    if (this.state.path !== path) {
-      unstable_scheduleCallback(() => this.setState({ path }));
-    }
-  }
-
-  render() {
-    const { path: loading } = this.props;
-    const { path } = this.state;
-
-    return (
-      <div className="table-responsive-md mt-sm-4">
-        <table className="table mb-0">
-          <thead className="thead-light">
+  return (
+    <div className="table-responsive-md mt-sm-4">
+      <table className="table mb-0">
+        <thead className="thead-light">
+          <tr>
+            <th colSpan={2}>
+              <IconCloud /> &nbsp;
+              <Link to={'/browse'}>lwjgl</Link>
+              {path.length
+                ? path.split('/').map((it, i, arr) => {
+                    const subpath = arr.slice(0, i + 1).join('/');
+                    return (
+                      <Fragment key={subpath}>
+                        /<Link to={`/browse/${subpath}`}>{it}</Link>
+                      </Fragment>
+                    );
+                  })
+                : null}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {path !== '' && (
             <tr>
-              <th colSpan={2}>
-                <IconCloud /> &nbsp;
-                <Link to={'/browse'}>lwjgl</Link>
-                {path.length
-                  ? path.split('/').map((it, i, arr) => {
-                      const subpath = arr.slice(0, i + 1).join('/');
-                      return (
-                        <Fragment key={subpath}>
-                          /<Link to={`/browse/${subpath}`}>{it}</Link>
-                        </Fragment>
-                      );
-                    })
-                  : null}
+              <th css={FolderTH} scope="row" colSpan={2}>
+                <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
               </th>
             </tr>
-          </thead>
-          <tbody>
-            {path !== '' && (
-              <tr>
-                <th css={FolderTH} scope="row" colSpan={2}>
-                  <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
-                </th>
-              </tr>
-            )}
-            <Suspense maxDuration={this.mounted ? 3200 : 0} fallback={<SpinnerRow />}>
-              <Contents path={path} loading={loading} />
-            </Suspense>
-          </tbody>
-        </table>
-      </div>
-    );
-  }
+          )}
+          <Suspense maxDuration={mounted.current ? 3200 : 0} fallback={<SpinnerRow />}>
+            <Contents path={path} loading={loading} />
+          </Suspense>
+        </tbody>
+      </table>
+    </div>
+  );
 }
 
 // Browser Contents
