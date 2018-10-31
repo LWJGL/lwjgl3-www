@@ -19,10 +19,10 @@ const env = {
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
-function disableRHL(config) {
-  // Replace ./client/RHL.js with ./client/container/App.jsx
-  config.resolve.alias[path.resolve(__dirname, 'client/RHL.js')] = path.resolve(__dirname, 'client/containers/App.jsx');
-}
+// function disableRHL(config) {
+//   // Replace ./client/RHL.js with ./client/container/App.jsx
+//   config.resolve.alias[path.resolve(__dirname, 'client/RHL.js')] = path.resolve(__dirname, 'client/containers/App.jsx');
+// }
 
 const buildConfiguration = () => {
   const config = {
@@ -73,7 +73,7 @@ const buildConfiguration = () => {
       hints: false,
     },
     entry: {
-      main: [path.resolve(__dirname, 'client/main.js')],
+      main: [path.resolve(__dirname, 'client/main.ts')],
     },
     output: {
       path: path.resolve(__dirname, 'public/js'),
@@ -83,7 +83,7 @@ const buildConfiguration = () => {
       pathinfo: false,
     },
     resolve: {
-      extensions: ['.mjs', '.js', '.jsx', '.json'],
+      extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
       mainFields: ['module', 'jsnext:main', 'main'],
       symlinks: false,
       alias: {
@@ -93,7 +93,7 @@ const buildConfiguration = () => {
     module: {
       rules: [
         {
-          test: /\.(js|mjs|jsx)$/,
+          test: /\.(mjs|js|jsx|ts|tsx)$/,
           include: [path.resolve(__dirname, 'client')],
           use: [
             {

@@ -1,4 +1,3 @@
-// @flow
 import { mount } from './mount';
 
 if (FLAG_CSSMODULES) {
@@ -7,10 +6,10 @@ if (FLAG_CSSMODULES) {
   styles.use();
 }
 
-const bootPromises: Array<Promise<any>> = [];
+// const bootPromises: Array<Promise<any>> = [];
+const bootPromises = [];
 
 if (!('fetch' in window)) {
-  //$FlowFixMe
   bootPromises.push(import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch'));
 }
 
