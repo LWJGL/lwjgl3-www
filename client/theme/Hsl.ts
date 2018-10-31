@@ -1,4 +1,3 @@
-// @flow
 export class Hsl {
   hue: number;
   saturation: number;

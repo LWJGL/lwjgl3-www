@@ -1,11 +1,9 @@
-// @flow
-//$FlowFixMe
 import React, { useEffect, useContext } from 'react';
 import { NavProgressContext } from '../NavProgress';
 
-type Props = {
-  delay?: number,
-};
+interface Props {
+  delay?: number;
+}
 
 const styles = {
   padding: '5rem 0',

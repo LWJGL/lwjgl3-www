@@ -1,5 +1,6 @@
-// @flow
-type Callback = (cb: Function) => void;
+interface Callback {
+  (cb: Function): void;
+}
 
 // Single listener, multiple handler dispatching
 export class EventFeed {
@@ -11,7 +12,7 @@ export class EventFeed {
     this.unregister = unregister;
   }
 
-  subscribers = [];
+  subscribers: Array<Function> = [];
 
   handle(...args: Array<any>) {
     this.subscribers.forEach(listener => {

@@ -5,9 +5,11 @@ const SW_SUPPORTED =
   FLAG_PRODUCTION &&
   navigator.serviceWorker !== undefined &&
   window.isSecureContext &&
-  document.location.hostname === HOSTNAME_PRODUCTION;
+  (document.location as any).hostname === HOSTNAME_PRODUCTION;
 
-type WorkerListener = (isPending: boolean) => void;
+interface WorkerListener {
+  (isPending: boolean): void;
+}
 
 let worker: null | ServiceWorker = null;
 let listeners: Array<WorkerListener> = [];
@@ -47,7 +49,7 @@ if (SW_SUPPORTED) {
 
   if (navigator.serviceWorker !== undefined) {
     // Register service worker
-    navigator.serviceWorker.register('/sw.js').then(reg => {
+    navigator.serviceWorker.register('/sw.js').then((reg: ServiceWorkerRegistration) => {
       // Registration was successful
       // console.log('ServiceWorker registration successful with scope: ', reg.scope);
 
@@ -72,7 +74,9 @@ if (SW_SUPPORTED) {
 
       // Else, listen for new installing workers arriving. If on arrives, track its progress
       reg.addEventListener('updatefound', () => {
-        trackInstallation(reg.installing);
+        if (reg.installing !== null) {
+          trackInstallation(reg.installing);
+        }
       });
     });
 

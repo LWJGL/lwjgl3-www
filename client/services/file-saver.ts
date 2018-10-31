@@ -1,10 +1,9 @@
-// @flow
-
 /*
  * Heavily based on FileSaver.js
  * By Eli Grey, https://eligrey.com
  * License: MIT
  *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
+ * https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js
 */
 function autoBOM(blob: Blob): Blob {
   // prepend BOM for UTF-8 XML and text/* types (including HTML)
@@ -19,36 +18,25 @@ let saveAsWrapped;
 // IE 10+ (native saveAs)
 if (navigator.msSaveOrOpenBlob !== undefined) {
   saveAsWrapped = function(blob: Blob, name: string, no_auto_bom?: boolean) {
-    if (navigator.msSaveOrOpenBlob !== undefined) {
-      return navigator.msSaveOrOpenBlob(no_auto_bom !== true ? blob : autoBOM(blob), name);
-    }
+    return navigator.msSaveOrOpenBlob(no_auto_bom !== true ? blob : autoBOM(blob), name);
   };
 } else {
-  const doc = window.document;
-
   // only get URL when necessary in case Blob.js hasn't overridden it yet
   const getURL = function() {
+    //@ts-ignore
     return window.URL || window.webkitURL || window;
   };
 
   const saveLink = document.createElement('a');
 
-  const click = function(node) {
+  const click = function(node: HTMLAnchorElement) {
     var event = new MouseEvent('click');
     node.dispatchEvent(event);
   };
 
-  const revoke = function(file) {
+  const revoke = function(file: string) {
     // the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
-    setTimeout(function() {
-      if (typeof file === 'string') {
-        // file is an object URL
-        getURL().revokeObjectURL(file);
-      } else {
-        // file is a File
-        file.remove();
-      }
-    }, 1000 * 40);
+    setTimeout(() => getURL().revokeObjectURL(file), 1000 * 40);
   };
 
   saveAsWrapped = function(blob: Blob, name: string, no_auto_bom?: boolean) {

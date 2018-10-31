@@ -1,20 +1,20 @@
 // @flow
 const cdnUrl = 'https://dloycpjzg76ow.cloudfront.net/sounds';
 
-type SoundFxFiles = {
-  [label: string]: string,
-};
+interface SoundFxFiles {
+  [label: string]: string;
+}
 
-type SoundFxBuffers = {
-  [label: string]: AudioBuffer | null,
-};
+interface SoundFxBuffers {
+  [label: string]: AudioBuffer | null;
+}
 
-type Sources = {
-  [label: string]: ?AudioBufferSourceNode,
-};
+// interface Sources {
+//   [label: string]: ?AudioBufferSourceNode,
+// };
 
 let supported = false;
-let ctx: ?AudioContext;
+let ctx: AudioContext | undefined;
 let dst: AudioDestinationNode | GainNode;
 let gainNode: GainNode;
 const buffers: SoundFxBuffers = {};

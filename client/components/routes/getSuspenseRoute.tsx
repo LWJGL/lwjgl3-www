@@ -1,9 +1,8 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
 import { lazy, Suspense } from 'react';
 import { PageBlank } from './PageBlank';
 // import { delay } from '~/services/delay';
+import { RouteComponentProps } from '@reach/router';
 
 export function getSuspenseRoute(loader: ComponentImport) {
   const LazyRoute = lazy(loader);
@@ -14,7 +13,7 @@ export function getSuspenseRoute(loader: ComponentImport) {
   //   return await loader();
   // });
 
-  function SuspenseRoute(props: {}) {
+  function SuspenseRoute(props: RouteComponentProps) {
     return (
       <Suspense maxDuration={200} fallback={<PageBlank />}>
         <LazyRoute {...props} />
