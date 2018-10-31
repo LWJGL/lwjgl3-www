@@ -1,4 +1,3 @@
-// @flow
 /**
  * Concats strings or object with boolean keys and returns a class value
  * This function is more than 2x faster than https://github.com/JedWatson/classnames

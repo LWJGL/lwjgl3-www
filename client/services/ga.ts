@@ -1,7 +1,13 @@
-// @flow
 import loadJS from 'fg-loadjs';
 
-const DNT = navigator.doNotTrack === 1 || window.doNotTrack === 1;
+declare global {
+  interface Window {
+    gtag: (...args: Array<any>) => void;
+  }
+}
+
+const DNT = navigator.doNotTrack === '1' || window.doNotTrack === '1';
+//@ts-ignore
 const ENABLE_TRACKING = FLAG_PRODUCTION && document.location.hostname === HOSTNAME_PRODUCTION;
 let firstCall = true;
 

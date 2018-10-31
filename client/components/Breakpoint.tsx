@@ -1,13 +1,11 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
 import { useEffect, useState } from 'react';
-import { breakpoints, breakpointIndex } from '../theme/media';
+import { breakpoints, breakpointIndex, BreakPointIndex } from '../theme/media';
 
-type Context = {
-  current: number,
-  breakpoints: typeof breakpointIndex,
-};
+interface Context {
+  current: number;
+  breakpoints: BreakPointIndex;
+}
 
 export const BreakpointContext = React.createContext<Context>({
   current: breakpointIndex.lg,
@@ -16,17 +14,12 @@ export const BreakpointContext = React.createContext<Context>({
 
 export const Breakpoint = BreakpointContext.Consumer;
 
-type Props = {
-  children?: React.Node,
-};
-
-type State = {
-  current: number,
-  breakpoints: typeof breakpointIndex,
-};
+interface Props {
+  children?: React.ReactNode;
+}
 
 const matchers: Array<MediaQueryList> = [];
-const listeners: Array<MediaQueryListListener> = [];
+const listeners: Array<EventListener> = [];
 let initialCurrent = breakpointIndex.lg;
 
 // Create matchMedia event listeners for each breakpoint

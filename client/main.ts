@@ -10,6 +10,7 @@ if (FLAG_CSSMODULES) {
 const bootPromises = [];
 
 if (!('fetch' in window)) {
+  //@ts-ignore
   bootPromises.push(import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch'));
 }
 

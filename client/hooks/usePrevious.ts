@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useRef, useEffect } from 'react';
 
 export function usePrevious(value: any) {

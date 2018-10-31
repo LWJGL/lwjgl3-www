@@ -9,9 +9,12 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "strict": true,
     "jsx": "preserve",
     "baseUrl": ".",
+    "lib": ["esnext", "dom", "dom.iterable"],
     "paths": {
       "~/*": ["./client/*"]
     },

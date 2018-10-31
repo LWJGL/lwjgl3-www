@@ -57,14 +57,14 @@ const cssProgressPulse = css`
   ${pulseAnimation.styles};
 `;
 
-type Context = {
-  start: (delay: number) => void,
-  end: () => void,
-};
+interface Context {
+  start: (delay: number) => void;
+  end: () => void;
+}
 
-type ProviderProps = {
-  children?: React.Node,
-};
+interface ProviderProps {
+  children?: React.ReactNode;
+}
 
 export const NavProgressContext = React.createContext<Context>({
   start: () => {},
@@ -72,7 +72,7 @@ export const NavProgressContext = React.createContext<Context>({
 });
 
 let counter = 0;
-let delayTimeout: TimeoutID | null = null;
+let delayTimeout: number | null = null;
 
 export function NavProgressProvider({ children }: ProviderProps) {
   const [count, setCount] = useState(counter);

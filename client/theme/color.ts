@@ -1,4 +1,3 @@
-// @flow
 import { Hsl } from './Hsl';
 
 export function hsl(hue: number, saturation: number, lightness: number, alpha?: number) {

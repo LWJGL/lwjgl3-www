@@ -2,18 +2,17 @@
 import * as React from 'react';
 //$FlowFixMe
 import { memo, useRef, useEffect } from 'react';
-import { Location, type RouterLocation } from '@reach/router';
+import { Location } from '@reach/router';
 import { scrollSmooth } from '../services/scrollSmooth';
 import { usePrevious } from '../hooks/usePrevious';
 
-type OwnProps = {|
-  id: string,
-|};
+interface OwnProps {
+  id: string;
+}
 
-type Props = {|
-  ...OwnProps,
-  hash: string,
-|};
+interface Props extends OwnProps {
+  hash: string;
+}
 
 // Remember position before we clicked on a HashLink
 let defaultScrollPos = [0, 0];

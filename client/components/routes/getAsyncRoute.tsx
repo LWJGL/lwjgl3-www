@@ -3,11 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import { PageBlank } from './PageBlank';
 import { PageError } from './PageError';
+import { RouteComponentProps } from '@reach/router';
 
 export function getAsyncRoute(loader: ComponentImport) {
   let RouteComponent = null;
 
-  function AsyncRoute(props: {}) {
+  function AsyncRoute(props: RouteComponentProps) {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(RouteComponent === null);
 

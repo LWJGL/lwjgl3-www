@@ -1,4 +1,3 @@
-// @flow
 import { hsl } from './color';
 export { mediaBreakpointUp, mediaBreakpointDown } from './media';
 export { cc } from './cc';

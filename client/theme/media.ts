@@ -1,7 +1,11 @@
 // @flow
 export type BREAKPOINT = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
-export const breakpointIndex: { [BREAKPOINT]: number } = {
+export interface BreakPointIndex {
+  [breakpoint: string]: number;
+}
+
+export const breakpointIndex: BreakPointIndex = {
   xs: 0,
   sm: 1,
   md: 2,

@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useEffect } from 'react';
 
 export function useDocumentTitle(title?: string) {

@@ -4,16 +4,15 @@ import * as React from 'react';
 import { memo, useEffect, useContext } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
-import type { RouterLocation } from '@reach/router';
 import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useMetaDescription } from '../../hooks/useMetaDescription';
 
 // Store scroll position when leaving a route, restore if we return back to it
-type ScrollPosition = {
-  x: number,
-  y: number,
-};
+interface ScrollPosition {
+  x: number;
+  y: number;
+}
 
 // The maximum number of pages in the browser's session history, i.e. the maximum number of URLs you can traverse purely through the Back/Forward buttons.
 // Default value is 50 to match Firefox's default value (about:config -> browser.sessionhistory.max_entries)
@@ -47,12 +46,12 @@ function storeScroll(key) {
   // console.table(Array.from(scrollEntries.keys()));
 }
 
-type Props = {
-  location: RouterLocation,
-  title?: string,
-  description?: string,
-  children?: React.Node,
-};
+interface Props {
+  location: RouterLocation;
+  title?: string;
+  description?: string;
+  children?: React.ReactNode;
+}
 
 function arePropsEqual({ location: prevLocation }: Props, { location: nextLocation }: Props) {
   // EXPERIMENTAL: We want to prevent re-render when only hash changes
