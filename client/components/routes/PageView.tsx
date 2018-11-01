@@ -1,6 +1,4 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
 import { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';

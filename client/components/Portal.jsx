@@ -13,7 +13,7 @@ type Props = {
  * Use it when you need to circumvent DOM z-stacking (for dialogs, popovers, etc.).
  * Any class names passed to this element will be propagated to the new container element on document.body.
  */
-export const Portal = memo(({ children }: Props) => {
+export const Portal = React.memo(({ children }: Props) => {
   const targetElement = useRef(null);
 
   if (targetElement.current === null) {

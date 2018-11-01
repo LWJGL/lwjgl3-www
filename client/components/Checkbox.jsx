@@ -14,7 +14,7 @@ type Props = {
   icon?: React.Node,
 };
 
-export const Checkbox = memo(
+export const Checkbox = React.memo(
   ({ label, value, checked = false, onChange, disabled = false, hidden = false, icon }: Props) => {
     const htmlForId = useRef(uniqueId('checkbox'));
 

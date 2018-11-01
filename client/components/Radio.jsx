@@ -12,7 +12,7 @@ type Props = {
   onChange: (value: any) => void,
 };
 
-export const Radio = memo(({ label, value, checked = false, onChange, disabled = false }: Props) => {
+export const Radio = React.memo(({ label, value, checked = false, onChange, disabled = false }: Props) => {
   const htmlForId = useRef(uniqueId('radio'));
 
   return (

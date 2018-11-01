@@ -12,7 +12,7 @@ type Props = {
   onClose?: () => mixed,
 };
 
-export const Modal = memo(({ isOpen = true, children, title, onClose }: Props) => {
+export const Modal = React.memo(({ isOpen = true, children, title, onClose }: Props) => {
   return (
     <Dialog className="dialog-modal" isOpen={isOpen} portal={true}>
       <Trap className="dialog-content container" role="dialog" onClose={onClose}>

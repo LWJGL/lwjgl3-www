@@ -16,7 +16,7 @@ type Props = {
   backdropClassName?: string,
 };
 
-export const Overlay = memo(
+export const Overlay = React.memo(
   ({ children, isOpen = false, lazy = true, portal = false, backdropClassName, hasBackdrop = true }: Props) => {
     const hasOpened = useRef(false);
 

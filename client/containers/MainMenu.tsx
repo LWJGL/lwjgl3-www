@@ -2,18 +2,19 @@
 import * as React from 'react';
 //$FlowFixMe
 import { memo } from 'react';
-import { Link } from '@reach/router';
+import { Link, LinkProps, LinkGetProps } from '@reach/router';
 
 type Props = {
-  onClick?: (e: Event) => any,
-  className?: string,
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
+  className?: string;
 };
 
-const isActive = ({ isCurrent }) => {
-  return isCurrent ? { className: 'active' } : null;
+const isActive = ({ isCurrent }: LinkGetProps) => {
+  return isCurrent ? { className: 'active' } : {};
 };
 
-const NavLink = props => <Link getProps={isActive} {...props} />;
+//@ts-ignore
+const NavLink = (props: LinkProps<void>) => <Link {...props} getProps={isActive} />;
 
 export const MainMenu = memo(({ onClick, className }: Props) => (
   <ul role="navigation" aria-label="Main Menu" className={className}>
