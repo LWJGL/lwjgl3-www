@@ -23,29 +23,29 @@ function scrollEnd() {
   scrolling = false;
 }
 
-function scrollToTarget(el: HTMLElement) {
+function scrollToTarget(el: HTMLAnchorElement) {
   if (el != null) {
     var rect = el.getBoundingClientRect();
     scrollSmooth(0, rect.top + window.pageYOffset);
-    setTimeout(scrollEnd, 0);
+    window.setTimeout(scrollEnd, 0);
   }
 }
 
 const HashLinkTargetControlled = memo(({ id, hash }: Props) => {
-  const el = useRef(null);
+  const el: React.RefObject<HTMLAnchorElement> = useRef(null);
   const prevHash = usePrevious(hash);
 
   useEffect(
     () => {
       if (prevHash === undefined) {
         // Only runs on mount
-        if (hash === `#${id}`) {
+        if (hash === `#${id}` && el.current !== null) {
           scrollToTarget(el.current);
         }
       } else {
         // Runs on re-render
         if (prevHash !== hash) {
-          if (hash === `#${id}`) {
+          if (hash === `#${id}` && el.current !== null) {
             if (prevHash === '') {
               defaultScrollPos = [window.pageXOffset, window.pageYOffset];
             }

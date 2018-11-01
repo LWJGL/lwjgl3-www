@@ -1,17 +1,17 @@
 // @flow
 import * as React from 'react';
 
-type ReactErrorInfo = {
+interface ReactErrorInfo {
   componentStack: string,
 };
 
-export type ErrorProps = {
+export interface ErrorProps {
   error: Error,
   info?: ReactErrorInfo,
 };
 
-type Props = {
-  children?: React.Node,
+interface Props {
+  children?: React.ReactNode,
   render: React.ComponentType<ErrorProps>,
 };
 

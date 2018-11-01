@@ -1,12 +1,13 @@
 // @flow
 import * as React from 'react';
 //$FlowFixMe
-import { memo, useEffect, useContext } from 'react';
+import { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
 import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useMetaDescription } from '../../hooks/useMetaDescription';
+import { Location } from 'history';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
@@ -30,7 +31,7 @@ if (SCROLL_RESTORATION) {
   }
 }
 
-function storeScroll(key) {
+function storeScroll(key: string) {
   // Add entry
   // scrollEntries.set(key, { x: window.scrollX, y: window.scrollY });
   scrollEntries.set(key, { x: window.pageXOffset, y: window.pageYOffset });
@@ -47,10 +48,10 @@ function storeScroll(key) {
 }
 
 interface Props {
-  location: RouterLocation;
+  location: Location;
   title?: string;
   description?: string;
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 function arePropsEqual({ location: prevLocation }: Props, { location: nextLocation }: Props) {
@@ -98,7 +99,7 @@ export const PageView = memo(
     if (FLAG_PRODUCTION) {
       return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
     } else {
-      return children !== undefined ? children : null;
+      return <>{children}</>;
     }
   },
   arePropsEqual

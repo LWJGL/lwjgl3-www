@@ -1,13 +1,13 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
-//$FlowFixMe
 import { useState, useEffect, useContext, useRef } from 'react';
+//@ts-ignore
 import { jsx, css, keyframes } from '@emotion/core';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 
-const pulseAnimation = keyframes(css`
-  from {
+const pulseAnimation = keyframes`
+  0% {
     transform: translateX(-20vw);
   }
   25% {
@@ -16,10 +16,10 @@ const pulseAnimation = keyframes(css`
   75% {
     transform: translateX(120vw);
   }
-  to {
+  100% {
     transform: translateX(120vw);
   }
-`);
+`;
 
 const cssProgressContainer = css`
   position: fixed;
@@ -58,6 +58,7 @@ const cssProgressPulse = css`
 `;
 
 interface Context {
+  count: number;
   start: (delay: number) => void;
   end: () => void;
 }
@@ -67,6 +68,7 @@ interface ProviderProps {
 }
 
 export const NavProgressContext = React.createContext<Context>({
+  count: 0,
   start: () => {},
   end: () => {},
 });
@@ -79,7 +81,7 @@ export function NavProgressProvider({ children }: ProviderProps) {
 
   function start(delay: number = 0) {
     if (delay > 0 && delayTimeout !== null) {
-      delayTimeout = setTimeout(delayedStart, delay);
+      delayTimeout = window.setTimeout(delayedStart, delay);
     } else {
       delayedStart();
     }
@@ -125,8 +127,8 @@ const PERC_MAX = 99.4;
 export function NavProgress() {
   const { count } = useContext(NavProgressContext);
   const [progress, setProgress] = useState(0);
-  const trickleTimeoutId = useRef(null);
-  const resetTimeoutId = useRef(null);
+  const trickleTimeoutId: React.RefValue<number> = useRef(null);
+  const resetTimeoutId: React.RefValue<number> = useRef(null);
 
   useEffect(
     () => {
@@ -145,7 +147,7 @@ export function NavProgress() {
               step = 0.5;
             }
 
-            trickleTimeoutId.current = setTimeout(trickle, 200 + Math.floor(400 * Math.random()));
+            trickleTimeoutId.current = window.setTimeout(trickle, 200 + Math.floor(400 * Math.random()));
             return progress >= PERC_MAX ? PERC_MAX : progress + step;
           }
         });
@@ -172,7 +174,7 @@ export function NavProgress() {
       } else if (progress > 0) {
         // Fill bar and wait 750ms before resetting
         setProgress(100);
-        resetTimeoutId.current = setTimeout(reset, 750);
+        resetTimeoutId.current = window.setTimeout(reset, 750);
 
         // Clear tricle timeout
         if (trickleTimeoutId.current !== null) {

@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import createFocusTrap, { type FocusTrap } from 'focus-trap';
+import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
 import IconMenu from '~/components/icons/md/Menu';
@@ -10,7 +10,7 @@ import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 type Props = {};
 
 type State = {
-  open: boolean,
+  open: boolean;
 };
 
 export class Sidebar extends React.PureComponent<Props, State> {

@@ -1,6 +1,7 @@
 // @flow
 // @jsx jsx
 import * as React from 'react';
+//@ts-ignore
 import { jsx, css } from '@emotion/core';
 import { Link } from '@reach/router';
 import { MainMenu } from './MainMenu';
@@ -20,23 +21,23 @@ const styleOpaque = css`
   background-color: ${COLOR_PRIMARY.css()};
 `;
 
-type Props = {|
-  isHome: boolean,
-|};
+interface Props {
+  isHome: boolean;
+}
 
-type State = {|
-  pos: number,
-  top: boolean,
-  fixed: boolean,
-  hidden: boolean,
-|};
+interface State {
+  pos: number;
+  top: boolean;
+  fixed: boolean;
+  hidden: boolean;
+}
 
 function ServiceWorkerUpdate() {
   const [pending, update] = useServiceWorker();
 
   return pending ? (
     <button
-      onClick={update}
+      onClick={update as any}
       className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
       title="Update website to latest version"
     >
@@ -66,7 +67,7 @@ export class Header extends React.PureComponent<Props, State> {
     // Cache menu height to avoid touching the DOM on every tick
     // WARNING: Do this on update() if menu changes in height dynamically
     // Better get a ref to avoid querying the DOM
-    const menu = document.querySelector(`.${HEADER_CLASSNAME}`);
+    const menu: HTMLDivElement | null = document.querySelector(`.${HEADER_CLASSNAME}`);
     if (menu !== null) {
       this.offsetHeight = menu.offsetHeight;
     }
@@ -76,7 +77,7 @@ export class Header extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
+    window.removeEventListener('scroll', this.onScroll, SUPPORTS_PASSIVE_EVENTS ? {} : false);
     this.mounted = false;
   }
 

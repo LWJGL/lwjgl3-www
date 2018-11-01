@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 
 export function useMedia(query: string, defaultMatches: boolean = true) {

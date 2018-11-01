@@ -1,11 +1,7 @@
-// @flow
-//$FlowFixMe
 import { useEffect } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
-type ElementRef = { current: null | HTMLElement };
-
-export function useScrollToMe(elementRef: ElementRef) {
+export function useScrollToMe(elementRef: React.RefObject<HTMLElement>) {
   useEffect(() => {
     if (elementRef.current != null) {
       scrollIntoView(elementRef.current, {

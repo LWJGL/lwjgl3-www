@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 
 export function useDeviceMotion() {
@@ -20,10 +18,10 @@ export function useDeviceMotion() {
       gamma: null,
     },
     interval: 0,
-  });
+  } as DeviceMotionEvent);
 
   useEffect(() => {
-    const handle = deviceMotionEvent => {
+    const handle = (deviceMotionEvent: DeviceMotionEvent) => {
       setMotion(deviceMotionEvent);
     };
 

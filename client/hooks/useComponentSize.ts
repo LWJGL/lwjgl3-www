@@ -1,15 +1,9 @@
-// @flow
-//$FlowFixMe
 import { useState, useLayoutEffect } from 'react';
 
-export type ComponentSize = {
-  width: number,
-  height: number,
-};
-
-type Ref = {
-  current: HTMLElement | null,
-};
+export interface ComponentSize {
+  width: number;
+  height: number;
+}
 
 export function getSize(el: HTMLElement | null): ComponentSize | null {
   return el
@@ -20,7 +14,7 @@ export function getSize(el: HTMLElement | null): ComponentSize | null {
     : null;
 }
 
-export function useComponentSize(ref: Ref) {
+export function useComponentSize(ref: React.RefObject<HTMLElement>) {
   let [componentSize, setComponentSize] = useState(getSize(ref.current));
 
   function handleResize() {

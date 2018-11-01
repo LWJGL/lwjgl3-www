@@ -1,3 +1,4 @@
+/*
 import { IS_IE } from '~/services/ua';
 import { forceHide } from '../containers/Header';
 import scrollIntoView from 'scroll-into-view-if-needed';
@@ -8,8 +9,6 @@ let animating = false;
 let hnd = null;
 let eventName = 'animation';
 let supportsAnimationEvents = IS_IE ? 0 : -1;
-
-declare var document;
 
 export const init = () => {
   forceHide();
@@ -108,3 +107,4 @@ export const scrollToElement = (el: HTMLElement, cb?: Function) => {
 
   play(cb);
 };
+*/

@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 
 export function getOnlineStatus() {

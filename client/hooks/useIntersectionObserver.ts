@@ -1,10 +1,10 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 
-type HtmlRef = { current: null | HTMLElement };
-
-export function useIntersectionObserver(target: HtmlRef, root: HtmlRef, options: IntersectionObserverOptions) {
+export function useIntersectionObserver(
+  target: React.RefObject<HTMLElement>,
+  root: React.RefObject<HTMLElement>,
+  options: IntersectionObserverInit
+) {
   const [isIntersecting, setIntersecting] = useState(false);
 
   useEffect(() => {

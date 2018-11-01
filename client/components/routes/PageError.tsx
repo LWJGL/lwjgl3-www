@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
-import type { ErrorProps } from '../ErrorBoundary';
+import { ErrorProps } from '../ErrorBoundary';
 
 export function PageError({ error, info }: ErrorProps) {
   useDocumentTitle('An error has occured');

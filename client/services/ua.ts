@@ -1,5 +1,4 @@
-// @flow
-let ua = navigator.userAgent;
+// const ua = navigator.userAgent;
 
 // export const IS_CHROME = /Chrome/.test(ua);
 // export const IS_SAFARI = window.safari !== undefined;
@@ -8,4 +7,5 @@ let ua = navigator.userAgent;
 
 // Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels
 // from the top of the screen (the point under the browser's address bar!)
-export const IS_IOS: boolean = /iPad|iPhone|iPod/.test(ua) && !window.MSStream;
+//@ts-ignore
+export const IS_IOS: boolean = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;

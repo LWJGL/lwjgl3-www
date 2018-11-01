@@ -1,12 +1,11 @@
-// @flow
-//$FlowFixMe
-import React, { useState, useEffect } from 'react';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
 import { PageBlank } from './PageBlank';
 import { PageError } from './PageError';
 import { RouteComponentProps } from '@reach/router';
 
 export function getAsyncRoute(loader: ComponentImport) {
-  let RouteComponent = null;
+  let RouteComponent: React.ComponentType<any> | null = null;
 
   function AsyncRoute(props: RouteComponentProps) {
     const [error, setError] = useState(null);

@@ -8,7 +8,6 @@ import '../components/routes/PageView';
 import '../components/HashLinkTarget';
 
 export default function App() {
-  return <p>test</p>;
   return (
     <BreakpointProvider>
       <NavProgressProvider>
