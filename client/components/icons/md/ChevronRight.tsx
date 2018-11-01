@@ -1,10 +1,7 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
-import { memo } from 'react';
-import { Icon, type Props } from '../Icon';
+import { Icon, IconProps } from '../Icon';
 
-function ChevronRight(props: Props) {
+function ChevronRight(props: IconProps) {
   return (
     <Icon viewBox="0 0 24 24" {...props}>
       <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
@@ -12,4 +9,4 @@ function ChevronRight(props: Props) {
   );
 }
 
-export default memo(ChevronRight);
+export default React.memo(ChevronRight);
