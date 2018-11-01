@@ -1,3 +1,7 @@
+// Helpers
+
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+
 // Type definitions for LWJGL
 
 declare const FLAG_PRODUCTION: boolean;

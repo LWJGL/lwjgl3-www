@@ -112,4 +112,4 @@ function TrapComponent({
   );
 }
 
-export const Trap = memo(TrapComponent);
+export const Trap = React.memo(TrapComponent);

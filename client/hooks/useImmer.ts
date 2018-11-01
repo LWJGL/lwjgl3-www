@@ -2,7 +2,7 @@ import { useState, useReducer } from 'react';
 import produce, { Draft } from 'immer';
 // https://github.com/mweststrate/use-immer
 
-type Updater = <S>(draftState: Draft<S>) => void | S;
+type Updater = <S>(this: void | Draft<S>, draftState: void | Draft<S>) => void | S;
 
 export function useImmer<S>(initialValue: S) {
   const [value, updateValue] = useState(initialValue);
@@ -14,7 +14,6 @@ export function useImmer<S>(initialValue: S) {
   ];
 }
 
-export function useImmerReducer<S, A>(reducer: React.Reducer<S, A>, initialState: S) {
-  //@ts-ignore
+export function useImmerReducer<S>(reducer: Updater, initialState: S) {
   return useReducer(produce(reducer), initialState);
 }

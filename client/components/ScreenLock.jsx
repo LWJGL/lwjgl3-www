@@ -16,7 +16,7 @@ type ScreenLockProps = {
   backdropClassName?: string,
 };
 
-export const ScreenLock = memo(
+export const ScreenLock = React.memo(
   ({
     isOpen = true,
     noScroll = true,

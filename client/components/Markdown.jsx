@@ -12,7 +12,7 @@ type Props = {
   options?: RemarkableOptions | RemarkableSettings,
 };
 
-export const Markdown = memo(({ tag = 'div', source, options, ...rest }: Props) => {
+export const Markdown = React.memo(({ tag = 'div', source, options, ...rest }: Props) => {
   const Container = tag;
   return <Container {...rest} dangerouslySetInnerHTML={{ __html: new Remarkable(options).render(source) }} />;
 });

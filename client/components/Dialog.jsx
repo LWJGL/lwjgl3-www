@@ -18,7 +18,7 @@ type DialogProps = {
   backdropClassName?: string,
 };
 
-export const Dialog = memo(({ className, children, fixed = true, ...rest }: DialogProps) => (
+export const Dialog = React.memo(({ className, children, fixed = true, ...rest }: DialogProps) => (
   <Overlay {...rest}>
     <div className={cc('dialog', { 'dialog-fixed': fixed }, className)}>{children}</div>
   </Overlay>

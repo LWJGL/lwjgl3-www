@@ -76,23 +76,25 @@ type Props = {
   onChange: (value: any) => mixed,
 };
 
-export const Toggle = memo(({ hidden = false, disabled = false, checked = false, label, onChange, value }: Props) => {
-  const htmlForId = useRef(uniqueId('toggle'));
+export const Toggle = React.memo(
+  ({ hidden = false, disabled = false, checked = false, label, onChange, value }: Props) => {
+    const htmlForId = useRef(uniqueId('toggle'));
 
-  return hidden === true ? null : (
-    <div className="custom-control">
-      <input
-        className="custom-control-input"
-        type="checkbox"
-        id={htmlForId.current}
-        disabled={disabled}
-        checked={checked}
-        onChange={() => onChange(value)}
-        css={InputStyle}
-      />
-      <label css={LabelStyle} className="custom-control-label" htmlFor={htmlForId.current}>
-        {label}
-      </label>
-    </div>
-  );
-});
+    return hidden === true ? null : (
+      <div className="custom-control">
+        <input
+          className="custom-control-input"
+          type="checkbox"
+          id={htmlForId.current}
+          disabled={disabled}
+          checked={checked}
+          onChange={() => onChange(value)}
+          css={InputStyle}
+        />
+        <label css={LabelStyle} className="custom-control-label" htmlFor={htmlForId.current}>
+          {label}
+        </label>
+      </div>
+    );
+  }
+);
