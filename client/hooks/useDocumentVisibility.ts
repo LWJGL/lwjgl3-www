@@ -1,7 +1,4 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
-import { EventFeed } from '~/services/EventFeed';
 
 export function getVisibility() {
   return document.visibilityState;

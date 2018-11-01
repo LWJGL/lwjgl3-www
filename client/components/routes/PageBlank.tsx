@@ -1,4 +1,5 @@
-import React, { useEffect, useContext } from 'react';
+import * as React from 'react';
+import { useEffect, useContext } from 'react';
 import { NavProgressContext } from '../NavProgress';
 
 interface Props {

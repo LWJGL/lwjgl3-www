@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 import throttle from 'lodash-es/throttle';
 

@@ -18,7 +18,10 @@ declare module 'react-dom' {
 declare module 'react' {
   // React 16.6
 
-  function memo<Props>(component: React.StatelessComponent<Props>): React.StatelessComponent<Props>;
+  function memo<Props>(
+    component: React.ReactType<Props>,
+    arePropsEqual?: (prevProps: Props, nextProps: Props) => boolean
+  ): React.StatelessComponent<Props>;
 
   function lazy<P, Component extends React.ComponentType<P>>(
     importFn: () => Promise<Component | { default: Component }>
@@ -28,7 +31,11 @@ declare module 'react' {
 
   // React 16.7
 
-  type StateUpdateFunction<State> = (newState: State | ((oldState: State) => State)) => void;
+  interface RefValue<T> {
+    current: T | null;
+  }
+
+  type StateUpdateFunction<State> = (newState: State | ((oldState: State) => State | void)) => void;
 
   function useState<State>(initialState: State | (() => State)): [State, StateUpdateFunction<State>];
 

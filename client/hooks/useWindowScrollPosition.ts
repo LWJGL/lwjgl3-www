@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import throttle from 'lodash-es/throttle';
@@ -21,7 +19,9 @@ export function useWindowScrollPosition(throttleMs: number = 0) {
 
     window.addEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     return () => {
-      window.removeEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
+      // TODO: test that this removes handleScroll
+      // removeEventListener options must not have passive: true based on spec
+      window.removeEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? {} : false);
     };
   }, []);
 

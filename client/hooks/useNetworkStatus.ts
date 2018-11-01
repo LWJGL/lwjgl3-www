@@ -1,9 +1,7 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 
 export function getConnection() {
-  //$FlowFixMe
+  //@ts-ignore
   return navigator.connection || navigator.mozConnection || navigator.webkitConnection;
 }
 

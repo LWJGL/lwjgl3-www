@@ -1,6 +1,4 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
 import { memo } from 'react';
 import { Link } from '@reach/router';
 import { LazyImg } from '~/components/LazyImg';

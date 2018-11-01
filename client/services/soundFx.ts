@@ -1,4 +1,3 @@
-// @flow
 const cdnUrl = 'https://dloycpjzg76ow.cloudfront.net/sounds';
 
 interface SoundFxFiles {
@@ -60,14 +59,17 @@ const soundFiles: SoundFxFiles = {
   notification9: `${cdnUrl}/Notification 9.mp3`,
 };
 
-if (window.AudioContext !== undefined) {
+if (typeof AudioContext !== 'undefined') {
   ctx = new AudioContext();
-} else if (window.webkitAudioContext !== undefined) {
-  // $FlowFixMe
+  //@ts-ignore
+} else if (typeof webkitAudioContext !== 'undefined') {
+  //@ts-ignore
   ctx = new webkitAudioContext();
 
   // Polyfill decodeAudioData
+  //@ts-ignore
   const oldFunc = webkitAudioContext.prototype.decodeAudioData;
+  //@ts-ignore
   webkitAudioContext.prototype.decodeAudioData = function(arraybuffer) {
     return new Promise((resolve, reject) => {
       oldFunc.call(this, arraybuffer, resolve, reject);

@@ -1,5 +1,3 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
 import { isPending, update, addListener, removeListener } from '../services/serviceWorker';
 

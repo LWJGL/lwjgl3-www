@@ -6,10 +6,6 @@
     "checkJs": false,
     "alwaysStrict": true,
     "noEmit": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "strict": true,
     "jsx": "preserve",
@@ -24,5 +20,6 @@
       }
     ]
   },
-  "exclude": [".idea", ".vscode", ".cache-loader", "public"]
+  "include": ["./types", "./client"],
+  "exclude": [".idea", ".vscode", ".cache-loader", "public", "**/*.spec.ts"]
 }

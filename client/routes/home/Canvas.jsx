@@ -6,14 +6,14 @@ import { jsx, css, keyframes } from '@emotion/core';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
-const fadeIn = keyframes(css`
+const fadeIn = keyframes`
   from {
     opacity: 0;
   }
   to {
     opacity: 0.175;
   }
-`);
+`;
 
 const Canvas = css`
   position: absolute;

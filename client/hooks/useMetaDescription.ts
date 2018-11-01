@@ -1,21 +1,19 @@
-// @flow
-//$FlowFixMe
 import { useEffect, useRef } from 'react';
 
 export function useMetaDescription(description?: string) {
-  const meta = useRef(null);
+  const meta: React.RefValue<HTMLMetaElement> = useRef(null);
 
   useEffect(
     () => {
       if (description != null && description.length > 0) {
         if (meta.current === null) {
-          //$FlowFixMe
-          let metatag = document.head.querySelector('meta[name=description]');
+          let metatag: HTMLMetaElement | null = (document.head as HTMLHeadElement).querySelector(
+            'meta[name=description]'
+          );
           if (metatag === null) {
             metatag = document.createElement('meta');
             metatag.setAttribute('name', 'description');
-            //$FlowFixMe
-            document.head.appendChild(metatag);
+            (document.head as HTMLHeadElement).appendChild(metatag);
           }
           meta.current = metatag;
         }

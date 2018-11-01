@@ -16,13 +16,13 @@ function easeOut(t) {
   return easeOutCubic(getRelativeValue(t, 0, 1));
 }
 
-const indeterminateAnimation = keyframes(css`
+const indeterminateAnimation = keyframes`
   to {
     transform: rotate(360deg);
   }
-`);
+`;
 
-const indeterminateStrokeAnimation = keyframes(css`
+const indeterminateStrokeAnimation = keyframes`
   0% {
     stroke-dasharray: 1px, 200px;
     stroke-dashoffset: 0px;
@@ -35,7 +35,7 @@ const indeterminateStrokeAnimation = keyframes(css`
     stroke-dasharray: 100px, 200px;
     stroke-dashoffset: -120px;
   }
-`);
+`;
 
 const ProgressStyle = css`
   display: inline-block;

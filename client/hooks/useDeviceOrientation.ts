@@ -1,6 +1,11 @@
-// @flow
-//$FlowFixMe
 import { useState, useEffect } from 'react';
+
+interface Orientation {
+  absolute: boolean;
+  alpha: number | null;
+  beta: number | null;
+  gamma: number | null;
+}
 
 export function useDeviceOrientation() {
   const [orientation, setOrientation] = useState({
@@ -8,10 +13,10 @@ export function useDeviceOrientation() {
     beta: null,
     gamma: null,
     absolute: false,
-  });
+  } as Orientation);
 
   useEffect(() => {
-    const handle = e => {
+    const handle = (e: DeviceOrientationEvent) => {
       setOrientation({
         beta: e.beta,
         alpha: e.alpha,
