@@ -5,10 +5,8 @@ export const getScrollbarSize = (): number => {
   if (scrollbarSize === -1) {
     let dummyScroller = document.createElement('div');
     dummyScroller.setAttribute('style', 'width:99px;height:99px;position:absolute;top:-9999px;overflow:scroll');
-    // $FlowFixMe
     document.body.appendChild(dummyScroller);
     scrollbarSize = dummyScroller.offsetWidth - dummyScroller.clientWidth;
-    // $FlowFixMe
     document.body.removeChild(dummyScroller);
   }
 

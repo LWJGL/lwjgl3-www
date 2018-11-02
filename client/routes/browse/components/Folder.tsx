@@ -1,9 +1,8 @@
-// @flow
 // @jsx jsx
 import * as React from 'react';
-//$FlowFixMe
 import { memo } from 'react';
 import { jsx, css } from '@emotion/core';
+jsx;
 import { Link } from '@reach/router';
 import IconFolder from '~/components/icons/md/Folder';
 import { CircularProgress } from '~/components/CircularProgress';
@@ -28,8 +27,8 @@ export const FolderTH = css`
 `;
 
 type Props = {
-  path: string,
-  loading: boolean,
+  path: string;
+  loading: boolean;
 };
 
 export const Folder = memo(({ path, loading = false }: Props) => {

@@ -1,14 +1,14 @@
-// @flow
 // @jsx jsx
 import * as React from 'react';
 import { jsx, css } from '@emotion/core';
+jsx;
 
-type Props = {|
-  path: string,
-|};
+interface Props {
+  path: string;
+}
 
-export const File = (props: Props) => {
-  const url = `https://build.lwjgl.org/${props.path}`;
+export const File = ({ path }: Props) => {
+  const url = `https://build.lwjgl.org/${path}`;
 
   return (
     <tr>
@@ -17,7 +17,7 @@ export const File = (props: Props) => {
           word-break: break-all;
         `}
       >
-        <b>{props.path.split('/').pop()}</b>
+        <b>{path.split('/').pop()}</b>
         <br />
         <small>{url}</small>
       </td>

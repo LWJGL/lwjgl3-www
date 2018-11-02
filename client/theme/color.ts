@@ -6,7 +6,7 @@ export function hsl(hue: number, saturation: number, lightness: number, alpha?: 
 
 /*
   TODO:
-    If the following TC39 proposals are accepted (and Flow adds support):
+    If the following TC39 proposals are accepted:
       https://github.com/rbuckton/proposal-partial-application
       https://github.com/tc39/proposal-pipeline-operator
 

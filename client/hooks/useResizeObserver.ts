@@ -3,7 +3,7 @@ import { useRef, useState, useLayoutEffect } from 'react';
 
 export function useResizeObserver(target: React.RefObject<HTMLElement>) {
   const [rect, setRect] = useState({ width: 0, height: 0, x: 0, y: 0, top: 0, right: 0, bottom: 0, left: 0 });
-  const observer: React.RefValue<ResizeObserver> = useRef(null);
+  const observer: React.MutableRefObject<ResizeObserver | null> = useRef(null);
 
   useLayoutEffect(() => {
     function handleResize(entries: Array<ResizeObserverEntry>) {
