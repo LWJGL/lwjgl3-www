@@ -1,5 +1,3 @@
-// @flow
-
 // const SW_SUPPORTED = navigator.serviceWorker !== undefined && window.isSecureContext;
 const SW_SUPPORTED =
   FLAG_PRODUCTION &&

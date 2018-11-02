@@ -1,4 +1,3 @@
-// @flow
 export type BREAKPOINT = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 export interface BreakPointIndex {

@@ -13,6 +13,8 @@ import { BreakpointContext } from '../components/Breakpoint';
 import { useServiceWorker } from '../hooks/useServiceWorker';
 import CloudDownload from '../components/icons/md/CloudDownload';
 
+jsx;
+
 const HEADER_CLASSNAME = 'site-header';
 const styleHome = css`
   transition: background-color 0.5s ease-out;

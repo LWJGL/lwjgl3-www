@@ -1,11 +1,8 @@
 import * as React from 'react';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { RouteComponentProps } from '@reach/router';
 
-interface Props {
-  default: boolean;
-}
-
-export function Miss404(props: Props) {
+export function Miss404(props: RouteComponentProps) {
   useDocumentTitle('Page not Found');
   return (
     <section className="container text-center py-5">

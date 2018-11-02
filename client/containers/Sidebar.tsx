@@ -22,16 +22,16 @@ export class Sidebar extends React.PureComponent<Props, State> {
   touchingSideNav: boolean = false;
   startX: number = 0;
   currentX: number = 0;
-  focusTrap: FocusTrap;
+  focusTrap!: FocusTrap;
 
-  closeButtonRef = React.createRef();
-  slidingMenuRef = React.createRef();
-  sideContainerRef = React.createRef();
+  closeButtonRef: React.RefObject<HTMLButtonElement> = React.createRef();
+  slidingMenuRef: React.RefObject<HTMLDivElement> = React.createRef();
+  sideContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
 
   componentDidMount() {
     this.mounted = true;
-    const slidingMenu: HTMLDivElement | null = this.slidingMenuRef.current;
-    const closeButton: HTMLButtonElement | null = this.closeButtonRef.current;
+    const slidingMenu = this.slidingMenuRef.current;
+    const closeButton = this.closeButtonRef.current;
 
     if (slidingMenu !== null && closeButton !== null) {
       this.focusTrap = createFocusTrap(slidingMenu, {
@@ -64,37 +64,34 @@ export class Sidebar extends React.PureComponent<Props, State> {
 
     if (this.state.open) {
       off();
+      //@ts-ignore
       focusTrap.deactivate({ onDeactivate: false });
-      sideContainer.removeEventListener(
-        'touchstart',
-        this.onTouchStart,
-        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
-      );
-      sideContainer.removeEventListener(
-        'touchmove',
-        this.onTouchMove,
-        SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
-      );
-      sideContainer.removeEventListener(
-        'touchend',
-        this.onTouchEnd,
-        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
-      );
+      if (sideContainer !== null) {
+        sideContainer.removeEventListener('touchstart', this.onTouchStart, SUPPORTS_PASSIVE_EVENTS ? {} : false);
+        sideContainer.removeEventListener('touchmove', this.onTouchMove, SUPPORTS_PASSIVE_EVENTS ? {} : false);
+        sideContainer.removeEventListener('touchend', this.onTouchEnd, SUPPORTS_PASSIVE_EVENTS ? {} : false);
+      }
     } else {
       on();
       focusTrap.activate();
-      sideContainer.addEventListener(
-        'touchstart',
-        this.onTouchStart,
-        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
-      );
-      // Disable passive to avoid triggering gestures in some devices
-      sideContainer.addEventListener(
-        'touchmove',
-        this.onTouchMove,
-        SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
-      );
-      sideContainer.addEventListener('touchend', this.onTouchEnd, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
+      if (sideContainer !== null) {
+        sideContainer.addEventListener(
+          'touchstart',
+          this.onTouchStart,
+          SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
+        );
+        // Disable passive to avoid triggering gestures in some devices
+        sideContainer.addEventListener(
+          'touchmove',
+          this.onTouchMove,
+          SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
+        );
+        sideContainer.addEventListener(
+          'touchend',
+          this.onTouchEnd,
+          SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
+        );
+      }
     }
 
     if (this.mounted) {

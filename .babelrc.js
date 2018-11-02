@@ -2,14 +2,14 @@ const { argv } = require('yargs');
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const MODERN = process.env.MODERN === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
-const HMR = argv.nohmr === undefined;
-const SOURCEMAP = argv.sourcemap !== undefined;
+// const HMR = argv.nohmr === undefined;
+// const SOURCEMAP = argv.sourcemap !== undefined;
 
 const config = {
   presets: ['@babel/preset-typescript'],
   plugins: [
     'emotion',
-    // '@babel/plugin-transform-flow-strip-types',
+    '@babel/plugin-transform-flow-strip-types',
     PRODUCTION && '@babel/plugin-transform-runtime',
     // DEV && HMR && 'react-hot-loader/babel',
 

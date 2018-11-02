@@ -1,4 +1,3 @@
-// @flow
 import { getSuspenseRoute } from '../components/routes/getSuspenseRoute';
 import { getAsyncRoute } from '../components/routes/getAsyncRoute';
 

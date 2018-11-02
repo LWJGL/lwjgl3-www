@@ -2,10 +2,11 @@
 import * as React from 'react';
 //@ts-ignore
 import { jsx, css } from '@emotion/core';
+jsx;
 
 export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
   children?: React.ReactNode;
-  style?: React.StyleHTMLAttributes<HTMLSpanElement>;
+  style?: React.CSSProperties;
 }
 
 // Based on https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4#.58pqpyl6w

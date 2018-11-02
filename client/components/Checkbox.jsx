@@ -1,6 +1,4 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
 import { memo, useRef } from 'react';
 import uniqueId from 'lodash-es/uniqueId';
 
@@ -14,7 +12,7 @@ type Props = {
   icon?: React.Node,
 };
 
-export const Checkbox = React.memo(
+export const Checkbox = memo(
   ({ label, value, checked = false, onChange, disabled = false, hidden = false, icon }: Props) => {
     const htmlForId = useRef(uniqueId('checkbox'));
 
