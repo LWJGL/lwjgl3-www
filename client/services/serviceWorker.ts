@@ -84,7 +84,6 @@ if (SW_SUPPORTED) {
     // Ensure refresh is only called once. This works around a bug in "force update on reload".
     let refreshing = false;
 
-    //$FlowFixMe
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (!refreshing) {
         window.location.reload();

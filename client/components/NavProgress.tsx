@@ -128,8 +128,8 @@ const PERC_MAX = 99.4;
 export function NavProgress() {
   const { count } = useContext(NavProgressContext);
   const [progress, setProgress] = useState(0);
-  const trickleTimeoutId: React.RefValue<number> = useRef(null);
-  const resetTimeoutId: React.RefValue<number> = useRef(null);
+  const trickleTimeoutId: React.MutableRefObject<number | null> = useRef(null);
+  const resetTimeoutId: React.MutableRefObject<number | null> = useRef(null);
 
   useEffect(
     () => {
@@ -151,6 +151,8 @@ export function NavProgress() {
             trickleTimeoutId.current = window.setTimeout(trickle, 200 + Math.floor(400 * Math.random()));
             return progress >= PERC_MAX ? PERC_MAX : progress + step;
           }
+
+          return progress;
         });
       }
 

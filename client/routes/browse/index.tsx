@@ -1,12 +1,17 @@
-// @flow
 import * as React from 'react';
 import { jsx } from '@emotion/core';
+jsx;
 import { PageView } from '~/components/routes/PageView';
-import type { RouteProps } from '@reach/router';
+import { RouteComponentProps, WindowLocation } from '@reach/router';
 import { Browser } from './components/Browser';
 import { Global } from '@emotion/core';
 
-const BrowseRoute = (props: RouteProps) => {
+interface BrowseRouteProps extends RouteComponentProps {
+  location: WindowLocation;
+  '*': string;
+}
+
+const BrowseRoute = (props: BrowseRouteProps) => {
   return (
     <PageView location={props.location} title="Browse" description="Browse LWJGL files">
       <Global

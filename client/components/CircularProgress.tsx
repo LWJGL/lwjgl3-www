@@ -7,12 +7,12 @@ import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 
 const SIZE = 44;
 
-function getRelativeValue(value, min, max) {
+function getRelativeValue(value: number, min: number, max: number) {
   const clampedValue = Math.min(Math.max(min, value), max);
   return (clampedValue - min) / (max - min);
 }
 
-function easeOut(t) {
+function easeOut(t: number) {
   return easeOutCubic(getRelativeValue(t, 0, 1));
 }
 
@@ -63,12 +63,12 @@ const ProgressStyle = css`
 `;
 
 type Props = {
-  className?: string,
-  size: number,
-  style?: $Shape<CSSStyleDeclaration>,
-  thickness?: number,
-  value?: number,
-  variant?: 'determinate' | 'indeterminate' | 'static',
+  className?: string;
+  size: number;
+  style?: React.CSSProperties;
+  thickness?: number;
+  value?: number;
+  variant?: 'determinate' | 'indeterminate' | 'static';
 };
 
 export function CircularProgress({
@@ -79,10 +79,10 @@ export function CircularProgress({
   className,
   style,
   ...other
-}: Props) {
-  const circleStyle = {};
-  const rootStyle = {};
-  const rootProps = {};
+}: Props & React.HTMLAttributes<any>) {
+  const circleStyle: React.CSSProperties = {};
+  const rootStyle: React.CSSProperties = {};
+  const rootProps: React.HTMLAttributes<any> = {};
 
   if (variant === 'determinate' || variant === 'static') {
     const circumference = 2 * Math.PI * ((SIZE - thickness) / 2);

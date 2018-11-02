@@ -111,7 +111,6 @@ export const play = (label: string) => {
   }
 
   const source = ctx.createBufferSource();
-  // $FlowFixMe
   source.buffer = buffers[label];
   source.connect(dst);
   source.start();

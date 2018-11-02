@@ -1,32 +1,19 @@
-//@flow
 'use strict';
 const fs = require('fs');
 const { promisify } = require('util');
 const crypto = require('crypto');
 const path = require('path');
 const manifest = require('../public/js/manifest.json');
-//$FlowFixMe
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-/*::
-type UploadSettings = {
-  Bucket: string,
-  Key: string,
-  Body: any,
-  ACL: 'public-read',
-  ContentType?: string,
-  CacheControl?: string,
-}
-*/
-
-async function uploadFile(file /*: string */, basename /*: string */) {
+async function uploadFile(file, basename) {
   const contents = await readFile(file, { encoding: 'utf-8' });
   const folder = basename.endsWith('css') ? 'css' : 'js';
 
-  const uploadSettings /*: UploadSettings*/ = {
+  const uploadSettings = {
     Bucket: 'cdn.lwjgl.org',
     Key: `${folder}/${basename}`,
     Body: contents,
@@ -59,14 +46,8 @@ async function uploadFile(file /*: string */, basename /*: string */) {
   return hash.digest('hex');
 }
 
-/*::
-type Deployed = {
-  [filename: string]: string,
-}
-*/
-
 async function main() {
-  let deployed /*: Deployed */ = {};
+  let deployed = {};
   let hashMap = {};
 
   try {
@@ -74,7 +55,7 @@ async function main() {
   } catch (e) {}
 
   // Collect files
-  const bundle /*: Set<string> */ = new Set();
+  const bundle = new Set();
 
   Object.keys(manifest.assets).forEach(id => {
     bundle.add(path.join(__dirname, `../public/${id === 'css' ? 'css' : 'js'}/`, manifest.assets[id]));
@@ -85,7 +66,7 @@ async function main() {
   bundle.add(path.join(__dirname, '../client/sw-destroy.js'));
 
   // Keep only new files
-  const files /*: Array<string>*/ =
+  const files =
     Object.keys(deployed).length === 0
       ? Array.from(bundle)
       : Array.from(bundle).filter(file => {
@@ -115,7 +96,6 @@ async function main() {
   const FILES_TOTAL = files.length;
   const PARALLEL_DOWNLOADS = Math.min(4, FILES_TOTAL);
 
-  //$FlowFixMe
   const queue = files[Symbol.iterator]();
   const channels = [];
   let f = 0;

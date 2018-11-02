@@ -1,30 +1,29 @@
-// @flow
 // @jsx jsx
+import { jsx } from '@emotion/core';
+import { Link } from '@reach/router';
 import * as React from 'react';
-//$FlowFixMe
-import { lazy, Suspense, Fragment, useState, useEffect, useRef } from 'react';
+import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 import { createCache, createResource } from 'react-cache';
 import { unstable_scheduleCallback } from 'scheduler';
-
-import { jsx } from '@emotion/core';
-import { Folder, FolderTH, SpinnerRow } from './Folder';
-import { File } from './File';
-import { Link } from '@reach/router';
-
-import { HTTP_OK } from '~/services/http_status_codes';
 import IconCloud from '~/components/icons/md/Cloud';
-import IconChevronRight from '~/components/icons/md/ChevronRight';
+import { HTTP_OK } from '~/services/http_status_codes';
+import { File } from './File';
+import { Folder, FolderTH, SpinnerRow } from './Folder';
+
+jsx;
 
 // Contents Resource
 
 const cache = createCache();
-const BrowserContentsResource = createResource(fetchContents);
+const BrowserContentsResource = createResource<string, FolderData>(fetchContents);
 
-type FolderData = {
-  path: string,
-  files: Array<string>,
-  folders: Array<string>,
-};
+interface FolderData {
+  path: string;
+  files: Array<string>;
+  folders: Array<string>;
+}
+
+type FolderDataAPI = Partial<FolderData>;
 
 async function fetchContents(path: string): Promise<FolderData> {
   if (path === '') {
@@ -40,7 +39,7 @@ async function fetchContents(path: string): Promise<FolderData> {
     throw response.statusText;
   }
 
-  let contents = await response.json();
+  let contents: FolderDataAPI = await response.json();
   contents.path = path;
   if (contents.files === undefined) {
     contents.files = [];
@@ -48,13 +47,13 @@ async function fetchContents(path: string): Promise<FolderData> {
   contents.folders =
     contents.folders === undefined ? [] : contents.folders.map(name => name.substring(0, name.length - 1));
 
-  return contents;
+  return contents as FolderData;
 }
 
 // Browser
-type Props = {
-  path: string,
-};
+interface Props {
+  path: string;
+}
 
 export function Browser({ path: loading }: Props) {
   const [path, setPath] = useState(loading);
@@ -109,10 +108,10 @@ export function Browser({ path: loading }: Props) {
 }
 
 // Browser Contents
-type ContentProps = {
-  path: string,
-  loading?: string,
-};
+interface ContentProps {
+  path: string;
+  loading?: string;
+}
 
 function Contents({ path, loading }: ContentProps) {
   const { folders, files } = BrowserContentsResource.read(cache, path);

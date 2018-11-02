@@ -21,7 +21,7 @@ Notable features:
 - Custom render-prop <Connect /> component for Redux
 - CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
 - fast-async instead of regenerator
-- [Flow](https://flow.org/) static type checking
+- Client is written in Typescript
 
 ## Dependencies
 
@@ -242,7 +242,6 @@ docker push lwjgl/website:latest
 
 We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following plugins:
 
-- Flow Language Support
 - Prettier - Code formatter
 - vscode-styled-components
 
@@ -259,7 +258,6 @@ Recommended VS Code **Workspace Settings**:
 
 - enable Prettier's format-on-save
 - exclude generated files
-- disable built-in JS support because we rely on Flow
 
 ```json
 {

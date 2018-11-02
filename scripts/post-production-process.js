@@ -1,24 +1,16 @@
-//@flow
 'use strict';
 const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
-//$FlowFixMe
 const terser = require('terser');
 // const minify = require('babel-minify');
-//$FlowFixMe
 const gzipSize = require('gzip-size');
 const chalk = require('chalk');
-
-/*::
-declare var process: child_process$ChildProcess;
-import type { Asset } from './post-production';
-*/
 
 const MINIFY = true;
 // const MINIFY = false;
 
-process.on('message', (asset /*: Asset*/) => {
+process.on('message', asset => {
   console.log(`Processing ${asset.name}`);
   let contents = asset.src;
 

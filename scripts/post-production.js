@@ -1,4 +1,3 @@
-//@flow
 'use strict';
 const os = require('os');
 const path = require('path');
@@ -8,10 +7,8 @@ const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 const chalk = require('chalk');
 const { fork } = require('child_process');
-//$FlowFixMe
 const Sema = require('async-sema');
 const crypto = require('crypto');
-//$FlowFixMe
 const gzipSize = require('gzip-size');
 
 /*
@@ -34,53 +31,7 @@ const gzipSize = require('gzip-size');
 // We'll us this to detect route chunks
 const routeRegExp = new RegExp('^route[-][a-z][a-z-_/]+$');
 
-/*::
-type ProductionManifest = {
-  entry: number,
-  routes: {
-    [route: string]: Array<number>,
-  },
-  assets: {
-    [id: string]: string,
-  },
-};
-
-export type Asset = {
-  id: number | string,
-  name: string,
-  file: string,
-  cdn: string,
-  route: boolean,
-  src: string,
-  hashSrc: string,
-  hash: string,
-  originalSize: number,
-  size: number,
-  gzipSize: number,
-};
-
-type AssetMap = Map<string|number, Asset>;
-
-type ReportData = {
-  manifest: ProductionManifest,
-  assetMap: AssetMap,
-};
-
-type Processed = {
-  [hashSrc: string]: {
-    id: number | string,
-    name: string,
-    file: string,
-    cdn: string,
-    hash: string,
-    originalSize: number,
-    size: number,
-    gzipSize: number,
-  },
-}
-*/
-
-function processedFromAsset({ id, name, file, cdn, hashSrc, hash, originalSize, size, gzipSize } /*: Asset*/) {
+function processedFromAsset({ id, name, file, cdn, hashSrc, hash, originalSize, size, gzipSize }) {
   return {
     id,
     name,
@@ -93,14 +44,14 @@ function processedFromAsset({ id, name, file, cdn, hashSrc, hash, originalSize, 
   };
 }
 
-async function main() /*: Promise<ReportData>*/ {
+async function main() {
   console.log(chalk`{yellow Compiling list of files & routes:}`);
 
   // Read webpack's manifest & chunks into memory
   const manifest = require('../public/js/webpack.manifest.json');
 
   // Remember previously post-processed files and skip
-  let processed /*: Processed */ = {};
+  let processed = {};
   let hashMap = {};
 
   try {
@@ -108,7 +59,7 @@ async function main() /*: Promise<ReportData>*/ {
   } catch (e) {}
 
   // We'll use this to store final production manifest
-  const productionManifest /*: ProductionManifest */ = {
+  const productionManifest = {
     // Boot the app from here
     entry: manifest.entrypoints.main.chunks[0],
 
@@ -121,7 +72,7 @@ async function main() /*: Promise<ReportData>*/ {
 
   // Build a map that contains each chunk
   // For each chunk we save its filename, id, and size
-  const assetMap /*: AssetMap */ = new Map();
+  const assetMap = new Map();
 
   manifest.assets.forEach(record => {
     const name = record.chunkNames[0];
@@ -130,7 +81,7 @@ async function main() /*: Promise<ReportData>*/ {
     hash.update(src);
     const hashSrc = hash.digest('hex');
 
-    let asset /*: Asset */ = {
+    let asset = {
       id: record.chunks[0],
       name,
       file: record.name,
@@ -289,7 +240,7 @@ async function main() /*: Promise<ReportData>*/ {
     MD5.update(contents);
     const hash = MD5.digest('hex');
 
-    const asset /*: Asset*/ = {
+    const asset = {
       id: 'css',
       name: 'core',
       file: 'core.css',
@@ -341,7 +292,7 @@ async function main() /*: Promise<ReportData>*/ {
   return { manifest: productionManifest, assetMap };
 }
 
-function ellipsis(str /*:string*/, maxlength /*:number*/ = 25) {
+function ellipsis(str, maxlength = 25) {
   if (str.length > maxlength) {
     return str.substr(0, maxlength) + '...';
   }
@@ -351,7 +302,6 @@ function ellipsis(str /*:string*/, maxlength /*:number*/ = 25) {
 main()
   .then(({ manifest, assetMap }) => {
     // Print file report
-    //$FlowFixMe
     const CliTable = require('cli-table');
     const prettyBytes = require('./prettyBytes');
     const formatSize = require('./formatSize');
@@ -368,7 +318,7 @@ main()
     });
 
     // Add rows
-    Array.from(assetMap.values()).forEach((asset /*: Asset*/) => {
+    Array.from(assetMap.values()).forEach(asset => {
       sumOriginal += asset.originalSize;
       sum += asset.size;
       sumGzip += asset.gzipSize;
