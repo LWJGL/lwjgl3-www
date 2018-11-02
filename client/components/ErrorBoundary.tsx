@@ -1,24 +1,23 @@
-// @flow
 import * as React from 'react';
 
 interface ReactErrorInfo {
-  componentStack: string,
-};
+  componentStack: string;
+}
 
 export interface ErrorProps {
-  error: Error,
-  info?: ReactErrorInfo,
-};
+  error: Error;
+  info?: ReactErrorInfo;
+}
 
 interface Props {
-  children?: React.ReactNode,
-  render: React.ComponentType<ErrorProps>,
-};
+  children?: React.ReactNode;
+  render: React.ComponentType<ErrorProps>;
+}
 
 type State = {
-  hasError: boolean,
-  error?: Error,
-  info?: ReactErrorInfo,
+  hasError: boolean;
+  error?: Error;
+  info?: ReactErrorInfo;
 };
 
 export class ErrorBoundary extends React.Component<Props, State> {

@@ -1,5 +1,3 @@
 declare module 'fg-loadjs' {
-  function loadJS(src: string, cb?: () => any): void;
-
-  export default loadJS;
+  export default function(src: string, cb?: () => any): void;
 }

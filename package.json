@@ -37,7 +37,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.346.0",
+    "aws-sdk": "2.347.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
@@ -70,6 +70,8 @@
     "@types/lodash-es": "4.17.1",
     "@types/reach__router": "1.2.1",
     "@types/react-dom": "16.0.9",
+    "@types/remarkable": "1.7.1",
+    "@types/three": "0.93.5",
     "async-sema": "2.1.4",
     "autoprefixer": "9.3.1",
     "babel-loader": "8.0.4",

@@ -1,9 +1,9 @@
-// @flow
 // @jsx jsx
 import * as React from 'react';
 import { jsx, css } from '@emotion/core';
+jsx;
 import { PageView } from '~/components/routes/PageView';
-import { Link, type RouteProps } from '@reach/router';
+import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
@@ -19,9 +19,9 @@ import IconDevices from '~/components/icons/md/Devices';
 import IconVideogameAsset from '~/components/icons/md/VideogameAsset';
 import IconBatteryUnknown from '~/components/icons/md/BatteryUnknown';
 
-const HomeRoute = (props: RouteProps) => (
+const HomeRoute = (props: RouteComponentProps) => (
   <PageView
-    location={props.location}
+    location={props.location as WindowLocation}
     description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
   >
     <HomeHero />

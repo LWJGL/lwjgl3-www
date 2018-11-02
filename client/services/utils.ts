@@ -1,4 +1,3 @@
-// @flow
 /**
  * Returns true if testElement is element or is contained within it
  */

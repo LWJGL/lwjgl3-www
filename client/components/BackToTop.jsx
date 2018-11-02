@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import { scrollSmooth } from '../services/scrollSmooth';
 import IconArrowUpward from './icons/md/ArrowUpward';

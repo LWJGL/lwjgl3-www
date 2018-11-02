@@ -1,4 +1,3 @@
-// @flow
 let stackCnt = 0;
 let scrollbarSize: number = -1;
 

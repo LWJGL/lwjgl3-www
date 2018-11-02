@@ -1,14 +1,10 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
-import { memo } from 'react';
 import { Dialog } from './Dialog';
 import { Trap } from './Trap';
 import IconClose from './icons/md/Close';
 
 type DialogType = 'primary' | 'success' | 'info' | 'warning' | 'danger';
 
-// @flow
 type AlertProps = {
   type: DialogType,
   message: string | null | void,
@@ -17,7 +13,7 @@ type AlertProps = {
   onClose?: () => mixed,
 };
 
-function Alert({ type = 'primary', isOpen = true, onClose, title, message }: AlertProps) {
+export function Alert({ type = 'primary', isOpen = true, onClose, title, message }: AlertProps) {
   return (
     <Dialog className="dialog-alert" isOpen={isOpen} portal={true}>
       <Trap className="dialog-content" role="alertdialog" onClose={onClose}>

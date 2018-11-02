@@ -1,16 +1,19 @@
-// @flow
 // @jsx jsx
 import * as React from 'react';
-//$FlowFixMe
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { jsx, css } from '@emotion/core';
+jsx;
 import { Link } from '@reach/router';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
 import { Logo } from './Logo';
 
 const Canvas = lazy(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'));
 
-const HeroBox = ({ children }) => (
+interface Props {
+  children?: React.ReactNode;
+}
+
+const HeroBox = ({ children }: Props) => (
   <section
     css={css`
       margin-top: -4rem;
@@ -35,7 +38,7 @@ const HeroBox = ({ children }) => (
   </section>
 );
 
-const LogoContainer = ({ children }) => (
+const LogoContainer = ({ children }: Props) => (
   <div
     className="d-flex flex-column justify-content-center align-items-center"
     css={css`
@@ -61,7 +64,7 @@ const LogoContainer = ({ children }) => (
   </div>
 );
 
-const HeroContent = ({ children }) => (
+const HeroContent = ({ children }: Props) => (
   <div
     css={css`
       text-align: center;

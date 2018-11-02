@@ -1,8 +1,7 @@
-// @flow
 // @jsx jsx
 import * as React from 'react';
 import { jsx, css, keyframes } from '@emotion/core';
-// $FlowFixMe
+jsx;
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
@@ -23,54 +22,40 @@ const Canvas = css`
   animation: ${fadeIn.name} 2s ease-out forwards;
 `;
 
-class HomeCanvas extends React.Component<{||}> {
-  canvasRef = React.createRef();
+class HomeCanvas extends React.Component {
+  canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
 
   io: IntersectionObserver | null = null;
-  rafId: AnimationFrameID | null = null;
-  scene: Scene = null;
-  camera: PerspectiveCamera | null = null;
-  geometry: BoxGeometry | null = null;
-  material: MeshNormalMaterial | null = null;
-  group: Group | null = null;
-  renderer: WebGLRenderer | null = null;
+  rafId: number | null = null;
+  scene!: Scene;
+  camera!: PerspectiveCamera;
+  geometry!: BoxGeometry;
+  material!: MeshNormalMaterial;
+  group!: Group;
+  renderer!: WebGLRenderer;
 
-  resizeCanvas = this.resizeCanvas.bind(this);
-  animate = this.animate.bind(this);
-  ioCheck = this.ioCheck.bind(this);
-
-  resizeCanvas() {
-    const canvas: ?HTMLCanvasElement = this.canvasRef.current;
-    /*::
-    if ( canvas == null || !(canvas.parentNode instanceof HTMLElement) ) {
-      return;
-    }
-    */
-
-    if (this.camera !== null && canvas != null) {
-      const winW = canvas.parentNode.offsetWidth;
-      const winH = canvas.parentNode.offsetHeight;
+  resizeCanvas = () => {
+    const canvas = this.canvasRef.current;
+    if (canvas !== null && canvas.parentElement !== null) {
+      const winW = canvas.parentElement.offsetWidth;
+      const winH = canvas.parentElement.offsetHeight;
       this.camera.aspect = winW / winH;
       this.camera.updateProjectionMatrix();
-      /*:: if ( this.renderer !== null ) */
       this.renderer.setSize(winW, winH, false);
     }
-  }
+  };
 
-  animate() {
+  animate = () => {
     this.rafId = requestAnimationFrame(this.animate);
 
     let time = Date.now() * 0.000015;
     let rx = time;
     let ry = time;
 
-    /*:: if ( this.group !== null ) */
     this.group.rotation.x = rx;
-    /*:: if ( this.group !== null ) */
     this.group.rotation.y = ry;
-    /*:: if ( this.renderer !== null ) */
     this.renderer.render(this.scene, this.camera);
-  }
+  };
 
   stop() {
     if (this.rafId !== null) {
@@ -79,7 +64,7 @@ class HomeCanvas extends React.Component<{||}> {
     }
   }
 
-  ioCheck(entries: Array<IntersectionObserverEntry>) {
+  ioCheck = (entries: Array<IntersectionObserverEntry>) => {
     if (entries[0].intersectionRatio > 0) {
       if (this.rafId === null) {
         this.animate();
@@ -87,20 +72,16 @@ class HomeCanvas extends React.Component<{||}> {
     } else if (this.rafId !== null) {
       this.stop();
     }
-  }
+  };
 
   componentDidMount() {
-    const canvas: ?HTMLCanvasElement = this.canvasRef.current;
-    if (canvas == null) {
+    const canvas = this.canvasRef.current;
+    if (canvas === null || canvas.parentElement === null) {
       return;
     }
-    /*::
-    if ( !(canvas.parentNode instanceof HTMLElement) ) {
-      return;
-    }
-    */
-    const winW = canvas.parentNode.offsetWidth;
-    const winH = canvas.parentNode.offsetHeight;
+
+    const winW = canvas.parentElement.offsetWidth;
+    const winH = canvas.parentElement.offsetHeight;
 
     this.camera = new PerspectiveCamera(60, winW / winH, 100, 10000);
     this.camera.position.z = 1500;
@@ -118,7 +99,6 @@ class HomeCanvas extends React.Component<{||}> {
       mesh.rotation.y = Math.random() * 2 * Math.PI;
       mesh.matrixAutoUpdate = false;
       mesh.updateMatrix();
-      /*:: if ( this.group !== null ) */
       this.group.add(mesh);
     }
 
@@ -129,13 +109,13 @@ class HomeCanvas extends React.Component<{||}> {
       canvas: canvas,
       antialias: window.devicePixelRatio === 1,
       alpha: true,
+      //@ts-ignore
       powerPreference: 'low-power',
     });
     if (window.devicePixelRatio !== undefined) {
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     }
     this.renderer.setSize(winW, winH, false);
-    /*:: if ( this.renderer !== null ) */
     this.renderer.sortObjects = false;
     this.animate();
 
@@ -156,22 +136,10 @@ class HomeCanvas extends React.Component<{||}> {
       this.io = null;
     }
 
-    if (this.scene !== null) {
+    if (this.scene !== undefined) {
       this.scene.remove(this.group);
-
-      if (this.geometry !== null) {
-        this.geometry.dispose();
-      }
-      if (this.material !== null) {
-        this.material.dispose();
-      }
-
-      this.scene = null;
-      this.geometry = null;
-      this.material = null;
-      this.group = null;
-      this.camera = null;
-      this.renderer = null;
+      this.geometry.dispose();
+      this.material.dispose();
     }
   }
 

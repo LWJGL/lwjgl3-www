@@ -1,16 +1,12 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
-import { memo, useRef, useMutationEffect } from 'react';
 // https://github.com/jonschlinkert/remarkable
-import Remarkable from 'remarkable';
-import type { RemarkableOptions, RemarkableSettings } from 'remarkable';
+import Remarkable, { Options } from 'remarkable';
 
-type Props = {
-  tag?: string,
-  source: string,
-  options?: RemarkableOptions | RemarkableSettings,
-};
+interface Props {
+  tag?: string;
+  source: string;
+  options?: Options;
+}
 
 export const Markdown = React.memo(({ tag = 'div', source, options, ...rest }: Props) => {
   const Container = tag;

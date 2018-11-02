@@ -1,13 +1,12 @@
-// @flow
 import * as React from 'react';
 import { PageView } from '~/components/routes/PageView';
-import type { RouteProps } from '@reach/router';
+import { RouteComponentProps, WindowLocation } from '@reach/router';
 import IconGithub from '~/components/icons/fa/brands/Github';
 import { BuildBadge } from './BuildBadge';
 
-const SourceRoute = (props: RouteProps) => (
+const SourceRoute = (props: RouteComponentProps) => (
   <PageView
-    location={props.location}
+    location={props.location as WindowLocation}
     title="Source & Build Status"
     description="Links to LWJGL Github repository and build status matrix"
   >

@@ -5,7 +5,7 @@ import { PageError } from './PageError';
 import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useMetaDescription } from '../../hooks/useMetaDescription';
-import { Location } from 'history';
+import { WindowLocation } from '@reach/router';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
@@ -46,7 +46,7 @@ function storeScroll(key: string) {
 }
 
 interface Props {
-  location: Location;
+  location: WindowLocation;
   title?: string;
   description?: string;
   children: React.ReactNode;

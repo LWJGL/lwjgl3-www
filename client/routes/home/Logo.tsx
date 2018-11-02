@@ -1,9 +1,8 @@
-// @flow
 import * as React from 'react';
 
-type Props = {
-  className?: string,
-};
+interface Props {
+  className?: string;
+}
 
 export const Logo = (props: Props) => (
   <svg

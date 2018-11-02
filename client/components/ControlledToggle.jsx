@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import { Toggle } from './Toggle';
 import type { Dispatch } from 'redux';

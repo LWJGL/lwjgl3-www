@@ -1,7 +1,4 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
-import { memo } from 'react';
 import { cc } from '~/theme';
 import { Overlay } from './Overlay';
 

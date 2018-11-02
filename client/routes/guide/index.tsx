@@ -1,17 +1,21 @@
-// @flow
 import * as React from 'react';
 import { PageView } from '~/components/routes/PageView';
-import { Link, type RouteProps } from '@reach/router';
+import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { sample } from './sample';
 import loadJS from 'fg-loadjs';
 import { loadCSS } from 'fg-loadcss';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 
-type State = {
-  sample: string,
-};
+interface State {
+  sample: string;
+}
 
-class GuideRoute extends React.Component<RouteProps, State> {
+interface HighlightJS {
+  highlight(lang: string, source: string): { value: string };
+}
+declare var hljs: HighlightJS;
+
+class GuideRoute extends React.Component<RouteComponentProps, State> {
   static init = true;
   static sample = sample;
   mounted = false;
@@ -27,8 +31,8 @@ class GuideRoute extends React.Component<RouteProps, State> {
       GuideRoute.init = false;
       loadCSS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css');
       loadJS('https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js', () => {
-        if (window.hljs != null) {
-          GuideRoute.sample = (window.hljs: any).highlight('java', sample).value;
+        if (typeof hljs !== 'undefined') {
+          GuideRoute.sample = hljs.highlight('java', sample).value;
         }
         if (!this.mounted) {
           return;
@@ -45,7 +49,7 @@ class GuideRoute extends React.Component<RouteProps, State> {
   render() {
     return (
       <PageView
-        location={this.props.location}
+        location={this.props.location as WindowLocation}
         title="Get started with LWJGL 3"
         description="This guide will help you get started with LWJGL 3"
       >
