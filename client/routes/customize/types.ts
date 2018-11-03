@@ -29,7 +29,6 @@ export interface Build {
   id: BUILD_TYPES;
   title: string;
   description: string;
-  status: null | BuildStatus;
 }
 
 export interface Mode {
@@ -162,16 +161,3 @@ export interface BuildConfigStored {
   version?: string;
   versionLatest?: string;
 }
-
-// Reducer
-
-export interface BuildStatusSuccess {
-  lastModified: string;
-  version?: string;
-}
-
-export interface BuildStatusError {
-  error: string;
-}
-
-export type BuildStatus = BuildStatusSuccess | BuildStatusError;

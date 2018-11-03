@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { MODE_MAVEN, MODE_GRADLE, MODE_IVY, LANGUAGE_GROOVY, BUILD_RELEASE } from '../constants';
-import { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition, Platforms, NATIVES } from '../types';
+import { MODE_MAVEN, MODE_GRADLE, MODE_IVY, LANGUAGE_GROOVY, BUILD_RELEASE } from './constants';
+import { BuildConfig, MODES, Mode, Addon, BUILD_TYPES, BindingDefinition, Platforms, NATIVES } from './types';
 import { Connect } from '~/store/Connect';
 import { Breakpoint } from '~/components/Breakpoint';
 

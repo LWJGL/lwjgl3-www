@@ -9,7 +9,6 @@ import IconCloud from '~/components/icons/md/Cloud';
 import { HTTP_OK } from '~/services/http_status_codes';
 import { File } from './File';
 import { Folder, FolderTH, SpinnerRow } from './Folder';
-
 jsx;
 
 // Contents Resource

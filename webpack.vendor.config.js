@@ -41,14 +41,8 @@ const config = {
       'react-fast-compare',
       'immer',
 
-      // State management
-      'redux',
-      'redux-logger',
-      'redux-thunk',
-
       // UI
       '@reach/router',
-      'scroll-into-view-if-needed',
       'focus-trap',
 
       // Route-specific

@@ -5,9 +5,9 @@ import IconLinux from '~/components/icons/fa/brands/Linux';
 import IconWindows from '~/components/icons/fa/brands/Windows';
 import { Connect } from '~/store/Connect';
 import { cc } from '~/theme';
-import { NATIVE_ALL, NATIVE_LINUX, NATIVE_MAC, NATIVE_WIN } from '../constants';
-import { toggleArtifact } from '../reducer';
-import { BuildConfig, NATIVES } from '../types';
+import { NATIVE_ALL, NATIVE_LINUX, NATIVE_MAC, NATIVE_WIN } from './constants';
+import { toggleArtifact } from './reducer';
+import { BuildConfig, NATIVES } from './types';
 interface Props {
   id: string;
 }

@@ -1,51 +1,32 @@
-import * as JSZip from 'jszip';
-import debounce from 'lodash-es/debounce';
 import * as React from 'react';
-import * as isEqual from 'react-fast-compare';
-import { ControlledCheckbox } from '~/components/ControlledCheckbox';
-import { ControlledPanel } from '~/components/ControlledPanel';
-import { ControlledRadio } from '~/components/ControlledRadio';
-import { ControlledToggle } from '~/components/ControlledToggle';
-import IconFileDownload from '~/components/icons/md/FileDownload';
-import { ScreenLock } from '~/components/ScreenLock';
-import { saveAs } from '~/services/file-saver';
-import { store } from '~/store';
-import { Connect } from '~/store/Connect';
-import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getConfig, getFiles } from './bundler';
-import { BuildAddon } from './components/BuildAddon';
-import { BuildArtifact } from './components/BuildArtifact';
-import { BuildBundler } from './components/BuildBundler';
-import { BuildConfigArea } from './components/BuildConfigArea';
-import { BuildPlatform } from './components/BuildPlatform';
-import { BuildScript } from './components/BuildScript';
-import { BuildToolbar } from './components/BuildToolbar';
-import { BuildType } from './components/BuildType';
-import { BUILD_RELEASE, MODE_ZIP } from './constants';
-import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
-import { configLoad } from './reducer';
-// Types
-import { BuildConfig, BuildConfigStored } from './types';
-
-interface Props {}
-interface State {
-  isDownloading: boolean;
-  progress: Array<string>;
-}
+import { useEffect } from 'react';
+import { BuildType } from './BuildType';
 
 // Constants
 const STORAGE_KEY = 'lwjgl-build-config';
+let firstLoad = false;
 
-export class BuildConfigurator extends React.Component<Props, State> {
-  static firstLoad = true;
-  unsubscribe!: () => void;
-  prevSave: BuildConfigStored | null = null;
-  mounted: boolean = false;
+export function BuildConfigurator() {
+  useEffect(() => {
+    /*
+    if ( firstLoad ) {
+      firstLoad = false;
+      const restore = localStorage.getItem(STORAGE_KEY);
+      if (restore != null) {
+        try {
+          this.prevSave = JSON.parse(restore);
+        } catch (err) {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+        if (this.prevSave !== null) {
+          store.dispatch(configLoad(this.prevSave));
+        }
+      }
+    }
+    */
+  }, []);
 
-  state = {
-    isDownloading: false,
-    progress: [],
-  };
-
+  /*
   componentDidMount() {
     this.mounted = true;
 
@@ -93,6 +74,72 @@ export class BuildConfigurator extends React.Component<Props, State> {
       this.downloadAbort();
     }
   }
+*/
+  return (
+    <React.Fragment>
+      <div className="row">
+        <div className="col-lg p-0 px-lg-3">
+          <BuildType build="release" />
+        </div>
+        <div className="col-lg p-0">
+          <BuildType build="stable" />
+        </div>
+        <div className="col-lg p-0 px-lg-3">
+          <BuildType build="nightly" />
+        </div>
+      </div>
+    </React.Fragment>
+  );
+}
+
+/*
+import * as JSZip from 'jszip';
+import debounce from 'lodash-es/debounce';
+import * as isEqual from 'react-fast-compare';
+import { ControlledCheckbox } from '~/components/ControlledCheckbox';
+import { ControlledPanel } from '~/components/ControlledPanel';
+import { ControlledRadio } from '~/components/ControlledRadio';
+import { ControlledToggle } from '~/components/ControlledToggle';
+import IconFileDownload from '~/components/icons/md/FileDownload';
+import { ScreenLock } from '~/components/ScreenLock';
+import { saveAs } from '~/services/file-saver';
+import { store } from '~/store';
+import { Connect } from '~/store/Connect';
+import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getConfig, getFiles } from './bundler';
+import { BuildAddon } from './components/BuildAddon';
+import { BuildArtifact } from './components/BuildArtifact';
+import { BuildBundler } from './components/BuildBundler';
+import { BuildConfigArea } from './components/BuildConfigArea';
+import { BuildPlatform } from './components/BuildPlatform';
+import { BuildScript } from './components/BuildScript';
+import { BuildToolbar } from './components/BuildToolbar';
+import { BuildType } from './components/BuildType';
+import { BUILD_RELEASE, MODE_ZIP } from './constants';
+import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
+import { configLoad } from './reducer';
+// Types
+import { BuildConfig, BuildConfigStored } from './types';
+
+interface Props {}
+interface State {
+  isDownloading: boolean;
+  progress: Array<string>;
+}
+
+*/
+
+/*
+export class BuildConfigurator extends React.Component<Props, State> {
+  static firstLoad = true;
+  unsubscribe!: () => void;
+  prevSave: BuildConfigStored | null = null;
+  mounted: boolean = false;
+
+  state = {
+    isDownloading: false,
+    progress: [],
+  };
+
 
   configJSONfilename(save: BuildConfigStored) {
     return `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`;
@@ -337,3 +384,4 @@ export class BuildConfigurator extends React.Component<Props, State> {
     );
   }
 }
+*/

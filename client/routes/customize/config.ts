@@ -1,30 +1,28 @@
 import {
+  BUILD_NIGHTLY,
   BUILD_RELEASE,
   BUILD_STABLE,
-  BUILD_NIGHTLY,
-  NATIVE_MAC,
-  NATIVE_WIN,
-  NATIVE_LINUX,
-  NATIVE_ALL,
-  MODE_ZIP,
-  MODE_MAVEN,
   MODE_GRADLE,
   MODE_IVY,
+  MODE_MAVEN,
+  MODE_ZIP,
+  NATIVE_ALL,
+  NATIVE_LINUX,
+  NATIVE_MAC,
+  NATIVE_WIN,
 } from './constants';
-
-import lwjgl_300 from './lwjgl/3.0.0';
-import lwjgl_310 from './lwjgl/3.1.0';
-import lwjgl_311 from './lwjgl/3.1.1';
-import lwjgl_312 from './lwjgl/3.1.2';
-import lwjgl_313 from './lwjgl/3.1.3';
-import lwjgl_314 from './lwjgl/3.1.4';
-import lwjgl_315 from './lwjgl/3.1.5';
-import lwjgl_316 from './lwjgl/3.1.6';
-import lwjgl_320 from './lwjgl/3.2.0';
-import lwjgl_stable from './lwjgl/stable';
-import lwjgl_nightly from './lwjgl/nightly';
-
-import { BuildConfig, BuildOptions, BuildOptionsBuilder, MODES, LANGUAGES } from './types';
+import lwjgl_300 from './versions/3.0.0';
+import lwjgl_310 from './versions/3.1.0';
+import lwjgl_311 from './versions/3.1.1';
+import lwjgl_312 from './versions/3.1.2';
+import lwjgl_313 from './versions/3.1.3';
+import lwjgl_314 from './versions/3.1.4';
+import lwjgl_315 from './versions/3.1.5';
+import lwjgl_316 from './versions/3.1.6';
+import lwjgl_320 from './versions/3.2.0';
+import lwjgl_nightly from './versions/nightly';
+import lwjgl_stable from './versions/stable';
+import { BuildConfig, BuildOptions, BuildOptionsBuilder, LANGUAGES, MODES } from './types';
 
 function getDefaultPlatform() {
   if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
@@ -44,19 +42,16 @@ export const config: BuildConfig = {
         id: BUILD_RELEASE,
         title: 'Release',
         description: 'Latest official release',
-        status: null,
       },
       [BUILD_STABLE]: {
         id: BUILD_STABLE,
         title: 'Stable',
         description: 'Beta quality, verified to work',
-        status: null,
       },
       [BUILD_NIGHTLY]: {
         id: BUILD_NIGHTLY,
         title: 'Nightly',
         description: 'Bleeding edge, possibly broken',
-        status: null,
       },
     },
     allIds: [BUILD_RELEASE, BUILD_STABLE, BUILD_NIGHTLY],
