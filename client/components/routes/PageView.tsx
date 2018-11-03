@@ -38,7 +38,6 @@ function storeScroll(key: string) {
   if (scrollEntries.size > MAX_SCROLL_ENTRIES) {
     // * The keys() method returns a new Iterator object that contains the keys for each element in the Map object in **insertion** order.
     // * Therefore, the first value returned by the Iterator will be the oldest scroll entry that we need to drop.
-    //$FlowFixMe
     scrollEntries.delete(scrollEntries.keys().next().value);
   }
 

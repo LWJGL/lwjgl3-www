@@ -10,7 +10,7 @@ export interface ErrorProps {
 }
 
 interface Props {
-  children?: React.ReactNode;
+  children: React.ReactNode;
   render: React.ComponentType<ErrorProps>;
 }
 

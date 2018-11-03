@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
@@ -7,7 +6,7 @@ import IconMenu from '~/components/icons/md/Menu';
 import IconClose from '~/components/icons/md/Close';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 
-type Props = {};
+interface Props {}
 
 type State = {
   open: boolean;

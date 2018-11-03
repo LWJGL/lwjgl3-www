@@ -7,7 +7,7 @@ import { RouteComponentProps } from '@reach/router';
 export function getAsyncRoute(loader: ComponentImport) {
   let RouteComponent: React.ComponentType<any> | null = null;
 
-  function AsyncRoute(props: RouteComponentProps) {
+  const AsyncRoute = (props: RouteComponentProps) => {
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(RouteComponent === null);
 
@@ -35,7 +35,7 @@ export function getAsyncRoute(loader: ComponentImport) {
     } else {
       return null;
     }
-  }
+  };
 
   AsyncRoute.preload = loader;
 

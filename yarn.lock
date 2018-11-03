@@ -1079,6 +1079,13 @@
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.2.tgz#0e670ea254d559241b6eeb3894f8754991e73220"
   integrity sha512-ui3WwXmjTaY73fOQ3/m3nnajU/Orhi6cEu5rzX+BrAAJxa3eITXZ5ch9suPqtM03OWhAHhPSyBGCN4UKoxO20Q==
 
+"@types/jszip@3.1.4":
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/@types/jszip/-/jszip-3.1.4.tgz#9b81e3901a6988e9459ac27abf483e6b892251af"
+  integrity sha512-UaVbz4buRlBEolZYrxqkrGDOypugYlbqGNrUFB4qBaexrLypTH0jyvaF5jolNy5D+5C4kKV1WJ3Yx9cn/JH8oA==
+  dependencies:
+    "@types/node" "*"
+
 "@types/lodash-es@4.17.1":
   version "4.17.1"
   resolved "https://registry.yarnpkg.com/@types/lodash-es/-/lodash-es-4.17.1.tgz#56745e5411558362aeca31def918f88f725dd29d"
@@ -1124,6 +1131,11 @@
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
+
+"@types/redux@3.6.31":
+  version "3.6.31"
+  resolved "https://registry.yarnpkg.com/@types/redux/-/redux-3.6.31.tgz#40eafa7575db36b912ce0059b85de98c205b0708"
+  integrity sha1-QOr6dXXbNrkSzgBZuF3pjCBbBwg=
 
 "@types/remarkable@1.7.1":
   version "1.7.1"
@@ -7346,6 +7358,11 @@ typescript-template-language-service-decorator@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.0.0.tgz#7433fdc464f07034d951dea9a5e76fab6e558f57"
   integrity sha512-wbrje6G8t+h/xBRP+gyAXYpR0+U7the2YnfsF59SKz//gdLnpL+cSFhIuW61I07XXDyU68yMBFqUzm0Hg1Xpcg==
+
+typescript@3.2.0-dev.20181102:
+  version "3.2.0-dev.20181102"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.0-dev.20181102.tgz#eccbc20fc88bb4680962f1e67410e6f4374be241"
+  integrity sha512-fjHMxgzARm5KkT3WBS2j0/TaD2l49Oj9DknJUT3pMpg+wtE7EY7wMQsxgB3++8fDZzD++ybJ7L34y6G+59c24Q==
 
 ua-parser-js@^0.7.18:
   version "0.7.18"

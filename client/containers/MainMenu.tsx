@@ -1,13 +1,11 @@
-// @flow
 import * as React from 'react';
-//$FlowFixMe
 import { memo } from 'react';
 import { Link, LinkProps, LinkGetProps } from '@reach/router';
 
-type Props = {
+interface Props {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   className?: string;
-};
+}
 
 const isActive = ({ isCurrent }: LinkGetProps) => {
   return isCurrent ? { className: 'active' } : {};

@@ -26,10 +26,10 @@ export const FolderTH = css`
   }
 `;
 
-type Props = {
+interface Props {
   path: string;
   loading: boolean;
-};
+}
 
 export const Folder = memo(({ path, loading = false }: Props) => {
   const parts = path.split('/');
