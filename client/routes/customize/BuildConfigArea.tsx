@@ -3,7 +3,7 @@ import * as React from 'react';
 import { jsx, css } from '@emotion/core';
 jsx;
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
-import { BuildConfig } from '../types';
+import { BuildConfig } from './types';
 import { Connect } from '~/store/Connect';
 
 import {
@@ -14,7 +14,7 @@ import {
   COLOR_NIGHTLY,
   COLOR_NIGHTLY_LIGHT,
   SMALL_FONT_SIZE,
-} from '../theme';
+} from './theme';
 
 import { lighten } from '~/theme/color';
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { toggleAddon } from '../reducer';
-import { BuildConfig } from '../types';
+import { toggleAddon } from './reducer';
+import { BuildConfig } from './types';
 import { Checkbox } from '~/components/Checkbox';
 import { Connect } from '~/store/Connect';
 import { cc } from '~/theme';

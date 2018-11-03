@@ -1,11 +1,15 @@
 // @jsx jsx
 import { css, jsx } from '@emotion/core';
 import * as React from 'react';
+import { Suspense } from 'react';
 import { Breakpoint } from '~/components/Breakpoint';
+import { CircularProgress } from '~/components/CircularProgress';
 import IconClose from '~/components/icons/md/Close';
-import { Connect } from '~/store/Connect';
+import { StateMemo } from '~/components/StateMemo';
 import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
-import { changeType, loadStatus } from '../reducer';
+import { useStore } from './Store';
+import { changeType } from './actions';
+import { BuildStatus } from './BuildStatus';
 import {
   BORDER_RADIUS,
   COLOR_NIGHTLY,
@@ -14,10 +18,64 @@ import {
   COLOR_RELEASE_LIGHT,
   COLOR_STABLE,
   COLOR_STABLE_LIGHT,
-} from '../theme';
-import { Build, BuildStatus as BuildStatusType, BUILD_TYPES } from '../types';
-import { BuildStatus } from './BuildStatus';
+} from './theme';
+import { Build, BUILD_TYPES } from './types';
 jsx;
+
+type ConnectedProps = {
+  buildSelected: boolean;
+  isSelected: boolean;
+  spec: Build;
+};
+
+interface Props {
+  build: BUILD_TYPES;
+}
+
+function StatusFallback() {
+  return (
+    <React.Fragment>
+      <CircularProgress size={24} thickness={8} style={{ color: 'hsla(0, 0%, 0%, 0.5)' }} />
+      <br />
+      <br />
+    </React.Fragment>
+  );
+}
+
+export function BuildType({ build }: Props) {
+  const [state, dispatch] = useStore<ConnectedProps>(
+    (state): ConnectedProps => ({
+      buildSelected: state.build !== null,
+      isSelected: state.build === build,
+      spec: state.builds.byId[build],
+    })
+  );
+  const { buildSelected, isSelected, spec } = state;
+
+  return (
+    <StateMemo state={state}>
+      <Breakpoint>
+        {({ current, breakpoints: { lg } }) => (
+          <div
+            onClick={() => dispatch(changeType(build))}
+            css={BuildBox}
+            className={cc(build, {
+              selected: isSelected,
+              active: buildSelected && current < lg,
+            })}
+          >
+            <h2>{spec.title}</h2>
+            <p>{spec.description}</p>
+            <Suspense maxDuration={0} fallback={<StatusFallback />}>
+              <BuildStatus name={build} />
+            </Suspense>
+            {isSelected ? <IconClose /> : null}
+          </div>
+        )}
+      </Breakpoint>
+    </StateMemo>
+  );
+}
 
 const BuildBox = css`
   border: 2px solid ${COLOR_PRIMARY.css()};
@@ -101,52 +159,3 @@ const BuildBox = css`
     }
   }
 `;
-
-interface Props {
-  build: BUILD_TYPES;
-}
-
-type ConnectedProps = {
-  buildSelected: boolean;
-  isSelected: boolean;
-  spec: Build;
-  status: BuildStatusType | null;
-};
-
-export class BuildType extends React.PureComponent<Props> {
-  render() {
-    const { build } = this.props;
-
-    return (
-      <Connect
-        state={(state): ConnectedProps => ({
-          buildSelected: state.build.build !== null,
-          isSelected: state.build.build === build,
-          status: state.build.builds.byId[build].status,
-          spec: state.build.builds.byId[build],
-        })}
-        actions={{ changeType, loadStatus }}
-      >
-        {({ buildSelected, isSelected, status, spec }, { changeType, loadStatus }) => (
-          <Breakpoint>
-            {({ current, breakpoints: { lg } }) => (
-              <div
-                onClick={changeType.bind(this, build)}
-                css={BuildBox}
-                className={cc(build, {
-                  selected: isSelected,
-                  active: buildSelected && current < lg,
-                })}
-              >
-                <h2>{spec.title}</h2>
-                <p>{spec.description}</p>
-                <BuildStatus name={spec.id} status={status} loadStatus={loadStatus} />
-                {isSelected ? <IconClose /> : null}
-              </div>
-            )}
-          </Breakpoint>
-        )}
-      </Connect>
-    );
-  }
-}

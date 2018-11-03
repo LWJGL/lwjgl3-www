@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Checkbox } from '~/components/Checkbox';
-import { togglePlatform } from '../reducer';
-import { NATIVES, BuildConfig } from '../types';
+import { togglePlatform } from './reducer';
+import { NATIVES, BuildConfig } from './types';
 import { Connect } from '~/store/Connect';
-import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from '../constants';
+import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from './constants';
 import IconApple from '~/components/icons/fa/brands/Apple';
 import IconLinux from '~/components/icons/fa/brands/Linux';
 import IconWindows from '~/components/icons/fa/brands/Windows';

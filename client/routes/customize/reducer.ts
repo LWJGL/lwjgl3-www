@@ -1,6 +1,7 @@
+import * as React from 'react';
 import produce from 'immer';
-import { register } from '~/store/asyncReducers';
 import { config } from './config';
+import { ActionKeys, ActionTypes } from './actions';
 import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
 import {
   BUILD_TYPES,
@@ -12,33 +13,10 @@ import {
   BuildStatus,
   BuildStatusSuccess,
 } from './types';
-import { Reducer } from 'redux';
 
-// Actions
-
-export const BUILD_STATUS = 'BUILD/STATUS';
-
-export const SELECT_TYPE = 'BUILD/SELECT_TYPE';
-export const SELECT_MODE = 'BUILD/SELECT_MODE';
-export const SELECT_PRESET = 'BUILD/SELECT_PRESET';
-export const SELECT_LANGUAGE = 'BUILD/SELECT_LANGUAGE';
-export const SELECT_VERSION = 'BUILD/SELECT_VERSION';
-export const TOGGLE_DESCRIPTIONS = 'BUILD/TOGGLE_DESCRIPTIONS';
-export const TOGGLE_SOURCE = 'BUILD/TOGGLE_SOURCE';
-export const TOGGLE_JAVADOC = 'BUILD/TOGGLE_JAVADOC';
-export const TOGGLE_INCLUDE_JSON = 'BUILD/TOGGLE_INCLUDE_JSON';
-export const TOGGLE_OSGI = 'BUILD/TOGGLE_OSGI';
-export const TOGGLE_COMPACT = 'BUILD/TOGGLE_COMPACT';
-export const TOGGLE_HARDCODED = 'BUILD/TOGGLE_HARDCODED';
-export const TOGGLE_PLATFORM = 'BUILD/TOGGLE_PLATFORM';
-export const TOGGLE_ARTIFACT = 'BUILD/TOGGLE_ARTIFACT';
-export const TOGGLE_ADDON = 'BUILD/TOGGLE_ADDON';
-
-export const CONFIG_LOAD = 'BUILD/CONFIG_LOAD';
+/*
 
 // Action Creators
-
-export const changeType = (type: BUILD_TYPES | null) => ({ type: SELECT_TYPE, build: type });
 export const changeMode = (mode: MODES) => ({ type: SELECT_MODE, mode });
 export const changePreset = (preset: string) => ({ type: SELECT_PRESET, preset });
 export const changeLanguage = (language: LANGUAGES) => ({ type: SELECT_LANGUAGE, language });
@@ -56,77 +34,20 @@ export const togglePlatform = (platform: NATIVES) => ({ type: TOGGLE_PLATFORM, p
 export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
 
 export const configLoad = (payload: BuildConfigStored) => ({ type: CONFIG_LOAD, payload });
-
-export const storeStatus = (name: BUILD_TYPES, response: BuildStatus) => {
-  if ('error' in response) {
-    return {
-      type: BUILD_STATUS,
-      name,
-      payload: {
-        error: response.error,
-      },
-    };
-  } else {
-    const payload: BuildStatusSuccess = {
-      lastModified: response.lastModified,
-    };
-    if (response.version !== undefined) {
-      payload.version = response.version.replace(/^LWJGL\s+/, '');
-    }
-    return { type: BUILD_STATUS, name, payload };
-  }
-};
-
-type Action =
-  | ReturnType<typeof storeStatus>
-  | ReturnType<typeof changeType>
-  | ReturnType<typeof changeMode>
-  | ReturnType<typeof changePreset>
-  | ReturnType<typeof changeLanguage>
-  | ReturnType<typeof changeVersion>
-  | ReturnType<typeof toggleDescriptions>
-  | ReturnType<typeof toggleSource>
-  | ReturnType<typeof toggleJavadoc>
-  | ReturnType<typeof toggleOSGi>
-  | ReturnType<typeof toggleCompact>
-  | ReturnType<typeof toggleHardcoded>
-  | ReturnType<typeof toggleArtifact>
-  | ReturnType<typeof togglePlatform>
-  | ReturnType<typeof toggleAddon>
-  | ReturnType<typeof configLoad>;
-
-async function fetchStatus(url: string) {
-  const response = await fetch(url);
-
-  if (response.status !== 200) {
-    throw new Error(response.statusText);
-  }
-
-  return await response.json();
-}
-
-export const loadStatus = (name: BUILD_TYPES) => async (dispatch: Function, getState: () => any) => {
-  let result;
-  let url = `/build/${name}`;
-
-  if (name === 'release') {
-    url += `/${getState().build.versions[0]}`;
-  }
-
-  try {
-    result = await fetchStatus(url);
-  } catch (err) {
-    result = { error: err.message };
-  }
-
-  dispatch(storeStatus(name, result));
-};
+*/
 
 // Reducer
 
-function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
+export const reducer: React.Reducer<BuildConfig, ActionTypes> = (state: BuildConfig = config, action: ActionTypes) => {
   return produce(state, (draft: BuildConfig) => {
     switch (action.type) {
+      case ActionKeys.BUILD_STATUS:
+        saveStatus(draft, action.name, action.payload);
+        break;
+      case ActionKeys.SELECT_TYPE:
+        selectBuild(draft, action.build !== state.build ? action.build : null);
+        break;
+      /*
       case BUILD_STATUS:
         saveStatus(draft, action.name, action.payload);
         break;
@@ -223,11 +144,46 @@ function buildConfiguratorReducer(state: BuildConfig = config, action: Action) {
       case CONFIG_LOAD:
         loadConfig(draft, action.payload);
         break;
+        */
     }
   });
+};
+
+function selectBuild(state: BuildConfig, build: BUILD_TYPES | null) {
+  state.build = build;
+  computeArtifacts(state);
 }
 
-const computeArtifacts = (state: BuildConfig) => {
+const saveStatus = (state: BuildConfig, name: BUILD_TYPES, payload: BuildStatus) => {
+  state.builds.byId[name].status = payload;
+};
+
+function selectPreset(state: BuildConfig, preset: string) {
+  // Make sure preset exists
+  if (state.presets.byId[preset] === undefined) {
+    return;
+  }
+
+  // Set preset
+  state.preset = preset;
+
+  if (preset === 'all') {
+    state.artifacts.allIds.forEach(artifact => {
+      state.contents[artifact] = true;
+    });
+  } else if (preset !== 'custom') {
+    state.artifacts.allIds.forEach(artifact => {
+      state.contents[artifact] = false;
+    });
+    if (state.presets.byId[preset].artifacts !== undefined) {
+      state.presets.byId[preset].artifacts.forEach(artifact => {
+        state.contents[artifact] = true;
+      });
+    }
+  }
+}
+
+function computeArtifacts(state: BuildConfig) {
   if (state.build === null) {
     return;
   }
@@ -266,14 +222,9 @@ const computeArtifacts = (state: BuildConfig) => {
       state.mode = MODE_ZIP;
     }
   }
-};
+}
 
-const selectBuild = (state: BuildConfig, build: BUILD_TYPES | null) => {
-  state.build = build;
-  if (build !== null) {
-    computeArtifacts(state);
-  }
-};
+/*
 
 const selectVersion = (state: BuildConfig, version: string) => {
   state.version = version;
@@ -285,30 +236,7 @@ const selectMode = (state: BuildConfig, mode: MODES) => {
   computeArtifacts(state);
 };
 
-const selectPreset = (state: BuildConfig, preset: string) => {
-  // Make sure preset exists
-  if (state.presets.byId[preset] === undefined) {
-    return;
-  }
 
-  // Set preset
-  state.preset = preset;
-
-  if (preset === 'all') {
-    state.artifacts.allIds.forEach(artifact => {
-      state.contents[artifact] = true;
-    });
-  } else if (preset !== 'custom') {
-    state.artifacts.allIds.forEach(artifact => {
-      state.contents[artifact] = false;
-    });
-    if (state.presets.byId[preset].artifacts !== undefined) {
-      state.presets.byId[preset].artifacts.forEach(artifact => {
-        state.contents[artifact] = true;
-      });
-    }
-  }
-};
 
 const doToggleArtifact = (state: BuildConfig, artifact: string) => {
   state.contents[artifact] = !state.contents[artifact];
@@ -413,9 +341,4 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
   }
 };
 
-const saveStatus = (state: BuildConfig, name: BUILD_TYPES, payload: BuildStatus) => {
-  state.builds.byId[name].status = payload;
-};
-
-// Self-register reducer on module load
-register('build', buildConfiguratorReducer as Reducer);
+*/

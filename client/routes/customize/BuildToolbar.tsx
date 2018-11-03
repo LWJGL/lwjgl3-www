@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { configLoad } from '../reducer';
+import { configLoad } from './reducer';
 import { store } from '~/store';
 import { BreakpointContext } from '~/components/Breakpoint';
 import IconArchive from '~/components/icons/md/Archive';
