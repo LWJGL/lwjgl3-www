@@ -62,14 +62,14 @@ const ProgressStyle = css`
   }
 `;
 
-type Props = {
+interface Props {
   className?: string;
   size: number;
   style?: React.CSSProperties;
   thickness?: number;
   value?: number;
   variant?: 'determinate' | 'indeterminate' | 'static';
-};
+}
 
 export function CircularProgress({
   size = 40,

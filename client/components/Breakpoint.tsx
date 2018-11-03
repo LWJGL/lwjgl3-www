@@ -15,7 +15,7 @@ export const BreakpointContext = React.createContext<Context>({
 export const Breakpoint = BreakpointContext.Consumer;
 
 interface Props {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const matchers: Array<MediaQueryList> = [];
@@ -55,12 +55,12 @@ export function BreakpointProvider({ children }: Props) {
     matchers.forEach((matcher, i) => {
       const listener = mediaQueryListener.bind(null, i);
       matcher.addListener(listener);
-      listeners.push(listener);
+      listeners.push(listener as EventListener);
     });
 
     return () => {
       matchers.forEach((matcher, i) => {
-        matcher.removeListener(listeners[i]);
+        matcher.removeListener(listeners[i] as EventListener);
       });
     };
   }, []);

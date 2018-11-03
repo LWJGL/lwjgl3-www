@@ -13,13 +13,11 @@ export function getSuspenseRoute(loader: ComponentImport) {
   //   return await loader();
   // });
 
-  function SuspenseRoute(props: RouteComponentProps) {
-    return (
-      <Suspense maxDuration={200} fallback={<PageBlank />}>
-        <LazyRoute {...props} />
-      </Suspense>
-    );
-  }
+  const SuspenseRoute = (props: RouteComponentProps) => (
+    <Suspense maxDuration={200} fallback={<PageBlank />}>
+      <LazyRoute {...props} />
+    </Suspense>
+  );
 
   SuspenseRoute.preload = loader;
 

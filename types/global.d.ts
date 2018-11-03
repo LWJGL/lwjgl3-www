@@ -12,6 +12,8 @@ declare const ANALYTICS_TRACKING_ID: string;
 
 declare type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
 
+// Missing from standard lib
+
 declare class NetworkInformation {
   readonly downlink: number;
   readonly downlinkMax: number;
@@ -25,4 +27,8 @@ declare class NetworkInformation {
 interface Navigator {
   readonly deviceMemory?: number;
   readonly connection?: NetworkInformation;
+}
+
+interface BlobPropertyBag {
+  endings?: 'transparent' | 'native';
 }

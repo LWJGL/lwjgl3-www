@@ -65,7 +65,7 @@ interface Context {
 }
 
 interface ProviderProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export const NavProgressContext = React.createContext<Context>({

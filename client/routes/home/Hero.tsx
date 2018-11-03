@@ -10,7 +10,7 @@ import { Logo } from './Logo';
 const Canvas = lazy(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'));
 
 interface Props {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const HeroBox = ({ children }: Props) => (

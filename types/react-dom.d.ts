@@ -1,3 +1,5 @@
+import * as ReactDOM from 'react-dom';
+
 declare module 'react-dom' {
   type RootOptions = {
     hydrate?: boolean;
