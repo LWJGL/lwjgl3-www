@@ -1,25 +1,24 @@
-import { NATIVE_ALL } from '../constants';
-import { BuildOptions } from '../types';
+import { BuildBindings, Version, Binding, Preset, NATIVE_ALL, BindingDefinition } from '../types';
 
-export default (prev: BuildOptions): BuildOptions => ({
+export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: '3.1.1',
+  version: Version.LWJGL311,
   byId: {
     ...prev.byId,
-    'lwjgl-assimp': {
-      id: 'lwjgl-assimp',
+    [Binding.Assimp]: {
+      id: Binding.Assimp,
       title: 'Assimp',
       description: 'A portable Open Source library to import various well-known 3D model formats in a uniform manner.',
       natives: NATIVE_ALL,
       website: 'http://www.assimp.org/',
-      presets: ['getting-started', 'minimal-opengl', 'minimal-opengles', 'minimal-vulkan'],
+      presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
-    'lwjgl-opengl': {
-      ...prev.byId['lwjgl-opengl'],
+    [Binding.OpenGL]: {
+      ...(prev.byId[Binding.OpenGL] as BindingDefinition),
       natives: NATIVE_ALL,
     },
-    'lwjgl-opengles': {
-      ...prev.byId['lwjgl-opengles'],
+    [Binding.OpenGLES]: {
+      ...(prev.byId[Binding.OpenGLES] as BindingDefinition),
       natives: NATIVE_ALL,
     },
   },

@@ -1,6 +1,6 @@
-import { BuildOptions } from '../types';
+import { BuildBindings, Version } from '../types';
 
-export default (prev: BuildOptions): BuildOptions => ({
+export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: '3.1.6',
+  version: Version.LWJGL316,
 });

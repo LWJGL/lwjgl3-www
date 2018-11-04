@@ -1,38 +1,37 @@
-import { NATIVE_ALL } from '../constants';
-import { BuildOptions } from '../types';
+import { BuildBindings, Version, Binding, Preset, NATIVE_ALL } from '../types';
 
-export default (prev: BuildOptions): BuildOptions => ({
+export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: '3.1.0',
+  version: Version.LWJGL310,
   byId: {
     ...prev.byId,
-    'lwjgl-bgfx': {
-      id: 'lwjgl-bgfx',
+    [Binding.Bgfx]: {
+      id: Binding.Bgfx,
       title: 'bgfx',
       description:
         'A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.',
       natives: NATIVE_ALL,
       website: 'https://github.com/bkaradzic/bgfx',
-      presets: ['getting-started'],
+      presets: [Preset.GettingStarted],
     },
-    'lwjgl-lmdb': {
-      id: 'lwjgl-lmdb',
+    [Binding.LMDB]: {
+      id: Binding.LMDB,
       title: 'LMDB',
       description:
         'A compact, fast, powerful, and robust database that implements a simplified variant of the BerkeleyDB (BDB) API.',
       natives: NATIVE_ALL,
       website: 'https://symas.com/products/lightning-memory-mapped-database/',
     },
-    'lwjgl-nuklear': {
-      id: 'lwjgl-nuklear',
+    [Binding.Nuklear]: {
+      id: Binding.Nuklear,
       title: 'Nuklear',
       description: 'A minimal state immediate mode graphical user interface toolkit.',
       natives: NATIVE_ALL,
       website: 'https://github.com/vurtun/nuklear',
-      presets: ['getting-started'],
+      presets: [Preset.GettingStarted],
     },
-    'lwjgl-tinyfd': {
-      id: 'lwjgl-tinyfd',
+    [Binding.TinyFD]: {
+      id: Binding.TinyFD,
       title: 'Tiny File Dialogs',
       description: 'Provides basic modal dialogs.',
       natives: NATIVE_ALL,

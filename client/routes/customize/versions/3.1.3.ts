@@ -1,13 +1,12 @@
-import { NATIVE_ALL } from '../constants';
-import { BuildOptions } from '../types';
+import { BuildBindings, Version, Binding, NATIVE_ALL } from '../types';
 
-export default (prev: BuildOptions): BuildOptions => ({
+export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: '3.1.3',
+  version: Version.LWJGL313,
   byId: {
     ...prev.byId,
-    'lwjgl-rpmalloc': {
-      id: 'lwjgl-rpmalloc',
+    [Binding.Rpmalloc]: {
+      id: Binding.Rpmalloc,
       title: 'rpmalloc',
       description:
         'A public domain cross platform lock free thread caching 16-byte aligned memory allocator implemented in C.',

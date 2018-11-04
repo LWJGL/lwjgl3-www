@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { BuildType } from './BuildType';
+import { BuildPanel } from './BuildPanel';
+import { BuildType } from './types';
 import { /*fields, hasLanguageOption, isBuildRelease,*/ isBuildSelected } from './fields';
 import { ControlledPanel } from '~/routes/customize/ControlledPanel';
 
@@ -8,13 +9,13 @@ export function BuildConfigurator() {
     <React.Fragment>
       <div className="row">
         <div className="col-lg p-0 px-lg-3">
-          <BuildType build="release" />
+          <BuildPanel build={BuildType.Release} />
         </div>
         <div className="col-lg p-0">
-          <BuildType build="stable" />
+          <BuildPanel build={BuildType.Stable} />
         </div>
         <div className="col-lg p-0 px-lg-3">
-          <BuildType build="nightly" />
+          <BuildPanel build={BuildType.Nightly} />
         </div>
       </div>
       <ControlledPanel predicate={isBuildSelected}>

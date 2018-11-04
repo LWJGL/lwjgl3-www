@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { BUILD_TYPES } from './types';
+import { BuildType } from './types';
 import { config } from './config';
 import { createCache, createResource } from 'react-cache';
 
@@ -15,11 +15,11 @@ interface BuildStatusError {
 type BuildStatus = BuildStatusSuccess | BuildStatusError;
 
 interface Props {
-  name: BUILD_TYPES;
+  name: BuildType;
 }
 
 const cache = createCache();
-const BuildStatusResource = createResource<BUILD_TYPES, BuildStatus>(loadStatus);
+const BuildStatusResource = createResource<BuildType, BuildStatus>(loadStatus);
 
 export const BuildStatus = React.memo(({ name }: Props) => {
   const status = BuildStatusResource.read(cache, name);
@@ -33,7 +33,7 @@ export const BuildStatus = React.memo(({ name }: Props) => {
   );
 });
 
-async function loadStatus(name: BUILD_TYPES): Promise<BuildStatus> {
+async function loadStatus(name: BuildType): Promise<BuildStatus> {
   let url = `/build/${name}`;
 
   if (name === 'release') {

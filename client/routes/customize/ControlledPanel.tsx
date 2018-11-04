@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useStore } from './Store';
-import { BuildConfig } from './types';
+import { BuildStore } from './types';
 
 interface Props {
-  predicate: (state: BuildConfig) => boolean;
+  predicate: (state: BuildStore) => boolean;
   children: React.ReactNode;
 }
 
@@ -13,7 +13,7 @@ interface ConnectedProps {
 
 export function ControlledPanel({ children, predicate }: Props) {
   const [state] = useStore(
-    (state: BuildConfig): ConnectedProps => ({
+    (state: BuildStore): ConnectedProps => ({
       visible: predicate(state),
     })
   );

@@ -1,9 +1,9 @@
 import {
-  BUILD_TYPES,
+  BuildType,
   // NATIVES,
   // MODES,
   // LANGUAGES
-  BuildConfigStored,
+  BuildStoreSnapshot,
 } from './types';
 
 export enum ActionKeys {
@@ -32,10 +32,10 @@ export type ActionTypes = BuildSelectTypeAction | BuildConfigLoadAction;
 
 export interface BuildSelectTypeAction {
   type: ActionKeys.SELECT_TYPE;
-  build: BUILD_TYPES | null;
+  build: BuildType | null;
 }
 
-export const changeType = (build: BUILD_TYPES | null): BuildSelectTypeAction => ({
+export const changeType = (build: BuildType | null): BuildSelectTypeAction => ({
   type: ActionKeys.SELECT_TYPE,
   build,
 });
@@ -44,10 +44,10 @@ export const changeType = (build: BUILD_TYPES | null): BuildSelectTypeAction => 
 
 export interface BuildConfigLoadAction {
   type: ActionKeys.CONFIG_LOAD;
-  payload: BuildConfigStored;
+  payload: BuildStoreSnapshot;
 }
 
-export const configLoad = (payload: BuildConfigStored): BuildConfigLoadAction => ({
+export const configLoad = (payload: BuildStoreSnapshot): BuildConfigLoadAction => ({
   type: ActionKeys.CONFIG_LOAD,
   payload,
 });

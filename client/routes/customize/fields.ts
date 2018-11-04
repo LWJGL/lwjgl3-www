@@ -1,5 +1,5 @@
 // import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
-import { BuildConfig, LANGUAGES } from './types';
+import { BuildStore, Language } from './types';
 // import { RadioOptions } from '~/components/ControlledRadio';
 
 /*
@@ -23,7 +23,7 @@ import {
 // const getPreset = (state: State) => state.build.preset;
 // const getLanguage = (state: State) => state.build.language;
 // const getVersion = (state: State) => state.build.version;
-export const isBuildSelected = (state: BuildConfig) => state.build !== null;
+export const isBuildSelected = (state: BuildStore) => state.build !== null;
 // export const hasLanguageOption = (state: State) => getMode(state) === MODE_GRADLE;
 // const hasCompactModeOption = (state: State) => getMode(state) === MODE_MAVEN || getMode(state) === MODE_IVY;
 // const isModeZip = (state: State) => getMode(state) === MODE_ZIP;
