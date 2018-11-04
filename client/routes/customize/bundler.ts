@@ -23,7 +23,7 @@ function keepChecked(src: any) {
   return Object.keys(src).filter(key => src[key] === true);
 }
 
-export function getConfig({ build }: { build: BuildConfig }): BuildConfigStored | null {
+export function getConfig(build: BuildConfig): BuildConfigStored | null {
   if (build.build === null) {
     return null;
   }

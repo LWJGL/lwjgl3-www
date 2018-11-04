@@ -43,7 +43,7 @@ function StatusFallback() {
 }
 
 export function BuildType({ build }: Props) {
-  const [state, dispatch] = useStore<ConnectedProps>(
+  const [state, dispatch] = useStore(
     (state): ConnectedProps => ({
       buildSelected: state.build !== null,
       isSelected: state.build === build,

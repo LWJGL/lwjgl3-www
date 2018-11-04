@@ -2,16 +2,19 @@ import * as React from 'react';
 import produce from 'immer';
 import { config } from './config';
 import { ActionKeys, ActionTypes } from './actions';
-import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
+import {
+  BUILD_RELEASE,
+  BUILD_STABLE,
+  MODE_ZIP,
+  // MODE_MAVEN, MODE_GRADLE, MODE_IVY
+} from './constants';
 import {
   BUILD_TYPES,
   NATIVES,
-  MODES,
-  LANGUAGES,
+  // MODES,
+  // LANGUAGES,
   BuildConfig,
   BuildConfigStored,
-  BuildStatus,
-  BuildStatusSuccess,
 } from './types';
 
 /*
@@ -33,7 +36,6 @@ export const toggleArtifact = (artifact: string) => ({ type: TOGGLE_ARTIFACT, ar
 export const togglePlatform = (platform: NATIVES) => ({ type: TOGGLE_PLATFORM, platform });
 export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
 
-export const configLoad = (payload: BuildConfigStored) => ({ type: CONFIG_LOAD, payload });
 */
 
 // Reducer
@@ -41,8 +43,8 @@ export const configLoad = (payload: BuildConfigStored) => ({ type: CONFIG_LOAD, 
 export const reducer: React.Reducer<BuildConfig, ActionTypes> = (state: BuildConfig = config, action: ActionTypes) => {
   return produce(state, (draft: BuildConfig) => {
     switch (action.type) {
-      case ActionKeys.BUILD_STATUS:
-        saveStatus(draft, action.name, action.payload);
+      case ActionKeys.CONFIG_LOAD:
+        loadConfig(draft, action.payload);
         break;
       case ActionKeys.SELECT_TYPE:
         selectBuild(draft, action.build !== state.build ? action.build : null);
@@ -141,9 +143,6 @@ export const reducer: React.Reducer<BuildConfig, ActionTypes> = (state: BuildCon
         doToggleAddon(draft, action.addon);
         break;
 
-      case CONFIG_LOAD:
-        loadConfig(draft, action.payload);
-        break;
         */
     }
   });
@@ -153,10 +152,6 @@ function selectBuild(state: BuildConfig, build: BUILD_TYPES | null) {
   state.build = build;
   computeArtifacts(state);
 }
-
-const saveStatus = (state: BuildConfig, name: BUILD_TYPES, payload: BuildStatus) => {
-  state.builds.byId[name].status = payload;
-};
 
 function selectPreset(state: BuildConfig, preset: string) {
   // Make sure preset exists
@@ -175,8 +170,9 @@ function selectPreset(state: BuildConfig, preset: string) {
     state.artifacts.allIds.forEach(artifact => {
       state.contents[artifact] = false;
     });
-    if (state.presets.byId[preset].artifacts !== undefined) {
-      state.presets.byId[preset].artifacts.forEach(artifact => {
+    const configPreset = state.presets.byId[preset];
+    if (configPreset.artifacts !== undefined) {
+      configPreset.artifacts.forEach(artifact => {
         state.contents[artifact] = true;
       });
     }
@@ -208,7 +204,10 @@ function computeArtifacts(state: BuildConfig) {
     if (state.availability[it] && artifact.presets !== undefined) {
       // Populate presets
       artifact.presets.forEach(preset => {
-        state.presets.byId[preset].artifacts.push(it);
+        const statePreset = state.presets.byId[preset];
+        if (statePreset.artifacts !== undefined) {
+          statePreset.artifacts.push(it);
+        }
       });
     }
   });
@@ -288,6 +287,9 @@ const doToggleAddon = (state: BuildConfig, addon: string) => {
   }
 };
 
+
+*/
+
 const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
   if (config.build === null) {
     return;
@@ -340,5 +342,3 @@ const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
     selectPreset(state, 'getting-started');
   }
 };
-
-*/

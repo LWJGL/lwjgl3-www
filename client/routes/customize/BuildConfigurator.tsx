@@ -1,80 +1,9 @@
 import * as React from 'react';
-import { useEffect } from 'react';
 import { BuildType } from './BuildType';
-
-// Constants
-const STORAGE_KEY = 'lwjgl-build-config';
-let firstLoad = false;
+import { /*fields, hasLanguageOption, isBuildRelease,*/ isBuildSelected } from './fields';
+import { ControlledPanel } from '~/routes/customize/ControlledPanel';
 
 export function BuildConfigurator() {
-  useEffect(() => {
-    /*
-    if ( firstLoad ) {
-      firstLoad = false;
-      const restore = localStorage.getItem(STORAGE_KEY);
-      if (restore != null) {
-        try {
-          this.prevSave = JSON.parse(restore);
-        } catch (err) {
-          localStorage.removeItem(STORAGE_KEY);
-        }
-        if (this.prevSave !== null) {
-          store.dispatch(configLoad(this.prevSave));
-        }
-      }
-    }
-    */
-  }, []);
-
-  /*
-  componentDidMount() {
-    this.mounted = true;
-
-    if (BuildConfigurator.firstLoad) {
-      // Only restore once, use redux store for subsequent mounts
-      BuildConfigurator.firstLoad = false;
-      const restore = localStorage.getItem(STORAGE_KEY);
-      if (restore != null) {
-        try {
-          this.prevSave = JSON.parse(restore);
-        } catch (err) {
-          localStorage.removeItem(STORAGE_KEY);
-        }
-        if (this.prevSave !== null) {
-          store.dispatch(configLoad(this.prevSave));
-        }
-      }
-    }
-
-    this.unsubscribe = store.subscribe(
-      debounce(() => {
-        const save = getConfig(store.getState());
-        if (save === null) {
-          if (this.prevSave !== null) {
-            this.prevSave = null;
-            localStorage.removeItem(STORAGE_KEY);
-          }
-          return;
-        }
-
-        // Save to local storage
-        // * NOTE: We deep compare because it is faster than serializing & storing on disk every time
-        if (this.prevSave === null || !isEqual(this.prevSave, save)) {
-          this.prevSave = save;
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
-        }
-      }, 500)
-    );
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
-    this.unsubscribe();
-    if (this.state.isDownloading) {
-      this.downloadAbort();
-    }
-  }
-*/
   return (
     <React.Fragment>
       <div className="row">
@@ -88,16 +17,122 @@ export function BuildConfigurator() {
           <BuildType build="nightly" />
         </div>
       </div>
+      <ControlledPanel predicate={isBuildSelected}>
+        <div className="row">
+          <div className="col p-0">
+            {/*
+          <BuildConfigArea>
+            <div className="row pt-3">
+              <div className="col-md">
+                <h4>Mode</h4>
+                <ControlledRadio spec={fields.mode} />
+
+                <h4 className="mt-3">Options</h4>
+                <div className="custom-controls-stacked">
+                  <ControlledToggle spec={fields.descriptions} />
+                  <ControlledCheckbox spec={fields.source} />
+                  <ControlledCheckbox spec={fields.javadoc} />
+                  <ControlledCheckbox spec={fields.includeJSON} />
+                  <ControlledToggle spec={fields.hardcoded} />
+                  <ControlledToggle spec={fields.compact} />
+                  <ControlledToggle spec={fields.osgi} />
+                </div>
+
+                <BuildPlatform />
+
+                <ControlledPanel predicate={hasLanguageOption}>
+                  <h4 className="mt-3">Language</h4>
+                  <ControlledRadio spec={fields.language} />
+                </ControlledPanel>
+              </div>
+              <div className="col-md">
+                <h4>Presets</h4>
+                <ControlledRadio spec={fields.preset} />
+
+                <h4 className="mt-3">Addons</h4>
+                <Connect
+                  state={({ build }: { build: BuildConfig }) => ({
+                    addons: build.addons.allIds,
+                  })}
+                >
+                  {({ addons }) => (
+                    <div className="custom-controls-stacked">
+                      {addons.map((it: string) => (
+                        <BuildAddon key={it} id={it} />
+                      ))}
+                    </div>
+                  )}
+                </Connect>
+
+                <ControlledPanel predicate={isBuildRelease}>
+                  <h4 className="mt-3">Version</h4>
+                  <ControlledRadio spec={fields.version} />
+                  <Connect
+                    state={({ build }: { build: BuildConfig }) => ({
+                      version: build.version,
+                    })}
+                  >
+                    {({ version }) => (
+                      <p>
+                        <a
+                          href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
+                          style={{ fontSize: '80%' }}
+                        >
+                          release notes for {version}
+                        </a>
+                      </p>
+                    )}
+                  </Connect>
+                </ControlledPanel>
+              </div>
+
+              <div className="col-md-6">
+                <h4>Contents</h4>
+                <Connect
+                  state={({ build }: { build: BuildConfig }) => ({
+                    artifacts: build.artifacts.allIds,
+                  })}
+                >
+                  {({ artifacts }) => (
+                    <div className="custom-controls-stacked">
+                      {artifacts.map((it: string) => (
+                        <BuildArtifact key={it} id={it} />
+                      ))}
+                    </div>
+                  )}
+                </Connect>
+              </div>
+            </div>
+
+            <Connect
+              state={({ build }: { build: BuildConfig }) => ({
+                mode: build.modes.byId[build.mode].id,
+              })}
+            >
+              {({ mode }) =>
+                mode === MODE_ZIP ? (
+                  <BuildToolbar configDownload={this.configDownload}>
+                    <button className="btn btn-success" onClick={this.download}>
+                      <IconFileDownload /> DOWNLOAD ZIP
+                    </button>
+                  </BuildToolbar>
+                ) : (
+                  <BuildScript configDownload={this.configDownload} />
+                )
+              }
+            </Connect>
+          </BuildConfigArea>
+           */}
+          </div>
+        </div>
+      </ControlledPanel>
     </React.Fragment>
   );
 }
 
 /*
 import * as JSZip from 'jszip';
-import debounce from 'lodash-es/debounce';
-import * as isEqual from 'react-fast-compare';
 import { ControlledCheckbox } from '~/components/ControlledCheckbox';
-import { ControlledPanel } from '~/components/ControlledPanel';
 import { ControlledRadio } from '~/components/ControlledRadio';
 import { ControlledToggle } from '~/components/ControlledToggle';
 import IconFileDownload from '~/components/icons/md/FileDownload';
@@ -115,7 +150,6 @@ import { BuildScript } from './components/BuildScript';
 import { BuildToolbar } from './components/BuildToolbar';
 import { BuildType } from './components/BuildType';
 import { BUILD_RELEASE, MODE_ZIP } from './constants';
-import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
 import { configLoad } from './reducer';
 // Types
 import { BuildConfig, BuildConfigStored } from './types';
@@ -126,20 +160,19 @@ interface State {
   progress: Array<string>;
 }
 
-*/
-
-/*
 export class BuildConfigurator extends React.Component<Props, State> {
-  static firstLoad = true;
-  unsubscribe!: () => void;
-  prevSave: BuildConfigStored | null = null;
-  mounted: boolean = false;
-
   state = {
     isDownloading: false,
     progress: [],
   };
 
+  componentWillUnmount() {
+    this.mounted = false;
+    this.unsubscribe();
+    if (this.state.isDownloading) {
+      this.downloadAbort();
+    }
+  }
 
   configJSONfilename(save: BuildConfigStored) {
     return `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`;
@@ -261,125 +294,6 @@ export class BuildConfigurator extends React.Component<Props, State> {
             </div>
           </div>
         </ScreenLock>
-
-        <div className="row">
-          <div className="col-lg p-0 px-lg-3">
-            <BuildType build="release" />
-          </div>
-          <div className="col-lg p-0">
-            <BuildType build="stable" />
-          </div>
-          <div className="col-lg p-0 px-lg-3">
-            <BuildType build="nightly" />
-          </div>
-        </div>
-        <ControlledPanel predicate={isBuildSelected}>
-          <div className="row">
-            <div className="col p-0">
-              <BuildConfigArea>
-                <div className="row pt-3">
-                  <div className="col-md">
-                    <h4>Mode</h4>
-                    <ControlledRadio spec={fields.mode} />
-
-                    <h4 className="mt-3">Options</h4>
-                    <div className="custom-controls-stacked">
-                      <ControlledToggle spec={fields.descriptions} />
-                      <ControlledCheckbox spec={fields.source} />
-                      <ControlledCheckbox spec={fields.javadoc} />
-                      <ControlledCheckbox spec={fields.includeJSON} />
-                      <ControlledToggle spec={fields.hardcoded} />
-                      <ControlledToggle spec={fields.compact} />
-                      <ControlledToggle spec={fields.osgi} />
-                    </div>
-
-                    <BuildPlatform />
-
-                    <ControlledPanel predicate={hasLanguageOption}>
-                      <h4 className="mt-3">Language</h4>
-                      <ControlledRadio spec={fields.language} />
-                    </ControlledPanel>
-                  </div>
-                  <div className="col-md">
-                    <h4>Presets</h4>
-                    <ControlledRadio spec={fields.preset} />
-
-                    <h4 className="mt-3">Addons</h4>
-                    <Connect
-                      state={({ build }: { build: BuildConfig }) => ({
-                        addons: build.addons.allIds,
-                      })}
-                    >
-                      {({ addons }) => (
-                        <div className="custom-controls-stacked">
-                          {addons.map((it: string) => (
-                            <BuildAddon key={it} id={it} />
-                          ))}
-                        </div>
-                      )}
-                    </Connect>
-
-                    <ControlledPanel predicate={isBuildRelease}>
-                      <h4 className="mt-3">Version</h4>
-                      <ControlledRadio spec={fields.version} />
-                      <Connect
-                        state={({ build }: { build: BuildConfig }) => ({
-                          version: build.version,
-                        })}
-                      >
-                        {({ version }) => (
-                          <p>
-                            <a
-                              href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
-                              style={{ fontSize: '80%' }}
-                            >
-                              release notes for {version}
-                            </a>
-                          </p>
-                        )}
-                      </Connect>
-                    </ControlledPanel>
-                  </div>
-
-                  <div className="col-md-6">
-                    <h4>Contents</h4>
-                    <Connect
-                      state={({ build }: { build: BuildConfig }) => ({
-                        artifacts: build.artifacts.allIds,
-                      })}
-                    >
-                      {({ artifacts }) => (
-                        <div className="custom-controls-stacked">
-                          {artifacts.map((it: string) => (
-                            <BuildArtifact key={it} id={it} />
-                          ))}
-                        </div>
-                      )}
-                    </Connect>
-                  </div>
-                </div>
-
-                <Connect
-                  state={({ build }: { build: BuildConfig }) => ({
-                    mode: build.modes.byId[build.mode].id,
-                  })}
-                >
-                  {({ mode }) =>
-                    mode === MODE_ZIP ? (
-                      <BuildToolbar configDownload={this.configDownload}>
-                        <button className="btn btn-success" onClick={this.download}>
-                          <IconFileDownload /> DOWNLOAD ZIP
-                        </button>
-                      </BuildToolbar>
-                    ) : (
-                      <BuildScript configDownload={this.configDownload} />
-                    )
-                  }
-                </Connect>
-              </BuildConfigArea>
-            </div>
-          </div>
-        </ControlledPanel>
       </div>
     );
   }
