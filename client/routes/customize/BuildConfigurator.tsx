@@ -3,6 +3,7 @@ import { BuildPanel } from './BuildPanel';
 import { BuildType } from './types';
 import { /*fields, hasLanguageOption, isBuildRelease,*/ isBuildSelected } from './fields';
 import { ControlledPanel } from '~/routes/customize/ControlledPanel';
+import { BuildConfigArea } from './BuildConfigArea';
 
 export function BuildConfigurator() {
   return (
@@ -21,8 +22,8 @@ export function BuildConfigurator() {
       <ControlledPanel predicate={isBuildSelected}>
         <div className="row">
           <div className="col p-0">
-            {/*
-          <BuildConfigArea>
+            <BuildConfigArea>
+              {/*
             <div className="row pt-3">
               <div className="col-md">
                 <h4>Mode</h4>
@@ -122,8 +123,8 @@ export function BuildConfigurator() {
                 )
               }
             </Connect>
-          </BuildConfigArea>
            */}
+            </BuildConfigArea>
           </div>
         </div>
       </ControlledPanel>

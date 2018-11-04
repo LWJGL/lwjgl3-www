@@ -1,7 +1,14 @@
 import * as JSZip from 'jszip';
 import { HTTP_OK } from '~/services/http_status_codes';
-import { BUILD_RELEASE } from './constants';
-import { BuildStore, BuildStoreSnapshot, BuildType, Native, PlatformSelection } from './types';
+import {
+  BuildStore,
+  BuildStoreSnapshot,
+  BuildType,
+  Native,
+  PlatformSelection,
+  Binding,
+  BindingDefinition,
+} from './types';
 
 type AddonSelection = Array<{ id: string; version: string }>;
 
@@ -17,7 +24,7 @@ interface SelectedBuildConfig {
   addons: AddonSelection;
 }
 
-function keepChecked(src: any) {
+function keepChecked(src) {
   // Keep only checked items to avoid phantom selections
   // when new items (bindings,addons,platforms) are added
   return Object.keys(src).filter(key => src[key] === true);
@@ -44,11 +51,11 @@ export function getConfig(build: BuildStore): BuildStoreSnapshot | null {
   };
 
   if (build.preset === 'custom') {
-    save.contents = keepChecked(build.contents);
+    save.contents = keepChecked > build.contents;
   } else {
     save.preset = build.preset;
   }
-  if (build.build === BUILD_RELEASE) {
+  if (build.build === BuildType.Release) {
     save.version = build.version;
     save.versionLatest = build.versions[0];
   }
@@ -70,9 +77,9 @@ export function getBuild({ build }: { build: BuildStore }): SelectedBuildConfig 
   const platformCount = build.natives.allIds.length;
   const selectedPlatforms = build.platform;
 
-  if (build.build === BUILD_RELEASE) {
+  if (build.build === BuildType.Release) {
     path = `release/${build.version}`;
-    _build = BUILD_RELEASE;
+    _build = BuildType.Release;
   } else if (build.build !== null) {
     _build = build.build;
     path = build.build;
@@ -85,7 +92,7 @@ export function getBuild({ build }: { build: BuildStore }): SelectedBuildConfig 
       return false;
     }
 
-    const spec = build.artifacts.byId[artifact];
+    const spec = build.artifacts.byId[artifact] as BindingDefinition;
 
     return (
       spec.natives === undefined ||

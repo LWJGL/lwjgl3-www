@@ -3,18 +3,17 @@ import produce from 'immer';
 import { config } from './config';
 import { ActionKeys, ActionTypes } from './actions';
 import {
-  BUILD_RELEASE,
-  BUILD_STABLE,
-  MODE_ZIP,
-  // MODE_MAVEN, MODE_GRADLE, MODE_IVY
-} from './constants';
-import {
   BuildType,
   Native,
+  Mode,
+  Language,
   // MODES,
   // LANGUAGES,
   BuildStore,
   BuildStoreSnapshot,
+  Preset,
+  Binding,
+  BindingDefinition,
 } from './types';
 
 /*
@@ -153,7 +152,7 @@ function selectBuild(state: BuildStore, build: BuildType | null) {
   computeArtifacts(state);
 }
 
-function selectPreset(state: BuildStore, preset: string) {
+function selectPreset(state: BuildStore, preset: Preset) {
   // Make sure preset exists
   if (state.presets.byId[preset] === undefined) {
     return;
@@ -162,11 +161,11 @@ function selectPreset(state: BuildStore, preset: string) {
   // Set preset
   state.preset = preset;
 
-  if (preset === 'all') {
+  if (preset === Preset.All) {
     state.artifacts.allIds.forEach(artifact => {
       state.contents[artifact] = true;
     });
-  } else if (preset !== 'custom') {
+  } else if (preset !== Preset.Custom) {
     state.artifacts.allIds.forEach(artifact => {
       state.contents[artifact] = false;
     });
@@ -184,7 +183,7 @@ function computeArtifacts(state: BuildStore) {
     return;
   }
 
-  state.artifacts = state.lwjgl[state.build === BUILD_RELEASE && state.version !== null ? state.version : state.build];
+  state.artifacts = state.lwjgl[state.build === BuildType.Release ? state.version : state.build];
 
   // reset state
   state.availability = {};
@@ -193,13 +192,13 @@ function computeArtifacts(state: BuildStore) {
   });
 
   state.artifacts.allIds.forEach(it => {
-    const artifact = state.artifacts.byId[it];
+    const artifact = state.artifacts.byId[it] as BindingDefinition;
 
     state.availability[it] =
       artifact.natives === undefined ||
       artifact.nativesOptional === true ||
       artifact.natives.length === config.natives.allIds.length ||
-      artifact.natives.some((platform: Native) => !!state.platform[platform]);
+      artifact.natives.some(platform => !!state.platform[platform]);
 
     if (state.availability[it] && artifact.presets !== undefined) {
       // Populate presets
@@ -212,14 +211,13 @@ function computeArtifacts(state: BuildStore) {
     }
   });
 
-  if (state.preset !== 'custom') {
+  if (state.preset !== Preset.Custom) {
     selectPreset(state, state.preset);
   }
 
-  if (state.build === BUILD_STABLE) {
-    if (state.mode !== MODE_ZIP) {
-      state.mode = MODE_ZIP;
-    }
+  // Stable builds are only available in ZIP
+  if (state.build === BuildType.Stable && state.mode !== Mode.Zip) {
+    state.mode = Mode.Zip;
   }
 }
 
@@ -307,7 +305,7 @@ const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
   state.language = config.language;
   state.osgi = !!config.osgi;
 
-  if (config.build === BUILD_RELEASE && config.version !== undefined && config.versionLatest !== undefined) {
+  if (config.build === BuildType.Release && config.version !== undefined && config.versionLatest !== undefined) {
     if (config.versionLatest === state.versions[1]) {
       state.version = state.versions[0];
     } else {
@@ -315,7 +313,7 @@ const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
     }
   }
 
-  if (config.mode === MODE_ZIP) {
+  if (config.mode === Mode.Zip) {
     state.natives.allIds.forEach(platform => {
       state.platform[platform] = false;
     });
@@ -329,16 +327,16 @@ const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
   if (config.preset !== undefined) {
     selectPreset(state, config.preset);
   } else if (config.contents !== undefined) {
-    state.preset = 'custom';
+    state.preset = Preset.Custom;
     state.contents = {};
     if (Array.isArray(config.contents)) {
-      config.contents.forEach((binding: string) => {
+      config.contents.forEach((binding: Binding) => {
         if (state.artifacts.byId[binding]) {
           state.contents[binding] = true;
         }
       });
     }
   } else {
-    selectPreset(state, 'getting-started');
+    selectPreset(state, Preset.GettingStarted);
   }
 };

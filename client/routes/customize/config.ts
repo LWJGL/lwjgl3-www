@@ -16,8 +16,6 @@ import {
   BuildBindings,
   BuildType,
   Mode,
-  Version,
-  VersionCollection,
   Binding,
   Preset,
   Native,
@@ -251,13 +249,13 @@ function getInitialConfig(): BuildStore {
   ].reduce((previousBuild: BuildBindings, nextBuildConfig: BuildBindingsReducer) => {
     const build = nextBuildConfig(previousBuild);
     build.allIds = Object.keys(build.byId).sort() as Array<Binding>;
-    (config.lwjgl as VersionCollection)[build.alias !== undefined ? build.alias : build.version] = build;
+    config.lwjgl[build.alias !== undefined ? build.alias : build.version] = build;
     return build;
   }, build);
 
   // Versions
-  (config.versions as Array<Version>) = (Object.keys(config.lwjgl) as Array<Version>)
-    .map(it => (config.lwjgl as VersionCollection)[it])
+  config.versions = Object.keys(config.lwjgl)
+    .map(it => config.lwjgl[it])
     .filter((it: BuildBindings) => it.alias === undefined)
     .map((it: BuildBindings) => it.version)
     .reverse();
@@ -265,9 +263,9 @@ function getInitialConfig(): BuildStore {
   config.version = config.versions[0];
 
   // Fill allIds
-  config.presets.allIds = Object.keys(config.presets.byId) as Array<Preset>;
-  config.modes.allIds = Object.keys(config.modes.byId) as Array<Mode>;
-  config.languages.allIds = Object.keys(config.languages.byId) as Array<Language>;
+  config.presets.allIds = Object.keys(config.presets.byId);
+  config.modes.allIds = Object.keys(config.modes.byId);
+  config.languages.allIds = Object.keys(config.languages.byId);
 
   config.platform[getDefaultPlatform()] = true;
 

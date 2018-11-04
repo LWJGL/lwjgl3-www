@@ -213,11 +213,11 @@ export interface BuildStore {
   includeJSON: boolean;
   source: boolean;
   osgi: boolean;
-  language: Language | null;
+  language: Language;
   platform: PlatformSelection;
   version: Version;
-  contents: { [k in Binding]: boolean };
-  availability: { [k in Binding]: boolean };
+  contents: { [k in Binding]?: boolean };
+  availability: { [k in Binding]?: boolean };
   selectedAddons: Array<Addon>;
   artifacts: BuildBindings;
 }
