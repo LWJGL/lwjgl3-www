@@ -1,7 +1,8 @@
-import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
+// import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
 import { BuildConfig, LANGUAGES } from './types';
-import { RadioOptions } from '~/components/ControlledRadio';
+// import { RadioOptions } from '~/components/ControlledRadio';
 
+/*
 import {
   changePreset,
   changeLanguage,
@@ -15,25 +16,23 @@ import {
   toggleSource,
   changeMode,
 } from './reducer';
+*/
 
-type State = {
-  build: BuildConfig;
-};
+// const getMode = (state: State) => state.build.mode;
+// const getBuild = (state: BuildConfig) => state.build;
+// const getPreset = (state: State) => state.build.preset;
+// const getLanguage = (state: State) => state.build.language;
+// const getVersion = (state: State) => state.build.version;
+export const isBuildSelected = (state: BuildConfig) => state.build !== null;
+// export const hasLanguageOption = (state: State) => getMode(state) === MODE_GRADLE;
+// const hasCompactModeOption = (state: State) => getMode(state) === MODE_MAVEN || getMode(state) === MODE_IVY;
+// const isModeZip = (state: State) => getMode(state) === MODE_ZIP;
+// const isModeNotZip = (state: State) => getMode(state) !== MODE_ZIP;
+// export const isBuildRelease = (state: State) => state.build === BUILD_RELEASE;
+// const showOSGi = (state: State) =>
+//   isModeNotZip(state) && isBuildRelease(state) && parseInt(getVersion(state).replace(/\./g, ''), 10) >= 312;
 
-const getMode = (state: State) => state.build.mode;
-const getBuild = (state: State) => state.build.build;
-const getPreset = (state: State) => state.build.preset;
-const getLanguage = (state: State) => state.build.language;
-const getVersion = (state: State) => state.build.version;
-export const isBuildSelected = (state: State) => getBuild(state) !== null;
-export const hasLanguageOption = (state: State) => getMode(state) === MODE_GRADLE;
-const hasCompactModeOption = (state: State) => getMode(state) === MODE_MAVEN || getMode(state) === MODE_IVY;
-const isModeZip = (state: State) => getMode(state) === MODE_ZIP;
-const isModeNotZip = (state: State) => getMode(state) !== MODE_ZIP;
-export const isBuildRelease = (state: State) => getBuild(state) === BUILD_RELEASE;
-const showOSGi = (state: State) =>
-  isModeNotZip(state) && isBuildRelease(state) && parseInt(getVersion(state).replace(/\./g, ''), 10) >= 312;
-
+/*
 export const fields = {
   mode: {
     name: 'mode',
@@ -120,3 +119,4 @@ export const fields = {
     hidden: (state: State) => isModeZip(state),
   },
 };
+*/

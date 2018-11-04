@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Checkbox } from './Checkbox';
+import { Checkbox } from '../../components/Checkbox';
 import { Dispatch, ActionCreator } from 'redux';
 import { Connect } from '~/store/Connect';
 

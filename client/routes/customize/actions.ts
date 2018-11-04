@@ -3,6 +3,7 @@ import {
   // NATIVES,
   // MODES,
   // LANGUAGES
+  BuildConfigStored,
 } from './types';
 
 export enum ActionKeys {
@@ -25,7 +26,7 @@ export enum ActionKeys {
   CONFIG_LOAD = 'BUILD/CONFIG_LOAD',
 }
 
-export type ActionTypes = BuildSelectTypeAction;
+export type ActionTypes = BuildSelectTypeAction | BuildConfigLoadAction;
 
 // Select/deselect a build type (e.g. Release, Stable, Nightly)
 
@@ -37,4 +38,16 @@ export interface BuildSelectTypeAction {
 export const changeType = (build: BUILD_TYPES | null): BuildSelectTypeAction => ({
   type: ActionKeys.SELECT_TYPE,
   build,
+});
+
+// Load previously save configuration
+
+export interface BuildConfigLoadAction {
+  type: ActionKeys.CONFIG_LOAD;
+  payload: BuildConfigStored;
+}
+
+export const configLoad = (payload: BuildConfigStored): BuildConfigLoadAction => ({
+  type: ActionKeys.CONFIG_LOAD,
+  payload,
 });
