@@ -19,17 +19,17 @@ import {
   COLOR_STABLE,
   COLOR_STABLE_LIGHT,
 } from './theme';
-import { Build, BUILD_TYPES } from './types';
+import { BuildDefinition, BuildType } from './types';
 jsx;
 
 type ConnectedProps = {
   buildSelected: boolean;
   isSelected: boolean;
-  spec: Build;
+  spec: BuildDefinition;
 };
 
 interface Props {
-  build: BUILD_TYPES;
+  build: BuildType;
 }
 
 function StatusFallback() {
@@ -42,7 +42,7 @@ function StatusFallback() {
   );
 }
 
-export function BuildType({ build }: Props) {
+export function BuildPanel({ build }: Props) {
   const [state, dispatch] = useStore(
     (state): ConnectedProps => ({
       buildSelected: state.build !== null,
@@ -58,7 +58,7 @@ export function BuildType({ build }: Props) {
         {({ current, breakpoints: { lg } }) => (
           <div
             onClick={() => dispatch(changeType(build))}
-            css={BuildBox}
+            css={PanelBox}
             className={cc(build, {
               selected: isSelected,
               active: buildSelected && current < lg,
@@ -77,7 +77,7 @@ export function BuildType({ build }: Props) {
   );
 }
 
-const BuildBox = css`
+const PanelBox = css`
   border: 2px solid ${COLOR_PRIMARY.css()};
   padding: 1rem;
   border-radius: ${BORDER_RADIUS};

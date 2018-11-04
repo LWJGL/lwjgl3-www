@@ -1,84 +1,173 @@
-export type BUILD_TYPES = 'release' | 'stable' | 'nightly';
-export type NATIVES = 'macos' | 'windows' | 'linux';
-export type MODES = 'zip' | 'maven' | 'gradle' | 'ivy';
-export type LANGUAGES = 'groovy' | 'kotlin';
+export enum Version {
+  LWJGL300 = '3.0.0',
+  LWJGL310 = '3.1.0',
+  LWJGL311 = '3.1.1',
+  LWJGL312 = '3.1.2',
+  LWJGL313 = '3.1.3',
+  LWJGL314 = '3.1.4',
+  LWJGL315 = '3.1.5',
+  LWJGL316 = '3.1.6',
+  LWJGL320 = '3.2.0',
+  LWJGL321 = '3.2.1',
+  Stable = 'stable',
+  Nightly = 'nightly',
+}
+
+export enum Binding {
+  LWJGL = 'lwjgl',
+  EGL = 'lwjgl-egl',
+  GLFW = 'lwjgl-glfw',
+  JAWT = 'lwjgl-jawt',
+  Jemalloc = 'lwjgl-jemalloc',
+  NanoSVG = 'lwjgl-nanovg',
+  Nfd = 'lwjgl-nfd',
+  OpenAL = 'lwjgl-openal',
+  OpenCL = 'lwjgl-opencl',
+  OpenGL = 'lwjgl-opengl',
+  OpenGLES = 'lwjgl-opengles',
+  OVR = 'lwjgl-ovr',
+  ParShapes = 'lwjgl-par',
+  SSE = 'lwjgl-sse',
+  Stb = 'lwjgl-stb',
+  Vulkan = 'lwjgl-vulkan',
+  XxHash = 'lwjgl-xxhash',
+  Bgfx = 'lwjgl-bgfx',
+  LMDB = 'lwjgl-lmdb',
+  Nuklear = 'lwjgl-nuklear',
+  TinyFD = 'lwjgl-tinyfd',
+  Assimp = 'lwjgl-assimp',
+  OpenVR = 'lwjgl-openvr',
+  TinyEXR = 'lwjgl-tinyexr',
+  Yoga = 'lwjgl-yoga',
+  Rpmalloc = 'lwjgl-rpmalloc',
+  LZ4 = 'lwjgl-lz4',
+  ODBC = 'lwjgl-odbc',
+  Remotery = 'lwjgl-remotery',
+  Zstandard = 'lwjgl-zstd',
+  Tootle = 'lwjgl-tootle',
+  VMA = 'lwjgl-vma',
+  Bullet = 'lwjgl-bullet',
+  CUDA = 'lwjgl-cuda',
+  Libdivide = 'lwjgl-libdivide',
+  Meow = 'lwjgl-meow',
+  Opus = 'lwjgl-opus',
+}
+
+export enum Addon {
+  JOML = 'joml',
+  LWJGLXDebug = 'lwjglx-debug',
+  Steamworks4J = 'steamworks4j',
+  Steamworks4JServer = 'steamworks4j-server',
+}
+
+export enum BuildType {
+  Release = 'release',
+  Stable = 'stable',
+  Nightly = 'nightly',
+}
+
+export enum Native {
+  Windows = 'windows',
+  Linux = 'linux',
+  MacOS = 'macos',
+}
+
+export const NATIVE_ALL = [Native.Windows, Native.Linux, Native.MacOS];
+
+export enum Mode {
+  Zip = 'zip',
+  Maven = 'maven',
+  Gradle = 'gradle',
+  Ivy = 'ivy',
+}
+
+export enum Language {
+  Groovy = 'groovy',
+  Kotlin = 'kotlin',
+}
+
+export enum Preset {
+  None = 'none',
+  Custom = 'custom',
+  All = 'all',
+  GettingStarted = 'getting-started',
+  OpenGL = 'minimal-opengl',
+  OpenGLES = 'minimal-opengles',
+  Vulkan = 'minimal-vulkan',
+}
 
 export interface BindingDefinition {
-  id: string;
+  id: Binding;
   title: string;
   description: string;
   required?: boolean;
-  natives?: Array<NATIVES>;
+  natives?: Array<Native>;
   nativesOptional?: boolean;
   website?: string;
-  presets?: Array<string>;
+  presets?: Array<Preset>;
 }
 
-export interface BuildOptions {
-  version: string;
-  alias?: string;
-  allIds: Array<string>;
-  byId: {
-    [key: string]: BindingDefinition;
-  };
+export interface BuildBindings {
+  version: Version;
+  alias?: Version;
+  allIds: Array<Binding>;
+  byId: { [key in Binding]?: BindingDefinition };
 }
 
-export type BuildOptionsBuilder = (opt: BuildOptions) => BuildOptions;
+export type VersionCollection = { [version in Version]: BuildBindings };
 
-export interface Build {
-  id: BUILD_TYPES;
+export interface BuildDefinition {
+  id: BuildType;
   title: string;
   description: string;
 }
 
-export interface Mode {
-  id: MODES;
+export interface BuildCollection {
+  byId: { [build in BuildType]: BuildDefinition };
+  allIds: Array<BuildType>;
+}
+
+export interface ModeDefinition {
+  id: Mode;
   title: string;
   logo?: string;
   file?: string;
 }
 
-export interface Builds {
-  byId: { [build in BUILD_TYPES]: Build };
-  allIds: Array<BUILD_TYPES>;
+export interface ModesCollection {
+  byId: { [id in Mode]: ModeDefinition };
+  allIds: Array<Mode>;
 }
 
-export interface Modes {
-  byId: { [id in MODES]: Mode };
-  allIds: Array<MODES>;
-}
-
-export interface Native {
-  id: NATIVES;
+export interface NativeDefinition {
+  id: Native;
   title: string;
 }
 
-export interface Natives {
-  byId: { [id in NATIVES]: Native };
-  allIds: Array<NATIVES>;
+export interface NativesCollection {
+  byId: { [id in Native]: NativeDefinition };
+  allIds: Array<Native>;
 }
 
-export interface Languages {
+export interface LanguageCollection {
   byId: {
-    [id in LANGUAGES]: {
-      id: LANGUAGES;
+    [id in Language]: {
+      id: Language;
       title: string;
     }
   };
-  allIds: Array<LANGUAGES>;
+  allIds: Array<Language>;
 }
 
-export interface Preset {
-  id: string;
+export interface PresetDefinition {
+  id: Preset;
   title: string;
-  artifacts?: Array<string>;
+  artifacts?: Array<Binding>;
 }
 
-export interface Presets {
-  byId: {
-    [id: string]: Preset;
-  };
-  allIds: Array<string>;
+export interface PresetCollection {
+  byId: { [id in Preset]: PresetDefinition };
+  allIds: Array<Preset>;
 }
 
 export interface MavenConfig {
@@ -87,42 +176,36 @@ export interface MavenConfig {
   version: string;
 }
 
-export interface Addon {
-  id: string;
+export interface AddonDefinition {
+  id: Addon;
   title: string;
   description: string;
   website: string;
   maven: MavenConfig;
-  modes?: Array<MODES>;
+  modes?: Array<Mode>;
 }
 
-export interface Addons {
-  byId: {
-    [id: string]: Addon;
-  };
-  allIds: Array<string>;
+export interface AddonCollection {
+  byId: { [id in Addon]: AddonDefinition };
+  allIds: Array<Addon>;
 }
 
-export interface LWJGLVersions {
-  [version: string]: BuildOptions;
-}
+export type PlatformSelection = { [key in Native]: boolean };
 
-export type Platforms = { [key in NATIVES]: boolean };
-
-export interface BuildConfig {
-  lwjgl: LWJGLVersions;
-  builds: Builds;
-  modes: Modes;
-  natives: Natives;
-  languages: Languages;
-  presets: Presets;
-  addons: Addons;
-  versions: Array<string>;
+export interface BuildStore {
+  lwjgl: VersionCollection;
+  builds: BuildCollection;
+  modes: ModesCollection;
+  natives: NativesCollection;
+  languages: LanguageCollection;
+  presets: PresetCollection;
+  addons: AddonCollection;
+  versions: Array<Version>;
 
   // UI State
-  build: null | BUILD_TYPES;
-  mode: MODES;
-  preset: string;
+  build: null | BuildType;
+  mode: Mode;
+  preset: Preset;
   descriptions: boolean;
   compact: boolean;
   hardcoded: boolean;
@@ -130,24 +213,20 @@ export interface BuildConfig {
   includeJSON: boolean;
   source: boolean;
   osgi: boolean;
-  language: string;
-  platform: Platforms;
-  version: string;
-  contents: {
-    [k: string]: boolean;
-  };
-  availability: {
-    [k: string]: boolean;
-  };
-  selectedAddons: Array<string>;
-  artifacts: BuildOptions;
+  language: Language | null;
+  platform: PlatformSelection;
+  version: Version;
+  contents: { [k in Binding]: boolean };
+  availability: { [k in Binding]: boolean };
+  selectedAddons: Array<Addon>;
+  artifacts: BuildBindings;
 }
 
-export interface BuildConfigStored {
-  build: BUILD_TYPES;
-  mode: MODES;
-  selectedAddons: Array<string>;
-  platform: Array<NATIVES>;
+export interface BuildStoreSnapshot {
+  build: BuildType;
+  mode: Mode;
+  selectedAddons: Array<Addon>;
+  platform: Array<Native>;
   descriptions: boolean;
   compact: boolean;
   hardcoded: boolean;
@@ -155,9 +234,9 @@ export interface BuildConfigStored {
   includeJSON: boolean;
   source: boolean;
   osgi: boolean;
-  language: string;
-  preset?: string;
-  contents?: Array<string>;
-  version?: string;
-  versionLatest?: string;
+  language: Language;
+  preset?: Preset;
+  contents?: Array<Binding>;
+  version?: Version;
+  versionLatest?: Version;
 }

@@ -9,12 +9,12 @@ import {
   // MODE_MAVEN, MODE_GRADLE, MODE_IVY
 } from './constants';
 import {
-  BUILD_TYPES,
-  NATIVES,
+  BuildType,
+  Native,
   // MODES,
   // LANGUAGES,
-  BuildConfig,
-  BuildConfigStored,
+  BuildStore,
+  BuildStoreSnapshot,
 } from './types';
 
 /*
@@ -40,8 +40,8 @@ export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
 
 // Reducer
 
-export const reducer: React.Reducer<BuildConfig, ActionTypes> = (state: BuildConfig = config, action: ActionTypes) => {
-  return produce(state, (draft: BuildConfig) => {
+export const reducer: React.Reducer<BuildStore, ActionTypes> = (state: BuildStore = config, action: ActionTypes) => {
+  return produce(state, (draft: BuildStore) => {
     switch (action.type) {
       case ActionKeys.CONFIG_LOAD:
         loadConfig(draft, action.payload);
@@ -148,12 +148,12 @@ export const reducer: React.Reducer<BuildConfig, ActionTypes> = (state: BuildCon
   });
 };
 
-function selectBuild(state: BuildConfig, build: BUILD_TYPES | null) {
+function selectBuild(state: BuildStore, build: BuildType | null) {
   state.build = build;
   computeArtifacts(state);
 }
 
-function selectPreset(state: BuildConfig, preset: string) {
+function selectPreset(state: BuildStore, preset: string) {
   // Make sure preset exists
   if (state.presets.byId[preset] === undefined) {
     return;
@@ -179,7 +179,7 @@ function selectPreset(state: BuildConfig, preset: string) {
   }
 }
 
-function computeArtifacts(state: BuildConfig) {
+function computeArtifacts(state: BuildStore) {
   if (state.build === null) {
     return;
   }
@@ -199,7 +199,7 @@ function computeArtifacts(state: BuildConfig) {
       artifact.natives === undefined ||
       artifact.nativesOptional === true ||
       artifact.natives.length === config.natives.allIds.length ||
-      artifact.natives.some((platform: NATIVES) => !!state.platform[platform]);
+      artifact.natives.some((platform: Native) => !!state.platform[platform]);
 
     if (state.availability[it] && artifact.presets !== undefined) {
       // Populate presets
@@ -290,7 +290,7 @@ const doToggleAddon = (state: BuildConfig, addon: string) => {
 
 */
 
-const loadConfig = (state: BuildConfig, config: BuildConfigStored) => {
+const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
   if (config.build === null) {
     return;
   }

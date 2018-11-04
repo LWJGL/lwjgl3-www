@@ -1,15 +1,15 @@
 import * as JSZip from 'jszip';
 import { HTTP_OK } from '~/services/http_status_codes';
 import { BUILD_RELEASE } from './constants';
-import { BuildConfig, BuildConfigStored, BUILD_TYPES, NATIVES, Platforms } from './types';
+import { BuildStore, BuildStoreSnapshot, BuildType, Native, PlatformSelection } from './types';
 
 type AddonSelection = Array<{ id: string; version: string }>;
 
 interface SelectedBuildConfig {
   path: string;
   selected: Array<string>;
-  build: BUILD_TYPES;
-  platforms: Platforms;
+  build: BuildType;
+  platforms: PlatformSelection;
   source: boolean;
   javadoc: boolean;
   includeJSON: boolean;
@@ -23,16 +23,16 @@ function keepChecked(src: any) {
   return Object.keys(src).filter(key => src[key] === true);
 }
 
-export function getConfig(build: BuildConfig): BuildConfigStored | null {
+export function getConfig(build: BuildStore): BuildStoreSnapshot | null {
   if (build.build === null) {
     return null;
   }
 
-  const save: BuildConfigStored = {
+  const save: BuildStoreSnapshot = {
     build: build.build,
     mode: build.mode,
     selectedAddons: build.selectedAddons,
-    platform: keepChecked(build.platform) as Array<NATIVES>,
+    platform: keepChecked(build.platform) as Array<Native>,
     descriptions: build.descriptions,
     compact: build.compact,
     hardcoded: build.hardcoded,
@@ -64,7 +64,7 @@ export async function fetchManifest(path: string) {
   return await response.json();
 }
 
-export function getBuild({ build }: { build: BuildConfig }): SelectedBuildConfig {
+export function getBuild({ build }: { build: BuildStore }): SelectedBuildConfig {
   let path;
   let _build;
   const platformCount = build.natives.allIds.length;
@@ -117,7 +117,7 @@ export function getFiles(
   path: string,
   manifest: Array<string>,
   selected: Array<string>,
-  platforms: Platforms,
+  platforms: PlatformSelection,
   source: boolean,
   javadoc: boolean
 ): Array<string> {

@@ -4,7 +4,7 @@ import { ActionTypes, configLoad } from './actions';
 import { config } from './config';
 import { reducer } from './reducer';
 import { getConfig } from './bundler';
-import { BuildConfig, BuildConfigStored } from './types';
+import { BuildStore, BuildStoreSnapshot } from './types';
 import debounce from 'lodash-es/debounce';
 import * as isEqual from 'react-fast-compare';
 
@@ -14,7 +14,7 @@ const STORAGE_KEY = 'lwjgl-build-config';
 // Create store for Build Configurator.
 // This lives in a React Context
 interface StoreContextType {
-  state: BuildConfig;
+  state: BuildStore;
   dispatch: React.Dispatch<ActionTypes>;
 }
 
@@ -23,7 +23,7 @@ export const StoreContext = createContext<StoreContextType>({
   dispatch: () => {},
 });
 
-export function useStore<S>(slicer: (state: BuildConfig) => S): [S, React.Dispatch<ActionTypes>] {
+export function useStore<S>(slicer: (state: BuildStore) => S): [S, React.Dispatch<ActionTypes>] {
   const { state, dispatch } = useContext(StoreContext);
   return [slicer(state), dispatch];
 }
@@ -37,8 +37,8 @@ let firstLoad = true;
 // Build store Provider
 // <Connect /> components in the tree will receive updates everytime the store changes
 export function Provider(props: ProviderProps) {
-  const [state, dispatch] = useReducer<BuildConfig, ActionTypes>(reducer, config);
-  const prevConfig: React.MutableRefObject<null | BuildConfigStored> = useRef(null);
+  const [state, dispatch] = useReducer<BuildStore, ActionTypes>(reducer, config);
+  const prevConfig: React.MutableRefObject<null | BuildStoreSnapshot> = useRef(null);
 
   useEffect(() => {
     if (firstLoad) {
@@ -46,7 +46,7 @@ export function Provider(props: ProviderProps) {
       const restore = localStorage.getItem(STORAGE_KEY);
       if (restore !== null) {
         try {
-          let previousConfig: BuildConfigStored = JSON.parse(restore);
+          let previousConfig: BuildStoreSnapshot = JSON.parse(restore);
           prevConfig.current = previousConfig;
           dispatch(configLoad(previousConfig));
         } catch (err) {

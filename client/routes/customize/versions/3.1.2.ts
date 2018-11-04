@@ -1,28 +1,27 @@
-import { NATIVE_ALL } from '../constants';
-import { BuildOptions } from '../types';
+import { BuildBindings, Version, Binding, NATIVE_ALL } from '../types';
 
-export default (prev: BuildOptions): BuildOptions => ({
+export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: '3.1.2',
+  version: Version.LWJGL312,
   byId: {
     ...prev.byId,
-    'lwjgl-openvr': {
-      id: 'lwjgl-openvr',
+    [Binding.OpenVR]: {
+      id: Binding.OpenVR,
       title: 'OpenVR',
       description:
         'OpenVR is an API and runtime that allows access to VR hardware from multiple vendors without requiring that applications have specific knowledge of the hardware they are targeting.',
       natives: NATIVE_ALL,
       website: 'https://github.com/ValveSoftware/openvr',
     },
-    'lwjgl-tinyexr': {
-      id: 'lwjgl-tinyexr',
+    [Binding.TinyEXR]: {
+      id: Binding.TinyEXR,
       title: 'Tiny OpenEXR',
       description: 'A small library to load and save OpenEXR(.exr) images.',
       natives: NATIVE_ALL,
       website: 'https://github.com/syoyo/tinyexr',
     },
-    'lwjgl-yoga': {
-      id: 'lwjgl-yoga',
+    [Binding.Yoga]: {
+      id: Binding.Yoga,
       title: 'Yoga',
       description: 'An open-source, cross-platform layout library that implements Flexbox.',
       natives: NATIVE_ALL,

@@ -1,35 +1,34 @@
-import { NATIVE_ALL } from '../constants';
-import { BuildOptions } from '../types';
+import { BuildBindings, Version, Binding, NATIVE_ALL } from '../types';
 
-export default (prev: BuildOptions): BuildOptions => ({
+export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: '3.1.4',
+  version: Version.LWJGL314,
   byId: {
     ...prev.byId,
-    'lwjgl-lz4': {
-      id: 'lwjgl-lz4',
+    [Binding.LZ4]: {
+      id: Binding.LZ4,
       title: 'LZ4',
       description:
         'LZ4 is a lossless data compression algorithm that is focused on compression and decompression speed.',
       natives: NATIVE_ALL,
       website: 'http://lz4.github.io/lz4/',
     },
-    'lwjgl-odbc': {
-      id: 'lwjgl-odbc',
+    [Binding.ODBC]: {
+      id: Binding.ODBC,
       title: 'ODBC',
       description:
         'A C programming language interface that makes it possible for applications to access data from a variety of database management systems (DBMSs).',
       website: 'https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc',
     },
-    'lwjgl-remotery': {
-      id: 'lwjgl-remotery',
+    [Binding.Remotery]: {
+      id: Binding.Remotery,
       title: 'Remotery',
       description: 'A realtime CPU/GPU profiler hosted in a single C file with a viewer that runs in a web browser.',
       natives: NATIVE_ALL,
       website: 'https://github.com/Celtoys/Remotery',
     },
-    'lwjgl-zstd': {
-      id: 'lwjgl-zstd',
+    [Binding.Zstandard]: {
+      id: Binding.Zstandard,
       title: 'Zstandard',
       description:
         'Zstandard (zstd) is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios.',

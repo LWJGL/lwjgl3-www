@@ -1,13 +1,12 @@
-import { NATIVE_ALL } from '../constants';
-import { BuildOptions } from '../types';
+import { BuildBindings, Version, Binding, NATIVE_ALL } from '../types';
 
-export default (prev: BuildOptions): BuildOptions => ({
+export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: '3.1.5',
+  version: Version.LWJGL315,
   byId: {
     ...prev.byId,
-    'lwjgl-tootle': {
-      id: 'lwjgl-tootle',
+    [Binding.Tootle]: {
+      id: Binding.Tootle,
       title: 'AMD Tootle',
       description:
         'AMD Tootle (Triangle Order Optimization Tool) is a 3D triangle mesh optimization library that improves on existing mesh preprocessing techniques.',
