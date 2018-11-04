@@ -3,8 +3,8 @@ import * as React from 'react';
 import { jsx, css } from '@emotion/core';
 jsx;
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
-import { BuildConfig } from './types';
-import { Connect } from '~/store/Connect';
+import { lighten } from '~/theme/color';
+import { useStore } from './Store';
 
 import {
   COLOR_RELEASE,
@@ -16,7 +16,21 @@ import {
   SMALL_FONT_SIZE,
 } from './theme';
 
-import { lighten } from '~/theme/color';
+interface Props {
+  children: React.ReactNode;
+}
+
+export function BuildConfigArea({ children }: Props) {
+  const [state] = useStore(state => ({
+    build: state.build,
+  }));
+
+  return state.build !== null ? (
+    <div css={ConfigPanel} className={state.build}>
+      {children}
+    </div>
+  ) : null;
+}
 
 const ConfigPanel = css`
   position: relative;
@@ -90,17 +104,3 @@ const ConfigPanel = css`
     }
   }
 `;
-
-export const BuildConfigArea = ({ children }: { children?: React.ReactNode }) => (
-  <Connect
-    state={({ build }: { build: BuildConfig }) => ({
-      build: build.build,
-    })}
-  >
-    {({ build }) => (
-      <div css={ConfigPanel} className={build}>
-        {children}
-      </div>
-    )}
-  </Connect>
-);

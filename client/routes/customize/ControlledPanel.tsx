@@ -7,16 +7,10 @@ interface Props {
   children: React.ReactNode;
 }
 
-interface ConnectedProps {
-  visible: boolean;
-}
-
 export function ControlledPanel({ children, predicate }: Props) {
-  const [state] = useStore(
-    (state: BuildStore): ConnectedProps => ({
-      visible: predicate(state),
-    })
-  );
+  const [state] = useStore(state => ({
+    visible: predicate(state),
+  }));
 
   return state.visible ? React.Children.only(children) : null;
 }
