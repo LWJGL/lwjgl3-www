@@ -8,7 +8,7 @@ import IconClose from '~/components/icons/md/Close';
 import { StateMemo } from '~/components/StateMemo';
 import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { useStore } from './Store';
-import { changeType } from './actions';
+import { selectBuildType } from './actions';
 import { BuildStatus } from './BuildStatus';
 import {
   BORDER_RADIUS,
@@ -57,7 +57,7 @@ export function BuildPanel({ build }: Props) {
       <Breakpoint>
         {({ current, breakpoints: { lg } }) => (
           <div
-            onClick={() => dispatch(changeType(build))}
+            onClick={() => dispatch(selectBuildType(build))}
             css={PanelBox}
             className={cc(build, {
               selected: isSelected,

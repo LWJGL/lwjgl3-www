@@ -8,6 +8,7 @@ import {
   PlatformSelection,
   Binding,
   BindingDefinition,
+  Preset,
 } from './types';
 
 type AddonSelection = Array<{ id: string; version: string }>;
@@ -30,34 +31,34 @@ function keepChecked(src) {
   return Object.keys(src).filter(key => src[key] === true);
 }
 
-export function getConfig(build: BuildStore): BuildStoreSnapshot | null {
-  if (build.build === null) {
+export function getConfig(state: BuildStore): BuildStoreSnapshot | null {
+  if (state.build === null) {
     return null;
   }
 
   const save: BuildStoreSnapshot = {
-    build: build.build,
-    mode: build.mode,
-    selectedAddons: build.selectedAddons,
-    platform: keepChecked(build.platform) as Array<Native>,
-    descriptions: build.descriptions,
-    compact: build.compact,
-    hardcoded: build.hardcoded,
-    javadoc: build.javadoc,
-    includeJSON: build.includeJSON,
-    source: build.source,
-    osgi: build.osgi,
-    language: build.language,
+    build: state.build,
+    mode: state.mode,
+    selectedAddons: state.selectedAddons,
+    platform: keepChecked(state.platform) as Array<Native>,
+    descriptions: state.descriptions,
+    compact: state.compact,
+    hardcoded: state.hardcoded,
+    javadoc: state.javadoc,
+    includeJSON: state.includeJSON,
+    source: state.source,
+    osgi: state.osgi,
+    language: state.language,
   };
 
-  if (build.preset === 'custom') {
-    save.contents = keepChecked > build.contents;
+  if (state.preset === Preset.Custom) {
+    save.contents = keepChecked(state.contents) as Array<Binding>;
   } else {
-    save.preset = build.preset;
+    save.preset = state.preset;
   }
-  if (build.build === BuildType.Release) {
-    save.version = build.version;
-    save.versionLatest = build.versions[0];
+  if (state.build === BuildType.Release) {
+    save.version = state.version;
+    save.versionLatest = state.versions[0];
   }
 
   return save;

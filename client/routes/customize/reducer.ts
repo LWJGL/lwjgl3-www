@@ -1,121 +1,90 @@
 import * as React from 'react';
 import produce from 'immer';
 import { config } from './config';
-import { ActionKeys, ActionTypes } from './actions';
+import { Action, ActionCreator } from './actions';
 import {
   BuildType,
-  Native,
   Mode,
-  Language,
-  // MODES,
-  // LANGUAGES,
   BuildStore,
   BuildStoreSnapshot,
   Preset,
   Binding,
   BindingDefinition,
+  Addon,
+  Version,
 } from './types';
-
-/*
-
-// Action Creators
-export const changeMode = (mode: MODES) => ({ type: SELECT_MODE, mode });
-export const changePreset = (preset: string) => ({ type: SELECT_PRESET, preset });
-export const changeLanguage = (language: LANGUAGES) => ({ type: SELECT_LANGUAGE, language });
-export const changeVersion = (version: string) => ({ type: SELECT_VERSION, version });
-
-export const toggleDescriptions = (enabled: boolean) => ({ type: TOGGLE_DESCRIPTIONS, descriptions: enabled });
-export const toggleSource = (enabled: boolean) => ({ type: TOGGLE_SOURCE, source: enabled });
-export const toggleJavadoc = (enabled: boolean) => ({ type: TOGGLE_JAVADOC, javadoc: enabled });
-export const toggleIncludeJSON = (enabled: boolean) => ({ type: TOGGLE_INCLUDE_JSON, includeJSON: enabled });
-export const toggleOSGi = (enabled: boolean) => ({ type: TOGGLE_OSGI, osgi: enabled });
-export const toggleCompact = (enabled: boolean) => ({ type: TOGGLE_COMPACT, compact: enabled });
-export const toggleHardcoded = (enabled: boolean) => ({ type: TOGGLE_HARDCODED, hardcoded: enabled });
-export const toggleArtifact = (artifact: string) => ({ type: TOGGLE_ARTIFACT, artifact });
-export const togglePlatform = (platform: NATIVES) => ({ type: TOGGLE_PLATFORM, platform });
-export const toggleAddon = (addon: string) => ({ type: TOGGLE_ADDON, addon });
-
-*/
 
 // Reducer
 
-export const reducer: React.Reducer<BuildStore, ActionTypes> = (state: BuildStore = config, action: ActionTypes) => {
+export const reducer: React.Reducer<BuildStore, ActionCreator> = (
+  state: BuildStore = config,
+  action: ActionCreator
+) => {
   return produce(state, (draft: BuildStore) => {
     switch (action.type) {
-      case ActionKeys.CONFIG_LOAD:
+      case Action.CONFIG_LOAD:
         loadConfig(draft, action.payload);
         break;
-      case ActionKeys.SELECT_TYPE:
+      case Action.SELECT_TYPE:
         selectBuild(draft, action.build !== state.build ? action.build : null);
         break;
-      /*
-      case BUILD_STATUS:
-        saveStatus(draft, action.name, action.payload);
-        break;
-
-      case SELECT_TYPE:
-        selectBuild(draft, action.build !== state.build ? action.build : null);
-        break;
-
-      case SELECT_MODE:
-        if (state.build !== BUILD_STABLE && state.mode !== action.mode) {
+      case Action.SELECT_MODE:
+        if (state.build !== BuildType.Stable && state.mode !== action.mode) {
           selectMode(draft, action.mode);
         }
         break;
-
-      case TOGGLE_DESCRIPTIONS:
+      case Action.TOGGLE_DESCRIPTIONS:
         draft.descriptions = action.descriptions;
         break;
 
-      case TOGGLE_COMPACT:
-        if (state.mode === MODE_MAVEN || state.mode === MODE_IVY) {
+      case Action.TOGGLE_COMPACT:
+        if (state.mode === Mode.Maven || state.mode === Mode.Ivy) {
           draft.compact = action.compact;
         }
         break;
 
-      case TOGGLE_HARDCODED:
-        if (state.mode !== MODE_ZIP) {
+      case Action.TOGGLE_HARDCODED:
+        if (state.mode !== Mode.Zip) {
           draft.hardcoded = action.hardcoded;
         }
         break;
 
-      case TOGGLE_JAVADOC:
-        if (state.mode === MODE_ZIP) {
+      case Action.TOGGLE_JAVADOC:
+        if (state.mode === Mode.Zip) {
           draft.javadoc = action.javadoc;
         }
         break;
 
-      case TOGGLE_INCLUDE_JSON:
-        if (state.mode === MODE_ZIP) {
+      case Action.TOGGLE_INCLUDE_JSON:
+        if (state.mode === Mode.Zip) {
           draft.includeJSON = action.includeJSON;
         }
         break;
 
-      case TOGGLE_SOURCE:
-        if (state.mode === MODE_ZIP) {
+      case Action.TOGGLE_SOURCE:
+        if (state.mode === Mode.Zip) {
           draft.source = action.source;
         }
         break;
 
-      case TOGGLE_OSGI:
-        if (state.mode !== MODE_ZIP && state.build === BUILD_RELEASE) {
+      case Action.TOGGLE_OSGI:
+        if (state.mode !== Mode.Zip && state.build === BuildType.Release) {
           draft.osgi = action.osgi;
         }
         break;
 
-      case SELECT_PRESET:
+      case Action.SELECT_PRESET:
         if (state.preset !== action.preset) {
           selectPreset(draft, action.preset);
         }
         break;
-
-      case SELECT_LANGUAGE:
-        if (state.mode === MODE_GRADLE) {
+      case Action.SELECT_LANGUAGE:
+        if (state.mode === Mode.Gradle) {
           draft.language = action.language;
         }
         break;
 
-      case TOGGLE_PLATFORM:
+      case Action.TOGGLE_PLATFORM:
         const selections = state.natives.allIds.reduce(
           (previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0),
           0
@@ -126,29 +95,32 @@ export const reducer: React.Reducer<BuildStore, ActionTypes> = (state: BuildStor
         }
         break;
 
-      case SELECT_VERSION:
-        if (state.build === BUILD_RELEASE && state.version !== action.version) {
+      case Action.SELECT_VERSION:
+        if (state.build === BuildType.Release && state.version !== action.version) {
           selectVersion(draft, action.version);
         }
         break;
 
-      case TOGGLE_ARTIFACT:
+      case Action.TOGGLE_ARTIFACT:
         if (action.artifact !== 'lwjgl') {
           doToggleArtifact(draft, action.artifact);
         }
         break;
 
-      case TOGGLE_ADDON:
+      case Action.TOGGLE_ADDON:
         doToggleAddon(draft, action.addon);
         break;
-
-        */
     }
   });
 };
 
 function selectBuild(state: BuildStore, build: BuildType | null) {
   state.build = build;
+  computeArtifacts(state);
+}
+
+function selectMode(state: BuildStore, mode: Mode) {
+  state.mode = mode;
   computeArtifacts(state);
 }
 
@@ -221,21 +193,12 @@ function computeArtifacts(state: BuildStore) {
   }
 }
 
-/*
-
-const selectVersion = (state: BuildConfig, version: string) => {
+const selectVersion = (state: BuildStore, version: Version) => {
   state.version = version;
   computeArtifacts(state);
 };
 
-const selectMode = (state: BuildConfig, mode: MODES) => {
-  state.mode = mode;
-  computeArtifacts(state);
-};
-
-
-
-const doToggleArtifact = (state: BuildConfig, artifact: string) => {
+const doToggleArtifact = (state: BuildStore, artifact: Binding) => {
   state.contents[artifact] = !state.contents[artifact];
 
   // MATCH PRESET
@@ -243,27 +206,29 @@ const doToggleArtifact = (state: BuildConfig, artifact: string) => {
   const selected = state.artifacts.allIds.filter(artifact => state.contents[artifact]);
 
   if (selected.length === state.artifacts.allIds.length) {
-    state.preset = 'all';
+    state.preset = Preset.All;
     return;
   } else if (selected.length === 1) {
-    state.preset = 'none';
+    state.preset = Preset.None;
     return;
   }
 
   // match selected artifacts with a preset
-  const presetFoundMatch = state.presets.allIds.some((preset: string) => {
+  const presetFoundMatch = state.presets.allIds.some((presetName: Preset) => {
     // only check predefined presets
-    if (preset === 'custom' || preset === 'all' || preset === 'none') {
+    if (presetName === Preset.Custom || presetName === Preset.All || presetName === Preset.None) {
       return false;
     }
 
+    const preset = state.presets.byId[presetName];
+
     // Get preset artifacts but keep only ones present in the current artifact collection
-    if (state.presets.byId[preset].artifacts) {
-      const artifacts = state.presets.byId[preset].artifacts.filter(it => !!state.artifacts.byId[it]);
+    if (preset.artifacts !== undefined) {
+      const artifacts = preset.artifacts.filter(it => !!state.artifacts.byId[it]);
 
       // first check length for speed, then do deep comparison
       if (artifacts.length === selected.length && artifacts.every((it, i) => it === selected[i])) {
-        state.preset = preset;
+        state.preset = presetName;
         return true;
       }
     }
@@ -273,20 +238,17 @@ const doToggleArtifact = (state: BuildConfig, artifact: string) => {
 
   // if we didn't get a match, set it to custom preset
   if (!presetFoundMatch) {
-    state.preset = 'custom';
+    state.preset = Preset.Custom;
   }
 };
 
-const doToggleAddon = (state: BuildConfig, addon: string) => {
+const doToggleAddon = (state: BuildStore, addon: Addon) => {
   if (state.selectedAddons.includes(addon)) {
     state.selectedAddons = state.selectedAddons.filter(it => it !== addon);
   } else {
     state.selectedAddons.push(addon);
   }
 };
-
-
-*/
 
 const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
   if (config.build === null) {
