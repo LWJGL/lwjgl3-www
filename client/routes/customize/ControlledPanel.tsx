@@ -12,5 +12,5 @@ export function ControlledPanel({ children, predicate }: Props) {
     visible: predicate(state),
   }));
 
-  return state.visible ? React.Children.only(children) : null;
+  return state.visible ? <React.Fragment>{children}</React.Fragment> : null;
 }

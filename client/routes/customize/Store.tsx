@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { createContext, useContext, useReducer, useEffect, useRef } from 'react';
-import { ActionTypes, configLoad } from './actions';
+import { ActionCreator, configLoad } from './actions';
 import { config } from './config';
 import { reducer } from './reducer';
 import { getConfig } from './bundler';
@@ -15,7 +15,7 @@ const STORAGE_KEY = 'lwjgl-build-config';
 // This lives in a React Context
 interface StoreContextType {
   state: BuildStore;
-  dispatch: React.Dispatch<ActionTypes>;
+  dispatch: React.Dispatch<ActionCreator>;
 }
 
 export const StoreContext = createContext<StoreContextType>({
@@ -23,7 +23,7 @@ export const StoreContext = createContext<StoreContextType>({
   dispatch: () => {},
 });
 
-export function useStore<S>(slicer: (state: BuildStore) => S): [S, React.Dispatch<ActionTypes>] {
+export function useStore<S>(slicer: (state: BuildStore) => S): [S, React.Dispatch<ActionCreator>] {
   const { state, dispatch } = useContext(StoreContext);
   return [slicer(state), dispatch];
 }
@@ -37,7 +37,7 @@ let firstLoad = true;
 // Build store Provider
 // <Connect /> components in the tree will receive updates everytime the store changes
 export function Provider(props: ProviderProps) {
-  const [state, dispatch] = useReducer<BuildStore, ActionTypes>(reducer, config);
+  const [state, dispatch] = useReducer<BuildStore, ActionCreator>(reducer, config);
   const prevConfig: React.MutableRefObject<null | BuildStoreSnapshot> = useRef(null);
 
   useEffect(() => {

@@ -1,55 +1,50 @@
 // import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
-import { BuildStore, Language } from './types';
-// import { RadioOptions } from '~/components/ControlledRadio';
-
-/*
+import { BuildStore, Language, Mode, BuildType } from './types';
+import { RadioOptions } from './ControlledRadio';
 import {
-  changePreset,
-  changeLanguage,
-  changeVersion,
-  toggleHardcoded,
-  toggleCompact,
-  toggleJavadoc,
-  toggleIncludeJSON,
-  toggleOSGi,
+  selectMode,
+  selectLanguage,
+  selectVersion,
   toggleDescriptions,
   toggleSource,
-  changeMode,
-} from './reducer';
-*/
+  toggleIncludeJSON,
+  toggleJavadoc,
+  toggleOSGi,
+  toggleCompact,
+  toggleHardcoded,
+  selectPreset,
+} from './actions';
 
-// const getMode = (state: State) => state.build.mode;
-// const getBuild = (state: BuildConfig) => state.build;
-// const getPreset = (state: State) => state.build.preset;
-// const getLanguage = (state: State) => state.build.language;
-// const getVersion = (state: State) => state.build.version;
+const getMode = (state: BuildStore) => state.mode;
+const getPreset = (state: BuildStore) => state.preset;
+const getLanguage = (state: BuildStore) => state.language;
+const getVersion = (state: BuildStore) => state.version;
 export const isBuildSelected = (state: BuildStore) => state.build !== null;
-// export const hasLanguageOption = (state: State) => getMode(state) === MODE_GRADLE;
-// const hasCompactModeOption = (state: State) => getMode(state) === MODE_MAVEN || getMode(state) === MODE_IVY;
-// const isModeZip = (state: State) => getMode(state) === MODE_ZIP;
-// const isModeNotZip = (state: State) => getMode(state) !== MODE_ZIP;
-// export const isBuildRelease = (state: State) => state.build === BUILD_RELEASE;
-// const showOSGi = (state: State) =>
-//   isModeNotZip(state) && isBuildRelease(state) && parseInt(getVersion(state).replace(/\./g, ''), 10) >= 312;
+export const hasLanguageOption = (state: BuildStore) => state.mode === Mode.Gradle;
+const hasCompactModeOption = (state: BuildStore) => state.mode === Mode.Maven || state.mode === Mode.Ivy;
+const isModeZip = (state: BuildStore) => state.mode === Mode.Zip;
+const isModeNotZip = (state: BuildStore) => state.mode !== Mode.Zip;
+export const isBuildRelease = (state: BuildStore) => state.build === BuildType.Release;
+const showOSGi = (state: BuildStore) =>
+  state.mode !== Mode.Zip && state.build === BuildType.Release && parseInt(state.version.replace(/\./g, ''), 10) >= 312;
 
-/*
 export const fields = {
   mode: {
     name: 'mode',
     value: getMode,
-    action: changeMode,
-    options: ({ build: { modes, build } }: State): RadioOptions =>
+    action: selectMode,
+    options: ({ build, modes }: BuildStore): RadioOptions =>
       modes.allIds.map(mode => ({
         value: mode,
         label: modes.byId[mode].title,
-        disabled: build === BUILD_STABLE && mode !== MODE_ZIP,
+        disabled: build === BuildType.Stable && mode !== Mode.Zip,
       })),
   },
   preset: {
     name: 'preset',
     value: getPreset,
-    action: changePreset,
-    options: ({ build: { presets, preset } }: State): RadioOptions =>
+    action: selectPreset,
+    options: ({ presets, preset }: BuildStore): RadioOptions =>
       presets.allIds.map(presetId => ({
         value: presetId,
         label: presets.byId[presetId].title,
@@ -59,9 +54,9 @@ export const fields = {
   language: {
     name: 'language',
     value: getLanguage,
-    action: changeLanguage,
-    options: ({ build: { languages } }: State): RadioOptions =>
-      languages.allIds.map((lang: LANGUAGES) => ({
+    action: selectLanguage,
+    options: ({ languages }: BuildStore): RadioOptions =>
+      languages.allIds.map((lang: Language) => ({
         value: lang,
         label: languages.byId[lang].title,
       })),
@@ -69,8 +64,8 @@ export const fields = {
   version: {
     name: 'version',
     value: getVersion,
-    action: changeVersion,
-    options: ({ build: { versions } }: State): RadioOptions =>
+    action: selectVersion,
+    options: ({ versions }: BuildStore): RadioOptions =>
       versions.map(version => ({
         value: version,
         label: version,
@@ -79,44 +74,43 @@ export const fields = {
   },
   descriptions: {
     label: 'Show descriptions',
-    checked: (state: State) => state.build.descriptions,
+    checked: (state: BuildStore) => state.descriptions,
     action: toggleDescriptions,
   },
   source: {
     label: 'Include source',
-    checked: (state: State) => state.build.source,
+    checked: (state: BuildStore) => state.source,
     action: toggleSource,
     hidden: isModeNotZip,
   },
   includeJSON: {
     label: 'Include build config',
-    checked: (state: State) => state.build.includeJSON,
+    checked: (state: BuildStore) => state.includeJSON,
     action: toggleIncludeJSON,
     hidden: isModeNotZip,
   },
   javadoc: {
     label: 'Include JavaDoc',
-    checked: (state: State) => state.build.javadoc,
+    checked: (state: BuildStore) => state.javadoc,
     action: toggleJavadoc,
     hidden: isModeNotZip,
   },
   osgi: {
     label: 'OSGi Mode',
-    checked: (state: State) => state.build.osgi,
+    checked: (state: BuildStore) => state.osgi,
     action: toggleOSGi,
-    hidden: (state: State) => !showOSGi(state),
+    hidden: (state: BuildStore) => !showOSGi(state),
   },
   compact: {
     label: 'Compact Mode',
-    checked: (state: State) => state.build.compact,
+    checked: (state: BuildStore) => state.compact,
     action: toggleCompact,
-    hidden: (state: State) => !hasCompactModeOption(state),
+    hidden: (state: BuildStore) => !hasCompactModeOption(state),
   },
   hardcoded: {
     label: 'Do not use variables',
-    checked: (state: State) => state.build.hardcoded,
+    checked: (state: BuildStore) => state.hardcoded,
     action: toggleHardcoded,
-    hidden: (state: State) => isModeZip(state),
+    hidden: (state: BuildStore) => isModeZip(state),
   },
 };
-*/
