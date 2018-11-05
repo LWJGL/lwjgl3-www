@@ -5,6 +5,7 @@ jsx;
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import { lighten } from '~/theme/color';
 import { useStore } from './Store';
+import { StateMemo } from '~/components/StateMemo';
 
 import {
   COLOR_RELEASE,
@@ -25,11 +26,15 @@ export function BuildConfigArea({ children }: Props) {
     build: state.build,
   }));
 
-  return state.build !== null ? (
-    <div css={ConfigPanel} className={state.build}>
-      {children}
-    </div>
-  ) : null;
+  return (
+    <StateMemo state={state}>
+      {state.build !== null ? (
+        <div css={ConfigPanel} className={state.build}>
+          {children}
+        </div>
+      ) : null}
+    </StateMemo>
+  );
 }
 
 const ConfigPanel = css`

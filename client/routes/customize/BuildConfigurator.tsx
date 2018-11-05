@@ -7,6 +7,28 @@ import { BuildConfigArea } from './BuildConfigArea';
 import { ControlledRadio } from './ControlledRadio';
 import { ControlledCheckbox } from './ControlledCheckbox';
 import { ControlledToggle } from './ControlledToggle';
+import { BuildPlatform } from './BuildPlatform';
+import { BuildAddons } from './BuildAddons';
+import { BuildReleaseNotes } from './BuildReleaseNotes';
+import { BuildArtifacts } from './BuildArtifacts';
+// import { BuildFooter } from './BuildFooter';
+
+/*
+import * as JSZip from 'jszip';
+
+import { ScreenLock } from '~/components/ScreenLock';
+import { saveAs } from '~/services/file-saver';
+import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getConfig, getFiles } from './bundler';
+import { BuildAddon } from './BuildAddon';
+import { BuildArtifact } from './BuildArtifact';
+import { BuildBundler } from './BuildBundler';
+import { BuildConfigArea } from './BuildConfigArea';
+import { BuildType } from './BuildType';
+import { BUILD_RELEASE, MODE_ZIP } from './constants';
+import { configLoad } from './reducer';
+// Types
+import { BuildConfig, BuildConfigStored } from './types';
+*/
 
 export function BuildConfigurator() {
   return (
@@ -41,9 +63,8 @@ export function BuildConfigurator() {
                     <ControlledToggle spec={fields.osgi} />
                   </div>
 
-                  {/*
-                <BuildPlatform />
-              */}
+                  <BuildPlatform />
+
                   <ControlledPanel predicate={hasLanguageOption}>
                     <h4 className="mt-3">Language</h4>
                     <ControlledRadio spec={fields.language} />
@@ -54,81 +75,21 @@ export function BuildConfigurator() {
                   <ControlledRadio spec={fields.preset} />
 
                   <h4 className="mt-3">Addons</h4>
-                  {/* <Connect
-                    state={({ build }: { build: BuildConfig }) => ({
-                      addons: build.addons.allIds,
-                    })}
-                  >
-                    {({ addons }) => (
-                      <div className="custom-controls-stacked">
-                        {addons.map((it: string) => (
-                          <BuildAddon key={it} id={it} />
-                        ))}
-                      </div>
-                    )}
-                        </Connect> */}
+                  <BuildAddons />
+
                   <ControlledPanel predicate={isBuildRelease}>
                     <h4 className="mt-3">Version</h4>
                     <ControlledRadio spec={fields.version} />
-                    {/*
-                    <Connect
-                      state={({ build }: { build: BuildConfig }) => ({
-                        version: build.version,
-                      })}
-                    >
-                      {({ version }) => (
-                        <p>
-                          <a
-                            href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
-                            style={{ fontSize: '80%' }}
-                          >
-                            release notes for {version}
-                          </a>
-                        </p>
-                      )}
-                    </Connect>
-                  */}
+                    <BuildReleaseNotes />
                   </ControlledPanel>
                 </div>
 
                 <div className="col-md-6">
                   <h4>Contents</h4>
-                  {/*
-                  <Connect
-                    state={({ build }: { build: BuildConfig }) => ({
-                      artifacts: build.artifacts.allIds,
-                    })}
-                  >
-                    {({ artifacts }) => (
-                      <div className="custom-controls-stacked">
-                        {artifacts.map((it: string) => (
-                          <BuildArtifact key={it} id={it} />
-                        ))}
-                      </div>
-                    )}
-                  </Connect>
-                   */}
+                  <BuildArtifacts />
                 </div>
               </div>
-              {/*
-              <Connect
-                state={({ build }: { build: BuildConfig }) => ({
-                  mode: build.modes.byId[build.mode].id,
-                })}
-              >
-                {({ mode }) =>
-                  mode === MODE_ZIP ? (
-                    <BuildToolbar configDownload={this.configDownload}>
-                      <button className="btn btn-success" onClick={this.download}>
-                        <IconFileDownload /> DOWNLOAD ZIP
-                      </button>
-                    </BuildToolbar>
-                  ) : (
-                    <BuildScript configDownload={this.configDownload} />
-                  )
-                }
-              </Connect>
-              */}
+              {/*<BuildFooter />*/}
             </BuildConfigArea>
           </div>
         </div>
@@ -138,25 +99,6 @@ export function BuildConfigurator() {
 }
 
 /*
-import * as JSZip from 'jszip';
-import IconFileDownload from '~/components/icons/md/FileDownload';
-import { ScreenLock } from '~/components/ScreenLock';
-import { saveAs } from '~/services/file-saver';
-import { store } from '~/store';
-import { Connect } from '~/store/Connect';
-import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getConfig, getFiles } from './bundler';
-import { BuildAddon } from './components/BuildAddon';
-import { BuildArtifact } from './components/BuildArtifact';
-import { BuildBundler } from './components/BuildBundler';
-import { BuildConfigArea } from './components/BuildConfigArea';
-import { BuildPlatform } from './components/BuildPlatform';
-import { BuildScript } from './components/BuildScript';
-import { BuildToolbar } from './components/BuildToolbar';
-import { BuildType } from './components/BuildType';
-import { BUILD_RELEASE, MODE_ZIP } from './constants';
-import { configLoad } from './reducer';
-// Types
-import { BuildConfig, BuildConfigStored } from './types';
 
 interface Props {}
 interface State {
