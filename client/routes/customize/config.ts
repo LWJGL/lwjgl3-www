@@ -262,10 +262,11 @@ function getInitialConfig(): BuildStore {
 
   config.version = config.versions[0];
 
-  // Fill allIds
+  // Populate allIds
   config.presets.allIds = Object.keys(config.presets.byId);
   config.modes.allIds = Object.keys(config.modes.byId);
   config.languages.allIds = Object.keys(config.languages.byId);
+  config.addons.allIds = Object.keys(config.addons.byId);
 
   config.platform[getDefaultPlatform()] = true;
 

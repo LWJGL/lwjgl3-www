@@ -1,51 +1,36 @@
 import * as React from 'react';
 import { Checkbox } from '~/components/Checkbox';
-import { togglePlatform } from './reducer';
-import { NATIVES, BuildConfig } from './types';
-import { Connect } from '~/store/Connect';
-import { NATIVE_WIN, NATIVE_LINUX, NATIVE_MAC } from './constants';
-import IconApple from '~/components/icons/fa/brands/Apple';
-import IconLinux from '~/components/icons/fa/brands/Linux';
-import IconWindows from '~/components/icons/fa/brands/Windows';
+import { useStore } from './Store';
+import { togglePlatform } from './actions';
+import { Native } from './types';
+import { StateMemo } from '~/components/StateMemo';
+import { getPlatformIcon } from './getPlatformIcon';
 
-const getIcon = (platform: NATIVES) => {
-  switch (platform) {
-    case NATIVE_WIN:
-      return <IconWindows />;
-    case NATIVE_MAC:
-      return <IconApple />;
-    case NATIVE_LINUX:
-      return <IconLinux />;
-    default:
-      return undefined;
-  }
-};
+export function BuildPlatform() {
+  const [state, dispatch] = useStore(state => ({
+    platforms: state.natives.allIds,
+    natives: state.natives.byId,
+    selected: state.platform,
+  }));
 
-export const BuildPlatform = () => (
-  <Connect
-    state={({ build }: { build: BuildConfig }) => ({
-      platforms: build.natives.allIds,
-      natives: build.natives.byId,
-      selected: build.platform,
-    })}
-    actions={{ togglePlatform }}
-  >
-    {({ platforms, natives, selected }, { togglePlatform }) => (
-      <React.Fragment>
-        <h4 className="mt-3">Natives</h4>
-        <div className="custom-controls-stacked">
-          {platforms.map((platform: NATIVES) => (
-            <Checkbox
-              key={platform}
-              icon={getIcon(platform)}
-              label={natives[platform].title}
-              checked={selected[platform]}
-              value={platform}
-              onChange={togglePlatform}
-            />
-          ))}
-        </div>
-      </React.Fragment>
-    )}
-  </Connect>
-);
+  const { platforms, natives, selected } = state;
+  const onChange = (platform: Native) => dispatch(togglePlatform(platform));
+
+  return (
+    <StateMemo state={state}>
+      <h4 className="mt-3">Natives</h4>
+      <div className="custom-controls-stacked">
+        {platforms.map((platform: Native) => (
+          <Checkbox
+            key={platform}
+            icon={getPlatformIcon(platform)}
+            label={natives[platform].title}
+            checked={selected[platform]}
+            value={platform}
+            onChange={onChange}
+          />
+        ))}
+      </div>
+    </StateMemo>
+  );
+}
