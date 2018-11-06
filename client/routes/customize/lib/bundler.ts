@@ -2,20 +2,19 @@ import * as JSZip from 'jszip';
 import { HTTP_OK } from '~/services/http_status_codes';
 import {
   BuildStore,
-  BuildStoreSnapshot,
   BuildType,
   Native,
   PlatformSelection,
   Binding,
   BindingDefinition,
-  Preset,
-} from './types';
+  BindingMapSelection,
+} from '../types';
 
 type AddonSelection = Array<{ id: string; version: string }>;
 
 interface SelectedBuildConfig {
   path: string;
-  selected: Array<string>;
+  selected: Array<Binding>;
   build: BuildType;
   platforms: PlatformSelection;
   source: boolean;
@@ -25,36 +24,28 @@ interface SelectedBuildConfig {
   addons: AddonSelection;
 }
 
-export async function fetchManifest(path: string) {
-  const response = await fetch(`/bin/${path}`);
-  if (response.status !== HTTP_OK) {
-    throw response.statusText;
-  }
-  return await response.json();
-}
-
-export function getBuild({ build }: { build: BuildStore }): SelectedBuildConfig {
+export function getBuild(state: BuildStore): SelectedBuildConfig {
   let path;
   let _build;
-  const platformCount = build.natives.allIds.length;
-  const selectedPlatforms = build.platform;
+  const platformCount = state.natives.allIds.length;
+  const selectedPlatforms = state.platform;
 
-  if (build.build === BuildType.Release) {
-    path = `release/${build.version}`;
+  if (state.build === BuildType.Release) {
+    path = `release/${state.version}`;
     _build = BuildType.Release;
-  } else if (build.build !== null) {
-    _build = build.build;
-    path = build.build;
+  } else if (state.build !== null) {
+    _build = state.build;
+    path = state.build;
   } else {
     throw new Error('no build selected');
   }
 
-  const selected = build.artifacts.allIds.filter(artifact => {
-    if (!build.contents[artifact]) {
+  const selected = state.artifacts.allIds.filter(artifact => {
+    if (!state.contents[artifact]) {
       return false;
     }
 
-    const spec = build.artifacts.byId[artifact] as BindingDefinition;
+    const spec = state.artifacts.byId[artifact] as BindingDefinition;
 
     return (
       spec.natives === undefined ||
@@ -64,9 +55,9 @@ export function getBuild({ build }: { build: BuildStore }): SelectedBuildConfig 
     );
   });
 
-  const addons = build.selectedAddons.map(addon => ({
+  const addons = state.selectedAddons.map(addon => ({
     id: addon,
-    version: build.addons.byId[addon].maven.version,
+    version: state.addons.byId[addon].maven.version,
   }));
 
   return {
@@ -74,18 +65,26 @@ export function getBuild({ build }: { build: BuildStore }): SelectedBuildConfig 
     selected,
     build: _build,
     platforms: selectedPlatforms,
-    source: build.source,
-    javadoc: build.javadoc,
-    includeJSON: build.includeJSON,
-    version: build.version,
+    source: state.source,
+    javadoc: state.javadoc,
+    includeJSON: state.includeJSON,
+    version: state.version,
     addons,
   };
+}
+
+export async function fetchManifest(path: string): Promise<Array<string>> {
+  const response = await fetch(`/bin/${path}`);
+  if (response.status !== HTTP_OK) {
+    throw response.statusText;
+  }
+  return await response.json();
 }
 
 export function getFiles(
   path: string,
   manifest: Array<string>,
-  selected: Array<string>,
+  selected: Array<Binding>,
   platforms: PlatformSelection,
   source: boolean,
   javadoc: boolean
@@ -97,7 +96,7 @@ export function getFiles(
   const nativeRegExp = new RegExp('-natives-');
   const platformRegExp = new RegExp('-natives-([a-z]+).jar$');
 
-  const selectedMap = {};
+  const selectedMap = {} as BindingMapSelection;
 
   selected.forEach(key => {
     selectedMap[key] = true;
@@ -119,7 +118,7 @@ export function getFiles(
     const folder = filepath.split('/')[0];
 
     // Check if binding is selected
-    if (!selectedMap[folder]) {
+    if (!(folder in selectedMap)) {
       return;
     }
 
@@ -135,16 +134,9 @@ export function getFiles(
       if (platform == null) {
         return;
       }
-      switch (platform[1]) {
-        case 'macos':
-        case 'windows':
-        case 'linux':
-          if (platforms[platform[1]] === false) {
-            return;
-          }
-          break;
-        default:
-          return;
+      const native = folderToPlatform(folder);
+      if (native === null || platforms[native] !== true) {
+        return;
       }
     }
 
@@ -155,8 +147,21 @@ export function getFiles(
   return files.map((filepath: string): string => `${path}/bin/${filepath}`);
 }
 
+function folderToPlatform(folder: string): Native | null {
+  switch (folder) {
+    case 'windows':
+      return Native.Windows;
+    case 'macos':
+      return Native.MacOS;
+    case 'linux':
+      return Native.Linux;
+  }
+
+  return null;
+}
+
 export function getAddons(addons: AddonSelection, source: boolean, javadoc: boolean) {
-  const files = [];
+  const files: Array<string> = [];
 
   addons.forEach(addon => {
     const { id, version } = addon;
@@ -175,7 +180,7 @@ export function getAddons(addons: AddonSelection, source: boolean, javadoc: bool
 }
 
 async function fetchFile(path: string, abortSignal?: AbortSignal) {
-  const fetchOptions = {
+  const fetchOptions: RequestInit = {
     method: 'GET',
     mode: 'cors',
   };
@@ -189,8 +194,8 @@ async function fetchFile(path: string, abortSignal?: AbortSignal) {
   }
 
   return {
-    payload: response.blob(),
-    filename: path.split('/').pop(),
+    payload: await response.blob(),
+    filename: path.split('/').pop() as string,
   };
 }
 
@@ -208,7 +213,7 @@ export function abortDownload() {
 export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: string) => void): Promise<Array<void>> {
   const FILES_TOTAL = files.length;
   const PARALLEL_DOWNLOADS = Math.min(6, FILES_TOTAL);
-  const queue: Iterator<string> = files[Symbol.iterator]();
+  const queue: Iterable<string> = files[Symbol.iterator]();
   const channels: Array<Promise<void>> = [];
   let f = 0;
   abortSignal = false;
