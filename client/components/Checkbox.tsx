@@ -5,15 +5,15 @@ import uniqueId from 'lodash-es/uniqueId';
 interface Props {
   label: string;
   value?: any;
-  checked?: boolean;
   onChange: (value: any) => void;
+  checked?: boolean;
   disabled?: boolean;
   hidden?: boolean;
   icon?: React.ReactNode;
 }
 
 export const Checkbox = memo(
-  ({ label, value, checked = false, onChange, disabled = false, hidden = false, icon }: Props) => {
+  ({ label, value, onChange, checked = false, disabled = false, hidden = false, icon }: Props) => {
     const htmlForId = useRef(uniqueId('checkbox'));
 
     return hidden === true ? null : (
@@ -33,5 +33,12 @@ export const Checkbox = memo(
         </label>
       </div>
     );
-  }
+  },
+  (prevProps: Props, nextProps: Props) =>
+    prevProps.checked === nextProps.checked &&
+    prevProps.disabled === nextProps.disabled &&
+    prevProps.hidden === nextProps.hidden &&
+    prevProps.value === nextProps.value &&
+    prevProps.label === nextProps.label &&
+    prevProps.icon === nextProps.icon
 );

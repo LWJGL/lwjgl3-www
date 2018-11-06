@@ -1,7 +1,7 @@
 // @jsx jsx
 import { css, jsx } from '@emotion/core';
 import * as React from 'react';
-import { Suspense } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { Breakpoint } from '~/components/Breakpoint';
 import { CircularProgress } from '~/components/CircularProgress';
 import IconClose from '~/components/icons/md/Close';
@@ -32,15 +32,11 @@ interface Props {
   build: BuildType;
 }
 
-function StatusFallback() {
-  return (
-    <React.Fragment>
-      <CircularProgress size={24} thickness={8} style={{ color: 'hsla(0, 0%, 0%, 0.5)' }} />
-      <br />
-      <br />
-    </React.Fragment>
-  );
-}
+const StatusFallback = () => (
+  <div className="d-flex align-items-center justify-content-center" style={{ height: 64 }}>
+    <CircularProgress size={24} thickness={8} style={{ color: 'hsla(0, 0%, 0%, 0.5)' }} />
+  </div>
+);
 
 export function BuildPanel({ build }: Props) {
   const [state, dispatch] = useStore(
@@ -51,6 +47,13 @@ export function BuildPanel({ build }: Props) {
     })
   );
   const { buildSelected, isSelected, spec } = state;
+  const [showStatus, setShowStatus] = useState(false);
+
+  useEffect(() => {
+    if (!showStatus) {
+      setShowStatus(true);
+    }
+  }, []);
 
   return (
     <StateMemo state={state}>
@@ -66,9 +69,13 @@ export function BuildPanel({ build }: Props) {
           >
             <h2>{spec.title}</h2>
             <p>{spec.description}</p>
-            <Suspense maxDuration={0} fallback={<StatusFallback />}>
-              <BuildStatus name={build} />
-            </Suspense>
+            {showStatus ? (
+              <Suspense fallback={<StatusFallback />}>
+                <BuildStatus name={build} />
+              </Suspense>
+            ) : (
+              <StatusFallback />
+            )}
             {isSelected ? <IconClose /> : null}
           </div>
         )}

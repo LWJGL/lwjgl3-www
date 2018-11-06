@@ -1,5 +1,7 @@
 import * as React from 'react';
+// import { useRef } from 'react';
 import { Toggle } from '~/components/Toggle';
+import { StateMemo } from '~/components/StateMemo';
 import { useStore } from './Store';
 
 interface Props {
@@ -28,16 +30,12 @@ export function ControlledToggle({ spec }: Props) {
       hidden: spec.hidden != null && spec.hidden(state),
     })
   );
-
   const { label, disabled, hidden, checked } = state;
+  const toggleAction = () => dispatch(spec.action(!checked));
 
   return (
-    <Toggle
-      label={label}
-      disabled={disabled}
-      hidden={hidden}
-      checked={checked}
-      onChange={() => dispatch(spec.action(!checked))}
-    />
+    <StateMemo state={state}>
+      <Toggle label={label} disabled={disabled} hidden={hidden} checked={checked} onChange={toggleAction} />
+    </StateMemo>
   );
 }

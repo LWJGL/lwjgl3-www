@@ -1,34 +1,53 @@
 import * as React from 'react';
-import { useStore } from './Store';
-import { Mode } from './types';
-import { StateMemo } from '~/components/StateMemo';
 import IconFileDownload from '~/components/icons/md/FileDownload';
+import { StateMemo } from '~/components/StateMemo';
+import { saveAs } from '~/services/file-saver';
+import { configLoad } from './actions';
 import { BuildScript } from './BuildScript';
 import { BuildToolbar } from './BuildToolbar';
+import { configJSONfilename, getConfigSnapshot, useStore, useStoreRef } from './Store';
+import { BuildStoreSnapshot, Mode } from './types';
 
 interface ConnectedProps {
   mode: Mode;
 }
 
 export function BuildFooter() {
-  const [state] = useStore(
-    (state): ConnectedProps => ({
-      mode: state.mode,
-    })
+  const [state, dispatch] = useStore(
+    (state): ConnectedProps => {
+      return {
+        mode: state.mode,
+      };
+    }
   );
-
   const { mode } = state;
+  const dispatchConfigLoad = (payload: BuildStoreSnapshot) => dispatch(configLoad(payload));
+
+  const storeRef = useStoreRef();
+  const configDownload = () => {
+    const save = getConfigSnapshot(storeRef.current);
+    if (save === null) {
+      return;
+    }
+    const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
+    saveAs(blob, configJSONfilename(save));
+  };
 
   return (
     <StateMemo state={mode}>
       {mode === Mode.Zip ? (
-        <BuildToolbar configDownload={this.configDownload}>
-          <button className="btn btn-success" onClick={this.download}>
+        <BuildToolbar configDownload={configDownload} configLoad={dispatchConfigLoad}>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              /* this.download */
+            }}
+          >
             <IconFileDownload /> DOWNLOAD ZIP
           </button>
         </BuildToolbar>
       ) : (
-        <BuildScript configDownload={this.configDownload} />
+        <BuildScript configDownload={configDownload} configLoad={dispatchConfigLoad} />
       )}
     </StateMemo>
   );

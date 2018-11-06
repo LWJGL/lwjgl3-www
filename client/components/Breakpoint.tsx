@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { breakpoints, breakpointIndex, BreakPointIndex } from '../theme/media';
 
 interface Context {
@@ -13,6 +13,11 @@ export const BreakpointContext = React.createContext<Context>({
 });
 
 export const Breakpoint = BreakpointContext.Consumer;
+
+export function useBreakpoint() {
+  const ctx = useContext(BreakpointContext);
+  return ctx;
+}
 
 interface Props {
   children: React.ReactNode;

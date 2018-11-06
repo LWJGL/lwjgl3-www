@@ -68,29 +68,37 @@ const LabelStyle = css`
 interface Props {
   label: string;
   value?: any;
+  onChange: (value: any) => void;
   checked?: boolean;
   disabled?: boolean;
   hidden?: boolean;
-  onChange: (value: any) => void;
 }
 
-export const Toggle = memo(({ hidden = false, disabled = false, checked = false, label, onChange, value }: Props) => {
-  const htmlForId = useRef(uniqueId('toggle'));
+export const Toggle = memo(
+  ({ label, value, onChange, checked = false, disabled = false, hidden = false }: Props) => {
+    const htmlForId = useRef(uniqueId('toggle'));
 
-  return hidden === true ? null : (
-    <div className="custom-control">
-      <input
-        className="custom-control-input"
-        type="checkbox"
-        id={htmlForId.current}
-        disabled={disabled}
-        checked={checked}
-        onChange={() => onChange(value)}
-        css={InputStyle}
-      />
-      <label css={LabelStyle} className="custom-control-label" htmlFor={htmlForId.current}>
-        {label}
-      </label>
-    </div>
-  );
-});
+    return hidden === true ? null : (
+      <div className="custom-control">
+        <input
+          className="custom-control-input"
+          type="checkbox"
+          id={htmlForId.current}
+          checked={checked}
+          disabled={disabled}
+          onChange={() => onChange(value)}
+          css={InputStyle}
+        />
+        <label css={LabelStyle} className="custom-control-label" htmlFor={htmlForId.current}>
+          {label}
+        </label>
+      </div>
+    );
+  },
+  (prevProps: Props, nextProps: Props) =>
+    prevProps.checked === nextProps.checked &&
+    prevProps.disabled === nextProps.disabled &&
+    prevProps.hidden === nextProps.hidden &&
+    prevProps.value === nextProps.value &&
+    prevProps.label === nextProps.label
+);

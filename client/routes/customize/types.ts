@@ -107,14 +107,18 @@ export interface BindingDefinition {
   presets?: Array<Preset>;
 }
 
+export type BindingMap = { [key in Binding]?: BindingDefinition };
+export type BindingMapUnsafe = { [key in Binding]: BindingDefinition };
+export type BindingMapSelection = { [key in Binding]: boolean | undefined };
+
 export interface BuildBindings {
   version: Version;
   alias?: Version;
   allIds: Array<Binding>;
-  byId: { [key in Binding]?: BindingDefinition };
+  byId: BindingMap;
 }
 
-export type VersionCollection = { [version in Version]: BuildBindings };
+export type VersionCollection = { [key in Version]: BuildBindings };
 
 export interface BuildDefinition {
   id: BuildType;
@@ -122,8 +126,10 @@ export interface BuildDefinition {
   description: string;
 }
 
+export type BuildTypeMap = { [key in BuildType]: BuildDefinition };
+
 export interface BuildCollection {
-  byId: { [build in BuildType]: BuildDefinition };
+  byId: BuildTypeMap;
   allIds: Array<BuildType>;
 }
 
@@ -134,8 +140,10 @@ export interface ModeDefinition {
   file?: string;
 }
 
+export type ModeMap = { [key in Mode]: ModeDefinition };
+
 export interface ModesCollection {
-  byId: { [id in Mode]: ModeDefinition };
+  byId: ModeMap;
   allIds: Array<Mode>;
 }
 
@@ -144,18 +152,22 @@ export interface NativeDefinition {
   title: string;
 }
 
+export type NativeMap = { [key in Native]: NativeDefinition };
+
 export interface NativesCollection {
-  byId: { [id in Native]: NativeDefinition };
+  byId: NativeMap;
   allIds: Array<Native>;
 }
 
+export interface LanguageDefinition {
+  id: Language;
+  title: string;
+}
+
+export type LanguageMap = { [key in Language]: LanguageDefinition };
+
 export interface LanguageCollection {
-  byId: {
-    [id in Language]: {
-      id: Language;
-      title: string;
-    }
-  };
+  byId: LanguageMap;
   allIds: Array<Language>;
 }
 
@@ -165,8 +177,10 @@ export interface PresetDefinition {
   artifacts?: Array<Binding>;
 }
 
+export type PresetMap = { [key in Preset]: PresetDefinition };
+
 export interface PresetCollection {
-  byId: { [id in Preset]: PresetDefinition };
+  byId: PresetMap;
   allIds: Array<Preset>;
 }
 
@@ -185,8 +199,10 @@ export interface AddonDefinition {
   modes?: Array<Mode>;
 }
 
+export type AddonMap = { [key in Addon]: AddonDefinition };
+
 export interface AddonCollection {
-  byId: { [id in Addon]: AddonDefinition };
+  byId: AddonMap;
   allIds: Array<Addon>;
 }
 
@@ -216,8 +232,8 @@ export interface BuildStore {
   language: Language;
   platform: PlatformSelection;
   version: Version;
-  contents: { [k in Binding]?: boolean };
-  availability: { [k in Binding]?: boolean };
+  contents: BindingMapSelection;
+  availability: BindingMapSelection;
   selectedAddons: Array<Addon>;
   artifacts: BuildBindings;
 }

@@ -1,90 +1,75 @@
 import * as React from 'react';
-import { configLoad } from './reducer';
-import { store } from '~/store';
+import { useContext, useState } from 'react';
 import { BreakpointContext } from '~/components/Breakpoint';
 import IconArchive from '~/components/icons/md/Archive';
 import IconSettingsBackupRestore from '~/components/icons/md/SettingsBackupRestore';
+import { BuildStoreSnapshot } from './types';
 
 interface Props {
   configDownload: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  configLoad: (payload: BuildStoreSnapshot) => void;
   children?: React.ReactNode;
 }
 
-type State = {
-  fileUI: boolean;
-};
+export function BuildToolbar({ configDownload, configLoad, children }: Props) {
+  const {
+    current,
+    breakpoints: { sm },
+  } = useContext(BreakpointContext);
+  const [fileUI, setFileUI] = useState(false);
 
-export class BuildToolbar extends React.Component<Props, State> {
-  static contextType = BreakpointContext;
+  const toggleFileUI = () => setFileUI(!fileUI);
 
-  state = {
-    fileUI: false,
-  };
+  if (fileUI) {
+    const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
 
-  toggleFileUI = () => {
-    this.setState({ fileUI: !this.state.fileUI });
-  };
-
-  handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-
-    if (files === null || files.length !== 1) {
-      alert('Please select a configuration JSON file.');
-      return;
-    }
-
-    let reader = new FileReader();
-    reader.onload = (event: ProgressEvent) => {
-      try {
-        //@ts-ignore
-        store.dispatch(configLoad(JSON.parse(event.target.result)));
-        this.setState({ fileUI: false });
-      } catch (ignore) {
-        alert('File does not contain a valid LWJGL configuration.');
+      if (files === null || files.length !== 1) {
+        alert('Please select a configuration JSON file.');
+        return;
       }
+
+      let reader = new FileReader();
+      reader.onload = (event: ProgressEvent) => {
+        try {
+          //@ts-ignore
+          configLoad(JSON.parse(event.target.result) as BuildStoreSnapshot);
+          setFileUI(false);
+        } catch (ignore) {
+          alert('File does not contain a valid LWJGL configuration.');
+        }
+      };
+      reader.readAsText(files[0]);
     };
-    reader.readAsText(files[0]);
-  };
-
-  render() {
-    if (this.state.fileUI) {
-      return (
-        <div className="download-toolbar">
-          <div className="container d-flex">
-            <div className="custom-file mx-2">
-              <input type="file" className="custom-file-input" accept=".json" onChange={this.handleFile} />
-              <label className="custom-file-label" />
-            </div>
-            <button className="btn btn-outline-light mx-2" onClick={this.toggleFileUI}>
-              Cancel
-            </button>
-          </div>
-        </div>
-      );
-    }
-
-    const {
-      current,
-      breakpoints: { sm },
-    } = this.context;
-    const showLabels = current > sm;
 
     return (
       <div className="download-toolbar">
-        {this.props.children}
-        <button className="btn btn-outline-light" title="Load configuration file (JSON)" onClick={this.toggleFileUI}>
-          <IconSettingsBackupRestore />
-          {showLabels ? ` Load config` : null}
-        </button>
-        <button
-          className="btn btn-outline-light"
-          title="Save configuration (in JSON)"
-          onClick={this.props.configDownload}
-        >
-          <IconArchive />
-          {showLabels ? ` Save config` : null}
-        </button>
+        <div className="container d-flex">
+          <div className="custom-file mx-2">
+            <input type="file" className="custom-file-input" accept=".json" onChange={handleFile} />
+            <label className="custom-file-label" />
+          </div>
+          <button className="btn btn-outline-light mx-2" onClick={toggleFileUI}>
+            Cancel
+          </button>
+        </div>
       </div>
     );
   }
+
+  const showLabels = current > sm;
+
+  return (
+    <div className="download-toolbar">
+      {children}
+      <button className="btn btn-outline-light" title="Load configuration file (JSON)" onClick={toggleFileUI}>
+        <IconSettingsBackupRestore />
+        {showLabels ? ` Load config` : null}
+      </button>
+      <button className="btn btn-outline-light" title="Save configuration (in JSON)" onClick={configDownload}>
+        <IconArchive />
+        {showLabels ? ` Save config` : null}
+      </button>
+    </div>
+  );
 }

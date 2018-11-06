@@ -1,41 +1,46 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { useStore } from './Store';
+import { StateMemo } from '~/components/StateMemo';
+import { useStore, useStoreRef } from './Store';
 import { Addon, AddonDefinition } from './types';
 import { toggleAddon } from './actions';
 import { Checkbox } from '~/components/Checkbox';
 import { cc } from '~/theme';
 
 export function BuildAddons() {
-  const [state, dispatch] = useStore(state => ({
-    addons: state.addons.allIds,
-    byId: state.addons.byId,
-    mode: state.mode,
-    selectedAddons: state.selectedAddons,
-    showDescriptions: state.descriptions,
+  const [state, dispatch] = useStore(({ mode, selectedAddons, descriptions }) => ({
+    mode,
+    selectedAddons,
+    descriptions,
   }));
 
-  const { addons, byId, mode, selectedAddons, showDescriptions } = state;
+  const {
+    addons: { allIds, byId },
+  } = useStoreRef().current;
+
+  const { mode, selectedAddons, descriptions: showDescriptions } = state;
   const onChange = (addon: Addon) => dispatch(toggleAddon(addon));
 
   return (
-    <div className="custom-controls-stacked">
-      {addons.map((it: Addon) => {
-        const addon = byId[it];
-        const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
+    <StateMemo state={state}>
+      <div className="custom-controls-stacked">
+        {allIds.map((it: Addon) => {
+          const addon = byId[it];
+          const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
 
-        return (
-          <BuildAddon
-            key={it}
-            addon={addon}
-            disabled={disabled}
-            selected={selectedAddons.includes(it)}
-            showDescriptions={showDescriptions}
-            onChange={onChange}
-          />
-        );
-      })}
-    </div>
+          return (
+            <BuildAddon
+              key={it}
+              addon={addon}
+              disabled={disabled}
+              selected={selectedAddons.includes(it)}
+              showDescriptions={showDescriptions}
+              onChange={onChange}
+            />
+          );
+        })}
+      </div>
+    </StateMemo>
   );
 }
 

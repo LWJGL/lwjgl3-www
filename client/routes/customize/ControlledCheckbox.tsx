@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Checkbox } from '~/components/Checkbox';
+import { StateMemo } from '~/components/StateMemo';
 import { useStore } from './Store';
 
 interface Props {
@@ -30,14 +31,11 @@ export function ControlledCheckbox({ spec }: Props) {
   );
 
   const { label, disabled, hidden, checked } = state;
+  const toggle = () => dispatch(spec.action(!checked));
 
   return (
-    <Checkbox
-      label={label}
-      disabled={disabled}
-      hidden={hidden}
-      checked={checked}
-      onChange={() => dispatch(spec.action(!checked))}
-    />
+    <StateMemo state={state}>
+      <Checkbox label={label} disabled={disabled} hidden={hidden} checked={checked} onChange={toggle} />
+    </StateMemo>
   );
 }

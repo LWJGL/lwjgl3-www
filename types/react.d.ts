@@ -1,10 +1,10 @@
 import * as React from 'react';
 
 declare module 'react' {
-  function memo<Props>(
-    component: React.ReactType<Props>,
-    arePropsEqual?: (prevProps: Props, nextProps: Props) => boolean
-  ): React.StatelessComponent<Props>;
+  function memo<P>(
+    component: React.ReactType<P>,
+    arePropsEqual?: (prevProps: P, nextProps: P) => boolean
+  ): React.StatelessComponent<P>;
 
   function lazy<P, Component extends React.ComponentType<P>>(
     importFn: () => Promise<Component | { default: Component }>

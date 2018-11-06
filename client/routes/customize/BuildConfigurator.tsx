@@ -1,34 +1,18 @@
 import * as React from 'react';
-import { BuildPanel } from './BuildPanel';
-import { BuildType } from './types';
-import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
-import { ControlledPanel } from '~/routes/customize/ControlledPanel';
-import { BuildConfigArea } from './BuildConfigArea';
-import { ControlledRadio } from './ControlledRadio';
-import { ControlledCheckbox } from './ControlledCheckbox';
-import { ControlledToggle } from './ControlledToggle';
-import { BuildPlatform } from './BuildPlatform';
 import { BuildAddons } from './BuildAddons';
-import { BuildReleaseNotes } from './BuildReleaseNotes';
 import { BuildArtifacts } from './BuildArtifacts';
-// import { BuildFooter } from './BuildFooter';
-
-/*
-import * as JSZip from 'jszip';
-
-import { ScreenLock } from '~/components/ScreenLock';
-import { saveAs } from '~/services/file-saver';
-import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getConfig, getFiles } from './bundler';
-import { BuildAddon } from './BuildAddon';
-import { BuildArtifact } from './BuildArtifact';
-import { BuildBundler } from './BuildBundler';
 import { BuildConfigArea } from './BuildConfigArea';
-import { BuildType } from './BuildType';
-import { BUILD_RELEASE, MODE_ZIP } from './constants';
-import { configLoad } from './reducer';
-// Types
-import { BuildConfig, BuildConfigStored } from './types';
-*/
+import { BuildDownloader } from './BuildDownloader';
+import { BuildFooter } from './BuildFooter';
+import { BuildPanel } from './BuildPanel';
+import { BuildPlatform } from './BuildPlatform';
+import { BuildReleaseNotes } from './BuildReleaseNotes';
+import { ControlledCheckbox } from './ControlledCheckbox';
+import { ControlledPanel } from './ControlledPanel';
+import { ControlledRadio } from './ControlledRadio';
+import { ControlledToggle } from './ControlledToggle';
+import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
+import { BuildType } from './types';
 
 export function BuildConfigurator() {
   return (
@@ -89,159 +73,12 @@ export function BuildConfigurator() {
                   <BuildArtifacts />
                 </div>
               </div>
-              {/*<BuildFooter />*/}
+              <BuildFooter />
             </BuildConfigArea>
           </div>
         </div>
       </ControlledPanel>
+      <BuildDownloader />
     </React.Fragment>
   );
 }
-
-/*
-
-interface Props {}
-interface State {
-  isDownloading: boolean;
-  progress: Array<string>;
-}
-
-export class BuildConfigurator extends React.Component<Props, State> {
-  state = {
-    isDownloading: false,
-    progress: [],
-  };
-
-  componentWillUnmount() {
-    this.mounted = false;
-    this.unsubscribe();
-    if (this.state.isDownloading) {
-      this.downloadAbort();
-    }
-  }
-
-  configJSONfilename(save: BuildConfigStored) {
-    return `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`;
-  }
-
-  configDownload = () => {
-    const save = getConfig(store.getState());
-    if (save === null) {
-      return;
-    }
-    const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
-    saveAs(blob, this.configJSONfilename(save));
-  };
-
-  download = async () => {
-    if (!JSZip.support.blob) {
-      alert(`We're sorry, your browser is not capable of downloading and bundling files.`);
-      return;
-    }
-
-    this.setState({
-      isDownloading: true,
-      progress: ['Downloading file manifest'],
-    });
-
-    const snapshot = store.getState();
-    const { build, path, selected, platforms, source, javadoc, includeJSON, version, addons } = getBuild(snapshot);
-
-    let manifest;
-    try {
-      manifest = await fetchManifest(path);
-    } catch (err) {
-      this.downloadCancel(err.message);
-      return;
-    }
-
-    let files = getFiles(path, manifest, selected, platforms, source, javadoc);
-
-    if (addons.length) {
-      files = files.concat(getAddons(addons, source, javadoc));
-    }
-
-    const jszip = new JSZip();
-
-    this.downloadLog(`Downloading ${files.length} files`);
-    try {
-      await downloadFiles(files, jszip, this.downloadLog.bind(this));
-    } catch (err) {
-      this.downloadCancel(err.name !== 'AbortError' ? err.message : undefined);
-      return;
-    }
-
-    // Include JSON Config
-    if (includeJSON) {
-      const save = getConfig(snapshot);
-      if (save !== null) {
-        const blob = new Blob([JSON.stringify(save, null, 2)], {
-          type: 'application/json',
-          endings: 'native',
-        });
-        jszip.file(this.configJSONfilename(save), blob, { binary: true });
-      }
-    }
-
-    // Generate ZPI files
-    this.downloadLog('Compressing files');
-    const blob = await jszip.generateAsync({
-      type: 'blob',
-      // compression: 'DEFLATE',
-      // compressionOptions: {level:6},
-    });
-
-    saveAs(
-      blob,
-      `lwjgl-${build}-${build === BUILD_RELEASE ? version : new Date().toISOString().slice(0, 10)}-custom.zip`
-    );
-
-    this.downloadComplete();
-  };
-
-  downloadAbort = () => {
-    // This will cause an AbortController signal to fire.
-    // Firing the signal will reject the fetch promise which will then be caught
-    // and downloadCancel(err.message) will fire
-    abortDownload();
-  };
-
-  downloadCancel(msg?: string) {
-    if (this.mounted) {
-      this.downloadComplete();
-    }
-    if (msg !== undefined) {
-      alert(msg);
-    }
-  }
-
-  downloadLog(msg: string) {
-    this.setState({
-      progress: [...this.state.progress, msg],
-    });
-  }
-
-  downloadComplete() {
-    this.setState({
-      isDownloading: false,
-      progress: [],
-    });
-  }
-
-  render() {
-    const { isDownloading, progress } = this.state;
-
-    return (
-      <div className="config-container" style={{ position: 'relative' }}>
-        <ScreenLock isOpen={isDownloading} backdropClassName="dark">
-          <div className="container">
-            <div className="row">
-              <BuildBundler progress={progress} cancel={this.downloadAbort} />
-            </div>
-          </div>
-        </ScreenLock>
-      </div>
-    );
-  }
-}
-*/
