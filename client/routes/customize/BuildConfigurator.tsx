@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as JSZip from 'jszip';
+import { useState } from 'react';
 import { BuildAddons } from './BuildAddons';
 import { BuildArtifacts } from './BuildArtifacts';
 import { BuildConfigArea } from './BuildConfigArea';
@@ -15,6 +17,16 @@ import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fi
 import { BuildType } from './types';
 
 export function BuildConfigurator() {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const beginDownload = () => {
+    if (!JSZip.support.blob) {
+      alert(`We're sorry, your browser is not capable of downloading and bundling files.`);
+    } else {
+      setIsDownloading(true);
+    }
+  };
+
   return (
     <React.Fragment>
       <div className="row">
@@ -73,12 +85,12 @@ export function BuildConfigurator() {
                   <BuildArtifacts />
                 </div>
               </div>
-              <BuildFooter />
+              <BuildFooter setIsDownloading={beginDownload} />
             </BuildConfigArea>
           </div>
         </div>
       </ControlledPanel>
-      <BuildDownloader />
+      {isDownloading && <BuildDownloader setIsDownloading={setIsDownloading} />}
     </React.Fragment>
   );
 }

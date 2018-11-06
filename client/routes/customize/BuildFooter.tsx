@@ -8,11 +8,15 @@ import { BuildToolbar } from './BuildToolbar';
 import { configJSONfilename, getConfigSnapshot, useStore, useStoreRef } from './Store';
 import { BuildStoreSnapshot, Mode } from './types';
 
+interface Props {
+  setIsDownloading: (state: boolean) => void;
+}
+
 interface ConnectedProps {
   mode: Mode;
 }
 
-export function BuildFooter() {
+export function BuildFooter({ setIsDownloading }: Props) {
   const [state, dispatch] = useStore(
     (state): ConnectedProps => {
       return {
@@ -40,7 +44,7 @@ export function BuildFooter() {
           <button
             className="btn btn-success"
             onClick={() => {
-              /* this.download */
+              setIsDownloading(true);
             }}
           >
             <IconFileDownload /> DOWNLOAD ZIP

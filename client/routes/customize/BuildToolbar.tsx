@@ -30,10 +30,12 @@ export function BuildToolbar({ configDownload, configLoad, children }: Props) {
       }
 
       let reader = new FileReader();
-      reader.onload = (event: ProgressEvent) => {
+      reader.onload = () => {
         try {
-          //@ts-ignore
-          configLoad(JSON.parse(event.target.result) as BuildStoreSnapshot);
+          if (typeof reader.result !== 'string') {
+            throw new Error('File must be JSON');
+          }
+          configLoad(JSON.parse(reader.result) as BuildStoreSnapshot);
           setFileUI(false);
         } catch (ignore) {
           alert('File does not contain a valid LWJGL configuration.');
