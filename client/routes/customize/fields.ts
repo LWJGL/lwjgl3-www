@@ -1,4 +1,4 @@
-// import { BUILD_RELEASE, BUILD_STABLE, MODE_ZIP, MODE_MAVEN, MODE_GRADLE, MODE_IVY } from './constants';
+import { useMemo } from 'react';
 import { BuildStore, Language, Mode, BuildType } from './types';
 import { RadioOptions } from './ControlledRadio';
 import {
@@ -34,22 +34,30 @@ export const fields = {
     value: getMode,
     action: selectMode,
     options: ({ build, modes }: BuildStore): RadioOptions =>
-      modes.allIds.map(mode => ({
-        value: mode,
-        label: modes.byId[mode].title,
-        disabled: build === BuildType.Stable && mode !== Mode.Zip,
-      })),
+      useMemo(
+        () =>
+          modes.allIds.map(mode => ({
+            value: mode,
+            label: modes.byId[mode].title,
+            disabled: build === BuildType.Stable && mode !== Mode.Zip,
+          })),
+        [build]
+      ),
   },
   preset: {
     name: 'preset',
     value: getPreset,
     action: selectPreset,
     options: ({ presets, preset }: BuildStore): RadioOptions =>
-      presets.allIds.map(presetId => ({
-        value: presetId,
-        label: presets.byId[presetId].title,
-        disabled: preset !== presetId && presetId === 'custom',
-      })),
+      useMemo(
+        () =>
+          presets.allIds.map(presetId => ({
+            value: presetId,
+            label: presets.byId[presetId].title,
+            disabled: preset !== presetId && presetId === 'custom',
+          })),
+        [preset]
+      ),
   },
   language: {
     name: 'language',
@@ -66,11 +74,15 @@ export const fields = {
     value: getVersion,
     action: selectVersion,
     options: ({ versions }: BuildStore): RadioOptions =>
-      versions.map(version => ({
-        value: version,
-        label: version,
-        disabled: version === '3.0.0',
-      })),
+      useMemo(
+        () =>
+          versions.map(version => ({
+            value: version,
+            label: version,
+            disabled: version === '3.0.0',
+          })),
+        [versions]
+      ),
   },
   descriptions: {
     label: 'Show descriptions',

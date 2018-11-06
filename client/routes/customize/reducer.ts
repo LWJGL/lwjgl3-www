@@ -1,16 +1,17 @@
-import * as React from 'react';
 import produce from 'immer';
-import { config } from './config';
+import * as React from 'react';
 import { Action, ActionCreator } from './actions';
+import { config } from './config';
 import {
-  BuildType,
-  Mode,
-  BuildStore,
-  BuildStoreSnapshot,
-  Preset,
+  Addon,
   Binding,
   BindingDefinition,
-  Addon,
+  BindingMapSelection,
+  BuildStore,
+  BuildStoreSnapshot,
+  BuildType,
+  Mode,
+  Preset,
   Version,
 } from './types';
 
@@ -158,7 +159,7 @@ function computeArtifacts(state: BuildStore) {
   state.artifacts = state.lwjgl[state.build === BuildType.Release ? state.version : state.build];
 
   // reset state
-  state.availability = {};
+  state.availability = {} as BindingMapSelection;
   state.presets.allIds.forEach(preset => {
     state.presets.byId[preset].artifacts = [];
   });
@@ -290,14 +291,12 @@ const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
     selectPreset(state, config.preset);
   } else if (config.contents !== undefined) {
     state.preset = Preset.Custom;
-    state.contents = {};
-    if (Array.isArray(config.contents)) {
-      config.contents.forEach((binding: Binding) => {
-        if (state.artifacts.byId[binding]) {
-          state.contents[binding] = true;
-        }
-      });
-    }
+    state.contents = {} as BindingMapSelection;
+    config.contents.forEach((binding: Binding) => {
+      if (state.artifacts.byId[binding] !== undefined) {
+        state.contents[binding] = true;
+      }
+    });
   } else {
     selectPreset(state, Preset.GettingStarted);
   }

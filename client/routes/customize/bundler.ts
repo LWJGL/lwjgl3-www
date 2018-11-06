@@ -25,45 +25,6 @@ interface SelectedBuildConfig {
   addons: AddonSelection;
 }
 
-function keepChecked(src) {
-  // Keep only checked items to avoid phantom selections
-  // when new items (bindings,addons,platforms) are added
-  return Object.keys(src).filter(key => src[key] === true);
-}
-
-export function getConfig(state: BuildStore): BuildStoreSnapshot | null {
-  if (state.build === null) {
-    return null;
-  }
-
-  const save: BuildStoreSnapshot = {
-    build: state.build,
-    mode: state.mode,
-    selectedAddons: state.selectedAddons,
-    platform: keepChecked(state.platform) as Array<Native>,
-    descriptions: state.descriptions,
-    compact: state.compact,
-    hardcoded: state.hardcoded,
-    javadoc: state.javadoc,
-    includeJSON: state.includeJSON,
-    source: state.source,
-    osgi: state.osgi,
-    language: state.language,
-  };
-
-  if (state.preset === Preset.Custom) {
-    save.contents = keepChecked(state.contents) as Array<Binding>;
-  } else {
-    save.preset = state.preset;
-  }
-  if (state.build === BuildType.Release) {
-    save.version = state.version;
-    save.versionLatest = state.versions[0];
-  }
-
-  return save;
-}
-
 export async function fetchManifest(path: string) {
   const response = await fetch(`/bin/${path}`);
   if (response.status !== HTTP_OK) {

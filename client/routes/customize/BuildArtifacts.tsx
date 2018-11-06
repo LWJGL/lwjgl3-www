@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { memo } from 'react';
-import { useStore } from './Store';
+import { StateMemo } from '~/components/StateMemo';
+import { useStore, useStoreRef } from './Store';
 import { Binding, BindingDefinition, Native, NATIVE_ALL } from './types';
 import { toggleArtifact } from './actions';
 
@@ -17,35 +18,39 @@ const getPlatformIcons = (platforms: Array<Native>) => (
 );
 
 export function BuildArtifacts() {
-  const [state, dispatch] = useStore(state => ({
-    artifacts: state.artifacts.allIds,
-    byId: state.artifacts.byId,
-    contents: state.contents,
-    availability: state.availability,
-    showDescriptions: state.descriptions,
+  const [state, dispatch] = useStore(({ contents, availability, descriptions }) => ({
+    contents,
+    availability,
+    descriptions,
   }));
 
-  const { artifacts, byId, contents, availability, showDescriptions } = state;
+  const {
+    artifacts: { allIds, byId },
+  } = useStoreRef().current;
+
+  const { contents, availability, descriptions: showDescriptions } = state;
   const onChange = (artifact: Binding) => dispatch(toggleArtifact(artifact));
 
   return (
-    <div className="custom-controls-stacked">
-      {artifacts.map((it: Binding) => {
-        const artifact = byId[it] as BindingDefinition;
-        const available = availability[it] === true;
+    <StateMemo state={state}>
+      <div className="custom-controls-stacked">
+        {allIds.map((it: Binding) => {
+          const artifact = byId[it] as BindingDefinition;
+          const available = availability[it] === true;
 
-        return (
-          <BuildArtifact
-            key={it}
-            artifact={artifact}
-            disabled={!available || artifact.required === true}
-            selected={available && contents[it] === true}
-            showDescriptions={showDescriptions}
-            onChange={onChange}
-          />
-        );
-      })}
-    </div>
+          return (
+            <BuildArtifact
+              key={it}
+              artifact={artifact}
+              disabled={!available || artifact.required === true}
+              selected={available && contents[it] === true}
+              showDescriptions={showDescriptions}
+              onChange={onChange}
+            />
+          );
+        })}
+      </div>
+    </StateMemo>
   );
 }
 

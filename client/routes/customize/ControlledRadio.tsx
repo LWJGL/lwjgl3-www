@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Radio } from '~/components/Radio';
+import { StateMemo } from '~/components/StateMemo';
 import { useStore } from './Store';
+import { Radio } from '~/components/Radio';
 
 interface Props {
   spec: {
@@ -38,17 +39,19 @@ export function ControlledRadio({ spec }: Props) {
   const select = (value: any) => dispatch(spec.action(value));
 
   return (
-    <div className="custom-controls-stacked">
-      {options.map(({ value, label, disabled }: RadioOption, i: number) => (
-        <Radio
-          key={`${spec.name}-${typeof value === 'string' ? value : i}`}
-          value={value}
-          checked={value === selectedValue}
-          onChange={select}
-          label={label}
-          disabled={disabled === true}
-        />
-      ))}
-    </div>
+    <StateMemo state={state}>
+      <div className="custom-controls-stacked">
+        {options.map(({ value, label, disabled }: RadioOption, i: number) => (
+          <Radio
+            key={`${spec.name}-${typeof value === 'string' ? value : i}`}
+            value={value}
+            checked={value === selectedValue}
+            onChange={select}
+            label={label}
+            disabled={disabled === true}
+          />
+        ))}
+      </div>
+    </StateMemo>
   );
 }

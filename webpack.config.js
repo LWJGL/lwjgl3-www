@@ -132,8 +132,8 @@ const buildConfiguration = () => {
       // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
-    } else {
-      disableRHL(config);
+      // } else {
+      //   disableRHL(config);
     }
 
     if (DLL) {
@@ -186,7 +186,7 @@ const buildConfiguration = () => {
       // Base hashes on the relative path of modules
       new webpack.HashedModuleIdsPlugin()
     );
-    disableRHL(config);
+    // disableRHL(config);
 
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
