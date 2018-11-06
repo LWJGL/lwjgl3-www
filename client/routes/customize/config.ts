@@ -13,6 +13,7 @@ import lwjgl_stable from './versions/stable';
 // Types
 import {
   BuildStore,
+  BuildStoreSnapshot,
   BuildBindings,
   BuildType,
   Mode,
@@ -274,3 +275,46 @@ function getInitialConfig(): BuildStore {
 }
 
 export const config: BuildStore = getInitialConfig();
+
+function keepChecked(src: { [key: string]: boolean | undefined }) {
+  // Keep only checked items to avoid phantom selections
+  // when new items (bindings,addons,platforms) are added
+  return Object.keys(src).filter(key => src[key] === true);
+}
+
+export function getConfigSnapshot(state: BuildStore): BuildStoreSnapshot | null {
+  if (state.build === null) {
+    return null;
+  }
+
+  const save: BuildStoreSnapshot = {
+    build: state.build,
+    mode: state.mode,
+    selectedAddons: state.selectedAddons,
+    platform: keepChecked(state.platform) as Array<Native>,
+    descriptions: state.descriptions,
+    compact: state.compact,
+    hardcoded: state.hardcoded,
+    javadoc: state.javadoc,
+    includeJSON: state.includeJSON,
+    source: state.source,
+    osgi: state.osgi,
+    language: state.language,
+  };
+
+  if (state.preset === Preset.Custom) {
+    save.contents = keepChecked(state.contents) as Array<Binding>;
+  } else {
+    save.preset = state.preset;
+  }
+  if (state.build === BuildType.Release) {
+    save.version = state.version;
+    save.versionLatest = state.versions[0];
+  }
+
+  return save;
+}
+
+export function configJSONfilename(save: BuildStoreSnapshot) {
+  return `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`;
+}

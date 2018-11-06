@@ -1,11 +1,12 @@
-import * as React from 'react';
 import * as JSZip from 'jszip';
-import { useRef, useState, useEffect } from 'react';
-import { saveAs } from '~/services/file-saver';
-import { getConfigSnapshot, useStoreRef, configJSONfilename } from './Store';
-import { ScreenLock } from '~/components/ScreenLock';
+import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CircularProgress } from '~/components/CircularProgress';
+import { ScreenLock } from '~/components/ScreenLock';
+import { saveAs } from '~/services/file-saver';
+import { configJSONfilename, getConfigSnapshot } from './config';
 import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getFiles } from './lib/bundler';
+import { useStoreRef } from './Store';
 import { BuildType } from './types';
 
 interface Props {

@@ -5,7 +5,8 @@ import { saveAs } from '~/services/file-saver';
 import { configLoad } from './actions';
 import { BuildScript } from './BuildScript';
 import { BuildToolbar } from './BuildToolbar';
-import { configJSONfilename, getConfigSnapshot, useStore, useStoreRef } from './Store';
+import { configJSONfilename, getConfigSnapshot } from './config';
+import { useStore, useStoreRef } from './Store';
 import { BuildStoreSnapshot, Mode } from './types';
 
 interface Props {
