@@ -1,13 +1,13 @@
 import * as JSZip from 'jszip';
 import { HTTP_OK } from '~/services/http_status_codes';
 import {
+  Binding,
+  BindingDefinition,
+  BindingMapSelection,
   BuildStore,
   BuildType,
   Native,
   PlatformSelection,
-  Binding,
-  BindingDefinition,
-  BindingMapSelection,
 } from '../types';
 
 type AddonSelection = Array<{ id: string; version: string }>;
