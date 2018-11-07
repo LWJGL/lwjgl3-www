@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import throttle from 'lodash-es/throttle';
 
 export type WindowSize = {
-  innerHeight: number,
-  innerWidth: number,
-  outerHeight: number,
-  outerWidth: number,
+  innerHeight: number;
+  innerWidth: number;
+  outerHeight: number;
+  outerWidth: number;
 };
 
 function getSize(): WindowSize {
@@ -18,12 +18,10 @@ function getSize(): WindowSize {
 }
 
 export function useWindowSize(throttleMs: number = 0) {
-  const [windowSize, setWindowSize] = useState(getSize());
+  const [windowSize, setWindowSize] = useState(getSize);
 
   useEffect(() => {
-    const handleResize = throttle(() => {
-      setWindowSize(getSize());
-    }, throttleMs);
+    const handleResize = throttle(() => setWindowSize(getSize), throttleMs);
 
     window.addEventListener('resize', handleResize);
     return () => {

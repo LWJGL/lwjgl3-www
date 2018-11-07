@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-export function useDeviceMotion() {
-  const [motion, setMotion] = useState({
+const getBlankEvent = () =>
+  ({
     acceleration: {
       x: null,
       y: null,
@@ -19,6 +19,9 @@ export function useDeviceMotion() {
     },
     interval: 0,
   } as DeviceMotionEvent);
+
+export function useDeviceMotion() {
+  const [motion, setMotion] = useState(getBlankEvent);
 
   useEffect(() => {
     const handle = (deviceMotionEvent: DeviceMotionEvent) => {

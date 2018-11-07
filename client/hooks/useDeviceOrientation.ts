@@ -7,23 +7,19 @@ interface Orientation {
   gamma: number | null;
 }
 
-export function useDeviceOrientation() {
-  const [orientation, setOrientation] = useState({
+const getInitialOrientation = () =>
+  ({
     alpha: null,
     beta: null,
     gamma: null,
     absolute: false,
   } as Orientation);
 
+export function useDeviceOrientation() {
+  const [orientation, setOrientation] = useState(getInitialOrientation);
+
   useEffect(() => {
-    const handle = (e: DeviceOrientationEvent) => {
-      setOrientation({
-        beta: e.beta,
-        alpha: e.alpha,
-        gamma: e.gamma,
-        absolute: e.absolute,
-      });
-    };
+    const handle = (e: DeviceOrientationEvent) => setOrientation(e);
 
     window.addEventListener('deviceorientation', handle);
     return () => {

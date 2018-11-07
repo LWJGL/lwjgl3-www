@@ -1,21 +1,25 @@
 import { useState, useEffect } from 'react';
 
-export function getConnection() {
-  //@ts-ignore
-  return navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+export function getConnection(): NetworkInformation | undefined {
+  return navigator.connection;
 }
 
 export function useNetworkStatus() {
-  const [connection, updateNetworkConnection] = useState(getConnection());
+  const [connection, updateNetworkConnection] = useState(getConnection);
 
   function updateConnectionStatus() {
-    updateNetworkConnection(getConnection());
+    updateNetworkConnection(getConnection);
   }
+
   useEffect(() => {
-    connection.addEventListener('change', updateConnectionStatus);
-    return () => {
-      connection.removeEventListener('change', updateConnectionStatus);
-    };
+    if (connection !== undefined) {
+      //@ts-ignore
+      connection.addEventListener('change', updateConnectionStatus);
+      return () => {
+        //@ts-ignore
+        connection.removeEventListener('change', updateConnectionStatus);
+      };
+    }
   }, []);
 
   return connection;

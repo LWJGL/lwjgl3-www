@@ -5,10 +5,10 @@ export function getVisibility() {
 }
 
 export function useDocumentVisibility() {
-  const [documentVisibility, setDocumentVisibility] = useState(getVisibility());
+  const [documentVisibility, setDocumentVisibility] = useState(getVisibility);
 
   function handleVisibilityChange() {
-    setDocumentVisibility(getVisibility());
+    setDocumentVisibility(getVisibility);
   }
 
   useEffect(() => {

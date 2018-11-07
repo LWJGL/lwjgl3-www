@@ -10,17 +10,13 @@ export function getPosition() {
 }
 
 export function useWindowScrollPosition(throttleMs: number = 0) {
-  let [position, setPosition] = useState(getPosition());
+  let [position, setPosition] = useState(getPosition);
 
   useEffect(() => {
-    const handleScroll = throttle(() => {
-      setPosition(getPosition());
-    }, throttleMs);
+    const handleScroll = throttle(() => setPosition(getPosition), throttleMs);
 
     window.addEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     return () => {
-      // TODO: test that this removes handleScroll
-      // removeEventListener options must not have passive: true based on spec
       window.removeEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? {} : false);
     };
   }, []);

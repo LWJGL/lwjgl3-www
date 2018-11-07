@@ -5,7 +5,7 @@ export function getOnlineStatus() {
 }
 
 export function useOnlineStatus() {
-  let [onlineStatus, setOnlineStatus] = useState(getOnlineStatus());
+  let [onlineStatus, setOnlineStatus] = useState(getOnlineStatus);
   function goOnline() {
     setOnlineStatus(true);
   }
