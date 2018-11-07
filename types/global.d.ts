@@ -1,6 +1,12 @@
 // Helpers
 
 type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+type Opaque<K, T> = T & { __TYPE__: K };
+
+declare interface CSSModule {
+  use: () => void;
+  unuse: () => void;
+}
 
 // Type definitions for LWJGL
 
