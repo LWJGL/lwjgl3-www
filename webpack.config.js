@@ -103,6 +103,19 @@ const buildConfiguration = () => {
             },
           ],
         },
+        {
+          test: /\.css?$/,
+          use: [
+            'style-loader/useable',
+            {
+              loader: 'css-loader',
+              options: {
+                url: false,
+                import: false,
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [

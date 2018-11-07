@@ -1,4 +1,28 @@
-export const sample = `import org.lwjgl.*;
+import * as React from 'react';
+import { useEffect } from 'react';
+import hljs from 'highlight.js/lib/highlight';
+import java from 'highlight.js/lib/languages/java';
+import style from 'highlight.js/styles/dracula.css';
+
+// Register Java
+hljs.registerLanguage('java', java);
+
+export default function Sample() {
+  useEffect(() => {
+    style.use();
+    return style.unuse;
+  }, []);
+
+  return (
+    <pre className="container" style={{ color: 'white', tabSize: 4 }}>
+      <code dangerouslySetInnerHTML={{ __html: sample }} />
+    </pre>
+  );
+}
+
+const sample = hljs.highlight(
+  'java',
+  `import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.system.*;
@@ -112,4 +136,5 @@ public class HelloWorld {
 		new HelloWorld().run();
 	}
 
-}`;
+}`
+).value;
