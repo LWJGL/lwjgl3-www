@@ -95,7 +95,7 @@ if (PRODUCTION) {
       modules: false,
       // forceAllTransforms: true,
       debug: false,
-      useBuiltIns: 'entry',
+      useBuiltIns: 'usage',
       shippedProposals: true,
       ...(MODERN ? { targets: { esmodules: true } } : undefined),
       exclude: [

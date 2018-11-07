@@ -176,11 +176,11 @@ const buildConfiguration = () => {
     }
   } else {
     config.module.rules[0].use.unshift('jsx-compress-loader');
-    config.entry.main.unshift(
-      // Load core-js polyfill first
-      // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
-      path.resolve(__dirname, 'client/services/polyfill.js')
-    );
+    // config.entry.main.unshift(
+    //   // Load core-js polyfill first
+    //   // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
+    //   path.resolve(__dirname, 'client/services/polyfill.js')
+    // );
     // config.optimization.namedModules = true;
     config.plugins.push(
       // Base hashes on the relative path of modules
