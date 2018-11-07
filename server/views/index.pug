@@ -3,22 +3,21 @@ extends layout
 block content
   #lwjgl-app
     //- The following content is replaced by React <App />
+    //-style.
+     @keyframes spin{0%{stroke-dasharray:150.6 100.4;stroke-dashoffset:0}50%{stroke-dasharray:1 250;stroke-dashoffset:251px}100%{stroke-dasharray:150.6 100.4;stroke-dashoffset:502px}}
     style.
-      @keyframes spin{0%{stroke-dasharray:150.6 100.4;stroke-dashoffset:0}50%{stroke-dasharray:1 250;stroke-dashoffset:251px}100%{stroke-dasharray:150.6 100.4;stroke-dashoffset:502px}}
-    div.d-flex.flex-column.justify-content-center.align-items-center(style="height:100vh")
-      h1.display-3
-        | LW
-        b JGL
-      svg(viewBox="0 0 100 100", preserveAspectRatio="xMidYMid" style="max-width:20vw;max-height:75px;opacity:0;animation:fade-in .33s ease-in 1s forwards")
+     @keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+    div(style="height:90vh;display:flex;justify-content:center;align-items:center;font:x-large sans-serif;color:silver;animation:fade-in 1s ease-in 1s both") Loading
+      //-svg(viewBox="0 0 100 100", preserveAspectRatio="xMidYMid" style="width:20vw;height:75px")
         circle(cx="50", cy="50", r="40", stroke="#2d6ca5", fill="none", stroke-width="8", stroke-linecap="round")
-        circle(style="animation:spin 2s linear 1s infinite" cx="50", cy="50", r="40", stroke="#4cddff", fill="none", stroke-width="6", stroke-linecap="round")
+        circle(style="animation:spin 2s linear infinite" cx="50", cy="50", r="40", stroke="#4cddff", fill="none", stroke-width="6", stroke-linecap="round")
       noscript
-        style.
-          #lwjgl-app>div>svg{display:none}
+        //-style.
+          #lwjgl-app svg{display:none!important}
         p.text-danger Please enable JavaScript
 
   if ( production )
-    script(src=`/js/${entry}` async)
+    script(src=`/js/${entry}`)
   else
     script(src=`/js/vendor.js` crossorigin="anonymous")
     script(src=`/js/${entry}` crossorigin="anonymous")
