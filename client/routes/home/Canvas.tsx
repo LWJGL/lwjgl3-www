@@ -1,5 +1,6 @@
 // @jsx jsx
 import * as React from 'react';
+import { useRef, useEffect } from 'react';
 import { jsx, css, keyframes } from '@emotion/core';
 jsx;
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
@@ -22,76 +23,69 @@ const Canvas = css`
   animation: ${fadeIn.name} 2s ease-out forwards;
 `;
 
-class HomeCanvas extends React.Component {
-  canvasRef: React.RefObject<HTMLCanvasElement> = React.createRef();
+export default function HomeCanvas() {
+  const canvasRef: React.RefObject<HTMLCanvasElement> = useRef(null);
 
-  io: IntersectionObserver | null = null;
-  rafId: number | null = null;
-  scene!: Scene;
-  camera!: PerspectiveCamera;
-  geometry!: BoxGeometry;
-  material!: MeshNormalMaterial;
-  group!: Group;
-  renderer!: WebGLRenderer;
-
-  resizeCanvas = () => {
-    const canvas = this.canvasRef.current;
-    if (canvas !== null && canvas.parentElement !== null) {
-      const winW = canvas.parentElement.offsetWidth;
-      const winH = canvas.parentElement.offsetHeight;
-      this.camera.aspect = winW / winH;
-      this.camera.updateProjectionMatrix();
-      this.renderer.setSize(winW, winH, false);
-    }
-  };
-
-  animate = () => {
-    this.rafId = requestAnimationFrame(this.animate);
-
-    let time = Date.now() * 0.000015;
-    let rx = time;
-    let ry = time;
-
-    this.group.rotation.x = rx;
-    this.group.rotation.y = ry;
-    this.renderer.render(this.scene, this.camera);
-  };
-
-  stop() {
-    if (this.rafId !== null) {
-      cancelAnimationFrame(this.rafId);
-      this.rafId = null;
-    }
-  }
-
-  ioCheck = (entries: Array<IntersectionObserverEntry>) => {
-    if (entries[0].intersectionRatio > 0) {
-      if (this.rafId === null) {
-        this.animate();
+  useEffect(() => {
+    function resizeCanvas() {
+      const canvas = canvasRef.current;
+      if (canvas !== null && canvas.parentElement !== null) {
+        const winW = canvas.parentElement.offsetWidth;
+        const winH = canvas.parentElement.offsetHeight;
+        camera.aspect = winW / winH;
+        camera.updateProjectionMatrix();
+        renderer.setSize(winW, winH, false);
       }
-    } else if (this.rafId !== null) {
-      this.stop();
     }
-  };
 
-  componentDidMount() {
-    const canvas = this.canvasRef.current;
+    function animate() {
+      rafId = requestAnimationFrame(animate);
+
+      let time = Date.now() * 0.000015;
+      let rx = time;
+      let ry = time;
+
+      group.rotation.x = rx;
+      group.rotation.y = ry;
+      renderer.render(scene, camera);
+    }
+
+    function stop() {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    function ioCheck(entries: Array<IntersectionObserverEntry>) {
+      if (entries[0].intersectionRatio > 0) {
+        if (rafId === null) {
+          animate();
+        }
+      } else if (rafId !== null) {
+        stop();
+      }
+    }
+
+    const canvas = canvasRef.current;
     if (canvas === null || canvas.parentElement === null) {
       return;
     }
 
     const winW = canvas.parentElement.offsetWidth;
     const winH = canvas.parentElement.offsetHeight;
+    let io: IntersectionObserver | null = null;
+    let rafId: number | null = null;
 
-    this.camera = new PerspectiveCamera(60, winW / winH, 100, 10000);
-    this.camera.position.z = 1500;
+    let camera = new PerspectiveCamera(60, winW / winH, 100, 10000);
+    camera.position.z = 1500;
 
-    this.geometry = new BoxGeometry(60, 60, 60);
-    this.material = new MeshNormalMaterial();
+    let geometry = new BoxGeometry(60, 60, 60);
+    let material = new MeshNormalMaterial();
 
-    this.group = new Group();
+    let group = new Group();
     for (let i = 0; i < 300; i += 1) {
-      let mesh = new Mesh(this.geometry, this.material);
+      let mesh = new Mesh(geometry, material);
       mesh.position.x = Math.random() * 2000 - 1000;
       mesh.position.y = Math.random() * 2000 - 1000;
       mesh.position.z = Math.random() * 2000 - 1000;
@@ -99,13 +93,13 @@ class HomeCanvas extends React.Component {
       mesh.rotation.y = Math.random() * 2 * Math.PI;
       mesh.matrixAutoUpdate = false;
       mesh.updateMatrix();
-      this.group.add(mesh);
+      group.add(mesh);
     }
 
-    this.scene = new Scene();
-    this.scene.add(this.group);
+    let scene = new Scene();
+    scene.add(group);
 
-    this.renderer = new WebGLRenderer({
+    let renderer = new WebGLRenderer({
       canvas: canvas,
       antialias: window.devicePixelRatio === 1,
       alpha: true,
@@ -113,39 +107,35 @@ class HomeCanvas extends React.Component {
       powerPreference: 'low-power',
     });
     if (window.devicePixelRatio !== undefined) {
-      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     }
-    this.renderer.setSize(winW, winH, false);
-    this.renderer.sortObjects = false;
-    this.animate();
+    renderer.setSize(winW, winH, false);
+    renderer.sortObjects = false;
+    animate();
 
     if (SUPPORTS_INTERSECTION_OBSERVER) {
-      this.io = new IntersectionObserver(this.ioCheck);
-      this.io.observe(canvas);
+      io = new IntersectionObserver(ioCheck);
+      io.observe(canvas);
     }
 
-    window.addEventListener('resize', this.resizeCanvas);
-  }
+    window.addEventListener('resize', resizeCanvas);
 
-  componentWillUnmount() {
-    this.stop();
-    window.removeEventListener('resize', this.resizeCanvas);
+    return () => {
+      stop();
+      window.removeEventListener('resize', resizeCanvas);
 
-    if (this.io !== null) {
-      this.io.disconnect();
-      this.io = null;
-    }
+      if (io !== null) {
+        io.disconnect();
+        io = null;
+      }
 
-    if (this.scene !== undefined) {
-      this.scene.remove(this.group);
-      this.geometry.dispose();
-      this.material.dispose();
-    }
-  }
+      if (scene !== undefined) {
+        scene.remove(group);
+        geometry.dispose();
+        material.dispose();
+      }
+    };
+  }, []);
 
-  render() {
-    return <canvas css={[Canvas, fadeIn.styles]} ref={this.canvasRef} />;
-  }
+  return <canvas css={[Canvas, fadeIn.styles]} ref={canvasRef} />;
 }
-
-export default HomeCanvas;
