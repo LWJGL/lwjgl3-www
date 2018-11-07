@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
@@ -6,182 +7,148 @@ import IconMenu from '~/components/icons/md/Menu';
 import IconClose from '~/components/icons/md/Close';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 
-interface Props {}
+export function Sidebar() {
+  const [open, setOpen] = useState(false);
+  const slidingMenu: React.RefObject<HTMLDivElement> = useRef(null);
+  const sideContainer: React.RefObject<HTMLDivElement> = useRef(null);
+  const closeButton: React.RefObject<HTMLButtonElement> = useRef(null);
+  const focusTrap: React.MutableRefObject<FocusTrap | null> = useRef(null);
 
-type State = {
-  open: boolean;
-};
+  const onToggle = () => setOpen(open => !open);
 
-export class Sidebar extends React.PureComponent<Props, State> {
-  state = {
-    open: false,
-  };
-
-  mounted: boolean = false;
-  touchingSideNav: boolean = false;
-  startX: number = 0;
-  currentX: number = 0;
-  focusTrap!: FocusTrap;
-
-  closeButtonRef: React.RefObject<HTMLButtonElement> = React.createRef();
-  slidingMenuRef: React.RefObject<HTMLDivElement> = React.createRef();
-  sideContainerRef: React.RefObject<HTMLDivElement> = React.createRef();
-
-  componentDidMount() {
-    this.mounted = true;
-    const slidingMenu = this.slidingMenuRef.current;
-    const closeButton = this.closeButtonRef.current;
-
-    if (slidingMenu !== null && closeButton !== null) {
-      this.focusTrap = createFocusTrap(slidingMenu, {
-        onDeactivate: this.onToggle,
-        initialFocus: closeButton,
+  useEffect(() => {
+    if (slidingMenu.current !== null && closeButton.current !== null) {
+      focusTrap.current = createFocusTrap(slidingMenu.current, {
+        onDeactivate: onToggle,
+        initialFocus: closeButton.current,
         // clickOutsideDeactivates: true
       });
     }
-  }
+  }, []);
 
-  componentWillUnmount() {
-    // Fired when resizing browser window (component unmounts)
-    this.mounted = false;
-    if (this.state.open) {
-      this.onToggle();
-    }
-  }
-
-  onToggle = (/*evt*/) => {
-    const {
-      focusTrap,
-      sideContainerRef: { current: sideContainer },
-    } = this;
-
-    /*::
-    if (focusTrap == null || sideContainer == null) {
-      return;
-    }
-    */
-
-    if (this.state.open) {
-      off();
-      //@ts-ignore
-      focusTrap.deactivate({ onDeactivate: false });
-      if (sideContainer !== null) {
-        sideContainer.removeEventListener('touchstart', this.onTouchStart, false);
-        sideContainer.removeEventListener('touchmove', this.onTouchMove, false);
-        sideContainer.removeEventListener('touchend', this.onTouchEnd, false);
+  useEffect(
+    () => {
+      if (!open) {
+        // Skip effect when closed
+        return;
       }
-    } else {
+
+      let touchingSideNav = false;
+      let startX = 0;
+      let currentX = 0;
+
+      function onTouchStart(evt: TouchEvent) {
+        startX = evt.touches[0].pageX;
+        currentX = startX;
+
+        touchingSideNav = true;
+        if (sideContainer.current !== null) {
+          sideContainer.current.classList.add('touching');
+        }
+        requestAnimationFrame(update);
+      }
+
+      function onTouchMove(evt: TouchEvent) {
+        if (touchingSideNav) {
+          currentX = evt.touches[0].pageX;
+          evt.preventDefault();
+        }
+      }
+
+      function onTouchEnd() {
+        if (touchingSideNav) {
+          touchingSideNav = false;
+
+          if (sideContainer.current !== null) {
+            sideContainer.current.style.transform = '';
+            sideContainer.current.classList.remove('touching');
+          }
+
+          if (currentX - startX > 0) {
+            onToggle();
+          }
+        }
+      }
+
+      function update() {
+        if (!touchingSideNav) {
+          return;
+        }
+
+        requestAnimationFrame(update);
+
+        let translateX = currentX - startX;
+
+        if (translateX < 0) {
+          translateX = 0;
+        }
+
+        if (sideContainer.current !== null) {
+          sideContainer.current.style.transform = `translateX(${translateX}px)`;
+        }
+      }
+
+      // On Open
       on();
-      focusTrap.activate();
-      if (sideContainer !== null) {
-        sideContainer.addEventListener(
+      if (focusTrap.current !== null) {
+        focusTrap.current.activate();
+      }
+      if (sideContainer.current !== null) {
+        sideContainer.current.addEventListener(
           'touchstart',
-          this.onTouchStart,
+          onTouchStart,
           SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
         );
         // Disable passive to avoid triggering gestures in some devices
-        sideContainer.addEventListener(
+        sideContainer.current.addEventListener(
           'touchmove',
-          this.onTouchMove,
+          onTouchMove,
           SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
         );
-        sideContainer.addEventListener('touchend', this.onTouchEnd, false);
-      }
-    }
-
-    if (this.mounted) {
-      this.setState({ open: !this.state.open });
-    }
-  };
-
-  onTouchStart = (evt: TouchEvent): void => {
-    this.startX = evt.touches[0].pageX;
-    this.currentX = this.startX;
-
-    this.touchingSideNav = true;
-    if (this.sideContainerRef.current !== null) {
-      this.sideContainerRef.current.classList.add('touching');
-    }
-    requestAnimationFrame(this.update);
-  };
-
-  onTouchMove = (evt: TouchEvent) => {
-    if (this.touchingSideNav) {
-      this.currentX = evt.touches[0].pageX;
-      evt.preventDefault();
-    }
-  };
-
-  onTouchEnd = () => {
-    if (this.touchingSideNav) {
-      this.touchingSideNav = false;
-
-      const sideContainer = this.sideContainerRef.current;
-      if (sideContainer !== null) {
-        sideContainer.style.transform = '';
-        sideContainer.classList.remove('touching');
+        sideContainer.current.addEventListener('touchend', onTouchEnd, false);
       }
 
-      if (this.currentX - this.startX > 0) {
-        this.onToggle();
-      }
-    }
-  };
+      return () => {
+        off();
+        if (focusTrap.current !== null) {
+          focusTrap.current.deactivate({ onDeactivate: false });
+        }
+        if (sideContainer.current !== null) {
+          sideContainer.current.removeEventListener('touchstart', onTouchStart, false);
+          sideContainer.current.removeEventListener('touchmove', onTouchMove, false);
+          sideContainer.current.removeEventListener('touchend', onTouchEnd, false);
+        }
+      };
+    },
+    [open]
+  );
 
-  update = () => {
-    if (!this.touchingSideNav) {
-      return;
-    }
-
-    requestAnimationFrame(this.update);
-
-    let translateX = this.currentX - this.startX;
-
-    if (translateX < 0) {
-      translateX = 0;
-    }
-
-    if (this.sideContainerRef.current !== null) {
-      this.sideContainerRef.current.style.transform = `translateX(${translateX}px)`;
-    }
-  };
-
-  render() {
-    let isOpen = this.state.open;
-
-    return (
-      <div ref={this.slidingMenuRef} className={`col sliding-menu${isOpen ? ' open' : ''}`}>
-        <button
-          type="button"
-          className="btn-link sliding-menu-icon"
-          onClick={this.onToggle}
-          aria-hidden={isOpen}
-          title="Open navigation menu"
-        >
-          <IconMenu />
-        </button>
-        <div className="sliding-menu-overlay" onClick={this.onToggle} />
-        <div
-          ref={this.sideContainerRef}
-          className="sliding-menu-container"
-          role="menu"
-          aria-hidden={!isOpen}
-          aria-expanded={isOpen}
-        >
-          <div className="text-right">
-            <button
-              ref={this.closeButtonRef}
-              type="button"
-              className="btn-link sliding-menu-icon"
-              onClick={this.onToggle}
-              title="Close navigation menu"
-            >
-              <IconClose />
-            </button>
-          </div>
-          <MainMenu className="list-unstyled" onClick={this.onToggle} />
+  return (
+    <div ref={slidingMenu} className={`col sliding-menu${open ? ' open' : ''}`}>
+      <button
+        type="button"
+        className="btn-link sliding-menu-icon"
+        onClick={onToggle}
+        aria-hidden={open}
+        title="Open navigation menu"
+      >
+        <IconMenu />
+      </button>
+      <div className="sliding-menu-overlay" onClick={onToggle} />
+      <div ref={sideContainer} className="sliding-menu-container" role="menu" aria-hidden={!open} aria-expanded={open}>
+        <div className="text-right">
+          <button
+            ref={closeButton}
+            type="button"
+            className="btn-link sliding-menu-icon"
+            onClick={onToggle}
+            title="Close navigation menu"
+          >
+            <IconClose />
+          </button>
         </div>
+        <MainMenu className="list-unstyled" onClick={onToggle} />
       </div>
-    );
-  }
+    </div>
+  );
 }
