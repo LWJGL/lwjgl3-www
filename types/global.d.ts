@@ -6,7 +6,6 @@ type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 
 declare const FLAG_PRODUCTION: boolean;
 declare const FLAG_CSSMODULES: boolean;
-declare const FLAG_REDUXLOGGER: boolean;
 declare const HOSTNAME_PRODUCTION: string;
 declare const ANALYTICS_TRACKING_ID: string;
 
