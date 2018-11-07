@@ -18,7 +18,6 @@ Notable features:
 - Optional hot reloading for Sass
 - Very fast dev builds using DllReferencePlugin
 - Custom webpack manifest parsing + code minification
-- Custom render-prop <Connect /> component for Redux
 - CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
 - fast-async instead of regenerator
 - Client is written in Typescript
@@ -86,7 +85,6 @@ yarn watch
 --css # Enables CSS modules in dev mode (enables Sass HMR)
 --sourcemap # Enables inline JS source-maps
 --nohmr # Disables Webpack Hot Module Replacement & React Hot Loader
---redux-logger # Enables Logger for Redux
 ```
 
 The following flags are used for testing production builds locally.
@@ -244,6 +242,8 @@ We recommend [Visual Studio Code](https://code.visualstudio.com/) with the follo
 
 - Prettier - Code formatter
 - vscode-styled-components
+- IntelliSense for CSS class names
+- Latest TypeScript and Javascript Grammar
 
 We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab).
 In VS Code add the following in the user settings:
@@ -268,9 +268,7 @@ Recommended VS Code **Workspace Settings**:
     "**/public/js/*": true,
     "**/public/css/*": true
   },
-  "javascript.format.enable": false,
-  "javascript.nameSuggestions": false,
-  "javascript.referencesCodeLens.enabled": false,
-  "javascript.validate.enable": false
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "html-css-class-completion.includeGlobPattern": "**/*.{css}"
 }
 ```
