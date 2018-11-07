@@ -101,33 +101,41 @@ const HeroContent = ({ children }: Props) => (
   </div>
 );
 
-let supportsWebGL = -1;
+enum UseWebGL {
+  Unknown,
+  Off,
+  NotSupported,
+  On,
+}
+
+let useWebGL = UseWebGL.Unknown;
+const supportsWebGL = () => useWebGL === UseWebGL.On;
 
 export function HomeHero() {
-  const [webGL, setGL] = useState(supportsWebGL === 1);
+  const [webGL, setGL] = useState(supportsWebGL);
 
   useEffect(() => {
     // If we detected WebGL before, the checks below already passed
-    if (supportsWebGL > -1) {
+    if (useWebGL !== UseWebGL.Unknown) {
       return;
     }
 
     // Skip if user prefers-reduced-motion
     const preferesReducedMotion = window.matchMedia('(prefers-reduced-motion)').matches;
     if (preferesReducedMotion) {
-      supportsWebGL = 0;
+      useWebGL = UseWebGL.Off;
       return;
     }
 
     // Check device memory, skip for under 4GB
     if (navigator.deviceMemory !== undefined && navigator.deviceMemory < 4) {
-      supportsWebGL = 0;
+      useWebGL = UseWebGL.Off;
       return;
     }
 
     // Check thread count, skip if probably old/less-capable CPU
     if (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4) {
-      supportsWebGL = 0;
+      useWebGL = UseWebGL.Off;
       return;
     }
 
@@ -150,10 +158,10 @@ export function HomeHero() {
     // detect WebGL support
     const cnv = document.createElement('canvas');
     if (cnv.getContext('webgl') != null || cnv.getContext('experimental-webgl') != null) {
-      supportsWebGL = 1;
+      useWebGL = UseWebGL.On;
       setGL(true);
     } else {
-      supportsWebGL = 0;
+      useWebGL = UseWebGL.NotSupported;
     }
   }, []);
 
