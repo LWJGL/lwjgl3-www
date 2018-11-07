@@ -35,25 +35,23 @@ const HashLinkTargetControlled = memo(({ id, hash }: Props) => {
 
   useEffect(
     () => {
-      if (prevHash === undefined) {
+      if (prevHash === null) {
         // Only runs on mount
         if (hash === `#${id}` && el.current !== null) {
           scrollToTarget(el.current);
         }
-      } else {
+      } else if (prevHash !== hash) {
         // Runs on re-render
-        if (prevHash !== hash) {
-          if (hash === `#${id}` && el.current !== null) {
-            if (prevHash === '') {
-              defaultScrollPos = [window.pageXOffset, window.pageYOffset];
-            }
-            scrolling = true;
-            scrollToTarget(el.current);
-          } else if (!scrolling) {
-            scrolling = true;
-            scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
-            setTimeout(scrollEnd, 0);
+        if (hash === `#${id}` && el.current !== null) {
+          if (prevHash === '') {
+            defaultScrollPos = [window.pageXOffset, window.pageYOffset];
           }
+          scrolling = true;
+          scrollToTarget(el.current);
+        } else if (!scrolling) {
+          scrolling = true;
+          scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
+          setTimeout(scrollEnd, 0);
         }
       }
     },
