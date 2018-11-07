@@ -5677,10 +5677,10 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.5:
     source-map "^0.6.1"
     supports-color "^5.5.0"
 
-prettier@1.14.3:
-  version "1.14.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.14.3.tgz#90238dd4c0684b7edce5f83b0fb7328e48bd0895"
-  integrity sha512-qZDVnCrnpsRJJq5nSsiHCE3BYMED2OtsI+cmzIzF1QIfqm5ALf8tEJcO27zV1gKNKRPdhjO0dNWnrzssDQ1tFg==
+prettier@1.15.1:
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.1.tgz#06c67106afb1b40e74b002353b2079cc7e0e67bf"
+  integrity sha512-4rgV2hyc/5Pk0XHH4VjJWHRgVjgRbpMfLQjREAhHBtyW1UvTFkjJEsueGYNYYZd9mn97K+1qv0EBwm11zoaSgA==
 
 private@^0.1.6:
   version "0.1.8"
@@ -6371,7 +6371,15 @@ sax@>=0.6.0, sax@^1.2.4, sax@~1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-scheduler@0.11.0-alpha.0, scheduler@^0.11.0-alpha.0:
+scheduler@0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.11.0.tgz#def1f1bfa6550cc57981a87106e65e8aea41a6b5"
+  integrity sha512-MAYbBfmiEHxF0W+c4CxMpEqMYK+rYF584VP/qMKSiHM6lTkBKKYOJaDiSILpJHla6hBOsVd6GucPL46o2Uq3sg==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@^0.11.0-alpha.0:
   version "0.11.0-alpha.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.11.0-alpha.0.tgz#7b132c726608993471db07866f2d59a52b9e190b"
   integrity sha512-0tUDHYSyni/EHkMMBysVXVwfanCWWbLsulnDB1tGrQiWWrVuRVoclWCPHCYC/1iR5Rj34EQhxh3/F36V+F+ZpA==
@@ -7071,10 +7079,10 @@ typescript-template-language-service-decorator@^2.0.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.0.0.tgz#7433fdc464f07034d951dea9a5e76fab6e558f57"
   integrity sha512-wbrje6G8t+h/xBRP+gyAXYpR0+U7the2YnfsF59SKz//gdLnpL+cSFhIuW61I07XXDyU68yMBFqUzm0Hg1Xpcg==
 
-typescript@3.2.0-dev.20181106:
-  version "3.2.0-dev.20181106"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.0-dev.20181106.tgz#5481754a3399f5eaf9a9bbb2ed15464f574b7a7c"
-  integrity sha512-k/PaWTBbpKpykJYBD1OqzdyDi+BGOz9FYGid67ZD4AVVSzn15TmrOdXrHFfe+B5Odv+As0SFfki8ZUMvW0MoiQ==
+typescript@3.2.0-dev.20181107:
+  version "3.2.0-dev.20181107"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.0-dev.20181107.tgz#bf080a808d9c2e3ca828fbb9835331bc1d878e1a"
+  integrity sha512-2LReeaWhtx20VxQ78nudW2HJD9Am3nAcLfuFI2SGRLpQxnEss6bKDXy+3SxawNTLDI8gn7YdalR/3bCSA6qgiw==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
