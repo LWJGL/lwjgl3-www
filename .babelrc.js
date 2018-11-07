@@ -96,13 +96,17 @@ if (PRODUCTION) {
       // forceAllTransforms: true,
       debug: false,
       useBuiltIns: 'usage',
-      shippedProposals: true,
-      ...(MODERN ? { targets: { esmodules: true } } : undefined),
+      // shippedProposals: true,
+      // ...(MODERN ? { targets: { esmodules: true } } : undefined),
+      targets: {
+        browsers: ['defaults', 'chrome >= 41', 'firefox >= 34', 'safari >= 8', 'edge >= 12', 'ios >= 8', 'ie >= 11'],
+      },
       exclude: [
-        'transform-sticky-regex',
-        'transform-unicode-regex',
+        // 'transform-sticky-regex',
+        // 'transform-unicode-regex',
         'transform-async-to-generator',
         'transform-regenerator',
+        /*
         'es6.typed.array-buffer',
         'es6.typed.data-view',
         'es6.typed.int8-array',
@@ -199,6 +203,7 @@ if (PRODUCTION) {
         // 'es7.string.pad-start',
         // 'es7.string.pad-end',
         // 'es7.promise.finally',
+        */
       ],
     },
   ]);
