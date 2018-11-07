@@ -64,7 +64,7 @@ const ProgressStyle = css`
 
 interface Props {
   className?: string;
-  size: number;
+  size?: number;
   style?: React.CSSProperties;
   thickness?: number;
   value?: number;
