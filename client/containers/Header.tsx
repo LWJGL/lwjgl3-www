@@ -78,7 +78,7 @@ export class Header extends React.PureComponent<Props, State> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.onScroll, SUPPORTS_PASSIVE_EVENTS ? {} : false);
+    window.removeEventListener('scroll', this.onScroll, false);
     this.mounted = false;
   }
 

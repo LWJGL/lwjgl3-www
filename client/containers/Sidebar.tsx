@@ -66,9 +66,9 @@ export class Sidebar extends React.PureComponent<Props, State> {
       //@ts-ignore
       focusTrap.deactivate({ onDeactivate: false });
       if (sideContainer !== null) {
-        sideContainer.removeEventListener('touchstart', this.onTouchStart, SUPPORTS_PASSIVE_EVENTS ? {} : false);
-        sideContainer.removeEventListener('touchmove', this.onTouchMove, SUPPORTS_PASSIVE_EVENTS ? {} : false);
-        sideContainer.removeEventListener('touchend', this.onTouchEnd, SUPPORTS_PASSIVE_EVENTS ? {} : false);
+        sideContainer.removeEventListener('touchstart', this.onTouchStart, false);
+        sideContainer.removeEventListener('touchmove', this.onTouchMove, false);
+        sideContainer.removeEventListener('touchend', this.onTouchEnd, false);
       }
     } else {
       on();
@@ -85,11 +85,7 @@ export class Sidebar extends React.PureComponent<Props, State> {
           this.onTouchMove,
           SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
         );
-        sideContainer.addEventListener(
-          'touchend',
-          this.onTouchEnd,
-          SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
-        );
+        sideContainer.addEventListener('touchend', this.onTouchEnd, false);
       }
     }
 

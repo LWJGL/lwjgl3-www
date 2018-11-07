@@ -17,7 +17,7 @@ export function useWindowScrollPosition(throttleMs: number = 0) {
 
     window.addEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     return () => {
-      window.removeEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? {} : false);
+      window.removeEventListener('scroll', handleScroll, false);
     };
   }, []);
 
