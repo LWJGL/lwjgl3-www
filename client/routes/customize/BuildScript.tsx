@@ -1,11 +1,11 @@
 import * as React from 'react';
+import { useMemo } from 'react';
+import { useMemoSlice } from './Store';
 import { useBreakpoint } from '~/components/Breakpoint';
 import IconContentCopy from '~/components/icons/md/ContentCopy';
 import IconFileDownload from '~/components/icons/md/FileDownload';
-import { StateMemo } from '~/components/StateMemo';
 import { BuildToolbar } from './BuildToolbar';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
-import { useStore } from './Store';
 import {
   Addon,
   AddonMap,
@@ -44,7 +44,16 @@ interface Props {
 }
 
 export function BuildScript(props: Props) {
-  const [state] = useStore(
+  const preRef: React.RefObject<HTMLPreElement> = React.useRef(null);
+
+  // Breakpoint
+  const {
+    current,
+    breakpoints: { sm, md },
+  } = useBreakpoint();
+
+  // Slice
+  const [slice] = useMemoSlice(
     (state): State => {
       // Artifacts
       const selected: Array<Binding> = [];
@@ -80,63 +89,71 @@ export function BuildScript(props: Props) {
         addons: state.addons.byId,
         selectedAddons,
       };
-    }
+    },
+    ({ build, mode, version, hardcoded, compact, osgi, language, platform, selectedAddons, contents }) => [
+      build,
+      mode,
+      version,
+      hardcoded,
+      compact,
+      osgi,
+      language,
+      platform,
+      selectedAddons,
+      contents,
+    ]
   );
 
-  const { mode } = state;
+  const { mode } = slice;
 
-  const {
-    current,
-    breakpoints: { sm, md },
-  } = useBreakpoint();
+  return useMemo(
+    () => {
+      const labels = {
+        download: `DOWNLOAD ${typeof mode.file === 'string' ? mode.file.toUpperCase() : 'FILE'}`,
+        copy: ' COPY TO CLIPBOARD',
+      };
 
-  const preRef: React.RefObject<HTMLPreElement> = React.useRef(null);
+      if (current < sm) {
+        labels.download = 'DOWNLOAD';
+        labels.copy = '';
+      } else if (current < md) {
+        labels.copy = ' COPY';
+      }
 
-  const labels = {
-    download: `DOWNLOAD ${typeof mode.file === 'string' ? mode.file.toUpperCase() : 'FILE'}`,
-    copy: ' COPY TO CLIPBOARD',
-  };
+      const script = generateScript(mode.id, slice);
 
-  if (current < sm) {
-    labels.download = 'DOWNLOAD';
-    labels.copy = '';
-  } else if (current < md) {
-    labels.copy = ' COPY';
-  }
-
-  const script = generateScript(mode.id, state);
-
-  return (
-    <StateMemo state={state}>
-      <div>
-        <h2 className="mt-1">
-          <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
-        </h2>
-        <pre ref={preRef} className="m-0">
-          <code>{script}</code>
-        </pre>
-        <BuildToolbar configDownload={props.configDownload} configLoad={props.configLoad}>
-          {ALLOW_DOWNLOAD && (
-            <a
+      return (
+        <div>
+          <h2 className="mt-1">
+            <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
+          </h2>
+          <pre ref={preRef} className="m-0">
+            <code>{script}</code>
+          </pre>
+          <BuildToolbar configDownload={props.configDownload} configLoad={props.configLoad}>
+            {ALLOW_DOWNLOAD && (
+              <a
+                className="btn btn-success"
+                download={mode.file}
+                href={`data:${mime(mode)};base64,${btoa(script)}`}
+                title={`Download ${mode.id} code snippet`}
+              >
+                <IconFileDownload /> {labels.download}
+              </a>
+            )}
+            <button
               className="btn btn-success"
-              download={mode.file}
-              href={`data:${mime(mode)};base64,${btoa(script)}`}
-              title={`Download ${mode.id} code snippet`}
+              onClick={() => copyToClipboard(preRef)}
+              disabled={!document.execCommand}
+              title="Copy to clipboard"
             >
-              <IconFileDownload /> {labels.download}
-            </a>
-          )}
-          <button
-            className="btn btn-success"
-            onClick={() => copyToClipboard(preRef)}
-            disabled={!document.execCommand}
-            title="Copy to clipboard"
-          >
-            <IconContentCopy />
-            {labels.copy}
-          </button>
-        </BuildToolbar>
-      </div>
-    </StateMemo>
+              <IconContentCopy />
+              {labels.copy}
+            </button>
+          </BuildToolbar>
+        </div>
+      );
+    },
+    [slice]
   );
 }

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createContext, useContext, useReducer, useEffect, useRef } from 'react';
+import { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
 import { ActionCreator, configLoad } from './actions';
 import { config, getConfigSnapshot } from './config';
 import { reducer } from './reducer';
@@ -23,11 +23,11 @@ export const StoreContext = createContext<StoreContextType>({
   dispatch: emptyFn,
 });
 
-type SliceTuple<S> = [S, React.Dispatch<ActionCreator>];
+type StoreTuple = [BuildStore, React.Dispatch<ActionCreator>];
 
-export function useStore<S>(slicer: (state: BuildStore) => S): SliceTuple<S> {
+export function useStore(): StoreTuple {
   const { state, dispatch } = useContext(StoreContext);
-  return [slicer(state), dispatch];
+  return [state, dispatch];
 }
 
 export function useStoreRef() {
@@ -35,6 +35,21 @@ export function useStoreRef() {
   const storeRef = useRef<BuildStore>(state);
   storeRef.current = state;
   return storeRef;
+}
+
+type SliceTuple<S> = [S, React.Dispatch<ActionCreator>];
+
+export function useSlice<S>(slicer: (state: BuildStore) => S): SliceTuple<S> {
+  const { state, dispatch } = useContext(StoreContext);
+  return [slicer(state), dispatch];
+}
+
+export function useMemoSlice<S>(
+  getSlice: (state: BuildStore) => S,
+  getInputs: (state: BuildStore) => React.InputIdentityList
+): SliceTuple<S> {
+  const { state, dispatch } = useContext(StoreContext);
+  return [useMemo(() => getSlice(state), getInputs(state)), dispatch];
 }
 
 // export function useStoreContext(): StoreContextType {
@@ -57,43 +72,48 @@ interface ProviderProps {
   children: React.ReactNode;
 }
 
+let prevConfig: BuildStoreSnapshot | null;
+const saveSnapshot = debounce((state: BuildStore) => {
+  if (state === config) {
+    // Skip default state
+    return;
+  }
+  const save = getConfigSnapshot(state);
+  if (save === null) {
+    if (prevConfig !== null) {
+      prevConfig = null;
+      localStorage.removeItem(STORAGE_KEY);
+    }
+    return;
+  }
+
+  // Save to local storage
+  // * NOTE: We deep compare because it is faster than serializing & storing on disk every time
+  if (prevConfig === null || !isEqual(prevConfig, save)) {
+    prevConfig = save;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
+  }
+}, 500);
+
 // Store Provider
 export function Provider(props: ProviderProps) {
   const [state, dispatch] = useReducer<BuildStore, ActionCreator>(reducer, config);
-  const prevConfig: React.MutableRefObject<null | BuildStoreSnapshot> = useRef(null);
 
   useEffect(() => {
     const restore = localStorage.getItem(STORAGE_KEY);
     if (restore !== null) {
       try {
-        let previousConfig: BuildStoreSnapshot = JSON.parse(restore);
-        prevConfig.current = previousConfig;
-        dispatch(configLoad(previousConfig));
+        prevConfig = JSON.parse(restore) as BuildStoreSnapshot;
+        dispatch(configLoad(prevConfig));
       } catch (err) {
         localStorage.removeItem(STORAGE_KEY);
       }
     }
   }, []);
 
-  useEffect(
-    debounce(() => {
-      const save = getConfigSnapshot(state);
-      if (save === null) {
-        if (prevConfig.current !== null) {
-          prevConfig.current = null;
-          localStorage.removeItem(STORAGE_KEY);
-        }
-        return;
-      }
-
-      // Save to local storage
-      // * NOTE: We deep compare because it is faster than serializing & storing on disk every time
-      if (prevConfig.current === null || !isEqual(prevConfig.current, save)) {
-        prevConfig.current = save;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
-      }
-    }, 500)
-  );
+  useEffect(() => {
+    saveSnapshot(state);
+  });
 
   return (
     <StoreContext.Provider

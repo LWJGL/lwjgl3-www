@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { memo } from 'react';
-import { StateMemo } from '~/components/StateMemo';
-import { useStore, useStoreRef } from './Store';
-import { Binding, BindingDefinition, Native, NATIVE_ALL } from './types';
+import { memo, useMemo } from 'react';
+import { useMemoSlice } from './Store';
+import { Binding, BindingDefinition, Native, NATIVE_ALL, BuildStore } from './types';
 import { toggleArtifact } from './actions';
 
 // UI
@@ -17,40 +16,45 @@ const getPlatformIcons = (platforms: Array<Native>) => (
   </p>
 );
 
+const getSlice = ({ contents, availability, descriptions, artifacts }: BuildStore) => ({
+  contents,
+  availability,
+  descriptions,
+  allIds: artifacts.allIds,
+  byId: artifacts.byId,
+});
+
+const getInputs = (state: BuildStore) => [state.contents, state.availability, state.descriptions];
+
 export function BuildArtifacts() {
-  const [state, dispatch] = useStore(({ contents, availability, descriptions }) => ({
-    contents,
-    availability,
-    descriptions,
-  }));
+  const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
+  const { contents, availability, descriptions, allIds, byId } = slice;
 
-  const {
-    artifacts: { allIds, byId },
-  } = useStoreRef().current;
+  return useMemo(
+    () => {
+      const onChange = (artifact: Binding) => dispatch(toggleArtifact(artifact));
 
-  const { contents, availability, descriptions: showDescriptions } = state;
-  const onChange = (artifact: Binding) => dispatch(toggleArtifact(artifact));
+      return (
+        <div className="custom-controls-stacked">
+          {allIds.map((it: Binding) => {
+            const artifact = byId[it] as BindingDefinition;
+            const available = availability[it] === true;
 
-  return (
-    <StateMemo state={state}>
-      <div className="custom-controls-stacked">
-        {allIds.map((it: Binding) => {
-          const artifact = byId[it] as BindingDefinition;
-          const available = availability[it] === true;
-
-          return (
-            <BuildArtifact
-              key={it}
-              artifact={artifact}
-              disabled={!available || artifact.required === true}
-              selected={available && contents[it] === true}
-              showDescriptions={showDescriptions}
-              onChange={onChange}
-            />
-          );
-        })}
-      </div>
-    </StateMemo>
+            return (
+              <BuildArtifact
+                key={it}
+                artifact={artifact}
+                disabled={!available || artifact.required === true}
+                selected={available && contents[it] === true}
+                showDescriptions={descriptions}
+                onChange={onChange}
+              />
+            );
+          })}
+        </div>
+      );
+    },
+    [slice]
   );
 }
 

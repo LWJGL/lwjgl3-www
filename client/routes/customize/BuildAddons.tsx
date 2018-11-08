@@ -1,46 +1,50 @@
 import * as React from 'react';
-import { memo } from 'react';
-import { StateMemo } from '~/components/StateMemo';
-import { useStore, useStoreRef } from './Store';
-import { Addon, AddonDefinition } from './types';
+import { memo, useMemo } from 'react';
+import { useMemoSlice } from './Store';
+import { Addon, AddonDefinition, BuildStore } from './types';
 import { toggleAddon } from './actions';
 import { Checkbox } from '~/components/Checkbox';
 import { cc } from '~/theme';
 
+const getSlice = ({ mode, selectedAddons, descriptions, addons }: BuildStore) => ({
+  mode,
+  selectedAddons,
+  descriptions,
+  allIds: addons.allIds,
+  byId: addons.byId,
+});
+
+const getInputs = (state: BuildStore) => [state.mode, state.selectedAddons, state.descriptions];
+
 export function BuildAddons() {
-  const [state, dispatch] = useStore(({ mode, selectedAddons, descriptions }) => ({
-    mode,
-    selectedAddons,
-    descriptions,
-  }));
+  const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
+  const { mode, selectedAddons, descriptions, allIds, byId } = slice;
 
-  const {
-    addons: { allIds, byId },
-  } = useStoreRef().current;
+  return useMemo(
+    () => {
+      const onChange = (addon: Addon) => dispatch(toggleAddon(addon));
 
-  const { mode, selectedAddons, descriptions: showDescriptions } = state;
-  const onChange = (addon: Addon) => dispatch(toggleAddon(addon));
+      return (
+        <div className="custom-controls-stacked">
+          {allIds.map((it: Addon) => {
+            const addon = byId[it];
+            const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
 
-  return (
-    <StateMemo state={state}>
-      <div className="custom-controls-stacked">
-        {allIds.map((it: Addon) => {
-          const addon = byId[it];
-          const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
-
-          return (
-            <BuildAddon
-              key={it}
-              addon={addon}
-              disabled={disabled}
-              selected={selectedAddons.includes(it)}
-              showDescriptions={showDescriptions}
-              onChange={onChange}
-            />
-          );
-        })}
-      </div>
-    </StateMemo>
+            return (
+              <BuildAddon
+                key={it}
+                addon={addon}
+                disabled={disabled}
+                selected={selectedAddons.includes(it)}
+                showDescriptions={descriptions}
+                onChange={onChange}
+              />
+            );
+          })}
+        </div>
+      );
+    },
+    [slice]
   );
 }
 

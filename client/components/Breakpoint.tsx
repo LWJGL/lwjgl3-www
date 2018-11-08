@@ -12,7 +12,7 @@ export const BreakpointContext = React.createContext<Context>({
   breakpoints: breakpointIndex,
 });
 
-export const Breakpoint = BreakpointContext.Consumer;
+// export const Breakpoint = BreakpointContext.Consumer;
 
 export function useBreakpoint() {
   const ctx = useContext(BreakpointContext);

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useStore } from './Store';
+import { useSlice } from './Store';
 import { BuildStore } from './types';
 
 interface Props {
@@ -8,9 +8,6 @@ interface Props {
 }
 
 export function ControlledPanel({ children, predicate }: Props) {
-  const [state] = useStore(state => ({
-    visible: predicate(state),
-  }));
-
-  return state.visible ? <React.Fragment>{children}</React.Fragment> : null;
+  const [visible] = useSlice(state => predicate(state));
+  return visible ? (children as any) : null;
 }

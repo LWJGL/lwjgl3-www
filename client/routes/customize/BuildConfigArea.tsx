@@ -1,11 +1,11 @@
 // @jsx jsx
 import * as React from 'react';
+import { useMemo } from 'react';
 import { jsx, css } from '@emotion/core';
 jsx;
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import { lighten } from '~/theme/color';
-import { useStore } from './Store';
-import { StateMemo } from '~/components/StateMemo';
+import { useSlice } from './Store';
 
 import {
   COLOR_RELEASE,
@@ -22,18 +22,18 @@ interface Props {
 }
 
 export function BuildConfigArea({ children }: Props) {
-  const [state] = useStore(state => ({
+  const [slice] = useSlice(state => ({
     build: state.build,
   }));
 
-  return (
-    <StateMemo state={state}>
-      {state.build !== null ? (
-        <div css={ConfigPanel} className={state.build}>
+  return useMemo(
+    () =>
+      slice.build !== null ? (
+        <div css={ConfigPanel} className={slice.build}>
           {children}
         </div>
-      ) : null}
-    </StateMemo>
+      ) : null,
+    [slice.build]
   );
 }
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { StateMemo } from '~/components/StateMemo';
-import { useStore } from './Store';
+import { useMemo } from 'react';
+import { useMemoSlice } from './Store';
 import { Radio } from '~/components/Radio';
 
 interface Props {
@@ -10,6 +10,7 @@ interface Props {
     options: (state: any) => any;
     // hidden?: (state: any) => boolean,
     action: any;
+    inputs: (state: any) => React.InputIdentityList;
   };
 }
 
@@ -28,30 +29,34 @@ interface State {
 }
 
 export function ControlledRadio({ spec }: Props) {
-  const [state, dispatch] = useStore(
+  const [slice, dispatch] = useMemoSlice(
     (state): State => ({
       value: spec.value(state),
       options: spec.options(state),
-    })
+    }),
+    state => spec.inputs(state)
   );
 
-  const { value: selectedValue, options } = state;
-  const select = (value: any) => dispatch(spec.action(value));
+  return useMemo(
+    () => {
+      const { value: selectedValue, options } = slice;
+      const select = (value: any) => dispatch(spec.action(value));
 
-  return (
-    <StateMemo state={state}>
-      <div className="custom-controls-stacked">
-        {options.map(({ value, label, disabled }: RadioOption, i: number) => (
-          <Radio
-            key={`${spec.name}-${typeof value === 'string' ? value : i}`}
-            value={value}
-            checked={value === selectedValue}
-            onChange={select}
-            label={label}
-            disabled={disabled === true}
-          />
-        ))}
-      </div>
-    </StateMemo>
+      return (
+        <div className="custom-controls-stacked">
+          {options.map(({ value, label, disabled }: RadioOption, i: number) => (
+            <Radio
+              key={`${spec.name}-${typeof value === 'string' ? value : i}`}
+              value={value}
+              checked={value === selectedValue}
+              onChange={select}
+              label={label}
+              disabled={disabled === true}
+            />
+          ))}
+        </div>
+      );
+    },
+    [slice]
   );
 }
