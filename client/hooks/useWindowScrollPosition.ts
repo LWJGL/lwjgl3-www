@@ -13,7 +13,8 @@ export function useWindowScrollPosition(throttleMs: number = 0) {
   let [position, setPosition] = useState(getPosition);
 
   useEffect(() => {
-    const handleScroll = throttle(() => setPosition(getPosition), throttleMs);
+    const handleScroll =
+      throttleMs > 0 ? throttle(() => setPosition(getPosition), throttleMs) : () => setPosition(getPosition);
 
     window.addEventListener('scroll', handleScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     return () => {
