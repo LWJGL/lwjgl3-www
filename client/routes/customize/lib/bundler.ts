@@ -131,10 +131,10 @@ export function getFiles(
       // Check if platform is selected
     } else if (nativeRegExp.test(filepath)) {
       const platform = filepath.match(platformRegExp);
-      if (platform == null) {
+      if (platform === null) {
         return;
       }
-      const native = folderToPlatform(folder);
+      const native = pathToNative(platform[1]);
       if (native === null || platforms[native] !== true) {
         return;
       }
@@ -147,7 +147,7 @@ export function getFiles(
   return files.map((filepath: string): string => `${path}/bin/${filepath}`);
 }
 
-function folderToPlatform(folder: string): Native | null {
+function pathToNative(folder: string): Native | null {
   switch (folder) {
     case 'windows':
       return Native.Windows;
