@@ -32,10 +32,10 @@ export const fields = {
     name: 'mode',
     value: getMode,
     action: selectMode,
-    options: ({ build, modes }: BuildStore): RadioOptions =>
-      modes.allIds.map(mode => ({
+    options: ({ modes: { allIds, byId }, build }: BuildStore): RadioOptions =>
+      allIds.map(mode => ({
         value: mode,
-        label: modes.byId[mode].title,
+        label: byId[mode].title,
         disabled: build === BuildType.Stable && mode !== Mode.Zip,
       })),
     inputs: ({ build, mode }: BuildStore) => [build, mode],
@@ -44,10 +44,10 @@ export const fields = {
     name: 'preset',
     value: getPreset,
     action: selectPreset,
-    options: ({ presets, preset }: BuildStore): RadioOptions =>
-      presets.allIds.map(presetId => ({
+    options: ({ presets: { allIds, byId }, preset }: BuildStore): RadioOptions =>
+      allIds.map(presetId => ({
         value: presetId,
-        label: presets.byId[presetId].title,
+        label: byId[presetId].title,
         disabled: preset !== presetId && presetId === 'custom',
       })),
     inputs: (state: BuildStore) => [state.preset],
@@ -56,10 +56,10 @@ export const fields = {
     name: 'language',
     value: getLanguage,
     action: selectLanguage,
-    options: ({ languages }: BuildStore): RadioOptions =>
-      languages.allIds.map((lang: Language) => ({
+    options: ({ languages: { allIds, byId } }: BuildStore): RadioOptions =>
+      allIds.map((lang: Language) => ({
         value: lang,
-        label: languages.byId[lang].title,
+        label: byId[lang].title,
       })),
     inputs: (state: BuildStore) => [state.language],
   },

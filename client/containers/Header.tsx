@@ -61,6 +61,11 @@ export function Header({ isHome }: Props) {
 
   useEffect(
     () => {
+      enum Direction {
+        Up,
+        Down,
+      }
+
       // Re-create useState variables to prevent scope conflicts
       let pos = 0;
       let top = true;
@@ -71,7 +76,7 @@ export function Header({ isHome }: Props) {
       let mounted = true;
       let prev = 0;
       let current = 0;
-      let direction = 0;
+      let direction = Direction.Down;
       let ticking = false;
 
       function _setPos(value: number) {
@@ -105,9 +110,9 @@ export function Header({ isHome }: Props) {
             if (!hidden) {
               _setHidden(true);
             }
-          } else if (direction >= 0) {
+          } else if (direction === Direction.Up) {
             // We just started scroll down
-            direction = -1;
+            direction = Direction.Down;
             if (fixed) {
               // Release menu from the top of the viewport
               _setFixed(false);
@@ -125,9 +130,9 @@ export function Header({ isHome }: Props) {
               _setHidden(false);
             }
           } else {
-            if (direction <= 0) {
+            if (direction === Direction.Down) {
               // We just started scrolling up
-              direction = 1;
+              direction = Direction.Up;
               if (prev - current > offsetHeight.current) {
                 _setFixed(true);
                 _setPos(0);
