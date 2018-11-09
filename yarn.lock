@@ -1508,10 +1508,10 @@ autoprefixer@9.3.1:
     postcss "^7.0.5"
     postcss-value-parser "^3.3.1"
 
-aws-sdk@2.351.0:
-  version "2.351.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.351.0.tgz#c09ae170341e193bd3708ddb2925806732d3a3ab"
-  integrity sha512-FQ2dEnOha4fmUIarHIMyvAh+QMEwaYBeXf0p/HqVhr3H8+T8wsetN+pWLIFmnJtMyt+5tOSH13OGHWZ3rTg6hg==
+aws-sdk@2.352.0:
+  version "2.352.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.352.0.tgz#259cbb42652cbd811e729197fd43ee6a3cc1913e"
+  integrity sha512-MiPgXDUT2JrlmtGEYKzfVirnc4L5TlFLBuCbLEIsNiDlAjt5ZhjBudOC0NfAhMmVpUGVruut3l0Qs1IWJ9+CpQ==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -5996,10 +5996,10 @@ react-dom@16.7.0-alpha.0:
     prop-types "^15.6.2"
     scheduler "^0.11.0-alpha.0"
 
-react-fast-compare@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.2.tgz#0560ba7a61a1662d9cea8cd97a0d9db7591bab1c"
-  integrity sha512-EdPU5vXIzvNvQFNuej3oQ1PZ6YmDunTPZJ3V5EmwRqOhEmW0PNxzUdbYhXnZKZFtrrjGiu9718f6iQRdj0l2JA==
+react-fast-compare@2.0.3:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.3.tgz#f7c8f3867986dd6d9ad512299a3fc2231fb60c6f"
+  integrity sha512-zUaPHxoOZZYYf42Jm3tZklY19YVGr7Z7buvKw1MSzy0S1r/DVnuR/EfYPQmwh5UkMrAfAH4gbBz2pcDqec7Bhw==
 
 react-hot-loader@4.3.12:
   version "4.3.12"
@@ -7086,13 +7086,13 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript-styled-plugin@0.12.0:
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/typescript-styled-plugin/-/typescript-styled-plugin-0.12.0.tgz#ea441d773c1648727dbdb1e961a6a59d8f53c1a3"
-  integrity sha512-dqetvWmgwkfeUNyWlGlolnAw/A65bj+9I33MFQcy7a6JslZ71Zhvp0HMLmLYgF24qk5J8/UIGcYYUh7lJZIpLQ==
+typescript-styled-plugin@0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/typescript-styled-plugin/-/typescript-styled-plugin-0.13.0.tgz#e5d3d1293b9b85cffd473f01a7f4917ad6035ee5"
+  integrity sha512-GGMzv/JAd4S8mvWgHZslvW2G1HHrdurrp93oSR4h85SM8e5at7+KCqHsZICiTaL+iN25YGkJqoaZe4XklA76rg==
   dependencies:
     typescript-template-language-service-decorator "^2.0.0"
-    vscode-css-languageservice "^3.0.11"
+    vscode-css-languageservice "^3.0.12"
     vscode-emmet-helper "1.2.11"
     vscode-languageserver-types "^3.13.0"
 
@@ -7347,7 +7347,7 @@ void-elements@^2.0.1:
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
   integrity sha1-wGavtYK7HLQSjWDqkjkulNXp2+w=
 
-vscode-css-languageservice@^3.0.11:
+vscode-css-languageservice@^3.0.12:
   version "3.0.12"
   resolved "https://registry.yarnpkg.com/vscode-css-languageservice/-/vscode-css-languageservice-3.0.12.tgz#fb4aac5ae3c5b761b1db1d7224b78ff824284dc3"
   integrity sha512-+FLQ9LcukIhnxaGTjDOqb3Nb1hesz9BLXf5yeoZxUsuK7joADPLPdxLwlZugFcMAvgmtnaFIGnzkQhGOVqf5yw==

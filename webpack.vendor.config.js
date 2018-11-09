@@ -35,7 +35,6 @@ const config = {
       'scheduler',
       'prop-types',
       'fg-loadjs',
-      'fg-loadcss',
       'lodash-es',
       'fbjs',
       'react-fast-compare',

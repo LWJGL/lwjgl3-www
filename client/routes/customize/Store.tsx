@@ -88,12 +88,12 @@ const saveSnapshot = debounce((state: BuildStore) => {
   }
 
   // Save to local storage
-  // * NOTE: We deep compare because it is faster than serializing & storing on disk every time
+  // * NOTE: We deep compare because it is much faster than serializing & storing on disk every time
   if (prevConfig === null || !isEqual(prevConfig, save)) {
     prevConfig = save;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
   }
-}, 500);
+}, 1000);
 
 // Store Provider
 export function Provider(props: ProviderProps) {
@@ -109,6 +109,10 @@ export function Provider(props: ProviderProps) {
         localStorage.removeItem(STORAGE_KEY);
       }
     }
+    return () => {
+      // Immediately flush pending unsaved config changes
+      saveSnapshot.flush();
+    };
   }, []);
 
   useEffect(() => {

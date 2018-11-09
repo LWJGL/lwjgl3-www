@@ -32,7 +32,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.351.0",
+    "aws-sdk": "2.352.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
@@ -99,7 +99,7 @@
     "react": "16.7.0-alpha.0",
     "react-cache": "canary",
     "react-dom": "16.7.0-alpha.0",
-    "react-fast-compare": "2.0.2",
+    "react-fast-compare": "2.0.3",
     "react-hot-loader": "4.3.12",
     "sass-loader": "7.1.0",
     "scheduler": "0.11.0",
@@ -109,7 +109,7 @@
     "thread-loader": "1.2.0",
     "three": "0.98.0",
     "typescript": "3.2.0-dev.20181107",
-    "typescript-styled-plugin": "0.12.0",
+    "typescript-styled-plugin": "0.13.0",
     "webpack": "4.25.1",
     "webpack-bundle-analyzer": "3.0.3",
     "webpack-cli": "3.1.2",
