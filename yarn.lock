@@ -1508,10 +1508,10 @@ autoprefixer@9.3.1:
     postcss "^7.0.5"
     postcss-value-parser "^3.3.1"
 
-aws-sdk@2.352.0:
-  version "2.352.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.352.0.tgz#259cbb42652cbd811e729197fd43ee6a3cc1913e"
-  integrity sha512-MiPgXDUT2JrlmtGEYKzfVirnc4L5TlFLBuCbLEIsNiDlAjt5ZhjBudOC0NfAhMmVpUGVruut3l0Qs1IWJ9+CpQ==
+aws-sdk@2.353.0:
+  version "2.353.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.353.0.tgz#3c809d2b02834d892a3f5c3f1171273b336e5692"
+  integrity sha512-c5MwJhfcHwA2lC1Wq9csQvP9gz8dVGpZ64s5j9f/sWY6eZiDCQ6OWjxj+VJfpnCmfxyC/pdZO7JDGwems7dqIQ==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -5699,10 +5699,10 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.5:
     source-map "^0.6.1"
     supports-color "^5.5.0"
 
-prettier@1.15.1:
-  version "1.15.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.1.tgz#06c67106afb1b40e74b002353b2079cc7e0e67bf"
-  integrity sha512-4rgV2hyc/5Pk0XHH4VjJWHRgVjgRbpMfLQjREAhHBtyW1UvTFkjJEsueGYNYYZd9mn97K+1qv0EBwm11zoaSgA==
+prettier@1.15.2:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.2.tgz#d31abe22afa4351efa14c7f8b94b58bb7452205e"
+  integrity sha512-YgPLFFA0CdKL4Eg2IHtUSjzj/BWgszDHiNQAe0VAIBse34148whfdzLagRL+QiKS+YfK5ftB6X4v/MBw8yCoug==
 
 private@^0.1.6:
   version "0.1.8"
@@ -5996,15 +5996,15 @@ react-dom@16.7.0-alpha.0:
     prop-types "^15.6.2"
     scheduler "^0.11.0-alpha.0"
 
-react-fast-compare@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.3.tgz#f7c8f3867986dd6d9ad512299a3fc2231fb60c6f"
-  integrity sha512-zUaPHxoOZZYYf42Jm3tZklY19YVGr7Z7buvKw1MSzy0S1r/DVnuR/EfYPQmwh5UkMrAfAH4gbBz2pcDqec7Bhw==
+react-fast-compare@2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-2.0.4.tgz#e84b4d455b0fec113e0402c329352715196f81f9"
+  integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
-react-hot-loader@4.3.12:
-  version "4.3.12"
-  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.3.12.tgz#0d56688884e7330c63a00a17217866280616b07a"
-  integrity sha512-GMM4TsqUVss2QPe+Y33NlgydA5/+7tAVQxR0rZqWvBpapM8JhD7p6ymMwSZzr5yxjoXXlK/6P6qNQBOqm1dqdg==
+react-hot-loader@4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/react-hot-loader/-/react-hot-loader-4.4.0.tgz#bb025bc01d77b246766f3f3d19d824c8052fba87"
+  integrity sha512-cxLqseogDVrrpFYjS00AchfILK1zab0SXQwRAUHM/mNjcN4gS4Agjc97BfIzrgIVuJCIkQCpSGWQh4kVnz5VGQ==
   dependencies:
     fast-levenshtein "^2.0.6"
     global "^4.3.0"
@@ -6012,6 +6012,7 @@ react-hot-loader@4.3.12:
     prop-types "^15.6.1"
     react-lifecycles-compat "^3.0.4"
     shallowequal "^1.0.2"
+    source-map "^0.7.3"
 
 react-lifecycles-compat@^3.0.4:
   version "3.0.4"
@@ -6658,6 +6659,11 @@ source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
 
+source-map@^0.7.3:
+  version "0.7.3"
+  resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.7.3.tgz#5302f8169031735226544092e64981f751750383"
+  integrity sha512-CkCj6giN3S+n9qrYiBTX5gystlENnRW5jZeNLHpe6aue+SrHcG5VYwujhW9s4dY31mEGsxBDrHR6oI69fTXsaQ==
+
 spdx-correct@^3.0.0:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/spdx-correct/-/spdx-correct-3.0.2.tgz#19bb409e91b47b1ad54159243f7312a858db3c2e"
@@ -7101,10 +7107,10 @@ typescript-template-language-service-decorator@^2.0.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.0.0.tgz#7433fdc464f07034d951dea9a5e76fab6e558f57"
   integrity sha512-wbrje6G8t+h/xBRP+gyAXYpR0+U7the2YnfsF59SKz//gdLnpL+cSFhIuW61I07XXDyU68yMBFqUzm0Hg1Xpcg==
 
-typescript@3.2.0-dev.20181107:
-  version "3.2.0-dev.20181107"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.0-dev.20181107.tgz#bf080a808d9c2e3ca828fbb9835331bc1d878e1a"
-  integrity sha512-2LReeaWhtx20VxQ78nudW2HJD9Am3nAcLfuFI2SGRLpQxnEss6bKDXy+3SxawNTLDI8gn7YdalR/3bCSA6qgiw==
+typescript@3.2.0-dev.20181110:
+  version "3.2.0-dev.20181110"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.0-dev.20181110.tgz#4f4f4f3cd4f0d259227dacac2f7e5b163faa1771"
+  integrity sha512-s5t9wN6HVrp0Y3ueHL6ES9B3x/dO0XR8wztNuQeDSSR6Kueto/L3yziU8YLaOMCcFo53l+txZNtkUFO5FE/UNg==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
@@ -7619,10 +7625,10 @@ yargs-parser@^10.1.0:
   dependencies:
     camelcase "^4.1.0"
 
-yargs-parser@^11.0.0:
-  version "11.0.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-11.0.0.tgz#d9fd0f0cd551a2a2ef9bbf42606ffb6211634232"
-  integrity sha512-dvsafRjM45h79WOTvS/dP35Sb31SlGAKz6tFjI97kGC4MJFBuzTZY6TTYHrz0QSMQdkyd8Y+RsOMLr+JY0nPFQ==
+yargs-parser@^11.1.0:
+  version "11.1.0"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-11.1.0.tgz#0b8104116367bf663089b24e5801438ab50396a3"
+  integrity sha512-lGA5HsbjkpCfekDBHAhgE5OE8xEoqiUDylowr+BvhRCwG1xVYTsd8hx2CYC0NY4k9RIgJeybFTG2EZW4P2aN1w==
   dependencies:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
@@ -7634,10 +7640,10 @@ yargs-parser@^5.0.0:
   dependencies:
     camelcase "^3.0.0"
 
-yargs@12.0.3-candidate.0:
-  version "12.0.3-candidate.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.3-candidate.0.tgz#4e85168ff8c79d8a0f41a6e3f747eb58008d018c"
-  integrity sha512-1jc2KQR35tCCFswQOBwXUodWJJ4XCPNraAcX+V9SXW1FwGB5oX5XddNf1hUcg/o96j1wTlUZ9Iz2BfquOpepBA==
+yargs@12.0.4:
+  version "12.0.4"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.4.tgz#5ea307c6f11f11881c3bc375f9c939194e8cf4bc"
+  integrity sha512-f5esswlPO351AnejaO2A1ZZr0zesz19RehQKwiRDqWtrraWrJy16tsUIKgDXFMVytvNOHPVmTiaTh3wO67I0fQ==
   dependencies:
     cliui "^4.0.0"
     decamelize "^1.2.0"
@@ -7650,7 +7656,7 @@ yargs@12.0.3-candidate.0:
     string-width "^2.0.0"
     which-module "^2.0.0"
     y18n "^3.2.1 || ^4.0.0"
-    yargs-parser "^11.0.0"
+    yargs-parser "^11.1.0"
 
 yargs@^12.0.2:
   version "12.0.2"

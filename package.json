@@ -32,7 +32,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.352.0",
+    "aws-sdk": "2.353.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
@@ -43,7 +43,7 @@
     "request": "2.88.0",
     "request-promise-native": "1.0.5",
     "serve-favicon": "2.5.0",
-    "yargs": "12.0.3-candidate.0"
+    "yargs": "12.0.4"
   },
   "devDependencies": {
     "@babel/core": "7.1.5",
@@ -95,12 +95,12 @@
     "lodash-es": "4.17.11",
     "node-sass": "4.10.0",
     "postcss-loader": "3.0.0",
-    "prettier": "1.15.1",
+    "prettier": "1.15.2",
     "react": "16.7.0-alpha.0",
     "react-cache": "canary",
     "react-dom": "16.7.0-alpha.0",
-    "react-fast-compare": "2.0.3",
-    "react-hot-loader": "4.3.12",
+    "react-fast-compare": "2.0.4",
+    "react-hot-loader": "4.4.0",
     "sass-loader": "7.1.0",
     "scheduler": "0.11.0",
     "scroll-into-view-if-needed": "2.2.20",
@@ -108,7 +108,7 @@
     "terser": "3.10.11",
     "thread-loader": "1.2.0",
     "three": "0.98.0",
-    "typescript": "3.2.0-dev.20181107",
+    "typescript": "3.2.0-dev.20181110",
     "typescript-styled-plugin": "0.13.0",
     "webpack": "4.25.1",
     "webpack-bundle-analyzer": "3.0.3",

@@ -20,7 +20,7 @@ const env = {
 
 // function disableRHL(config) {
 //   // Replace ./client/RHL.js with ./client/container/App.jsx
-//   config.resolve.alias[path.resolve(__dirname, 'client/RHL.js')] = path.resolve(__dirname, 'client/containers/App.jsx');
+//   config.resolve.alias[path.resolve(__dirname, 'client/RHL.ts')] = path.resolve(__dirname, 'client/containers/App.tsx');
 // }
 
 const buildConfiguration = () => {
