@@ -9,7 +9,6 @@ const config = {
   presets: ['@babel/preset-typescript'],
   plugins: [
     'emotion',
-    '@babel/plugin-transform-flow-strip-types',
     PRODUCTION && '@babel/plugin-transform-runtime',
     // DEV && HMR && 'react-hot-loader/babel',
 
