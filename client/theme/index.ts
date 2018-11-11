@@ -1,6 +1,10 @@
+// import { createContext, useContext } from 'react';
 import { hsl } from './color';
 export { mediaBreakpointUp, mediaBreakpointDown } from './media';
 export { cc } from './cc';
+
+// const ThemeContext = createContext();
+// export const useTheme = () => useContext(ThemeContext);
 
 // For Bootstrap 4 variables see https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss
 
@@ -53,15 +57,26 @@ export const YIQ_TEXT_DARK = COLOR_GRAY_900;
 export const YIQ_TEXT_LIGHT = COLOR_WHITE;
 
 // Quickly modify global styling by enabling or disabling optional features.
-// export const ENABLE_CARET = true;
-export const ENABLE_CARET = false;
-export const ENABLE_ROUNDED = true;
+
+export const ENABLE_ROUNDED = false;
+
 // export const ENABLE_SHADOWS = false;
 export const ENABLE_SHADOWS = true;
-export const ENABLE_GRADIENTS = false;
-export const ENABLE_TRANSITIONS = true;
-export const ENABLE_HOVER_MEDIA_QUERY = false;
+
+export const ENABLE_GRADIENTS = true;
+
+// export const ENABLE_TRANSITIONS = true;
+export const ENABLE_TRANSITIONS = false;
+
+// export const ENABLE_HOVER_MEDIA_QUERY = false;
+export const ENABLE_HOVER_MEDIA_QUERY = true;
+
+// export const ENABLE_GRID_CLASSES = false;
 export const ENABLE_GRID_CLASSES = true;
+
+// export const ENABLE_CARET = true;
+export const ENABLE_CARET = false;
+
 // export const ENABLE_PRINT_STYLES = true;
 export const ENABLE_PRINT_STYLES = false;
 
