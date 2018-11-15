@@ -1092,10 +1092,10 @@
   resolved "https://registry.yarnpkg.com/@types/remarkable/-/remarkable-1.7.1.tgz#9029dc75c6ba80d33c3f6da16e9418eb81ed2767"
   integrity sha512-eOWGbv+nRk1AJeAkP9gFZM72U+c0U6cEvKtUc9vxOlAbSj+fqrvbQKOq9FhHzHN5tovBJ/Uoc2aoIRZ2BAESUg==
 
-"@types/three@0.93.8":
-  version "0.93.8"
-  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.93.8.tgz#447d1de1cbe3d322c0d6390f067ab2ef3f5a4544"
-  integrity sha512-SZkk5w1NP6Y9m7Zg0eGOYFGPMJD8RzJTR7o+ScnF0Y5e5J4cNcIg5UZJtrDShhaic9ubYf6Xy1WP83qNM0OMzQ==
+"@types/three@0.93.9":
+  version "0.93.9"
+  resolved "https://registry.yarnpkg.com/@types/three/-/three-0.93.9.tgz#2932790342e793427691adb9d8851c68ba9ac6b9"
+  integrity sha512-9DsBTC77r+ZRRoMN4CqZo0cAmtudWYletFPRJeNeCjI95zWBC5mZ+HcZiYRMgsZNTvrtMSQK+nUlqgxXHt+Hvg==
 
 "@webassemblyjs/ast@1.7.11":
   version "1.7.11"
@@ -1525,10 +1525,10 @@ autoprefixer@9.3.1:
     postcss "^7.0.5"
     postcss-value-parser "^3.3.1"
 
-aws-sdk@2.355.0:
-  version "2.355.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.355.0.tgz#ad78f95b5c39e32425a050d6ca19c9fc57742d05"
-  integrity sha512-/p5Oce83a58ItO8qdQ+rjXs1isGxFAWG9jse3GIHqxyLjpD1OL5/ouUE/0jgVihz1zB+hJ0CNj4yo7DdCaQ+Cg==
+aws-sdk@2.356.0:
+  version "2.356.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.356.0.tgz#491ec8f47a722ffdd2ac553895f012caef8022aa"
+  integrity sha512-s/VjKcmvF1Dh4G3eFI7BEiNaqNs38TqdpxInAK/89AyTpbuEeo1e0ErDUn6+EqdwePhbC6AuLtFTOUv/PlSJ+A==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -4933,10 +4933,10 @@ node-releases@^1.0.1:
   dependencies:
     semver "^5.3.0"
 
-node-sass@4.10.0:
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.10.0.tgz#dcc2b364c0913630945ccbf7a2bbf1f926effca4"
-  integrity sha512-fDQJfXszw6vek63Fe/ldkYXmRYK/QS6NbvM3i5oEo9ntPDy4XX7BcKZyTKv+/kSSxRtXXc7l+MSwEmYc0CSy6Q==
+node-sass@4.11.0:
+  version "4.11.0"
+  resolved "https://registry.yarnpkg.com/node-sass/-/node-sass-4.11.0.tgz#183faec398e9cbe93ba43362e2768ca988a6369a"
+  integrity sha512-bHUdHTphgQJZaF1LASx0kAviPH7sGlcyNhWade4eVIpFp6tsn7SV8xNMTbsQFpEV9VXpnwTTnNYlfsZXgGgmkA==
   dependencies:
     async-foreach "^0.1.3"
     chalk "^1.1.1"
@@ -7130,10 +7130,10 @@ typescript-template-language-service-decorator@^2.0.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.0.0.tgz#7433fdc464f07034d951dea9a5e76fab6e558f57"
   integrity sha512-wbrje6G8t+h/xBRP+gyAXYpR0+U7the2YnfsF59SKz//gdLnpL+cSFhIuW61I07XXDyU68yMBFqUzm0Hg1Xpcg==
 
-typescript@3.2.0-dev.20181113:
-  version "3.2.0-dev.20181113"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.0-dev.20181113.tgz#2d48b6f62843c6cbd0dd41a0ee9015bd7d22dcca"
-  integrity sha512-OoyIVhVzYUT33UCQfr1iBfhpk6iF7qSCgtRU/klz5tpWfIjvsOH+2jILNQNzaSoz5l3ulXCQNeAxDy10zRhz6w==
+typescript@3.2.0-dev.20181115:
+  version "3.2.0-dev.20181115"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.0-dev.20181115.tgz#19d23d64658198e334e4d42c560ad61ffe33ced7"
+  integrity sha512-fXDJgHrq8szvuaqp/SqsksAjY0IzmRlJxMHjFTBbdKDJFKR0dvSZ4OFlb2clrijZ5vF4HtIPB5yfMLtH3Nr/sA==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
