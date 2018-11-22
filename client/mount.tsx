@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { createRoot } from 'react-dom';
 import App from './containers/App';
-// import App from './RHL';
 import './services/ga';
 
 export function mount() {

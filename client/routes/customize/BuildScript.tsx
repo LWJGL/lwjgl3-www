@@ -68,10 +68,9 @@ export function BuildScript(props: Props) {
       const selectedAddons: Array<Addon> = [];
       state.selectedAddons.forEach(id => {
         const addon = state.addons.byId[id];
-        if (addon.modes !== undefined && addon.modes.indexOf(state.mode) === -1) {
-          return;
+        if (addon.modes === undefined || addon.modes.indexOf(state.mode) > -1) {
+          selectedAddons.push(id);
         }
-        selectedAddons.push(id);
       });
 
       return {

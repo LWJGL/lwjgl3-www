@@ -18,11 +18,6 @@ const env = {
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
-// function disableRHL(config) {
-//   // Replace ./client/RHL.js with ./client/container/App.jsx
-//   config.resolve.alias[path.resolve(__dirname, 'client/RHL.ts')] = path.resolve(__dirname, 'client/containers/App.tsx');
-// }
-
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
@@ -144,8 +139,6 @@ const buildConfiguration = () => {
       // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
-      // } else {
-      //   disableRHL(config);
     }
 
     if (DLL) {
@@ -198,7 +191,6 @@ const buildConfiguration = () => {
       // Base hashes on the relative path of modules
       new webpack.HashedModuleIdsPlugin()
     );
-    // disableRHL(config);
 
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';

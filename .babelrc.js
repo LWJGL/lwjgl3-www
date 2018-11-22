@@ -10,7 +10,6 @@ const config = {
   plugins: [
     'emotion',
     PRODUCTION && '@babel/plugin-transform-runtime',
-    // DEV && HMR && 'react-hot-loader/babel',
 
     // React
     DEV && '@babel/plugin-transform-react-jsx-self',
