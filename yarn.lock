@@ -1071,10 +1071,10 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react-dom@16.0.9":
-  version "16.0.9"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.9.tgz#73ceb7abe6703822eab6600e65c5c52efd07fb91"
-  integrity sha512-4Z0bW+75zeQgsEg7RaNuS1k9MKhci7oQqZXxrV5KUGIyXZHHAAL3KA4rjhdH8o6foZ5xsRMSqkoM5A3yRVPR5w==
+"@types/react-dom@16.0.10":
+  version "16.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.0.10.tgz#0c8980a639fa1d92a8547c8b6d0cf47af96c8966"
+  integrity sha512-CsUWfZBpj7SGBX/05bnvnsOUx+Uo6n7DoRVP7vYB5NWsanjHi60NWGZac8DstuXhdc7rasxI/j4D3hxgNSWlzg==
   dependencies:
     "@types/node" "*"
     "@types/react" "*"
@@ -7113,10 +7113,10 @@ typescript-template-language-service-decorator@^2.0.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.0.0.tgz#7433fdc464f07034d951dea9a5e76fab6e558f57"
   integrity sha512-wbrje6G8t+h/xBRP+gyAXYpR0+U7the2YnfsF59SKz//gdLnpL+cSFhIuW61I07XXDyU68yMBFqUzm0Hg1Xpcg==
 
-typescript@3.3.0-dev.20181121:
-  version "3.3.0-dev.20181121"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.0-dev.20181121.tgz#f59b52f98e85c993b38e158b0fe3244f3d71e1ec"
-  integrity sha512-KRLFDzWrQP3c0ypBQ49mAG1/LVPaTxzXOEwAWtNI1Ccvpw67/vHt1OnS7u+B+K3klA7iBVjv8Lcytdn1K/7b2g==
+typescript@3.3.0-dev.20181122:
+  version "3.3.0-dev.20181122"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.3.0-dev.20181122.tgz#8e83a477c1ac4983c09a7ffd37126412d3756045"
+  integrity sha512-tYYZPLAMfweT/HN+0MsTLZ2Poqq6LoccRzzyvTMkruRRXpxooqo91g9C9yhTD1eFf8hTsiy6j7HJzkrSTflr1A==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
