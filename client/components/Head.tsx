@@ -1,10 +1,10 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 
 interface Props {
   children: React.ReactNode;
 }
 
 export function Head(props: Props) {
-  return ReactDOM.createPortal(props.children, document.head);
+  return createPortal(props.children, document.head);
 }

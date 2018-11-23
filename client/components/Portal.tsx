@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createPortal } from 'react-dom';
 import { memo, useRef, useEffect } from 'react';
 
 interface Props {
@@ -27,5 +27,5 @@ export const Portal = memo(({ children }: Props) => {
     };
   }, []);
 
-  return ReactDOM.createPortal(children !== undefined ? children : null, targetElement.current);
+  return createPortal(children !== undefined ? children : null, targetElement.current);
 });
