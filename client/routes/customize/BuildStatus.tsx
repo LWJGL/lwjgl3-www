@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { BuildType } from './types';
 import { config } from './config';
-import { createCache, createResource } from 'react-cache';
+import { unstable_createResource as createResource } from 'react-cache';
 
 interface BuildStatusSuccess {
   lastModified: string;
@@ -18,11 +18,10 @@ interface Props {
   name: BuildType;
 }
 
-const cache = createCache();
 const BuildStatusResource = createResource<BuildType, BuildStatus>(loadStatus);
 
 export const BuildStatus = React.memo(({ name }: Props) => {
-  const status = BuildStatusResource.read(cache, name);
+  const status = BuildStatusResource.read(name);
 
   return (
     <p className="my-0">

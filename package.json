@@ -96,7 +96,7 @@
     "postcss-loader": "3.0.0",
     "prettier": "1.15.2",
     "react": "16.7.0-alpha.2",
-    "react-cache": "canary",
+    "react-cache": "2.0.0-alpha.1",
     "react-dom": "16.7.0-alpha.2",
     "react-fast-compare": "2.0.4",
     "sass-loader": "7.1.0",

@@ -5995,10 +5995,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-cache@canary:
-  version "16.6.0-alpha.8af6728"
-  resolved "https://registry.yarnpkg.com/react-cache/-/react-cache-16.6.0-alpha.8af6728.tgz#b0a9d1d1c598245540032fa6e2ab4bbcb22ae840"
-  integrity sha512-yAEtFHXZfQKud2mcuAXoPYRZN7/cGShnvQXkj2brVG6q6ftaQYZ6u+VD0vcuiy81x/MEp+H5y6xRg9+XzmoSOg==
+react-cache@2.0.0-alpha.1:
+  version "2.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/react-cache/-/react-cache-2.0.0-alpha.1.tgz#4c119188248bc988a61268458bc18bd845f2ec19"
+  integrity sha512-dDJVVGvxAlZE/dMxDXaxU5ZfcE4fbaSmJVFrCTi6dYWXDp7YjCsnywkpEYG6IURVW+eJrCydAIDcW0FADw0/5w==
 
 react-dom@16.7.0-alpha.2:
   version "16.7.0-alpha.2"
@@ -6395,10 +6395,18 @@ sax@>=0.6.0, sax@^1.2.4, sax@~1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-scheduler@0.12.0-alpha.2, scheduler@^0.12.0-alpha.2:
+scheduler@^0.12.0-alpha.2:
   version "0.12.0-alpha.2"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.12.0-alpha.2.tgz#2a8bc8dc6ecdb75fa6480ceeedc1f187c9539970"
   integrity sha512-bfqFzGH18MjjhePIzYQNR0uGQ1wMCX6Q83c2s+3fzyuqKT6zBI2wNQTpq01q72C7QItAp8if5w2LfMiXnI2SYw==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+
+scheduler@canary:
+  version "0.0.0-ed4c4a51c"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.0.0-ed4c4a51c.tgz#fc0c4980e504c9a56599ab55c47e73d1586247e5"
+  integrity sha512-RSZyGGu7LA1oQz+N2DkYhwtbKbCEFyszfYwPGuZLmUMjg+qq+StzUxbPsjstDvl5lUofz/e11e/wmnuhc6HnnQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"

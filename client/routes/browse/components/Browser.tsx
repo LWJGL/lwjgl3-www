@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core';
 import { Link } from '@reach/router';
 import * as React from 'react';
 import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
-import { createCache, createResource } from 'react-cache';
+import { unstable_createResource as createResource } from 'react-cache';
 import { unstable_scheduleCallback } from 'scheduler';
 import IconCloud from '~/components/icons/md/Cloud';
 import { HTTP_OK } from '~/services/http_status_codes';
@@ -13,7 +13,6 @@ jsx;
 
 // Contents Resource
 
-const cache = createCache();
 const BrowserContentsResource = createResource<string, FolderData>(fetchContents);
 
 interface FolderData {
@@ -113,7 +112,7 @@ interface ContentProps {
 }
 
 function Contents({ path, loading }: ContentProps) {
-  const { folders, files } = BrowserContentsResource.read(cache, path);
+  const { folders, files } = BrowserContentsResource.read(path);
   const basePath = path.length ? path + '/' : '';
   return (
     <Fragment>
