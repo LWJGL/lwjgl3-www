@@ -70,7 +70,7 @@
     "async-sema": "2.1.4",
     "autoprefixer": "9.3.1",
     "babel-loader": "8.0.4",
-    "babel-plugin-emotion": "10.0.0-beta.6",
+    "babel-plugin-emotion": "10.0.0-beta.13",
     "babel-plugin-transform-react-remove-prop-types": "0.4.20",
     "benchmark": "2.1.4",
     "bootstrap": "4.1.3",
