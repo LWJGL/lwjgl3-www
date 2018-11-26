@@ -29,6 +29,13 @@ export default (prev: BuildBindings): BuildBindings => ({
       natives: NATIVE_ALL,
       website: 'https://libdivide.com/',
     },
+    [Binding.LLVM]: {
+      id: Binding.LLVM,
+      title: 'LLVM',
+      description: 'A collection of modular and reusable compiler and toolchain technologies.',
+      natives: NATIVE_ALL,
+      website: 'https://llvm.org/'
+    },
     [Binding.MEOW]: {
       id: Binding.MEOW,
       title: 'Meow hash',

@@ -26,6 +26,7 @@ export enum Binding {
   JAWT = 'lwjgl-jawt',
   JEMALLOC = 'lwjgl-jemalloc',
   LIBDIVIDE = 'lwjgl-libdivide',
+  LLVM = 'lwjgl-llvm',
   LMDB = 'lwjgl-lmdb',
   LZ4 = 'lwjgl-lz4',
   MEOW = 'lwjgl-meow',
