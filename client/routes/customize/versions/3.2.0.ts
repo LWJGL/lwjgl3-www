@@ -12,8 +12,8 @@ export default (prev: BuildBindings): BuildBindings => ({
       natives: NATIVE_ALL,
       website: 'https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator',
     },
-    [Binding.Vulkan]: {
-      ...(prev.byId[Binding.Vulkan] as BindingDefinition),
+    [Binding.VULKAN]: {
+      ...(prev.byId[Binding.VULKAN] as BindingDefinition),
       natives: [Native.MacOS],
       nativesOptional: true,
     },

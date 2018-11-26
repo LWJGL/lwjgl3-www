@@ -6,8 +6,8 @@ export default (prev: BuildBindings): BuildBindings => ({
   alias: Version.Nightly,
   byId: {
     ...prev.byId,
-    [Binding.Bullet]: {
-      id: Binding.Bullet,
+    [Binding.BULLET]: {
+      id: Binding.BULLET,
       title: 'Bullet Physics',
       description:
         'Real-time collision detection and multi-physics simulation for VR, games, visual effects, robotics, machine learning etc.',
@@ -21,23 +21,23 @@ export default (prev: BuildBindings): BuildBindings => ({
         'A parallel computing platform and programming model developed by NVIDIA for general computing on GPUs.',
       website: 'https://developer.nvidia.com/cuda-zone/',
     },
-    [Binding.Libdivide]: {
-      id: Binding.Libdivide,
+    [Binding.LIBDIVIDE]: {
+      id: Binding.LIBDIVIDE,
       title: 'libdivide',
       description:
         'A library that replaces expensive integer divides with comparatively cheap multiplication and bitshifts.',
       natives: NATIVE_ALL,
       website: 'https://libdivide.com/',
     },
-    [Binding.Meow]: {
-      id: Binding.Meow,
+    [Binding.MEOW]: {
+      id: Binding.MEOW,
       title: 'Meow hash',
       description: 'An extremely fast non-cryptographic hash.',
       natives: NATIVE_ALL,
       website: 'https://github.com/cmuratori/meow_hash/',
     },
-    [Binding.Opus]: {
-      id: Binding.Opus,
+    [Binding.OPUS]: {
+      id: Binding.OPUS,
       title: 'Opus',
       description: 'Opus is a totally open, royalty-free, highly versatile audio codec.',
       natives: NATIVE_ALL,

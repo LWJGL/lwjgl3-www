@@ -35,16 +35,16 @@ export default (): BuildBindings => ({
       description: 'The AWT native interface.',
       website: 'https://docs.oracle.com/javase/8/docs/technotes/guides/awt/AWT_Native_Interface.html',
     },
-    [Binding.Jemalloc]: {
-      id: Binding.Jemalloc,
+    [Binding.JEMALLOC]: {
+      id: Binding.JEMALLOC,
       title: 'jemalloc',
       description:
         'A general purpose malloc implementation that emphasizes fragmentation avoidance and scalable concurrency support.',
       natives: NATIVE_ALL,
       website: 'http://jemalloc.net/',
     },
-    [Binding.NanoSVG]: {
-      id: Binding.NanoSVG,
+    [Binding.NANOVG]: {
+      id: Binding.NANOVG,
       title: 'NanoVG & NanoSVG',
       description:
         'A small antialiased vector graphics rendering library for OpenGL. Also includes <a href="https://github.com/memononen/nanosvg">NanoSVG</a>, a simple SVG parser (3.1.4+).',
@@ -52,15 +52,15 @@ export default (): BuildBindings => ({
       website: 'https://github.com/memononen/nanovg',
       presets: [Preset.GettingStarted],
     },
-    [Binding.Nfd]: {
-      id: Binding.Nfd,
+    [Binding.NFD]: {
+      id: Binding.NFD,
       title: 'Native File Dialog',
       description: 'A tiny, neat C library that portably invokes native file open and save dialogs.',
       natives: NATIVE_ALL,
       website: 'https://github.com/mlabbe/nativefiledialog',
     },
-    [Binding.OpenAL]: {
-      id: Binding.OpenAL,
+    [Binding.OPENAL]: {
+      id: Binding.OPENAL,
       title: 'OpenAL',
       description:
         'A cross-platform 3D audio API appropriate for use with gaming applications and many other types of audio applications.',
@@ -68,23 +68,23 @@ export default (): BuildBindings => ({
       website: 'https://www.openal.org/',
       presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
-    [Binding.OpenCL]: {
-      id: Binding.OpenCL,
+    [Binding.OPENCL]: {
+      id: Binding.OPENCL,
       title: 'OpenCL',
       description:
         'An open, royalty-free standard for cross-platform, parallel programming of diverse processors found in personal computers, servers, mobile devices and embedded platforms.',
       website: 'https://www.khronos.org/opencl/',
     },
-    [Binding.OpenGL]: {
-      id: Binding.OpenGL,
+    [Binding.OPENGL]: {
+      id: Binding.OPENGL,
       title: 'OpenGL',
       description:
         'The most widely adopted 2D and 3D graphics API in the industry, bringing thousands of applications to a wide variety of computer platforms.',
       website: 'https://www.opengl.org/',
       presets: [Preset.GettingStarted, Preset.OpenGL],
     },
-    [Binding.OpenGLES]: {
-      id: Binding.OpenGLES,
+    [Binding.OPENGLES]: {
+      id: Binding.OPENGLES,
       title: 'OpenGL ES',
       description:
         'A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including consoles, phones, appliances and vehicles.',
@@ -98,8 +98,8 @@ export default (): BuildBindings => ({
       natives: [Native.Windows],
       website: 'https://developer.oculus.com/',
     },
-    [Binding.ParShapes]: {
-      id: Binding.ParShapes,
+    [Binding.PAR]: {
+      id: Binding.PAR,
       title: 'par_shapes',
       description: 'Generate parametric surfaces and other simple shapes.',
       natives: NATIVE_ALL,
@@ -113,24 +113,24 @@ export default (): BuildBindings => ({
       natives: NATIVE_ALL,
       website: 'https://software.intel.com/en-us/node/523328',
     },
-    [Binding.Stb]: {
-      id: Binding.Stb,
+    [Binding.STB]: {
+      id: Binding.STB,
       title: 'stb',
       description: 'Single-file public domain libraries for fonts, images, ogg vorbis files and more.',
       natives: NATIVE_ALL,
       website: 'https://github.com/nothings/stb',
       presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
-    [Binding.Vulkan]: {
-      id: Binding.Vulkan,
+    [Binding.VULKAN]: {
+      id: Binding.VULKAN,
       title: 'Vulkan',
       description:
         'A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.',
       website: 'https://www.khronos.org/vulkan/',
       presets: [Preset.GettingStarted, Preset.Vulkan],
     },
-    [Binding.XxHash]: {
-      id: Binding.XxHash,
+    [Binding.XXHASH]: {
+      id: Binding.XXHASH,
       title: 'xxHash',
       description: 'An Extremely fast Hash algorithm, running at RAM speed limits.',
       natives: NATIVE_ALL,

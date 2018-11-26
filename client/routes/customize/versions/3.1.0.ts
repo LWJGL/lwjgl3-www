@@ -5,8 +5,8 @@ export default (prev: BuildBindings): BuildBindings => ({
   version: Version.LWJGL310,
   byId: {
     ...prev.byId,
-    [Binding.Bgfx]: {
-      id: Binding.Bgfx,
+    [Binding.BGFX]: {
+      id: Binding.BGFX,
       title: 'bgfx',
       description:
         'A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.',
@@ -22,16 +22,16 @@ export default (prev: BuildBindings): BuildBindings => ({
       natives: NATIVE_ALL,
       website: 'https://symas.com/products/lightning-memory-mapped-database/',
     },
-    [Binding.Nuklear]: {
-      id: Binding.Nuklear,
+    [Binding.NUKLEAR]: {
+      id: Binding.NUKLEAR,
       title: 'Nuklear',
       description: 'A minimal state immediate mode graphical user interface toolkit.',
       natives: NATIVE_ALL,
       website: 'https://github.com/vurtun/nuklear',
       presets: [Preset.GettingStarted],
     },
-    [Binding.TinyFD]: {
-      id: Binding.TinyFD,
+    [Binding.TINYFD]: {
+      id: Binding.TINYFD,
       title: 'Tiny File Dialogs',
       description: 'Provides basic modal dialogs.',
       natives: NATIVE_ALL,
