@@ -1,5 +1,0 @@
-{
-  "greatest": true,
-  "upgradeAll": true,
-  "reject": ["core-js", "@emotion/core", "@emotion/styled", "babel-plugin-emotion"]
-}
