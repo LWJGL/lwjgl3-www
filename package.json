@@ -32,7 +32,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.366.0",
+    "aws-sdk": "2.368.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",
@@ -94,7 +94,7 @@
     "lodash-es": "4.17.11",
     "node-sass": "4.11.0",
     "postcss-loader": "3.0.0",
-    "prettier": "1.15.2",
+    "prettier": "1.15.3",
     "react": "16.7.0-alpha.2",
     "react-cache": "2.0.0-alpha.1",
     "react-dom": "16.7.0-alpha.2",
@@ -102,9 +102,9 @@
     "sass-loader": "7.1.0",
     "scroll-into-view-if-needed": "2.2.20",
     "style-loader": "0.23.1",
-    "terser": "3.10.12",
+    "terser": "3.10.13",
     "thread-loader": "1.2.0",
-    "three": "0.98.0",
+    "three": "0.99.0",
     "typescript": "next",
     "typescript-styled-plugin": "0.13.0",
     "webpack": "4.26.1",
@@ -136,6 +136,9 @@
     "release-js": "yarn run production && yarn run post-production",
     "release": "yarn run styles && yarn run production && yarn run post-production",
     "deploy": "node ./scripts/deploy.js",
-    "format": "prettier --write \"{client,server,scripts}/**/*.{js,md,scss}*\""
+    "format": "prettier --write \"{client,server,scripts}/**/*.{js,md,scss}*\"",
+    "ncu": "yarn upgrade-interactive --latest -E",
+    "ncut": "npx npm-check-updates -t",
+    "ncun": "npx npm-check-updates -n"
   }
 }
