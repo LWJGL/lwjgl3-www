@@ -86,15 +86,15 @@ dependencies {`;
       artifacts,
       platform,
       osgi,
-      (groupId, artifactId, hasEnabledNativePlatform) => `\n\tcompile "${groupId}:${artifactId}:${v}"`,
-      (groupId, artifactId) => `\n\tcompile "${groupId}:${artifactId}:${v}:${classifier}"`
+      (groupId, artifactId, hasEnabledNativePlatform) => `\n\timplementation "${groupId}:${artifactId}:${v}"`,
+      (groupId, artifactId) => `\n\truntimeOnly "${groupId}:${artifactId}:${v}:${classifier}"`
     );
 
     selectedAddons.forEach((id: Addon) => {
       const {
         maven: { groupId, artifactId, version },
       } = addons[id];
-      script += `\n\tcompile "${groupId}:${artifactId}:${hardcoded ? version : `\${${id}Version}`}"`;
+      script += `\n\timplementation "${groupId}:${artifactId}:${hardcoded ? version : `\${${id}Version}`}"`;
     });
   } else {
     const v = hardcoded ? `"${versionString}"` : 'lwjglVersion';
@@ -104,8 +104,8 @@ dependencies {`;
       artifacts,
       platform,
       osgi,
-      (groupId, artifactId, hasEnabledNativePlatform) => `\n\t"compile"("${groupId}", "${artifactId}", ${v})`,
-      (groupId, artifactId) => `\n\t"compile"("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
+      (groupId, artifactId, hasEnabledNativePlatform) => `\n\timplementation("${groupId}", "${artifactId}", ${v})`,
+      (groupId, artifactId) => `\n\truntimeOnly("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
     );
 
     selectedAddons.forEach((id: Addon) => {
@@ -113,7 +113,7 @@ dependencies {`;
         maven: { groupId, artifactId, version },
       } = addons[id];
       const v = id.indexOf('-') === -1 ? `${id}Version` : `\`${id}Version\``;
-      script += `\n\t"compile"("${groupId}", "${artifactId}", ${hardcoded ? `"${version}"` : v})`;
+      script += `\n\timplementation("${groupId}", "${artifactId}", ${hardcoded ? `"${version}"` : v})`;
     });
   }
 
