@@ -9,6 +9,7 @@ export enum Version {
   LWJGL316 = '3.1.6',
   LWJGL320 = '3.2.0',
   LWJGL321 = '3.2.1',
+  LWJGL322 = '3.2.2',
   Stable = 'stable',
   Nightly = 'nightly',
 }
