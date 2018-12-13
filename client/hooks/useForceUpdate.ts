@@ -1,2 +1,8 @@
-import { useState } from 'react';
-export const useForceUpdate = () => useState<undefined>(undefined)[1];
+import { useReducer } from 'react';
+
+function forcedReducer(state: boolean) {
+  return !state;
+}
+export function useForceUpdate() {
+  return useReducer(forcedReducer, false)[1];
+}
