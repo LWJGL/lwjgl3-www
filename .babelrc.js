@@ -8,6 +8,7 @@ const DEV = !PRODUCTION;
 const config = {
   presets: ['@babel/preset-typescript'],
   plugins: [
+    // DEV && 'react-hot-loader/babel',
     'emotion',
     PRODUCTION && '@babel/plugin-transform-runtime',
 

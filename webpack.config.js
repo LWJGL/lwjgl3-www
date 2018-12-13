@@ -139,6 +139,11 @@ const buildConfiguration = () => {
       // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
+      // config.module.rules.unshift({
+      //   test: /\.jsx?$/,
+      //   include: /node_modules/,
+      //   use: ['react-hot-loader/webpack'],
+      // });
     }
 
     if (DLL) {
