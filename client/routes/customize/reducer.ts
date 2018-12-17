@@ -1,7 +1,7 @@
 import produce from 'immer';
 import * as React from 'react';
 import { Action, ActionCreator } from './actions';
-import { config } from './config';
+import { config, OSGiVersionMax } from './config';
 import {
   Addon,
   Binding,
@@ -32,6 +32,7 @@ export const reducer: React.Reducer<BuildStore, ActionCreator> = (
       case Action.SELECT_MODE:
         if (state.build !== BuildType.Stable && state.mode !== action.mode) {
           selectMode(draft, action.mode);
+          checkOSGiVersion(draft);
         }
         break;
       case Action.TOGGLE_DESCRIPTIONS:
@@ -71,6 +72,7 @@ export const reducer: React.Reducer<BuildStore, ActionCreator> = (
       case Action.TOGGLE_OSGI:
         if (state.mode !== Mode.Zip && state.build === BuildType.Release) {
           draft.osgi = action.osgi;
+          checkOSGiVersion(draft);
         }
         break;
 
@@ -114,6 +116,16 @@ export const reducer: React.Reducer<BuildStore, ActionCreator> = (
     }
   });
 };
+
+export function versionNum(version: Version) {
+  return parseInt(version.replace(/\./g, ''), 10);
+}
+
+function checkOSGiVersion(draft: BuildStore) {
+  if (draft.mode !== Mode.Zip && draft.osgi && versionNum(OSGiVersionMax) < versionNum(draft.version)) {
+    draft.version = OSGiVersionMax;
+  }
+}
 
 function selectBuild(state: BuildStore, build: BuildType | null) {
   state.build = build;

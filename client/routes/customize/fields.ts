@@ -1,17 +1,19 @@
-import { BuildStore, Language, Mode, BuildType } from './types';
+import { BuildStore, BuildType, Language, Mode } from './types';
+import { OSGiVersionMax } from './config';
+import { versionNum } from './reducer';
 import { RadioOptions } from './ControlledRadio';
 import {
-  selectMode,
   selectLanguage,
+  selectMode,
+  selectPreset,
   selectVersion,
+  toggleCompact,
   toggleDescriptions,
-  toggleSource,
+  toggleHardcoded,
   toggleIncludeJSON,
   toggleJavadoc,
   toggleOSGi,
-  toggleCompact,
-  toggleHardcoded,
-  selectPreset,
+  toggleSource,
 } from './actions';
 
 const getMode = (state: BuildStore) => state.mode;
@@ -25,7 +27,7 @@ const isModeZip = (state: BuildStore) => state.mode === Mode.Zip;
 const isModeNotZip = (state: BuildStore) => state.mode !== Mode.Zip;
 export const isBuildRelease = (state: BuildStore) => state.build === BuildType.Release;
 const showOSGi = (state: BuildStore) =>
-  state.mode !== Mode.Zip && state.build === BuildType.Release && parseInt(state.version.replace(/\./g, ''), 10) >= 312;
+  state.mode !== Mode.Zip && state.build === BuildType.Release && versionNum(state.version) >= 312;
 
 export const fields = {
   mode: {
@@ -67,13 +69,15 @@ export const fields = {
     name: 'version',
     value: getVersion,
     action: selectVersion,
-    options: ({ versions }: BuildStore): RadioOptions =>
-      versions.map(version => ({
+    options: ({ mode, osgi, versions }: BuildStore): RadioOptions => {
+      const maxVersion = mode == Mode.Zip || !osgi ? Number.MAX_VALUE : versionNum(OSGiVersionMax);
+      return versions.map(version => ({
         value: version,
         label: version,
-        disabled: version === '3.0.0',
-      })),
-    inputs: (state: BuildStore) => [state.version],
+        disabled: version === '3.0.0' || maxVersion < versionNum(version),
+      }));
+    },
+    inputs: (state: BuildStore) => [state.mode, state.osgi, state.version],
   },
   descriptions: {
     label: 'Show descriptions',
