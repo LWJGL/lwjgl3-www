@@ -3,7 +3,6 @@ import { css, jsx } from '@emotion/core';
 import React from 'react';
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useBreakpoint } from '~/components/Breakpoint';
-import { CircularProgress } from '~/components/CircularProgress';
 import IconClose from '~/components/icons/md/Close';
 import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { useMemoSlice } from './Store';
@@ -33,7 +32,9 @@ interface Props {
 
 const StatusFallback = () => (
   <div className="d-flex align-items-center justify-content-center" style={{ height: 64 }}>
-    <CircularProgress size={24} thickness={8} style={{ color: 'hsla(0, 0%, 0%, 0.5)' }} />
+    <div className="spinner-grow" role="status">
+      <span className="sr-only">Loading...</span>
+    </div>
   </div>
 );
 

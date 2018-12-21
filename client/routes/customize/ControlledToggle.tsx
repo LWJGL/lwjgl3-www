@@ -1,7 +1,7 @@
 import React from 'react';
 import { useMemo } from 'react';
 import { useMemoSlice } from './Store';
-import { Toggle } from '~/components/Toggle';
+import { Checkbox } from '~/components/Checkbox';
 
 interface Props {
   spec: {
@@ -32,5 +32,7 @@ export function ControlledToggle({ spec }: Props) {
     state => spec.inputs(state)
   );
 
-  return useMemo(() => <Toggle {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [slice]);
+  return useMemo(() => <Checkbox toggle={true} {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [
+    slice,
+  ]);
 }

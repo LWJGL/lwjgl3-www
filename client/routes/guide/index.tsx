@@ -3,7 +3,6 @@ import { lazy, Suspense } from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
-import { CircularProgress } from '~/components/CircularProgress';
 
 const Sample = lazy(() => import(/* webpackChunkName: "guide$sample" */ './Sample'));
 
@@ -41,8 +40,10 @@ const GuideRoute = (props: RouteComponentProps) => (
       <Suspense
         maxDuration={0}
         fallback={
-          <div className="text-center my-5">
-            <CircularProgress style={{ color: 'silver' }} />
+          <div className="d-flex justify-content-center">
+            <div className="spinner-grow text-light my-5" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
           </div>
         }
       >

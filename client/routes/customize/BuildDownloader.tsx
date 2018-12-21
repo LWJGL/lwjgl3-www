@@ -1,6 +1,5 @@
 import React from 'react';
 import { useEffect, useRef, useState } from 'react';
-import { CircularProgress } from '~/components/CircularProgress';
 import { ScreenLock } from '~/components/ScreenLock';
 import { saveAs } from '~/services/file-saver';
 import { configJSONfilename, getConfigSnapshot } from './config';
@@ -127,7 +126,7 @@ export function BuildDownloader({ setIsDownloading }: Props) {
         <div className="row">
           <div className="col py-3">
             <div className="text-center">
-              <CircularProgress size={32} className="my-3" style={{ color: 'white' }} />
+              <div className="spinner-border text-white my-3" style={{ width: '3rem', height: '3rem' }} role="status" />
               <h4>Generating ZIP bundle. Please wait...</h4>
               <p>
                 <button className="btn btn-sm btn-danger" onClick={() => setIsDownloading(false)}>

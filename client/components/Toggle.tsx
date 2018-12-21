@@ -1,11 +1,9 @@
-// @jsx jsx
-import { css, jsx } from '@emotion/core';
+import { css } from '@emotion/core';
 import uniqueId from 'lodash-es/uniqueId';
 import React from 'react';
 import { memo, useRef } from 'react';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 import { lighten, setSaturation } from '~/theme/color';
-jsx;
 
 const COLOR_TOGGLE_INDICATOR_CHECKED_BG = lighten(COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, 30);
 const COLOR_TOGGLE_INDICATOR_BG = setSaturation(COLOR_CUSTOM_CONTROL_INDICATOR_BG, 0);

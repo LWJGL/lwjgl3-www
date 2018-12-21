@@ -9,15 +9,16 @@ interface Props {
   checked?: boolean;
   disabled?: boolean;
   hidden?: boolean;
+  toggle?: boolean;
   icon?: React.ReactNode;
 }
 
 export const Checkbox = memo(
-  ({ label, value, onChange, checked = false, disabled = false, hidden = false, icon }: Props) => {
+  ({ label, value, onChange, checked = false, disabled = false, hidden = false, toggle = false, icon }: Props) => {
     const htmlForId = useRef(uniqueId('checkbox'));
 
     return hidden === true ? null : (
-      <div className="custom-control custom-checkbox">
+      <div className={`custom-control custom-${toggle === true ? 'switch' : 'checkbox'}`}>
         <input
           type="checkbox"
           id={htmlForId.current}

@@ -1,12 +1,13 @@
-// Remove padding from control container (see below)
-.custom-control {
-  padding-left: 0;
-}
+// // Remove padding from control container (see below)
+// .custom-control {
+//   padding-left: 0;
+// }
 
 .custom-control-label {
-  // Add padding so we make the entire area clickable,
-  // otherwise pixels between checkbox and label not clickable
-  padding-left: $custom-control-gutter;
+  // // Add padding so we make the entire area clickable,
+  // // otherwise pixels between checkbox and label not clickable
+  // padding-left: $custom-control-gutter;
+
   // Prevent label selection (happens when clicking checkboxes very fast)
   user-select: none;
 }
@@ -16,28 +17,43 @@ input:not(:focus) ~ .custom-control-label::before {
   transition: background-color 0.35s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
-.custom-control-label::before,
-.custom-control-label::after {
-  left: 0;
-}
+// Force-enable custom-switch transition and adjust margins to align with checkboxes
+.custom-switch {
+  padding-left: 1.5rem;
 
-.custom-control-input {
-  &:disabled ~ .custom-control-label {
-    color: silver;
-  }
-  &:disabled:checked ~ .custom-control-label:before {
-    // background-color: $custom-control-indicator-disabled-bg;
-    // Increase contrast
-    background-color: $custom-select-disabled-color;
-  }
-  // Render focus ring also when active
-  &:active ~ .custom-control-label::before {
-    box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  .custom-control-label {
+    &::before {
+      left: -1.75rem;
+    }
+    &::after {
+      transition: transform 0.15s ease-in-out;
+      left: calc(-1.75rem + 2px);
+    }
   }
 }
 
-.custom-controls-stacked {
-  .custom-control {
-    margin-bottom: 0.25rem;
-  }
-}
+// .custom-control-label::before,
+// .custom-control-label::after {
+//   left: 0;
+// }
+
+// .custom-control-input {
+//   &:disabled ~ .custom-control-label {
+//     color: silver;
+//   }
+//   &:disabled:checked ~ .custom-control-label:before {
+//     // background-color: $custom-control-indicator-disabled-bg;
+//     // Increase contrast
+//     background-color: $custom-select-disabled-color;
+//   }
+//   // Render focus ring also when active
+//   &:active ~ .custom-control-label::before {
+//     box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+//   }
+// }
+
+// .custom-controls-stacked {
+//   .custom-control {
+//     margin-bottom: 0.25rem;
+//   }
+// }

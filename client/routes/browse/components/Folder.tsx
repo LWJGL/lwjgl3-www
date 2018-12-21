@@ -3,7 +3,6 @@ import { memo } from 'react';
 import { css } from '@emotion/core';
 import { Link } from '@reach/router';
 import IconFolder from '~/components/icons/md/Folder';
-import { CircularProgress } from '~/components/CircularProgress';
 
 export const FolderTH = css`
   user-select: none;
@@ -39,9 +38,9 @@ export const Folder = memo(({ path, loading = false }: Props) => {
         <Link to={path}>
           <IconFolder /> {name}{' '}
           {loading && (
-            <span className="present-yourself">
-              <CircularProgress className="ml-2" size={16} thickness={4} />
-            </span>
+            <div className="spinner-grow spinner-grow-sm" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
           )}
         </Link>
       </th>
@@ -53,7 +52,9 @@ export function SpinnerRow() {
   return (
     <tr>
       <td>
-        <CircularProgress size={24} thickness={8} />
+        <div className="spinner-grow" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
       </td>
     </tr>
   );

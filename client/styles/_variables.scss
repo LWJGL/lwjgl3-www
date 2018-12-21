@@ -6,6 +6,7 @@ $enable-hover-media-query: true;
 // $enable-grid-classes: false;
 $enable-caret: false;
 $enable-print-styles: false;
+$enable-validation-icons: false;
 
 // Improve bootstrap primary color AA
 $blue: #0071eb;
@@ -33,8 +34,10 @@ $transition-ease: cubic-bezier(0.4, 1, 0.75, 0.9);
 $transition-ease-bounce: cubic-bezier(0.54, 1.12, 0.38, 1.11);
 $transition-duration: 100ms;
 
-// Colors
+// Custom Forms
+$custom-switch-width: 1.5rem;
 
+// Colors
 $lwjgl-primary: #1b2426;
 
 $body-color: $lwjgl-primary;
