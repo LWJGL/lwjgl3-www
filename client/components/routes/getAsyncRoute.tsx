@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { PageBlank } from './PageBlank';
 import { PageError } from './PageError';

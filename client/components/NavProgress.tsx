@@ -1,11 +1,7 @@
-// @jsx jsx
-import * as React from 'react';
+import React from 'react';
 import { useState, useEffect, useContext, useRef } from 'react';
-//@ts-ignore
-import { jsx, css, keyframes } from '@emotion/core';
+import { css, keyframes } from '@emotion/core';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
-
-jsx;
 
 const pulseAnimation = keyframes`
   0% {

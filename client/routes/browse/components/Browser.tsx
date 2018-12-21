@@ -1,7 +1,5 @@
-// @jsx jsx
-import { jsx } from '@emotion/core';
+import React from 'react';
 import { Link } from '@reach/router';
-import * as React from 'react';
 import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 import { unstable_createResource as createResource } from 'react-cache';
 import { unstable_scheduleCallback } from 'scheduler';
@@ -9,7 +7,6 @@ import IconCloud from '~/components/icons/md/Cloud';
 import { HTTP_OK } from '~/services/http_status_codes';
 import { File } from './File';
 import { Folder, FolderTH, SpinnerRow } from './Folder';
-jsx;
 
 // Contents Resource
 

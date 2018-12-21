@@ -2,7 +2,7 @@
 //@ts-ignore
 import { css, jsx } from '@emotion/core';
 import { Link } from '@reach/router';
-import * as React from 'react';
+import React from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';

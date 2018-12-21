@@ -185,7 +185,6 @@ const buildConfiguration = () => {
       });
     }
   } else {
-    config.module.rules[0].use.unshift('jsx-compress-loader');
     // config.entry.main.unshift(
     //   // Load core-js polyfill first
     //   // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations

@@ -1,8 +1,6 @@
-// @jsx jsx
-import * as React from 'react';
+import React from 'react';
 import { useMemo } from 'react';
-import { jsx, css } from '@emotion/core';
-jsx;
+import { css } from '@emotion/core';
 import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
 import { lighten } from '~/theme/color';
 import { useSlice } from './Store';

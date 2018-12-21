@@ -1,7 +1,5 @@
-// @jsx jsx
-import * as React from 'react';
-import { jsx, css, keyframes } from '@emotion/core';
-jsx;
+import React from 'react';
+import { css, keyframes } from '@emotion/core';
 import { cc, COLOR_PRIMARY } from '~/theme';
 import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 

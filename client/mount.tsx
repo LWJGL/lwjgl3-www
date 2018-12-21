@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom';
 import App from './containers/App';
 import './services/ga';

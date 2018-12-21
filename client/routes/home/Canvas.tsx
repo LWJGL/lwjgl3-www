@@ -1,8 +1,6 @@
-// @jsx jsx
-import * as React from 'react';
+import React from 'react';
 import { useRef, useEffect } from 'react';
-import { jsx, css, keyframes } from '@emotion/core';
-jsx;
+import { css, keyframes } from '@emotion/core';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 

@@ -1,6 +1,4 @@
-import * as React from 'react';
-import { jsx } from '@emotion/core';
-jsx;
+import React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
 import { Browser } from './components/Browser';

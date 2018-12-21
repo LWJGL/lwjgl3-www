@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo, useState, useEffect, useRef } from 'react';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 

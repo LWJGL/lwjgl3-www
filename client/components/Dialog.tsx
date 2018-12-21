@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { cc } from '~/theme';
 import { Overlay } from './Overlay';
 

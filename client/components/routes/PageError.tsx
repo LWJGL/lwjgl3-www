@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { ErrorProps } from '../ErrorBoundary';
 

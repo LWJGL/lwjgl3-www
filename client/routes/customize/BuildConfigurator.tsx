@@ -1,5 +1,5 @@
-import * as React from 'react';
-import * as JSZip from 'jszip';
+import React from 'react';
+import JSZip from 'jszip';
 import { useState } from 'react';
 import { BuildAddons } from './BuildAddons';
 import { BuildArtifacts } from './BuildArtifacts';

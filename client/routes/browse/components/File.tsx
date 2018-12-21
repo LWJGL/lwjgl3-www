@@ -1,7 +1,5 @@
-// @jsx jsx
-import * as React from 'react';
-import { jsx, css } from '@emotion/core';
-jsx;
+import React from 'react';
+import { css } from '@emotion/core';
 
 interface Props {
   path: string;

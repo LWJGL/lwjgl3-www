@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';

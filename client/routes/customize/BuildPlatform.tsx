@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useMemo } from 'react';
 import { Checkbox } from '~/components/Checkbox';
 import { useMemoSlice } from './Store';

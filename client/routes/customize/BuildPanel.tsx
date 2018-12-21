@@ -1,6 +1,6 @@
 // @jsx jsx
 import { css, jsx } from '@emotion/core';
-import * as React from 'react';
+import React from 'react';
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { CircularProgress } from '~/components/CircularProgress';

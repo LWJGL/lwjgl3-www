@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo, useEffect, useRef } from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';

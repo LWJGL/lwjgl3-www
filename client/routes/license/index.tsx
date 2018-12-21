@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
 

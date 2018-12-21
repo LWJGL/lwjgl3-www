@@ -1,4 +1,4 @@
-const { argv } = require('yargs');
+// const { argv } = require('yargs');
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const MODERN = process.env.MODERN === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
@@ -6,16 +6,16 @@ const DEV = !PRODUCTION;
 // const SOURCEMAP = argv.sourcemap !== undefined;
 
 const config = {
-  presets: ['@babel/preset-typescript'],
+  presets: ['@babel/preset-typescript', '@emotion/babel-preset-css-prop'],
   plugins: [
     // DEV && 'react-hot-loader/babel',
-    'emotion',
     PRODUCTION && '@babel/plugin-transform-runtime',
 
     // React
     DEV && '@babel/plugin-transform-react-jsx-self',
     DEV && '@babel/plugin-transform-react-jsx-source',
     DEV && '@babel/plugin-transform-react-display-name',
+    PRODUCTION && 'react-local',
     PRODUCTION && [
       'transform-react-remove-prop-types',
       {
@@ -23,9 +23,9 @@ const config = {
         removeImport: true,
       },
     ],
-    // PRODUCTION && '@babel/plugin-transform-react-constant-elements',
+    PRODUCTION && '@babel/plugin-transform-react-constant-elements', // Larger file size but faster reconciliation and less GC pressure
     // PRODUCTION && '@babel/plugin-transform-react-inline-elements', // Breaks @emotion
-    ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],
+    // ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],  // Used internally by @emotion preset
 
     // Stage-1
     '@babel/plugin-proposal-optional-chaining',

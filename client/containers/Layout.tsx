@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { NavProgress } from '../components/NavProgress';

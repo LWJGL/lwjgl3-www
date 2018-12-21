@@ -1,7 +1,7 @@
 // @jsx jsx
 import { css, jsx } from '@emotion/core';
 import uniqueId from 'lodash-es/uniqueId';
-import * as React from 'react';
+import React from 'react';
 import { memo, useRef } from 'react';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 import { lighten, setSaturation } from '~/theme/color';

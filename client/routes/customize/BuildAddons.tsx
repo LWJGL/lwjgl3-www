@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo, useMemo } from 'react';
 import { useMemoSlice } from './Store';
 import { Addon, AddonDefinition, BuildStore } from './types';

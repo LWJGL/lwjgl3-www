@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo, useRef, useEffect } from 'react';
 import { Location } from '@reach/router';
 import { scrollSmooth } from '../services/scrollSmooth';

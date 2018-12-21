@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
 import { ActionCreator, configLoad } from './actions';
 import { config, getConfigSnapshot } from './config';
 import { reducer } from './reducer';
 import { BuildStore, BuildStoreSnapshot } from './types';
 import debounce from 'lodash-es/debounce';
-import * as isEqual from 'react-fast-compare';
+import isEqual from 'react-fast-compare';
 
 // Constants
 const STORAGE_KEY = 'lwjgl-build-config';

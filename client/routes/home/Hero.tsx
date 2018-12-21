@@ -1,8 +1,6 @@
-// @jsx jsx
-import * as React from 'react';
+import React from 'react';
 import { lazy, Suspense, useState, useEffect } from 'react';
-import { jsx, css } from '@emotion/core';
-jsx;
+import { css } from '@emotion/core';
 import { Link } from '@reach/router';
 import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
 import { Logo } from './Logo';

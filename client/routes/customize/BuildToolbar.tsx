@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useContext, useState } from 'react';
 import { BreakpointContext } from '~/components/Breakpoint';
 import IconArchive from '~/components/icons/md/Archive';

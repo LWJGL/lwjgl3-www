@@ -1,6 +1,6 @@
-import * as React from 'react';
+import React from 'react';
 // https://github.com/jonschlinkert/remarkable
-import * as Remarkable from 'remarkable';
+import Remarkable from 'remarkable';
 import { Options } from 'remarkable';
 
 interface Props {

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { BuildType } from './types';
 import { config } from './config';
 import { unstable_createResource as createResource } from 'react-cache';

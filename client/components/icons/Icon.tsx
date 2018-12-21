@@ -1,8 +1,6 @@
-// @jsx jsx
-import * as React from 'react';
+import React from 'react';
 //@ts-ignore
-import { jsx, css } from '@emotion/core';
-jsx;
+import { css } from '@emotion/core';
 
 export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
   children?: React.ReactNode;

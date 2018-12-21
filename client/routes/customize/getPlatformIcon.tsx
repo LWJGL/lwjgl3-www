@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Native } from './types';
 import IconApple from '~/components/icons/fa/brands/Apple';
 import IconLinux from '~/components/icons/fa/brands/Linux';

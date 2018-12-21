@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { lazy, Suspense } from 'react';
 import { PageBlank } from './PageBlank';
 // import { delay } from '~/services/delay';

@@ -1,5 +1,5 @@
 import produce from 'immer';
-import * as React from 'react';
+import React from 'react';
 import { Action, ActionCreator } from './actions';
 import { config, OSGiVersionMax } from './config';
 import {

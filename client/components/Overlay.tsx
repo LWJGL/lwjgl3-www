@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo, useRef } from 'react';
 import { Portal } from './Portal';
 import { Backdrop } from './Backdrop';

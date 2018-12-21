@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { memo, useState, useEffect } from 'react';
 import { cc } from '~/theme';
 
