@@ -1,6 +1,5 @@
 import React from 'react';
-import JSZip from 'jszip';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BuildAddons } from './BuildAddons';
 import { BuildArtifacts } from './BuildArtifacts';
 import { BuildConfigArea } from './BuildConfigArea';
@@ -15,6 +14,7 @@ import { ControlledRadio } from './ControlledRadio';
 import { ControlledToggle } from './ControlledToggle';
 import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
 import { BuildType } from './types';
+import { loadJS } from '../../services/loadJS';
 
 export function BuildConfigurator() {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -26,6 +26,10 @@ export function BuildConfigurator() {
       setIsDownloading(true);
     }
   };
+
+  useEffect(() => {
+    loadJS('https://unpkg.com/jszip@3.1.5/dist/jszip.min.js');
+  }, []);
 
   return (
     <React.Fragment>

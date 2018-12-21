@@ -1,7 +1,11 @@
 'use strict';
+const fs = require('fs');
+const crypto = require('crypto');
 const webpack = require('webpack');
+const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const { argv } = require('yargs');
+const os = require('os');
 const globals = require('./server/globals.json');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -18,25 +22,106 @@ const env = {
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
+// Hash filesystem cache dependencies to generate a unique version string
+const versionHash = crypto.createHash('sha256');
+versionHash.update(fs.readFileSync(path.resolve(__dirname, 'node_modules/.yarn-integrity')));
+versionHash.update(fs.readFileSync(path.resolve(__dirname, 'webpack.config.js')));
+
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
     target: 'web',
-    node: {
-      console: false,
-      global: true,
-      process: true,
-      __filename: false,
-      __dirname: false,
-      Buffer: false,
-      setImmediate: false,
+    cache: {
+      type: 'filesystem',
+      version: versionHash.digest('base64'),
     },
     optimization: {
-      // We minimize manually in a separate step
-      minimize: false,
+      // minimize: false,
+      minimizer: [
+        new TerserPlugin({
+          cache: true,
+          parallel: Math.max(os.cpus().length, 2),
+          // extractComments: true,
+          terserOptions: {
+            compress: {
+              defaults: false,
+              arrows: true,
+              arguments: false,
+              booleans: true,
+              collapse_vars: true,
+              comparisons: true,
+              computed_props: true,
+              conditionals: true,
+              dead_code: true,
+              drop_console: true,
+              drop_debugger: true,
+              evaluate: true,
+              expression: false,
+              // global_defs: {},
+              hoist_funs: true,
+              hoist_props: true,
+              hoist_vars: false,
+              if_return: true,
+              /*
+                false -- same as 0
+                0 -- disabled inlining
+                1 -- inline simple functions
+                2 -- inline functions with arguments
+                3 -- inline functions with arguments and variables
+                true -- same as 3
+              */
+              inline: 1,
+              join_vars: true,
+              keep_classnames: false,
+              keep_fargs: false,
+              keep_fnames: false,
+              keep_infinity: true,
+              loops: true,
+              module: false,
+              negate_iife: true,
+              passes: 2,
+              properties: true,
+              pure_funcs: null,
+              pure_getters: true,
+              reduce_funcs: true,
+              reduce_vars: true,
+              sequences: true,
+              side_effects: true,
+              switches: true,
+              toplevel: false,
+              top_retain: null,
+              typeofs: true,
+              unsafe: false,
+              unsafe_arrows: false,
+              unsafe_comps: true,
+              unsafe_Function: true,
+              unsafe_math: false,
+              unsafe_methods: false,
+              unsafe_proto: true,
+              unsafe_regexp: true,
+              unsafe_undefined: false,
+              unused: true,
+              warnings: false,
+            },
+            output: {
+              comments: /^KEEP_COMMENT/, // Remove all comments
+            },
+            mangle: true,
+            sourceMap: false,
+            ecma: 5,
+            // ie8: false,
+            // safari10: true,
+            // toplevel: true,
+            // warnings: 'verbose',
+            warnings: false,
+          },
+        }),
+      ],
       // Include runtime chunk in entry
       runtimeChunk: false,
       noEmitOnErrors: true,
+      moduleIds: 'deterministic',
+      chunkIds: 'deterministic',
       removeAvailableModules: PRODUCTION,
       removeEmptyChunks: PRODUCTION,
       mergeDuplicateChunks: PRODUCTION,
@@ -49,7 +134,6 @@ const buildConfiguration = () => {
             maxAsyncRequests: 5,
             maxInitialRequests: 3,
             automaticNameDelimiter: '~',
-            name: true,
             cacheGroups: {
               vendors: {
                 test: /[\\/]node_modules[\\/]/,
@@ -71,8 +155,8 @@ const buildConfiguration = () => {
     },
     output: {
       path: path.resolve(__dirname, 'public/js'),
-      filename: '[name].js',
-      chunkFilename: '[name].js',
+      filename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
+      chunkFilename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
       publicPath: '/js/',
       pathinfo: false,
     },
@@ -89,14 +173,7 @@ const buildConfiguration = () => {
         {
           test: /\.(mjs|js|jsx|ts|tsx)$/,
           include: [path.resolve(__dirname, 'client')],
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                cacheDirectory: true,
-              },
-            },
-          ],
+          use: ['babel-loader'],
         },
         {
           test: /\.css?$/,
@@ -123,9 +200,6 @@ const buildConfiguration = () => {
   };
 
   if (DEV) {
-    // const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
-    // config.plugins.push(new ErrorOverlayPlugin());
-
     config.output.crossOriginLoading = 'anonymous';
 
     // Enable source maps
@@ -190,19 +264,14 @@ const buildConfiguration = () => {
     //   // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
     //   path.resolve(__dirname, 'client/services/polyfill.js')
     // );
-    // config.optimization.namedModules = true;
-    config.plugins.push(
-      // Base hashes on the relative path of modules
-      new webpack.HashedModuleIdsPlugin()
-    );
+    // config.optimization.moduleIds = 'named';
+    // config.optimization.chunkIds = 'named';
 
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
       config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
     }
   }
-
-  config.module.rules[0].use.unshift('cache-loader', 'thread-loader');
 
   return config;
 };

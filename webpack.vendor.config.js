@@ -6,15 +6,6 @@ const config = {
   mode: 'development',
   target: 'web',
   // devtool: 'inline-source-map',
-  node: {
-    console: false,
-    global: true,
-    process: true,
-    __filename: false,
-    __dirname: false,
-    Buffer: false,
-    setImmediate: false,
-  },
   optimization: {
     minimize: false,
   },
@@ -34,7 +25,6 @@ const config = {
       'react-cache',
       'scheduler',
       'prop-types',
-      'fg-loadjs',
       'lodash-es',
       'fbjs',
       'react-fast-compare',
@@ -45,7 +35,7 @@ const config = {
       'focus-trap',
 
       // Route-specific
-      'jszip',
+      // 'jszip',
       'three',
 
       // Dev

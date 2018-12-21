@@ -1,4 +1,4 @@
-import loadJS from 'fg-loadjs';
+import { loadJS } from './loadJS';
 
 declare global {
   interface Window {

@@ -1,5 +1,4 @@
 import React from 'react';
-import JSZip from 'jszip';
 import { useEffect, useRef, useState } from 'react';
 import { CircularProgress } from '~/components/CircularProgress';
 import { ScreenLock } from '~/components/ScreenLock';

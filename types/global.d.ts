@@ -8,15 +8,6 @@ declare interface CSSModule {
   unuse: () => void;
 }
 
-// Type definitions for LWJGL
-
-declare const FLAG_PRODUCTION: boolean;
-declare const FLAG_CSSMODULES: boolean;
-declare const HOSTNAME_PRODUCTION: string;
-declare const ANALYTICS_TRACKING_ID: string;
-
-declare type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
-
 // Missing from standard lib
 
 declare class NetworkInformation {
@@ -36,4 +27,27 @@ interface Navigator {
 
 interface BlobPropertyBag {
   endings?: 'transparent' | 'native';
+}
+
+// Type definitions for LWJGL
+
+declare const FLAG_PRODUCTION: boolean;
+declare const FLAG_CSSMODULES: boolean;
+declare const HOSTNAME_PRODUCTION: string;
+declare const ANALYTICS_TRACKING_ID: string;
+
+declare type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
+
+declare class JSZip {
+  static support: {
+    blob: boolean;
+  };
+  file: (filename: string, payload: any, options: { binary: boolean }) => void;
+  generateAsync: (
+    options: {
+      type: 'blob';
+      compression?: 'DEFLATE';
+      compressionOptions?: { level: number };
+    }
+  ) => Promise<Blob>;
 }
