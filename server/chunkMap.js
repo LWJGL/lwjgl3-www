@@ -1,9 +1,17 @@
 'use strict';
 
 const chunkMap = (routes, path) => {
-  let parts = path.split('/');
-  parts.shift();
+  if (path === '/') {
+    return routes.home;
+  }
 
+  const parts = path.split('/');
+  if (routes[parts[1]] !== undefined) {
+    return routes[parts[1]];
+  }
+
+  /*
+  parts.shift();
   const route = parts.join('-');
 
   if (!route.length) {
@@ -13,6 +21,7 @@ const chunkMap = (routes, path) => {
   } else if (routes[`${route}-home`]) {
     return routes[`${route}-home`];
   }
+  */
 
   return null;
 };

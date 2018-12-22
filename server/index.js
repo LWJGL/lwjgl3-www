@@ -224,35 +224,22 @@ app.get('/wiki/*', (req, res) => {
 // Service Worker
 app.get('/sw.js', async (req, res) => {
   if (serviceWorkerCache === null) {
-    // Read service worker source code
     let swJS;
+
+    // Read service worker source code
     if (argv.test || app.locals.development) {
       swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
     } else {
       swJS = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js');
     }
 
-    // Update version hash - detects changes to build or to the service worker itself
+    // Append manifest as JS object
+    swJS = swJS.toString().replace(/manifest = {}/, `manifest = ${JSON.stringify(manifest)}`);
+
+    // Hash SW code and set it as VERSION
     const MD5 = crypto.createHash('MD5');
     MD5.update(swJS);
-    MD5.update(JSON.stringify(manifest));
-    swJS = swJS.toString().replace(/VERSION/, MD5.digest('hex'));
-
-    // Populate service worker script with files to cache
-    const files = ['/', `/css/${manifest.assets.css}`, `/js/${manifest.assets[manifest.entry]}`];
-    swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
-
-    // SW must know route paths to always serve index.html
-    const routes = Object.keys(manifest.routes).map(route => {
-      if (route === 'home') {
-        return '/';
-      } else if (route.endsWith('-home')) {
-        return `/${route.slice(0, -'-home'.length).replace(/[-]/g, '/')}/`;
-      } else {
-        return `/${route.replace(/[-]/g, '/')}`;
-      }
-    });
-    swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
+    swJS = swJS.replace(/VERSION/, MD5.digest('hex'));
 
     // Store SW script source so we can serve from memory
     serviceWorkerCache = swJS;
@@ -278,8 +265,8 @@ app.get('*', (req, res, next) => {
 
     // Push entries, we need to start loading as soon as possible
     const preload = [
-      `\</css/${manifest.assets.css}\>; rel=preload; as=style`,
       `\</js/${renderOptions.entry}\>; rel=preload; as=script`,
+      `\</css/${manifest.assets.css}\>; rel=preload; as=style`,
     ];
 
     // Append chunk of important routes to the preload list
@@ -287,7 +274,7 @@ app.get('*', (req, res, next) => {
     // or routes deep in site's hierarchy, so not always worth it
     const routes = chunkMap(manifest.routes, req.path);
     if (routes !== null) {
-      preload.push.apply(preload, routes.map(id => `\</js/${manifest.assets[id + '']}\>; rel=preload; as=script`));
+      preload.push.apply(preload, routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
     }
 
     res.set('Link', preload);

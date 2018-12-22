@@ -53,6 +53,7 @@ const buildConfiguration = () => {
               computed_props: true,
               conditionals: true,
               dead_code: true,
+              // drop_console: false,
               drop_console: true,
               drop_debugger: true,
               evaluate: true,
