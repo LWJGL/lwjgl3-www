@@ -127,7 +127,7 @@ export function Sidebar() {
     <div ref={slidingMenu} className={`col sliding-menu${open ? ' open' : ''}`}>
       <button
         type="button"
-        className="btn-link sliding-menu-icon"
+        className="btn btn-link sliding-menu-icon"
         onClick={onToggle}
         aria-hidden={open}
         title="Open navigation menu"
@@ -140,7 +140,7 @@ export function Sidebar() {
           <button
             ref={closeButton}
             type="button"
-            className="btn-link sliding-menu-icon"
+            className="btn btn-link sliding-menu-icon"
             onClick={onToggle}
             title="Close navigation menu"
           >
