@@ -63,7 +63,7 @@ async function main() {
 
   // Add Service Worker files
   bundle.add(path.join(__dirname, '../client/sw.js'));
-  bundle.add(path.join(__dirname, '../client/sw-destroy.js'));
+  // bundle.add(path.join(__dirname, '../client/sw-destroy.js'));
 
   // Keep only new files
   const files =

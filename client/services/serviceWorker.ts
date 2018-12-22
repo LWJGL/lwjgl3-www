@@ -1,4 +1,3 @@
-// const SW_SUPPORTED = navigator.serviceWorker !== undefined && window.isSecureContext;
 const SW_SUPPORTED =
   FLAG_PRODUCTION &&
   navigator.serviceWorker !== undefined &&
@@ -47,34 +46,36 @@ if (SW_SUPPORTED) {
 
   if (navigator.serviceWorker !== undefined) {
     // Register service worker
-    navigator.serviceWorker.register('/sw.js').then((reg: ServiceWorkerRegistration) => {
-      // Registration was successful
-      // console.log('ServiceWorker registration successful with scope: ', reg.scope);
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').then((reg: ServiceWorkerRegistration) => {
+        // Registration was successful
+        // console.log('ServiceWorker registration successful with scope: ', reg.scope);
 
-      // If there's no controller, this page wasn't loaded via a service worker, so they're looking at the latest version.
-      // In that case, exit early
-      if (navigator.serviceWorker === undefined || navigator.serviceWorker.controller === null) {
-        return;
-      }
-
-      // An updated worker is already waiting
-      if (reg.waiting) {
-        worker = reg.waiting;
-        setPending(true);
-        return;
-      }
-
-      // An updated worker is installing, track its progress (if it becomes "installed")
-      if (reg.installing) {
-        trackInstallation(reg.installing);
-        return;
-      }
-
-      // Else, listen for new installing workers arriving. If on arrives, track its progress
-      reg.addEventListener('updatefound', () => {
-        if (reg.installing !== null) {
-          trackInstallation(reg.installing);
+        // If there's no controller, this page wasn't loaded via a service worker, so they're looking at the latest version.
+        // In that case, exit early
+        if (navigator.serviceWorker === undefined || navigator.serviceWorker.controller === null) {
+          return;
         }
+
+        // An updated worker is already waiting
+        if (reg.waiting) {
+          worker = reg.waiting;
+          setPending(true);
+          return;
+        }
+
+        // An updated worker is installing, track its progress (if it becomes "installed")
+        if (reg.installing) {
+          trackInstallation(reg.installing);
+          return;
+        }
+
+        // Else, listen for new installing workers arriving. If on arrives, track its progress
+        reg.addEventListener('updatefound', () => {
+          if (reg.installing !== null) {
+            trackInstallation(reg.installing);
+          }
+        });
       });
     });
 

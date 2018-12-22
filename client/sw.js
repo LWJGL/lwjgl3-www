@@ -2,33 +2,35 @@ const CACHEPREFIX = 'lwjgl-static-';
 const CACHENAME = CACHEPREFIX + 'VERSION';
 const FILES = [];
 const ROUTES = [];
-const WHITELIST = [/^\/(js|css|img|svg)\//];
+const WHITELIST = [/^\/(js|css|img|svg)\//, /^\/manifest.webmanifest/];
 
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open(CACHENAME).then(function(cache) {
-      return cache.addAll(FILES);
-    })
-  );
-});
+// TODO: Create a separate cache for images
+// TODO: Inject the manifest in the SW
+// TODO: Cache basic files on installation, as before but:
+// TODO: send a message post-install with the current route so we can cache dependencies - ONLY FOR NEW SW INSTALLATIONS
 
-self.addEventListener('activate', function(event) {
-  return event.waitUntil(
-    caches.keys().then(function(keys) {
-      return Promise.all(
-        keys.map(function(k) {
-          if (k !== CACHENAME && k.indexOf(CACHEPREFIX) === 0) {
-            return caches.delete(k);
-          } else {
-            return Promise.resolve();
-          }
-        })
-      );
-    })
-  );
-});
+async function cacheFiles() {
+  const cache = await caches.open(CACHENAME);
+  return cache.addAll(FILES);
+}
 
-self.addEventListener('fetch', function(event) {
+async function clearOldCaches() {
+  const keys = await caches.keys();
+  for (let i = 0; i < keys.length; i += 1) {
+    const key = keys[i];
+    if (key !== CACHENAME && key.indexOf(CACHEPREFIX) === 0) {
+      await caches.delete(key);
+    }
+  }
+}
+
+self.addEventListener('install', event => event.waitUntil(cacheFiles()));
+
+self.addEventListener('activate', event => event.waitUntil(clearOldCaches()));
+
+self.addEventListener('message', event => event.data.action === 'skipWaiting' && self.skipWaiting());
+
+self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   let req = event.request;
 
@@ -37,49 +39,38 @@ self.addEventListener('fetch', function(event) {
     return;
   }
 
-  event.respondWith(
-    caches.match(req).then(function(response) {
+  const cacheFirst = async () => {
+    let response = await caches.match(req);
+    if (response) {
+      return response;
+    }
+
+    if (req.mode === 'navigate' && url.pathname !== '/' && ROUTES.indexOf(url.pathname) !== -1) {
+      const cache = await caches.open(CACHENAME);
+      response = await cache.match('/');
       if (response) {
-        return response;
+        // Remove link header
+        const newHeaders = new Headers(response.headers);
+        newHeaders.delete('Link');
+
+        return new Response(response.body, {
+          status: response.status,
+          statusText: response.statusText,
+          headers: newHeaders,
+        });
       }
+      return fetch(req);
+    }
 
-      if (req.mode === 'navigate' && url.pathname !== '/' && ROUTES.indexOf(url.pathname) !== -1) {
-        return caches
-          .open(CACHENAME)
-          .then(function(cache) {
-            return cache.match('/');
-          })
-          .then(function(result) {
-            if (result === undefined) {
-              return fetch(req);
-            }
-            return result;
-          });
-      }
+    response = await fetch(req);
 
-      return fetch(req).then(function(response) {
-        const shouldCache =
-          response.ok &&
-          response.type === 'basic' &&
-          WHITELIST.some(function(exp) {
-            return exp.test(url.pathname);
-          });
+    if (response.ok && response.type === 'basic' && WHITELIST.some(exp => exp.test(url.pathname))) {
+      const cache = await caches.open(CACHENAME);
+      cache.put(req, response.clone());
+    }
 
-        if (shouldCache) {
-          return caches.open(CACHENAME).then(function(cache) {
-            cache.put(req, response.clone());
-            return response;
-          });
-        } else {
-          return response;
-        }
-      });
-    })
-  );
-});
+    return response;
+  };
 
-self.addEventListener('message', function(event) {
-  if (event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
+  event.respondWith(cacheFirst());
 });

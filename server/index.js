@@ -14,7 +14,6 @@ const request = require('request-promise-native');
 const { promisify } = require('util');
 const readFileAsync = promisify(fs.readFile);
 
-const AWS = require('aws-sdk');
 const cloudFrontSubnets = require('./cloudfront-subnets.json');
 const chunkMap = require('./chunkMap');
 const helmetConfig = require('./helmetConfig');
@@ -225,46 +224,38 @@ app.get('/wiki/*', (req, res) => {
 // Service Worker
 app.get('/sw.js', async (req, res) => {
   if (serviceWorkerCache === null) {
-    if (app.locals.production) {
-      // Read service worker source code
-      let swJS;
-      if (argv.test) {
-        swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
-      } else {
-        swJS = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js');
-      }
-
-      // Update version hash - detects changes to build or to the service worker itself
-      const MD5 = crypto.createHash('MD5');
-      MD5.update(swJS);
-      MD5.update(JSON.stringify(manifest));
-      swJS = swJS.toString().replace(/VERSION/, MD5.digest('hex'));
-
-      // Populate service worker script with files to cache
-      const files = ['/', `/css/${manifest.assets.css}`, `/js/${manifest.assets[manifest.entry]}`];
-      swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
-
-      // SW must know route paths to always serve index.html
-      const routes = Object.keys(manifest.routes).map((route /*: string*/) => {
-        if (route === 'home') {
-          return '/';
-        } else if (route.endsWith('-home')) {
-          return `/${route.slice(0, -'-home'.length).replace(/[-]/g, '/')}/`;
-        } else {
-          return `/${route.replace(/[-]/g, '/')}`;
-        }
-      });
-      swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
-
-      // Store SW script source so we can serve from memory
-      serviceWorkerCache = swJS;
+    // Read service worker source code
+    let swJS;
+    if (argv.test || app.locals.development) {
+      swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
     } else {
-      if (argv.test) {
-        serviceWorkerCache = await readFileAsync(path.join(__dirname, '../client', 'sw-destroy.js'));
-      } else {
-        serviceWorkerCache = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw-destroy.js');
-      }
+      swJS = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js');
     }
+
+    // Update version hash - detects changes to build or to the service worker itself
+    const MD5 = crypto.createHash('MD5');
+    MD5.update(swJS);
+    MD5.update(JSON.stringify(manifest));
+    swJS = swJS.toString().replace(/VERSION/, MD5.digest('hex'));
+
+    // Populate service worker script with files to cache
+    const files = ['/', `/css/${manifest.assets.css}`, `/js/${manifest.assets[manifest.entry]}`];
+    swJS = swJS.replace(/FILES = \[\]/, `FILES = ${JSON.stringify(files)}`);
+
+    // SW must know route paths to always serve index.html
+    const routes = Object.keys(manifest.routes).map(route => {
+      if (route === 'home') {
+        return '/';
+      } else if (route.endsWith('-home')) {
+        return `/${route.slice(0, -'-home'.length).replace(/[-]/g, '/')}/`;
+      } else {
+        return `/${route.replace(/[-]/g, '/')}`;
+      }
+    });
+    swJS = swJS.replace(/ROUTES = \[\]/, `ROUTES = ${JSON.stringify(routes)}`);
+
+    // Store SW script source so we can serve from memory
+    serviceWorkerCache = swJS;
   }
 
   res.type('text/javascript').send(serviceWorkerCache);
