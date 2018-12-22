@@ -35,45 +35,56 @@ function setPending(state: boolean) {
   listeners.forEach(cb => cb(state));
 }
 
+function trackInstallation(workerInstalling: ServiceWorker) {
+  workerInstalling.addEventListener('statechange', () => {
+    if (workerInstalling.state == 'installed') {
+      // A new service worker has been installed!
+      worker = workerInstalling;
+      setPending(true);
+    }
+  });
+}
+
 if (SW_SUPPORTED) {
   // Prevent web app install banner from being displayed automatically
-  // ? https://developers.google.com/web/fundamentals/app-install-banners/#defer_or_cancel
-  // TODO: https://developers.google.com/web/updates/2018/06/a2hs-updates
+  // https://developers.google.com/web/fundamentals/app-install-banners/
+  // let deferredPrompt;
   window.addEventListener('beforeinstallprompt', e => {
+    // Prevent Chrome 67 and earlier from automatically showing the prompt
     e.preventDefault();
-    return false;
+    // Stash the event so it can be triggered later.
+    // deferredPrompt = e;
   });
 
   if (navigator.serviceWorker !== undefined) {
     // Register service worker
-    window.addEventListener('load', function() {
-      navigator.serviceWorker.register('/sw.js').then((reg: ServiceWorkerRegistration) => {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').then((registration: ServiceWorkerRegistration) => {
         // Registration was successful
         // console.log('ServiceWorker registration successful with scope: ', reg.scope);
 
-        // If there's no controller, this page wasn't loaded via a service worker, so they're looking at the latest version.
-        // In that case, exit early
-        if (navigator.serviceWorker === undefined || navigator.serviceWorker.controller === null) {
+        // If there's no controller this page wasn't loaded via a service worker so we know we are on the latest version.
+        if (navigator.serviceWorker.controller === null) {
           return;
         }
 
         // An updated worker is already waiting
-        if (reg.waiting) {
-          worker = reg.waiting;
+        if (registration.waiting) {
+          worker = registration.waiting;
           setPending(true);
           return;
         }
 
         // An updated worker is installing, track its progress (if it becomes "installed")
-        if (reg.installing) {
-          trackInstallation(reg.installing);
+        if (registration.installing) {
+          trackInstallation(registration.installing);
           return;
         }
 
         // Else, listen for new installing workers arriving. If on arrives, track its progress
-        reg.addEventListener('updatefound', () => {
-          if (reg.installing !== null) {
-            trackInstallation(reg.installing);
+        registration.addEventListener('updatefound', () => {
+          if (registration.installing !== null) {
+            trackInstallation(registration.installing);
           }
         });
       });
@@ -92,14 +103,4 @@ if (SW_SUPPORTED) {
       }
     });
   }
-}
-
-function trackInstallation(workerInstalling: ServiceWorker) {
-  workerInstalling.addEventListener('statechange', () => {
-    if (workerInstalling.state == 'installed') {
-      // A new service worker has been installed!
-      worker = workerInstalling;
-      setPending(true);
-    }
-  });
 }

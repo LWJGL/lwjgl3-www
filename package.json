@@ -32,7 +32,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.381.0",
+    "aws-sdk": "2.382.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.1",
     "compression": "1.7.3",

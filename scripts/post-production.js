@@ -26,8 +26,6 @@ const gzipSize = require('gzip-size');
 */
 
 async function main() {
-  console.log(chalk`{yellow Compiling list of files & routes:}`);
-
   // Read webpack's manifest & chunks into memory
   const manifest = require('../public/js/webpack.manifest.json');
 
