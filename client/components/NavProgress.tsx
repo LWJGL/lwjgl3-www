@@ -82,12 +82,14 @@ export function NavProgressProvider({ children }: ProviderProps) {
     } else {
       delayedStart();
     }
+
+    return end;
   }
 
   function delayedStart() {
+    cleanup();
     counter += 1;
     setCount(counter);
-    cleanup();
   }
 
   function cleanup() {
@@ -100,14 +102,15 @@ export function NavProgressProvider({ children }: ProviderProps) {
   }
 
   function end() {
-    if (!cleanup()) {
-      if (counter <= 0 && !FLAG_PRODUCTION) {
-        throw new Error('Called end without first calling start');
-      }
-
-      counter -= 1;
-      setCount(counter);
+    if (cleanup()) {
+      return;
     }
+    if (counter <= 0 && !FLAG_PRODUCTION) {
+      throw new Error('Called end without first calling start');
+    }
+
+    counter -= 1;
+    setCount(counter);
   }
 
   const state = {
@@ -152,6 +155,13 @@ export function NavProgress() {
         });
       }
 
+      function resetTrickle() {
+        if (resetTimeoutId.current !== null) {
+          clearTimeout(resetTimeoutId.current);
+          resetTimeoutId.current = null;
+        }
+      }
+
       function reset() {
         if (count === 0) {
           setProgress(0);
@@ -164,21 +174,21 @@ export function NavProgress() {
         } else if (progress === 100) {
           // This is caused by a quick "start → end → start"
           setProgress(0);
+          resetTrickle();
           trickle();
-          if (resetTimeoutId.current !== null) {
-            clearTimeout(resetTimeoutId.current);
-            resetTimeoutId.current = null;
-          }
         }
-      } else if (progress > 0) {
-        // Fill bar and wait 750ms before resetting
-        setProgress(100);
-        resetTimeoutId.current = window.setTimeout(reset, 750);
+      } else {
+        resetTrickle();
+        if (progress > 0) {
+          // Fill bar and wait 750ms before resetting
+          setProgress(100);
+          resetTimeoutId.current = window.setTimeout(reset, 750);
 
-        // Clear tricle timeout
-        if (trickleTimeoutId.current !== null) {
-          clearTimeout(trickleTimeoutId.current);
-          trickleTimeoutId.current = null;
+          // Clear tricle timeout
+          if (trickleTimeoutId.current !== null) {
+            clearTimeout(trickleTimeoutId.current);
+            trickleTimeoutId.current = null;
+          }
         }
       }
     },

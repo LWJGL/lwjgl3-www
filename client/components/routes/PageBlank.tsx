@@ -12,12 +12,7 @@ const styles = {
 };
 
 export function PageBlank({ delay = 0 }: Props) {
-  const { start, end } = useContext(NavProgressContext);
-
-  useEffect(() => {
-    start(delay);
-    return end;
-  }, []);
-
+  const { start } = useContext(NavProgressContext);
+  useEffect(() => start(delay), []);
   return <div style={styles} />;
 }
