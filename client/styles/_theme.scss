@@ -1,3 +1,10 @@
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
 body {
   // Disables pull-to-refresh and overscroll glow effect. Still keeps swipe navigations.
   // https://developers.google.com/web/updates/2017/11/overscroll-behavior
