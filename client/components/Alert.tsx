@@ -15,15 +15,14 @@ export function Alert({ type = 'primary', isOpen = true, onClose, title, message
   return (
     <Dialog className="dialog-alert" isOpen={isOpen} portal={true}>
       <Trap className="dialog-content" role="alertdialog" onClose={onClose}>
-        {title != null &&
-          title.length > 0 && (
-            <div className={`dialog-header bg-${type}`}>
-              <h3>{title}</h3>
-              <div className="dialog-close-button">
-                <IconClose onClick={onClose} />
-              </div>
+        {title != null && title.length > 0 && (
+          <div className={`dialog-header bg-${type}`}>
+            <h3>{title}</h3>
+            <div className="dialog-close-button">
+              <IconClose onClick={onClose} />
             </div>
-          )}
+          </div>
+        )}
         <p>{message}</p>
         <div className="dialog-footer">
           <button type="button" className={`btn btn-sm btn-default`} onClick={onClose} autoFocus={true}>
