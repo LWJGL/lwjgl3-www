@@ -22,7 +22,7 @@ const config = {
       // Core
       'react',
       'react-dom',
-      'react-cache',
+      // 'react-cache',
       'scheduler',
       'prop-types',
       'lodash-es',

@@ -4,7 +4,7 @@
  * License: MIT
  *   See https://github.com/eligrey/FileSaver.js/blob/master/LICENSE.md
  * https://github.com/eligrey/FileSaver.js/blob/master/src/FileSaver.js
-*/
+ */
 function autoBOM(blob: Blob): Blob {
   // prepend BOM for UTF-8 XML and text/* types (including HTML)
   // note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF

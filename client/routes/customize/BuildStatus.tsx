@@ -1,7 +1,8 @@
 import React from 'react';
 import { BuildType } from './types';
 import { config } from './config';
-import { unstable_createResource as createResource } from 'react-cache';
+// import { unstable_createResource as createResource } from 'react-cache';
+import { unstable_createResource as createResource } from '~/services/react-cache/ReactCache';
 
 interface BuildStatusSuccess {
   lastModified: string;

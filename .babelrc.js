@@ -16,13 +16,7 @@ const config = {
     DEV && '@babel/plugin-transform-react-jsx-source',
     DEV && '@babel/plugin-transform-react-display-name',
     PRODUCTION && 'react-local',
-    PRODUCTION && [
-      'transform-react-remove-prop-types',
-      {
-        mode: 'remove',
-        removeImport: true,
-      },
-    ],
+    PRODUCTION && ['transform-react-remove-prop-types', { mode: 'remove', removeImport: true }],
     PRODUCTION && '@babel/plugin-transform-react-constant-elements', // Larger file size but faster reconciliation and less GC pressure
     // PRODUCTION && '@babel/plugin-transform-react-inline-elements', // Breaks @emotion
     // ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }],  // Used internally by @emotion preset
@@ -75,13 +69,7 @@ const config = {
 
     // https://github.com/MatAtBread/fast-async
     // async/await using Promises instead of (Re)generator
-    PRODUCTION &&
-      !MODERN && [
-        'module:fast-async',
-        {
-          spec: true,
-        },
-      ],
+    PRODUCTION && !MODERN && ['module:fast-async', { spec: true }],
   ].filter(Boolean),
 };
 

@@ -4,6 +4,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "checkJs": false,
     "alwaysStrict": true,
     "noEmit": true,
