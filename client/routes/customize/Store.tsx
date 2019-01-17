@@ -1,5 +1,4 @@
-import React from 'react';
-import { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
 import { ActionCreator, configLoad } from './actions';
 import { config, getConfigSnapshot } from './config';
 import { reducer } from './reducer';

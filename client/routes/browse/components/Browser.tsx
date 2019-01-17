@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from '@reach/router';
-import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 // import { unstable_createResource as createResource } from 'react-cache';
 import { unstable_createResource as createResource } from '~/services/react-cache/ReactCache';
 import { unstable_scheduleCallback } from 'scheduler';

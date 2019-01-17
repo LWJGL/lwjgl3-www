@@ -1,10 +1,5 @@
-import React from 'react';
 import { createPortal } from 'react-dom';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export function Head(props: Props) {
+export const Head: React.FC = props => {
   return createPortal(props.children, document.head);
-}
+};

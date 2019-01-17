@@ -1,5 +1,4 @@
-import React from 'react';
-import { memo, useState, useEffect, useRef } from 'react';
+import React, { memo, useState, useEffect, useRef } from 'react';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
 let io: IntersectionObserver | null = null;

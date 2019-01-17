@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Checkbox } from '~/components/Checkbox';
 import { useMemoSlice } from './Store';
 import { togglePlatform } from './actions';

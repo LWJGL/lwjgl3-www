@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';

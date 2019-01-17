@@ -1,5 +1,4 @@
-import React from 'react';
-import { memo, useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
 import { trackView } from '../../services/ga';

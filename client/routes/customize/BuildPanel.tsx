@@ -1,7 +1,5 @@
-// @jsx jsx
-import { css, jsx } from '@emotion/core';
-import React from 'react';
-import { Suspense, useState, useEffect, useMemo } from 'react';
+import React, { Suspense, useState, useEffect, useMemo } from 'react';
+import { css } from '@emotion/core';
 import { useBreakpoint } from '~/components/Breakpoint';
 import IconClose from '~/components/icons/md/Close';
 import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
@@ -18,7 +16,6 @@ import {
   COLOR_STABLE_LIGHT,
 } from './theme';
 import { BuildDefinition, BuildType } from './types';
-jsx;
 
 type ConnectedProps = {
   buildSelected: boolean;

@@ -1,5 +1,4 @@
-import React from 'react';
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { HashLinkTarget } from '~/components/HashLinkTarget';

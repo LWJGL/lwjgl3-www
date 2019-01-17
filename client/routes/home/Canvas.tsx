@@ -1,5 +1,4 @@
-import React from 'react';
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { css, keyframes } from '@emotion/core';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';

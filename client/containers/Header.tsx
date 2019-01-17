@@ -1,9 +1,6 @@
-// @jsx jsx
-//@ts-ignore
-import { css, jsx } from '@emotion/core';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { css } from '@emotion/core';
 import { Link } from '@reach/router';
-import React from 'react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
@@ -12,7 +9,6 @@ import CloudDownload from '../components/icons/md/CloudDownload';
 import { useServiceWorker } from '../hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
-jsx;
 
 const HEADER_CLASSNAME = 'site-header';
 const styleHome = css`

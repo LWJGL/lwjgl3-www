@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ScreenLock } from '~/components/ScreenLock';
 import { saveAs } from '~/services/file-saver';
 import { configJSONfilename, getConfigSnapshot } from './config';

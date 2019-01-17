@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { breakpoints, breakpointIndex, BreakPointIndex } from '../theme/media';
 
 interface Context {

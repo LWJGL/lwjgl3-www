@@ -1,5 +1,4 @@
-import React from 'react';
-import { lazy, Suspense } from 'react';
+import React, { lazy, Suspense } from 'react';
 import { PageBlank } from './PageBlank';
 // import { delay } from '~/services/delay';
 import { RouteComponentProps } from '@reach/router';

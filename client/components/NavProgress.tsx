@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import { css, keyframes } from '@emotion/core';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 

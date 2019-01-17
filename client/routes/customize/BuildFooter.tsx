@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import IconFileDownload from '~/components/icons/md/FileDownload';
 import { saveAs } from '~/services/file-saver';
 import { configLoad } from './actions';

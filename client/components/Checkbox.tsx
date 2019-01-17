@@ -1,5 +1,4 @@
-import React from 'react';
-import { memo, useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import uniqueId from 'lodash-es/uniqueId';
 
 interface Props {

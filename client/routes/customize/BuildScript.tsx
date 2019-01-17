@@ -1,5 +1,4 @@
-import React from 'react';
-import { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useMemoSlice } from './Store';
 import { useBreakpoint } from '~/components/Breakpoint';
 import IconContentCopy from '~/components/icons/md/ContentCopy';
@@ -44,7 +43,7 @@ interface Props {
 }
 
 export function BuildScript(props: Props) {
-  const preRef: React.RefObject<HTMLPreElement> = React.useRef(null);
+  const preRef: React.RefObject<HTMLPreElement> = useRef(null);
 
   // Breakpoint
   const {

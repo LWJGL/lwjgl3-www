@@ -1,5 +1,4 @@
-import React from 'react';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { Link } from '@reach/router';
 import { LazyImg } from '~/components/LazyImg';
 

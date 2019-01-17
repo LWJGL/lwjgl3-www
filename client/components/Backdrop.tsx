@@ -1,5 +1,4 @@
-import React from 'react';
-import { memo, useState, useEffect } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { cc } from '~/theme';
 
 interface Props {

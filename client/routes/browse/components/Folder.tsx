@@ -1,5 +1,4 @@
-import React from 'react';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { css } from '@emotion/core';
 import { Link } from '@reach/router';
 import IconFolder from '~/components/icons/md/Folder';
