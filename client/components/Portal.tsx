@@ -1,17 +1,12 @@
-import React from 'react';
+import React, { /*memo, */ useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { memo, useRef, useEffect } from 'react';
-
-interface Props {
-  children?: React.ReactNode;
-}
+const { memo } = React;
 
 /**
  * This component detaches its contents and re-attaches them to document.body (using ReactDOM.createPortal).
  * Use it when you need to circumvent DOM z-stacking (for dialogs, popovers, etc.).
- * Any class names passed to this element will be propagated to the new container element on document.body.
  */
-export const Portal = memo(({ children }: Props) => {
+export const Portal = memo(({ children }) => {
   const targetElement: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
 
   if (targetElement.current === null) {

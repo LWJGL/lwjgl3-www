@@ -113,8 +113,6 @@ const buildConfiguration = () => {
             // ie8: false,
             // safari10: true,
             // toplevel: true,
-            // warnings: 'verbose',
-            warnings: false,
           },
         }),
       ],
