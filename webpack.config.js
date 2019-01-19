@@ -258,14 +258,8 @@ const buildConfiguration = () => {
       });
     }
   } else {
-    // config.entry.main.unshift(
-    //   // Load core-js polyfill first
-    //   // We import a file that imports the polyfill in order to take advantage of @babel/env optimizations
-    //   path.resolve(__dirname, 'client/services/polyfill.js')
-    // );
     // config.optimization.moduleIds = 'named';
     // config.optimization.chunkIds = 'named';
-
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
       config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
