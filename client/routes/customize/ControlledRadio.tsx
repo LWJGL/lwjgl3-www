@@ -36,26 +36,23 @@ export function ControlledRadio({ spec }: Props) {
     state => spec.inputs(state)
   );
 
-  return useMemo(
-    () => {
-      const { value: selectedValue, options } = slice;
-      const select = (value: any) => dispatch(spec.action(value));
+  return useMemo(() => {
+    const { value: selectedValue, options } = slice;
+    const select = (value: any) => dispatch(spec.action(value));
 
-      return (
-        <div className="custom-controls-stacked">
-          {options.map(({ value, label, disabled }: RadioOption, i: number) => (
-            <Radio
-              key={`${spec.name}-${typeof value === 'string' ? value : i}`}
-              value={value}
-              checked={value === selectedValue}
-              onChange={select}
-              label={label}
-              disabled={disabled === true}
-            />
-          ))}
-        </div>
-      );
-    },
-    [slice]
-  );
+    return (
+      <div className="custom-controls-stacked">
+        {options.map(({ value, label, disabled }: RadioOption, i: number) => (
+          <Radio
+            key={`${spec.name}-${typeof value === 'string' ? value : i}`}
+            value={value}
+            checked={value === selectedValue}
+            onChange={select}
+            label={label}
+            disabled={disabled === true}
+          />
+        ))}
+      </div>
+    );
+  }, [slice]);
 }

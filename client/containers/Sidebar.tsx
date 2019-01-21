@@ -25,102 +25,99 @@ export function Sidebar() {
     }
   }, []);
 
-  useEffect(
-    () => {
-      if (!open) {
-        // Skip effect when closed
+  useEffect(() => {
+    if (!open) {
+      // Skip effect when closed
+      return;
+    }
+
+    let touchingSideNav = false;
+    let startX = 0;
+    let currentX = 0;
+
+    function onTouchStart(evt: TouchEvent) {
+      startX = evt.touches[0].pageX;
+      currentX = startX;
+
+      touchingSideNav = true;
+      if (sideContainer.current !== null) {
+        sideContainer.current.classList.add('touching');
+      }
+      requestAnimationFrame(update);
+    }
+
+    function onTouchMove(evt: TouchEvent) {
+      if (touchingSideNav) {
+        currentX = evt.touches[0].pageX;
+        evt.preventDefault();
+      }
+    }
+
+    function onTouchEnd() {
+      if (touchingSideNav) {
+        touchingSideNav = false;
+
+        if (sideContainer.current !== null) {
+          sideContainer.current.style.transform = '';
+          sideContainer.current.classList.remove('touching');
+        }
+
+        if (currentX - startX > 0) {
+          onToggle();
+        }
+      }
+    }
+
+    function update() {
+      if (!touchingSideNav) {
         return;
       }
 
-      let touchingSideNav = false;
-      let startX = 0;
-      let currentX = 0;
+      requestAnimationFrame(update);
 
-      function onTouchStart(evt: TouchEvent) {
-        startX = evt.touches[0].pageX;
-        currentX = startX;
+      let translateX = currentX - startX;
 
-        touchingSideNav = true;
-        if (sideContainer.current !== null) {
-          sideContainer.current.classList.add('touching');
-        }
-        requestAnimationFrame(update);
+      if (translateX < 0) {
+        translateX = 0;
       }
 
-      function onTouchMove(evt: TouchEvent) {
-        if (touchingSideNav) {
-          currentX = evt.touches[0].pageX;
-          evt.preventDefault();
-        }
+      if (sideContainer.current !== null) {
+        sideContainer.current.style.transform = `translateX(${translateX}px)`;
       }
+    }
 
-      function onTouchEnd() {
-        if (touchingSideNav) {
-          touchingSideNav = false;
+    // On Open
+    on();
+    if (focusTrap.current !== null) {
+      focusTrap.current.activate();
+    }
+    if (sideContainer.current !== null) {
+      sideContainer.current.addEventListener(
+        'touchstart',
+        onTouchStart,
+        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
+      );
+      // Disable passive to avoid triggering gestures in some devices
+      sideContainer.current.addEventListener(
+        'touchmove',
+        onTouchMove,
+        SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
+      );
+      sideContainer.current.addEventListener('touchend', onTouchEnd, false);
+    }
 
-          if (sideContainer.current !== null) {
-            sideContainer.current.style.transform = '';
-            sideContainer.current.classList.remove('touching');
-          }
-
-          if (currentX - startX > 0) {
-            onToggle();
-          }
-        }
-      }
-
-      function update() {
-        if (!touchingSideNav) {
-          return;
-        }
-
-        requestAnimationFrame(update);
-
-        let translateX = currentX - startX;
-
-        if (translateX < 0) {
-          translateX = 0;
-        }
-
-        if (sideContainer.current !== null) {
-          sideContainer.current.style.transform = `translateX(${translateX}px)`;
-        }
-      }
-
-      // On Open
-      on();
+    return () => {
+      off();
       if (focusTrap.current !== null) {
-        focusTrap.current.activate();
+        focusTrap.current.deactivate({ onDeactivate: false });
       }
       if (sideContainer.current !== null) {
-        sideContainer.current.addEventListener(
-          'touchstart',
-          onTouchStart,
-          SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
-        );
-        // Disable passive to avoid triggering gestures in some devices
-        sideContainer.current.addEventListener(
-          'touchmove',
-          onTouchMove,
-          SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
-        );
-        sideContainer.current.addEventListener('touchend', onTouchEnd, false);
+        sideContainer.current.removeEventListener('touchstart', onTouchStart, false);
+        sideContainer.current.removeEventListener('touchmove', onTouchMove, false);
+        sideContainer.current.removeEventListener('touchend', onTouchEnd, false);
       }
-
-      return () => {
-        off();
-        if (focusTrap.current !== null) {
-          focusTrap.current.deactivate({ onDeactivate: false });
-        }
-        if (sideContainer.current !== null) {
-          sideContainer.current.removeEventListener('touchstart', onTouchStart, false);
-          sideContainer.current.removeEventListener('touchmove', onTouchMove, false);
-          sideContainer.current.removeEventListener('touchend', onTouchEnd, false);
-        }
-      };
-    },
-    [open]
-  );
+    };
+  }, [open]);
 
   return (
     <div ref={slidingMenu} className={`col sliding-menu${open ? ' open' : ''}`}>

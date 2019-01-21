@@ -32,30 +32,27 @@ const HashLinkTargetControlled = memo(({ id, hash }: Props) => {
   const el: React.RefObject<HTMLAnchorElement> = useRef(null);
   const prevHash = usePrevious(hash);
 
-  useEffect(
-    () => {
-      if (prevHash === null) {
-        // Only runs on mount
-        if (hash === `#${id}` && el.current !== null) {
-          scrollToTarget(el.current);
-        }
-      } else if (prevHash !== hash) {
-        // Runs on re-render
-        if (hash === `#${id}` && el.current !== null) {
-          if (prevHash === '') {
-            defaultScrollPos = [window.pageXOffset, window.pageYOffset];
-          }
-          scrolling = true;
-          scrollToTarget(el.current);
-        } else if (!scrolling) {
-          scrolling = true;
-          scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
-          setTimeout(scrollEnd, 0);
-        }
+  useEffect(() => {
+    if (prevHash === null) {
+      // Only runs on mount
+      if (hash === `#${id}` && el.current !== null) {
+        scrollToTarget(el.current);
       }
-    },
-    [id, hash]
-  );
+    } else if (prevHash !== hash) {
+      // Runs on re-render
+      if (hash === `#${id}` && el.current !== null) {
+        if (prevHash === '') {
+          defaultScrollPos = [window.pageXOffset, window.pageYOffset];
+        }
+        scrolling = true;
+        scrollToTarget(el.current);
+      } else if (!scrolling) {
+        scrolling = true;
+        scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
+        setTimeout(scrollEnd, 0);
+      }
+    }
+  }, [id, hash]);
 
   return <a ref={el} />;
 });

@@ -86,7 +86,7 @@
     "lodash-es": "4.17.11",
     "node-sass": "4.11.0",
     "postcss-loader": "3.0.0",
-    "prettier": "1.15.3",
+    "prettier": "1.16.0",
     "react": "16.8.0-alpha.1",
     "react-cache": "2.0.0-alpha.1",
     "react-dom": "16.8.0-alpha.1",

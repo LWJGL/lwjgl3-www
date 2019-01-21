@@ -16,34 +16,31 @@ export function BuildFooter({ setIsDownloading }: Props) {
   const [mode, dispatch] = useSlice(({ mode }) => mode);
   const storeRef = useStoreRef();
 
-  return useMemo(
-    () => {
-      const configDownload = () => {
-        const save = getConfigSnapshot(storeRef.current);
-        if (save === null) {
-          return;
-        }
-        const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
-        saveAs(blob, configJSONfilename(save));
-      };
+  return useMemo(() => {
+    const configDownload = () => {
+      const save = getConfigSnapshot(storeRef.current);
+      if (save === null) {
+        return;
+      }
+      const blob = new Blob([JSON.stringify(save, null, 2)], { type: 'application/json', endings: 'native' });
+      saveAs(blob, configJSONfilename(save));
+    };
 
-      const dispatchConfigLoad = (payload: BuildStoreSnapshot) => dispatch(configLoad(payload));
+    const dispatchConfigLoad = (payload: BuildStoreSnapshot) => dispatch(configLoad(payload));
 
-      return mode === Mode.Zip ? (
-        <BuildToolbar configDownload={configDownload} configLoad={dispatchConfigLoad}>
-          <button
-            className="btn btn-success"
-            onClick={() => {
-              setIsDownloading(true);
-            }}
-          >
-            <IconFileDownload /> DOWNLOAD ZIP
-          </button>
-        </BuildToolbar>
-      ) : (
-        <BuildScript configDownload={configDownload} configLoad={dispatchConfigLoad} />
-      );
-    },
-    [mode]
-  );
+    return mode === Mode.Zip ? (
+      <BuildToolbar configDownload={configDownload} configLoad={dispatchConfigLoad}>
+        <button
+          className="btn btn-success"
+          onClick={() => {
+            setIsDownloading(true);
+          }}
+        >
+          <IconFileDownload /> DOWNLOAD ZIP
+        </button>
+      </BuildToolbar>
+    ) : (
+      <BuildScript configDownload={configDownload} configLoad={dispatchConfigLoad} />
+    );
+  }, [mode]);
 }

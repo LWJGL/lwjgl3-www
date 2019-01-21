@@ -53,38 +53,35 @@ export function BuildPanel({ build }: Props) {
     }
   }, []);
 
-  return useMemo(
-    () => {
-      const { buildSelected, isSelected, spec } = slice;
-      const {
-        current,
-        breakpoints: { lg },
-      } = breakpoint;
+  return useMemo(() => {
+    const { buildSelected, isSelected, spec } = slice;
+    const {
+      current,
+      breakpoints: { lg },
+    } = breakpoint;
 
-      return (
-        <div
-          onClick={() => dispatch(selectBuildType(build))}
-          css={PanelBox}
-          className={cc(build, {
-            selected: isSelected,
-            active: buildSelected && current < lg,
-          })}
-        >
-          <h2>{spec.title}</h2>
-          <p>{spec.description}</p>
-          {showStatus ? (
-            <Suspense fallback={<StatusFallback />}>
-              <BuildStatus name={build} />
-            </Suspense>
-          ) : (
-            <StatusFallback />
-          )}
-          {isSelected ? <IconClose /> : null}
-        </div>
-      );
-    },
-    [slice, showStatus, breakpoint]
-  );
+    return (
+      <div
+        onClick={() => dispatch(selectBuildType(build))}
+        css={PanelBox}
+        className={cc(build, {
+          selected: isSelected,
+          active: buildSelected && current < lg,
+        })}
+      >
+        <h2>{spec.title}</h2>
+        <p>{spec.description}</p>
+        {showStatus ? (
+          <Suspense fallback={<StatusFallback />}>
+            <BuildStatus name={build} />
+          </Suspense>
+        ) : (
+          <StatusFallback />
+        )}
+        {isSelected ? <IconClose /> : null}
+      </div>
+    );
+  }, [slice, showStatus, breakpoint]);
 }
 
 const PanelBox = css`

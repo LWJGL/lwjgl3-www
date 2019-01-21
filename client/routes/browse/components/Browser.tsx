@@ -54,15 +54,12 @@ export function Browser({ path: loading }: Props) {
   const [path, setPath] = useState(loading);
   const mounted = useRef(false);
 
-  useEffect(
-    () => {
-      mounted.current = true;
-      if (loading !== path) {
-        unstable_scheduleCallback(() => setPath(loading));
-      }
-    },
-    [loading]
-  );
+  useEffect(() => {
+    mounted.current = true;
+    if (loading !== path) {
+      unstable_scheduleCallback(() => setPath(loading));
+    }
+  }, [loading]);
 
   return (
     <div className="table-responsive-md mt-sm-4">

@@ -129,70 +129,67 @@ export function NavProgress() {
   const trickleTimeoutId: React.MutableRefObject<number | null> = useRef(null);
   const resetTimeoutId: React.MutableRefObject<number | null> = useRef(null);
 
-  useEffect(
-    () => {
-      function trickle() {
-        setProgress(progress => {
-          if (progress < PERC_MAX) {
-            let step = 0;
+  useEffect(() => {
+    function trickle() {
+      setProgress(progress => {
+        if (progress < PERC_MAX) {
+          let step = 0;
 
-            if (progress < 37) {
-              step = 13;
-            } else if (progress >= 37 && progress < 59) {
-              step = 7;
-            } else if (progress >= 59 && progress < 83) {
-              step = 3;
-            } else {
-              step = 0.5;
-            }
-
-            trickleTimeoutId.current = window.setTimeout(trickle, 200 + Math.floor(400 * Math.random()));
-            return progress >= PERC_MAX ? PERC_MAX : progress + step;
+          if (progress < 37) {
+            step = 13;
+          } else if (progress >= 37 && progress < 59) {
+            step = 7;
+          } else if (progress >= 59 && progress < 83) {
+            step = 3;
+          } else {
+            step = 0.5;
           }
 
-          return progress;
-        });
-      }
-
-      function resetTrickle() {
-        if (resetTimeoutId.current !== null) {
-          clearTimeout(resetTimeoutId.current);
-          resetTimeoutId.current = null;
+          trickleTimeoutId.current = window.setTimeout(trickle, 200 + Math.floor(400 * Math.random()));
+          return progress >= PERC_MAX ? PERC_MAX : progress + step;
         }
-      }
 
-      function reset() {
-        if (count === 0) {
-          setProgress(0);
-        }
-      }
+        return progress;
+      });
+    }
 
-      if (count > 0) {
-        if (progress === 0) {
-          trickle();
-        } else if (progress === 100) {
-          // This is caused by a quick "start → end → start"
-          setProgress(0);
-          resetTrickle();
-          trickle();
-        }
-      } else {
+    function resetTrickle() {
+      if (resetTimeoutId.current !== null) {
+        clearTimeout(resetTimeoutId.current);
+        resetTimeoutId.current = null;
+      }
+    }
+
+    function reset() {
+      if (count === 0) {
+        setProgress(0);
+      }
+    }
+
+    if (count > 0) {
+      if (progress === 0) {
+        trickle();
+      } else if (progress === 100) {
+        // This is caused by a quick "start → end → start"
+        setProgress(0);
         resetTrickle();
-        if (progress > 0) {
-          // Fill bar and wait 750ms before resetting
-          setProgress(100);
-          resetTimeoutId.current = window.setTimeout(reset, 750);
+        trickle();
+      }
+    } else {
+      resetTrickle();
+      if (progress > 0) {
+        // Fill bar and wait 750ms before resetting
+        setProgress(100);
+        resetTimeoutId.current = window.setTimeout(reset, 750);
 
-          // Clear tricle timeout
-          if (trickleTimeoutId.current !== null) {
-            clearTimeout(trickleTimeoutId.current);
-            trickleTimeoutId.current = null;
-          }
+        // Clear tricle timeout
+        if (trickleTimeoutId.current !== null) {
+          clearTimeout(trickleTimeoutId.current);
+          trickleTimeoutId.current = null;
         }
       }
-    },
-    [count]
-  );
+    }
+  }, [count]);
 
   return (
     <div hidden={progress === 0} className={progress === 100 ? 'fade-out' : ''} css={cssProgressContainer}>

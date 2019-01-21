@@ -19,32 +19,29 @@ export function BuildAddons() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
   const { mode, selectedAddons, descriptions, allIds, byId } = slice;
 
-  return useMemo(
-    () => {
-      const onChange = (addon: Addon) => dispatch(toggleAddon(addon));
+  return useMemo(() => {
+    const onChange = (addon: Addon) => dispatch(toggleAddon(addon));
 
-      return (
-        <div className="custom-controls-stacked">
-          {allIds.map((it: Addon) => {
-            const addon = byId[it];
-            const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
+    return (
+      <div className="custom-controls-stacked">
+        {allIds.map((it: Addon) => {
+          const addon = byId[it];
+          const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
 
-            return (
-              <BuildAddon
-                key={it}
-                addon={addon}
-                disabled={disabled}
-                selected={selectedAddons.includes(it)}
-                showDescriptions={descriptions}
-                onChange={onChange}
-              />
-            );
-          })}
-        </div>
-      );
-    },
-    [slice]
-  );
+          return (
+            <BuildAddon
+              key={it}
+              addon={addon}
+              disabled={disabled}
+              selected={selectedAddons.includes(it)}
+              showDescriptions={descriptions}
+              onChange={onChange}
+            />
+          );
+        })}
+      </div>
+    );
+  }, [slice]);
 }
 
 interface Props {

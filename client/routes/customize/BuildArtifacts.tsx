@@ -29,32 +29,29 @@ export function BuildArtifacts() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
   const { contents, availability, descriptions, allIds, byId } = slice;
 
-  return useMemo(
-    () => {
-      const onChange = (artifact: Binding) => dispatch(toggleArtifact(artifact));
+  return useMemo(() => {
+    const onChange = (artifact: Binding) => dispatch(toggleArtifact(artifact));
 
-      return (
-        <div className="custom-controls-stacked">
-          {allIds.map((it: Binding) => {
-            const artifact = byId[it] as BindingDefinition;
-            const available = availability[it] === true;
+    return (
+      <div className="custom-controls-stacked">
+        {allIds.map((it: Binding) => {
+          const artifact = byId[it] as BindingDefinition;
+          const available = availability[it] === true;
 
-            return (
-              <BuildArtifact
-                key={it}
-                artifact={artifact}
-                disabled={!available || artifact.required === true}
-                selected={available && contents[it] === true}
-                showDescriptions={descriptions}
-                onChange={onChange}
-              />
-            );
-          })}
-        </div>
-      );
-    },
-    [slice]
-  );
+          return (
+            <BuildArtifact
+              key={it}
+              artifact={artifact}
+              disabled={!available || artifact.required === true}
+              selected={available && contents[it] === true}
+              showDescriptions={descriptions}
+              onChange={onChange}
+            />
+          );
+        })}
+      </div>
+    );
+  }, [slice]);
 }
 
 interface Props {
