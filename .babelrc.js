@@ -13,9 +13,10 @@ const config = {
     DEV && '@babel/plugin-transform-react-jsx-self',
     DEV && '@babel/plugin-transform-react-jsx-source',
     DEV && '@babel/plugin-transform-react-display-name',
-    PRODUCTION && 'babel-plugin-optimize-react',
     PRODUCTION && ['transform-react-remove-prop-types', { mode: 'remove', removeImport: true }],
+    PRODUCTION && 'transform-react-pure-class-to-function',
     PRODUCTION && '@babel/plugin-transform-react-constant-elements', // Larger file size but faster reconciliation and less GC pressure
+    PRODUCTION && 'babel-plugin-optimize-react',
     // PRODUCTION && '@babel/plugin-transform-react-inline-elements', // Breaks @emotion
     // ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }], // Used internally by @emotion preset
 
