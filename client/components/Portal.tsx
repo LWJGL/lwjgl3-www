@@ -1,6 +1,5 @@
-import React, { /*memo, */ useRef, useEffect } from 'react';
+import React, { memo, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-const { memo } = React;
 
 /**
  * This component detaches its contents and re-attaches them to document.body (using ReactDOM.createPortal).
