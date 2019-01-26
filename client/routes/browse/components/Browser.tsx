@@ -2,7 +2,6 @@ import React, { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from '@reach/router';
 // import { unstable_createResource as createResource } from 'react-cache';
 import { unstable_createResource as createResource } from '~/services/react-cache/ReactCache';
-import { unstable_scheduleCallback } from 'scheduler';
 import IconCloud from '~/components/icons/md/Cloud';
 import { HTTP_OK } from '~/services/http_status_codes';
 import { File } from './File';
@@ -57,7 +56,7 @@ export function Browser({ path: loading }: Props) {
   useEffect(() => {
     mounted.current = true;
     if (loading !== path) {
-      unstable_scheduleCallback(() => setPath(loading));
+      setPath(loading);
     }
   }, [loading]);
 
