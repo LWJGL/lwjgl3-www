@@ -99,7 +99,7 @@
     "terser": "3.14.1",
     "three": "0.100.0",
     "typescript-styled-plugin": "0.13.0",
-    "webpack": "5.0.0-alpha.6",
+    "webpack": "5.0.0-alpha.9",
     "webpack-bundle-analyzer": "3.0.3",
     "webpack-cli": "3.2.1",
     "webpack-dev-middleware": "3.5.1",
