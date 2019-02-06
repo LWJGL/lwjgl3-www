@@ -94,7 +94,7 @@ function deleteEntry(resource: any, key: string | number) {
   }
 }
 
-export function unstable_createResource<I, V>(
+export function createResource<I, V>(
   fetch: (key: I) => Thenable<V>,
   maybeHashInput?: (key: I) => string | number
 ): Resource<I, V> {
@@ -131,6 +131,6 @@ export function unstable_createResource<I, V>(
   return resource;
 }
 
-export function unstable_setGlobalCacheLimit(limit: number) {
-  lru.setLimit(limit);
-}
+// export function unstable_setGlobalCacheLimit(limit: number) {
+//   lru.setLimit(limit);
+// }

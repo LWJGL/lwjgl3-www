@@ -11,5 +11,5 @@ declare module 'react-dom' {
     unmount(callback?: () => any): any;
   }
 
-  function createRoot(rootElement: HTMLElement, options?: RootOptions): ReactRoot;
+  function unstable_createRoot(rootElement: HTMLElement, options?: RootOptions): ReactRoot;
 }

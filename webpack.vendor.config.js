@@ -5,17 +5,19 @@ const path = require('path');
 const config = {
   mode: 'development',
   target: 'web',
+  cache: false,
   // devtool: 'inline-source-map',
-  optimization: {
-    minimize: false,
-  },
-  performance: {
-    hints: false,
-  },
   resolve: {
     extensions: ['.mjs', '.js', '.jsx', '.json'],
     mainFields: ['module', 'jsnext:main', 'main'],
     symlinks: false,
+  },
+  output: {
+    path: path.resolve(__dirname, 'public/js'),
+    filename: '[name].js',
+    library: '[name]',
+    crossOriginLoading: 'anonymous',
+    pathinfo: false,
   },
   entry: {
     vendor: [
@@ -43,12 +45,6 @@ const config = {
       'html-entities',
     ],
   },
-  output: {
-    path: path.resolve(__dirname, 'public/js'),
-    filename: '[name].js',
-    library: '[name]',
-    crossOriginLoading: 'anonymous',
-  },
   plugins: [
     new webpack.DllPlugin({
       context: __dirname,
@@ -56,6 +52,12 @@ const config = {
       name: '[name]',
     }),
   ],
+  optimization: {
+    minimize: false,
+  },
+  performance: {
+    hints: false,
+  },
 };
 
 module.exports = config;

@@ -1,7 +1,7 @@
 import React, { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from '@reach/router';
 // import { unstable_createResource as createResource } from 'react-cache';
-import { unstable_createResource as createResource } from '~/services/react-cache/ReactCache';
+import { createResource } from '~/services/react-cache/ReactCache';
 import IconCloud from '~/components/icons/md/Cloud';
 import { HTTP_OK } from '~/services/http_status_codes';
 import { File } from './File';
