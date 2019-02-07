@@ -32,7 +32,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.397.0",
+    "aws-sdk": "2.398.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.2",
     "compression": "1.7.3",
@@ -61,7 +61,7 @@
     "@types/jszip": "3.1.4",
     "@types/lodash-es": "4.17.1",
     "@types/reach__router": "1.2.3",
-    "@types/react-dom": "16.0.11",
+    "@types/react-dom": "16.8.0",
     "@types/remarkable": "1.7.2",
     "@types/three": "0.93.19",
     "async-sema": "2.1.4",
@@ -88,9 +88,9 @@
     "node-sass": "4.11.0",
     "postcss-loader": "3.0.0",
     "prettier": "1.16.4",
-    "react": "16.8.0",
+    "react": "16.8.1",
     "react-cache": "2.0.0-alpha.1",
-    "react-dom": "16.8.0",
+    "react-dom": "16.8.1",
     "react-fast-compare": "2.0.4",
     "react-hot-loader": "4.6.5",
     "sass-loader": "7.1.0",
@@ -102,7 +102,7 @@
     "webpack": "5.0.0-alpha.9",
     "webpack-bundle-analyzer": "3.0.3",
     "webpack-cli": "3.2.1",
-    "webpack-dev-middleware": "3.5.1",
+    "webpack-dev-middleware": "3.5.2",
     "webpack-hot-middleware": "2.24.3",
     "whatwg-fetch": "3.0.0"
   },
