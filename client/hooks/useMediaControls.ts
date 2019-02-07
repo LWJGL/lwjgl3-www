@@ -1,11 +1,76 @@
-import { useState, useEffect } from 'react';
+import { useReducer, useEffect } from 'react';
+
+interface State {
+  currentTime: number;
+  paused: boolean;
+  oldVolume: number;
+  volume: number;
+  muted: boolean;
+}
+
+interface InitEvent {
+  type: 'init';
+  state: State;
+}
+
+interface PlayPauseEvent {
+  type: 'playPause';
+  paused: boolean;
+}
+
+interface VolumeEvent {
+  type: 'volume';
+  volume: number;
+}
+
+interface SeekEvent {
+  type: 'seek';
+  currentTime: number;
+}
+
+type Event = InitEvent | PlayPauseEvent | VolumeEvent | SeekEvent;
+
+function mediaReducer(state: State, event: Event): State {
+  switch (event.type) {
+    case 'playPause':
+      if (event.paused !== state.paused) {
+        return {
+          ...state,
+          paused: event.paused,
+        };
+      }
+      break;
+    case 'volume':
+      if (event.volume !== state.volume) {
+        return {
+          ...state,
+          oldVolume: state.volume > 0 ? state.volume : state.oldVolume,
+          volume: event.volume,
+          muted: event.volume === 0,
+        };
+      }
+      break;
+    case 'seek':
+      return {
+        ...state,
+        currentTime: event.currentTime,
+      };
+  }
+  return state;
+}
+
+function isPaused(el: HTMLMediaElement) {
+  return el.paused || el.ended;
+}
 
 export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
-  const [currentTime, setCurrentTime] = useState(0);
-  const [muted, setMuted] = useState(false);
-  const [oldVolume, setOldVolume] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [volume, setNewVolume] = useState(0);
+  const [state, dispatch] = useReducer(mediaReducer, {
+    currentTime: 0,
+    paused: true,
+    oldVolume: 1,
+    volume: 1,
+    muted: false,
+  });
 
   function pause() {
     if (player.current) {
@@ -21,18 +86,31 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
     }
   }
 
-  function setVolume(value: number) {
+  function setVolume(volume: number) {
     if (player.current) {
-      setOldVolume(player.current.volume);
-      player.current.volume = value;
+      if (volume < 0) {
+        if (state.volume > 0) {
+          volume = 0;
+        } else {
+          return;
+        }
+      } else if (volume > 1) {
+        volume = 1;
+        if (state.volume < 1) {
+          volume = 1;
+        } else {
+          return;
+        }
+      }
+      player.current.volume = volume;
 
       // no onmuted event, must set on volumechange
-      if (value === 0) {
+      if (volume === 0) {
         player.current.muted = true;
       } else {
         player.current.muted = false;
       }
-      setMuted(player.current.muted);
+      dispatch({ type: 'volume', volume });
     }
   }
 
@@ -41,7 +119,7 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
   }
 
   function unmute() {
-    setVolume(oldVolume);
+    setVolume(state.oldVolume);
   }
 
   function seek(value: number) {
@@ -62,24 +140,26 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
 
   useEffect(() => {
     if (player.current !== null) {
-      function isPaused(el: HTMLMediaElement) {
-        return el.paused || el.ended;
-      }
+      dispatch({
+        type: 'init',
+        state: {
+          currentTime: player.current.currentTime,
+          paused: isPaused(player.current),
+          oldVolume: player.current.volume,
+          volume: player.current.volume,
+          muted: player.current.muted,
+        },
+      });
+
       function playPauseHandler(this: HTMLMediaElement) {
-        setPaused(isPaused(this));
+        dispatch({ type: 'playPause', paused: isPaused(this) });
       }
       function volumeHandler(this: HTMLMediaElement) {
-        setNewVolume(this.volume);
+        dispatch({ type: 'volume', volume: this.volume });
       }
       function seekHandler(this: HTMLMediaElement) {
-        setCurrentTime(this.currentTime);
+        dispatch({ type: 'seek', currentTime: this.currentTime });
       }
-
-      setCurrentTime(player.current.currentTime);
-      setMuted(player.current.muted);
-      setPaused(isPaused(player.current));
-      setOldVolume(player.current.volume);
-      setNewVolume(player.current.volume);
 
       player.current.addEventListener('play', playPauseHandler); // fired by play method or autoplay attribute
       player.current.addEventListener('playing', playPauseHandler); // fired by resume after being paused due to lack of data
@@ -104,17 +184,17 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
   }, [player.current]);
 
   return {
-    currentTime,
+    currentTime: state.currentTime,
     mute,
-    muted,
+    muted: state.muted,
     unmute,
     pause,
-    paused,
+    paused: state.paused,
     play,
     restart,
     seek,
-    setVolume: setVolume,
+    setVolume,
     stop,
-    volume,
+    volume: state.volume,
   };
 }
