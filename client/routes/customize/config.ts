@@ -94,17 +94,17 @@ function getInitialConfig(): BuildStore {
     },
     natives: {
       byId: {
-        [Native.Windows]: {
-          id: Native.Windows,
-          title: 'Windows',
+        [Native.Linux]: {
+          id: Native.Linux,
+          title: 'Linux',
         },
         [Native.MacOS]: {
           id: Native.MacOS,
           title: 'macOS',
         },
-        [Native.Linux]: {
-          id: Native.Linux,
-          title: 'Linux',
+        [Native.Windows]: {
+          id: Native.Windows,
+          title: 'Windows',
         },
       },
       allIds: NATIVE_ALL,
@@ -218,9 +218,9 @@ function getInitialConfig(): BuildStore {
     includeJSON: true,
     language: Language.Groovy,
     platform: {
-      [Native.Windows]: false,
-      [Native.MacOS]: false,
       [Native.Linux]: false,
+      [Native.MacOS]: false,
+      [Native.Windows]: false,
     },
     contents: {},
     availability: {},

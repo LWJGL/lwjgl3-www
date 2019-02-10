@@ -71,12 +71,12 @@ export enum BuildType {
 }
 
 export enum Native {
-  Windows = 'windows',
   Linux = 'linux',
   MacOS = 'macos',
+  Windows = 'windows',
 }
 
-export const NATIVE_ALL = [Native.Windows, Native.Linux, Native.MacOS];
+export const NATIVE_ALL = [Native.Linux, Native.MacOS, Native.Windows];
 
 export enum Mode {
   Zip = 'zip',

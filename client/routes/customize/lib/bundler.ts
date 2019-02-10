@@ -148,12 +148,12 @@ export function getFiles(
 
 function pathToNative(folder: string): Native | null {
   switch (folder) {
-    case 'windows':
-      return Native.Windows;
-    case 'macos':
-      return Native.MacOS;
     case 'linux':
       return Native.Linux;
+    case 'macos':
+      return Native.MacOS;
+    case 'windows':
+      return Native.Windows;
   }
 
   return null;

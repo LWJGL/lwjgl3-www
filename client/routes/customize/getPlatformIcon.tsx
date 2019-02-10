@@ -6,11 +6,11 @@ import IconWindows from '~/components/icons/fa/brands/Windows';
 
 export const getPlatformIcon = (platform: Native) => {
   switch (platform) {
-    case Native.Windows:
-      return <IconWindows key="fa-win" />;
-    case Native.MacOS:
-      return <IconApple key="fa-macos" />;
     case Native.Linux:
       return <IconLinux key="fa-linux" />;
+    case Native.MacOS:
+      return <IconApple key="fa-macos" />;
+    case Native.Windows:
+      return <IconWindows key="fa-win" />;
   }
 };

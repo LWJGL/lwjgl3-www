@@ -44,14 +44,14 @@ export function generateGradle({
   if (platformSingle === null) {
     if (language === Language.Groovy) {
       script += `switch ( OperatingSystem.current() ) {
-\tcase OperatingSystem.WINDOWS:
-\t\tproject.ext.lwjglNatives = "natives-windows"
-\t\tbreak
 \tcase OperatingSystem.LINUX:
 \t\tproject.ext.lwjglNatives = "natives-linux"
-\tbreak
+\t\tbreak
 \tcase OperatingSystem.MAC_OS:
 \t\tproject.ext.lwjglNatives = "natives-macos"
+\t\tbreak
+\tcase OperatingSystem.WINDOWS:
+\t\tproject.ext.lwjglNatives = "natives-windows"
 \t\tbreak
 }\n\n`;
     } else {
