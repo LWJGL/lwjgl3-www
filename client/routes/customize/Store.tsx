@@ -9,28 +9,15 @@ import isEqual from 'react-fast-compare';
 // Constants
 const STORAGE_KEY = 'lwjgl-build-config';
 
-// Create store for Build Configurator.
-// This lives in a React Context
-interface StoreContextType {
-  state: BuildStore;
-  dispatch: React.Dispatch<ActionCreator>;
-}
-
-const emptyFn = () => {};
-export const StoreContext = createContext<StoreContextType>({
-  state: config,
-  dispatch: emptyFn,
-});
-
 type StoreTuple = [BuildStore, React.Dispatch<ActionCreator>];
+export const StoreContext = createContext<StoreTuple>([config, () => {}]);
 
 export function useStore(): StoreTuple {
-  const { state, dispatch } = useContext(StoreContext);
-  return [state, dispatch];
+  return useContext(StoreContext);
 }
 
 export function useStoreRef() {
-  const { state } = useContext(StoreContext);
+  const [state] = useContext(StoreContext);
   const storeRef = useRef<BuildStore>(state);
   storeRef.current = state;
   return storeRef;
@@ -39,7 +26,7 @@ export function useStoreRef() {
 type SliceTuple<S> = [S, React.Dispatch<ActionCreator>];
 
 export function useSlice<S>(slicer: (state: BuildStore) => S): SliceTuple<S> {
-  const { state, dispatch } = useContext(StoreContext);
+  const [state, dispatch] = useContext(StoreContext);
   return [slicer(state), dispatch];
 }
 
@@ -47,7 +34,7 @@ export function useMemoSlice<S>(
   getSlice: (state: BuildStore) => S,
   getInputs: (state: BuildStore) => React.InputIdentityList
 ): SliceTuple<S> {
-  const { state, dispatch } = useContext(StoreContext);
+  const [state, dispatch] = useContext(StoreContext);
   return [useMemo(() => getSlice(state), getInputs(state)), dispatch];
 }
 
@@ -118,14 +105,5 @@ export function Provider(props: ProviderProps) {
     saveSnapshot(state);
   });
 
-  return (
-    <StoreContext.Provider
-      value={{
-        state,
-        dispatch,
-      }}
-    >
-      {props.children}
-    </StoreContext.Provider>
-  );
+  return <StoreContext.Provider value={[state, dispatch]}>{props.children}</StoreContext.Provider>;
 }
