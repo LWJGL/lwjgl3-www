@@ -1,6 +1,6 @@
 import { State } from '../BuildScript';
-import { Addon, BuildType, Language } from '../types';
-import { generateDependencies, getVersion } from './script';
+import { Addon, BindingDefinition, BuildType, Language, PlatformSelection } from '../types';
+import { generateDependencies, getVersion, isNativeApplicableToAllPlatforms } from './script';
 
 export function generateGradle({
   build,
@@ -43,22 +43,39 @@ export function generateGradle({
   }
   if (platformSingle === null) {
     if (language === Language.Groovy) {
-      script += `switch ( OperatingSystem.current() ) {
+      script += `switch (OperatingSystem.current()) {`;
+      if (platform.linux) {
+        script += `
 \tcase OperatingSystem.LINUX:
 \t\tproject.ext.lwjglNatives = "natives-linux"
-\t\tbreak
+\t\tbreak`;
+      }
+      if (platform.macos) {
+        script += `
 \tcase OperatingSystem.MAC_OS:
 \t\tproject.ext.lwjglNatives = "natives-macos"
-\t\tbreak
+\t\tbreak`;
+      }
+      if (platform.windows) {
+        script += `
 \tcase OperatingSystem.WINDOWS:
 \t\tproject.ext.lwjglNatives = "natives-windows"
-\t\tbreak
+\t\tbreak`;
+      }
+      script += `
 }\n\n`;
     } else {
-      script += `val lwjglNatives = when (OperatingSystem.current()) {
-\tOperatingSystem.LINUX   -> "natives-linux"
-\tOperatingSystem.MAC_OS  -> "natives-macos"
-\tOperatingSystem.WINDOWS -> "natives-windows"
+      script += `val lwjglNatives = when (OperatingSystem.current()) {`;
+      if (platform.linux) {
+        script += `\n\tOperatingSystem.LINUX   -> "natives-linux"`;
+      }
+      if (platform.macos) {
+        script += `\n\tOperatingSystem.MAC_OS  -> "natives-macos"`;
+      }
+      if (platform.windows) {
+        script += `\n\tOperatingSystem.WINDOWS -> "natives-windows"`;
+      }
+      script += `
 \telse -> throw Error("Unrecognized or unsupported Operating system. Please set \\"lwjglNatives\\" manually")
 }\n\n`;
     }
@@ -86,8 +103,9 @@ dependencies {`;
       artifacts,
       platform,
       osgi,
-      (groupId, artifactId, hasEnabledNativePlatform) => `\n\timplementation "${groupId}:${artifactId}:${v}"`,
-      (groupId, artifactId) => `\n\truntimeOnly "${groupId}:${artifactId}:${v}:${classifier}"`
+      (artifact, groupId, artifactId, hasEnabledNativePlatform) => `\n\timplementation "${groupId}:${artifactId}:${v}"`,
+      (artifact, groupId, artifactId) =>
+        `\n\t${guardNative(artifact, platform)}runtimeOnly "${groupId}:${artifactId}:${v}:${classifier}"`
     );
 
     selectedAddons.forEach((id: Addon) => {
@@ -104,8 +122,13 @@ dependencies {`;
       artifacts,
       platform,
       osgi,
-      (groupId, artifactId, hasEnabledNativePlatform) => `\n\timplementation("${groupId}", "${artifactId}", ${v})`,
-      (groupId, artifactId) => `\n\truntimeOnly("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
+      (artifact, groupId, artifactId, hasEnabledNativePlatform) =>
+        `\n\timplementation("${groupId}", "${artifactId}", ${v})`,
+      (artifact, groupId, artifactId) =>
+        `\n\t${guardNative(
+          artifact,
+          platform
+        )}runtimeOnly("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
     );
 
     selectedAddons.forEach((id: Addon) => {
@@ -120,4 +143,13 @@ dependencies {`;
   script += `\n}`;
 
   return script;
+}
+
+function guardNative(artifact: BindingDefinition, platform: PlatformSelection) {
+  return artifact.natives === undefined || isNativeApplicableToAllPlatforms(artifact, platform)
+    ? ''
+    : `if (${artifact.natives
+        .filter(p => platform[p])
+        .map(p => `lwjglNatives == "natives-${p}"`)
+        .join(' || ')}) `;
 }

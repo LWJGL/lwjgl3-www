@@ -2,11 +2,13 @@ import { useMemo } from 'react';
 import { State } from '../BuildScript';
 import {
   Binding,
+  BindingDefinition,
   BindingMapUnsafe,
   BuildType,
   Mode,
   ModeDefinition,
   Native,
+  NATIVE_ALL,
   PlatformSelection,
   Version,
 } from '../types';
@@ -35,27 +37,43 @@ export function mime(mode: ModeDefinition) {
   return mode.file !== undefined && mode.file.endsWith('.xml') ? 'text/xml' : 'text/plain';
 }
 
+export function isNativeApplicableToAllPlatforms(artifact: BindingDefinition, platform: PlatformSelection): boolean {
+  if (artifact.natives === undefined || artifact.nativesOptional !== true) {
+    return true;
+  }
+
+  let applicablePlatforms = artifact.natives.filter(p => platform[p]).length;
+  return applicablePlatforms === 0 || applicablePlatforms === NATIVE_ALL.filter(p => platform[p]).length;
+}
+
+export function getArtifactName(binding: BindingDefinition) {
+  return binding.id === 'lwjgl' ? binding.id : binding.id.substring('lwjgl-'.length);
+}
+
 export function getVersion(version: Version, build: BuildType) {
   return build === BuildType.Release ? version : `${version}-SNAPSHOT`;
 }
 
 export function getSelectedPlatforms(natives: Array<Native>, platform: PlatformSelection): Native | null {
-  return useMemo(() => {
-    let result = null;
+  return useMemo(
+    () => {
+      let result = null;
 
-    for (let i = 0; i < natives.length; i += 1) {
-      const p = natives[i];
-      if (platform[p]) {
-        if (result === null) {
-          result = p;
-        } else {
-          return null; // more than one platforms selected
+      for (let i = 0; i < natives.length; i += 1) {
+        const p = natives[i];
+        if (platform[p]) {
+          if (result === null) {
+            result = p;
+          } else {
+            return null; // more than one platforms selected
+          }
         }
       }
-    }
 
-    return result;
-  }, [platform]);
+      return result;
+    },
+    [platform]
+  );
 }
 
 export function generateScript(mode: Mode, state: State): string {
@@ -76,25 +94,33 @@ export function generateDependencies(
   artifacts: BindingMapUnsafe,
   platform: PlatformSelection,
   osgi: boolean,
-  generateJava: (groupId: string, artifactId: string, hasEnabledNativePlatform: boolean) => string,
-  generateNative: (groupId: string, artifactId: string) => string
+  generateJava: (
+    artifact: BindingDefinition,
+    groupId: string,
+    artifactId: string,
+    hasEnabledNativePlatform: boolean
+  ) => string,
+  generateNative?: (artifact: BindingDefinition, groupId: string, artifactId: string) => string
 ): string {
   let script = '';
   let nativesBundle = '';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
-  selected.forEach(artifact => {
-    let natives = artifacts[artifact].natives;
-    let hasEnabledNativePlatform = natives !== undefined && natives.some(it => platform[it]);
-    if (natives !== undefined && !hasEnabledNativePlatform && artifacts[artifact].nativesOptional !== true) {
-      return;
+  selected.forEach(binding => {
+    let artifact = artifacts[binding];
+
+    let hasEnabledNativePlatform = false;
+    if (artifact.natives !== undefined) {
+      hasEnabledNativePlatform = artifact.natives.some(it => platform[it]);
+      if (!hasEnabledNativePlatform && artifact.nativesOptional !== true) {
+        return;
+      }
     }
-    const artifactId = osgi
-      ? `org.lwjgl.${artifact === 'lwjgl' ? artifact : artifact.substring('lwjgl-'.length)}`
-      : artifact;
-    script += generateJava(groupId, artifactId, hasEnabledNativePlatform);
-    if (!osgi && hasEnabledNativePlatform) {
-      nativesBundle += generateNative(groupId, artifactId);
+
+    const artifactId = osgi ? `org.lwjgl.${getArtifactName(artifact)}` : binding;
+    script += generateJava(artifact, groupId, artifactId, hasEnabledNativePlatform);
+    if (!osgi && hasEnabledNativePlatform && generateNative !== undefined) {
+      nativesBundle += generateNative(artifact, groupId, artifactId);
     }
   });
 

@@ -1,6 +1,6 @@
 import { State } from '../BuildScript';
 import { Addon, BuildType } from '../types';
-import { generateDependencies, getVersion } from './script';
+import { generateDependencies, getArtifactName, getVersion, isNativeApplicableToAllPlatforms } from './script';
 
 export function generateIvy({
   build,
@@ -49,25 +49,62 @@ export function generateIvy({
   }
 
   if (platformSingle === null) {
-    script += `\t<!-- Add to build.xml -->
-\t<condition property="lwjgl.natives" value="natives-linux">${nl2}<os name="Linux"/>${nl1}</condition>
-\t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>
-\t<condition property="lwjgl.natives" value="natives-windows">${nl2}<os family="Windows"/>${nl1}</condition>\n\n`;
+    script += `\t<!-- Add to build.xml -->`;
+    if (platform.linux) {
+      script += `
+\t<condition property="lwjgl.natives" value="natives-linux">${nl2}<os name="Linux"/>${nl1}</condition>`;
+    }
+    if (platform.macos) {
+      script += `
+\t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
+    }
+    if (platform.windows) {
+      script += `
+\t<condition property="lwjgl.natives" value="natives-windows">${nl2}<os family="Windows"/>${nl1}</condition>`;
+    }
+    let classifierOverrides = selected
+      .filter(binding => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
+      .map(binding => {
+        let artifact = artifacts[binding];
+        if (artifact.natives === undefined) {
+          // cannot happen
+          return '';
+        }
+
+        let predicates = artifact.natives
+          .filter(p => platform[p])
+          .map(p => `<equals arg1="\${lwjgl.natives}" arg2="native-${p}"/>`);
+
+        return `\t<condition property="lwjgl.natives.${getArtifactName(
+          artifact
+        )}" value="\${lwjgl.natives}" else="">${nl2}${
+          predicates.length === 1 ? predicates : `<or>${nl3}${predicates.join(nl3)}${nl2}</or>`
+        }${nl1}</condition>`;
+      })
+      .join(nl3);
+    if (classifierOverrides.length !== 0) {
+      script += `\n${classifierOverrides}`;
+    }
+    script += `\n\n`;
   }
 
   script += `\t<!-- Add to ivy.xml (xmlns:m="http://ant.apache.org/ivy/maven") -->
 \t<dependencies>`;
-
   script += generateDependencies(
     selected,
     artifacts,
     platform,
     osgi,
-    (groupId, artifactId, hasEnabledNativePlatform) =>
-      hasEnabledNativePlatform
-        ? `\n\t\t<dependency org="${groupId}" name="${artifactId}" rev="${v}">${nl3}<artifact name="${artifactId}" type="jar"/>${nl3}<artifact name="${artifactId}" type="jar" m:classifier="${classifier}"/>${nl2}</dependency>`
-        : `\n\t\t<dependency org="${groupId}" name="${artifactId}" rev="${v}"/>`,
-    () => ''
+    (artifact, groupId, artifactId, hasEnabledNativePlatform) =>
+      `\n\t\t<dependency org="${groupId}" name="${artifactId}" rev="${v}"${
+        hasEnabledNativePlatform
+          ? `>${nl3}<artifact name="${artifactId}" type="jar"/>${nl3}<artifact name="${artifactId}" type="jar" m:classifier="${
+              isNativeApplicableToAllPlatforms(artifact, platform)
+                ? classifier
+                : `\${lwjgl.natives.${getArtifactName(artifact)}}`
+            }"/>${nl2}</dependency>`
+          : '/>'
+      }`
   );
 
   selectedAddons.forEach((id: Addon) => {

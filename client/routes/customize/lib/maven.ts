@@ -1,6 +1,6 @@
 import { State } from '../BuildScript';
-import { Addon, BuildType } from '../types';
-import { generateDependencies, getVersion } from './script';
+import { Addon, BuildType, Native } from '../types';
+import { generateDependencies, getArtifactName, getVersion, isNativeApplicableToAllPlatforms } from './script';
 
 export function generateMaven({
   build,
@@ -38,11 +38,33 @@ export function generateMaven({
     script += `\n\t</properties>\n\n`;
   }
   if (platformSingle === null) {
-    script += `\t<profiles>
-\t\t<profile>${nl3}<id>lwjgl-natives-linux</id>${nl3}<activation>${nl4}<os><family>unix</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-linux</lwjgl.natives>${nl3}</properties>${nl2}</profile>
-\t\t<profile>${nl3}<id>lwjgl-natives-macos</id>${nl3}<activation>${nl4}<os><family>mac</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-macos</lwjgl.natives>${nl3}</properties>${nl2}</profile>
-\t\t<profile>${nl3}<id>lwjgl-natives-windows</id>${nl3}<activation>${nl4}<os><family>windows</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-windows</lwjgl.natives>${nl3}</properties>${nl2}</profile>
-\t</profiles>\n\n`;
+    function generateProfile(profile: Native, family: string) {
+      let classifierOverrides = selected
+        .filter(binding => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
+        .map(binding => {
+          let artifact = artifacts[binding];
+          let property = `lwjgl.natives.${getArtifactName(artifact)}`;
+          return `<${property}>${
+            artifact.natives !== undefined && artifact.natives.includes(profile) ? `natives-${profile}` : ''
+          }</${property}>`;
+        });
+
+      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}</id>${nl3}<activation>${nl4}<os><family>${family}</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-${profile}</lwjgl.natives>${
+        classifierOverrides.length === 0 ? '' : `${nl4}${classifierOverrides.join(nl4)}`
+      }${nl3}</properties>${nl2}</profile>`;
+    }
+
+    script += '\t<profiles>';
+    if (platform.linux) {
+      script += generateProfile(Native.Linux, 'unix');
+    }
+    if (platform.macos) {
+      script += generateProfile(Native.MacOS, 'mac');
+    }
+    if (platform.windows) {
+      script += generateProfile(Native.Windows, 'windows');
+    }
+    script += '\n\t</profiles>\n\n';
   }
 
   if (build !== BuildType.Release) {
@@ -63,10 +85,15 @@ export function generateMaven({
     artifacts,
     platform,
     osgi,
-    (groupId, artifactId) =>
+    (artifact, groupId, artifactId) =>
       `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${nl3}<version>${v}</version>${nl2}</dependency>`,
-    (groupId, artifactId) =>
-      `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${nl3}<version>${v}</version>${nl3}<classifier>${classifier}</classifier>${nl2}</dependency>`
+    (artifact, groupId, artifactId) => {
+      return `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${nl3}<version>${v}</version>${nl3}<classifier>${
+        isNativeApplicableToAllPlatforms(artifact, platform)
+          ? classifier
+          : `\${lwjgl.natives.${getArtifactName(artifact)}}`
+      }</classifier>${nl2}</dependency>`;
+    }
   );
 
   selectedAddons.forEach((id: Addon) => {
