@@ -32,7 +32,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.407.0",
+    "aws-sdk": "2.408.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.2",
     "compression": "1.7.3",
@@ -88,9 +88,9 @@
     "node-sass": "4.11.0",
     "postcss-loader": "3.0.0",
     "prettier": "1.16.4",
-    "react": "16.8.2",
+    "react": "16.8.3",
     "react-cache": "2.0.0-alpha.1",
-    "react-dom": "16.8.2",
+    "react-dom": "16.8.3",
     "react-fast-compare": "2.0.4",
     "react-hot-loader": "4.7.1",
     "sass-loader": "7.1.0",
