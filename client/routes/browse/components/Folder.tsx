@@ -35,9 +35,9 @@ export const Folder = memo(({ path, loading = false }: Props) => {
     <tr>
       <th css={FolderTH} colSpan={2}>
         <Link to={path}>
-          <IconFolder /> {name}{' '}
+          <IconFolder /> {name}
           {loading && (
-            <div className="spinner-grow spinner-grow-sm" role="status">
+            <div className="spinner-grow spinner-grow-sm ml-1" role="status">
               <span className="sr-only">Loading...</span>
             </div>
           )}

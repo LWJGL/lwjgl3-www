@@ -1,11 +1,5 @@
 import React from 'react';
-//@ts-ignore
 import { css } from '@emotion/core';
-
-export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
-  children?: React.ReactNode;
-  style?: React.CSSProperties;
-}
 
 // Based on https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4#.58pqpyl6w
 const SvgIcon = css`
@@ -25,7 +19,11 @@ const SvgIcon = css`
   }
 `;
 
-export const Icon = ({ children, style, ...props }: IconProps) => (
+export interface IconProps extends React.SVGAttributes<HTMLOrSVGElement> {
+  style?: React.CSSProperties;
+}
+
+export const Icon: React.FC<IconProps> = ({ children, style, ...props }) => (
   <span css={SvgIcon} className="svg-icon" style={style}>
     <svg fill="currentColor" preserveAspectRatio="xMidYMid meet" {...props}>
       {children}
