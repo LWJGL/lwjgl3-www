@@ -120,7 +120,7 @@ const buildConfiguration = () => {
       runtimeChunk: false,
       noEmitOnErrors: true,
       moduleIds: 'deterministic',
-      chunkIds: 'deterministic',
+      chunkIds: PRODUCTION ? 'deterministic' : 'named',
       removeAvailableModules: PRODUCTION,
       removeEmptyChunks: PRODUCTION,
       mergeDuplicateChunks: PRODUCTION,
@@ -154,7 +154,7 @@ const buildConfiguration = () => {
     },
     output: {
       path: path.resolve(__dirname, 'public/js'),
-      filename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
+      filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',
       chunkFilename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
       publicPath: '/js/',
       pathinfo: false,

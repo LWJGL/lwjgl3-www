@@ -32,7 +32,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.408.0",
+    "aws-sdk": "2.409.0",
     "body-parser": "1.18.3",
     "chalk": "2.4.2",
     "compression": "1.7.3",
@@ -64,7 +64,7 @@
     "@types/react-dom": "16.8.2",
     "@types/remarkable": "1.7.2",
     "@types/three": "0.93.22",
-    "async-sema": "2.1.4",
+    "async-sema": "2.2.0",
     "autoprefixer": "9.4.8",
     "babel-loader": "8.0.5",
     "babel-plugin-optimize-react": "0.0.4",
