@@ -24,7 +24,7 @@ async function fetchContents(path: string): Promise<FolderData> {
     return {
       path: '',
       files: [],
-      folders: ['release', 'stable', 'nightly'],
+      folders: ['addons', 'release', 'stable', 'nightly'],
     };
   }
 
