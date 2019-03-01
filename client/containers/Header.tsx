@@ -1,6 +1,6 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { css } from '@emotion/core';
-import { Link } from '@reach/router';
+import { Link, RouteComponentProps } from '@reach/router';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
@@ -12,7 +12,7 @@ import { Sidebar } from './Sidebar';
 
 const HEADER_CLASSNAME = 'site-header';
 const styleHome = css`
-  transition: background-color 0.5s ease-out;
+  transition: background-color 0.75s ease-out;
 `;
 const styleOpaque = css`
   background-color: ${COLOR_PRIMARY.css()};
@@ -32,11 +32,10 @@ function ServiceWorkerUpdate() {
   ) : null;
 }
 
-interface Props {
-  isHome: boolean;
-}
+let offsetHeight = 48;
 
-export function Header({ isHome }: Props) {
+export const Header: React.FC<RouteComponentProps> = ({ location }) => {
+  const isHome = location !== undefined && location.pathname === '/';
   const {
     current: currentBreakpoint,
     breakpoints: { md },
@@ -45,13 +44,12 @@ export function Header({ isHome }: Props) {
   const [top, setTop] = useState(true);
   const [fixed, setFixed] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const firstRender = useRef(true);
-  const offsetHeight = useRef(0);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
+    // Measure menu height, should be ~ 48 pixels
     const menu: HTMLDivElement | null = document.querySelector(`.${HEADER_CLASSNAME}`);
     if (menu !== null) {
-      offsetHeight.current = menu.offsetHeight;
+      offsetHeight = menu.offsetHeight;
     }
   }, []);
 
@@ -115,7 +113,7 @@ export function Header({ isHome }: Props) {
           }
         }
 
-        if (current > offsetHeight.current && top) {
+        if (current > offsetHeight && top) {
           _setTop(false);
         }
       } else {
@@ -128,11 +126,11 @@ export function Header({ isHome }: Props) {
           if (direction === Direction.Down) {
             // We just started scrolling up
             direction = Direction.Up;
-            if (prev - current > offsetHeight.current) {
+            if (prev - current > offsetHeight) {
               _setFixed(true);
               _setPos(0);
-            } else if (pos + offsetHeight.current < prev) {
-              _setPos(Math.max(0, prev - offsetHeight.current));
+            } else if (pos + offsetHeight < prev) {
+              _setPos(Math.max(0, prev - offsetHeight));
             }
           } else if (!fixed && current < pos) {
             // The entire menu has been revealed, fix it to the viewport
@@ -141,7 +139,7 @@ export function Header({ isHome }: Props) {
           }
         }
 
-        if (current <= offsetHeight.current && !top) {
+        if (current <= offsetHeight && !top) {
           _setTop(true);
         }
       }
@@ -154,23 +152,12 @@ export function Header({ isHome }: Props) {
       }
     }
 
-    if (!firstRender.current) {
-      // isHome flipped, reset
-      direction = 0;
-      current = 0;
-      _setFixed(false);
-      _setPos(0);
-      // Force onScroll to handle the rest
-      onScroll();
-    }
-
-    firstRender.current = false;
     window.addEventListener('scroll', onScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     return () => {
       window.removeEventListener('scroll', onScroll, false);
       mounted = false;
     };
-  }, [isHome]);
+  }, []);
 
   return (
     <header
@@ -197,4 +184,4 @@ export function Header({ isHome }: Props) {
       </nav>
     </header>
   );
-}
+};
