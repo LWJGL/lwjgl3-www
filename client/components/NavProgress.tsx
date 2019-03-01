@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { css, keyframes } from '@emotion/core';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 
@@ -53,77 +53,63 @@ const cssProgressPulse = css`
   ${pulseAnimation.styles};
 `;
 
-interface Context {
-  count: number;
-  start: (delay: number) => void;
-  end: () => void;
-}
-
-export const NavProgressContext = React.createContext<Context>({
-  count: 0,
-  start: () => {},
-  end: () => {},
-});
-
 let counter = 0;
+let callback: null | ((count: number) => void) = null;
 let delayTimeout: number | null = null;
 
-export const NavProgressProvider: React.FC = ({ children }) => {
-  const [count, setCount] = useState(counter);
-
-  function start(delay: number = 0) {
-    if (delay > 0 && delayTimeout !== null) {
-      delayTimeout = window.setTimeout(delayedStart, delay);
-    } else {
-      delayedStart();
-    }
-
-    return end;
+export function start(delay: number = 0) {
+  counter += 1;
+  if (delay > 0 && delayTimeout === null) {
+    delayTimeout = window.setTimeout(delayedStart, delay);
+  } else {
+    delayedStart();
   }
 
-  function delayedStart() {
-    cleanup();
-    counter += 1;
-    setCount(counter);
+  return end;
+}
+
+function delayedStart() {
+  cleanup();
+  if (callback) {
+    callback(counter);
   }
+}
 
-  function cleanup() {
-    if (delayTimeout !== null) {
-      clearTimeout(delayTimeout);
-      delayTimeout = null;
-      return true;
-    }
-    return false;
+function cleanup() {
+  if (delayTimeout !== null) {
+    clearTimeout(delayTimeout);
+    delayTimeout = null;
+    return true;
   }
+  return false;
+}
 
-  function end() {
-    if (cleanup()) {
-      return;
-    }
-    if (counter <= 0 && !FLAG_PRODUCTION) {
-      throw new Error('Called end without first calling start');
-    }
-
-    counter -= 1;
-    setCount(counter);
+export function end() {
+  counter -= 1;
+  if (counter < 0) {
+    counter = 0;
   }
-
-  const state = {
-    count,
-    start,
-    end,
-  };
-
-  return <NavProgressContext.Provider value={state}>{React.Children.only(children)}</NavProgressContext.Provider>;
-};
+  cleanup();
+  if (callback) {
+    callback(counter);
+  }
+}
 
 const PERC_MAX = 99.4;
 
 export function NavProgress() {
-  const { count } = useContext(NavProgressContext);
+  const [count, setCount] = useState(0);
   const [progress, setProgress] = useState(0);
   const trickleTimeoutId: React.MutableRefObject<number | null> = useRef(null);
   const resetTimeoutId: React.MutableRefObject<number | null> = useRef(null);
+
+  useEffect(() => {
+    // Subscribe
+    callback = setCount;
+    return () => {
+      callback = null;
+    };
+  }, []);
 
   useEffect(() => {
     function trickle() {

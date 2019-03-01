@@ -5,6 +5,7 @@ import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useMetaDescription } from '../../hooks/useMetaDescription';
 import { WindowLocation } from '@reach/router';
+import { end } from '../NavProgress';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
@@ -57,6 +58,13 @@ function arePropsEqual({ location: prevLocation }: Props, { location: nextLocati
 
 export const PageView: React.FC<Props> = memo(
   ({ location: { key = 'root', pathname, search, hash }, title, description, children }) => {
+    // Call end() because sometimes it is never called by <PageBlank />
+    // This probably happens because of a Concurrent-mode bug or something
+    // undocumented that I'm not understanding.
+    // TODO: Remove or refactor after React publishes concurrent-mode subscription guidelines
+    // SOS: Do not use NavProgress for other things till then
+    useEffect(() => end(), []);
+
     // Update document title
     useDocumentTitle(title);
 

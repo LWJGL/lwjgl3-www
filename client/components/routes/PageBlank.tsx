@@ -1,17 +1,19 @@
-import React, { useEffect, useContext } from 'react';
-import { NavProgressContext } from '../NavProgress';
+import React, { useEffect } from 'react';
+import { start } from '../NavProgress';
 
 interface Props {
   delay?: number;
 }
 
-const styles = {
-  padding: '5rem 0',
-  minHeight: 'calc(100vh - 4rem)',
-};
-
 export function PageBlank({ delay = 0 }: Props) {
-  const { start } = useContext(NavProgressContext);
   useEffect(() => start(delay), []);
-  return <div style={styles} />;
+
+  return (
+    <div
+      style={{
+        padding: '5rem 0',
+        minHeight: 'calc(100vh - 4rem)',
+      }}
+    />
+  );
 }
