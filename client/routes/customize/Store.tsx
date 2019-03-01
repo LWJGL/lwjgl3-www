@@ -54,10 +54,6 @@ export function useMemoSlice<S>(
 //   return dispatcher.readContext(Context, observedBits) as T;
 // }
 
-interface ProviderProps {
-  children: React.ReactNode;
-}
-
 let prevConfig: BuildStoreSnapshot | null;
 const saveSnapshot = debounce((state: BuildStore) => {
   if (state === config) {
@@ -82,7 +78,7 @@ const saveSnapshot = debounce((state: BuildStore) => {
 }, 1000);
 
 // Store Provider
-export function Provider(props: ProviderProps) {
+export const Provider: React.FC = props => {
   const [state, dispatch] = useReducer<BuildStore, ActionCreator>(reducer, config);
 
   useEffect(() => {
@@ -106,4 +102,4 @@ export function Provider(props: ProviderProps) {
   });
 
   return <StoreContext.Provider value={[state, dispatch]}>{props.children}</StoreContext.Provider>;
-}
+};

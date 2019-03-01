@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useMemoSlice } from './Store';
 import { Binding, BindingDefinition, Native, NATIVE_ALL, BuildStore } from './types';
 import { toggleArtifact } from './actions';
@@ -62,7 +62,7 @@ interface Props {
   onChange: any;
 }
 
-const BuildArtifact = memo(({ artifact, selected, disabled, showDescriptions, onChange }: Props) => {
+const BuildArtifact: React.FC<Props> = ({ artifact, selected, disabled, showDescriptions, onChange }) => {
   if (showDescriptions) {
     return (
       <div className={cc('artifact', { 'text-muted': disabled })}>
@@ -92,4 +92,4 @@ const BuildArtifact = memo(({ artifact, selected, disabled, showDescriptions, on
       <Checkbox value={artifact.id} label={artifact.title} disabled={disabled} checked={selected} onChange={onChange} />
     );
   }
-});
+};

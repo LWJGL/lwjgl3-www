@@ -1,4 +1,4 @@
-import React, { memo, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Location } from '@reach/router';
 import { scrollSmooth } from '../services/scrollSmooth';
 import { usePrevious } from '../hooks/usePrevious';
@@ -28,7 +28,7 @@ function scrollToTarget(el: HTMLAnchorElement) {
   }
 }
 
-const HashLinkTargetControlled = memo(({ id, hash }: Props) => {
+const HashLinkTargetControlled: React.FC<Props> = ({ id, hash }) => {
   const el: React.RefObject<HTMLAnchorElement> = useRef(null);
   const prevHash = usePrevious(hash);
 
@@ -55,7 +55,7 @@ const HashLinkTargetControlled = memo(({ id, hash }: Props) => {
   }, [id, hash]);
 
   return <a ref={el} />;
-});
+};
 
 export const HashLinkTarget = ({ id }: OwnProps) => (
   <Location>{({ location }) => <HashLinkTargetControlled id={id} hash={location.hash} />}</Location>

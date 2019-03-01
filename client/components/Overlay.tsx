@@ -1,10 +1,8 @@
-import React, { memo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Portal } from './Portal';
 import { Backdrop } from './Backdrop';
 
 interface Props {
-  children?: React.ReactNode;
-
   isOpen?: boolean;
   portal?: boolean;
   hasBackdrop?: boolean;
@@ -13,25 +11,30 @@ interface Props {
   backdropClassName?: string;
 }
 
-export const Overlay = memo(
-  ({ children, isOpen = false, lazy = true, portal = false, backdropClassName, hasBackdrop = true }: Props) => {
-    const hasOpened = useRef(false);
+export const Overlay: React.FC<Props> = ({
+  children,
+  isOpen = false,
+  lazy = true,
+  portal = false,
+  backdropClassName,
+  hasBackdrop = true,
+}) => {
+  const hasOpened = useRef(false);
 
-    if (lazy === true && !hasOpened.current) {
-      if (!isOpen) {
-        return null;
-      } else {
-        hasOpened.current = true;
-      }
+  if (lazy === true && !hasOpened.current) {
+    if (!isOpen) {
+      return null;
+    } else {
+      hasOpened.current = true;
     }
-
-    const Container = portal ? Portal : React.Fragment;
-
-    return (
-      <Container>
-        {isOpen && hasBackdrop && <Backdrop className={backdropClassName} />}
-        {isOpen && children}
-      </Container>
-    );
   }
-);
+
+  const Container = portal ? Portal : React.Fragment;
+
+  return (
+    <Container>
+      {isOpen && hasBackdrop && <Backdrop className={backdropClassName} />}
+      {isOpen && children}
+    </Container>
+  );
+};

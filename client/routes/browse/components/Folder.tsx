@@ -27,7 +27,7 @@ interface Props {
   loading: boolean;
 }
 
-export const Folder = memo(({ path, loading = false }: Props) => {
+export const Folder: React.FC<Props> = ({ path, loading = false }) => {
   const parts = path.split('/');
   const name = parts[parts.length - 1];
 
@@ -45,16 +45,14 @@ export const Folder = memo(({ path, loading = false }: Props) => {
       </th>
     </tr>
   );
-});
+};
 
-export function SpinnerRow() {
-  return (
-    <tr>
-      <td>
-        <div className="spinner-grow" role="status">
-          <span className="sr-only">Loading...</span>
-        </div>
-      </td>
-    </tr>
-  );
-}
+export const SpinnerRow: React.FC = () => (
+  <tr>
+    <td>
+      <div className="spinner-grow" role="status">
+        <span className="sr-only">Loading...</span>
+      </div>
+    </td>
+  </tr>
+);

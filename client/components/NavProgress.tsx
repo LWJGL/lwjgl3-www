@@ -59,10 +59,6 @@ interface Context {
   end: () => void;
 }
 
-interface ProviderProps {
-  children: React.ReactNode;
-}
-
 export const NavProgressContext = React.createContext<Context>({
   count: 0,
   start: () => {},
@@ -72,7 +68,7 @@ export const NavProgressContext = React.createContext<Context>({
 let counter = 0;
 let delayTimeout: number | null = null;
 
-export function NavProgressProvider({ children }: ProviderProps) {
+export const NavProgressProvider: React.FC = ({ children }) => {
   const [count, setCount] = useState(counter);
 
   function start(delay: number = 0) {
@@ -119,7 +115,7 @@ export function NavProgressProvider({ children }: ProviderProps) {
   };
 
   return <NavProgressContext.Provider value={state}>{React.Children.only(children)}</NavProgressContext.Provider>;
-}
+};
 
 const PERC_MAX = 99.4;
 

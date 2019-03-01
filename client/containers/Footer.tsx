@@ -1,8 +1,8 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Link } from '@reach/router';
 import { LazyImg } from '~/components/LazyImg';
 
-export const Footer = memo(() => (
+export const Footer = () => (
   <footer>
     <section className="container">
       <nav className="row">
@@ -107,4 +107,4 @@ export const Footer = memo(() => (
       </p>
     </section>
   </footer>
-));
+);

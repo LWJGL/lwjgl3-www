@@ -47,7 +47,6 @@ interface Props {
   location: WindowLocation;
   title?: string;
   description?: string;
-  children: React.ReactNode;
 }
 
 function arePropsEqual({ location: prevLocation }: Props, { location: nextLocation }: Props) {
@@ -56,8 +55,8 @@ function arePropsEqual({ location: prevLocation }: Props, { location: nextLocati
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
 }
 
-export const PageView = memo(
-  ({ location: { key = 'root', pathname, search, hash }, title, description, children }: Props) => {
+export const PageView: React.FC<Props> = memo(
+  ({ location: { key = 'root', pathname, search, hash }, title, description, children }) => {
     // Update document title
     useDocumentTitle(title);
 

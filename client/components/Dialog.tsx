@@ -2,8 +2,7 @@ import React from 'react';
 import { cc } from '~/theme';
 import { Overlay } from './Overlay';
 
-type DialogProps = {
-  children?: React.ReactNode;
+interface Props {
   fixed?: boolean;
   className?: string;
 
@@ -13,10 +12,10 @@ type DialogProps = {
   hasBackdrop?: boolean;
   lazy?: boolean;
   backdropClassName?: string;
-};
+}
 
-export const Dialog = React.memo(({ className, children, fixed = true, ...rest }: DialogProps) => (
+export const Dialog: React.FC<Props> = ({ className, children, fixed = true, ...rest }) => (
   <Overlay {...rest}>
     <div className={cc('dialog', { 'dialog-fixed': fixed }, className)}>{children}</div>
   </Overlay>
-));
+);

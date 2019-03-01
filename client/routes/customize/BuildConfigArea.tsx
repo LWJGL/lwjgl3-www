@@ -14,11 +14,7 @@ import {
   SMALL_FONT_SIZE,
 } from './theme';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-export function BuildConfigArea({ children }: Props) {
+export const BuildConfigArea: React.FC = ({ children }) => {
   const [slice] = useSlice(state => ({
     build: state.build,
   }));
@@ -32,7 +28,7 @@ export function BuildConfigArea({ children }: Props) {
       ) : null,
     [slice.build]
   );
-}
+};
 
 const ConfigPanel = css`
   position: relative;

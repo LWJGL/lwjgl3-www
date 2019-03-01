@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useMemoSlice } from './Store';
 import { Addon, AddonDefinition, BuildStore } from './types';
 import { toggleAddon } from './actions';
@@ -52,7 +52,7 @@ interface Props {
   onChange: any;
 }
 
-const BuildAddon = memo(({ addon, disabled, selected, showDescriptions, onChange }: Props) => {
+const BuildAddon = ({ addon, disabled, selected, showDescriptions, onChange }: Props) => {
   const label: string = `${addon.title} v${addon.maven.version}`;
 
   if (showDescriptions) {
@@ -86,4 +86,4 @@ const BuildAddon = memo(({ addon, disabled, selected, showDescriptions, onChange
       />
     );
   }
-});
+};

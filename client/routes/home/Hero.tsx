@@ -6,11 +6,7 @@ import { Logo } from './Logo';
 
 const Canvas = lazy(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'));
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const HeroBox = ({ children }: Props) => (
+const HeroBox: React.FC = props => (
   <section
     css={css`
       margin-top: -4rem;
@@ -31,11 +27,11 @@ const HeroBox = ({ children }: Props) => (
       position: relative;
     `}
   >
-    {children}
+    {props.children}
   </section>
 );
 
-const LogoContainer = ({ children }: Props) => (
+const LogoContainer: React.FC = props => (
   <div
     className="d-flex flex-column justify-content-center align-items-center"
     css={css`
@@ -57,11 +53,11 @@ const LogoContainer = ({ children }: Props) => (
       }
     `}
   >
-    {children}
+    {props.children}
   </div>
 );
 
-const HeroContent = ({ children }: Props) => (
+const HeroContent: React.FC = props => (
   <div
     css={css`
       text-align: center;
@@ -94,7 +90,7 @@ const HeroContent = ({ children }: Props) => (
       }
     `}
   >
-    {children}
+    {props.children}
   </div>
 );
 

@@ -1,15 +1,15 @@
 import React from 'react';
 import { LazyImg } from '~/components/LazyImg';
 
-type BadgeProps = {
+interface Props {
   title: string;
   href: string;
   src: string;
   width?: number;
   height?: number;
-};
+}
 
-export const BuildBadge = ({ title, href, src, width = 90, height = 20 }: BadgeProps) => (
+export const BuildBadge: React.FC<Props> = ({ title, href, src, width = 90, height = 20 }) => (
   <tr>
     <th>{title}</th>
     <td>

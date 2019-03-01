@@ -7,10 +7,9 @@ import { BuildStoreSnapshot } from './types';
 interface Props {
   configDownload: (event: React.MouseEvent<HTMLButtonElement>) => void;
   configLoad: (payload: BuildStoreSnapshot) => void;
-  children?: React.ReactNode;
 }
 
-export function BuildToolbar({ configDownload, configLoad, children }: Props) {
+export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, children }) => {
   const {
     current,
     breakpoints: { sm },
@@ -73,4 +72,4 @@ export function BuildToolbar({ configDownload, configLoad, children }: Props) {
       </button>
     </div>
   );
-}
+};

@@ -1,4 +1,4 @@
-import React, { memo, useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
 let io: IntersectionObserver | null = null;
@@ -20,7 +20,7 @@ interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   intrinsicsize?: string;
 }
 
-export const LazyImg = memo(({ src: lazySrc, srcSet: lazySrcSet, ...rest }: LazyImgProps) => {
+export const LazyImg: React.FC<LazyImgProps> = ({ src: lazySrc, srcSet: lazySrcSet, ...rest }) => {
   const [src, setSrc] = useState(SUPPORTS_INTERSECTION_OBSERVER ? undefined : lazySrc);
   const [srcSet, setSrcSet] = useState(SUPPORTS_INTERSECTION_OBSERVER ? undefined : lazySrcSet);
   const imgRef: React.RefObject<HTMLImageElement> = useRef(null);
@@ -60,8 +60,8 @@ export const LazyImg = memo(({ src: lazySrc, srcSet: lazySrcSet, ...rest }: Lazy
 
         return cleanup;
       }
-    }, []);
+    }, [lazySrc, lazySrcSet]);
   }
 
   return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
-});
+};

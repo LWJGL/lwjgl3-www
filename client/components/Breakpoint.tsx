@@ -18,10 +18,6 @@ export function useBreakpoint() {
   return ctx;
 }
 
-interface Props {
-  children: React.ReactNode;
-}
-
 const matchers: Array<MediaQueryList> = [];
 const listeners: Array<EventListener> = [];
 let initialCurrent = breakpointIndex.lg;
@@ -46,7 +42,7 @@ breakpoints.forEach((limit, i) => {
   }
 });
 
-export function BreakpointProvider({ children }: Props) {
+export const BreakpointProvider: React.FC = props => {
   const [current, setCurrent] = useState(initialCurrent);
 
   useEffect(() => {
@@ -76,7 +72,7 @@ export function BreakpointProvider({ children }: Props) {
         breakpoints: breakpointIndex,
       }}
     >
-      {children}
+      {props.children}
     </BreakpointContext.Provider>
   );
-}
+};

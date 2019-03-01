@@ -1,21 +1,20 @@
-import React, { memo, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 
-type TrapProps = {
+interface Props {
   className?: string;
   role?: string;
-  children?: React.ReactNode;
   onClose?: React.EventHandler<any>;
   noScroll?: boolean;
   autoFocus?: boolean;
   escapeDeactivates?: boolean;
   clickOutsideDeactivates?: boolean;
-};
+}
 
 let lastTrap: null | FocusTrap = null;
 
-function TrapComponent({
+export const Trap: React.FC<Props> = ({
   className,
   role,
   children,
@@ -24,7 +23,7 @@ function TrapComponent({
   autoFocus = true,
   escapeDeactivates = true,
   clickOutsideDeactivates = true,
-}: TrapProps) {
+}) => {
   const divRef: React.RefObject<HTMLDivElement> = useRef(null);
   const isMounted: React.MutableRefObject<boolean> = useRef(false);
   const returnFocus: React.MutableRefObject<HTMLElement | null> = useRef(null);
@@ -108,6 +107,4 @@ function TrapComponent({
       {children}
     </div>
   );
-}
-
-export const Trap = memo(TrapComponent);
+};

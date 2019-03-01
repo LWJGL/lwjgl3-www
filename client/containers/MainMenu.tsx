@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Link, LinkProps, LinkGetProps } from '@reach/router';
 
 interface Props {
@@ -13,7 +13,7 @@ const isActive = ({ isCurrent }: LinkGetProps) => {
 //@ts-ignore
 const NavLink = (props: LinkProps<void>) => <Link {...props} getProps={isActive} />;
 
-export const MainMenu = memo(({ onClick, className }: Props) => (
+export const MainMenu: React.FC<Props> = ({ onClick, className }) => (
   <ul role="navigation" aria-label="Main Menu" className={className}>
     <li>
       <NavLink onClick={onClick} to="/">
@@ -56,4 +56,4 @@ export const MainMenu = memo(({ onClick, className }: Props) => (
       </a>
     </li>
   </ul>
-));
+);

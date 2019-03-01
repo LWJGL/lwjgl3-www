@@ -1,6 +1,6 @@
 import { css } from '@emotion/core';
 import uniqueId from 'lodash-es/uniqueId';
-import React, { memo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 import { lighten, setSaturation } from '~/theme/color';
 
@@ -71,31 +71,23 @@ interface Props {
   hidden?: boolean;
 }
 
-export const Toggle = memo(
-  ({ label, value, onChange, checked = false, disabled = false, hidden = false }: Props) => {
-    const htmlForId = useRef(uniqueId('toggle'));
+export const Toggle = ({ label, value, onChange, checked = false, disabled = false, hidden = false }: Props) => {
+  const htmlForId = useRef(uniqueId('toggle'));
 
-    return hidden === true ? null : (
-      <div className="custom-control">
-        <input
-          className="custom-control-input"
-          type="checkbox"
-          id={htmlForId.current}
-          checked={checked}
-          disabled={disabled}
-          onChange={() => onChange(value)}
-          css={InputStyle}
-        />
-        <label css={LabelStyle} className="custom-control-label" htmlFor={htmlForId.current}>
-          {label}
-        </label>
-      </div>
-    );
-  },
-  (prevProps: Props, nextProps: Props) =>
-    prevProps.checked === nextProps.checked &&
-    prevProps.disabled === nextProps.disabled &&
-    prevProps.hidden === nextProps.hidden &&
-    prevProps.value === nextProps.value &&
-    prevProps.label === nextProps.label
-);
+  return hidden === true ? null : (
+    <div className="custom-control">
+      <input
+        className="custom-control-input"
+        type="checkbox"
+        id={htmlForId.current}
+        checked={checked}
+        disabled={disabled}
+        onChange={() => onChange(value)}
+        css={InputStyle}
+      />
+      <label css={LabelStyle} className="custom-control-label" htmlFor={htmlForId.current}>
+        {label}
+      </label>
+    </div>
+  );
+};

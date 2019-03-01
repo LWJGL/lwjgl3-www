@@ -21,7 +21,7 @@ interface Props {
 
 const BuildStatusResource = createResource<BuildType, BuildStatus>(loadStatus);
 
-export const BuildStatus = React.memo(({ name }: Props) => {
+export const BuildStatus = ({ name }: Props) => {
   const status = BuildStatusResource.read(name);
 
   return (
@@ -31,7 +31,7 @@ export const BuildStatus = React.memo(({ name }: Props) => {
       {'lastModified' in status ? status.lastModified : <br />}
     </p>
   );
-});
+};
 
 async function loadStatus(name: BuildType): Promise<BuildStatus> {
   let url = `/build/${name}`;

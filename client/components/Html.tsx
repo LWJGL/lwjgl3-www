@@ -1,13 +1,11 @@
 import React from 'react';
 
 interface Props {
-  children?: React.ReactNode; // ignored
   source: string;
   tag?: string;
 }
 
-export function Html({ tag = 'div', source, children, ...rest }: Props) {
-  const Container = tag;
+export const Html: React.FC<Props> = ({ tag: Container = 'div', source, children, ...rest }) => (
   //@ts-ignore
-  return <Container {...rest} dangerouslySetInnerHTML={{ __html: source }} />;
-}
+  <Container {...rest} dangerouslySetInnerHTML={{ __html: source }} />
+);

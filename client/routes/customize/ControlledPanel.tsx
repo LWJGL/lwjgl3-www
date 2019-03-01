@@ -4,10 +4,9 @@ import { BuildStore } from './types';
 
 interface Props {
   predicate: (state: BuildStore) => boolean;
-  children: React.ReactNode;
 }
 
-export function ControlledPanel({ children, predicate }: Props) {
+export const ControlledPanel: React.FC<Props> = ({ children, predicate }) => {
   const [visible] = useSlice(state => predicate(state));
-  return visible ? (children as any) : null;
-}
+  return visible ? (children as JSX.Element) : null;
+};
