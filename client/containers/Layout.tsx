@@ -23,11 +23,9 @@ export function Layout() {
         <License path="/license" />
         <Miss404 default />
       </Router>
-      <Location>
-        {({ location }) =>
-          location.pathname !== '/customize' && !location.pathname.startsWith('/browse') ? <Footer /> : null
-        }
-      </Location>
+      <Router>
+        <Footer path="/*" />
+      </Router>
     </React.Fragment>
   );
 }
