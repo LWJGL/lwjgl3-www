@@ -12,7 +12,7 @@ export function getSuspenseRoute(loader: ComponentImport) {
   //   return await loader();
   // });
 
-  const SuspenseRoute: React.FC<RouteComponentProps> = props => (
+  const SuspenseRoute = (props: RouteComponentProps) => (
     <Suspense maxDuration={200} fallback={<PageBlank />}>
       <LazyRoute {...props} />
     </Suspense>
