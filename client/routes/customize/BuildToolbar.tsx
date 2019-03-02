@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { BreakpointContext } from '~/components/Breakpoint';
-import IconArchive from '~/components/icons/md/Archive';
-import IconSettingsBackupRestore from '~/components/icons/md/SettingsBackupRestore';
+import { Icon, Archive, SettingsBackupRestore } from '~/components/icons';
 import { BuildStoreSnapshot } from './types';
 
 interface Props {
@@ -63,11 +62,11 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     <div className="download-toolbar">
       {children}
       <button className="btn btn-outline-light" title="Load configuration file (JSON)" onClick={toggleFileUI}>
-        <IconSettingsBackupRestore />
+        <Icon children={<SettingsBackupRestore />} />
         {showLabels ? ` Load config` : null}
       </button>
       <button className="btn btn-outline-light" title="Save configuration (in JSON)" onClick={configDownload}>
-        <IconArchive />
+        <Icon children={<Archive />} />
         {showLabels ? ` Save config` : null}
       </button>
     </div>

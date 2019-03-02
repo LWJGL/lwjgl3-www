@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { css } from '@emotion/core';
 import { Link } from '@reach/router';
-import IconKeyboardArrowDown from '~/components/icons/md/KeyboardArrowDown';
+import { Icon, KeyboardArrowDown } from '~/components/icons';
 import { Logo } from './Logo';
 
 const Canvas = lazy(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'));
@@ -174,7 +174,7 @@ export function HomeHero() {
           <Link to="/#learn-more">
             LEARN MORE
             <br />
-            <IconKeyboardArrowDown />
+            <Icon children={<KeyboardArrowDown />} />
           </Link>
         </HeroContent>
       </LogoContainer>

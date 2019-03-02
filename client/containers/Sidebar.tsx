@@ -2,8 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
-import IconMenu from '~/components/icons/md/Menu';
-import IconClose from '~/components/icons/md/Close';
+import { Icon, Menu, Close } from '~/components/icons';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 
 export function Sidebar() {
@@ -128,7 +127,7 @@ export function Sidebar() {
         aria-hidden={open}
         title="Open navigation menu"
       >
-        <IconMenu />
+        <Icon children={<Menu />} />
       </button>
       <div className="sliding-menu-overlay" onClick={onToggle} />
       <div ref={sideContainer} className="sliding-menu-container" role="menu" aria-hidden={!open} aria-expanded={open}>
@@ -140,7 +139,7 @@ export function Sidebar() {
             onClick={onToggle}
             title="Close navigation menu"
           >
-            <IconClose />
+            <Icon children={<Close />} />
           </button>
         </div>
         <MainMenu className="list-unstyled" onClick={onToggle} />

@@ -1,7 +1,7 @@
 import React, { Suspense, useState, useEffect, useMemo } from 'react';
 import { css } from '@emotion/core';
 import { useBreakpoint } from '~/components/Breakpoint';
-import IconClose from '~/components/icons/md/Close';
+import { Icon, Close } from '~/components/icons';
 import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { useMemoSlice } from './Store';
 import { selectBuildType } from './actions';
@@ -78,7 +78,7 @@ export function BuildPanel({ build }: Props) {
         ) : (
           <StatusFallback />
         )}
-        {isSelected ? <IconClose /> : null}
+        {isSelected ? <Icon children={<Close />} /> : null}
       </div>
     );
   }, [slice, showStatus, breakpoint]);

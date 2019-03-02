@@ -1,11 +1,11 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { css } from '@emotion/core';
 import { Link, RouteComponentProps } from '@reach/router';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
 import { cc, COLOR_PRIMARY } from '~/theme';
-import CloudDownload from '../components/icons/md/CloudDownload';
+import { Icon, CloudDownload } from '~/components/icons';
 import { useServiceWorker } from '../hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
@@ -27,7 +27,7 @@ function ServiceWorkerUpdate() {
       className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
       title="Update website to latest version"
     >
-      <CloudDownload />
+      <Icon children={<CloudDownload />} />
     </button>
   ) : null;
 }

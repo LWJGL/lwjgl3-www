@@ -187,6 +187,35 @@ const buildConfiguration = () => {
             },
           ],
         },
+        {
+          test: /\.svg$/,
+          use: [
+            {
+              loader: 'babel-loader',
+            },
+            {
+              loader: 'react-svg-loader',
+              options: {
+                jsx: true,
+                svgo: {
+                  plugins: [
+                    {
+                      addAttributesToSVGElement: {
+                        attributes: [
+                          'focusable="false"',
+                          'aria-hidden="true"',
+                          // 'fill="currentColor"',
+                          'preserveAspectRatio="xMidYMid meet"',
+                        ],
+                      },
+                    },
+                  ],
+                  // floatPrecision: 2,
+                },
+              },
+            },
+          ],
+        },
       ],
     },
     plugins: [

@@ -5,17 +5,18 @@ import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
-
-// Icons
-import IconGithub from '~/components/icons/fa/brands/Github';
-import IconApple from '~/components/icons/fa/brands/Apple';
-import IconSettingsInputComposite from '~/components/icons/md/SettingsInputComposite';
-import IconLibraryBooks from '~/components/icons/md/LibraryBooks';
-import IconWidgets from '~/components/icons/md/Widgets';
-import IconForum from '~/components/icons/md/Forum';
-import IconDevices from '~/components/icons/md/Devices';
-import IconVideogameAsset from '~/components/icons/md/VideogameAsset';
-import IconBatteryUnknown from '~/components/icons/md/BatteryUnknown';
+import {
+  Icon,
+  Github,
+  Apple,
+  SettingsInputComposite,
+  LibraryBooks,
+  Widgets,
+  Forum,
+  Devices,
+  VideogameAsset,
+  BatteryUnknown,
+} from '~/components/icons';
 
 const HomeRoute = (props: RouteComponentProps) => (
   <PageView
@@ -86,7 +87,7 @@ const HomeRoute = (props: RouteComponentProps) => (
 
         <div className="row">
           <div className="col-md py-3">
-            <IconSettingsInputComposite />
+            <Icon children={<SettingsInputComposite />} />
             <h3>Low-level Bindings</h3>
             <p>
               Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance and a
@@ -94,7 +95,7 @@ const HomeRoute = (props: RouteComponentProps) => (
             </p>
           </div>
           <div className="col-md py-3">
-            <IconGithub />
+            <Icon children={<Github />} />
             <h3>Open Source</h3>
             <p>
               LWJGL is available under a <Link to="/license">BSD license</Link>. Visit our{' '}
@@ -103,7 +104,7 @@ const HomeRoute = (props: RouteComponentProps) => (
             </p>
           </div>
           <div className="col-md py-3">
-            <IconLibraryBooks />
+            <Icon children={<LibraryBooks />} />
             <h3>Built-in Documentation</h3>
             <p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
           </div>
@@ -111,12 +112,12 @@ const HomeRoute = (props: RouteComponentProps) => (
 
         <div className="row">
           <div className="col-md py-3">
-            <IconDevices />
+            <Icon children={<Devices />} />
             <h3>Cross-platform</h3>
             <p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
           </div>
           <div className="col-md py-3">
-            <IconForum />
+            <Icon children={<Forum />} />
             <h3>Community</h3>
             <p>
               Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up for a
@@ -124,7 +125,7 @@ const HomeRoute = (props: RouteComponentProps) => (
             </p>
           </div>
           <div className="col-md py-3">
-            <IconVideogameAsset />
+            <Icon children={<VideogameAsset />} />
             <h3>GLFW Bindings</h3>
             <p>
               Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts. Also
@@ -221,12 +222,12 @@ const HomeRoute = (props: RouteComponentProps) => (
             <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
           </div>
           <div className="col-md py-3">
-            <IconApple />
+            <Icon children={<Apple />} />
             <h3>Objective-C Bindings</h3>
             <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on macOS.</p>
           </div>
           <div className="col-md py-3">
-            <IconWidgets />
+            <Icon children={<Widgets />} />
             <h3>Customization & Utilities</h3>
             <p>
               Use <a href="http://www.dyncall.org/">dyncall</a> to call functions from any native library, use{' '}
@@ -240,7 +241,7 @@ const HomeRoute = (props: RouteComponentProps) => (
         <div className="row">
           <div className="col pt-3">
             <div className="mb-3">
-              <IconBatteryUnknown style={{ fontSize: '6rem' }} color="yellow" />
+              <Icon children={<BatteryUnknown />} style={{ fontSize: '6rem' }} color="yellow" />
             </div>
             <h3>Your favorite API here!</h3>
             <p>

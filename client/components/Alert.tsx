@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dialog } from './Dialog';
 import { Trap } from './Trap';
-import IconClose from './icons/md/Close';
+import { Icon, Close } from '~/components/icons';
 
 interface Props {
   type: 'primary' | 'success' | 'info' | 'warning' | 'danger';
@@ -18,7 +18,7 @@ export const Alert: React.FC<Props> = ({ type = 'primary', isOpen = true, onClos
         <div className={`dialog-header bg-${type}`}>
           <h3>{title}</h3>
           <div className="dialog-close-button">
-            <IconClose onClick={onClose} />
+            <Icon children={<Close />} onClick={onClose} />
           </div>
         </div>
       )}

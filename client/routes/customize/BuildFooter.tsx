@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import IconFileDownload from '~/components/icons/md/FileDownload';
+import { Icon, CloudDownload } from '~/components/icons';
 import { saveAs } from '~/services/file-saver';
 import { configLoad } from './actions';
 import { BuildScript } from './BuildScript';
@@ -36,7 +36,7 @@ export function BuildFooter({ setIsDownloading }: Props) {
             setIsDownloading(true);
           }}
         >
-          <IconFileDownload /> DOWNLOAD ZIP
+          <Icon children={<CloudDownload />} /> DOWNLOAD ZIP
         </button>
       </BuildToolbar>
     ) : (

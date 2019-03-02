@@ -1,7 +1,7 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { css } from '@emotion/core';
 import { Link } from '@reach/router';
-import IconFolder from '~/components/icons/md/Folder';
+import { Icon, Folder as FolderIcon } from '~/components/icons';
 
 export const FolderTH = css`
   user-select: none;
@@ -35,7 +35,7 @@ export const Folder: React.FC<Props> = ({ path, loading = false }) => {
     <tr>
       <th css={FolderTH} colSpan={2}>
         <Link to={path}>
-          <IconFolder /> {name}
+          <Icon children={<FolderIcon />} /> {name}
           {loading && (
             <div className="spinner-grow spinner-grow-sm ml-1" role="status">
               <span className="sr-only">Loading...</span>

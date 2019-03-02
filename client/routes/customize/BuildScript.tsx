@@ -1,8 +1,7 @@
 import React, { useMemo, useRef } from 'react';
 import { useMemoSlice } from './Store';
 import { useBreakpoint } from '~/components/Breakpoint';
-import IconContentCopy from '~/components/icons/md/ContentCopy';
-import IconFileDownload from '~/components/icons/md/FileDownload';
+import { Icon, FileCopy, CloudDownload } from '~/components/icons';
 import { BuildToolbar } from './BuildToolbar';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
 import {
@@ -135,7 +134,7 @@ export function BuildScript(props: Props) {
               href={`data:${mime(mode)};base64,${btoa(script)}`}
               title={`Download ${mode.id} code snippet`}
             >
-              <IconFileDownload /> {labels.download}
+              <Icon children={<CloudDownload />} /> {labels.download}
             </a>
           )}
           <button
@@ -144,7 +143,7 @@ export function BuildScript(props: Props) {
             disabled={!document.execCommand}
             title="Copy to clipboard"
           >
-            <IconContentCopy />
+            <Icon children={<FileCopy />} />
             {labels.copy}
           </button>
         </BuildToolbar>

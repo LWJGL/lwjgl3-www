@@ -2,7 +2,7 @@ import React, { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from '@reach/router';
 // import { unstable_createResource as createResource } from 'react-cache';
 import { createResource } from '~/services/react-cache/ReactCache';
-import IconCloud from '~/components/icons/md/Cloud';
+import { Icon, Cloud } from '~/components/icons';
 import { HTTP_OK } from '~/services/http_status_codes';
 import { File } from './File';
 import { Folder, FolderTH, SpinnerRow } from './Folder';
@@ -66,7 +66,7 @@ export function Browser({ path: loading }: Props) {
         <thead className="thead-light">
           <tr>
             <th colSpan={2}>
-              <IconCloud /> &nbsp;
+              <Icon children={<Cloud />} /> &nbsp;
               <Link to={'/browse'}>lwjgl</Link>
               {path.length
                 ? path.split('/').map((it, i, arr) => {

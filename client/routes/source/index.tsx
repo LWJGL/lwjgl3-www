@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { RouteComponentProps, WindowLocation } from '@reach/router';
-import IconGithub from '~/components/icons/fa/brands/Github';
+import { Icon, Github } from '~/components/icons';
 import { BuildBadge } from './BuildBadge';
 
 const SourceRoute = (props: RouteComponentProps) => (
@@ -19,7 +19,7 @@ const SourceRoute = (props: RouteComponentProps) => (
       <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
       <p>
         <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3">
-          <IconGithub /> Github Repository
+          <Icon children={<Github />} /> Github Repository
         </a>
         <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/releases">
           Release notes
