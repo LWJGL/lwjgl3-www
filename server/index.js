@@ -82,6 +82,8 @@ if (app.locals.development) {
       require('webpack-hot-middleware')(webpackCompiler, {
         path: '/__webpack_hmr',
         heartbeat: 10 * 1000,
+        noInfo: true,
+        quiet: true,
       })
     );
   }

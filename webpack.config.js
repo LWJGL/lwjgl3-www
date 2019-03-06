@@ -200,6 +200,7 @@ const buildConfiguration = () => {
                 svgo: {
                   plugins: [
                     {
+                      removeXMLNS: true,
                       addAttributesToSVGElement: {
                         attributes: [
                           'focusable="false"',
