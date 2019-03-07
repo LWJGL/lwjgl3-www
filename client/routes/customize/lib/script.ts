@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { State } from '../BuildScript';
 import {
   Binding,
@@ -55,22 +54,20 @@ export function getVersion(version: Version, build: BuildType) {
 }
 
 export function getSelectedPlatforms(natives: Array<Native>, platform: PlatformSelection): Native | null {
-  return useMemo(() => {
-    let result = null;
+  let result = null;
 
-    for (let i = 0; i < natives.length; i += 1) {
-      const p = natives[i];
-      if (platform[p]) {
-        if (result === null) {
-          result = p;
-        } else {
-          return null; // more than one platforms selected
-        }
+  for (let i = 0; i < natives.length; i += 1) {
+    const p = natives[i];
+    if (platform[p]) {
+      if (result === null) {
+        result = p;
+      } else {
+        return null; // more than one platforms selected
       }
     }
+  }
 
-    return result;
-  }, [platform]);
+  return result;
 }
 
 export function generateScript(mode: Mode, state: State): string {
