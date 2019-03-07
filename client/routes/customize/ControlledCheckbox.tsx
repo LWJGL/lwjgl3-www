@@ -31,5 +31,9 @@ export function ControlledCheckbox({ spec }: Props) {
     state => spec.inputs(state)
   );
 
-  return useMemo(() => <Checkbox {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [slice]);
+  return useMemo(() => <Checkbox {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [
+    spec,
+    slice,
+    dispatch,
+  ]);
 }

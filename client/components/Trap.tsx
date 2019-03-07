@@ -96,7 +96,7 @@ export const Trap: React.FC<Props> = ({
         returnFocus.current = null;
       }
     };
-  }, []);
+  }, [autoFocus, clickOutsideDeactivates, escapeDeactivates, noScroll, onClose]);
 
   if (!isMounted.current) {
     returnFocus.current = document.activeElement as HTMLElement;

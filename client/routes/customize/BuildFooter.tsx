@@ -42,5 +42,5 @@ export function BuildFooter({ setIsDownloading }: Props) {
     ) : (
       <BuildScript configDownload={configDownload} configLoad={dispatchConfigLoad} />
     );
-  }, [mode]);
+  }, [mode, setIsDownloading, storeRef, dispatch]);
 }

@@ -52,7 +52,7 @@ const HashLinkTargetControlled: React.FC<Props> = ({ id, hash }) => {
         setTimeout(scrollEnd, 0);
       }
     }
-  }, [id, hash]);
+  }, [id, hash, prevHash]);
 
   return <a ref={el} />;
 };

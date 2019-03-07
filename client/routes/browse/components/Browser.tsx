@@ -58,7 +58,7 @@ export function Browser({ path: loading }: Props) {
     if (loading !== path) {
       setPath(loading);
     }
-  }, [loading]);
+  }, [loading, path]);
 
   return (
     <div className="table-responsive-md mt-sm-4">

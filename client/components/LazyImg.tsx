@@ -20,48 +20,48 @@ interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   intrinsicsize?: string;
 }
 
-export const LazyImg: React.FC<LazyImgProps> = ({ src: lazySrc, srcSet: lazySrcSet, ...rest }) => {
-  const [src, setSrc] = useState(SUPPORTS_INTERSECTION_OBSERVER ? undefined : lazySrc);
-  const [srcSet, setSrcSet] = useState(SUPPORTS_INTERSECTION_OBSERVER ? undefined : lazySrcSet);
-  const imgRef: React.RefObject<HTMLImageElement> = useRef(null);
+export const LazyImg: React.FC<LazyImgProps> = SUPPORTS_INTERSECTION_OBSERVER
+  ? ({ src, srcSet, ...rest }) => <img src={src} srcSet={srcSet} {...rest} />
+  : ({ src: lazySrc, srcSet: lazySrcSet, ...rest }) => {
+      const [src, setSrc] = useState(lazySrc);
+      const [srcSet, setSrcSet] = useState(lazySrcSet);
+      const imgRef: React.RefObject<HTMLImageElement> = useRef(null);
 
-  if (SUPPORTS_INTERSECTION_OBSERVER) {
-    useEffect(() => {
-      function cleanup() {
-        if (io !== null && imgRef.current !== null) {
-          io.unobserve(imgRef.current);
-          map.delete(imgRef.current);
-          mapCount -= 1;
+      useEffect(() => {
+        function cleanup() {
+          if (io !== null && imgRef.current !== null) {
+            io.unobserve(imgRef.current);
+            map.delete(imgRef.current);
+            mapCount -= 1;
 
-          if (mapCount === 0) {
-            // We don't need this IO anymore
-            io = null;
+            if (mapCount === 0) {
+              // We don't need this IO anymore
+              io = null;
+            }
           }
         }
-      }
 
-      function loadImage() {
-        setSrc(lazySrc);
-        setSrcSet(lazySrcSet);
-        cleanup();
-      }
-
-      if (imgRef.current !== null) {
-        if (io === null) {
-          io = new IntersectionObserver(observeEntries, {
-            threshold: 0,
-            rootMargin: '400px',
-          });
+        function loadImage() {
+          setSrc(lazySrc);
+          setSrcSet(lazySrcSet);
+          cleanup();
         }
 
-        map.set(imgRef.current, loadImage);
-        io.observe(imgRef.current);
-        mapCount += 1;
+        if (imgRef.current !== null) {
+          if (io === null) {
+            io = new IntersectionObserver(observeEntries, {
+              threshold: 0,
+              rootMargin: '400px',
+            });
+          }
 
-        return cleanup;
-      }
-    }, [lazySrc, lazySrcSet]);
-  }
+          map.set(imgRef.current, loadImage);
+          io.observe(imgRef.current);
+          mapCount += 1;
 
-  return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
-};
+          return cleanup;
+        }
+      }, [lazySrc, lazySrcSet]);
+
+      return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
+    };

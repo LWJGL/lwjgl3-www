@@ -41,7 +41,7 @@ interface Props {
   configLoad: (payload: BuildStoreSnapshot) => void;
 }
 
-export function BuildScript(props: Props) {
+export function BuildScript({ configDownload, configLoad }: Props) {
   const preRef: React.RefObject<HTMLPreElement> = useRef(null);
 
   // Breakpoint
@@ -126,7 +126,7 @@ export function BuildScript(props: Props) {
         <pre ref={preRef} className="m-0">
           <code>{script}</code>
         </pre>
-        <BuildToolbar configDownload={props.configDownload} configLoad={props.configLoad}>
+        <BuildToolbar configDownload={configDownload} configLoad={configLoad}>
           {ALLOW_DOWNLOAD && (
             <a
               className="btn btn-success"
@@ -149,5 +149,5 @@ export function BuildScript(props: Props) {
         </BuildToolbar>
       </div>
     );
-  }, [slice]);
+  }, [slice, current, sm, md, mode, configDownload, configLoad]);
 }

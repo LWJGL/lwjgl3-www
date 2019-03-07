@@ -32,6 +32,8 @@ export function ControlledToggle({ spec }: Props) {
   );
 
   return useMemo(() => <Checkbox toggle={true} {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [
+    spec,
     slice,
+    dispatch,
   ]);
 }

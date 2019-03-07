@@ -54,5 +54,5 @@ export function ControlledRadio({ spec }: Props) {
         ))}
       </div>
     );
-  }, [slice]);
+  }, [spec, slice, dispatch]);
 }

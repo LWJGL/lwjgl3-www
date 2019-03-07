@@ -33,14 +33,15 @@ export function Sidebar() {
     let touchingSideNav = false;
     let startX = 0;
     let currentX = 0;
+    let sideDiv = sideContainer.current;
 
     function onTouchStart(evt: TouchEvent) {
       startX = evt.touches[0].pageX;
       currentX = startX;
 
       touchingSideNav = true;
-      if (sideContainer.current !== null) {
-        sideContainer.current.classList.add('touching');
+      if (sideDiv !== null) {
+        sideDiv.classList.add('touching');
       }
       requestAnimationFrame(update);
     }
@@ -56,9 +57,9 @@ export function Sidebar() {
       if (touchingSideNav) {
         touchingSideNav = false;
 
-        if (sideContainer.current !== null) {
-          sideContainer.current.style.transform = '';
-          sideContainer.current.classList.remove('touching');
+        if (sideDiv !== null) {
+          sideDiv.style.transform = '';
+          sideDiv.classList.remove('touching');
         }
 
         if (currentX - startX > 0) {
@@ -80,8 +81,8 @@ export function Sidebar() {
         translateX = 0;
       }
 
-      if (sideContainer.current !== null) {
-        sideContainer.current.style.transform = `translateX(${translateX}px)`;
+      if (sideDiv !== null) {
+        sideDiv.style.transform = `translateX(${translateX}px)`;
       }
     }
 
@@ -90,19 +91,11 @@ export function Sidebar() {
     if (focusTrap.current !== null) {
       focusTrap.current.activate();
     }
-    if (sideContainer.current !== null) {
-      sideContainer.current.addEventListener(
-        'touchstart',
-        onTouchStart,
-        SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false
-      );
+    if (sideDiv !== null) {
+      sideDiv.addEventListener('touchstart', onTouchStart, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
       // Disable passive to avoid triggering gestures in some devices
-      sideContainer.current.addEventListener(
-        'touchmove',
-        onTouchMove,
-        SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false
-      );
-      sideContainer.current.addEventListener('touchend', onTouchEnd, false);
+      sideDiv.addEventListener('touchmove', onTouchMove, SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false);
+      sideDiv.addEventListener('touchend', onTouchEnd, false);
     }
 
     return () => {
@@ -110,10 +103,10 @@ export function Sidebar() {
       if (focusTrap.current !== null) {
         focusTrap.current.deactivate({ onDeactivate: false });
       }
-      if (sideContainer.current !== null) {
-        sideContainer.current.removeEventListener('touchstart', onTouchStart, false);
-        sideContainer.current.removeEventListener('touchmove', onTouchMove, false);
-        sideContainer.current.removeEventListener('touchend', onTouchEnd, false);
+      if (sideDiv !== null) {
+        sideDiv.removeEventListener('touchstart', onTouchStart, false);
+        sideDiv.removeEventListener('touchmove', onTouchMove, false);
+        sideDiv.removeEventListener('touchend', onTouchEnd, false);
       }
     };
   }, [open]);
