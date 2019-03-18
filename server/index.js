@@ -171,7 +171,14 @@ if (app.locals.development) {
   );
 }
 
-app.use(helmet(helmetConfig(app.locals.production)));
+let applyHelmet;
+
+app.use((req, res, next) => {
+  if (!applyHelmet) {
+    applyHelmet = helmet(helmetConfig(app.locals.production, req.hostname === 'www.lwjgl.org'));
+  }
+  applyHelmet(req, res, next);
+});
 
 // Redownloads and parses JS manifest from S3
 app.get('/dev/reload', (req, res) => {

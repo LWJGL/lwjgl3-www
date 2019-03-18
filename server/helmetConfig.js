@@ -1,6 +1,6 @@
 'use strict';
 
-const helmetConfig = production => {
+const helmetConfig = (production, hsts) => {
   const config = {
     contentSecurityPolicy: {
       directives: {
@@ -34,13 +34,12 @@ const helmetConfig = production => {
     xssFilter: true,
   };
 
-  if (production) {
+  if (production && hsts) {
     config.hsts = {
       maxAge: 365 * 24 * 60 * 60,
       includeSubDomains: false,
       // TODO: includeSubDomains must be true for preloading to be approved
       preload: false,
-      setIf: (req, res) => req.hostname === 'www.lwjgl.org',
     };
   }
 
