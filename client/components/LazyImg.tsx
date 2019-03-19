@@ -21,10 +21,9 @@ interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 export const LazyImg: React.FC<LazyImgProps> = SUPPORTS_INTERSECTION_OBSERVER
-  ? ({ src, srcSet, ...rest }) => <img src={src} srcSet={srcSet} {...rest} />
-  : ({ src: lazySrc, srcSet: lazySrcSet, ...rest }) => {
-      const [src, setSrc] = useState(lazySrc);
-      const [srcSet, setSrcSet] = useState(lazySrcSet);
+  ? ({ src: lazySrc, srcSet: lazySrcSet, ...rest }) => {
+      const [src, setSrc] = useState<string>();
+      const [srcSet, setSrcSet] = useState<string>();
       const imgRef: React.RefObject<HTMLImageElement> = useRef(null);
 
       useEffect(() => {
@@ -64,4 +63,5 @@ export const LazyImg: React.FC<LazyImgProps> = SUPPORTS_INTERSECTION_OBSERVER
       }, [lazySrc, lazySrcSet]);
 
       return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
-    };
+    }
+  : ({ src, srcSet, ...rest }) => <img src={src} srcSet={srcSet} {...rest} />;
