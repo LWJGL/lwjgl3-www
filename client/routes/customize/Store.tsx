@@ -32,7 +32,7 @@ export function useSlice<S>(slicer: (state: BuildStore) => S): SliceTuple<S> {
 
 export function useMemoSlice<S>(
   getSlice: (state: BuildStore) => S,
-  getInputs: (state: BuildStore) => React.InputIdentityList
+  getInputs: (state: BuildStore) => React.DependencyList
 ): SliceTuple<S> {
   const [state, dispatch] = useContext(StoreContext);
   return [useMemo(() => getSlice(state), getInputs(state)), dispatch];
@@ -79,7 +79,7 @@ const saveSnapshot = debounce((state: BuildStore) => {
 
 // Store Provider
 export const Provider: React.FC = props => {
-  const [state, dispatch] = useReducer<BuildStore, ActionCreator>(reducer, config);
+  const [state, dispatch] = useReducer<React.Reducer<BuildStore, ActionCreator>>(reducer, config);
 
   useEffect(() => {
     const restore = localStorage.getItem(STORAGE_KEY);

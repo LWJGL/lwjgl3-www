@@ -9,7 +9,7 @@ interface Props {
     checked?: (state: any) => boolean;
     disabled?: (state: any) => boolean;
     hidden?: (state: any) => boolean;
-    inputs: (state: any) => React.InputIdentityList;
+    inputs: (state: any) => React.DependencyList;
   };
 }
 

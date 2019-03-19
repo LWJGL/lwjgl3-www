@@ -9,7 +9,7 @@ interface Props {
     options: (state: any) => any;
     // hidden?: (state: any) => boolean,
     action: any;
-    inputs: (state: any) => React.InputIdentityList;
+    inputs: (state: any) => React.DependencyList;
   };
 }
 

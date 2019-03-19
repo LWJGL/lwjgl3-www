@@ -17,6 +17,9 @@ import { generateMaven } from './maven';
 
 export function copyToClipboard(ref: React.RefObject<HTMLElement>) {
   const selection = window.getSelection();
+  if (selection === null) {
+    return;
+  }
   if (selection.rangeCount > 0) {
     selection.removeAllRanges();
   }
