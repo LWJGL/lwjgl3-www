@@ -5,7 +5,7 @@ import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useMetaDescription } from '../../hooks/useMetaDescription';
 import { WindowLocation } from '@reach/router';
-import { end } from '../NavProgress';
+// import { end } from '../NavProgress';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
@@ -63,7 +63,7 @@ export const PageView: React.FC<Props> = memo(
     // undocumented that I'm not understanding.
     // TODO: Remove or refactor after React publishes concurrent-mode subscription guidelines
     // SOS: Do not use NavProgress for other things till then
-    useEffect(() => end(), []);
+    // useEffect(() => end(), []);
 
     // Update document title
     useDocumentTitle(title);
@@ -71,13 +71,13 @@ export const PageView: React.FC<Props> = memo(
     // Update META description
     useMetaDescription(description);
 
-    if (SCROLL_RESTORATION) {
-      function storeScrollEntriesInSession() {
-        storeScroll(key);
-        sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
-      }
+    useEffect(() => {
+      if (SCROLL_RESTORATION) {
+        const storeScrollEntriesInSession = () => {
+          storeScroll(key);
+          sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
+        };
 
-      useEffect(() => {
         // If we have previously stored the same key, restore scroll position
         const entry = scrollEntries.get(key);
         if (entry !== undefined) {
@@ -93,11 +93,13 @@ export const PageView: React.FC<Props> = memo(
           storeScroll(key);
           window.removeEventListener('unload', storeScrollEntriesInSession);
         };
-      }, []);
-    }
+      } else if (hash.length === 0) {
+        window.scroll(0, 0);
+      }
+    }, [key, hash]);
 
     // Track in Google Analytics
-    useEffect(() => void trackView({ page_path: `${pathname}${search}` }), []);
+    useEffect(() => void trackView({ page_path: `${pathname}${search}` }), [pathname, search]);
 
     if (FLAG_PRODUCTION) {
       return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;

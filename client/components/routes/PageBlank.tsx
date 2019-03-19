@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { start } from '../NavProgress';
+import React /*, { useEffect }*/ from 'react';
+// import { start } from '../NavProgress';
 
 interface Props {
   delay?: number;
 }
 
 export function PageBlank({ delay = 0 }: Props) {
-  useEffect(() => start(delay), []);
+  // useEffect(() => start(delay), []);
 
   return (
     <div
