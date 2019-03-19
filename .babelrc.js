@@ -44,9 +44,9 @@ if (PRODUCTION) {
       spec: false,
       loose: true,
       modules: false,
-      // forceAllTransforms: true,
       debug: false,
       useBuiltIns: 'usage',
+      corejs: 3,
       // shippedProposals: true,
       // ...(MODERN ? { targets: { esmodules: true } } : undefined),
       targets: {
