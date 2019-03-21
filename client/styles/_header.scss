@@ -28,10 +28,11 @@
     &:focus,
     &.active {
       color: yellow;
+      outline: none;
     }
     @include media-breakpoint-up(lg) {
       background: linear-gradient(currentColor, currentColor) bottom / 0 2px no-repeat;
-      transition: 0.5s background-size, 0.75s color ease-out;
+      transition: 0.5s background-size ease-out;
       &:hover,
       &.active {
         background-size: 100% 2px;
@@ -68,6 +69,7 @@
         }
       }
       &:hover,
+      &:focus,
       &:active {
         color: yellow;
       }

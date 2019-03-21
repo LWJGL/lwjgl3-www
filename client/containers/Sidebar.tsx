@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
@@ -12,7 +12,9 @@ export function Sidebar() {
   const closeButton: React.RefObject<HTMLButtonElement> = useRef(null);
   const focusTrap: React.MutableRefObject<FocusTrap | null> = useRef(null);
 
-  const onToggle = () => setOpen(open => !open);
+  const onToggle = useCallback(() => {
+    setOpen(open => !open);
+  }, []);
 
   useEffect(() => {
     if (slidingMenu.current !== null && closeButton.current !== null) {
@@ -22,7 +24,7 @@ export function Sidebar() {
         // clickOutsideDeactivates: true
       });
     }
-  }, []);
+  }, [onToggle]);
 
   useEffect(() => {
     if (!open) {
@@ -109,7 +111,7 @@ export function Sidebar() {
         sideDiv.removeEventListener('touchend', onTouchEnd, false);
       }
     };
-  }, [open]);
+  }, [open, onToggle]);
 
   return (
     <div ref={slidingMenu} className={`col sliding-menu${open ? ' open' : ''}`}>
@@ -126,6 +128,7 @@ export function Sidebar() {
       <div ref={sideContainer} className="sliding-menu-container" role="menu" aria-hidden={!open} aria-expanded={open}>
         <div className="text-right">
           <button
+            tabIndex={open ? 0 : -1}
             ref={closeButton}
             type="button"
             className="btn btn-link sliding-menu-icon"
@@ -135,7 +138,7 @@ export function Sidebar() {
             <Icon children={<Close />} />
           </button>
         </div>
-        <MainMenu className="list-unstyled" onClick={onToggle} />
+        {open && <MainMenu className="list-unstyled" onClick={onToggle} />}
       </div>
     </div>
   );
