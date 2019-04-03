@@ -278,42 +278,59 @@ const HomeRoute = (props: RouteComponentProps) => (
     <section className="container pt-5 pb-3">
       <div className="row justify-content-center">
         <div className="col-md-9">
-          <h1>Contributors</h1>
+          <h1>Supporting this project</h1>
+
           <p>
-            This project exists thanks to all the people who{' '}
+            LWJGL exists thanks to{' '}
+            <a href="https://github.com/LWJGL/lwjgl3/blob/master/BACKERS.md" target="_blank" rel="external">
+              all the people
+            </a>{' '}
+            who{' '}
             <a
               href="https://github.com/LWJGL/lwjgl3/blob/master/.github/CONTRIBUTING.md"
               target="_blank"
-              rel="noopener"
+              rel="external"
             >
               contribute
-            </a>
-            .
+            </a>{' '}
+            and back/sponsor our collective.
           </p>
+
           <p>
-            <a href="https://github.com/LWJGL/lwjgl3/graphs/contributors" target="_blank" rel="noopener">
+            <a href="https://opencollective.com/lwjgl/donate" target="_blank" rel="external">
               <LazyImg
-                className="img-fluid"
-                src="https://opencollective.com/lwjgl/contributors.svg?width=825"
-                alt="LWJGL contributors"
+                width={300}
+                height={50}
+                src="https://opencollective.com/lwjgl/donate/button@2x.png?color=white"
+                alt="DONATE TO OUR COLLECTIVE"
               />
             </a>
           </p>
+        </div>
+      </div>
+    </section>
 
-          <h1 className="mt-5">Backers</h1>
-          <p>Thank you to all our backers!</p>
-          <p>
-            <a href="https://opencollective.com/lwjgl#backers" target="_blank" rel="noopener">
-              <LazyImg
-                className="img-fluid"
-                src="https://opencollective.com/lwjgl/backers.svg?width=825"
-                alt="LWJGL Backers"
-              />
-            </a>
-          </p>
+    <div className="area-dark">
+      <section className="container py-5 text-center">
+        <h3>Our Gold Sponsors:</h3>
 
-          <hr className="my-5" />
+        <div className="d-flex justify-content-center">
+          <a href="https://www.bestvpn.co/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl">
+            <LazyImg className="m-3" width={250} height={47} src="/img/sponsors/bestvpn.png" alt="BestVPN.co" />
+          </a>
+          <a href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl">
+            <LazyImg className="m-3" width={50} height={50} src="/img/sponsors/vpnranks-white.png" alt="VPNRanks.com" />
+          </a>
+          <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external noopener">
+            <LazyImg className="m-3" height={50} alt="WebHotelier" src="/svg/webhotelier.svg" />
+          </a>
+        </div>
+      </section>
+    </div>
 
+    <section className="container pt-5 pb-3">
+      <div className="row justify-content-center">
+        <div className="col-md-9">
           <h1>Looking for LWJGL 2?</h1>
           <p>
             LW

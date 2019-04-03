@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from '@reach/router';
-import { LazyImg } from '~/components/LazyImg';
 import { RouteComponentProps } from '@reach/router';
 
 function shouldRenderFooter({ location }: RouteComponentProps) {
@@ -77,29 +76,6 @@ export const Footer: React.FC<RouteComponentProps> = React.memo(
                   <a href="http://slack.lwjgl.org/">Slack</a>
                 </li>
               </ul>
-            </div>
-            <div className="col-sm">
-              <h3 className="mb-0">Sponsors</h3>
-              <div style={{ maxWidth: 200 }}>
-                <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external noopener">
-                  <LazyImg
-                    className="img-fluid mb-4 mr-5"
-                    alt="WebHotelier"
-                    src="/svg/webhotelier.svg"
-                    width={566.9}
-                    height={185.8}
-                  />
-                </a>
-                <a href="https://www.jetbrains.com/" title="JetBrains" rel="external noopener">
-                  <LazyImg
-                    className="img-fluid mr-5"
-                    alt="JetBrains"
-                    src="/svg/jetbrains.svg"
-                    width={260.534}
-                    height={144.351}
-                  />
-                </a>
-              </div>
             </div>
           </nav>
         </section>
