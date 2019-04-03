@@ -242,11 +242,15 @@ const buildConfiguration = () => {
       // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
-      // config.module.rules.unshift({
-      //   test: /\.jsx?$/,
-      //   include: /node_modules/,
-      //   use: ['react-hot-loader/webpack'],
-      // });
+
+      // Load RHL's patched React-DOM
+      config.resolve.alias['react-dom'] = '@hot-loader/react-dom';
+
+      // Replace App.tsx with App.RHL.tsx
+      config.resolve.alias[path.resolve(__dirname, 'client/containers/App.tsx')] = path.resolve(
+        __dirname,
+        'client/containers/App.RHL.tsx'
+      );
     }
 
     if (DLL) {

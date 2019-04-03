@@ -9,7 +9,7 @@ const config = {
   presets: ['@emotion/babel-preset-css-prop', '@babel/preset-typescript'],
   plugins: [
     // React
-    // DEV && 'react-hot-loader/babel',
+    DEV && 'react-hot-loader/babel',
     DEV && '@babel/plugin-transform-react-jsx-self',
     DEV && '@babel/plugin-transform-react-jsx-source',
     DEV && '@babel/plugin-transform-react-display-name',
