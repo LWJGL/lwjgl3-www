@@ -314,7 +314,7 @@ const HomeRoute = (props: RouteComponentProps) => (
       <section className="container py-5 text-center">
         <h3>Our Gold Sponsors:</h3>
 
-        <div className="d-flex justify-content-center">
+        <div className="d-flex flex-column flex-sm-row justify-content-center">
           <a href="https://www.bestvpn.co/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl">
             <LazyImg className="m-3" width={250} height={47} src="/img/sponsors/bestvpn.png" alt="BestVPN.co" />
           </a>
