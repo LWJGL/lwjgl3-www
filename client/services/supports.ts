@@ -12,8 +12,10 @@ try {
 
 export const SUPPORTS_PASSIVE_EVENTS = supportsPassive;
 
-// Intersection Observers
+// Loading Property in images
+export const SUPPORTS_IMG_LOADING: boolean = 'loading' in HTMLImageElement.prototype;
 
+// Observers
 export const SUPPORTS_INTERSECTION_OBSERVER: boolean = 'IntersectionObserver' in window;
 
 // Touch

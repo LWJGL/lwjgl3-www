@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
+import { SUPPORTS_IMG_LOADING, SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
 let io: IntersectionObserver | null = null;
 let map: WeakMap<Element, Function> = new WeakMap();
@@ -16,52 +16,65 @@ function observeEntries(entries: Array<IntersectionObserverEntry>) {
   });
 }
 
-interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
-  intrinsicsize?: string;
+function getPlaceholder(params: Partial<React.ImgHTMLAttributes<HTMLImageElement>>) {
+  if (params.width !== undefined && params.height !== undefined) {
+    return `data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="${params.width}" height="${
+      params.height
+    }" />`;
+  }
+  return '';
 }
 
-export const LazyImg: React.FC<LazyImgProps> = SUPPORTS_INTERSECTION_OBSERVER
-  ? ({ src: lazySrc, srcSet: lazySrcSet, ...rest }) => {
-      const [src, setSrc] = useState<string>();
-      const [srcSet, setSrcSet] = useState<string>();
-      const imgRef: React.RefObject<HTMLImageElement> = useRef(null);
+interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  rootMargin?: string;
+}
 
-      useEffect(() => {
-        function cleanup() {
-          if (io !== null && imgRef.current !== null) {
-            io.unobserve(imgRef.current);
-            map.delete(imgRef.current);
-            mapCount -= 1;
+export const LazyImg: React.FC<LazyImgProps> =
+  !SUPPORTS_IMG_LOADING && SUPPORTS_INTERSECTION_OBSERVER
+    ? ({ src: lazySrc, srcSet: lazySrcSet, rootMargin = '0px', ...rest }) => {
+        const [src, setSrc] = useState<string | undefined>(getPlaceholder(rest));
+        const [srcSet, setSrcSet] = useState<string | undefined>();
+        const imgRef: React.RefObject<HTMLImageElement> = useRef(null);
 
-            if (mapCount === 0) {
-              // We don't need this IO anymore
-              io = null;
+        useEffect(() => {
+          function cleanup() {
+            if (io !== null && imgRef.current !== null) {
+              io.unobserve(imgRef.current);
+              map.delete(imgRef.current);
+              mapCount -= 1;
+
+              if (mapCount === 0) {
+                // We don't need this IO anymore
+                io = null;
+              }
             }
           }
-        }
 
-        function loadImage() {
-          setSrc(lazySrc);
-          setSrcSet(lazySrcSet);
-          cleanup();
-        }
-
-        if (imgRef.current !== null) {
-          if (io === null) {
-            io = new IntersectionObserver(observeEntries, {
-              threshold: 0,
-              rootMargin: '400px',
-            });
+          function loadImage() {
+            setSrc(lazySrc);
+            setSrcSet(lazySrcSet);
+            cleanup();
           }
 
-          map.set(imgRef.current, loadImage);
-          io.observe(imgRef.current);
-          mapCount += 1;
+          if (imgRef.current !== null) {
+            if (io === null) {
+              io = new IntersectionObserver(observeEntries, {
+                threshold: 0,
+                rootMargin,
+              });
+            }
 
-          return cleanup;
-        }
-      }, [lazySrc, lazySrcSet]);
+            map.set(imgRef.current, loadImage);
+            io.observe(imgRef.current);
+            mapCount += 1;
 
-      return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
-    }
-  : ({ src, srcSet, ...rest }) => <img src={src} srcSet={srcSet} {...rest} />;
+            return cleanup;
+          }
+        }, [lazySrc, lazySrcSet, rootMargin]);
+
+        return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
+      }
+    : ({ src, srcSet, ...rest }) => {
+        //@ts-ignore
+        return <img loading="lazy" src={src} srcSet={srcSet} {...rest} />;
+      };
