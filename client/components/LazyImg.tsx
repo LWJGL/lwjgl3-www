@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SUPPORTS_IMG_LOADING, SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
-let io: IntersectionObserver | null = null;
+let io: IntersectionObserver;
 let map: WeakMap<Element, Function> = new WeakMap();
-let mapCount: number = 0;
 
 function observeEntries(entries: Array<IntersectionObserverEntry>) {
   entries.forEach(entry => {
@@ -38,15 +37,9 @@ export const LazyImg: React.FC<LazyImgProps> =
 
         useEffect(() => {
           function cleanup() {
-            if (io !== null && imgRef.current !== null) {
+            if (io !== undefined && imgRef.current !== null) {
               io.unobserve(imgRef.current);
               map.delete(imgRef.current);
-              mapCount -= 1;
-
-              if (mapCount === 0) {
-                // We don't need this IO anymore
-                io = null;
-              }
             }
           }
 
@@ -57,7 +50,7 @@ export const LazyImg: React.FC<LazyImgProps> =
           }
 
           if (imgRef.current !== null) {
-            if (io === null) {
+            if (io === undefined) {
               io = new IntersectionObserver(observeEntries, {
                 threshold: 0,
                 rootMargin,
@@ -66,7 +59,6 @@ export const LazyImg: React.FC<LazyImgProps> =
 
             map.set(imgRef.current, loadImage);
             io.observe(imgRef.current);
-            mapCount += 1;
 
             return cleanup;
           }
