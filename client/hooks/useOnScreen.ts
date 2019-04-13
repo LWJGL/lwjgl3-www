@@ -1,19 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 
 export function useOnScreen(ref: React.RefObject<Element>, options?: IntersectionObserverInit) {
   const [isIntersecting, setIntersecting] = useState(false);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting), options);
+  useLayoutEffect(() => {
     if (ref.current) {
+      const observer = new IntersectionObserver(([entry]) => setIntersecting(entry.isIntersecting), options);
       observer.observe(ref.current);
+      return () => {
+        observer.disconnect();
+      };
     }
-    return () => {
-      if (ref.current !== null) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
+  }, [ref, options]);
 
   return isIntersecting;
 }
