@@ -17,6 +17,7 @@ export const SUPPORTS_IMG_LOADING: boolean = 'loading' in HTMLImageElement.proto
 
 // Observers
 export const SUPPORTS_INTERSECTION_OBSERVER: boolean = 'IntersectionObserver' in window;
+export const SUPPORTS_RESIZE_OBSERVER: boolean = 'ResizeObserver' in window;
 
 // Touch
 

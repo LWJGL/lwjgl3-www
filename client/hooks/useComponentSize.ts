@@ -1,4 +1,5 @@
-import { useState, useLayoutEffect } from 'react';
+import { useState, useCallback, useLayoutEffect } from 'react';
+import { SUPPORTS_RESIZE_OBSERVER } from '../services/supports';
 
 export interface ComponentSize {
   width: number;
@@ -17,20 +18,35 @@ export function getSize(el: HTMLElement | null): ComponentSize | null {
 export function useComponentSize(ref: React.RefObject<HTMLElement>) {
   let [componentSize, setComponentSize] = useState(getSize(ref.current));
 
-  function handleResize() {
-    if (ref && ref.current) {
-      setComponentSize(getSize(ref.current));
-    }
-  }
+  const handleResize = useCallback(
+    function handleResize() {
+      if (ref.current) {
+        setComponentSize(getSize(ref.current));
+      }
+    },
+    [ref]
+  );
 
   useLayoutEffect(() => {
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    if (!ref.current) {
+      return;
+    }
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+    if (SUPPORTS_RESIZE_OBSERVER) {
+      let resizeObserver = new ResizeObserver(() => handleResize());
+      resizeObserver.observe(ref.current);
+
+      return () => {
+        resizeObserver.disconnect();
+      };
+    } else {
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, [handleResize, ref]);
 
   return componentSize;
 }
