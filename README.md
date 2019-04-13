@@ -8,7 +8,7 @@ Notable features:
 
 - Client-side routing
 - Service Worker (works offline)
-- Tiny production build (entire codebase + content weights ~300KB gzipped)
+- Tiny production build (entire codebase + content weights <300KB gzipped)
 - Code splitting at route & component level
 - Scroll restoration
 - Route preloading
@@ -16,7 +16,6 @@ Notable features:
 - Build Customizer with smart download queue & client-side ZIP generator
 - Hot reloading using React Hot Loader
 - Optional hot reloading for Sass
-- Very fast dev builds using DllReferencePlugin
 - Custom webpack manifest parsing + code minification
 - CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
 - fast-async instead of regenerator
@@ -58,14 +57,7 @@ Other LWJGL subdomains:
 yarn
 ```
 
-2.  To build vendor file(s) for development run:
-
-```bash
-yarn vendor
-yarn styles --sourcemap
-```
-
-3.  To start the server in dev mode:
+2.  To start the server in dev mode:
 
 ```bash
 node server

@@ -47,9 +47,6 @@ const process = async () => {
       preset: [
         'default',
         {
-          // colormin: false,
-          calc: false,
-          zindex: false,
           discardComments: {
             removeAll: true,
           },

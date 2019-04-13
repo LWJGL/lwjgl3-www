@@ -12,7 +12,6 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 const HMR = argv.nohmr === undefined;
 const SOURCEMAP = argv.sourcemap !== undefined;
-const DLL = argv.nodll === undefined;
 const ENABLE_PROFILING = argv.profiling !== undefined;
 
 const env = {
@@ -31,6 +30,8 @@ const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
     target: 'web',
+    amd: false,
+    bail: true,
     cache: {
       type: 'filesystem',
       version: versionHash.digest('base64'),
@@ -242,25 +243,6 @@ const buildConfiguration = () => {
       // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
-
-      // Load RHL's patched React-DOM
-      config.resolve.alias['react-dom'] = '@hot-loader/react-dom';
-
-      // Replace App.tsx with App.RHL.tsx
-      config.resolve.alias[path.resolve(__dirname, 'client/containers/App.tsx')] = path.resolve(
-        __dirname,
-        'client/containers/App.RHL.tsx'
-      );
-    }
-
-    if (DLL) {
-      config.plugins.push(
-        // Load pre-built dependencies
-        new webpack.DllReferencePlugin({
-          context: __dirname,
-          manifest: require('./public/js/vendor-manifest.json'),
-        })
-      );
     }
 
     // Enable CSS HMR instead of loading CSS pre-built from disk

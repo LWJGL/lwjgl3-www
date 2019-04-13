@@ -1,15 +1,11 @@
-// const { argv } = require('yargs');
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const MODERN = process.env.MODERN === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
-// const HMR = argv.nohmr === undefined;
-// const SOURCEMAP = argv.sourcemap !== undefined;
 
 const config = {
   presets: ['@emotion/babel-preset-css-prop', '@babel/preset-typescript'],
   plugins: [
     // React
-    DEV && 'react-hot-loader/babel',
     DEV && '@babel/plugin-transform-react-jsx-self',
     DEV && '@babel/plugin-transform-react-jsx-source',
     DEV && '@babel/plugin-transform-react-display-name',
@@ -47,8 +43,7 @@ if (PRODUCTION) {
       debug: false,
       useBuiltIns: 'usage',
       corejs: 3,
-      // shippedProposals: true,
-      // ...(MODERN ? { targets: { esmodules: true } } : undefined),
+      ...(MODERN ? { targets: { esmodules: true } } : undefined),
       targets: {
         browsers: ['defaults', 'chrome >= 41', 'firefox >= 34', 'safari >= 8', 'edge >= 12', 'ios >= 8', 'ie >= 11'],
       },

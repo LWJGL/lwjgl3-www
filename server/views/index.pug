@@ -16,9 +16,5 @@ block content
           #lwjgl-app svg{display:none!important}
         p.text-danger Please enable JavaScript
 
-  if ( production )
-    script(src=`/js/${entry}`)
-  else
-    script(src=`/js/vendor.js` crossorigin="anonymous")
-    script(src=`/js/${entry}` crossorigin="anonymous")
+  script(src=`/js/${entry}`)
 
