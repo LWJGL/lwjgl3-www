@@ -9,7 +9,7 @@ export const Logo = (props: Props) => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 762.5 160"
-    preserveAspectRatio="xMidYMid"
+    preserveAspectRatio="xMidYMid meet"
     className={props.className}
   >
     <defs>

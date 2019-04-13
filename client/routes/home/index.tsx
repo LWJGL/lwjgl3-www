@@ -275,8 +275,8 @@ const HomeRoute = (props: RouteComponentProps) => (
 
     <HashLinkTarget id="credits" />
 
-    <section className="container pt-5 pb-3">
-      <div className="row justify-content-center">
+    <section className="container py-5">
+      <div className="row justify-content-center text-center">
         <div className="col-md-9">
           <h1>Supporting this project</h1>
 
@@ -341,16 +341,16 @@ const HomeRoute = (props: RouteComponentProps) => (
             <a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.
           </p>
 
-          <p className="text-center">
-            <a className="btn btn-xs-block btn-outline-dark" href="http://legacy.lwjgl.org/">
+          <p>
+            <a className="btn btn-xs-block btn-outline-dark" href="http://legacy.lwjgl.org/" target="_blank">
               LWJGL 2 WEBSITE
             </a>
-            <a className="btn btn-xs-block btn-outline-dark" href="http://wiki.lwjgl.org/">
+            <a className="btn btn-xs-block btn-outline-dark" href="http://wiki.lwjgl.org/" target="_blank">
               LWJGL 2 WIKI
             </a>
           </p>
 
-          <p className="text-center">
+          <p>
             <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">Migration Guide</a>
           </p>
         </div>
