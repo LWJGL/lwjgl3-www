@@ -5880,11 +5880,6 @@ raw-body@2.3.3:
     iconv-lite "0.4.23"
     unpipe "1.0.0"
 
-react-cache@2.0.0-alpha.1:
-  version "2.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/react-cache/-/react-cache-2.0.0-alpha.1.tgz#4c119188248bc988a61268458bc18bd845f2ec19"
-  integrity sha512-dDJVVGvxAlZE/dMxDXaxU5ZfcE4fbaSmJVFrCTi6dYWXDp7YjCsnywkpEYG6IURVW+eJrCydAIDcW0FADw0/5w==
-
 react-dom@16.9.0-alpha.0:
   version "16.9.0-alpha.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0-alpha.0.tgz#9dfaec18ac1a500fa72cab7b70f2ae29d0cd7716"

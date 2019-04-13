@@ -8,7 +8,7 @@ declare interface CSSModule {
   unuse: () => void;
 }
 
-// Missing from standard lib
+// DOM API extensions (stuff missing from lib.dom.d.ts, usually experimental)
 
 declare class NetworkInformation {
   readonly downlink: number;
@@ -29,23 +29,17 @@ interface BlobPropertyBag {
   endings?: 'transparent' | 'native';
 }
 
+interface HTMLImageElement {
+  loading?: 'auto' | 'lazy' | 'eager';
+}
+
+// Code-split components
+
+declare type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
+
 // Type definitions for LWJGL
 
 declare const FLAG_PRODUCTION: boolean;
 declare const FLAG_CSSMODULES: boolean;
 declare const HOSTNAME_PRODUCTION: string;
 declare const ANALYTICS_TRACKING_ID: string;
-
-declare type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
-
-declare class JSZip {
-  static support: {
-    blob: boolean;
-  };
-  file: (filename: string, payload: any, options: { binary: boolean }) => void;
-  generateAsync: (options: {
-    type: 'blob';
-    compression?: 'DEFLATE';
-    compressionOptions?: { level: number };
-  }) => Promise<Blob>;
-}

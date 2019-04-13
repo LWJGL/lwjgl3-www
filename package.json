@@ -94,7 +94,6 @@
     "postcss-loader": "3.0.0",
     "prettier": "1.17.0",
     "react": "16.9.0-alpha.0",
-    "react-cache": "2.0.0-alpha.1",
     "react-dom": "16.9.0-alpha.0",
     "react-fast-compare": "2.0.4",
     "react-svg-loader": "2.1.0",
