@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense, useEffect, useRef, useState } from 'react';
+import React, { Fragment, Suspense, useEffect, useState } from 'react';
 import { Link } from '@reach/router';
 // import { unstable_createResource as createResource } from 'react-cache';
 import { createResource } from '~/services/react-cache/ReactCache';
@@ -51,10 +51,8 @@ interface Props {
 
 export function Browser({ path: loading }: Props) {
   const [path, setPath] = useState(loading);
-  const mounted = useRef(false);
 
   useEffect(() => {
-    mounted.current = true;
     if (loading !== path) {
       setPath(loading);
     }
@@ -89,7 +87,7 @@ export function Browser({ path: loading }: Props) {
               </th>
             </tr>
           )}
-          <Suspense maxDuration={mounted.current ? 3200 : 0} fallback={<SpinnerRow />}>
+          <Suspense fallback={<SpinnerRow />}>
             <Contents path={path} loading={loading} />
           </Suspense>
         </tbody>

@@ -37,7 +37,6 @@ const GuideRoute = (props: RouteComponentProps) => (
 
     <section className="py-3" style={{ backgroundColor: '#2b2b2b' }}>
       <Suspense
-        maxDuration={0}
         fallback={
           <div className="d-flex justify-content-center">
             <div className="spinner-grow text-light my-5" role="status">
