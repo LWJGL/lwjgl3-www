@@ -42,9 +42,11 @@ const LogoContainer: React.FC = props => (
 
       .logo {
         display: block;
+        width: 100%;
+        height: auto;
         max-width: 700px;
-        margin: 2rem;
-        transform: translateY(2rem);
+        padding: 1rem;
+        transform: translateY(3rem);
         opacity: 0;
         animation: present-yourself 1s ease forwards;
         @media (max-height: 420px) {
@@ -104,7 +106,7 @@ enum UseWebGL {
 let useWebGL = UseWebGL.Unknown;
 const supportsWebGL = () => useWebGL === UseWebGL.On;
 
-export function HomeHero() {
+function CanvasContainer() {
   const [webGL, setGL] = useState(supportsWebGL);
 
   useEffect(() => {
@@ -158,13 +160,17 @@ export function HomeHero() {
     }
   }, []);
 
+  return webGL ? (
+    <Suspense fallback={null}>
+      <Canvas />
+    </Suspense>
+  ) : null;
+}
+
+export function HomeHero() {
   return (
     <HeroBox>
-      {webGL ? (
-        <Suspense maxDuration={0} fallback={null}>
-          <Canvas />
-        </Suspense>
-      ) : null}
+      <CanvasContainer />
       <LogoContainer>
         <Logo className="logo" />
         <HeroContent>
