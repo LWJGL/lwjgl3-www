@@ -23,6 +23,9 @@ const globals = require('./globals.json');
 // Initialize & Configure Application
 // ------------------------------------------------------------------------------
 
+const configFile = path.resolve(__dirname, '../config.json');
+const config = fs.existsSync(configFile) ? JSON.parse(fs.readFileSync(configFile)) : {};
+
 const PRODUCT = 'lwjgl.org';
 const app = express();
 
@@ -37,7 +40,7 @@ let serviceWorkerCache = null;
 app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
 
-app.set('port', process.env.PORT || 80);
+app.set('port', config.port || process.env.PORT || 80);
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 

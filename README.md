@@ -107,6 +107,14 @@ node server --async --nohmr
 yarn watch -- --async --nohmr
 ```
 
+### Configuration file (_OPTIONAL_)
+
+```json
+{
+  "port": 8080
+}
+```
+
 ### Environment variables
 
 NODE_ENV=production (default=development)
@@ -235,7 +243,6 @@ We recommend [Visual Studio Code](https://code.visualstudio.com/) with the follo
 - Prettier - Code formatter
 - vscode-styled-components
 - IntelliSense for CSS class names
-- Latest TypeScript and Javascript Grammar
 
 We also recommend enabling auto-save onWindowChange for faster HMR (simply Alt/Cmd+Tab).
 In VS Code add the following in the user settings:
@@ -256,7 +263,6 @@ Recommended VS Code **Workspace Settings**:
   "editor.formatOnSave": true,
   "files.exclude": {
     "**/.vscode": true,
-    "**/.cache-loader": true,
     "**/public/js/*": true,
     "**/public/css/*": true
   },
