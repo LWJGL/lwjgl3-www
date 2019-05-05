@@ -1,7 +1,3 @@
-/*
- * Copyright LWJGL. All rights reserved.
- * License terms: https://www.lwjgl.org/license
- */
 import { BuildBindings, Binding, NATIVE_ALL, Version } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({

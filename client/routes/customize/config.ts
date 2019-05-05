@@ -8,6 +8,7 @@ import lwjgl_315 from './versions/3.1.5';
 import lwjgl_316 from './versions/3.1.6';
 import lwjgl_320 from './versions/3.2.0';
 import lwjgl_321 from './versions/3.2.1';
+import lwjgl_322 from './versions/3.2.2';
 import lwjgl_nightly from './versions/nightly';
 import lwjgl_stable from './versions/stable';
 
@@ -248,6 +249,7 @@ function getInitialConfig(): BuildStore {
     lwjgl_316,
     lwjgl_320,
     lwjgl_321,
+    lwjgl_322,
     lwjgl_stable,
     lwjgl_nightly,
   ].reduce((previousBuild: BuildBindings, nextBuildConfig: BuildBindingsReducer) => {
