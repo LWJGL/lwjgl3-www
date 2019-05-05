@@ -81,6 +81,16 @@ const SourceRoute = (props: RouteComponentProps) => (
                 src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master"
               />
               <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/assimp/branches"
+                src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/assimp/branches"
+                src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master-linux-arm64"
+              />
+              <BuildBadge
                 title="macOS"
                 href="https://travis-ci.org/LWJGL-CI/assimp/branches"
                 src="https://travis-ci.org/LWJGL-CI/assimp.svg?branch=master-macos"
@@ -109,6 +119,16 @@ const SourceRoute = (props: RouteComponentProps) => (
                 title="Linux x64"
                 href="https://travis-ci.org/LWJGL-CI/bgfx/branches"
                 src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-linux"
+              />
+              <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/bgfx/branches"
+                src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/bgfx/branches"
+                src="https://travis-ci.org/LWJGL-CI/bgfx.svg?branch=master-linux-arm64"
               />
               <BuildBadge
                 title="macOS"
@@ -141,6 +161,16 @@ const SourceRoute = (props: RouteComponentProps) => (
                 src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-linux64"
               />
               <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/dyncall/branches"
+                src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/dyncall/branches"
+                src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-linux-arm64"
+              />
+              <BuildBadge
                 title="macOS"
                 href="https://travis-ci.org/LWJGL-CI/dyncall/branches"
                 src="https://travis-ci.org/LWJGL-CI/dyncall.svg?branch=master-macosx"
@@ -169,6 +199,16 @@ const SourceRoute = (props: RouteComponentProps) => (
                 title="Linux x64"
                 href="https://travis-ci.org/LWJGL-CI/glfw/branches"
                 src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-linux64"
+              />
+              <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/glfw/branches"
+                src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/glfw/branches"
+                src="https://travis-ci.org/LWJGL-CI/glfw.svg?branch=master-linux-arm64"
               />
               <BuildBadge
                 title="macOS"
@@ -201,6 +241,16 @@ const SourceRoute = (props: RouteComponentProps) => (
                 src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-linux64"
               />
               <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/jemalloc/branches"
+                src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/jemalloc/branches"
+                src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-linux-arm64"
+              />
+              <BuildBadge
                 title="macOS"
                 href="https://travis-ci.org/LWJGL-CI/jemalloc/branches"
                 src="https://travis-ci.org/LWJGL-CI/jemalloc.svg?branch=master-macosx"
@@ -231,6 +281,16 @@ const SourceRoute = (props: RouteComponentProps) => (
                 src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-linux64"
               />
               <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"
+                src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"
+                src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-linux-arm64"
+              />
+              <BuildBadge
                 title="macOS"
                 href="https://travis-ci.org/LWJGL-CI/openal-soft/branches"
                 src="https://travis-ci.org/LWJGL-CI/openal-soft.svg?branch=master-macosx"
@@ -246,6 +306,99 @@ const SourceRoute = (props: RouteComponentProps) => (
                 width={106}
                 href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
                 src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/openal-soft?svg=true&branch=master-linux64&job=2"
+              />
+            </tbody>
+          </table>
+        </div>
+
+        <div className="col-lg-4">
+          <h2>Opus</h2>
+          <table className="table table-bordered table-dark">
+            <tbody>
+              <BuildBadge
+                title="Linux x64"
+                href="https://travis-ci.org/LWJGL-CI/opus/branches"
+                src="https://travis-ci.org/LWJGL-CI/opus.svg?branch=master"
+              />
+              <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/opus/branches"
+                src="https://travis-ci.org/LWJGL-CI/opus.svg?branch=master-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/opus/branches"
+                src="https://travis-ci.org/LWJGL-CI/opus.svg?branch=master-linux-arm64"
+              />
+              <BuildBadge
+                title="macOS"
+                href="https://travis-ci.org/LWJGL-CI/opus/branches"
+                src="https://travis-ci.org/LWJGL-CI/opus.svg?branch=master-macos"
+              />
+              <BuildBadge
+                title="Windows x64"
+                width={106}
+                href="https://ci.appveyor.com/project/LWJGL-CI/opus"
+                src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/opus?svg=true&branch=master&job=1"
+              />
+              <BuildBadge
+                title="Windows x86"
+                width={106}
+                href="https://ci.appveyor.com/project/LWJGL-CI/opus"
+                src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/opus?svg=true&branch=master&job=2"
+              />
+            </tbody>
+          </table>
+        </div>
+
+        <div className="col-lg-4">
+          <h2>MoltenVK</h2>
+          <table className="table table-bordered table-dark">
+            <tbody>
+              <BuildBadge
+                title="macOS"
+                href="https://travis-ci.org/LWJGL-CI/MoltenVK/branches"
+                src="https://travis-ci.org/LWJGL-CI/MoltenVK.svg?branch=master"
+              />
+            </tbody>
+          </table>
+        </div>
+
+        <div className="col-lg-4">
+          <h2>TinyCC</h2>
+          <table className="table table-bordered table-dark">
+            <tbody>
+              <BuildBadge
+                title="Linux x64"
+                href="https://travis-ci.org/LWJGL-CI/tinycc/branches"
+                src="https://travis-ci.org/LWJGL-CI/tinycc.svg?branch=mob"
+              />
+              <BuildBadge
+                title="Linux ARMhf"
+                href="https://travis-ci.org/LWJGL-CI/tinycc/branches"
+                src="https://travis-ci.org/LWJGL-CI/tinycc.svg?branch=mob-linux-arm32"
+              />
+              <BuildBadge
+                title="Linux ARM64"
+                href="https://travis-ci.org/LWJGL-CI/tinycc/branches"
+                src="https://travis-ci.org/LWJGL-CI/tinycc.svg?branch=mob-linux-arm64"
+              />
+              <BuildBadge
+                title="macOS"
+                href="https://travis-ci.org/LWJGL-CI/tinycc/branches"
+                src="https://travis-ci.org/LWJGL-CI/tinycc.svg?branch=mob-macos"
+              />
+              <BuildBadge
+                title="Windows x64"
+                width={106}
+                href="https://ci.appveyor.com/project/LWJGL-CI/tinycc"
+                src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/tinycc?svg=true&branch=mob&job=1"
+              />
+              <BuildBadge
+                title="Windows x86"
+                width={106}
+                href="https://ci.appveyor.com/project/LWJGL-CI/tinycc"
+                src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/tinycc?svg=true&branch=mob&job=2"
               />
             </tbody>
           </table>
