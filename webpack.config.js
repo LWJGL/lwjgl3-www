@@ -200,8 +200,10 @@ const buildConfiguration = () => {
                 jsx: true,
                 svgo: {
                   plugins: [
+                    // https://github.com/svg/svgo
+                    { removeXMLNS: true },
+                    { removeViewBox: false },
                     {
-                      removeXMLNS: true,
                       addAttributesToSVGElement: {
                         attributes: [
                           'focusable="false"',
