@@ -6,7 +6,6 @@ docker-compose.override.yml
 
 # Generated files
 node_modules
-.cache-loader
 public/**/*.map
 public/js/**/*.js*
 public/css/**/*.css
