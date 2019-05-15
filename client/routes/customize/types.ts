@@ -46,6 +46,7 @@ export enum Binding {
   PAR = 'lwjgl-par',
   REMOTERY = 'lwjgl-remotery',
   RPMALLOC = 'lwjgl-rpmalloc',
+  SHADERC = 'lwjgl-shaderc',
   SSE = 'lwjgl-sse',
   STB = 'lwjgl-stb',
   TINYEXR = 'lwjgl-tinyexr',

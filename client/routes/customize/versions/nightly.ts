@@ -14,5 +14,13 @@ export default (prev: BuildBindings): BuildBindings => ({
       natives: NATIVE_ALL,
       website: 'http://bulletphysics.org/',
     },
+    [Binding.SHADERC]: {
+      id: Binding.SHADERC,
+      title: 'Shaderc',
+      description:
+        'A collection of libraries for shader compilation.',
+      natives: NATIVE_ALL,
+      website: 'https://github.com/google/shaderc',
+    },
   },
 });
