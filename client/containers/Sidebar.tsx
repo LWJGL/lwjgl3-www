@@ -138,7 +138,7 @@ export function Sidebar() {
             <Icon children={<Close />} />
           </button>
         </div>
-        {open && <MainMenu className="list-unstyled" onClick={onToggle} />}
+        {open && <MainMenu onClick={onToggle} />}
       </div>
     </div>
   );

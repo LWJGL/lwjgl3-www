@@ -179,7 +179,7 @@ export const Header: React.FC<RouteComponentProps> = ({ location }) => {
             </Link>
             <ServiceWorkerUpdate />
           </div>
-          {currentBreakpoint > md ? <MainMenu className="main-menu-horizontal list-unstyled col" /> : <Sidebar />}
+          {currentBreakpoint > md ? <MainMenu className="main-menu-horizontal col" /> : <Sidebar />}
         </div>
       </nav>
     </header>
