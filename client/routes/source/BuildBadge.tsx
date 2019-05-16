@@ -13,7 +13,7 @@ export const BuildBadge: React.FC<Props> = ({ title, href, src, width = 90, heig
   <tr>
     <th>{title}</th>
     <td>
-      <a href={href} target="_blank" rel="noopener">
+      <a href={href} target="_blank" rel="noopener external">
         <LazyImg width={width} height={height} src={src} alt={`${title} build status`} />
       </a>
     </td>

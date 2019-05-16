@@ -20,7 +20,7 @@ const DownloadRoute = (props: RouteComponentProps) => (
               className="btn btn-xs-block btn-lg btn-dark"
               href="https://github.com/LWJGL/lwjgl3/releases"
               target="_blank"
-              rel="noopener"
+              rel="noopener external"
             >
               <Icon children={<Github />} /> Download from Github
             </a>
@@ -62,17 +62,21 @@ const DownloadRoute = (props: RouteComponentProps) => (
 
     <section className="container py-4">
       <p>
-        Broken download? Let us know at the <a href="http://forum.lwjgl.org/">forums</a>.
+        Broken download? Let us know at the{' '}
+        <a href="http://forum.lwjgl.org/" rel="noopener external">
+          forums
+        </a>
+        .
       </p>
 
       <h2>Looking for LWJGL 2?</h2>
 
       <p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
       <p>
-        <a className="btn btn-xs-block btn-outline-primary" href="http://legacy.lwjgl.org/">
+        <a className="btn btn-xs-block btn-outline-primary" href="http://legacy.lwjgl.org/" rel="noopener external">
           LWJGL 2 WEBSITE
         </a>
-        <a className="btn btn-xs-block btn-outline-primary" href="http://wiki.lwjgl.org/">
+        <a className="btn btn-xs-block btn-outline-primary" href="http://wiki.lwjgl.org/" rel="noopener external">
           LWJGL 2 WIKI
         </a>
       </p>

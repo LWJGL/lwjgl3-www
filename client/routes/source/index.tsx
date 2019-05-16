@@ -18,19 +18,31 @@ const SourceRoute = (props: RouteComponentProps) => (
 
       <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
       <p>
-        <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3">
+        <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
           <Icon children={<Github />} /> Github Repository
         </a>
-        <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/releases">
+        <a
+          className="btn btn-xs-block btn-outline-dark"
+          href="https://github.com/LWJGL/lwjgl3/releases"
+          rel="noopener external"
+        >
           Release notes
         </a>
-        <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/commits/master">
+        <a
+          className="btn btn-xs-block btn-outline-dark"
+          href="https://github.com/LWJGL/lwjgl3/commits/master"
+          rel="noopener external"
+        >
           Changelog
         </a>
       </p>
 
       <p>LWJGL's issue tracker is also hosted on Github.</p>
-      <a className="btn btn-xs-block btn-outline-dark" href="https://github.com/LWJGL/lwjgl3/issues">
+      <a
+        className="btn btn-xs-block btn-outline-dark"
+        href="https://github.com/LWJGL/lwjgl3/issues"
+        rel="noopener external"
+      >
         Issue Tracker
       </a>
     </section>

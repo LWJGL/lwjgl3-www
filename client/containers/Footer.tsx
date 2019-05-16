@@ -39,21 +39,29 @@ export const Footer: React.FC<RouteComponentProps> = React.memo(
               <h3>News</h3>
               <ul className="list-unstyled">
                 <li>
-                  <a href="http://blog.lwjgl.org/">Blog</a>
+                  <a href="https://blog.lwjgl.org/" rel="noopener external">
+                    Blog
+                  </a>
                 </li>
                 <li>
-                  <a href="http://forum.lwjgl.org/">Forum</a>
+                  <a href="http://forum.lwjgl.org/" rel="noopener external">
+                    Forum
+                  </a>
                 </li>
                 <li>
-                  <a href="https://twitter.com/lwjgl" rel="external nofollow">
+                  <a href="https://twitter.com/lwjgl" rel="noopener external">
                     Twitter
                   </a>
                 </li>
                 <li>
-                  <a href="https://github.com/LWJGL/lwjgl3/commits/master">Changelog</a>
+                  <a href="https://github.com/LWJGL/lwjgl3/commits/master" rel="noopener external">
+                    Changelog
+                  </a>
                 </li>
                 <li>
-                  <a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md">Release notes</a>
+                  <a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md" rel="noopener external">
+                    Release notes
+                  </a>
                 </li>
               </ul>
             </div>
@@ -61,19 +69,29 @@ export const Footer: React.FC<RouteComponentProps> = React.memo(
               <h3>Developers</h3>
               <ul className="list-unstyled">
                 <li>
-                  <a href="https://github.com/LWJGL/lwjgl3">GitHub</a>
+                  <a href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
+                    GitHub
+                  </a>
                 </li>
                 <li>
-                  <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">Wiki</a>
+                  <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki" rel="noopener external">
+                    Wiki
+                  </a>
                 </li>
                 <li>
-                  <a href="https://github.com/LWJGL/lwjgl3/issues">Issues</a>
+                  <a href="https://github.com/LWJGL/lwjgl3/issues" rel="noopener external">
+                    Issues
+                  </a>
                 </li>
                 <li>
-                  <a href="http://javadoc.lwjgl.org/">JavaDoc</a>
+                  <a href="http://javadoc.lwjgl.org/" rel="noopener external">
+                    JavaDoc
+                  </a>
                 </li>
                 <li>
-                  <a href="http://slack.lwjgl.org/">Slack</a>
+                  <a href="http://slack.lwjgl.org/" rel="noopener external">
+                    Slack
+                  </a>
                 </li>
               </ul>
             </div>

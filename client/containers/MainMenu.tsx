@@ -41,17 +41,17 @@ export const MainMenu: React.FC<Props> = ({ onClick, className }) => (
       </NavLink>
     </li>
     <li>
-      <a href="https://opencollective.com/lwjgl" target="_blank" rel="noopener">
+      <a href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
         DONATE
       </a>
     </li>
     <li>
-      <a href="http://forum.lwjgl.org/" target="_blank" rel="noopener">
+      <a href="http://forum.lwjgl.org/" target="_blank" rel="noopener external">
         FORUM
       </a>
     </li>
     <li>
-      <a href="https://blog.lwjgl.org/" target="_blank" rel="noopener">
+      <a href="https://blog.lwjgl.org/" target="_blank" rel="noopener external">
         BLOG
       </a>
     </li>

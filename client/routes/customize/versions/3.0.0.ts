@@ -47,7 +47,7 @@ export default (): BuildBindings => ({
       id: Binding.NANOVG,
       title: 'NanoVG & NanoSVG',
       description:
-        'A small antialiased vector graphics rendering library for OpenGL. Also includes <a href="https://github.com/memononen/nanosvg">NanoSVG</a>, a simple SVG parser (3.1.4+).',
+        'A small antialiased vector graphics rendering library for OpenGL. Also includes <a href="https://github.com/memononen/nanosvg" rel="noopener external">NanoSVG</a>, a simple SVG parser (3.1.4+).',
       natives: NATIVE_ALL,
       website: 'https://github.com/memononen/nanovg',
       presets: [Preset.GettingStarted],

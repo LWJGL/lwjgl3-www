@@ -36,12 +36,24 @@ const HomeRoute = (props: RouteComponentProps) => (
           <p>
             LW
             <b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
-            development of graphics (<a href="https://www.opengl.org/">OpenGL</a>,{' '}
-            <a href="https://www.khronos.org/vulkan/">Vulkan</a>
-            ), audio (<a href="http://www.openal.org/">OpenAL</a>) and parallel computing (
-            <a href="https://www.khronos.org/opencl/">OpenCL</a>) applications. This access is direct and
-            high-performance, yet also wrapped in a type-safe and user-friendly layer, appropriate for the Java
-            ecosystem.
+            development of graphics (
+            <a href="https://www.opengl.org/" rel="noopener external">
+              OpenGL
+            </a>
+            ,{' '}
+            <a href="https://www.khronos.org/vulkan/" rel="noopener external">
+              Vulkan
+            </a>
+            ), audio (
+            <a href="http://www.openal.org/" rel="noopener external">
+              OpenAL
+            </a>
+            ) and parallel computing (
+            <a href="https://www.khronos.org/opencl/" rel="noopener external">
+              OpenCL
+            </a>
+            ) applications. This access is direct and high-performance, yet also wrapped in a type-safe and
+            user-friendly layer, appropriate for the Java ecosystem.
           </p>
 
           <p>
@@ -99,8 +111,10 @@ const HomeRoute = (props: RouteComponentProps) => (
             <h3>Open Source</h3>
             <p>
               LWJGL is available under a <Link to="/license">BSD license</Link>. Visit our{' '}
-              <a href="https://github.com/LWJGL/lwjgl3">GitHub repository</a> to monitor progress, report issues and
-              even contribute with your own code!
+              <a href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
+                GitHub repository
+              </a>{' '}
+              to monitor progress, report issues and even contribute with your own code!
             </p>
           </div>
           <div className="col-md py-3">
@@ -120,8 +134,14 @@ const HomeRoute = (props: RouteComponentProps) => (
             <Icon children={<Forum />} />
             <h3>Community</h3>
             <p>
-              Need help? Our <a href="http://forum.lwjgl.org/">forum</a> is a great place to seek a solution. Up for a
-              chat? Join our <a href="http://slack.lwjgl.org/">Slack team</a>
+              Need help? Our{' '}
+              <a href="http://forum.lwjgl.org/" rel="noopener external">
+                forum
+              </a>{' '}
+              is a great place to seek a solution. Up for a chat? Join our{' '}
+              <a href="http://slack.lwjgl.org/" rel="noopener external">
+                Slack team
+              </a>
             </p>
           </div>
           <div className="col-md py-3">
@@ -130,7 +150,10 @@ const HomeRoute = (props: RouteComponentProps) => (
             <p>
               Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts. Also
               features multi-monitor support, clipboard access, file drag-n-drop, and{' '}
-              <a href="http://www.glfw.org/docs/latest/news.html">much more</a>.
+              <a href="http://www.glfw.org/docs/latest/news.html" rel="noopener external">
+                much more
+              </a>
+              .
             </p>
           </div>
         </div>
@@ -185,7 +208,10 @@ const HomeRoute = (props: RouteComponentProps) => (
               Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions (including
               the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released and dozens of
               popular vendor-specific extensions. If your favorite extension is missing,{' '}
-              <a href="https://github.com/LWJGL/lwjgl3/issues">ask for it</a> and it will be added in no time!
+              <a href="https://github.com/LWJGL/lwjgl3/issues" rel="noopener external">
+                ask for it
+              </a>{' '}
+              and it will be added in no time!
             </p>
           </div>
           <div className="col-md py-3">
@@ -230,10 +256,19 @@ const HomeRoute = (props: RouteComponentProps) => (
             <Icon children={<Widgets />} />
             <h3>Customization & Utilities</h3>
             <p>
-              Use <a href="http://www.dyncall.org/">dyncall</a> to call functions from any native library, use{' '}
-              <a href="http://jemalloc.net/">jemalloc</a> for efficient and tunable memory management, use the{' '}
-              <a href="https://github.com/nothings/stb">stb</a> collection of libraries for texture loading, font
-              rendering and much more.
+              Use{' '}
+              <a href="http://www.dyncall.org/" rel="noopener external">
+                dyncall
+              </a>{' '}
+              to call functions from any native library, use{' '}
+              <a href="http://jemalloc.net/" rel="noopener external">
+                jemalloc
+              </a>{' '}
+              for efficient and tunable memory management, use the{' '}
+              <a href="https://github.com/nothings/stb" rel="noopener external">
+                stb
+              </a>{' '}
+              collection of libraries for texture loading, font rendering and much more.
             </p>
           </div>
         </div>
@@ -246,7 +281,10 @@ const HomeRoute = (props: RouteComponentProps) => (
             <h3>Your favorite API here!</h3>
             <p>
               Think LWJGL should have bindings to your favorite API? Let us know or{' '}
-              <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.3.-The-Generator">contribute it</a> yourself!
+              <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.3.-The-Generator" rel="noopener external">
+                contribute it
+              </a>{' '}
+              yourself!
             </p>
 
             <hr />
@@ -282,14 +320,14 @@ const HomeRoute = (props: RouteComponentProps) => (
 
           <p>
             LWJGL exists thanks to{' '}
-            <a href="https://github.com/LWJGL/lwjgl3/blob/master/BACKERS.md" target="_blank" rel="external">
+            <a href="https://github.com/LWJGL/lwjgl3/blob/master/BACKERS.md" target="_blank" rel="noopener external">
               all the people
             </a>{' '}
             who{' '}
             <a
               href="https://github.com/LWJGL/lwjgl3/blob/master/.github/CONTRIBUTING.md"
               target="_blank"
-              rel="external"
+              rel="noopener external"
             >
               contribute
             </a>{' '}
@@ -297,7 +335,7 @@ const HomeRoute = (props: RouteComponentProps) => (
           </p>
 
           <p>
-            <a href="https://opencollective.com/lwjgl/donate" target="_blank" rel="external">
+            <a href="https://opencollective.com/lwjgl/donate" target="_blank" rel="noopener external">
               <LazyImg
                 width={300}
                 height={50}
@@ -315,13 +353,19 @@ const HomeRoute = (props: RouteComponentProps) => (
         <h3>Our Gold Sponsors:</h3>
 
         <div className="d-flex flex-column flex-sm-row justify-content-center">
-          <a href="https://www.bestvpn.co/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl">
+          <a
+            href="https://www.bestvpn.co/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl"
+            rel="noopener nofollow external"
+          >
             <LazyImg className="m-3" width={250} height={47} src="/img/sponsors/bestvpn.png" alt="BestVPN.co" />
           </a>
-          <a href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl">
+          <a
+            href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+            rel="noopener nofollow external"
+          >
             <LazyImg className="m-3" width={50} height={50} src="/img/sponsors/vpnranks-white.png" alt="VPNRanks.com" />
           </a>
-          <a href="https://www.webhotelier.net/" title="WebHotelier" rel="external noopener">
+          <a href="https://www.webhotelier.net/" title="WebHotelier" rel="noopener external">
             <LazyImg className="m-3" height={50} alt="WebHotelier" src="/svg/webhotelier.svg" />
           </a>
         </div>
@@ -335,23 +379,48 @@ const HomeRoute = (props: RouteComponentProps) => (
           <p>
             LW
             <b>JGL</b> 3 is a fresh start and LWJGL 2 is its predecessor. LWJGL 2 has been used in the creation of
-            dozens of games, including titles like <a href="https://minecraft.net/">Minecraft</a> by Mojang and{' '}
-            <a href="http://www.puppygames.net/revenge-of-the-titans/">Revenge of the Titans</a> by Puppygames. It is
-            also used in popular game engines, like <a href="http://libgdx.badlogicgames.com/">libGDX</a> and{' '}
-            <a href="http://jmonkeyengine.org/">jMonkeyEngine</a>.
+            dozens of games, including titles like{' '}
+            <a href="https://minecraft.net/" rel="noopener external">
+              Minecraft
+            </a>{' '}
+            by Mojang and{' '}
+            <a href="http://www.puppygames.net/revenge-of-the-titans/" rel="noopener external">
+              Revenge of the Titans
+            </a>{' '}
+            by Puppygames. It is also used in popular game engines, like{' '}
+            <a href="http://libgdx.badlogicgames.com/" rel="noopener external">
+              libGDX
+            </a>{' '}
+            and{' '}
+            <a href="http://jmonkeyengine.org/" rel="noopener external">
+              jMonkeyEngine
+            </a>
+            .
           </p>
 
           <p>
-            <a className="btn btn-xs-block btn-outline-dark" href="http://legacy.lwjgl.org/" target="_blank">
+            <a
+              className="btn btn-xs-block btn-outline-dark"
+              href="http://legacy.lwjgl.org/"
+              target="_blank"
+              rel="noopener external"
+            >
               LWJGL 2 WEBSITE
             </a>
-            <a className="btn btn-xs-block btn-outline-dark" href="http://wiki.lwjgl.org/" target="_blank">
+            <a
+              className="btn btn-xs-block btn-outline-dark"
+              href="http://wiki.lwjgl.org/"
+              target="_blank"
+              rel="noopener external"
+            >
               LWJGL 2 WIKI
             </a>
           </p>
 
           <p>
-            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">Migration Guide</a>
+            <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration" rel="noopener external">
+              Migration Guide
+            </a>
           </p>
         </div>
       </div>

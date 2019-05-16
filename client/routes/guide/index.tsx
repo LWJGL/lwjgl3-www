@@ -24,9 +24,15 @@ const GuideRoute = (props: RouteComponentProps) => (
       <p>
         Please use the build configurator in our <Link to="/download">download page</Link> to configure and download an
         LWJGL release. You will also need a{' '}
-        <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html">Java SE Development Kit</a> (JDK),
-        LWJGL requires version 8 or higher. Then proceed by setting up a project in your favorite IDE and configuring it
-        as described in the <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install">Installation Guide</a>.
+        <a href="https://jdk.java.net/" rel="noopener external" target="_blank">
+          Java SE Development Kit
+        </a>{' '}
+        (JDK), LWJGL requires version 8 or higher. Then proceed by setting up a project in your favorite IDE and
+        configuring it as described in the{' '}
+        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install" target="_blank" rel="noopener external">
+          Installation Guide
+        </a>
+        .
       </p>
 
       <p>
@@ -53,26 +59,56 @@ const GuideRoute = (props: RouteComponentProps) => (
     <section className="container pt-4">
       <p>
         LWJGL comes with rich documentation, you can browse the javadoc online{' '}
-        <a href="http://javadoc.lwjgl.org/">starting here</a>. For more information, FAQ, guides and tutorials visit the{' '}
-        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki">wiki</a>. The{' '}
-        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.3.-Memory-FAQ">Memory FAQ</a>,{' '}
-        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.4.-Bindings-FAQ">Bindings FAQ</a> and{' '}
-        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.5.-Troubleshooting">Troubleshooting</a> pages are
-        especially useful. For more code examples, see the{' '}
-        <a href="https://github.com/LWJGL/lwjgl3/tree/master/modules/samples/src/test/java/org/lwjgl/demo">
+        <a href="http://javadoc.lwjgl.org/" rel="noopener external">
+          starting here
+        </a>
+        . For more information, FAQ, guides and tutorials visit the{' '}
+        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki" rel="noopener external">
+          wiki
+        </a>
+        . The{' '}
+        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.3.-Memory-FAQ" rel="noopener external">
+          Memory FAQ
+        </a>
+        ,{' '}
+        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.4.-Bindings-FAQ" rel="noopener external">
+          Bindings FAQ
+        </a>{' '}
+        and{' '}
+        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.5.-Troubleshooting" rel="noopener external">
+          Troubleshooting
+        </a>{' '}
+        pages are especially useful. For more code examples, see the{' '}
+        <a
+          href="https://github.com/LWJGL/lwjgl3/tree/master/modules/samples/src/test/java/org/lwjgl/demo"
+          rel="noopener external"
+        >
           LWJGL samples
         </a>{' '}
-        and the <a href="https://github.com/LWJGL/lwjgl3-demos">lwjgl3-demos</a> repository (nightly build required).
-        For porting existing LWJGL 2 code to LWJGL 3, see the{' '}
-        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration">migration guide</a>.
+        and the{' '}
+        <a href="https://github.com/LWJGL/lwjgl3-demos" rel="noopener external">
+          lwjgl3-demos
+        </a>{' '}
+        repository (nightly build required). For porting existing LWJGL 2 code to LWJGL 3, see the{' '}
+        <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration" rel="noopener external">
+          migration guide
+        </a>
+        .
       </p>
 
       <HashLinkTarget id="build-instructions" />
       <h3>Building from source</h3>
 
       <p>
-        Clone the <a href="https://github.com/LWJGL/lwjgl3.git">Git repository</a> locally, install a JDK and{' '}
-        <a href="http://ant.apache.org/">Apache Ant</a>, then you should be ready to build. Use the following targets:
+        Clone the{' '}
+        <a href="https://github.com/LWJGL/lwjgl3.git" rel="noopener external">
+          Git repository
+        </a>{' '}
+        locally, install a JDK and{' '}
+        <a href="http://ant.apache.org/" rel="noopener external">
+          Apache Ant
+        </a>
+        , then you should be ready to build. Use the following targets:
       </p>
       <ul>
         <li>
@@ -117,7 +153,9 @@ const GuideRoute = (props: RouteComponentProps) => (
       <ul>
         <li>
           <em>nightly</em> – the latest successful build, possibly broken. Dependency repositories can be found{' '}
-          <a href="https://github.com/LWJGL-CI">here</a>
+          <a href="https://github.com/LWJGL-CI" rel="noopener external">
+            here
+          </a>
         </li>
         <li>
           <em>stable</em> – the latest build that has been verified to work with LWJGL, the default
@@ -163,9 +201,11 @@ const GuideRoute = (props: RouteComponentProps) => (
     <section className="container pt-4">
       <h2>GLFW</h2>
       <p>
-        <a href="http://www.glfw.org/">GLFW</a> is an Open Source, multi-platform library for creating windows with
-        OpenGL contexts and receiving input and events. It is easy to integrate into existing applications and does not
-        lay claim to the main loop.
+        <a href="http://www.glfw.org/" rel="noopener external">
+          GLFW
+        </a>{' '}
+        is an Open Source, multi-platform library for creating windows with OpenGL contexts and receiving input and
+        events. It is easy to integrate into existing applications and does not lay claim to the main loop.
       </p>
       <p>
         GLFW is the preferred windowing system for LWJGL 3 applications. If you're familiar with LWJGL 2, GLFW is a
@@ -173,43 +213,65 @@ const GuideRoute = (props: RouteComponentProps) => (
       </p>
       <p>
         Learning GLFW is easy. It has a simple, yet powerful, API and comprehensive{' '}
-        <a href="http://www.glfw.org/docs/latest/">documentation</a>.
+        <a href="http://www.glfw.org/docs/latest/" rel="noopener external">
+          documentation
+        </a>
+        .
       </p>
 
       <h2>OpenGL</h2>
       <p>
-        <a href="https://www.opengl.org/about/">OpenGL</a> is the premier environment for developing portable,
-        interactive 2D and 3D graphics applications.
+        <a href="https://www.opengl.org/about/" rel="noopener external">
+          OpenGL
+        </a>{' '}
+        is the premier environment for developing portable, interactive 2D and 3D graphics applications.
       </p>
       <p>
         OpenGL is a massive API with long history and hundreds of extensions. Learning it from scratch is no easy
-        undertaking, but you can start from its <a href="https://www.opengl.org/documentation/">documentation</a>. The{' '}
-        <a href="https://www.opengl.org/registry/">OpenGL registry</a> is also quite useful.
+        undertaking, but you can start from its{' '}
+        <a href="https://www.opengl.org/documentation/" rel="noopener external">
+          documentation
+        </a>
+        . The{' '}
+        <a href="https://www.opengl.org/registry/" rel="noopener external">
+          OpenGL registry
+        </a>{' '}
+        is also quite useful.
       </p>
 
       <h2>OpenCL</h2>
       <p>
-        <a href="https://www.khronos.org/opencl/">OpenCL</a> is the first open, royalty-free standard for
-        cross-platform, parallel programming of modern processors found in personal computers, servers and
-        handheld/embedded devices. OpenCL (Open Computing Language) greatly improves speed and responsiveness for a wide
-        spectrum of applications in numerous market categories from gaming and entertainment to scientific and medical
-        software.
+        <a href="https://www.khronos.org/opencl/" rel="noopener external">
+          OpenCL
+        </a>{' '}
+        is the first open, royalty-free standard for cross-platform, parallel programming of modern processors found in
+        personal computers, servers and handheld/embedded devices. OpenCL (Open Computing Language) greatly improves
+        speed and responsiveness for a wide spectrum of applications in numerous market categories from gaming and
+        entertainment to scientific and medical software.
       </p>
       <p>
         Specifications for OpenCL and its extensions can be found at the{' '}
-        <a href="https://www.khronos.org/registry/cl/">Khronos OpenCL registry</a>.
+        <a href="https://www.khronos.org/registry/cl/" rel="noopener external">
+          Khronos OpenCL registry
+        </a>
+        .
       </p>
 
       <h2>OpenAL</h2>
       <p>
-        <a href="http://www.openal.org/">OpenAL</a> (for "Open Audio Library") is a software interface to audio
-        hardware. The interface consists of a number of functions that allow a programmer to specify the objects and
-        operations in producing high-quality audio output, specifically multichannel output of 3D arrangements of sound
-        sources around a listener.
+        <a href="http://www.openal.org/" rel="noopener external">
+          OpenAL
+        </a>{' '}
+        (for "Open Audio Library") is a software interface to audio hardware. The interface consists of a number of
+        functions that allow a programmer to specify the objects and operations in producing high-quality audio output,
+        specifically multichannel output of 3D arrangements of sound sources around a listener.
       </p>
       <p>
-        LWJGL is bundled with <a href="http://kcat.strangesoft.net/openal.html">OpenAL Soft</a>, an LGPL-licensed,
-        cross-platform, software implementation of the OpenAL 3D audio API.
+        LWJGL is bundled with{' '}
+        <a href="http://kcat.strangesoft.net/openal.html" rel="noopener external">
+          OpenAL Soft
+        </a>
+        , an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API.
       </p>
     </section>
   </PageView>
