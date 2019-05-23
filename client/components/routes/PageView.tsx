@@ -56,6 +56,12 @@ function arePropsEqual({ location: prevLocation }: Props, { location: nextLocati
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
 }
 
+function scrollToTop() {
+  if (window.pageXOffset + window.pageYOffset > 0) {
+    window.scroll(0, 0);
+  }
+}
+
 export const PageView: React.FC<Props> = memo(
   ({ location: { key = 'root', pathname, search, hash }, title, description, children }) => {
     // Call end() because sometimes it is never called by <PageBlank />
@@ -84,8 +90,7 @@ export const PageView: React.FC<Props> = memo(
           // Restore scroll position
           window.scroll(entry.x, entry.y);
         } else if (hash.length === 0) {
-          // Scroll to top of viewport
-          window.scroll(0, 0);
+          scrollToTop();
         }
 
         window.addEventListener('unload', storeScrollEntriesInSession);
@@ -94,7 +99,7 @@ export const PageView: React.FC<Props> = memo(
           window.removeEventListener('unload', storeScrollEntriesInSession);
         };
       } else if (hash.length === 0) {
-        window.scroll(0, 0);
+        scrollToTop();
       }
     }, [key, hash]);
 

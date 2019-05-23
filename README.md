@@ -14,10 +14,9 @@ Notable features:
 - Route preloading
 - Proximity based route preloading (see /download page)
 - Build Customizer with smart download queue & client-side ZIP generator
-- Hot reloading using React Hot Loader
-- Optional hot reloading for Sass
+- Optional hot reloading for [Sass](https://sass-lang.com/)
 - Custom webpack manifest parsing + code minification
-- CSS-in-JS (Emotion) in combination with custom Bootstrap build (Sass)
+- CSS-in-JS (Emotion) in combination with custom Bootstrap build
 - fast-async instead of regenerator
 - Client is written in Typescript
 
@@ -76,7 +75,7 @@ yarn watch
 ```bash
 --css # Enables CSS modules in dev mode (enables Sass HMR)
 --sourcemap # Enables inline JS source-maps
---nohmr # Disables Webpack Hot Module Replacement & React Hot Loader
+--nohmr # Disables Webpack Hot Module Replacement
 ```
 
 The following flags are used for testing production builds locally.

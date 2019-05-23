@@ -11,8 +11,12 @@ body {
   // https://developers.google.com/web/updates/2017/11/overscroll-behavior
   overscroll-behavior-y: none;
 
-  // Always show scrollbar
+  // Always show scrollbar to avoid layout between page navigations
   overflow-y: scroll;
+
+  // Disable scroll anchoring
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
+  overflow-anchor: none;
 }
 
 main {
