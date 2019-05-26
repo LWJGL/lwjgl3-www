@@ -50,9 +50,44 @@ export function generateIvy({
 
   if (platformSingle === null) {
     script += `\t<!-- Add to build.xml -->`;
-    if (platform.linux) {
-      script += `
-\t<condition property="lwjgl.natives" value="natives-linux">${nl2}<os name="Linux"/>${nl1}</condition>`;
+    if (platform.linux || platform['linux-arm64'] || platform['linux-arm32']) {
+      const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
+      if (linuxArches === 1) {
+        script += `
+\t<condition property="lwjgl.natives" value="natives-linux${
+          platform.linux ? '' : platform['linux-arm64'] ? '-arm64' : '-arm32'
+        }">${nl2}<os name="Linux"/>${nl1}</condition>`;
+      } else {
+        if (platform.linux) {
+          script += `
+\t<condition property="lwjgl.natives" value="natives-linux">
+\t\t<and>
+\t\t\t<os name="Linux"/>
+\t\t\t<not><matches string="\${os.arch}" pattern="^(arm|aarch64)"/></not>
+\t\t</and>
+\t</condition>`;
+        }
+        if (platform['linux-arm64']) {
+          script += `
+\t<condition property="lwjgl.natives" value="natives-linux-arm64">
+\t\t<and>
+\t\t\t<os name="Linux"/>
+\t\t\t<matches string="\${os.arch}" pattern="^(arm|aarch64)"/>
+\t\t\t<matches string="\${os.arch}" pattern="64|^armv8"/>
+\t\t</and>
+\t</condition>`;
+        }
+        if (platform['linux-arm32']) {
+          script += `
+\t<condition property="lwjgl.natives" value="natives-linux-arm32">
+\t\t<and>
+\t\t\t<os name="Linux"/>
+\t\t\t<matches string="\${os.arch}" pattern="^(arm|aarch64)"/>
+\t\t\t<not><matches string="\${os.arch}" pattern="64|^armv8"/></not>
+\t\t</and>
+\t</condition>`;
+        }
+      }
     }
     if (platform.macos) {
       script += `

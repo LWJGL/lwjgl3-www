@@ -90,10 +90,10 @@ export function getFiles(
 ): Array<string> {
   const files: Array<string> = [];
   const rootRegExp = new RegExp(`^${path}/bin/`);
-  const javaDocRegExp = new RegExp('-javadoc.jar$');
-  const sourcesRegExp = new RegExp('-sources.jar$');
-  const nativeRegExp = new RegExp('-natives-');
-  const platformRegExp = new RegExp('-natives-([a-z]+).jar$');
+  const javaDocRegExp = /-javadoc\.jar$/;
+  const sourcesRegExp = /-sources\.jar$/;
+  const nativeRegExp = /-natives-/;
+  const platformRegExp = /-natives-(\w+(?:-\w+)*)\.jar$/;
 
   const selectedMap = {} as BindingMapSelection;
 
@@ -150,6 +150,10 @@ function pathToNative(folder: string): Native | null {
   switch (folder) {
     case 'linux':
       return Native.Linux;
+    case 'linux-arm64':
+      return Native.LinuxARM64;
+    case 'linux-arm32':
+      return Native.LinuxARM32;
     case 'macos':
       return Native.MacOS;
     case 'windows':

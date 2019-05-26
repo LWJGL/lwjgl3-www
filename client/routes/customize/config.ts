@@ -97,7 +97,15 @@ function getInitialConfig(): BuildStore {
       byId: {
         [Native.Linux]: {
           id: Native.Linux,
-          title: 'Linux',
+          title: 'Linux x64',
+        },
+        [Native.LinuxARM64]: {
+          id: Native.LinuxARM64,
+          title: 'Linux arm64',
+        },
+        [Native.LinuxARM32]: {
+          id: Native.LinuxARM32,
+          title: 'Linux arm32',
         },
         [Native.MacOS]: {
           id: Native.MacOS,
@@ -220,6 +228,8 @@ function getInitialConfig(): BuildStore {
     language: Language.Groovy,
     platform: {
       [Native.Linux]: false,
+      [Native.LinuxARM64]: false,
+      [Native.LinuxARM32]: false,
       [Native.MacOS]: false,
       [Native.Windows]: false,
     },
@@ -324,4 +334,4 @@ export function configJSONfilename(save: BuildStoreSnapshot) {
   return `lwjgl-${save.build}-${save.preset != null ? save.preset : 'custom'}-${save.mode}.json`;
 }
 
-export const OSGiVersionMax: Version = Version.LWJGL320;
+export const OSGiVersionMax: Version = Version.LWJGL321;

@@ -38,7 +38,7 @@ export function generateMaven({
     script += `\n\t</properties>\n\n`;
   }
   if (platformSingle === null) {
-    function generateProfile(profile: Native, family: string) {
+    function generateProfile(profile: Native, family: string, natives: String) {
       let classifierOverrides = selected
         .filter(binding => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
         .map(binding => {
@@ -49,20 +49,30 @@ export function generateMaven({
           }</${property}>`;
         });
 
-      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}</id>${nl3}<activation>${nl4}<os><family>${family}</family></os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>natives-${profile}</lwjgl.natives>${
+      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}</id>${nl3}<activation>${nl4}<os><family>${family}</family></os>${nl3}</activation>${nl3}<properties>${nl4}${natives}${
         classifierOverrides.length === 0 ? '' : `${nl4}${classifierOverrides.join(nl4)}`
       }${nl3}</properties>${nl2}</profile>`;
     }
 
     script += '\t<profiles>';
-    if (platform.linux) {
-      script += generateProfile(Native.Linux, 'unix');
+    if (platform.linux || platform['linux-arm64'] || platform['linux-arm32']) {
+      const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
+      script += generateProfile(
+        Native.Linux,
+        'unix',
+        linuxArches === 1
+          ? `<lwjgl.natives>natives-linux${
+              platform.linux ? '' : platform['linux-arm64'] ? '-arm64' : '-arm32'
+            }</lwjgl.natives>`
+          : `<lwjgl.natives>natives-linux</lwjgl.natives> <!-- Add -arm64 or -arm32 to get the ARM builds -->`
+        // TODO: can we do better?
+      );
     }
     if (platform.macos) {
-      script += generateProfile(Native.MacOS, 'mac');
+      script += generateProfile(Native.MacOS, 'mac', '<lwjgl.natives>natives-macos</lwjgl.natives>');
     }
     if (platform.windows) {
-      script += generateProfile(Native.Windows, 'windows');
+      script += generateProfile(Native.Windows, 'windows', '<lwjgl.natives>natives-windows</lwjgl.natives>');
     }
     script += '\n\t</profiles>\n\n';
   }

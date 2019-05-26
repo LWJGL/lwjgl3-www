@@ -74,11 +74,14 @@ export enum BuildType {
 
 export enum Native {
   Linux = 'linux',
+  LinuxARM64 = 'linux-arm64',
+  LinuxARM32 = 'linux-arm32',
   MacOS = 'macos',
   Windows = 'windows',
 }
 
-export const NATIVE_ALL = [Native.Linux, Native.MacOS, Native.Windows];
+export const NATIVE_NO_ARM = [Native.Linux, Native.MacOS, Native.Windows];
+export const NATIVE_ALL = [Native.Linux, Native.LinuxARM64, Native.LinuxARM32, Native.MacOS, Native.Windows];
 
 export enum Mode {
   Zip = 'zip',

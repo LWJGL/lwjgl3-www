@@ -1,4 +1,4 @@
-import { BuildBindings, Binding, BindingDefinition, Native, NATIVE_ALL, Version } from '../types';
+import { BuildBindings, Binding, BindingDefinition, Native, NATIVE_NO_ARM, Version } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
@@ -9,7 +9,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       id: Binding.VMA,
       title: 'Vulkan Memory Allocator',
       description: 'An easy to integrate Vulkan memory allocation library.',
-      natives: NATIVE_ALL,
+      natives: NATIVE_NO_ARM,
       website: 'https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator',
     },
     [Binding.VULKAN]: {

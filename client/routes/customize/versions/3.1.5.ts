@@ -1,4 +1,4 @@
-import { BuildBindings, Version, Binding, NATIVE_ALL } from '../types';
+import { BuildBindings, Version, Binding, NATIVE_NO_ARM } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
@@ -10,7 +10,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'AMD Tootle',
       description:
         'AMD Tootle (Triangle Order Optimization Tool) is a 3D triangle mesh optimization library that improves on existing mesh preprocessing techniques.',
-      natives: NATIVE_ALL,
+      natives: NATIVE_NO_ARM,
       website: 'https://github.com/GPUOpen-Tools/amd-tootle',
     },
   },
