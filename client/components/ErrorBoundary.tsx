@@ -15,27 +15,25 @@ interface Props {
 }
 
 type State = {
-  hasError: boolean;
   error?: Error;
   info?: ReactErrorInfo;
 };
 
 export class ErrorBoundary extends React.Component<Props, State> {
-  state = {
-    hasError: false,
+  state: State = {
     error: undefined,
     info: undefined,
   };
 
-  componentDidCatch(error: Error, info: ReactErrorInfo) {
-    this.setState({ hasError: true, error, info });
+  componentDidCatch(error: Error, info?: ReactErrorInfo) {
+    this.setState({ error, info });
   }
 
   render() {
     const { children, render: Component } = this.props;
-    const { hasError, error, info } = this.state;
+    const { error, info } = this.state;
 
-    if (hasError && error !== undefined) {
+    if (error !== undefined) {
       return <Component error={error} info={info} />;
     } else {
       return children !== undefined ? children : null;

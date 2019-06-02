@@ -7,7 +7,7 @@ export function getAsyncRoute(loader: ComponentImport) {
   let RouteComponent: React.ComponentType<any> | null = null;
 
   const AsyncRoute = (props: RouteComponentProps) => {
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<Error | undefined>();
     const [loading, setLoading] = useState(RouteComponent === null);
 
     useEffect(() => {
@@ -25,7 +25,7 @@ export function getAsyncRoute(loader: ComponentImport) {
       }
     }, []);
 
-    if (error) {
+    if (error !== undefined) {
       return <PageError error={error} />;
     } else if (loading) {
       return <PageBlank delay={200} />;

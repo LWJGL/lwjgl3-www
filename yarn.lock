@@ -9,7 +9,7 @@
   dependencies:
     "@babel/highlight" "^7.0.0"
 
-"@babel/core@7.4.5", "@babel/core@^7.4.4":
+"@babel/core@7.4.5", "@babel/core@^7.4.5":
   version "7.4.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.4.5.tgz#081f97e8ffca65a9b4b0fdc7e274e703f000c06a"
   integrity sha512-OvjIh6aqXtlsA8ujtGKfC7LYWksYSX8yQcM8Ay3LuvVeQ63lcOKgoZWVqcpFwkd29aYU9rVx7jxhfhiEDV9MZA==
@@ -1388,10 +1388,10 @@ autoprefixer@9.5.1:
     postcss "^7.0.14"
     postcss-value-parser "^3.3.1"
 
-aws-sdk@2.463.0:
-  version "2.463.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.463.0.tgz#57562a95aa9b071ee16bb9e18ddd5c6c27c6eda6"
-  integrity sha512-bl0S6mxA2o8Hpy9LsMcPC9kVnrL4+B4qayiMlNMrp+8gcEMzJSMzfrUDX4SCWsqGYT25sZn8TDqTGJp7XIh3yw==
+aws-sdk@2.466.0:
+  version "2.466.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.466.0.tgz#02d819c5af058e15fd1942296ed3b1def9f4b14d"
+  integrity sha512-dWFpz774ONjP1Cb19VkLOfQSVTu5p5/uncZGovAe71NOfPGDSvrQKXOsKcuI1/k4oJyKW9z/GATF8ht8DkDWGg==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -3498,10 +3498,10 @@ hide-powered-by@1.0.0:
   resolved "https://registry.yarnpkg.com/hide-powered-by/-/hide-powered-by-1.0.0.tgz#4a85ad65881f62857fc70af7174a1184dccce32b"
   integrity sha1-SoWtZYgfYoV/xwr3F0oRhNzM4ys=
 
-highlight.js@9.15.6:
-  version "9.15.6"
-  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
-  integrity sha512-zozTAWM1D6sozHo8kqhfYgsac+B+q0PmsjXeyDrYIHHcBN0zTVT66+s2GW1GZv7DbyaROdLXKdabwS/WqPyIdQ==
+highlight.js@9.15.8:
+  version "9.15.8"
+  resolved "https://registry.yarnpkg.com/highlight.js/-/highlight.js-9.15.8.tgz#f344fda123f36f1a65490e932cf90569e4999971"
+  integrity sha512-RrapkKQWwE+wKdF73VsOa2RQdIoO3mxwJ4P8mhbI6KYJUraUHRKM5w5zQQKXNk0xNL4UVRdulV9SBJcmzJNzVA==
 
 homedir-polyfill@^1.0.1:
   version "1.0.3"
@@ -5650,12 +5650,12 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-svg-core@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-svg-core/-/react-svg-core-3.0.1.tgz#bd2fc8fdef7f4786d985119c3324e6e6db5d52fd"
-  integrity sha512-4V1cXprbZePERYfQY6nkIso+rUaDp5oeMKI2X87bWHTekoMzom8YUKAoXC+TJ67TG4lPwL7N+UXc4IWGu9N1Dg==
+react-svg-core@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-svg-core/-/react-svg-core-3.0.2.tgz#a969aee80fabb1fd5a4da4157e849014f264cb68"
+  integrity sha512-BPq1mUeFnRBHhp6x7Rvfo3e2hZaODWbvlUt/I5eiQxd0Tib8HjNi160YKUXR8peDyu9fRb63qwSLsB0y40THVg==
   dependencies:
-    "@babel/core" "^7.4.4"
+    "@babel/core" "^7.4.5"
     "@babel/plugin-syntax-jsx" "^7.2.0"
     "@babel/preset-react" "^7.0.0"
     babel-plugin-react-svg "^3.0.1"
@@ -5663,13 +5663,13 @@ react-svg-core@^3.0.1:
     lodash.isplainobject "^4.0.6"
     svgo "^1.2.2"
 
-react-svg-loader@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-svg-loader/-/react-svg-loader-3.0.1.tgz#65b0359ad6f5af578497afaaeac686e7dc7c0f9c"
-  integrity sha512-43VG2S+aKwu7MIagxhzHyN9nPTJBatHL7RfIxyqQ2/voKXi0xkIOxvyfIt04G2HcVlDdxeq6CxyR1sZx+iL3Cw==
+react-svg-loader@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-svg-loader/-/react-svg-loader-3.0.2.tgz#6c24719d4e695620c107e3dda2fc4668c72e6d69"
+  integrity sha512-kS2Y/8Yph8XULde3r/oQL/IVXC04D4GIQ5hIg0SzINH/FRpi9PeHEtAOzpfXhCQcCrumRj4WCzns4XgV6YZTYA==
   dependencies:
     loader-utils "^1.2.3"
-    react-svg-core "^3.0.1"
+    react-svg-core "^3.0.2"
 
 react@16.9.0-alpha.0:
   version "16.9.0-alpha.0"
@@ -6641,10 +6641,15 @@ text-table@^0.2.0:
   resolved "https://registry.yarnpkg.com/text-table/-/text-table-0.2.0.tgz#7f5ee823ae805207c00af2df4a84ec3fcfa570b4"
   integrity sha1-f17oI66AUgfACvLfSoTsP8+lcLQ=
 
-three@*, three@0.104.0:
+three@*:
   version "0.104.0"
   resolved "https://registry.yarnpkg.com/three/-/three-0.104.0.tgz#9ad1da492153b753a89e0df066631215bd9d9087"
   integrity sha512-q617IMBC5k40U2E9UC4/LtmhzTOOLB1jGMIooUL+QrhZ7abiGCSDrKrpCDt9V8RTl6xw+0FYfA1PYsIPKbQOgg==
+
+three@0.105.1:
+  version "0.105.1"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.105.1.tgz#323fc31e19b25eec408a84f8401ea6dbe42a32bb"
+  integrity sha512-Oa6dfF3qsgS/mmeNB+nKgcQBq71Ucxv8TdmVS+lNjLzG/GAIgvrTDTKmtvxXd7tXDv7RXmEprcmzO3JiT0UDsA==
 
 through2@^2.0.0:
   version "2.0.5"
@@ -6813,10 +6818,10 @@ typescript-template-language-service-decorator@^2.2.0:
   resolved "https://registry.yarnpkg.com/typescript-template-language-service-decorator/-/typescript-template-language-service-decorator-2.2.0.tgz#4ee6d580f307fb9239978e69626f2775b8a59b2a"
   integrity sha512-xiolqt1i7e22rpqMaprPgSFVgU64u3b9n6EJlAaUYE61jumipKAdI1+O5khPlWslpTUj80YzjUKjJ2jxT0D74w==
 
-typescript@3.4.5:
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.4.5.tgz#2d2618d10bb566572b8d7aad5180d84257d70a99"
-  integrity sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
+typescript@3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.1.tgz#ba72a6a600b2158139c5dd8850f700e231464202"
+  integrity sha512-64HkdiRv1yYZsSe4xC1WVgamNigVYjlssIoaH2HcZF0+ijsk5YK2g0G34w9wJkze8+5ow4STd22AynfO6ZYYLw==
 
 ua-parser-js@^0.7.18:
   version "0.7.19"
