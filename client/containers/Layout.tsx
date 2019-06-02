@@ -12,7 +12,7 @@ export function Layout() {
   return (
     <React.Fragment>
       {/* <NavProgress /> */}
-      <Router>
+      <Router primary={false}>
         <Header path="/*" />
       </Router>
       <Router component="main">
@@ -25,7 +25,7 @@ export function Layout() {
         <License path="/license" />
         <Miss404 default />
       </Router>
-      <Router>
+      <Router primary={false}>
         <Footer path="/*" />
       </Router>
     </React.Fragment>
