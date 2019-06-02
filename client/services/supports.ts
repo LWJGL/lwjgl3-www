@@ -7,7 +7,9 @@ try {
       supportsPassive = true;
     },
   });
-  window.addEventListener('test', () => {}, opts);
+  let emptyFn = () => {};
+  window.addEventListener('test', emptyFn, opts);
+  window.removeEventListener('test', emptyFn, opts);
 } catch (ignore) {}
 
 export const SUPPORTS_PASSIVE_EVENTS = supportsPassive;
