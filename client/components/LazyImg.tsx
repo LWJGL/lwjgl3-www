@@ -17,9 +17,7 @@ function observeEntries(entries: Array<IntersectionObserverEntry>) {
 
 function getPlaceholder(params: Partial<React.ImgHTMLAttributes<HTMLImageElement>>) {
   if (params.width !== undefined && params.height !== undefined) {
-    return `data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="${params.width}" height="${
-      params.height
-    }" />`;
+    return `data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" width="${params.width}" height="${params.height}" />`;
   }
   return '';
 }

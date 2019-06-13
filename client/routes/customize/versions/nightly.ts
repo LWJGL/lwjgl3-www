@@ -1,4 +1,4 @@
-import { BuildBindings, Version, Binding, BindingDefinition, Native, NATIVE_ALL} from '../types';
+import { BuildBindings, Version, Binding, BindingDefinition, Native, NATIVE_ALL } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
