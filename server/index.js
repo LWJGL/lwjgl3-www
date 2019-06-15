@@ -27,6 +27,9 @@ const configFile = path.resolve(__dirname, '../config.json');
 const config = fs.existsSync(configFile) ? JSON.parse(fs.readFileSync(configFile)) : {};
 
 const PRODUCT = 'lwjgl.org';
+const PORT = config.port || parseInt(process.env.PORT, 10) || 3000;
+const HOST = config.host || process.env.HOST || '0.0.0.0';
+
 const app = express();
 
 app.locals.development = app.get('env') === 'development';
@@ -40,7 +43,7 @@ let serviceWorkerCache = null;
 app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
 
-app.set('port', config.port || process.env.PORT || 80);
+app.set('port', PORT);
 app.set('view engine', 'pug');
 app.set('views', __dirname + '/views');
 
@@ -391,7 +394,7 @@ const downloadManifest = async cb => {
 const launchServer = () => {
   console.log(chalk`{yellow Starting {green.bold ${PRODUCT}} in ${app.get('env')} mode}`);
 
-  const server = app.listen(app.get('port'), () => {
+  const server = app.listen(PORT, HOST, () => {
     let host = server.address().address;
     let port = server.address().port;
 

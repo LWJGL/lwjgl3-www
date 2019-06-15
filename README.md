@@ -108,16 +108,20 @@ yarn watch -- --async --nohmr
 
 ### Configuration file (_OPTIONAL_)
 
+Default config if file is missing:
+
 ```json
 {
-  "port": 8080
+  "port": 3000,
+  "host": "0.0.0.0"
 }
 ```
 
 ### Environment variables
 
 NODE_ENV=production (default=development)
-PORT=8080 (default=80)
+PORT=80 (default=3000)
+HOST=127.0.0.1 (default=0.0.0.0)
 
 ## Production
 
