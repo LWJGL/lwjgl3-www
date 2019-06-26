@@ -23,8 +23,7 @@
     "bracketSpacing": true
   },
   "browserslist": [
-    "defaults",
-    "chrome >= 41"
+    "defaults"
   ],
   "postcss": {
     "plugins": {
@@ -32,14 +31,14 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.475.0",
+    "aws-sdk": "2.483.0",
     "body-parser": "1.19.0",
     "chalk": "2.4.2",
     "compression": "1.7.4",
     "express": "5.0.0-alpha.7",
     "helmet": "3.18.0",
     "http-proxy-middleware": "0.19.1",
-    "pug": "2.0.3",
+    "pug": "2.0.4",
     "request": "2.88.0",
     "request-promise-native": "1.0.7",
     "serve-favicon": "2.5.0",
@@ -54,8 +53,8 @@
     "@babel/preset-env": "7.4.5",
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.3.3",
-    "@emotion/babel-preset-css-prop": "10.0.9",
-    "@emotion/core": "10.0.10",
+    "@emotion/babel-preset-css-prop": "10.0.14",
+    "@emotion/core": "10.0.14",
     "@reach/router": "1.3.0-alpha.1",
     "@types/jszip": "3.1.6",
     "@types/lodash-es": "4.17.3",
@@ -63,8 +62,8 @@
     "@types/react-dom": "16.8.4",
     "@types/scheduler": "0.12.1",
     "@types/three": "0.103.2",
-    "@typescript-eslint/eslint-plugin": "1.10.2",
-    "@typescript-eslint/parser": "1.10.2",
+    "@typescript-eslint/eslint-plugin": "1.11.0",
+    "@typescript-eslint/parser": "1.11.0",
     "async-sema": "3.0.0",
     "autoprefixer": "9.6.0",
     "babel-loader": "8.0.6",
@@ -74,11 +73,11 @@
     "benchmark": "2.1.4",
     "bootstrap": "4.3.1",
     "cli-table": "0.3.1",
-    "core-js": "3.1.3",
+    "core-js": "3.1.4",
     "cross-env": "5.2.0",
     "css-loader": "3.0.0",
     "cssnano": "4.1.10",
-    "eslint": "5.16.0",
+    "eslint": "6.0.1",
     "eslint-plugin-react-hooks": "1.7.0-alpha.0",
     "exports-loader": "0.7.0",
     "fast-async": "7.0.6",
@@ -100,12 +99,12 @@
     "scroll-into-view-if-needed": "2.2.20",
     "style-loader": "0.23.1",
     "terser": "4.0.0",
-    "three": "0.105.2",
+    "three": "0.106.0",
     "typescript": "3.5.2",
     "typescript-styled-plugin": "0.14.0",
     "webpack": "5.0.0-alpha.14",
     "webpack-bundle-analyzer": "3.3.2",
-    "webpack-cli": "3.3.4",
+    "webpack-cli": "3.3.5",
     "webpack-dev-middleware": "3.7.0",
     "webpack-hot-middleware": "2.25.0",
     "whatwg-fetch": "3.0.0"
