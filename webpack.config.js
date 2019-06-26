@@ -265,7 +265,7 @@ const buildConfiguration = () => {
           'postcss-loader',
           {
             loader: 'sass-loader',
-            query: {
+            options: {
               sourceMap: false,
               sourceComments: false,
               outputStyle: 'expanded',
