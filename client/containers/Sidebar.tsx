@@ -7,10 +7,10 @@ import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 
 export function Sidebar() {
   const [open, setOpen] = useState(false);
-  const slidingMenu: React.RefObject<HTMLDivElement> = useRef(null);
-  const sideContainer: React.RefObject<HTMLDivElement> = useRef(null);
-  const closeButton: React.RefObject<HTMLButtonElement> = useRef(null);
-  const focusTrap: React.MutableRefObject<FocusTrap | null> = useRef(null);
+  const slidingMenu = useRef<HTMLDivElement>(null);
+  const sideContainer = useRef<HTMLDivElement>(null);
+  const closeButton = useRef<HTMLButtonElement>(null);
+  const focusTrap = useRef<FocusTrap | null>(null);
 
   const onToggle = useCallback(() => {
     setOpen(open => !open);

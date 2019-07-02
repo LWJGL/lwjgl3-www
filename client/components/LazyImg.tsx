@@ -31,7 +31,7 @@ export const LazyImg: React.FC<LazyImgProps> =
     ? ({ src: lazySrc, srcSet: lazySrcSet, rootMargin = '0px', ...rest }) => {
         const [src, setSrc] = useState<string | undefined>(getPlaceholder(rest));
         const [srcSet, setSrcSet] = useState<string | undefined>();
-        const imgRef: React.RefObject<HTMLImageElement> = useRef(null);
+        const imgRef = useRef<HTMLImageElement>(null);
 
         useEffect(() => {
           function cleanup() {

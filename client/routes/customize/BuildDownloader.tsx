@@ -14,8 +14,8 @@ type Progress = Array<string>;
 
 export function BuildDownloader({ setIsDownloading }: Props) {
   const storeRef = useStoreRef();
-  const isMounted: React.MutableRefObject<boolean> = useRef(false);
-  const usingNetwork: React.MutableRefObject<boolean> = useRef(false);
+  const isMounted = useRef<boolean>(false);
+  const usingNetwork = useRef<boolean>(false);
 
   const [progress, setProgress] = useState<Progress>(['Downloading file manifest']);
 

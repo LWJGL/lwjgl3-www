@@ -31,7 +31,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.483.0",
+    "aws-sdk": "2.486.0",
     "body-parser": "1.19.0",
     "chalk": "2.4.2",
     "compression": "1.7.4",
@@ -78,7 +78,7 @@
     "css-loader": "3.0.0",
     "cssnano": "4.1.10",
     "eslint": "6.0.1",
-    "eslint-plugin-react-hooks": "1.7.0-alpha.0",
+    "eslint-plugin-react-hooks": "1.6.1",
     "exports-loader": "0.7.0",
     "fast-async": "7.0.6",
     "fbjs": "1.0.0",
@@ -98,8 +98,8 @@
     "sass-loader": "7.1.0",
     "scroll-into-view-if-needed": "2.2.20",
     "style-loader": "0.23.1",
-    "terser": "4.0.0",
-    "three": "0.106.0",
+    "terser": "4.0.2",
+    "three": "0.106.2",
     "typescript": "3.5.2",
     "typescript-styled-plugin": "0.14.0",
     "webpack": "5.0.0-alpha.14",

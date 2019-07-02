@@ -24,12 +24,12 @@ export const Trap: React.FC<Props> = ({
   escapeDeactivates = true,
   clickOutsideDeactivates = true,
 }) => {
-  const divRef: React.RefObject<HTMLDivElement> = useRef(null);
-  const isMounted: React.MutableRefObject<boolean> = useRef(false);
-  const returnFocus: React.MutableRefObject<HTMLElement | null> = useRef(null);
+  const divRef = useRef<HTMLDivElement>(null);
+  const isMounted = useRef<boolean>(false);
+  const returnFocus = useRef<HTMLElement | null>(null);
 
-  const focusTrap: React.MutableRefObject<FocusTrap | null> = useRef(null);
-  const prevTrap: React.MutableRefObject<FocusTrap | null> = useRef(null);
+  const focusTrap = useRef<FocusTrap | null>(null);
+  const prevTrap = useRef<FocusTrap | null>(null);
 
   useEffect(() => {
     function findFocusable(): HTMLElement | null {

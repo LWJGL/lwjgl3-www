@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 export function useMetaDescription(description?: string) {
-  const meta: React.MutableRefObject<HTMLMetaElement | null> = useRef(null);
+  const meta = useRef<HTMLMetaElement | null>(null);
 
   useEffect(() => {
     if (description != null && description.length > 0) {

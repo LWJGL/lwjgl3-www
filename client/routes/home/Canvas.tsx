@@ -21,7 +21,7 @@ const Canvas = css`
 `;
 
 export default function HomeCanvas() {
-  const canvasRef: React.RefObject<HTMLCanvasElement> = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     function resizeCanvas() {

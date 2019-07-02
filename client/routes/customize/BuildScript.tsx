@@ -42,7 +42,7 @@ interface Props {
 }
 
 export function BuildScript({ configDownload, configLoad }: Props) {
-  const preRef: React.RefObject<HTMLPreElement> = useRef(null);
+  const preRef = useRef<HTMLPreElement>(null);
 
   // Breakpoint
   const {

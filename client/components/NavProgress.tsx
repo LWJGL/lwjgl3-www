@@ -100,8 +100,8 @@ const PERC_MAX = 99.4;
 export function NavProgress() {
   const [count, setCount] = useState(0);
   const [progress, setProgress] = useState(0);
-  const trickleTimeoutId: React.MutableRefObject<number | null> = useRef(null);
-  const resetTimeoutId: React.MutableRefObject<number | null> = useRef(null);
+  const trickleTimeoutId = useRef<number | null>(null);
+  const resetTimeoutId = useRef<number | null>(null);
 
   useEffect(() => {
     // Subscribe

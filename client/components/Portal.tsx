@@ -6,7 +6,7 @@ import { createPortal } from 'react-dom';
  * Use it when you need to circumvent DOM z-stacking (for dialogs, popovers, etc.).
  */
 export const Portal: React.FC = ({ children }) => {
-  const targetElement: React.MutableRefObject<HTMLDivElement | null> = useRef(null);
+  const targetElement = useRef<HTMLDivElement | null>(null);
 
   if (targetElement.current === null) {
     targetElement.current = document.body.appendChild(document.createElement('div'));

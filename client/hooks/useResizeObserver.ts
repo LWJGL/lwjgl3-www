@@ -5,7 +5,7 @@ const getZeroRect = () => ({ width: 0, height: 0, x: 0, y: 0, top: 0, right: 0, 
 
 export function useResizeObserver(target: React.RefObject<HTMLElement>) {
   const [rect, setRect] = useState(getZeroRect);
-  const observer: React.MutableRefObject<ResizeObserver | null> = useRef(null);
+  const observer = useRef<ResizeObserver | null>(null);
 
   useLayoutEffect(() => {
     function handleResize(entries: Array<ResizeObserverEntry>) {

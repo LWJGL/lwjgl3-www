@@ -29,7 +29,7 @@ function scrollToTarget(el: HTMLAnchorElement) {
 }
 
 const HashLinkTargetControlled: React.FC<Props> = ({ id, hash }) => {
-  const el: React.RefObject<HTMLAnchorElement> = useRef(null);
+  const el = useRef<HTMLAnchorElement>(null);
   const prevHash = usePrevious(hash);
 
   useEffect(() => {
