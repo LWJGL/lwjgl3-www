@@ -103,7 +103,7 @@ export default (): BuildBindings => ({
       title: 'par_shapes',
       description: 'Generate parametric surfaces and other simple shapes.',
       natives: NATIVE_NO_ARM,
-      website: 'http://github.prideout.net/shapes',
+      website: 'https://prideout.net/shapes',
       presets: [Preset.GettingStarted],
     },
     [Binding.SSE]: {
