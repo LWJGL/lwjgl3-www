@@ -9,9 +9,8 @@
  *  cc('fa', 'fa-check') => "fa fa-check"
  *  cc('fa' {'fa-check':true,'fa-spin':isSpinning}) => "fa fa-check fa-spin"
  *  cc(...['fa','fa-check'], 'fa-spin', {'bg-danger':hasError}) => "fa fa-check fa-spin bg-danger"
- * @param {*} args
  */
-function classConcat(...args: Array<string | null | void | { [classname: string]: boolean }>): string {
+export function cc(...args: Array<string | null | void | { [classname: string]: boolean }>): string {
   let result = '';
 
   for (let i = 0; i < args.length; i += 1) {
@@ -31,5 +30,3 @@ function classConcat(...args: Array<string | null | void | { [classname: string]
 
   return result;
 }
-
-export { classConcat as cc };

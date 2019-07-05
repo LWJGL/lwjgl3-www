@@ -1,7 +1,7 @@
 // import { createContext, useContext } from 'react';
 import { hsl } from './color';
-export { mediaBreakpointUp, mediaBreakpointDown } from './media';
-export { cc } from './cc';
+// export { mediaBreakpointUp, mediaBreakpointDown } from './media';
+// export { cc } from './cc';
 
 // const ThemeContext = createContext();
 // export const useTheme = () => useContext(ThemeContext);

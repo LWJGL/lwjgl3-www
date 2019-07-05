@@ -45,7 +45,7 @@ if (PRODUCTION) {
       corejs: 3,
       ...(MODERN ? { targets: { esmodules: true } } : undefined),
       targets: {
-        browsers: ['defaults', 'chrome >= 41', 'firefox >= 34', 'safari >= 8', 'edge >= 12', 'ios >= 8', 'ie >= 11'],
+        browsers: 'defaults',
       },
       exclude: ['transform-async-to-generator', 'transform-regenerator'],
     },

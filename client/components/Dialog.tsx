@@ -1,5 +1,5 @@
 import React from 'react';
-import { cc } from '~/theme';
+import { cc } from '~/theme/cc';
 import { Overlay } from './Overlay';
 
 interface Props {

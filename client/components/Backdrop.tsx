@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { cc } from '~/theme';
+import { cc } from '~/theme/cc';
 
 interface Props {
   className?: string;

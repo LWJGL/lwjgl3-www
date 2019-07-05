@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import { css } from '@emotion/core';
-import { mediaBreakpointUp, COLOR_PRIMARY } from '~/theme';
+import { COLOR_PRIMARY } from '~/theme';
+import { mediaBreakpointUp } from '~/theme/media';
 import { lighten } from '~/theme/color';
 import { useSlice } from './Store';
 

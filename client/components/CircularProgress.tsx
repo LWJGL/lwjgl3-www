@@ -1,6 +1,7 @@
 import React from 'react';
 import { css, keyframes } from '@emotion/core';
-import { cc, COLOR_PRIMARY } from '~/theme';
+import { COLOR_PRIMARY } from '~/theme';
+import { cc } from '~/theme/cc';
 import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 
 const SIZE = 44;
