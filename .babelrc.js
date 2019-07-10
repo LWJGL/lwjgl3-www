@@ -43,13 +43,17 @@ if (PRODUCTION) {
       debug: false,
       useBuiltIns: 'usage',
       corejs: 3,
-      ...(MODERN ? { targets: { esmodules: true } } : undefined),
-      targets: {
-        browsers: 'defaults',
-      },
+      targets: { browsers: 'defaults' },
       exclude: ['transform-async-to-generator', 'transform-regenerator'],
     },
   ]);
+
+  if (MODERN) {
+    // ~9KB smaller gzip size (not currently used)
+    config.presets[0][1].targets = {
+      esmodules: true,
+    };
+  }
 }
 
 module.exports = config;
