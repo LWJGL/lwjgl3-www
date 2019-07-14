@@ -1,7 +1,7 @@
 import produce from 'immer';
 import React from 'react';
 import { Action, ActionCreator } from './actions';
-import { config, OSGiVersionMax } from './config';
+import { config, getDefaultPlatform, OSGiVersionMax } from './config';
 import {
   Addon,
   Binding,
@@ -11,6 +11,7 @@ import {
   BuildStoreSnapshot,
   BuildType,
   Mode,
+  NATIVE_ALL,
   Preset,
   Version,
 } from './types';
@@ -120,7 +121,9 @@ export const reducer: React.Reducer<BuildStore, ActionCreator> = (
   });
 };
 
-const versionNum = (version: Version) => parseInt(version.replace(/\./g, ''), 10);
+export function versionNum(version: Version) {
+  return parseInt(version.replace(/\./g, ''), 10);
+}
 
 export function checkOSGiVersion(version: Version) {
   let vnum = versionNum(version);
@@ -169,6 +172,16 @@ function computeArtifacts(state: BuildStore) {
   }
 
   state.artifacts = state.lwjgl[state.build === BuildType.Release ? state.version : state.build];
+
+  const vnum = versionNum(state.artifacts.version);
+  NATIVE_ALL.forEach(p => {
+    if (state.platform[p] && vnum < versionNum(config.natives.byId[p].since)) {
+      state.platform[p] = false;
+    }
+  });
+  if (!NATIVE_ALL.some(p => state.platform[p])) {
+    state.platform[getDefaultPlatform()] = true;
+  }
 
   // reset state
   state.availability = {} as BindingMapSelection;

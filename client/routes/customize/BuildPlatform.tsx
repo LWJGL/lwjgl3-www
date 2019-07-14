@@ -2,36 +2,46 @@ import React, { useMemo } from 'react';
 import { Checkbox } from '~/components/Checkbox';
 import { useMemoSlice } from './Store';
 import { togglePlatform } from './actions';
-import { Native, BuildStore } from './types';
+import { BuildStore, Native } from './types';
 import { getPlatformIcon } from './getPlatformIcon';
+import { versionNum } from './reducer';
 
-const getSlice = ({ natives, platform }: BuildStore) => ({
+const getSlice = ({ natives, platform, artifacts }: BuildStore) => ({
   platforms: natives.allIds,
   natives: natives.byId,
+  version: artifacts.version,
   selected: platform,
 });
 
-const getInputs = (state: BuildStore) => [state.platform];
+const getInputs = (state: BuildStore) => [state.platform, state.artifacts];
 
 export function BuildPlatform() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
-  const { platforms, natives, selected } = slice;
+  const { platforms, natives, version, selected } = slice;
+
+  const vnum = versionNum(version);
 
   return useMemo(
     () => (
       <React.Fragment>
         <h4 className="mt-3">Natives</h4>
         <div className="custom-controls-stacked">
-          {platforms.map((platform: Native) => (
-            <Checkbox
-              key={platform}
-              icon={getPlatformIcon(platform)}
-              label={natives[platform].title}
-              checked={selected[platform]}
-              value={platform}
-              onChange={(platform: Native) => dispatch(togglePlatform(platform))}
-            />
-          ))}
+          {platforms
+            .filter((platform: Native) => versionNum(natives[platform].since) <= vnum)
+            .map((platform: Native) => (
+              <Checkbox
+                key={platform}
+                icon={getPlatformIcon(platform)}
+                label={
+                  platform === Native.Windows && vnum < versionNum(natives[Native.WindowsX86].since)
+                    ? 'Windows x64/x86'
+                    : natives[platform].title
+                }
+                checked={selected[platform]}
+                value={platform}
+                onChange={(platform: Native) => dispatch(togglePlatform(platform))}
+              />
+            ))}
         </div>
       </React.Fragment>
     ),

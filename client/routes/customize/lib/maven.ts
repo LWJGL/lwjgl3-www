@@ -71,8 +71,16 @@ export function generateMaven({
     if (platform.macos) {
       script += generateProfile(Native.MacOS, 'mac', '<lwjgl.natives>natives-macos</lwjgl.natives>');
     }
-    if (platform.windows) {
-      script += generateProfile(Native.Windows, 'windows', '<lwjgl.natives>natives-windows</lwjgl.natives>');
+    if (platform.windows || platform['windows-x86']) {
+      const windowsArches = +platform.windows + +platform['windows-x86'];
+      script += generateProfile(
+        Native.Windows,
+        'windows',
+        windowsArches === 1
+          ? `<lwjgl.natives>natives-windows${platform.windows ? '' : '-x86'}</lwjgl.natives>`
+          : `<lwjgl.natives>natives-windows</lwjgl.natives> <!-- Add -x86 to get the x86 builds -->`
+        // TODO: can we do better?
+      );
     }
     script += '\n\t</profiles>\n\n';
   }

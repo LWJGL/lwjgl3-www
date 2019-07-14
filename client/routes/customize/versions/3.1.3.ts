@@ -1,4 +1,4 @@
-import { BuildBindings, Version, Binding, NATIVE_NO_ARM } from '../types';
+import { BuildBindings, Version, Binding, NATIVE_LTE_322 } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
@@ -10,7 +10,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'rpmalloc',
       description:
         'A public domain cross platform lock free thread caching 16-byte aligned memory allocator implemented in C.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://github.com/rampantpixels/rpmalloc',
     },
   },

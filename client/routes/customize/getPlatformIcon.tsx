@@ -11,6 +11,7 @@ export const getPlatformIcon = (platform: Native) => {
     case Native.MacOS:
       return <Icon children={<Apple />} key="fa-macos" />;
     case Native.Windows:
+    case Native.WindowsX86:
       return <Icon children={<Windows />} key="fa-win" />;
   }
 };

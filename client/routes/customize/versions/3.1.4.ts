@@ -1,4 +1,4 @@
-import { BuildBindings, Version, Binding, NATIVE_NO_ARM } from '../types';
+import { BuildBindings, Version, Binding, NATIVE_LTE_322 } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
@@ -10,7 +10,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'LZ4',
       description:
         'LZ4 is a lossless data compression algorithm that is focused on compression and decompression speed.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'http://lz4.github.io/lz4/',
     },
     [Binding.ODBC]: {
@@ -24,7 +24,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       id: Binding.REMOTERY,
       title: 'Remotery',
       description: 'A realtime CPU/GPU profiler hosted in a single C file with a viewer that runs in a web browser.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://github.com/Celtoys/Remotery',
     },
     [Binding.ZSTD]: {
@@ -32,7 +32,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'Zstandard',
       description:
         'Zstandard (zstd) is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'http://facebook.github.io/zstd/',
     },
   },

@@ -29,7 +29,7 @@ import {
 } from './types';
 type BuildBindingsReducer = (opt: BuildBindings) => BuildBindings;
 
-function getDefaultPlatform(): Native {
+export function getDefaultPlatform(): Native {
   if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
     return Native.MacOS;
   } else if (navigator.platform.indexOf('Linux') > -1) {
@@ -98,22 +98,32 @@ function getInitialConfig(): BuildStore {
         [Native.Linux]: {
           id: Native.Linux,
           title: 'Linux x64',
+          since: Version.LWJGL300,
         },
         [Native.LinuxARM64]: {
           id: Native.LinuxARM64,
           title: 'Linux arm64',
+          since: Version.LWJGL323,
         },
         [Native.LinuxARM32]: {
           id: Native.LinuxARM32,
           title: 'Linux arm32',
+          since: Version.LWJGL323,
         },
         [Native.MacOS]: {
           id: Native.MacOS,
-          title: 'macOS',
+          title: 'macOS x64',
+          since: Version.LWJGL300,
         },
         [Native.Windows]: {
           id: Native.Windows,
-          title: 'Windows',
+          title: 'Windows x64',
+          since: Version.LWJGL300,
+        },
+        [Native.WindowsX86]: {
+          id: Native.WindowsX86,
+          title: 'Windows x86',
+          since: Version.LWJGL323,
         },
       },
       allIds: NATIVE_ALL,
@@ -232,6 +242,7 @@ function getInitialConfig(): BuildStore {
       [Native.LinuxARM32]: false,
       [Native.MacOS]: false,
       [Native.Windows]: false,
+      [Native.WindowsX86]: false,
     },
     contents: {},
     availability: {},

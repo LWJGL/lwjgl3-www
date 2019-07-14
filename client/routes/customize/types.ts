@@ -78,10 +78,18 @@ export enum Native {
   LinuxARM32 = 'linux-arm32',
   MacOS = 'macos',
   Windows = 'windows',
+  WindowsX86 = 'windows-x86',
 }
 
-export const NATIVE_NO_ARM = [Native.Linux, Native.MacOS, Native.Windows];
-export const NATIVE_ALL = [Native.Linux, Native.LinuxARM64, Native.LinuxARM32, Native.MacOS, Native.Windows];
+export const NATIVE_LTE_322 = [Native.Linux, Native.MacOS, Native.Windows];
+export const NATIVE_ALL = [
+  Native.Linux,
+  Native.LinuxARM64,
+  Native.LinuxARM32,
+  Native.MacOS,
+  Native.Windows,
+  Native.WindowsX86,
+];
 
 export enum Mode {
   Zip = 'zip',
@@ -159,6 +167,7 @@ export interface ModesCollection {
 export interface NativeDefinition {
   id: Native;
   title: string;
+  since: Version;
 }
 
 export type NativeMap = { [key in Native]: NativeDefinition };

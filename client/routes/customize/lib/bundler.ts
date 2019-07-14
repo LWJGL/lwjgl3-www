@@ -101,6 +101,8 @@ export function getFiles(
     selectedMap[key] = true;
   });
 
+  // TODO: Ensure the manifest isn't missing any of the selected bindings.
+  //       If that happens, there's a bug somewhere (either in lwjgl3-www or in lwjgl3's build process).
   manifest.forEach(file => {
     const filepath = file.replace(rootRegExp, '');
 
@@ -158,6 +160,8 @@ function pathToNative(folder: string): Native | null {
       return Native.MacOS;
     case 'windows':
       return Native.Windows;
+    case 'windows-x86':
+      return Native.WindowsX86;
   }
 
   return null;

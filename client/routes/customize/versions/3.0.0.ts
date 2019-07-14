@@ -1,4 +1,4 @@
-import { BuildBindings, Version, Binding, Preset, Native, NATIVE_NO_ARM } from '../types';
+import { BuildBindings, Version, Binding, Preset, Native, NATIVE_LTE_322 } from '../types';
 
 export default (): BuildBindings => ({
   version: Version.LWJGL300,
@@ -8,7 +8,7 @@ export default (): BuildBindings => ({
       id: Binding.LWJGL,
       title: 'LWJGL core',
       description: 'The LWJGL core library.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       required: true,
       presets: [Preset.None, Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
@@ -25,7 +25,7 @@ export default (): BuildBindings => ({
       title: 'GLFW',
       description:
         'A multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'http://www.glfw.org/',
       presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
@@ -40,7 +40,7 @@ export default (): BuildBindings => ({
       title: 'jemalloc',
       description:
         'A general purpose malloc implementation that emphasizes fragmentation avoidance and scalable concurrency support.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'http://jemalloc.net/',
     },
     [Binding.NANOVG]: {
@@ -48,7 +48,7 @@ export default (): BuildBindings => ({
       title: 'NanoVG & NanoSVG',
       description:
         'A small antialiased vector graphics rendering library for OpenGL. Also includes <a href="https://github.com/memononen/nanosvg" rel="noopener external">NanoSVG</a>, a simple SVG parser (3.1.4+).',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://github.com/memononen/nanovg',
       presets: [Preset.GettingStarted],
     },
@@ -56,7 +56,7 @@ export default (): BuildBindings => ({
       id: Binding.NFD,
       title: 'Native File Dialog',
       description: 'A tiny, neat C library that portably invokes native file open and save dialogs.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://github.com/mlabbe/nativefiledialog',
     },
     [Binding.OPENAL]: {
@@ -64,7 +64,7 @@ export default (): BuildBindings => ({
       title: 'OpenAL',
       description:
         'A cross-platform 3D audio API appropriate for use with gaming applications and many other types of audio applications.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://www.openal.org/',
       presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
@@ -102,7 +102,7 @@ export default (): BuildBindings => ({
       id: Binding.PAR,
       title: 'par_shapes',
       description: 'Generate parametric surfaces and other simple shapes.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://prideout.net/shapes',
       presets: [Preset.GettingStarted],
     },
@@ -110,14 +110,14 @@ export default (): BuildBindings => ({
       id: Binding.SSE,
       title: 'SSE',
       description: 'Simple SSE intrinsics.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://software.intel.com/en-us/node/523328',
     },
     [Binding.STB]: {
       id: Binding.STB,
       title: 'stb',
       description: 'Single-file public domain libraries for fonts, images, ogg vorbis files and more.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://github.com/nothings/stb',
       presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
@@ -133,7 +133,7 @@ export default (): BuildBindings => ({
       id: Binding.XXHASH,
       title: 'xxHash',
       description: 'An Extremely fast Hash algorithm, running at RAM speed limits.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'http://www.xxhash.com/',
     },
   },

@@ -1,4 +1,4 @@
-import { BuildBindings, Binding, NATIVE_NO_ARM, Version } from '../types';
+import { BuildBindings, Binding, NATIVE_LTE_322, Version } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
@@ -17,28 +17,28 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'libdivide',
       description:
         'A library that replaces expensive integer divides with comparatively cheap multiplication and bitshifts.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://libdivide.com/',
     },
     [Binding.LLVM]: {
       id: Binding.LLVM,
       title: 'LLVM',
       description: 'A collection of modular and reusable compiler and toolchain technologies.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://llvm.org/',
     },
     [Binding.MEOW]: {
       id: Binding.MEOW,
       title: 'Meow hash',
       description: 'An extremely fast non-cryptographic hash.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://github.com/cmuratori/meow_hash/',
     },
     [Binding.OPUS]: {
       id: Binding.OPUS,
       title: 'Opus',
       description: 'Opus is a totally open, royalty-free, highly versatile audio codec.',
-      natives: NATIVE_NO_ARM,
+      natives: NATIVE_LTE_322,
       website: 'https://opus-codec.org/',
     },
   },

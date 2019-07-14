@@ -50,8 +50,8 @@ export function generateIvy({
 
   if (platformSingle === null) {
     script += `\t<!-- Add to build.xml -->`;
-    if (platform.linux || platform['linux-arm64'] || platform['linux-arm32']) {
-      const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
+    const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
+    if (linuxArches !== 0) {
       if (linuxArches === 1) {
         script += `
 \t<condition property="lwjgl.natives" value="natives-linux${
@@ -93,9 +93,33 @@ export function generateIvy({
       script += `
 \t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
     }
-    if (platform.windows) {
-      script += `
-\t<condition property="lwjgl.natives" value="natives-windows">${nl2}<os family="Windows"/>${nl1}</condition>`;
+    const windowsArches = +platform.windows + +platform['windows-x86'];
+    if (windowsArches !== 0) {
+      if (windowsArches === 1) {
+        script += `
+\t<condition property="lwjgl.natives" value="natives-windows${
+          platform.windows ? '' : '-x86'
+        }">${nl2}<os family="Windows"/>${nl1}</condition>`;
+      } else {
+        if (platform.windows) {
+          script += `
+\t<condition property="lwjgl.natives" value="natives-windows">
+\t\t<and>
+\t\t\t<os family="Windows"/>
+\t\t\t<matches string="\${os.arch}" pattern="64"/>
+\t\t</and>
+\t</condition>`;
+        }
+        if (platform['windows-x86']) {
+          script += `
+\t<condition property="lwjgl.natives" value="natives-windows-x86">
+\t\t<and>
+\t\t\t<os family="Windows"/>
+\t\t\t<not><matches string="\${os.arch}" pattern="64"/></not>
+\t\t</and>
+\t</condition>`;
+        }
+      }
     }
     let classifierOverrides = selected
       .filter(binding => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
