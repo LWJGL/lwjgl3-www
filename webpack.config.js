@@ -29,6 +29,13 @@ versionHash.update(fs.readFileSync(path.resolve(__dirname, 'webpack.config.js'))
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
+    stats: PRODUCTION
+      ? {
+          all: false,
+          entrypoints: true,
+          assets: true,
+        }
+      : 'errors-only',
     target: 'web',
     amd: false,
     bail: true,
