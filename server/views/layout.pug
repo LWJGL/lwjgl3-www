@@ -9,21 +9,12 @@ html(lang="en-US" dir="ltr")
     meta(name="application-name" content="LWJGL")
     meta(name="google" content="notranslate")
     meta(http-equiv="Content-Language" content="en-US")
-    //-
-      meta(name="apple-mobile-web-app-capable" content="yes")
-    //- meta(name="apple-mobile-web-app-status-bar-style" content="black")
-    //- meta(name="apple-mobile-web-app-title" content="LWJGL")
-    //- meta(name="apple-touch-icon" content="/img/fav/apple-touch-icon.png")
-    //- meta(name="mask-icon" content="/svg/safari-pinned-tab.svg" color="#1b2426")
-    //- meta(name="msapplication-TileImage" content="/img/fav/144x144.png")
-    //- meta(name="msapplication-TileColor" content="#1b2426")
     link(rel="shortcut icon" href="/img/fav/favicon-16x16.png")
     //- link(rel="icon" type="image/png" href="/img/fav/favicon-16x16.png" sizes="16x16")
     link(rel="icon" type="image/png" href="/img/fav/favicon-32x32.png" sizes="32x32")
     link(rel="manifest" href="/manifest.webmanifest")
     if ( css !== undefined )
-      link(rel="stylesheet" href=`/css/${css}`)
-      //- link(rel="stylesheet" href=`/css/${css}` media="none" onload="this.media='all'")
+      link(rel="stylesheet" href=`/css/${css}` media="print" onload="this.media='all'")
     script window.dataLayer=[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','#{ga}',{send_page_view:false,transport_type:'beacon',anonymize_ip:true});
   body
     block content
