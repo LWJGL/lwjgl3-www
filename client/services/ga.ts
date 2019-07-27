@@ -18,7 +18,7 @@ export function analytics(...args: Array<any>) {
       firstCall = false;
     }
 
-    window.gtag.apply(null, args);
+    window.gtag(...args);
   }
 }
 

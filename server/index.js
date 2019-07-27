@@ -287,7 +287,7 @@ app.get('*', (req, res, next) => {
     // or routes deep in site's hierarchy, so not always worth it
     const routes = chunkMap(manifest.routes, req.path);
     if (routes !== null) {
-      preload.push.apply(preload, routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
+      preload.push(...routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
     }
 
     res.set('Link', preload);
