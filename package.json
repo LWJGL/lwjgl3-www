@@ -31,7 +31,7 @@
     }
   },
   "dependencies": {
-    "aws-sdk": "2.499.0",
+    "aws-sdk": "2.501.0",
     "body-parser": "1.19.0",
     "chalk": "2.4.2",
     "compression": "1.7.4",
@@ -63,7 +63,6 @@
     "@types/three": "0.103.2",
     "@typescript-eslint/eslint-plugin": "1.13.0",
     "@typescript-eslint/parser": "1.13.0",
-    "async-sema": "3.0.0",
     "autoprefixer": "9.6.1",
     "babel-loader": "8.0.6",
     "babel-plugin-optimize-react": "0.0.4",
