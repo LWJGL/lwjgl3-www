@@ -31,7 +31,28 @@ const helmetConfig = (production, hsts) => {
     hidePoweredBy: false,
     ieNoOpen: false,
     noSniff: true,
-    xssFilter: true,
+    xssFilter: false,
+    featurePolicy: {
+      features: {
+        accelerometer: ["'none'"],
+        ambientLightSensor: ["'none'"],
+        autoplay: ["'none'"],
+        camera: ["'none'"],
+        fullscreen: ["'self'"],
+        geolocation: ["'none'"],
+        gyroscope: ["'none'"],
+        magnetometer: ["'none'"],
+        microphone: ["'none'"],
+        midi: ["'none'"],
+        payment: ["'none'"],
+        speaker: ["'none'"],
+        syncXhr: ["'none'"],
+        usb: ["'none'"],
+      },
+    },
+    referrerPolicy: {
+      policy: 'no-referrer-when-downgrade',
+    },
   };
 
   if (production && hsts) {
