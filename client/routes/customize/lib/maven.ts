@@ -20,6 +20,7 @@ export function generateMaven({
   const nl2 = compact ? '' : '\n\t\t';
   const nl3 = compact ? '' : '\n\t\t\t';
   const nl4 = compact ? '' : '\n\t\t\t\t';
+  const nl5 = compact ? '' : '\n\t\t\t\t\t';
   const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
 
   let script = '';
@@ -38,7 +39,7 @@ export function generateMaven({
     script += `\n\t</properties>\n\n`;
   }
   if (platformSingle === null) {
-    function generateProfile(profile: Native, family: string, natives: String) {
+    function generateProfile(profile: Native, family: string, arch: string, natives: String) {
       let classifierOverrides = selected
         .filter(binding => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
         .map(binding => {
@@ -49,38 +50,29 @@ export function generateMaven({
           }</${property}>`;
         });
 
-      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}</id>${nl3}<activation>${nl4}<os><family>${family}</family></os>${nl3}</activation>${nl3}<properties>${nl4}${natives}${
+      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${
         classifierOverrides.length === 0 ? '' : `${nl4}${classifierOverrides.join(nl4)}`
       }${nl3}</properties>${nl2}</profile>`;
     }
-
     script += '\t<profiles>';
-    if (platform.linux || platform['linux-arm64'] || platform['linux-arm32']) {
-      const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
-      script += generateProfile(
-        Native.Linux,
-        'unix',
-        linuxArches === 1
-          ? `<lwjgl.natives>natives-linux${
-              platform.linux ? '' : platform['linux-arm64'] ? '-arm64' : '-arm32'
-            }</lwjgl.natives>`
-          : `<lwjgl.natives>natives-linux</lwjgl.natives> <!-- Add -arm64 or -arm32 to get the ARM builds -->`
-        // TODO: can we do better?
-      );
+    if (platform.linux) {
+      script += generateProfile(Native.Linux, 'unix', 'amd64', 'natives-linux');
+    }
+    if (platform['linux-arm64']) {
+      script += generateProfile(Native.Linux, 'unix', 'aarch64', 'natives-linux-arm64');
+    }
+    if (platform['linux-arm32']) {
+      script += generateProfile(Native.Linux, 'unix', 'arm', 'natives-linux-arm32');
+      script += generateProfile(Native.Linux, 'unix', 'arm32', 'natives-linux-arm32');
     }
     if (platform.macos) {
-      script += generateProfile(Native.MacOS, 'mac', '<lwjgl.natives>natives-macos</lwjgl.natives>');
+      script += generateProfile(Native.MacOS, 'mac', 'amd64', 'natives-macos');
     }
-    if (platform.windows || platform['windows-x86']) {
-      const windowsArches = +platform.windows + +platform['windows-x86'];
-      script += generateProfile(
-        Native.Windows,
-        'windows',
-        windowsArches === 1
-          ? `<lwjgl.natives>natives-windows${platform.windows ? '' : '-x86'}</lwjgl.natives>`
-          : `<lwjgl.natives>natives-windows</lwjgl.natives> <!-- Add -x86 to get the x86 builds -->`
-        // TODO: can we do better?
-      );
+    if (platform.windows) {
+      script += generateProfile(Native.Windows, 'windows', 'amd64', 'natives-windows');
+    }
+    if (platform['windows-x86']) {
+      script += generateProfile(Native.Windows, 'windows', 'x86', 'natives-windows-x86');
     }
     script += '\n\t</profiles>\n\n';
   }
