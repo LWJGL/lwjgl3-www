@@ -173,6 +173,7 @@ const buildConfiguration = () => {
       symlinks: false,
       alias: {
         '~': path.resolve(__dirname, './client'),
+        jszip: path.resolve(__dirname, './node_modules/jszip/dist/jszip.js'),
       },
     },
     module: {

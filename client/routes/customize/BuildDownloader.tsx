@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScreenLock } from '~/components/ScreenLock';
 import { saveAs } from '~/services/file-saver';
 import { configJSONfilename, getConfigSnapshot } from './config';
 import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getFiles } from './lib/bundler';
 import { useStoreRef } from './Store';
 import { BuildType } from './types';
+import JSZip from 'jszip';
 
 interface Props {
   setIsDownloading: (state: boolean) => void;
@@ -12,7 +12,7 @@ interface Props {
 
 type Progress = Array<string>;
 
-export function BuildDownloader({ setIsDownloading }: Props) {
+export default function BuildDownloader({ setIsDownloading }: Props) {
   const storeRef = useStoreRef();
   const isMounted = useRef<boolean>(false);
   const usingNetwork = useRef<boolean>(false);
@@ -120,30 +120,28 @@ export function BuildDownloader({ setIsDownloading }: Props) {
   }, []);
 
   return (
-    <ScreenLock backdropClassName="dark">
-      <div className="container">
-        <div className="row">
-          <div className="col py-3">
-            <div className="text-center">
-              <div className="spinner-border text-white my-3" style={{ width: '3rem', height: '3rem' }} role="status" />
-              <h4>Generating ZIP bundle. Please wait...</h4>
-              <p>
-                <button className="btn btn-sm btn-danger" onClick={() => setIsDownloading(false)}>
-                  Cancel
-                </button>
-              </p>
-            </div>
-            <pre style={{ color: 'white', height: '50vh', overflow: 'auto' }}>
-              {progress
-                .slice(0)
-                .reverse()
-                .map((line, i) => (
-                  <div key={`log${i}`}>{line}</div>
-                ))}
-            </pre>
+    <div className="container">
+      <div className="row">
+        <div className="col py-3">
+          <div className="text-center">
+            <div className="spinner-border text-white my-3" style={{ width: '3rem', height: '3rem' }} role="status" />
+            <h4>Generating ZIP bundle. Please wait...</h4>
+            <p>
+              <button className="btn btn-sm btn-danger" onClick={() => setIsDownloading(false)}>
+                Cancel
+              </button>
+            </p>
           </div>
+          <pre style={{ color: 'white', height: '50vh', overflow: 'auto' }}>
+            {progress
+              .slice(0)
+              .reverse()
+              .map((line, i) => (
+                <div key={`log${i}`}>{line}</div>
+              ))}
+          </pre>
         </div>
       </div>
-    </ScreenLock>
+    </div>
   );
 }

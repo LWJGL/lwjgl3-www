@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { BuildAddons } from './BuildAddons';
 import { BuildArtifacts } from './BuildArtifacts';
 import { BuildConfigArea } from './BuildConfigArea';
-import { BuildDownloader } from './BuildDownloader';
+import { BuildDownloaderSuspense } from './BuildDownloaderSuspense';
 import { BuildFooter } from './BuildFooter';
 import { BuildPanel } from './BuildPanel';
 import { BuildPlatform } from './BuildPlatform';
@@ -13,22 +13,9 @@ import { ControlledRadio } from './ControlledRadio';
 import { ControlledToggle } from './ControlledToggle';
 import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
 import { BuildType } from './types';
-import { loadJS } from '../../services/loadJS';
 
 export function BuildConfigurator() {
   const [isDownloading, setIsDownloading] = useState(false);
-
-  const beginDownload = () => {
-    if (!JSZip.support.blob) {
-      alert(`We're sorry, your browser is not capable of downloading and bundling files.`);
-    } else {
-      setIsDownloading(true);
-    }
-  };
-
-  useEffect(() => {
-    loadJS('https://unpkg.com/jszip@3.1.5/dist/jszip.min.js');
-  }, []);
 
   return (
     <React.Fragment>
@@ -88,12 +75,12 @@ export function BuildConfigurator() {
                   <BuildArtifacts />
                 </div>
               </div>
-              <BuildFooter setIsDownloading={beginDownload} />
+              <BuildFooter setIsDownloading={setIsDownloading} />
             </BuildConfigArea>
           </div>
         </div>
       </ControlledPanel>
-      {isDownloading && <BuildDownloader setIsDownloading={setIsDownloading} />}
+      {isDownloading && <BuildDownloaderSuspense setIsDownloading={setIsDownloading} />}
     </React.Fragment>
   );
 }
