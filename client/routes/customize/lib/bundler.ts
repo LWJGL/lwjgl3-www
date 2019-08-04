@@ -73,10 +73,19 @@ export function getBuild(state: BuildStore): SelectedBuildConfig {
 }
 
 export async function fetchManifest(path: string): Promise<Array<string>> {
-  const response = await fetch(`/bin/${path}`);
+  const response = await fetch(`/bin/${path}`, {
+    method: 'GET',
+    mode: 'same-origin',
+    credentials: 'omit',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
   if (response.status !== HTTP_OK) {
     throw response.statusText;
   }
+
   return await response.json();
 }
 

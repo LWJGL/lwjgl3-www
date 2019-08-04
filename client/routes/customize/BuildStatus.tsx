@@ -48,7 +48,14 @@ async function loadStatus(name: BuildType): Promise<BuildStatus> {
 }
 
 async function fetchStatus(url: string) {
-  const response = await fetch(url);
+  const response = await fetch(url, {
+    method: 'GET',
+    mode: 'same-origin',
+    credentials: 'omit',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
 
   if (response.status !== 200) {
     throw new Error(response.statusText);
