@@ -1412,10 +1412,10 @@ autoprefixer@9.6.1:
     postcss "^7.0.17"
     postcss-value-parser "^4.0.0"
 
-aws-sdk@2.503.0:
-  version "2.503.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.503.0.tgz#983b8c03aa919060a81127cb9d94fbb1667f4cf2"
-  integrity sha512-DPwRxhPYCGNvKL9rUhpAoOVpMRyISbVMlXykLQknYo7wyOI+jYcyA7t8H7IFPAqj4ZG+R+Au9tO/KT4im+2gbg==
+aws-sdk@2.504.0:
+  version "2.504.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.504.0.tgz#d7111b3f5117548935d68c717d72bbf57a9362f9"
+  integrity sha512-azOX54oovJv0zWzO23fBgIprwsvx8KUuMR+cAUAOx23D8LJ5S+sl3UYS9Q1X4qF/blBTa4+ZNawZDV0N1HiQmw==
   dependencies:
     buffer "4.9.1"
     events "1.1.1"
@@ -2681,10 +2681,10 @@ escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz#1b61c0562190a8dff6ae3bb2cf0200ca130b86d4"
   integrity sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ=
 
-eslint-plugin-react-hooks@1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.6.1.tgz#3c66a5515ea3e0a221ffc5d4e75c971c217b1a4c"
-  integrity sha512-wHhmGJyVuijnYIJXZJHDUF2WM+rJYTjulUTqF9k61d3BTk8etydz+M4dXUVH7M76ZRS85rqBTCx0Es/lLsrjnA==
+eslint-plugin-react-hooks@1.7.0-rc.0:
+  version "1.7.0-rc.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react-hooks/-/eslint-plugin-react-hooks-1.7.0-rc.0.tgz#41de20cfc9b0757509566ee9889ff96319492aae"
+  integrity sha512-oKrO4uV3CaDB9JXL2PYwr7Um5HZv8NtxaqiRHglDyg95LoerjcFb1RKCtlOR7py4e5RiMbpyarIcdjcMqzwOqA==
 
 eslint-scope@^4.0.0:
   version "4.0.3"
@@ -5719,15 +5719,15 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
-react-dom@16.9.0-alpha.0:
-  version "16.9.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0-alpha.0.tgz#9dfaec18ac1a500fa72cab7b70f2ae29d0cd7716"
-  integrity sha512-BQ5gN42yIPuTnBvE6K9vSjNfDRpSNcYCs2sUx9XR5VaWKwlHTt3G6qIWK6zdXy8TYKb1+IxpsAI0RtbRdXQZ2A==
+react-dom@16.9.0-rc.0:
+  version "16.9.0-rc.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.9.0-rc.0.tgz#63827dacb8148175f64e6ea69ac07d114d8899b1"
+  integrity sha512-71d0ZHwAhTxr7JBqk3xrhaHnd5zs/P62RTKNswtylCWKfqV75Tm/eZtq7riaZN+1mwnfMf2HyVx8ht7+GtMBQg==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.14.0-alpha.0"
+    scheduler "^0.15.0-rc.0"
 
 react-fast-compare@2.0.4:
   version "2.0.4"
@@ -5765,15 +5765,14 @@ react-svg-loader@3.0.3:
     loader-utils "^1.2.3"
     react-svg-core "^3.0.3"
 
-react@16.9.0-alpha.0:
-  version "16.9.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-16.9.0-alpha.0.tgz#e350f3d8af36e3251079cbc90d304620e2f78ccb"
-  integrity sha512-y4bu7rJvtnPPsIwOj7sp5Y2SqlOb0jFupfkdjWxxn8ZeqzUARgpR9wJBUVwW1/QosVdOblmApjo/j6iiAXnebA==
+react@16.9.0-rc.0:
+  version "16.9.0-rc.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.9.0-rc.0.tgz#fd5c4273383a0dd2b71d1d4e6ad464a392602be2"
+  integrity sha512-9J4dBd/6RITXvFY4eN4nyyqxsvO7UvGB8JFOn4wAQ1Y1sW8HL/xJ2nihRXGoIk53ewjaWZ0TfTczjPwIyqzTmA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.2"
-    scheduler "^0.14.0-alpha.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -6135,10 +6134,10 @@ sax@>=0.6.0, sax@~1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
-scheduler@^0.14.0-alpha.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.14.0.tgz#b392c23c9c14bfa2933d4740ad5603cc0d59ea5b"
-  integrity sha512-9CgbS06Kki2f4R9FjLSITjZo5BZxPsryiRNyL3LpvrM9WxcVmhlqAOc9E+KQbeI2nqej4JIIbOsfdL51cNb4Iw==
+scheduler@^0.15.0-rc.0:
+  version "0.15.0-rc.0"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.15.0-rc.0.tgz#e8da3aec91c7487c749b14dc400b32739b2b6f06"
+  integrity sha512-oaQa2FK+JyR0OhsDQd5ZpfEWmthBZ9eka1TjHQpfqMa5M7FfhlAJaKXAqNqdr+eyQ4smJEX3+PCnLuBcSGY0Tw==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -7431,12 +7430,13 @@ yargs@13.2.4:
     y18n "^4.0.0"
     yargs-parser "^13.1.0"
 
-yargs@13.3.0:
-  version "13.3.0"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.3.0.tgz#4c657a55e07e5f2cf947f8a366567c04a0dedc83"
-  integrity sha512-2eehun/8ALW8TLoIl7MVaRUrg+yCnenu8B4kBlRxj3GJGDKU1Og7sMXPNm1BYyM1DOJmTZ4YeN/Nwxv+8XJsUA==
+yargs@14.0.0:
+  version "14.0.0"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-14.0.0.tgz#ba4cacc802b3c0b3e36a9e791723763d57a85066"
+  integrity sha512-ssa5JuRjMeZEUjg7bEL99AwpitxU/zWGAGpdj0di41pOEmJti8NR6kyUIJBkR78DTYNPZOU08luUo0GTHuB+ow==
   dependencies:
     cliui "^5.0.0"
+    decamelize "^1.2.0"
     find-up "^3.0.0"
     get-caller-file "^2.0.1"
     require-directory "^2.1.1"
