@@ -6,7 +6,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const { argv } = require('yargs');
 const os = require('os');
-const globals = require('./server/globals.json');
+// const globals = require('./server/globals.json');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
@@ -15,7 +15,7 @@ const SOURCEMAP = argv.sourcemap !== undefined;
 const ENABLE_PROFILING = argv.profiling !== undefined;
 
 const env = {
-  ANALYTICS_TRACKING_ID: JSON.stringify(globals.google_analytics_id),
+  // ANALYTICS_TRACKING_ID: JSON.stringify(globals.google_analytics_id),
   FLAG_PRODUCTION: String(PRODUCTION),
   FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),

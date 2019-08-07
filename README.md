@@ -8,7 +8,7 @@ Notable features:
 
 - Client-side routing
 - Service Worker (works offline)
-- Tiny production build (entire codebase + content weights <300KB gzipped)
+- Tiny production build (entire codebase + content weights less than 350KB gzipped)
 - Code splitting at route & component level
 - Scroll restoration
 - Route preloading
@@ -24,7 +24,7 @@ Notable features:
 
 Static assets are loaded from LWJGL's CDN ( AWS CloudFront ).
 
-We use [Google Analytics](http://www.google.com/analytics) for tracking.
+<!-- We use [Google Analytics](http://www.google.com/analytics) for tracking. -->
 
 Build status icons are loaded directly from travis-ci.org and appveyor.com.
 

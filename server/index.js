@@ -17,7 +17,7 @@ const readFileAsync = promisify(fs.readFile);
 const cloudFrontSubnets = require('./cloudfront-subnets.json');
 const chunkMap = require('./chunkMap');
 const helmetConfig = require('./helmetConfig');
-const globals = require('./globals.json');
+// const globals = require('./globals.json');
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
@@ -264,7 +264,7 @@ app.get('/sw.js', async (req, res) => {
 // App
 app.get('*', (req, res, next) => {
   const renderOptions = {
-    ga: globals.google_analytics_id,
+    // ga: globals.google_analytics_id,
   };
 
   if (app.locals.production) {

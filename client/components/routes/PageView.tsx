@@ -1,7 +1,7 @@
 import React, { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
-import { trackView } from '../../services/ga';
+// import { trackView } from '../../services/ga';
 import { useDocumentTitle } from '../../hooks/useDocumentTitle';
 import { useMetaDescription } from '../../hooks/useMetaDescription';
 import { WindowLocation } from '@reach/router';
@@ -103,8 +103,8 @@ export const PageView: React.FC<Props> = memo(
       }
     }, [key, hash]);
 
-    // Track in Google Analytics
-    useEffect(() => void trackView({ page_path: `${pathname}${search}` }), [pathname, search]);
+    // // Track in Google Analytics
+    // useEffect(() => void trackView({ page_path: `${pathname}${search}` }), [pathname, search]);
 
     if (FLAG_PRODUCTION) {
       return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
