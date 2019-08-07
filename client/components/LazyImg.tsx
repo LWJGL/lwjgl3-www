@@ -2,7 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import { SUPPORTS_IMG_LOADING, SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
 let io: IntersectionObserver;
-let map: WeakMap<Element, Function> = new WeakMap();
+let map: WeakMap<Element, Function>;
+let lazyPolyfill = false;
+
+if (!SUPPORTS_IMG_LOADING && SUPPORTS_INTERSECTION_OBSERVER) {
+  lazyPolyfill = true;
+  map = new WeakMap();
+}
 
 function observeEntries(entries: Array<IntersectionObserverEntry>) {
   entries.forEach(entry => {
@@ -24,47 +30,47 @@ function getPlaceholder(params: Partial<React.ImgHTMLAttributes<HTMLImageElement
 
 interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   rootMargin?: string;
+  intrinsicsize?: string; // TODO: Remove this when added to ImgHTMLAttributes
 }
 
-export const LazyImg: React.FC<LazyImgProps> =
-  !SUPPORTS_IMG_LOADING && SUPPORTS_INTERSECTION_OBSERVER
-    ? ({ src: lazySrc, srcSet: lazySrcSet, rootMargin = '0px', ...rest }) => {
-        const [src, setSrc] = useState<string | undefined>(getPlaceholder(rest));
-        const [srcSet, setSrcSet] = useState<string | undefined>();
-        const imgRef = useRef<HTMLImageElement>(null);
+export const LazyImg: React.FC<LazyImgProps> = lazyPolyfill
+  ? ({ src: lazySrc, srcSet: lazySrcSet, rootMargin = '0px', ...rest }) => {
+      const [src, setSrc] = useState<string | undefined>(getPlaceholder(rest));
+      const [srcSet, setSrcSet] = useState<string | undefined>();
+      const imgRef = useRef<HTMLImageElement>(null);
 
-        useEffect(() => {
-          function cleanup() {
-            if (io !== undefined && imgRef.current !== null) {
-              io.unobserve(imgRef.current);
-              map.delete(imgRef.current);
-            }
+      useEffect(() => {
+        function cleanup() {
+          if (io !== undefined && imgRef.current !== null) {
+            io.unobserve(imgRef.current);
+            map.delete(imgRef.current);
+          }
+        }
+
+        function loadImage() {
+          setSrc(lazySrc);
+          setSrcSet(lazySrcSet);
+          cleanup();
+        }
+
+        if (imgRef.current !== null) {
+          if (io === undefined) {
+            io = new IntersectionObserver(observeEntries, {
+              threshold: 0,
+              rootMargin,
+            });
           }
 
-          function loadImage() {
-            setSrc(lazySrc);
-            setSrcSet(lazySrcSet);
-            cleanup();
-          }
+          map.set(imgRef.current, loadImage);
+          io.observe(imgRef.current);
 
-          if (imgRef.current !== null) {
-            if (io === undefined) {
-              io = new IntersectionObserver(observeEntries, {
-                threshold: 0,
-                rootMargin,
-              });
-            }
+          return cleanup;
+        }
+      }, [lazySrc, lazySrcSet, rootMargin]);
 
-            map.set(imgRef.current, loadImage);
-            io.observe(imgRef.current);
-
-            return cleanup;
-          }
-        }, [lazySrc, lazySrcSet, rootMargin]);
-
-        return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
-      }
-    : ({ src, srcSet, ...rest }) => {
-        //@ts-ignore
-        return <img loading="lazy" src={src} srcSet={srcSet} {...rest} />;
-      };
+      return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
+    }
+  : ({ src, srcSet, ...rest }) => {
+      //@ts-ignore
+      return <img loading="lazy" src={src} srcSet={srcSet} {...rest} />;
+    };

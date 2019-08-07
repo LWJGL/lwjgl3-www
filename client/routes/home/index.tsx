@@ -366,7 +366,13 @@ const HomeRoute = (props: RouteComponentProps) => (
             <LazyImg className="m-3" width={50} height={50} src="/img/sponsors/vpnranks-white.png" alt="VPNRanks.com" />
           </a>
           <a href="https://www.webhotelier.net/" title="WebHotelier" rel="noopener external">
-            <LazyImg className="m-3" height={50} alt="WebHotelier" src="/svg/webhotelier.svg" />
+            <LazyImg
+              className="m-3"
+              height={50}
+              alt="WebHotelier"
+              src="/svg/webhotelier.svg"
+              intrinsicsize="566.9x185.8"
+            />
           </a>
         </div>
       </section>

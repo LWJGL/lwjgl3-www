@@ -186,7 +186,7 @@ const buildConfiguration = () => {
         {
           test: /\.css?$/,
           use: [
-            'style-loader/useable',
+            { loader: 'style-loader', options: { injectType: 'lazyStyleTag' } },
             {
               loader: 'css-loader',
               options: {
@@ -260,7 +260,7 @@ const buildConfiguration = () => {
       config.module.rules.push({
         test: /\.scss?$/,
         use: [
-          'style-loader/useable',
+          'style-loader',
           {
             loader: 'css-loader',
             options: {

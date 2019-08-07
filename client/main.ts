@@ -2,8 +2,7 @@ import { mount } from './mount';
 
 if (FLAG_CSSMODULES) {
   // Inject global styles, this enables HMR for SASS
-  const styles = require('./styles/layout.scss');
-  styles.use();
+  require('./styles/layout.scss');
 }
 
 // const bootPromises: Array<Promise<any>> = [];
