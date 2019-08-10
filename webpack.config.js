@@ -29,15 +29,6 @@ versionHash.update(fs.readFileSync(path.resolve(__dirname, 'webpack.config.js'))
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
-    stats: PRODUCTION
-      ? {
-          all: false,
-          entrypoints: true,
-          assets: true,
-        }
-      : 'errors-only',
-    target: 'web',
-    amd: false,
     bail: true,
     cache: {
       type: 'filesystem',
@@ -230,13 +221,7 @@ const buildConfiguration = () => {
         },
       ],
     },
-    plugins: [
-      new webpack.DefinePlugin(env),
-      new webpack.LoaderOptionsPlugin({
-        minimize: PRODUCTION,
-        debug: false,
-      }),
-    ],
+    plugins: [new webpack.DefinePlugin(env)],
   };
 
   if (DEV) {
@@ -251,6 +236,7 @@ const buildConfiguration = () => {
 
     if (HMR) {
       // Enable Hot Module Replacement
+      // config.entry.main.unshift(require.resolve('react-refresh/runtime'));
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }
