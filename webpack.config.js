@@ -162,7 +162,10 @@ const buildConfiguration = () => {
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
       alias: {
         '~': path.resolve(__dirname, './client'),
-        jszip: path.resolve(__dirname, './node_modules/jszip/dist/jszip.js'),
+        // Use prebundled jszip that has smaller stream polyfill
+        jszip: path.resolve(__dirname, `./node_modules/jszip/dist/jszip.js`),
+        // // alternatively, use stream-browserify polyfill (~17KB larger)
+        // stream: 'stream-browserify'
       },
     },
     module: {
