@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const sass = require('node-sass');
 const postcss = require('postcss');
+// const postcssPresetEnv = require('postcss-preset-env');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const { argv } = require('yargs');
@@ -41,6 +42,7 @@ const process = async () => {
   console.log('Applying Autoprefixer & Minifying CSS');
 
   const result = await postcss([
+    // postcssPresetEnv({ stage: 0 }),
     autoprefixer,
     cssnano({
       preset: [
