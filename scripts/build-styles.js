@@ -1,12 +1,11 @@
 const path = require('path');
-const util = require('util');
-const fs = require('fs');
-const writeFileAsync = util.promisify(fs.writeFile);
+const fs = require('fs').promises;
 const sass = require('node-sass');
 const postcss = require('postcss');
 const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const { argv } = require('yargs');
+const renderSass = require('util').promisify(sass.render);
 
 /*
   1. Render Sass to CSS
@@ -29,7 +28,7 @@ const process = async () => {
 
   console.log('Rendering Sass to CSS');
 
-  const render = await util.promisify(sass.render)({
+  const render = await renderSass({
     file: sourcePath,
     outputStyle: 'expanded',
     precision: 6,
@@ -63,9 +62,9 @@ const process = async () => {
       : false,
   });
 
-  await writeFileAsync(targetPath, result.css);
+  await fs.writeFile(targetPath, result.css);
   if (result.map) {
-    await writeFileAsync(sourceMapPath, result.map);
+    await fs.writeFile(sourceMapPath, result.map);
   }
 };
 

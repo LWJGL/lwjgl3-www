@@ -1,16 +1,13 @@
 'use strict';
 const fs = require('fs');
-const { promisify } = require('util');
 const crypto = require('crypto');
 const path = require('path');
 const manifest = require('../public/js/manifest.json');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
 
 async function uploadFile(file, basename) {
-  const contents = await readFile(file, { encoding: 'utf-8' });
+  const contents = await fs.promises.readFile(file, { encoding: 'utf-8' });
   const folder = basename.endsWith('css') ? 'css' : 'js';
 
   const uploadSettings = {
@@ -51,7 +48,7 @@ async function main() {
   let hashMap = {};
 
   try {
-    deployed = JSON.parse(await readFile(path.join(__dirname, '../public/js/deploy.json')));
+    deployed = JSON.parse(await fs.promises.readFile(path.join(__dirname, '../public/js/deploy.json')));
   } catch (e) {}
 
   // Collect files
@@ -116,7 +113,7 @@ async function main() {
   }
 
   await Promise.all(channels);
-  await writeFile(
+  await fs.promises.writeFile(
     path.join(__dirname, '../public/js/', 'deploy.json'),
     JSON.stringify({ ...deployed, ...hashMap }, null, 2)
   );

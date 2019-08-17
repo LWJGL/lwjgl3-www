@@ -1,6 +1,6 @@
 'use strict';
 
-// Server
+// Server4
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -11,20 +11,17 @@ const favicon = require('serve-favicon');
 const { argv } = require('yargs');
 const chalk = require('chalk');
 const request = require('request-promise-native');
-const { promisify } = require('util');
-const readFileAsync = promisify(fs.readFile);
-
 const cloudFrontSubnets = require('./cloudfront-subnets.json');
 const chunkMap = require('./chunkMap');
 const helmetConfig = require('./helmetConfig');
-// const globals = require('./globals.json');
+const fileExists = require('./fileExists');
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
 // ------------------------------------------------------------------------------
 
 const configFile = path.resolve(__dirname, '../config.json');
-const config = fs.existsSync(configFile) ? JSON.parse(fs.readFileSync(configFile)) : {};
+const config = fileExists(configFile) ? JSON.parse(fs.readFileSync(configFile)) : {};
 
 const PRODUCT = 'lwjgl.org';
 const PORT = config.port || parseInt(process.env.PORT, 10) || 3000;
@@ -241,7 +238,7 @@ app.get('/sw.js', async (req, res) => {
 
     // Read service worker source code
     if (argv.test || app.locals.development) {
-      swJS = await readFileAsync(path.join(__dirname, '../client', 'sw.js'));
+      swJS = await fs.promises.readFile(path.join(__dirname, '../client', 'sw.js'));
     } else {
       swJS = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js');
     }

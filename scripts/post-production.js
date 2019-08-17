@@ -1,9 +1,6 @@
 'use strict';
 const path = require('path');
 const fs = require('fs');
-const { promisify } = require('util');
-const readFile = promisify(fs.readFile);
-const writeFile = promisify(fs.writeFile);
 const chalk = require('chalk');
 const crypto = require('crypto');
 const gzipSize = require('gzip-size');
@@ -77,7 +74,7 @@ async function main() {
 
   // Hash and append core.css
   await (async () => {
-    let contents = await readFile(path.resolve(__dirname, '../public/css/core.css'), { encoding: 'utf-8' });
+    let contents = await fs.promises.readFile(path.resolve(__dirname, '../public/css/core.css'), { encoding: 'utf-8' });
     const MD5 = crypto.createHash('MD5');
     MD5.update(contents);
     const hash = MD5.digest('hex');
@@ -92,13 +89,16 @@ async function main() {
       gzipSize: gzipSize.sync(contents),
     };
 
-    await writeFile(path.resolve(__dirname, `../public/css/${asset.cdn}`), contents);
+    await fs.promises.writeFile(path.resolve(__dirname, `../public/css/${asset.cdn}`), contents);
     productionManifest.assets.css = asset.cdn;
     assetMap.set('css', asset);
   })();
 
   // Store production manifest
-  await writeFile(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
+  await fs.promises.writeFile(
+    path.resolve(__dirname, '../public/js/manifest.json'),
+    JSON.stringify(productionManifest, null, 2)
+  );
 
   // Done!
   return { manifest: productionManifest, assetMap };
