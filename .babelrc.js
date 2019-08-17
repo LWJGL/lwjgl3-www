@@ -46,7 +46,6 @@ if (PRODUCTION) {
       debug: false,
       useBuiltIns: 'usage',
       corejs: 3,
-      targets: { browsers: 'defaults' },
       exclude: ['transform-async-to-generator', 'transform-regenerator'],
     },
   ]);

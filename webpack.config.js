@@ -160,8 +160,6 @@ const buildConfiguration = () => {
     },
     resolve: {
       extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
-      mainFields: ['module', 'jsnext:main', 'main'],
-      symlinks: false,
       alias: {
         '~': path.resolve(__dirname, './client'),
         jszip: path.resolve(__dirname, './node_modules/jszip/dist/jszip.js'),
@@ -170,7 +168,7 @@ const buildConfiguration = () => {
     module: {
       rules: [
         {
-          test: /\.(mjs|js|jsx|ts|tsx)$/,
+          test: /\.(js|ts|tsx)$/,
           include: [path.resolve(__dirname, 'client')],
           use: ['babel-loader'],
         },

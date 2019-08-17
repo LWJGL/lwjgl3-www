@@ -5,10 +5,10 @@ config.json
 docker-compose.override.yml
 
 # Generated files
-node_modules
-public/**/*.map
-public/js/**/*.js*
-public/css/**/*.css
+/node_modules
+/public/**/*.map
+/public/js/**/*.js*
+/public/css/**/*.css
 *.manifest.json
 *.log
 

@@ -13,25 +13,8 @@
     "url": "https://github.com/LWJGL/lwjgl3-www/issues"
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
-  "prettier": {
-    "printWidth": 120,
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": true,
-    "bracketSpacing": true
-  },
-  "browserslist": [
-    "defaults"
-  ],
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
   "dependencies": {
-    "aws-sdk": "2.509.0",
+    "aws-sdk": "2.512.0",
     "body-parser": "1.19.0",
     "chalk": "2.4.2",
     "compression": "1.7.4",
@@ -53,7 +36,7 @@
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.3.3",
     "@emotion/babel-preset-css-prop": "10.0.14",
-    "@emotion/core": "10.0.15",
+    "@emotion/core": "10.0.16",
     "@reach/router": "1.3.0-alpha.1",
     "@types/jszip": "3.1.6",
     "@types/lodash-es": "4.17.3",
@@ -98,7 +81,7 @@
     "style-loader": "1.0.0",
     "terser": "4.1.4",
     "three": "0.107.0",
-    "typescript": "3.5.3",
+    "typescript": "3.6.1-rc",
     "typescript-styled-plugin": "0.14.0",
     "webpack": "5.0.0-alpha.14",
     "webpack-bundle-analyzer": "3.4.1",
