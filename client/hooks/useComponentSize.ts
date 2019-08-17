@@ -1,5 +1,5 @@
 import { useState, useCallback, useLayoutEffect } from 'react';
-import { SUPPORTS_RESIZE_OBSERVER } from '../services/supports';
+import { SUPPORTS_RESIZE_OBSERVER } from '~/services/supports';
 
 export interface ComponentSize {
   width: number;

@@ -8,7 +8,7 @@ import { IS_IOS } from '~/services/ua';
 import { COLOR_PRIMARY } from '~/theme';
 import { cc } from '~/theme/cc';
 import { Icon, CloudDownload } from '~/components/icons';
-import { useServiceWorker } from '../hooks/useServiceWorker';
+import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 

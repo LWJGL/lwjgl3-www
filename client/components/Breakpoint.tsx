@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { breakpoints, breakpointIndex, BreakPointIndex } from '../theme/media';
+import { breakpoints, breakpointIndex, BreakPointIndex } from '~/theme/media';
 
 interface Context {
   current: number;

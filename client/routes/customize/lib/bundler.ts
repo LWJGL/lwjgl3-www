@@ -1,3 +1,4 @@
+import JSZip from 'jszip';
 import { HTTP_OK } from '~/services/http_status_codes';
 import {
   Binding,

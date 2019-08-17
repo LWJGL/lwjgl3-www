@@ -1,5 +1,5 @@
 import { useAnimationTimer } from './useAnimationTimer';
-import { linear, elastic, inExpo } from '../services/easing';
+import { linear, elastic, inExpo } from '~/services/easing';
 
 export enum Easing {
   Linear = 'linear',

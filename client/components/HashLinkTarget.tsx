@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Location } from '@reach/router';
-import { scrollSmooth } from '../services/scrollSmooth';
-import { usePrevious } from '../hooks/usePrevious';
+import { scrollSmooth } from '~/services/scrollSmooth';
+import { usePrevious } from '~/hooks/usePrevious';
 
 interface OwnProps {
   id: string;

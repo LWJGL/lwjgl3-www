@@ -1,7 +1,7 @@
 import React from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
-// import { NavProgress } from '../components/NavProgress';
+// import { NavProgress } from '~/components/NavProgress';
 
 // Routes
 import { Router } from '@reach/router';

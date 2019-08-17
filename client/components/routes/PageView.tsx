@@ -1,9 +1,9 @@
 import React, { memo, useEffect } from 'react';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
-// import { trackView } from '../../services/ga';
-import { useDocumentTitle } from '../../hooks/useDocumentTitle';
-import { useMetaDescription } from '../../hooks/useMetaDescription';
+// import { trackView } from '~/services/ga';
+import { useDocumentTitle } from '~/hooks/useDocumentTitle';
+import { useMetaDescription } from '~/hooks/useMetaDescription';
 import { WindowLocation } from '@reach/router';
 // import { end } from '../NavProgress';
 

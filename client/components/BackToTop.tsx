@@ -1,5 +1,5 @@
 import React from 'react';
-import { scrollSmooth } from '../services/scrollSmooth';
+import { scrollSmooth } from '~/services/scrollSmooth';
 import { Icon, ArrowUpward } from '~/components/icons';
 
 function scrollTopTop(e: React.MouseEvent<HTMLAnchorElement>) {

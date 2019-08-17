@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDocumentTitle } from '../../hooks/useDocumentTitle';
+import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { RouteComponentProps } from '@reach/router';
 
 export function Miss404(props: RouteComponentProps) {
