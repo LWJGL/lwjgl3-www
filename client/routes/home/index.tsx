@@ -354,16 +354,43 @@ const HomeRoute = (props: RouteComponentProps) => (
 
         <div className="d-flex flex-column flex-sm-row justify-content-center">
           <a
+            href="https://www.vpsserver.com/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl"
+            rel="noopener nofollow external"
+          >
+            <LazyImg
+              className="m-3"
+              width={218}
+              height={50}
+              intrinsicsize="218x50"
+              src="/img/sponsors/vpsserver.com.svg"
+              alt="VPSSERVER.com"
+            />
+          </a>
+          <a
             href="https://www.bestvpn.co/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl"
             rel="noopener nofollow external"
           >
-            <LazyImg className="m-3" width={250} height={47} src="/img/sponsors/bestvpn.png" alt="BestVPN.co" />
+            <LazyImg
+              className="m-3"
+              intrinsicsize="250x27"
+              width={223}
+              height={42}
+              src="/img/sponsors/bestvpn.png"
+              alt="BestVPN.co"
+            />
           </a>
           <a
             href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
             rel="noopener nofollow external"
           >
-            <LazyImg className="m-3" width={50} height={50} src="/img/sponsors/vpnranks-white.png" alt="VPNRanks.com" />
+            <LazyImg
+              className="m-3"
+              intrinsicsize="70x70"
+              width={50}
+              height={50}
+              src="/img/sponsors/vpnranks-white.png"
+              alt="VPNRanks.com"
+            />
           </a>
           <a href="https://www.webhotelier.net/" title="WebHotelier" rel="noopener external">
             <LazyImg
