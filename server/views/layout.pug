@@ -1,21 +1,21 @@
 doctype html
-html(lang="en-US" dir="ltr")
-
+html(lang="en-US", dir="ltr")
   head
     meta(charset="utf-8")
     title LWJGL - Lightweight Java Game Library
-    meta(name="viewport" content="width=device-width,initial-scale=1")
-    meta(name="theme-color" content="#1b2426")
-    meta(name="application-name" content="LWJGL")
-    meta(name="google" content="notranslate")
-    meta(http-equiv="Content-Language" content="en-US")
-    link(rel="shortcut icon" href="/img/fav/favicon-16x16.png")
+    meta(name="viewport", content="width=device-width,initial-scale=1")
+    meta(name="theme-color", content="#1b2426")
+    meta(name="application-name", content="LWJGL")
+    meta(name="google", content="notranslate")
+    meta(http-equiv="Content-Language", content="en-US")
+    link(rel="shortcut icon", href="/img/fav/favicon-16x16.png")
     //- link(rel="icon" type="image/png" href="/img/fav/favicon-16x16.png" sizes="16x16")
-    link(rel="icon" type="image/png" href="/img/fav/favicon-32x32.png" sizes="32x32")
-    link(rel="apple-touch-icon" href="/img/fav/apple-touch-icon.png")
-    link(rel="manifest" href="/manifest.webmanifest")
+    link(rel="icon", type="image/png", href="/img/fav/favicon-32x32.png", sizes="32x32")
+    link(rel="apple-touch-icon", href="/img/fav/apple-touch-icon.png")
+    link(rel="manifest", href="/manifest.webmanifest")
     if ( css !== undefined )
-      link(rel="stylesheet" href=`/css/${css}` media="print" onload="this.media='all'")
-    //- script window.dataLayer=[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','#{ga}',{send_page_view:false,transport_type:'beacon',anonymize_ip:true});
+      link(rel="stylesheet", href=`/css/${css}`, media="print", onload="this.media='all'")
+    //- script.
+      window.dataLayer=[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','#{ga}',{send_page_view:false,transport_type:'beacon',anonymize_ip:true});
   body
     block content
