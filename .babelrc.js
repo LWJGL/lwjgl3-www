@@ -19,20 +19,13 @@ const config = {
     // PRODUCTION && '@babel/plugin-transform-react-inline-elements', // Breaks @emotion
     // ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }], // Used internally by @emotion preset
 
-    // Stage-1
-    // '@babel/plugin-proposal-optional-chaining',
-
-    // Stage-2
-    // '@babel/plugin-proposal-export-namespace-from',
-    // '@babel/plugin-proposal-numeric-separator',
-
     // Stage-3
+    // '@babel/plugin-proposal-optional-chaining',
+    '@babel/plugin-proposal-numeric-separator',
     '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-proposal-class-properties', { spec: false }],
 
-    // https://github.com/MatAtBread/fast-async
-    // async/await using Promises instead of (Re)generator
-    PRODUCTION && !MODERN && ['module:fast-async', { spec: true }],
+    'babel-plugin-transform-async-to-promises',
   ].filter(Boolean),
 };
 
