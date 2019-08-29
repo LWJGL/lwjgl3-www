@@ -1,6 +1,7 @@
 import { State } from '../BuildScript';
 import { Addon, BindingDefinition, BuildType, Language, PlatformSelection } from '../types';
 import { generateDependencies, getVersion, isNativeApplicableToAllPlatforms } from './script';
+import { versionNum } from '../reducer';
 
 export function generateGradle({
   build,
@@ -16,6 +17,7 @@ export function generateGradle({
   selectedAddons,
 }: State) {
   const versionString = getVersion(version, build);
+  const hasBoM = 323 <= versionNum(version);
 
   let script = platformSingle === null ? 'import org.gradle.internal.os.OperatingSystem\n\n' : '';
 
@@ -127,14 +129,23 @@ dependencies {`;
   if (language === Language.Groovy) {
     const v = hardcoded ? versionString : '$lwjglVersion';
     const classifier = !hardcoded || platformSingle == null ? '$lwjglNatives' : `natives-${platformSingle}`;
+    if (hasBoM) {
+      script += `
+\timplementation platform("org.lwjgl:lwjgl-bom:${v}")
+`;
+    }
     script += generateDependencies(
       selected,
       artifacts,
       platform,
       osgi,
-      (artifact, groupId, artifactId, hasEnabledNativePlatform) => `\n\timplementation "${groupId}:${artifactId}:${v}"`,
+      (artifact, groupId, artifactId, hasEnabledNativePlatform) =>
+        `\n\timplementation "${groupId}:${artifactId}${hasBoM ? '' : `:${v}`}"`,
       (artifact, groupId, artifactId) =>
-        `\n\t${guardNative(artifact, platform)}runtimeOnly "${groupId}:${artifactId}:${v}:${classifier}"`
+        `\n\t${guardNative(
+          artifact,
+          platform
+        )}runtimeOnly "${groupId}:${artifactId}:${hasBoM ? '' : `${v}`}:${classifier}"`
     );
 
     selectedAddons.forEach((id: Addon) => {
@@ -144,20 +155,25 @@ dependencies {`;
       script += `\n\timplementation "${groupId}:${artifactId}:${hardcoded ? version : `\${${id}Version}`}"`;
     });
   } else {
-    const v = hardcoded ? `"${versionString}"` : 'lwjglVersion';
+    const v = hasBoM ? '' : `, ${hardcoded ? `"${versionString}"` : 'lwjglVersion'}`;
     const classifier = !hardcoded || platformSingle == null ? 'lwjglNatives' : `"natives-${platformSingle}"`;
+    if (hasBoM) {
+      script += `
+\timplementation(platform("org.lwjgl:lwjgl-bom:${hardcoded ? versionString : '$lwjglVersion'}"))
+`;
+    }
     script += generateDependencies(
       selected,
       artifacts,
       platform,
       osgi,
       (artifact, groupId, artifactId, hasEnabledNativePlatform) =>
-        `\n\timplementation("${groupId}", "${artifactId}", ${v})`,
+        `\n\timplementation("${groupId}", "${artifactId}"${v})`,
       (artifact, groupId, artifactId) =>
         `\n\t${guardNative(
           artifact,
           platform
-        )}runtimeOnly("${groupId}", "${artifactId}", ${v}, classifier = ${classifier})`
+        )}runtimeOnly("${groupId}", "${artifactId}"${v}, classifier = ${classifier})`
     );
 
     selectedAddons.forEach((id: Addon) => {

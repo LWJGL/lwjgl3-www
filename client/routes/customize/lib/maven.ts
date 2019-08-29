@@ -1,6 +1,7 @@
 import { State } from '../BuildScript';
 import { Addon, BuildType, Native } from '../types';
 import { generateDependencies, getArtifactName, getVersion, isNativeApplicableToAllPlatforms } from './script';
+import { versionNum } from '../reducer';
 
 export function generateMaven({
   build,
@@ -22,6 +23,7 @@ export function generateMaven({
   const nl4 = compact ? '' : '\n\t\t\t\t';
   const nl5 = compact ? '' : '\n\t\t\t\t\t';
   const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
+  const hasBoM = 323 <= versionNum(version);
 
   let script = '';
   if (!hardcoded) {
@@ -88,6 +90,20 @@ export function generateMaven({
 \t</repositories>\n\n`;
   }
 
+  if (hasBoM) {
+    script += `\t<dependencyManagement>
+\t\t<dependencies>
+\t\t\t<dependency>
+\t\t\t\t<groupId>org.lwjgl</groupId>
+\t\t\t\t<artifactId>lwjgl-bom</artifactId>
+\t\t\t\t<version>${v}</version>
+\t\t\t\t<scope>import</scope>
+\t\t\t\t<type>pom</type>
+\t\t\t</dependency>
+\t\t</dependencies>
+\t</dependencyManagement>\n\n`;
+  }
+
   script += `\t<dependencies>`;
 
   script += generateDependencies(
@@ -96,9 +112,13 @@ export function generateMaven({
     platform,
     osgi,
     (artifact, groupId, artifactId) =>
-      `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${nl3}<version>${v}</version>${nl2}</dependency>`,
+      `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
+        hasBoM ? '' : `${nl3}<version>${v}</version>`
+      }${nl2}</dependency>`,
     (artifact, groupId, artifactId) => {
-      return `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${nl3}<version>${v}</version>${nl3}<classifier>${
+      return `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
+        hasBoM ? '' : `${nl3}<version>${v}</version>`
+      }${nl3}<classifier>${
         isNativeApplicableToAllPlatforms(artifact, platform)
           ? classifier
           : `\${lwjgl.natives.${getArtifactName(artifact)}}`
