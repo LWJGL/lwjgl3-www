@@ -42,19 +42,26 @@ export function generateMaven({
   }
   if (platformSingle === null) {
     function generateProfile(profile: Native, family: string, arch: string, natives: String) {
-      let classifierOverrides = selected
-        .filter(binding => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
+      let dependencies = selected
+        .filter(binding => {
+          const artifact = artifacts[binding];
+          return (
+            artifact.natives !== undefined &&
+            artifact.natives.includes(profile) &&
+            !isNativeApplicableToAllPlatforms(artifact, platform)
+          );
+        })
         .map(binding => {
-          let artifact = artifacts[binding];
-          let property = `lwjgl.natives.${getArtifactName(artifact)}`;
-          return `<${property}>${
-            artifact.natives !== undefined && artifact.natives.includes(profile) ? `natives-${profile}` : ''
-          }</${property}>`;
+          const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
+          const artifactId = osgi ? `org.lwjgl.${getArtifactName(artifacts[binding])}` : binding;
+          return `${nl4}<dependency>${nl5}<groupId>${groupId}</groupId>${nl5}<artifactId>${artifactId}</artifactId>${
+            hasBoM ? '' : `${nl5}<version>${v}</version>`
+          }${nl5}<classifier>${natives}</classifier>${nl4}</dependency>`;
         });
 
-      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${
-        classifierOverrides.length === 0 ? '' : `${nl4}${classifierOverrides.join(nl4)}`
-      }${nl3}</properties>${nl2}</profile>`;
+      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${nl3}</properties>${
+        dependencies.length === 0 ? '' : `${nl3}<dependencies>${dependencies.join(nl4)}${nl3}</dependencies>`
+      }${nl2}</profile>`;
     }
     script += '\t<profiles>';
     if (platform.linux) {
@@ -116,13 +123,12 @@ export function generateMaven({
         hasBoM ? '' : `${nl3}<version>${v}</version>`
       }${nl2}</dependency>`,
     (artifact, groupId, artifactId) => {
+      if (!isNativeApplicableToAllPlatforms(artifact, platform)) {
+        return '';
+      }
       return `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
         hasBoM ? '' : `${nl3}<version>${v}</version>`
-      }${nl3}<classifier>${
-        isNativeApplicableToAllPlatforms(artifact, platform)
-          ? classifier
-          : `\${lwjgl.natives.${getArtifactName(artifact)}}`
-      }</classifier>${nl2}</dependency>`;
+      }${nl3}<classifier>${classifier}</classifier>${nl2}</dependency>`;
     }
   );
 
