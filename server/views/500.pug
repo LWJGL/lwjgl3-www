@@ -5,10 +5,10 @@ block content
   p An error has occured
 
   h4 Error Details
-  - var hasError = error.message && error.message.length;
-  if ( hasError )
+  - var hasError = error.message !== undefined && error.message.length > 0;
+  if hasError
     pre= error.message
-  else if ( typeof error === 'string' )
+  else if typeof error === 'string'
     pre= error
   else if development
     pre= JSON.stringify(error, null, '  ')

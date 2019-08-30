@@ -247,7 +247,7 @@ const buildConfiguration = () => {
       config.module.rules.push({
         test: /\.scss?$/,
         use: [
-          'style-loader',
+          { loader: 'style-loader', options: { injectType: 'styleTag' } },
           {
             loader: 'css-loader',
             options: {
@@ -262,9 +262,13 @@ const buildConfiguration = () => {
             loader: 'sass-loader',
             options: {
               sourceMap: false,
-              sourceComments: false,
-              outputStyle: 'expanded',
-              precision: 6,
+              webpackImporter: false,
+              sassOptions: {
+                indentedSyntax: false,
+                sourceComments: false,
+                outputStyle: 'expanded',
+                precision: 6,
+              },
             },
           },
         ],

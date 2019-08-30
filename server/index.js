@@ -74,7 +74,7 @@ if (app.locals.development) {
   app.use(
     require('webpack-dev-middleware')(webpackCompiler, {
       lazy: false,
-      logLevel: 'silent', // trace, debug, info, warn, error, silent
+      logLevel: 'error', // trace, debug, info, warn, error, silent
       publicPath: webpackConfig.output.publicPath,
       headers: { 'Access-Control-Allow-Origin': '*' },
     })
