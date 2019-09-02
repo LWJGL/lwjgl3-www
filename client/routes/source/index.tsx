@@ -219,6 +219,25 @@ const SourceRoute = (props: RouteComponentProps) => (
         </div>
 
         <div className="col-lg-4">
+          <h2>Shaderc</h2>
+          <table className="table table-bordered table-dark">
+            <tbody>
+              <BuildBadge
+                title="Linux/macOS"
+                href="https://travis-ci.org/LWJGL-CI/shaderc"
+                src="https://travis-ci.org/LWJGL-CI/shaderc.svg"
+              />
+              <BuildBadge
+                title="Windows"
+                width={106}
+                href="https://ci.appveyor.com/project/LWJGL-CI/shaderc"
+                src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/shaderc?svg=true"
+              />
+            </tbody>
+          </table>
+        </div>
+
+        <div className="col-lg-4">
           <h2>TinyCC</h2>
           <table className="table table-bordered table-dark">
             <tbody>
