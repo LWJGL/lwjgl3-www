@@ -2,7 +2,7 @@ import { Binding, BuildBindings, NATIVE_ALL, Version } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: Version.LWJGL323,
+  version: Version.LWJGL324,
   alias: Version.Nightly,
   byId: {
     ...prev.byId,
