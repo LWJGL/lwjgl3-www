@@ -1,12 +1,8 @@
 'use strict';
-const fs = require('fs');
-const crypto = require('crypto');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
 const { argv } = require('yargs');
-const os = require('os');
-// const globals = require('./server/globals.json');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
@@ -21,145 +17,79 @@ const env = {
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
-// Hash filesystem cache dependencies to generate a unique version string
-const versionHash = crypto.createHash('sha256');
-versionHash.update(fs.readFileSync(path.resolve(__dirname, 'node_modules/.yarn-integrity')));
-versionHash.update(fs.readFileSync(path.resolve(__dirname, 'webpack.config.js')));
-
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
-    bail: true,
+    target: 'web',
     cache: {
       type: 'filesystem',
-      version: versionHash.digest('base64'),
+      buildDependencies: {
+        config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
+      },
     },
     optimization: {
       // minimize: false,
       minimizer: [
         new TerserPlugin({
           cache: true,
-          parallel: Math.max(os.cpus().length, 2),
-          // extractComments: true,
+          parallel: true,
+          sourceMap: SOURCEMAP,
           terserOptions: {
-            compress: {
-              defaults: false,
-              arrows: true,
-              arguments: false,
-              booleans: true,
-              collapse_vars: true,
-              comparisons: true,
-              computed_props: true,
-              conditionals: true,
-              dead_code: true,
-              // drop_console: false,
-              drop_console: true,
-              drop_debugger: true,
-              evaluate: true,
-              expression: false,
-              // global_defs: {},
-              hoist_funs: true,
-              hoist_props: true,
-              hoist_vars: false,
-              if_return: true,
-              /*
-                false -- same as 0
-                0 -- disabled inlining
-                1 -- inline simple functions
-                2 -- inline functions with arguments
-                3 -- inline functions with arguments and variables
-                true -- same as 3
-              */
-              inline: 1,
-              join_vars: true,
-              keep_classnames: false,
-              keep_fargs: false,
-              keep_fnames: false,
-              keep_infinity: true,
-              loops: true,
-              module: false,
-              negate_iife: true,
-              passes: 2,
-              properties: true,
-              pure_funcs: null,
-              pure_getters: true,
-              reduce_funcs: true,
-              reduce_vars: true,
-              sequences: true,
-              side_effects: true,
-              switches: true,
-              toplevel: false,
-              top_retain: null,
-              typeofs: true,
-              unsafe: false,
-              unsafe_arrows: false,
-              unsafe_comps: true,
-              unsafe_Function: true,
-              unsafe_math: false,
-              unsafe_methods: false,
-              unsafe_proto: true,
-              unsafe_regexp: true,
-              unsafe_undefined: false,
-              unused: true,
-              warnings: false,
-            },
             output: {
-              comments: /^KEEP_COMMENT/, // Remove all comments
+              comments: false,
             },
             mangle: true,
-            sourceMap: false,
+            // warnings: true,
             ecma: 5,
-            // ie8: false,
+            module: false,
             // safari10: true,
             // toplevel: true,
+            compress: {
+              drop_console: true,
+              // drop_console: false,
+              // drop_debugger: false,
+              hoist_funs: true,
+              inline: 1,
+              keep_fargs: false,
+              keep_infinity: true,
+              passes: 2,
+              pure_getters: true,
+              // pure_getters: 'strict',
+              unsafe_comps: true,
+            },
           },
         }),
       ],
-      // Include runtime chunk in entry
-      runtimeChunk: false,
-      noEmitOnErrors: true,
-      moduleIds: 'deterministic',
-      chunkIds: PRODUCTION ? 'deterministic' : 'named',
-      removeAvailableModules: PRODUCTION,
       removeEmptyChunks: PRODUCTION,
       mergeDuplicateChunks: PRODUCTION,
+      providedExports: PRODUCTION,
       splitChunks: DEV
         ? false
         : {
-            chunks: 'async',
-            minSize: 1024 * 30,
-            minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '~',
+            // name: true,
             cacheGroups: {
-              vendors: {
+              vendor: {
                 test: /[\\/]node_modules[\\/]/,
                 priority: -10,
+                // name: 'vendor.[contenthash].js', // TODO: bug when outputting content hash, try in future webpack version
               },
-              default: {
-                minChunks: 2,
-                priority: -20,
-                reuseExistingChunk: true,
-              },
+              default: { minChunks: 2, priority: -20, reuseExistingChunk: true },
             },
           },
     },
-    performance: {
-      hints: false,
-    },
-    entry: {
-      main: [path.resolve(__dirname, 'client/main.ts')],
-    },
+    performance: { hints: false },
+    entry: './client/main.ts',
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',
       chunkFilename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
       publicPath: '/js/',
-      pathinfo: false,
+      chunkLoadTimeout: 30 * 1000, // 30sec instead of 2min
+      crossOriginLoading: false, // false | 'anonymous' | 'use-credentials'
+      ecmaVersion: 5,
     },
     resolve: {
-      extensions: ['.mjs', '.js', '.jsx', '.ts', '.tsx', '.json'],
+      extensions: ['.tsx', '.jsx', '.ts', '.js', '.json'],
       alias: {
         '~': path.resolve(__dirname, './client'),
         // Use prebundled jszip that has smaller stream polyfill
@@ -173,7 +103,7 @@ const buildConfiguration = () => {
         {
           test: /\.(js|ts|tsx)$/,
           include: [path.resolve(__dirname, 'client')],
-          use: ['babel-loader'],
+          use: [{ loader: 'babel-loader', options: { cacheDirectory: true } }],
         },
         {
           test: /\.css?$/,
@@ -191,9 +121,7 @@ const buildConfiguration = () => {
         {
           test: /\.svg$/,
           use: [
-            {
-              loader: 'babel-loader',
-            },
+            { loader: 'babel-loader', options: { cacheDirectory: true } },
             {
               loader: 'react-svg-loader',
               options: {
@@ -229,11 +157,7 @@ const buildConfiguration = () => {
     config.output.crossOriginLoading = 'anonymous';
 
     // Enable source maps
-    if (SOURCEMAP) {
-      config.devtool = 'inline-source-map';
-    } else {
-      config.devtool = 'cheap-module-source-map';
-    }
+    config.devtool = SOURCEMAP ? 'inline-source-map' : 'cheap-module-source-map';
 
     if (HMR) {
       // Enable Hot Module Replacement

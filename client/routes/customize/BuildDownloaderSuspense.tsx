@@ -5,7 +5,7 @@ interface Props {
   setIsDownloading: (state: boolean) => void;
 }
 
-const BuildDownloader = lazy(() => import(/* webpackChunkName: "customize$downloader" */ './BuildDownloader'));
+const BuildDownloader = lazy(() => import(/* webpackChunkName: "route-customize$downloader" */ './BuildDownloader'));
 
 export function BuildDownloaderSuspense({ setIsDownloading }: Props) {
   return (

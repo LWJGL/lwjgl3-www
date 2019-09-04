@@ -23,5 +23,5 @@
     ]
   },
   "include": ["./types", "./client"],
-  "exclude": [".idea", ".vscode", ".cache-loader", "public", "**/*.spec.ts"]
+  "exclude": ["**/*.spec.ts"]
 }

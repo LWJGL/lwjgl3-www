@@ -50,7 +50,7 @@ async function main() {
       name,
       file: record.name,
       cdn: record.name,
-      route: name.match(/^route[-]/) !== null, // && name.indexOf('~') === -1,
+      route: name.match(/^route[-]/) !== null && name.indexOf('$') === -1,
       size: record.size,
       gzipSize: gzipSize.sync(src),
     };
@@ -104,12 +104,7 @@ async function main() {
   return { manifest: productionManifest, assetMap };
 }
 
-function ellipsis(str, maxlength = 25) {
-  if (str.length > maxlength) {
-    return str.substr(0, maxlength) + '...';
-  }
-  return str;
-}
+const ellipsis = (str, maxlength = 30) => (str.length > maxlength ? `${str.substr(0, maxlength)}…` : str);
 
 main()
   .then(({ manifest, assetMap }) => {
@@ -137,11 +132,11 @@ main()
       const isEntry = manifest.entry === asset.id || asset.id === 'css';
 
       if (isEntry) {
-        row.push(chalk`{cyan > ${asset.name}}`);
+        row.push(chalk`{cyan ${asset.name}}`);
       } else if (asset.route) {
-        row.push(asset.name);
+        row.push(chalk`{yellow ${asset.name}}`);
       } else {
-        row.push(`* ${ellipsis(asset.name)}`);
+        row.push(`${ellipsis(asset.name)}`);
       }
 
       row.push(formatSize(asset.size, false, isEntry, false), formatSize(asset.gzipSize, true, isEntry, false));

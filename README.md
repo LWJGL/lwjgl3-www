@@ -173,6 +173,16 @@ yarn post-production
 yarn test-production
 ```
 
+### Debugging production output
+
+The following debugging tips may come in handy:
+
+- Disable minification by uncommenting `minimize: false` in `webpack.config.js`
+- Prevent Terser from dropping `console.log` or `debugger` by changing `terserOptions` in `webpack.config.js`
+- Pass `--profiling` to load React profiling builds
+- Output `named` module & chunk ids in `webpack.config.js`
+- Analyze build output with `npx webpack-bundle-analyzer public/js/webpack.manifest.json -h 0.0.0.0` (for full breakdown, change to `all: true` when writing `webpack.manifest.json` in `build-production.js`)
+
 ### Run in production with PM2
 
 ```bash

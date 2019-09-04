@@ -10,7 +10,7 @@ const bootPromises = [];
 
 if (!('fetch' in window)) {
   //@ts-ignore
-  bootPromises.push(import(/* webpackChunkName: "polyfill-fetch" */ 'whatwg-fetch'));
+  bootPromises.push(import(/* webpackChunkName: "vendor-polyfill-fetch" */ 'whatwg-fetch'));
 }
 
 if (bootPromises.length) {

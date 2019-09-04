@@ -4,7 +4,7 @@ import { Link } from '@reach/router';
 import { Icon, KeyboardArrowDown } from '~/components/icons';
 import { Logo } from './Logo';
 
-const Canvas = lazy(() => import(/* webpackChunkName: "home$canvas" */ './Canvas'));
+const Canvas = lazy(() => import(/* webpackChunkName: "route-home$canvas" */ './Canvas'));
 
 const HeroBox: React.FC = props => (
   <section
