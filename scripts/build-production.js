@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const config = require('../webpack.config.js');
-// config.plugins.push(new webpack.ProgressPlugin());
+config.plugins.push(new webpack.ProgressPlugin());
 
 const compiler = webpack(config);
 

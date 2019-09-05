@@ -78,7 +78,9 @@ const buildConfiguration = () => {
           },
     },
     performance: { hints: false },
-    entry: './client/main.ts',
+    entry: {
+      main: ['./client/main.ts'],
+    },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',
