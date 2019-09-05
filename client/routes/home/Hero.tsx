@@ -3,6 +3,7 @@ import { css } from '@emotion/core';
 import { Link } from '@reach/router';
 import { Icon, KeyboardArrowDown } from '~/components/icons';
 import { Logo } from './Logo';
+import { contextOptions } from './contextOptions';
 
 const Canvas = lazy(() => import(/* webpackChunkName: "route-home$canvas" */ './Canvas'));
 
@@ -154,7 +155,10 @@ function CanvasContainer() {
 
     // detect WebGL support
     const cnv = document.createElement('canvas');
-    if (cnv.getContext('webgl') != null || cnv.getContext('experimental-webgl') != null) {
+    if (
+      cnv.getContext('webgl', contextOptions) !== null ||
+      (cnv.getContext('experimental-webgl', contextOptions) as WebGLRenderingContext | null) !== null
+    ) {
       useWebGL = UseWebGL.On;
       setGL(true);
     } else {

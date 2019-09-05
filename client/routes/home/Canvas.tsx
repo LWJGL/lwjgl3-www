@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { css, keyframes } from '@emotion/core';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
+import { contextOptions } from './contextOptions';
 
 const fadeIn = keyframes`
   from {
@@ -69,6 +70,14 @@ export default function HomeCanvas() {
       return;
     }
 
+    let context =
+      canvas.getContext('webgl', contextOptions) ||
+      (canvas.getContext('experimental-webgl', contextOptions) as WebGLRenderingContext | null);
+
+    if (context === null) {
+      return;
+    }
+
     const winW = canvas.parentElement.offsetWidth;
     const winH = canvas.parentElement.offsetHeight;
     let io: IntersectionObserver | null = null;
@@ -96,13 +105,7 @@ export default function HomeCanvas() {
     let scene = new Scene();
     scene.add(group);
 
-    let renderer = new WebGLRenderer({
-      canvas: canvas,
-      antialias: window.devicePixelRatio === 1,
-      alpha: true,
-      //@ts-ignore
-      powerPreference: 'low-power',
-    });
+    let renderer = new WebGLRenderer({ canvas, context });
     if (window.devicePixelRatio !== undefined) {
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     }
