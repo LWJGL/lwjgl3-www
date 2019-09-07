@@ -73,7 +73,7 @@ export function getBuild(state: BuildStore): SelectedBuildConfig {
   };
 }
 
-export async function fetchManifest(path: string): Promise<Array<string>> {
+export const fetchManifest = async (path: string): Promise<Array<string>> => {
   const response = await fetch(`/bin/${path}`, {
     method: 'GET',
     mode: 'same-origin',
@@ -88,7 +88,7 @@ export async function fetchManifest(path: string): Promise<Array<string>> {
   }
 
   return await response.json();
-}
+};
 
 export function getFiles(
   path: string,

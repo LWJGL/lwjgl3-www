@@ -6,7 +6,7 @@ const { argv } = require('yargs');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
-const HMR = argv.nohmr === undefined;
+const HMR = DEV && argv.nohmr === undefined;
 const SOURCEMAP = argv.sourcemap !== undefined;
 const ENABLE_PROFILING = argv.profiling !== undefined;
 
@@ -81,7 +81,7 @@ const buildConfiguration = () => {
           },
     },
     performance: { hints: false },
-    entry: { main: ['./client/main.ts'] },
+    entry: { main: [PRODUCTION ? './client/main.ts' : './client/index.js'] },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',

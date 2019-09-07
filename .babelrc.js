@@ -1,9 +1,9 @@
-const { argv } = require('yargs');
+// const { argv } = require('yargs');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const MODERN = process.env.MODERN === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
-const HMR = argv.nohmr === undefined;
+// const HMR = DEV && argv.nohmr === undefined;
 
 const config = {
   presets: ['@emotion/babel-preset-css-prop', '@babel/preset-typescript'],
