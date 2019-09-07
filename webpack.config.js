@@ -14,6 +14,7 @@ const env = {
   // ANALYTICS_TRACKING_ID: JSON.stringify(globals.google_analytics_id),
   FLAG_PRODUCTION: String(PRODUCTION),
   FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
+  FLAG_HMR: String(HMR),
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
@@ -24,11 +25,13 @@ const buildConfiguration = () => {
     cache: {
       type: 'filesystem',
       buildDependencies: {
-        config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
+        // config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
+        config: [__filename],
       },
     },
     optimization: {
       // minimize: false,
+      innerGraph: false, // remove if building with @emotion is fixed in future webpack versions
       minimizer: [
         new TerserPlugin({
           cache: true,
@@ -78,9 +81,7 @@ const buildConfiguration = () => {
           },
     },
     performance: { hints: false },
-    entry: {
-      main: ['./client/main.ts'],
-    },
+    entry: { main: ['./client/main.ts'] },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',
@@ -163,7 +164,6 @@ const buildConfiguration = () => {
 
     if (HMR) {
       // Enable Hot Module Replacement
-      // config.entry.main.unshift(require.resolve('react-refresh/runtime'));
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
     }

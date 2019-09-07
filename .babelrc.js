@@ -1,8 +1,9 @@
+const { argv } = require('yargs');
+
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const MODERN = process.env.MODERN === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
-// const { argv } = require('yargs');
-// const HMR = argv.nohmr === undefined;
+const HMR = argv.nohmr === undefined;
 
 const config = {
   presets: ['@emotion/babel-preset-css-prop', '@babel/preset-typescript'],
@@ -13,10 +14,7 @@ const config = {
     DEV && '@babel/plugin-transform-react-jsx-source',
     DEV && '@babel/plugin-transform-react-display-name',
     PRODUCTION && ['transform-react-remove-prop-types', { mode: 'remove', removeImport: true }],
-    PRODUCTION && 'transform-react-pure-class-to-function',
-    // PRODUCTION && '@babel/plugin-transform-react-constant-elements', // Breaks SVG, Larger file size but faster reconciliation and less GC pressure
     PRODUCTION && 'babel-plugin-optimize-react',
-    // PRODUCTION && '@babel/plugin-transform-react-inline-elements', // Breaks @emotion
     // ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }], // Used internally by @emotion preset
 
     // Stage-3
