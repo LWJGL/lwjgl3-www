@@ -112,7 +112,7 @@ Default config if file is missing:
 
 ```json
 {
-  "port": 3000,
+  "port": 80,
   "host": "0.0.0.0"
 }
 ```
@@ -120,7 +120,7 @@ Default config if file is missing:
 ### Environment variables
 
 NODE_ENV=production (default=development)
-PORT=80 (default=3000)
+PORT=8088 (default=80)
 HOST=127.0.0.1 (default=0.0.0.0)
 
 ## Production

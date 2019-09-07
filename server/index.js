@@ -1,6 +1,4 @@
 'use strict';
-
-// Server4
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
@@ -24,7 +22,7 @@ const configFile = path.resolve(__dirname, '../config.json');
 const config = fileExists(configFile) ? JSON.parse(fs.readFileSync(configFile)) : {};
 
 const PRODUCT = 'lwjgl.org';
-const PORT = config.port || parseInt(process.env.PORT, 10) || 3000;
+const PORT = config.port || parseInt(process.env.PORT, 10) || 80;
 const HOST = config.host || process.env.HOST || '0.0.0.0';
 
 const app = express();
