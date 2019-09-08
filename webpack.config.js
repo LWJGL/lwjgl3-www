@@ -25,13 +25,11 @@ const buildConfiguration = () => {
     cache: {
       type: 'filesystem',
       buildDependencies: {
-        // config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
-        config: [__filename],
+        config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
       },
     },
     optimization: {
       // minimize: false,
-      innerGraph: false, // remove if building with @emotion is fixed in future webpack versions
       minimizer: [
         new TerserPlugin({
           cache: true,
