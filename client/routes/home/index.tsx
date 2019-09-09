@@ -352,9 +352,9 @@ const HomeRoute = (props: RouteComponentProps) => (
       <section className="container py-5 text-center">
         <h3>Our Gold Sponsors:</h3>
 
-        <div className="d-flex flex-column flex-sm-row justify-content-center">
+        <div className="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center">
           <a
-            href="https://www.vpsserver.com/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl"
+            href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
             rel="noopener nofollow external"
           >
             <LazyImg
@@ -367,7 +367,7 @@ const HomeRoute = (props: RouteComponentProps) => (
             />
           </a>
           <a
-            href="https://www.bestvpn.co/?utm_source=opencollective&amp;utm_medium=github&amp;utm_campaign=lwjgl"
+            href="https://www.bestvpn.co/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
             rel="noopener nofollow external"
           >
             <LazyImg
@@ -392,13 +392,17 @@ const HomeRoute = (props: RouteComponentProps) => (
               alt="VPNRanks.com"
             />
           </a>
-          <a href="https://www.webhotelier.net/" title="WebHotelier" rel="noopener external">
+          <a
+            href="https://vpngorilla.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+            rel="noopener nofollow external"
+          >
             <LazyImg
               className="m-3"
-              height={50}
-              alt="WebHotelier"
-              src="/svg/webhotelier.svg"
-              intrinsicsize="566.9x185.8"
+              intrinsicsize="169x22"
+              width={169}
+              height={22}
+              src="/img/sponsors/vpn-gorilla-white-169x22.png"
+              alt="VPNGorilla.com"
             />
           </a>
         </div>
