@@ -405,6 +405,19 @@ const HomeRoute = (props: RouteComponentProps) => (
               alt="VPNGorilla.com"
             />
           </a>
+          <a
+            href="https://moneypug.co.uk/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+            rel="noopener nofollow external"
+          >
+            <LazyImg
+              className="m-3"
+              intrinsicsize="280x64"
+              width={140}
+              height={32}
+              src="/img/sponsors/moneypug-white.png"
+              alt="Money Pug"
+            />
+          </a>
         </div>
       </section>
     </div>
