@@ -355,7 +355,7 @@ const HomeRoute = (props: RouteComponentProps) => (
         <div className="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center">
           <a
             href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
-            rel="noopener nofollow external"
+            rel="sponsored noopener"
           >
             <LazyImg
               className="m-3"
@@ -368,7 +368,7 @@ const HomeRoute = (props: RouteComponentProps) => (
           </a>
           <a
             href="https://www.bestvpn.co/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
-            rel="noopener nofollow external"
+            rel="sponsored noopener"
           >
             <LazyImg
               className="m-3"
@@ -381,7 +381,7 @@ const HomeRoute = (props: RouteComponentProps) => (
           </a>
           <a
             href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
-            rel="noopener nofollow external"
+            rel="sponsored noopener"
           >
             <LazyImg
               className="m-3"
@@ -394,7 +394,7 @@ const HomeRoute = (props: RouteComponentProps) => (
           </a>
           <a
             href="https://vpngorilla.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
-            rel="noopener nofollow external"
+            rel="sponsored noopener"
           >
             <LazyImg
               className="m-3"
@@ -407,7 +407,7 @@ const HomeRoute = (props: RouteComponentProps) => (
           </a>
           <a
             href="https://moneypug.co.uk/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
-            rel="noopener nofollow external"
+            rel="sponsored noopener"
           >
             <LazyImg
               className="m-3"
