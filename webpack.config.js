@@ -79,7 +79,7 @@ const buildConfiguration = () => {
           },
     },
     performance: { hints: false },
-    entry: { main: [PRODUCTION ? './client/main.ts' : './client/index.js'] },
+    entry: { main: ['./client/main.ts'] },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',
@@ -164,6 +164,10 @@ const buildConfiguration = () => {
       // Enable Hot Module Replacement
       config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
+
+      // React Refresh
+      const ReactRefreshPlugin = require('@webhotelier/webpack-fast-refresh');
+      config.plugins.unshift(new ReactRefreshPlugin());
     }
 
     // Enable CSS HMR instead of loading CSS pre-built from disk
