@@ -27,7 +27,7 @@ export const BuildConfigArea: React.FC = ({ children }) => {
           {children}
         </div>
       ) : null,
-    [slice.build]
+    [slice.build, children]
   );
 };
 

@@ -54,7 +54,7 @@ export function BuildPanel({ build }: Props) {
     if (!showStatus) {
       setShowStatus(true);
     }
-  }, []);
+  }, [showStatus, setShowStatus]);
 
   return useMemo(() => {
     const { buildSelected, isSelected, spec } = slice;

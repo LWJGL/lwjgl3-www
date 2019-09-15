@@ -6,12 +6,10 @@ import { BreakpointProvider } from '~/components/Breakpoint';
 import '~/components/routes/PageView';
 import '~/components/HashLinkTarget';
 
-function App() {
+export function App() {
   return (
     <BreakpointProvider>
       <Layout />
     </BreakpointProvider>
   );
 }
-
-export default App;

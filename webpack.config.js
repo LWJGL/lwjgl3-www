@@ -167,7 +167,7 @@ const buildConfiguration = () => {
 
       // React Refresh
       const ReactRefreshPlugin = require('@webhotelier/webpack-fast-refresh');
-      config.plugins.unshift(new ReactRefreshPlugin());
+      config.plugins.push(new ReactRefreshPlugin());
     }
 
     // Enable CSS HMR instead of loading CSS pre-built from disk
