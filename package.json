@@ -46,7 +46,7 @@
     "@types/scheduler": "0.12.1",
     "@typescript-eslint/eslint-plugin": "2.2.0",
     "@typescript-eslint/parser": "2.2.0",
-    "@webhotelier/webpack-fast-refresh": "1.0.2",
+    "@webhotelier/webpack-fast-refresh": "1.0.4",
     "autoprefixer": "9.6.1",
     "babel-loader": "8.0.6",
     "babel-plugin-optimize-react": "0.0.4",
@@ -94,6 +94,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=development node server",
+    "debug": "NODE_ENV=development node --inspect --preserve-symlinks server",
     "lint": "eslint --ext .ts,.js,.tsx client/",
     "test-production": "NODE_ENV=production node server --test --s3proxy --nocache --pretty",
     "run-production": "NODE_ENV=production node server --s3proxy",

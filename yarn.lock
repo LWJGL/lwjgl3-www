@@ -1154,10 +1154,10 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@webhotelier/webpack-fast-refresh@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@webhotelier/webpack-fast-refresh/-/webpack-fast-refresh-1.0.2.tgz#045627ea8e95312fffae14ec4800fd338481de54"
-  integrity sha512-eS5JtIxgd4Tsa4CYLwAhqKHWUH4VkWzngIiLhCx9oTWNvuxLmDadN1MRN3kbg98XM2Z9Uy1yhidJUS7ZrsEnpw==
+"@webhotelier/webpack-fast-refresh@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@webhotelier/webpack-fast-refresh/-/webpack-fast-refresh-1.0.4.tgz#c94d7700fdd4c920b46293ec39106394e99a3943"
+  integrity sha512-egc+tCQnTH0gBdtqaOAN2DWjXuyrMVDCe+MvgH9eseNZK7VnOtSkwjLPzgSQSvicl9Z7Z9L9rkgaBGbQPQosuw==
 
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
