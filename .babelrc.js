@@ -23,7 +23,7 @@ const config = {
     '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-proposal-class-properties', { spec: false }],
 
-    'babel-plugin-transform-async-to-promises',
+    PRODUCTION && 'babel-plugin-transform-async-to-promises',
   ].filter(Boolean),
 };
 
