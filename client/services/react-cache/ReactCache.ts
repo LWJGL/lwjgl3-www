@@ -13,11 +13,6 @@ interface PendingResult {
   value: Suspender;
 }
 
-interface PendingResult {
-  status: 0;
-  value: Suspender;
-}
-
 interface ResolvedResult<V> {
   status: 1;
   value: V;
@@ -131,6 +126,6 @@ export function createResource<I, V>(
   return resource;
 }
 
-// export function unstable_setGlobalCacheLimit(limit: number) {
-//   lru.setLimit(limit);
-// }
+export function setGlobalCacheLimit(limit: number) {
+  lru.setLimit(limit);
+}
