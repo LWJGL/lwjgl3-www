@@ -36,7 +36,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
     if (error !== undefined) {
       return <Component error={error} info={info} />;
     } else {
-      return children !== undefined ? children : null;
+      return children ?? null;
     }
   }
 }

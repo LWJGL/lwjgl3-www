@@ -18,10 +18,11 @@ const config = {
     // ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }], // Used internally by @emotion preset
 
     // Stage-3
-    // '@babel/plugin-proposal-optional-chaining',
-    '@babel/plugin-proposal-numeric-separator',
     '@babel/plugin-syntax-dynamic-import',
-    ['@babel/plugin-proposal-class-properties', { spec: false }],
+    ['@babel/plugin-proposal-class-properties', { loose: true }],
+    '@babel/plugin-proposal-numeric-separator',
+    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: true }],
+    ['@babel/plugin-proposal-optional-chaining', { loose: true }],
 
     PRODUCTION && 'babel-plugin-transform-async-to-promises',
   ].filter(Boolean),
