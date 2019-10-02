@@ -24,7 +24,7 @@ export const FolderTH = css`
 
 interface Props {
   path: string;
-  loading: boolean;
+  loading?: boolean;
 }
 
 export const Folder: React.FC<Props> = ({ path, loading = false }) => {
