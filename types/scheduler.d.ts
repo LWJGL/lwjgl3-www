@@ -1,4 +1,4 @@
-// Type definitions for scheduler 0.14
+// Type definitions for scheduler 0.16.1
 declare module 'scheduler' {
   export type FrameCallbackType = () => FrameCallbackType | void;
   export interface CallbackNode {
@@ -22,9 +22,10 @@ declare module 'scheduler' {
   export function unstable_wrapCallback(callback: FrameCallbackType): () => FrameCallbackType | undefined;
   export function unstable_getCurrentPriorityLevel(): number;
   export function unstable_shouldYield(): boolean;
+  export function unstable_requestPaint(): boolean;
   export function unstable_continueExecution(): void;
   export function unstable_pauseExecution(): void;
   export function unstable_getFirstCallbackNode(): CallbackNode | null;
   export function unstable_now(): number;
-  // export function unstable_forceFrameRate(): void;
+  export function unstable_forceFrameRate(fps: number): void;
 }
