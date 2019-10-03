@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aws-sdk": "2.540.0",
+    "aws-sdk": "2.541.0",
     "body-parser": "1.19.0",
     "chalk": "3.0.0-beta.1",
     "compression": "1.7.4",
@@ -38,7 +38,7 @@
     "@babel/preset-react": "7.0.0",
     "@babel/preset-typescript": "7.6.0",
     "@emotion/babel-preset-css-prop": "10.0.17",
-    "@emotion/core": "10.0.17",
+    "@emotion/core": "10.0.20",
     "@prettier/plugin-pug": "1.0.3",
     "@reach/router": "1.3.0-beta.0",
     "@types/jszip": "3.1.6",
