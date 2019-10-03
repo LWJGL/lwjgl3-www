@@ -5,6 +5,7 @@ import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getFi
 import { useStoreRef } from './Store';
 import { BuildType } from './types';
 import JSZip from 'jszip';
+import { useMountedRef } from '~/hooks/useMountedRef';
 
 interface Props {
   setIsDownloading: (state: boolean) => void;
@@ -14,15 +15,12 @@ type Progress = Array<string>;
 
 export default function BuildDownloader({ setIsDownloading }: Props) {
   const storeRef = useStoreRef();
-  const isMounted = useRef<boolean>(false);
-  const usingNetwork = useRef<boolean>(false);
+  const isMounted = useMountedRef();
+  const usingNetwork = useRef(false);
 
   const [progress, setProgress] = useState<Progress>(['Downloading file manifest']);
 
   useEffect(() => {
-    // onMount
-    isMounted.current = true;
-
     function downloadCancel(msg?: string) {
       if (msg !== undefined) {
         alert(msg);
@@ -108,8 +106,6 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
     beginDownload();
 
     return () => {
-      isMounted.current = false;
-
       if (usingNetwork.current) {
         // This will cause an AbortController signal to fire.
         // Firing the signal will reject the fetch promise which will then be caught
@@ -117,7 +113,7 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
         abortDownload();
       }
     };
-  }, []);
+  }, [setIsDownloading, storeRef, isMounted]);
 
   return (
     <div className="container">

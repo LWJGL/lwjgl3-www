@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
+import { useMountedRef } from '~/hooks/useMountedRef';
 
 interface Props {
   className?: string;
@@ -25,7 +26,7 @@ export const Trap: React.FC<Props> = ({
   clickOutsideDeactivates = true,
 }) => {
   const divRef = useRef<HTMLDivElement>(null);
-  const isMounted = useRef<boolean>(false);
+  const isMounted = useMountedRef();
   const returnFocus = useRef<HTMLElement | null>(null);
 
   const focusTrap = useRef<FocusTrap | null>(null);
@@ -45,7 +46,6 @@ export const Trap: React.FC<Props> = ({
       return trap;
     }
 
-    isMounted.current = true;
     const trap = divRef.current;
     if (trap === null) {
       return;
@@ -72,7 +72,6 @@ export const Trap: React.FC<Props> = ({
     lastTrap = focusTrap.current;
 
     return () => {
-      isMounted.current = false;
       if (focusTrap.current !== null) {
         focusTrap.current.deactivate({ onDeactivate: false });
       }
