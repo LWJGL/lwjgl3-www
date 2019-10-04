@@ -9,15 +9,22 @@ declare module 'scheduler' {
     prev: CallbackNode | null;
   }
 
+  // Priorities
   export const unstable_ImmediatePriority = 1;
   export const unstable_UserBlockingPriority = 2;
   export const unstable_NormalPriority = 3;
-  export const unstable_IdlePriority = 5;
   export const unstable_LowPriority = 4;
+  export const unstable_IdlePriority = 5;
+
   export type PriorityLevels = 1 | 2 | 3 | 4 | 5;
-  export function unstable_runWithPriority<T>(priorityLevel: number, eventHandler: () => T): T | undefined;
+
+  export function unstable_runWithPriority<T>(priorityLevel: PriorityLevels, eventHandler: () => T): T | undefined;
   export function unstable_next<T>(eventHandler: () => T): T | undefined;
-  export function unstable_scheduleCallback(priorityLevel: number, callback: FrameCallbackType): CallbackNode;
+  export function unstable_scheduleCallback(
+    priorityLevel: PriorityLevels,
+    callback: FrameCallbackType,
+    options?: { delay?: number; timeout?: number }
+  ): CallbackNode;
   export function unstable_cancelCallback(callbackNode: CallbackNode): void;
   export function unstable_wrapCallback(callback: FrameCallbackType): () => FrameCallbackType | undefined;
   export function unstable_getCurrentPriorityLevel(): number;
