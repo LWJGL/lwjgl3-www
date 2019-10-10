@@ -64,22 +64,12 @@ const buildConfiguration = () => {
       removeEmptyChunks: PRODUCTION,
       mergeDuplicateChunks: PRODUCTION,
       providedExports: PRODUCTION,
-      splitChunks: DEV
-        ? false
-        : {
-            // name: true,
-            cacheGroups: {
-              vendor: {
-                test: /[\\/]node_modules[\\/]/,
-                priority: -10,
-                // name: 'vendor.[contenthash].js', // TODO: bug when outputting content hash, try in future webpack version
-              },
-              default: { minChunks: 2, priority: -20, reuseExistingChunk: true },
-            },
-          },
     },
     performance: { hints: false },
     entry: { main: ['./client/main.ts'] },
+    // experiments: {
+    //   outputModule: true,
+    // },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',
@@ -88,6 +78,7 @@ const buildConfiguration = () => {
       chunkLoadTimeout: 30 * 1000, // 30sec instead of 2min
       crossOriginLoading: false, // false | 'anonymous' | 'use-credentials'
       ecmaVersion: 5,
+      // module: true,
     },
     resolve: {
       extensions: ['.tsx', '.jsx', '.ts', '.js', '.json'],
@@ -203,8 +194,10 @@ const buildConfiguration = () => {
       });
     }
   } else {
+    // // Debug output
     // config.optimization.moduleIds = 'named';
     // config.optimization.chunkIds = 'named';
+
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
       config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
