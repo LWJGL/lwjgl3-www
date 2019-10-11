@@ -362,6 +362,7 @@ const StaticContent = () => {
             <a
               href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
               rel="sponsored noopener"
+              target="_blank"
             >
               <LazyImg
                 className="m-3"
@@ -375,6 +376,7 @@ const StaticContent = () => {
             <a
               href="https://www.bestvpn.co/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
               rel="sponsored noopener"
+              target="_blank"
             >
               <LazyImg
                 className="m-3"
@@ -388,6 +390,7 @@ const StaticContent = () => {
             <a
               href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
               rel="sponsored noopener"
+              target="_blank"
             >
               <LazyImg
                 className="m-3"
@@ -401,6 +404,7 @@ const StaticContent = () => {
             <a
               href="https://vpngorilla.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
               rel="sponsored noopener"
+              target="_blank"
             >
               <LazyImg
                 className="m-3"
@@ -411,16 +415,13 @@ const StaticContent = () => {
                 alt="VPNGorilla.com"
               />
             </a>
-            <a
-              href="https://moneypug.co.uk/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
-              rel="sponsored noopener"
-            >
+            <a href="https://opencollective.com/casinotop-com" rel="sponsored noopener" target="_blank">
               <LazyImg
                 className="m-3"
-                intrinsicsize="280x64"
-                width={140}
-                height={32}
-                src="/img/sponsors/moneypug-white.png"
+                intrinsicsize="128x128"
+                width={64}
+                height={64}
+                src="/img/sponsors/casinotop.png"
                 alt="Money Pug"
               />
             </a>
