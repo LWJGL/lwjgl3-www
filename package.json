@@ -86,7 +86,7 @@
     "three": "0.109.0",
     "typescript": "3.7.0-beta",
     "typescript-styled-plugin": "0.14.0",
-    "webpack": "5.0.0-alpha.31",
+    "webpack": "5.0.0-beta.0",
     "webpack-dev-middleware": "3.7.2",
     "webpack-hot-middleware": "2.25.0",
     "whatwg-fetch": "3.0.0"
