@@ -415,7 +415,7 @@ const StaticContent = () => {
                 alt="VPNGorilla.com"
               />
             </a>
-            <a href="https://opencollective.com/casinotop-com" rel="sponsored noopener" target="_blank">
+            <a href="https://www.casinotop.com/" rel="sponsored noopener" target="_blank">
               <LazyImg
                 className="m-3"
                 intrinsicsize="128x128"
