@@ -14,5 +14,13 @@ export default (prev: BuildBindings): BuildBindings => ({
       natives: NATIVE_ALL,
       website: 'http://bulletphysics.org/',
     },
+    [Binding.SPVC]: {
+      id: Binding.SPVC,
+      title: 'SPIRV-Cross',
+      description:
+        'A library for performing reflection on SPIR-V and disassembling SPIR-V back to high level languages.',
+      natives: NATIVE_ALL,
+      website: 'https://github.com/KhronosGroup/SPIRV-Cross',
+    },
   },
 });

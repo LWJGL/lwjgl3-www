@@ -238,6 +238,25 @@ const SourceRoute = (props: RouteComponentProps) => (
         </div>
 
         <div className="col-lg-4">
+          <h2>SPIRV-Cross</h2>
+          <table className="table table-bordered table-dark">
+            <tbody>
+              <BuildBadge
+                title="Linux/macOS"
+                href="https://travis-ci.org/LWJGL-CI/SPIRV-Cross"
+                src="https://travis-ci.org/LWJGL-CI/SPIRV-Cross.svg"
+              />
+              <BuildBadge
+                title="Windows"
+                width={106}
+                href="https://ci.appveyor.com/project/LWJGL-CI/SPIRV-Cross"
+                src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/SPIRV-Cross?svg=true"
+              />
+            </tbody>
+          </table>
+        </div>
+
+        <div className="col-lg-4">
           <h2>TinyCC</h2>
           <table className="table table-bordered table-dark">
             <tbody>

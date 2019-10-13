@@ -48,6 +48,7 @@ export enum Binding {
   REMOTERY = 'lwjgl-remotery',
   RPMALLOC = 'lwjgl-rpmalloc',
   SHADERC = 'lwjgl-shaderc',
+  SPVC = 'lwjgl-spvc',
   SSE = 'lwjgl-sse',
   STB = 'lwjgl-stb',
   TINYEXR = 'lwjgl-tinyexr',
