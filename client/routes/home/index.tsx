@@ -425,6 +425,15 @@ const StaticContent = () => {
                 alt="Money Pug"
               />
             </a>
+            <a href="https://loanscouter.com/" rel="noopener" target="_blank">
+              <LazyImg
+                className="m-3"
+                intrinsicsize="463x184"
+                height={64}
+                src="/img/sponsors/loanscouter-white.svg"
+                alt="Loan Scouter"
+              />
+            </a>
           </div>
         </section>
       </div>
