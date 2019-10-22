@@ -1,4 +1,4 @@
-import React, { Fragment, Suspense } from 'react';
+import React, { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
 import { Link } from '@reach/router';
 // import { unstable_createResource as createResource } from 'react-cache';
 import { createResource } from '~/services/react-cache/ReactCache';
@@ -49,16 +49,19 @@ interface Props {
   path: string;
 }
 
-export function Browser({ path /*: loading*/ }: Props) {
-  /*
+export function Browser({ path: loading }: Props) {
   const [path, setPath] = useState(loading);
+  const [startTransition, isPending] = useTransition({
+    timeoutMs: 1250,
+  });
 
   useEffect(() => {
     if (loading !== path) {
-      setPath(loading);
+      startTransition(() => {
+        setPath(loading);
+      });
     }
-  }, [loading, path]);
-  */
+  }, [startTransition, loading, path]);
 
   return (
     <div className="table-responsive-md mt-sm-4">
@@ -90,7 +93,7 @@ export function Browser({ path /*: loading*/ }: Props) {
             </tr>
           )}
           <Suspense fallback={<SpinnerRow />}>
-            <Contents path={path} /* loading={loading}*/ />
+            <Contents path={path} loading={loading} />
           </Suspense>
         </tbody>
       </table>
@@ -104,18 +107,18 @@ interface ContentProps {
   loading?: string;
 }
 
-function Contents({ path /*, loading*/ }: ContentProps) {
+function Contents({ path, loading }: ContentProps) {
   const { folders, files } = BrowserContentsResource.read(path);
   const basePath = path.length ? path + '/' : '';
   return (
-    <Fragment>
+    <>
       {folders.map(folder => {
         const fullPath = `${basePath}${folder}`;
-        return <Folder key={fullPath} path={fullPath} /* loading={loading === fullPath}*/ />;
+        return <Folder key={fullPath} path={fullPath} loading={loading === fullPath} />;
       })}
       {files.map(file => (
         <File key={`${basePath}${file}`} path={`${basePath}${file}`} />
       ))}
-    </Fragment>
+    </>
   );
 }
