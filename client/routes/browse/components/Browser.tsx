@@ -1,67 +1,29 @@
 import React, { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
 import { Link } from '@reach/router';
-// import { unstable_createResource as createResource } from 'react-cache';
-import { createResource } from '~/services/react-cache/ReactCache';
 import { Icon, Cloud } from '~/components/icons';
-import { HTTP_OK } from '~/services/http_status_codes';
 import { File } from './File';
-import { Folder, FolderTH, SpinnerRow } from './Folder';
-
-// Contents Resource
-
-const BrowserContentsResource = createResource<string, FolderData>(fetchContents);
-
-interface FolderData {
-  path: string;
-  files: Array<string>;
-  folders: Array<string>;
-}
-
-type FolderDataAPI = Partial<FolderData>;
-
-async function fetchContents(path: string): Promise<FolderData> {
-  if (path === '') {
-    return {
-      path: '',
-      files: [],
-      folders: ['addons', 'release', 'stable', 'nightly'],
-    };
-  }
-
-  const response = await fetch(`/list?path=${path}/`);
-  if (response.status !== HTTP_OK) {
-    throw response.statusText;
-  }
-
-  let contents: FolderDataAPI = await response.json();
-  contents.path = path;
-  if (contents.files === undefined) {
-    contents.files = [];
-  }
-  contents.folders =
-    contents.folders === undefined ? [] : contents.folders.map(name => name.substring(0, name.length - 1));
-
-  return contents as FolderData;
-}
+import { Folder, FolderWrap, SpinnerRow, FolderError } from './Folder';
+import { ErrorBoundary } from '~/components/ErrorBoundary';
+import { PathResource } from '../PathResource';
 
 // Browser
 interface Props {
   path: string;
 }
 
-export function Browser({ path: loading }: Props) {
-  const [path, setPath] = useState(loading);
+export function Browser({ path: targetPath }: Props) {
+  const [path, setPath] = useState(targetPath);
   const [startTransition, isPending] = useTransition({
-    timeoutMs: 1250,
+    timeoutMs: 2250, // 0.75 spinner circle * 3
   });
 
   useEffect(() => {
-    if (loading !== path) {
+    if (targetPath !== path) {
       startTransition(() => {
-        setPath(loading);
+        setPath(targetPath);
       });
     }
-  }, [startTransition, loading, path]);
+  }, [startTransition, targetPath, path]);
 
   return (
     <div className="table-responsive-md mt-sm-4">
@@ -86,15 +48,15 @@ export function Browser({ path: loading }: Props) {
         </thead>
         <tbody>
           {path !== '' && (
-            <tr>
-              <th css={FolderTH} scope="row" colSpan={2}>
-                <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
-              </th>
-            </tr>
+            <FolderWrap>
+              <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
+            </FolderWrap>
           )}
-          <Suspense fallback={<SpinnerRow />}>
-            <Contents path={path} loading={loading} />
-          </Suspense>
+          <ErrorBoundary fallback={FolderError}>
+            <Suspense fallback={<SpinnerRow />}>
+              <FolderContents path={path} targetPath={targetPath} />
+            </Suspense>
+          </ErrorBoundary>
         </tbody>
       </table>
     </div>
@@ -104,17 +66,17 @@ export function Browser({ path: loading }: Props) {
 // Browser Contents
 interface ContentProps {
   path: string;
-  loading?: string;
+  targetPath?: string;
 }
 
-function Contents({ path, loading }: ContentProps) {
-  const { folders, files } = BrowserContentsResource.read(path);
+function FolderContents({ path, targetPath }: ContentProps) {
+  const { folders, files } = PathResource.read(path);
   const basePath = path.length ? path + '/' : '';
   return (
     <>
       {folders.map(folder => {
         const fullPath = `${basePath}${folder}`;
-        return <Folder key={fullPath} path={fullPath} loading={loading === fullPath} />;
+        return <Folder key={fullPath} path={fullPath} loading={targetPath === fullPath} />;
       })}
       {files.map(file => (
         <File key={`${basePath}${file}`} path={`${basePath}${file}`} />
