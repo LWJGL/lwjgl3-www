@@ -2,7 +2,7 @@ import React from 'react';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { ErrorProps } from '../ErrorBoundary';
 
-export function PageError({ error, info }: ErrorProps) {
+export function PageError({ error }: ErrorProps) {
   useDocumentTitle('An error has occured');
 
   return (
@@ -15,9 +15,6 @@ export function PageError({ error, info }: ErrorProps) {
       <section className="container small py-5 text-muted">
         <h5>Error information</h5>
         <p>{error.message}</p>
-        <pre className="text-muted">
-          <code>{JSON.stringify(info, null, 2).replace(/\\n/g, '\n')}</code>
-        </pre>
       </section>
     </main>
   );

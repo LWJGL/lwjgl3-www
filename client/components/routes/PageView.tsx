@@ -107,7 +107,7 @@ export const PageView: React.FC<Props> = memo(
     // useEffect(() => void trackView({ page_path: `${pathname}${search}` }), [pathname, search]);
 
     if (FLAG_PRODUCTION) {
-      return <ErrorBoundary render={PageError}>{children}</ErrorBoundary>;
+      return <ErrorBoundary fallback={PageError}>{children}</ErrorBoundary>;
     } else {
       return <>{children}</>;
     }
