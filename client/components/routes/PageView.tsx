@@ -5,7 +5,6 @@ import { PageError } from './PageError';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
 import { WindowLocation } from '@reach/router';
-// import { end } from '../NavProgress';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
@@ -62,55 +61,45 @@ function scrollToTop() {
   }
 }
 
-export const PageView: React.FC<Props> = memo(
-  ({ location: { key = 'root', pathname, search, hash }, title, description, children }) => {
-    // Call end() because sometimes it is never called by <PageBlank />
-    // This probably happens because of a Concurrent-mode bug or something
-    // undocumented that I'm not understanding.
-    // TODO: Remove or refactor after React publishes concurrent-mode subscription guidelines
-    // SOS: Do not use NavProgress for other things till then
-    // useEffect(() => end(), []);
+export const PageView: React.FC<Props> = memo(({ location: { key = 'root', hash }, title, description, children }) => {
+  // Update document title
+  useDocumentTitle(title);
 
-    // Update document title
-    useDocumentTitle(title);
+  // Update META description
+  useMetaDescription(description);
 
-    // Update META description
-    useMetaDescription(description);
+  useEffect(() => {
+    if (SCROLL_RESTORATION) {
+      const storeScrollEntriesInSession = () => {
+        storeScroll(key);
+        sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
+      };
 
-    useEffect(() => {
-      if (SCROLL_RESTORATION) {
-        const storeScrollEntriesInSession = () => {
-          storeScroll(key);
-          sessionStorage.setItem(SCROLL_ENTRIES_SESSION_KEY, JSON.stringify(Array.from(scrollEntries)));
-        };
-
-        // If we have previously stored the same key, restore scroll position
-        const entry = scrollEntries.get(key);
-        if (entry !== undefined) {
-          // Restore scroll position
-          window.scroll(entry.x, entry.y);
-        } else if (hash.length === 0) {
-          scrollToTop();
-        }
-
-        window.addEventListener('unload', storeScrollEntriesInSession);
-        return () => {
-          storeScroll(key);
-          window.removeEventListener('unload', storeScrollEntriesInSession);
-        };
+      // If we have previously stored the same key, restore scroll position
+      const entry = scrollEntries.get(key);
+      if (entry !== undefined) {
+        // Restore scroll position
+        window.scroll(entry.x, entry.y);
       } else if (hash.length === 0) {
         scrollToTop();
       }
-    }, [key, hash]);
 
-    // // Track in Google Analytics
-    // useEffect(() => void trackView({ page_path: `${pathname}${search}` }), [pathname, search]);
-
-    if (FLAG_PRODUCTION) {
-      return <ErrorBoundary fallback={PageError}>{children}</ErrorBoundary>;
-    } else {
-      return <>{children}</>;
+      window.addEventListener('unload', storeScrollEntriesInSession);
+      return () => {
+        storeScroll(key);
+        window.removeEventListener('unload', storeScrollEntriesInSession);
+      };
+    } else if (hash.length === 0) {
+      scrollToTop();
     }
-  },
-  arePropsEqual
-);
+  }, [key, hash]);
+
+  // // Track in Google Analytics
+  // useEffect(() => void trackView({ page_path: `${pathname}${search}` }), [pathname, search]);
+
+  if (FLAG_PRODUCTION) {
+    return <ErrorBoundary fallback={PageError}>{children}</ErrorBoundary>;
+  } else {
+    return <>{children}</>;
+  }
+}, arePropsEqual);

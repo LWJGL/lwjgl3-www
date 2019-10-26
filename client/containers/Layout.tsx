@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
-// import { NavProgress } from '~/components/NavProgress';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { PageError } from '../components/routes/PageError';
+import { PageBlank } from '../components/routes/PageBlank';
+import { NavProgress } from '~/components/NavProgress';
 
 // Routes
 import { Router } from '@reach/router';
@@ -11,20 +14,24 @@ import { Miss404 } from '../routes/miss404';
 export function Layout() {
   return (
     <>
-      {/* <NavProgress /> */}
+      <NavProgress />
       <Router primary={false} component={React.Fragment}>
         <Header path="/*" />
       </Router>
-      <Router component="main">
-        <Home path="/" />
-        <Guide path="/guide" />
-        <Download path="/download" />
-        <Customize path="/customize" />
-        <Browse path="/browse/*" />
-        <Source path="/source" />
-        <License path="/license" />
-        <Miss404 default />
-      </Router>
+      <ErrorBoundary fallback={PageError}>
+        <Suspense fallback={<PageBlank />} unstable_avoidThisFallback={true}>
+          <Router component="main">
+            <Home path="/" />
+            <Guide path="/guide" />
+            <Download path="/download" />
+            <Customize path="/customize" />
+            <Browse path="/browse/*" />
+            <Source path="/source" />
+            <License path="/license" />
+            <Miss404 default />
+          </Router>
+        </Suspense>
+      </ErrorBoundary>
       <Router primary={false} component={React.Fragment}>
         <Footer path="/*" />
       </Router>
