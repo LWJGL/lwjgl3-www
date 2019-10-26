@@ -4,9 +4,8 @@ import { Link, RouteComponentProps } from '@reach/router';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
-// import { cc, COLOR_PRIMARY } from '~/theme';
-import { COLOR_PRIMARY } from '~/theme';
 import { cc } from '~/theme/cc';
+import { mediaBreakpointUp } from '~/theme/media';
 import { Icon, CloudDownload } from '~/components/icons';
 import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
@@ -17,7 +16,11 @@ const styleHome = css`
   transition: background-color 0.75s ease-out;
 `;
 const styleOpaque = css`
-  background-color: ${COLOR_PRIMARY.css()};
+  background-color: black;
+
+  ${mediaBreakpointUp('lg')} {
+    background-color: #1b2426;
+  }
 `;
 
 function ServiceWorkerUpdate() {

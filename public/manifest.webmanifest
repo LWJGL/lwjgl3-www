@@ -5,7 +5,7 @@
   "display": "standalone",
   "name": "Lightweight Java Game Library",
   "background_color": "#1b2426",
-  "theme_color": "#1b2426",
+  "theme_color": "#000",
   "lang": "en",
   "dir": "ltr",
   "orientation": "portrait",
