@@ -30,7 +30,6 @@ function getPlaceholder(params: Partial<React.ImgHTMLAttributes<HTMLImageElement
 
 interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   rootMargin?: string;
-  intrinsicsize?: string; // TODO: Remove this when added to ImgHTMLAttributes
 }
 
 export const LazyImg: React.FC<LazyImgProps> = lazyPolyfill

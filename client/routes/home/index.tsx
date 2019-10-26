@@ -368,7 +368,6 @@ const StaticContent = () => {
                 className="m-3"
                 width={218}
                 height={50}
-                intrinsicsize="218x50"
                 src="/img/sponsors/vpsserver.com.svg"
                 alt="VPSSERVER.com"
               />
@@ -378,14 +377,7 @@ const StaticContent = () => {
               rel="sponsored noopener"
               target="_blank"
             >
-              <LazyImg
-                className="m-3"
-                intrinsicsize="250x27"
-                width={223}
-                height={42}
-                src="/img/sponsors/bestvpn.png"
-                alt="BestVPN.co"
-              />
+              <LazyImg className="m-3" width={223} height={42} src="/img/sponsors/bestvpn.png" alt="BestVPN.co" />
             </a>
             <a
               href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
@@ -394,7 +386,6 @@ const StaticContent = () => {
             >
               <LazyImg
                 className="m-3"
-                intrinsicsize="70x70"
                 width={50}
                 height={50}
                 src="/img/sponsors/vpnranks-white.png"
@@ -408,7 +399,6 @@ const StaticContent = () => {
             >
               <LazyImg
                 className="m-3"
-                intrinsicsize="169x22"
                 width={169}
                 height={22}
                 src="/img/sponsors/vpn-gorilla-white-169x22.png"
@@ -416,19 +406,12 @@ const StaticContent = () => {
               />
             </a>
             <a href="https://www.casinotop.com/" rel="sponsored noopener" target="_blank">
-              <LazyImg
-                className="m-3"
-                intrinsicsize="128x128"
-                width={64}
-                height={64}
-                src="/img/sponsors/casinotop.png"
-                alt="Money Pug"
-              />
+              <LazyImg className="m-3" width={64} height={64} src="/img/sponsors/casinotop.png" alt="Money Pug" />
             </a>
             <a href="https://loanscouter.com/" rel="noopener" target="_blank">
               <LazyImg
                 className="m-3"
-                intrinsicsize="463x184"
+                width={161}
                 height={64}
                 src="/img/sponsors/loanscouter-white.svg"
                 alt="Loan Scouter"
