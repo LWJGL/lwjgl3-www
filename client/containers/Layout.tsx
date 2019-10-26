@@ -10,9 +10,9 @@ import { Miss404 } from '../routes/miss404';
 
 export function Layout() {
   return (
-    <React.Fragment>
+    <>
       {/* <NavProgress /> */}
-      <Router primary={false}>
+      <Router primary={false} component={React.Fragment}>
         <Header path="/*" />
       </Router>
       <Router component="main">
@@ -25,9 +25,9 @@ export function Layout() {
         <License path="/license" />
         <Miss404 default />
       </Router>
-      <Router primary={false}>
+      <Router primary={false} component={React.Fragment}>
         <Footer path="/*" />
       </Router>
-    </React.Fragment>
+    </>
   );
 }

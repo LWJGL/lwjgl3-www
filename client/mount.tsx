@@ -5,7 +5,7 @@ import { App } from './containers/App';
 // import './services/ga';
 
 export function mount() {
-  const rootEl = document.getElementById('lwjgl-app');
+  const rootEl = document.body;
   if (rootEl !== null) {
     rootEl.innerHTML = '';
     // render(<App />, rootEl);
