@@ -198,6 +198,10 @@ const buildConfiguration = () => {
     // config.optimization.moduleIds = 'named';
     // config.optimization.chunkIds = 'named';
 
+    // Use pre-built three.js to avoid breaking IE11
+    config.resolve.alias.three = path.resolve(__dirname, `./node_modules/three/build/three.min.js`);
+    config.resolve.alias.jszip = path.resolve(__dirname, `./node_modules/jszip/dist/jszip.min.js`);
+
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
       config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
