@@ -20,7 +20,8 @@
       {
         "name": "typescript-styled-plugin"
       }
-    ]
+    ],
+    "types": ["react/experimental", "react-dom/experimental"]
   },
   "include": ["./types", "./client"],
   "exclude": ["**/*.spec.ts"]
