@@ -4,7 +4,6 @@ import { Footer } from './Footer';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { PageError } from '../components/routes/PageError';
 import { PageBlank } from '../components/routes/PageBlank';
-import { NavProgress } from '~/components/NavProgress';
 
 // Routes
 import { Router } from '@reach/router';
@@ -14,7 +13,6 @@ import { Miss404 } from '../routes/miss404';
 export function Layout() {
   return (
     <>
-      <NavProgress />
       <Router primary={false} component={React.Fragment}>
         <Header path="/*" />
       </Router>
