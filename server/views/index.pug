@@ -3,19 +3,24 @@ extends layout
 block content
   #lwjgl-app
     //- The following content is replaced by React <App />
-    //-style.
+    //- style.
       @keyframes spin{0%{stroke-dasharray:150.6 100.4;stroke-dashoffset:0}50%{stroke-dasharray:1 250;stroke-dashoffset:251px}100%{stroke-dasharray:150.6 100.4;stroke-dashoffset:502px}}
     style.
-      @keyframes fade-in{0%{opacity:0}100%{opacity:1}}
+      @keyframes fade-in{0%{opacity:0}to{opacity:1}}
     div(
-      style="height:90vh;display:flex;justify-content:center;align-items:center;font:xx-large sans-serif;color:silver;animation:fade-in 1s ease-in 1s both"
-    ) Loading&hellip;
-      //-svg(viewBox="0 0 100 100", preserveAspectRatio="xMidYMid" style="width:20vw;height:75px")
+      style="height:90vh;display:flex;justify-content:center;align-items:center;font:xx-large sans-serif;color:silver;opacity:0;animation:fade-in 1s ease 1s alternate infinite forwards"
+    ) loading&hellip;
+      //- svg(viewBox="0 0 100 100", preserveAspectRatio="xMidYMid", style="width:20vw;height:75px")
         circle(cx="50", cy="50", r="40", stroke="#2d6ca5", fill="none", stroke-width="8", stroke-linecap="round")
-        circle(style="animation:spin 2s linear infinite" cx="50", cy="50", r="40", stroke="#4cddff", fill="none", stroke-width="6", stroke-linecap="round")
-      noscript
-        //-style.
-          #lwjgl-app svg{display:none!important}
-        p.text-danger Please enable JavaScript
+        circle(
+        style="animation:spin 2s linear infinite",
+        cx="50",
+        cy="50",
+        r="40",
+        stroke="#4cddff",
+        fill="none",
+        stroke-width="6",
+        stroke-linecap="round"
+        )
 
   script(src=`/js/${entry}`)

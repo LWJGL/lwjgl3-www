@@ -49,7 +49,7 @@ const LogoContainer: React.FC = props => (
         padding: 1rem;
         transform: translateY(3rem);
         opacity: 0;
-        animation: present-yourself 1s ease forwards;
+        animation: anim-reset-opacity-transform 1s ease forwards;
         @media (max-height: 420px) {
           max-width: 75%;
         }

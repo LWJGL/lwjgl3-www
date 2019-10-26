@@ -4,10 +4,7 @@ import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMateria
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
+const fadeInCanvas = keyframes`
   to {
     opacity: 0.175;
   }
@@ -18,7 +15,8 @@ const Canvas = css`
   z-index: 0;
   width: 100%;
   height: 100%;
-  animation: ${fadeIn.name} 2s ease-out forwards;
+  opacity: 0;
+  animation: ${fadeInCanvas.name} 2s ease 0.5s forwards;
 `;
 
 export default function HomeCanvas() {
@@ -137,5 +135,5 @@ export default function HomeCanvas() {
     };
   }, []);
 
-  return <canvas css={[Canvas, fadeIn.styles]} ref={canvasRef} />;
+  return <canvas css={[Canvas, fadeInCanvas.styles]} ref={canvasRef} />;
 }
