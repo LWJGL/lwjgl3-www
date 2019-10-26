@@ -342,12 +342,7 @@ const StaticContent = () => {
 
             <p>
               <a href="https://opencollective.com/lwjgl/donate" target="_blank" rel="noopener external">
-                <LazyImg
-                  width={300}
-                  height={50}
-                  src="https://opencollective.com/lwjgl/donate/button@2x.png?color=white"
-                  alt="DONATE TO OUR COLLECTIVE"
-                />
+                <LazyImg width={300} height={50} src="/img/sponsors/donate-blue.png" alt="DONATE TO OUR COLLECTIVE" />
               </a>
             </p>
           </div>
@@ -360,7 +355,7 @@ const StaticContent = () => {
 
           <div className="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center">
             <a
-              href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+              href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
               rel="sponsored noopener"
               target="_blank"
             >
@@ -373,14 +368,14 @@ const StaticContent = () => {
               />
             </a>
             <a
-              href="https://www.bestvpn.co/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+              href="https://www.bestvpn.co/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
               rel="sponsored noopener"
               target="_blank"
             >
               <LazyImg className="m-3" width={223} height={42} src="/img/sponsors/bestvpn.png" alt="BestVPN.co" />
             </a>
             <a
-              href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+              href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
               rel="sponsored noopener"
               target="_blank"
             >
@@ -393,7 +388,7 @@ const StaticContent = () => {
               />
             </a>
             <a
-              href="https://vpngorilla.com/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+              href="https://vpngorilla.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
               rel="sponsored noopener"
               target="_blank"
             >
@@ -405,10 +400,18 @@ const StaticContent = () => {
                 alt="VPNGorilla.com"
               />
             </a>
-            <a href="https://www.casinotop.com/" rel="sponsored noopener" target="_blank">
+            <a
+              href="https://www.casinotop.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+              rel="sponsored noopener"
+              target="_blank"
+            >
               <LazyImg className="m-3" width={64} height={64} src="/img/sponsors/casinotop.png" alt="Money Pug" />
             </a>
-            <a href="https://loanscouter.com/" rel="noopener" target="_blank">
+            <a
+              href="https://loanscouter.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+              rel="noopener"
+              target="_blank"
+            >
               <LazyImg
                 className="m-3"
                 width={161}
