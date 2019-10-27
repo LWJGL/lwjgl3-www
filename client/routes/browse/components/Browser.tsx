@@ -13,7 +13,7 @@ interface Props {
 
 export function Browser({ path: targetPath }: Props) {
   const [path, setPath] = useState(targetPath);
-  const [startTransition, isPending] = useTransition({
+  const [startTransition] = useTransition({
     timeoutMs: 2250, // 0.75 spinner circle * 3
   });
 

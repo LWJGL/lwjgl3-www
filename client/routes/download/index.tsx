@@ -2,7 +2,7 @@ import React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { Icon, Github, Checkbox, Folder } from '~/components/icons';
-import { Customize, Browse } from '../';
+import { CustomizePreload, BrowsePreload } from '../';
 
 const DownloadRoute: React.FC<RouteComponentProps> = props => (
   <PageView location={props.location as WindowLocation} title="Download" description="Download LWJGL 3">
@@ -35,7 +35,7 @@ const StaticContent = () => {
               </a>
             </p>
           </div>
-          <div className="col-md-12 col-lg-4" onMouseOver={() => Customize.preload()}>
+          <div className="col-md-12 col-lg-4" onMouseOver={CustomizePreload}>
             <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-dark" to="/customize">
@@ -43,7 +43,7 @@ const StaticContent = () => {
               </Link>
             </p>
           </div>
-          <div className="col-md-12 col-lg-4" onMouseOver={() => Browse.preload()}>
+          <div className="col-md-12 col-lg-4" onMouseOver={BrowsePreload}>
             <p>Or you can browse and download individual LWJGL artifacts:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/browse">
