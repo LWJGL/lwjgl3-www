@@ -33,7 +33,7 @@ export const Trap: React.FC<Props> = ({
   const prevTrap = useRef<FocusTrap | null>(null);
 
   useEffect(() => {
-    function findFocusable(): HTMLElement | null {
+    function findFocusable(): HTMLElement {
       const trap = divRef.current;
       if (autoFocus && trap !== null) {
         let el = trap.querySelector<HTMLElement>(
@@ -43,7 +43,7 @@ export const Trap: React.FC<Props> = ({
           return el;
         }
       }
-      return trap;
+      return trap || document.body;
     }
 
     const trap = divRef.current;
@@ -73,7 +73,7 @@ export const Trap: React.FC<Props> = ({
 
     return () => {
       if (focusTrap.current !== null) {
-        focusTrap.current.deactivate({ onDeactivate: false });
+        focusTrap.current.deactivate({ onDeactivate: () => {} });
       }
 
       if (prevTrap.current !== null) {

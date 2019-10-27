@@ -103,7 +103,7 @@ export function Sidebar() {
     return () => {
       off();
       if (focusTrap.current !== null) {
-        focusTrap.current.deactivate({ onDeactivate: false });
+        focusTrap.current.deactivate({ onDeactivate: () => {} });
       }
       if (sideDiv !== null) {
         sideDiv.removeEventListener('touchstart', onTouchStart, false);

@@ -13,16 +13,10 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "lib": ["esnext", "dom", "dom.iterable"],
-    "paths": {
-      "~/*": ["./client/*"]
-    },
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      }
-    ],
-    "types": ["react/experimental", "react-dom/experimental"]
+    "paths": { "~/*": ["./client/*"] },
+    "plugins": [{ "name": "typescript-styled-plugin" }],
+    "types": ["node", "react/experimental", "react-dom/experimental"]
   },
   "include": ["./types", "./client"],
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["node_modules", "**/*.spec.ts", "public"]
 }
