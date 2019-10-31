@@ -30,12 +30,6 @@ async function cacheFirstStrategy(event, req, url) {
     return response;
   }
 
-  // Handle navigation preload
-  response = await event.preloadResponse;
-  if (response) {
-    return response;
-  }
-
   // All routes should serve '/' HTML.
   if (req.mode === 'navigate' && url.pathname !== '/' && manifest.routes[url.pathname] !== undefined) {
     response = await cache.match('/');
@@ -52,11 +46,16 @@ async function cacheFirstStrategy(event, req, url) {
     }
   }
 
+  // // Handle navigation preload
+  // response = await event.preloadResponse;
+  // if (response) {
+  //   return response;
+  // }
+
   // Fetch & cache
   response = await fetch(req);
 
   if (response.ok && response.type === 'basic' && WHITELIST_RE.some(exp => exp.test(url.pathname))) {
-    const cache = await caches.open(CACHE_NAME);
     cache.put(req, response.clone());
   }
 
@@ -86,11 +85,11 @@ async function install() {
 self.addEventListener('install', event => event.waitUntil(install()));
 
 async function activate() {
-  // Enable navigation preloads, if supported
-  // https://developers.google.com/web/updates/2017/02/navigation-preload
-  if (self.registration.navigationPreload) {
-    await self.registration.navigationPreload.enable();
-  }
+  // // Enable navigation preloads, if supported
+  // // https://developers.google.com/web/updates/2017/02/navigation-preload
+  // if (self.registration.navigationPreload) {
+  //   await self.registration.navigationPreload.enable();
+  // }
 
   // Delete old caches
   const keys = await caches.keys();
