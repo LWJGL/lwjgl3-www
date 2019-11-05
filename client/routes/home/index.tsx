@@ -354,11 +354,7 @@ const StaticContent = () => {
           <h3>Our Gold Sponsors:</h3>
 
           <div className="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center">
-            <a
-              href="https://loanscouter.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-              rel="noopener"
-              target="_blank"
-            >
+            <a href="https://loanscouter.com/" rel="noopener" target="_blank">
               <LazyImg
                 className="m-3"
                 width={120}
@@ -367,11 +363,7 @@ const StaticContent = () => {
                 alt="Loan Scouter"
               />
             </a>
-            <a
-              href="https://matchbanker.no/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-              rel="noopener"
-              target="_blank"
-            >
+            <a href="https://matchbanker.no/" rel="noopener" target="_blank">
               <LazyImg
                 className="m-3"
                 width={220}
@@ -379,6 +371,9 @@ const StaticContent = () => {
                 src="/img/sponsors/matchbanker-440x41.png"
                 alt="MatchBanker"
               />
+            </a>
+            <a href="https://fair-laan.se/" rel="noopener" target="_blank">
+              <LazyImg className="m-3" width={190} height={42} src="/img/sponsors/fairplan.svg" alt="FairPlan" />
             </a>
             <a
               href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
@@ -432,13 +427,6 @@ const StaticContent = () => {
               target="_blank"
             >
               <LazyImg className="m-3" width={64} height={64} src="/img/sponsors/casinotop.png" alt="Money Pug" />
-            </a>
-            <a
-              href="https://fair-laan.se/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-              rel="sponsored noopener"
-              target="_blank"
-            >
-              <LazyImg className="m-3" width={190} height={42} src="/img/sponsors/fairplan.svg" alt="FairPlan" />
             </a>
           </div>
         </section>
