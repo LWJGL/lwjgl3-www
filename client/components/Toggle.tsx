@@ -1,4 +1,4 @@
-import { css } from '@emotion/core';
+import { css } from 'emotion';
 import uniqueId from 'lodash-es/uniqueId';
 import React, { useRef } from 'react';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
@@ -85,7 +85,7 @@ export const Toggle = ({ label, value, onChange, checked = false, disabled = fal
         onChange={() => onChange(value)}
         css={InputStyle}
       />
-      <label css={LabelStyle} className="custom-control-label" htmlFor={htmlForId.current}>
+      <label className={`custom-control-label ${LabelStyle}`} htmlFor={htmlForId.current}>
         {label}
       </label>
     </div>

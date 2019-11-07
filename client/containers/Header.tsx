@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { css } from '@emotion/core';
+import { css } from 'emotion';
 import { Link, RouteComponentProps } from '@reach/router';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
-import { cc } from '~/theme/cc';
+import { cx } from 'emotion';
 import { mediaBreakpointUp } from '~/theme/media';
 import { Icon, CloudDownload } from '~/components/icons';
 import { useServiceWorker } from '~/hooks/useServiceWorker';
@@ -12,10 +12,10 @@ import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 
 const HEADER_CLASSNAME = 'site-header';
-const styleHome = css`
+const cssIsHome = css`
   transition: background-color 0.75s ease-out;
 `;
-const styleOpaque = css`
+const cssOpaque = css`
   background-color: black;
 
   ${mediaBreakpointUp('lg')} {
@@ -167,8 +167,7 @@ export const Header: React.FC<RouteComponentProps> = ({ location }) => {
   return (
     <header
       role="navigation"
-      css={[isHome && styleHome, (!isHome || !top) && styleOpaque]}
-      className={cc(HEADER_CLASSNAME, {
+      className={cx(HEADER_CLASSNAME, isHome && cssIsHome, (!isHome || !top) && cssOpaque, {
         alt: IS_IOS,
         fixed,
         hidden,

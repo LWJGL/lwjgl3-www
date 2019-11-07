@@ -1,7 +1,7 @@
 import React from 'react';
-import { css, keyframes } from '@emotion/core';
+import { css, keyframes } from 'emotion';
 import { COLOR_PRIMARY } from '~/theme';
-import { cc } from '~/theme/cc';
+import { cx } from 'emotion';
 import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 
 const SIZE = 44;
@@ -36,7 +36,7 @@ const indeterminateStrokeAnimation = keyframes`
   }
 `;
 
-const ProgressStyle = css`
+const cssProgressStyle = css`
   display: inline-block;
   line-height: 1;
   color: ${COLOR_PRIMARY.css()};
@@ -50,11 +50,9 @@ const ProgressStyle = css`
     }
   }
   &.indeterminate {
-    animation: ${indeterminateAnimation.name} 1.8s linear infinite;
-    ${indeterminateAnimation.styles};
+    animation: ${indeterminateAnimation} 1.8s linear infinite;
     circle {
-      animation: ${indeterminateStrokeAnimation.name} 1.8s ease-in-out infinite;
-      ${indeterminateStrokeAnimation.styles};
+      animation: ${indeterminateStrokeAnimation} 1.8s ease-in-out infinite;
       stroke-dasharray: 80px, 200px;
       stroke-dashoffset: 0px;
     }
@@ -99,8 +97,7 @@ export function CircularProgress({
 
   return (
     <svg
-      css={ProgressStyle}
-      className={cc(className, {
+      className={cx(cssProgressStyle, className, {
         indeterminate: variant === 'indeterminate',
         static: variant === 'static',
       })}

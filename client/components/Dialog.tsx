@@ -1,5 +1,5 @@
 import React from 'react';
-import { cc } from '~/theme/cc';
+import { cx } from 'emotion';
 import { Overlay } from './Overlay';
 
 interface Props {
@@ -16,6 +16,6 @@ interface Props {
 
 export const Dialog: React.FC<Props> = ({ className, children, fixed = true, ...rest }) => (
   <Overlay {...rest}>
-    <div className={cc('dialog', { 'dialog-fixed': fixed }, className)}>{children}</div>
+    <div className={cx('dialog', { 'dialog-fixed': fixed }, className)}>{children}</div>
   </Overlay>
 );

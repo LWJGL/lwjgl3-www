@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@emotion/core';
+import { css, cx } from 'emotion';
 import { PageView } from '~/components/routes/PageView';
 import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
@@ -28,6 +28,14 @@ const HomeRoute = (props: RouteComponentProps) => (
     <StaticContent />
   </PageView>
 );
+
+const cssMainFeatures = css`
+  .svg-icon,
+  img {
+    font-size: 4rem;
+    margin: 1rem 0 2rem 0;
+  }
+`;
 
 const StaticContent = () => {
   return (
@@ -90,16 +98,7 @@ const StaticContent = () => {
         </div>
       </section>
 
-      <div
-        css={css`
-          .svg-icon,
-          img {
-            font-size: 4rem;
-            margin: 1rem 0 2rem 0;
-          }
-        `}
-        className="area-dark"
-      >
+      <div className={cx('area-dark', cssMainFeatures)}>
         <section className="container py-5 text-center features">
           <h1>Main Features</h1>
 

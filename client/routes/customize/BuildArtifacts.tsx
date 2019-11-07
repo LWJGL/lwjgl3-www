@@ -6,7 +6,7 @@ import { toggleArtifact } from './actions';
 // UI
 import { Checkbox } from '~/components/Checkbox';
 import { getPlatformIcon } from './getPlatformIcon';
-import { cc } from '~/theme/cc';
+import { cx } from 'emotion';
 
 const getPlatformIcons = (platforms: Array<Native>) => (
   <p>
@@ -65,7 +65,7 @@ interface Props {
 const BuildArtifact: React.FC<Props> = ({ artifact, selected, disabled, showDescriptions, onChange }) => {
   if (showDescriptions) {
     return (
-      <div className={cc('artifact', { 'text-muted': disabled })}>
+      <div className={cx('artifact', { 'text-muted': disabled })}>
         <Checkbox
           value={artifact.id}
           label={artifact.title}

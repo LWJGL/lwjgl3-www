@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { css } from '@emotion/core';
+import { css } from 'emotion';
 import { Link } from '@reach/router';
 import { Icon, KeyboardArrowDown } from '~/components/icons';
 import { Logo } from './Logo';
@@ -7,95 +7,86 @@ import { contextOptions } from './contextOptions';
 
 const Canvas = lazy(() => import(/* webpackChunkName: "route-home$canvas" */ './Canvas'));
 
-const HeroBox: React.FC = props => (
-  <section
-    css={css`
-      margin-top: -4rem;
-      background: linear-gradient(
-        to top left,
-        #4cddff,
-        #3b9aca 10%,
-        #2d6ca5 20%,
-        #2a5291 27%,
-        #283d81 35%,
-        #222654 50%,
-        #1e1635 63%,
-        #0c0010 93%,
-        #000
-      );
-      width: 100%;
-      height: 100vh;
-      position: relative;
-    `}
-  >
-    {props.children}
-  </section>
-);
+const CssHeroBox = css`
+  margin-top: -4rem;
+  background: linear-gradient(
+    to top left,
+    #4cddff,
+    #3b9aca 10%,
+    #2d6ca5 20%,
+    #2a5291 27%,
+    #283d81 35%,
+    #222654 50%,
+    #1e1635 63%,
+    #0c0010 93%,
+    #000
+  );
+  width: 100%;
+  height: 100vh;
+  position: relative;
+`;
+
+const HeroBox: React.FC = props => <section className={CssHeroBox}>{props.children}</section>;
+
+const CssLogoContainer = css`
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+
+  .logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 700px;
+    padding: 1rem;
+    transform: translateY(3rem);
+    opacity: 0;
+    animation: anim-reset-opacity-transform 1s ease forwards;
+    @media (max-height: 420px) {
+      max-width: 75%;
+    }
+  }
+`;
 
 const LogoContainer: React.FC = props => (
-  <div
-    className="d-flex flex-column justify-content-center align-items-center"
-    css={css`
-      position: absolute;
-      z-index: 1;
-      width: 100%;
-      height: 100vh;
-
-      .logo {
-        display: block;
-        width: 100%;
-        height: auto;
-        max-width: 700px;
-        padding: 1rem;
-        transform: translateY(3rem);
-        opacity: 0;
-        animation: anim-reset-opacity-transform 1s ease forwards;
-        @media (max-height: 420px) {
-          max-width: 75%;
-        }
-      }
-    `}
-  >
+  <div className={`d-flex flex-column justify-content-center align-items-center ${CssLogoContainer}`}>
     {props.children}
   </div>
 );
 
-const HeroContent: React.FC = props => (
-  <div
-    css={css`
-      text-align: center;
-      padding: 0 2rem;
-      color: white;
-      font-weight: 300;
+const CssHeroContent = css`
+  text-align: center;
+  padding: 0 2rem;
+  color: white;
+  font-weight: 300;
 
-      .svg-icon {
-        font-size: 1.5rem;
-      }
+  .svg-icon {
+    font-size: 1.5rem;
+  }
 
-      a {
-        color: white;
-      }
+  a {
+    color: white;
+  }
 
-      @media (max-width: 600px) {
-        h1 {
-          font-size: 1.4rem;
-        }
-        a {
-          font-size: 90%;
-        }
-      }
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 1.4rem;
+    }
+    a {
+      font-size: 90%;
+    }
+  }
 
-      @media (max-width: 400px), (max-height: 420px) {
-        h1 {
-          font-size: 1.1rem;
-          line-height: 1.5rem;
-        }
-      }
-    `}
-  >
-    {props.children}
-  </div>
-);
+  @media (max-width: 400px), (max-height: 420px) {
+    h1 {
+      font-size: 1.1rem;
+      line-height: 1.5rem;
+    }
+  }
+`;
+
+const HeroContent: React.FC = props => <div className={CssHeroContent}>{props.children}</div>;
 
 enum UseWebGL {
   Unknown,

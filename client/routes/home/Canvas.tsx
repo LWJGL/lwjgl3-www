@@ -1,22 +1,22 @@
 import React, { useRef, useEffect } from 'react';
-import { css, keyframes } from '@emotion/core';
+import { css, keyframes } from 'emotion';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';
 
-const fadeInCanvas = keyframes`
+const cssFadeInCanvas = keyframes`
   to {
     opacity: 0.175;
   }
 `;
 
-const Canvas = css`
+const cssCanvas = css`
   position: absolute;
   z-index: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
-  animation: ${fadeInCanvas.name} 2s ease 0.5s forwards;
+  animation: ${cssFadeInCanvas} 2s ease 0.5s forwards;
 `;
 
 export default function HomeCanvas() {
@@ -135,5 +135,5 @@ export default function HomeCanvas() {
     };
   }, []);
 
-  return <canvas css={[Canvas, fadeInCanvas.styles]} ref={canvasRef} />;
+  return <canvas className={cssCanvas} ref={canvasRef} />;
 }

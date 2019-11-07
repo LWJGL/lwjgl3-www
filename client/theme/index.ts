@@ -1,10 +1,4 @@
-// import { createContext, useContext } from 'react';
 import { hsl } from './color';
-// export { mediaBreakpointUp, mediaBreakpointDown } from './media';
-// export { cc } from './cc';
-
-// const ThemeContext = createContext();
-// export const useTheme = () => useContext(ThemeContext);
 
 // For Bootstrap 4 variables see https://github.com/twbs/bootstrap/blob/v4-dev/scss/_variables.scss
 

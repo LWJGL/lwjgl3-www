@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { css, keyframes } from '@emotion/core';
+import { css, keyframes } from 'emotion';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 
 const pulseAnimation = keyframes`
@@ -49,8 +49,7 @@ const cssProgressPulse = css`
   will-change: transform;
   transform-origin: left;
   background: linear-gradient(to right, transparent, ${COLOR_CUSTOM_CONTROL_INDICATOR_BG.css()} 50%, transparent);
-  animation: ${pulseAnimation.name} 2.5s linear 10s both infinite;
-  ${pulseAnimation.styles};
+  animation: ${pulseAnimation} 2.5s linear 10s both infinite;
 `;
 
 let counter = 0;
@@ -176,12 +175,12 @@ export function NavProgress() {
   return (
     <div hidden={progress === 0} className={progress === 100 ? 'fade-out' : ''} css={cssProgressContainer}>
       <div
-        css={cssProgressBar}
+        className={cssProgressBar}
         style={{
           transform: `scaleX(${progress / 100})`,
         }}
       />
-      <div css={cssProgressPulse} />
+      <div className={cssProgressPulse} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { css } from '@emotion/core';
+import { css, cx } from 'emotion';
 
 // Based on https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4#.58pqpyl6w
-const SvgIcon = css`
+const cssSvgIcon = css`
   display: inline-flex;
   align-self: center;
   position: relative;
@@ -20,8 +20,8 @@ const SvgIcon = css`
   }
 `;
 
-export const Icon: React.FC<React.HTMLAttributes<HTMLSpanElement>> = ({ children, ...props }) => (
-  <span css={SvgIcon} className="svg-icon" {...props}>
+export const Icon: React.FC<React.HTMLAttributes<HTMLSpanElement>> = ({ children, className, ...props }) => (
+  <span className={cx('svg-icon', cssSvgIcon, className)} {...props}>
     {children}
   </span>
 );

@@ -6,7 +6,7 @@ const DEV = !PRODUCTION;
 const HMR = DEV && argv.nohmr === undefined;
 
 const config = {
-  presets: ['@emotion/babel-preset-css-prop', '@babel/preset-typescript'],
+  presets: ['@babel/preset-typescript'],
   plugins: [
     DEV && HMR && 'react-refresh/babel',
     // React
@@ -15,7 +15,16 @@ const config = {
     DEV && '@babel/plugin-transform-react-display-name',
     PRODUCTION && ['transform-react-remove-prop-types', { mode: 'remove', removeImport: true }],
     PRODUCTION && 'babel-plugin-optimize-react',
-    // ['@babel/plugin-transform-react-jsx', { useBuiltIns: true }], // Used internally by @emotion preset
+    ['@babel/plugin-transform-react-jsx', { useBuiltIns: PRODUCTION, useSpread: !PRODUCTION }],
+    [
+      'emotion',
+      {
+        sourceMap: !PRODUCTION,
+        // autoLabel: !PRODUCTION,
+        // labelFormat: '[local]',
+        cssPropOptimization: false,
+      },
+    ],
 
     // Stage-3
     '@babel/plugin-syntax-dynamic-import',

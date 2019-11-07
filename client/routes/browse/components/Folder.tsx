@@ -1,9 +1,10 @@
 import React from 'react';
-import { css } from '@emotion/core';
+import { css } from 'emotion';
 import { Link } from '@reach/router';
 import { Icon, Folder as FolderIcon } from '~/components/icons';
 
 export const FolderTH = css`
+  padding: 0 !important;
   user-select: none;
   a {
     display: block;
@@ -35,7 +36,7 @@ interface Props {
 export const FolderWrap: React.FC<{}> = ({ children }) => {
   return (
     <tr>
-      <th css={FolderTH} className="p-0" scope="row" colSpan={2}>
+      <th className={FolderTH} scope="row" colSpan={2}>
         {children}
       </th>
     </tr>

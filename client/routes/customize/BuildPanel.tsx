@@ -1,11 +1,11 @@
 import React, { Suspense, useState, useEffect, useMemo } from 'react';
-import { css } from '@emotion/core';
+import { css } from 'emotion';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { Icon, Close } from '~/components/icons';
 // import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { COLOR_PRIMARY } from '~/theme';
 import { mediaBreakpointDown, mediaBreakpointUp } from '~/theme/media';
-import { cc } from '~/theme/cc';
+import { cx } from 'emotion';
 import { useMemoSlice } from './Store';
 import { selectBuildType } from './actions';
 import { BuildStatus } from './BuildStatus';
@@ -66,8 +66,7 @@ export function BuildPanel({ build }: Props) {
     return (
       <div
         onClick={() => dispatch(selectBuildType(build))}
-        css={PanelBox}
-        className={cc(build, {
+        className={cx(CssPanelBox, build, {
           selected: isSelected,
           active: buildSelected && current < lg,
         })}
@@ -87,7 +86,7 @@ export function BuildPanel({ build }: Props) {
   }, [slice, showStatus, breakpoint]);
 }
 
-const PanelBox = css`
+const CssPanelBox = css`
   border: 2px solid ${COLOR_PRIMARY.css()};
   padding: 1rem;
   border-radius: ${BORDER_RADIUS};
