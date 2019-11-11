@@ -427,6 +427,19 @@ const StaticContent = () => {
             >
               <LazyImg className="m-3" width={64} height={64} src="/img/sponsors/casinotop.png" alt="Money Pug" />
             </a>
+            <a
+              href="https://www.bonus.net.nz/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+              rel="sponsored noopener"
+              target="_blank"
+            >
+              <LazyImg
+                className="m-3"
+                width={179.71}
+                height={38}
+                src="/img/sponsors/bonusfindernz.svg"
+                alt="BonusFinder New Zealand"
+              />
+            </a>
           </div>
         </section>
       </div>
