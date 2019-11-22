@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aws-sdk": "2.576.0",
+    "aws-sdk": "2.577.0",
     "body-parser": "1.19.0",
     "chalk": "3.0.0",
     "compression": "1.7.4",
@@ -56,7 +56,7 @@
     "benchmark": "2.1.4",
     "bootstrap": "4.3.1",
     "cli-table": "0.3.1",
-    "core-js": "3.4.1",
+    "core-js": "3.4.2",
     "css-loader": "3.2.0",
     "cssnano": "4.1.10",
     "emotion": "11.0.0-next.0",

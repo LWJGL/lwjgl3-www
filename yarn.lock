@@ -1404,10 +1404,10 @@ autoprefixer@9.7.2:
     postcss "^7.0.23"
     postcss-value-parser "^4.0.2"
 
-aws-sdk@2.576.0:
-  version "2.576.0"
-  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.576.0.tgz#2709ba6ced3e940aa889e53305f725e56f6fc13b"
-  integrity sha512-VdMN1GnQ5V6nzgzl90VcZugNslXt1AyuYBlYHEB/1xz5FXKKJ+D4RDHryDRBOUC65F1OqS2G0mseoaxYEJEznQ==
+aws-sdk@2.577.0:
+  version "2.577.0"
+  resolved "https://registry.yarnpkg.com/aws-sdk/-/aws-sdk-2.577.0.tgz#3718021182aa3058fda2ce968b72b7e4ffe4360a"
+  integrity sha512-c+8AbZuosYnqYvgFLVScIxcZBFPSiFer+46k7fe/dV1EY3TUJI8Rarcmj7E3ljtZtssTxbSmor8I5Xyii40h3g==
   dependencies:
     buffer "^4.9.1"
     events "^1.1.1"
@@ -2048,10 +2048,10 @@ core-js-compat@^3.1.1:
     browserslist "^4.7.2"
     semver "^6.3.0"
 
-core-js@3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.4.1.tgz#76dd6828412900ab27c8ce0b22e6114d7ce21b18"
-  integrity sha512-KX/dnuY/J8FtEwbnrzmAjUYgLqtk+cxM86hfG60LGiW3MmltIc2yAmDgBgEkfm0blZhUrdr1Zd84J2Y14mLxzg==
+core-js@3.4.2:
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.4.2.tgz#ee2b1a60b50388d8ddcda8cdb44a92c7a9ea76df"
+  integrity sha512-bUTfqFWtNKWp73oNIfRkqwYZJeNT3lstzZcAkhhiuvDraRSgOH1/+F9ZklbpR4zpdKuo4cpXN8tKP7s61yjX+g==
 
 core-js@^2.4.0, core-js@^2.4.1:
   version "2.6.10"

@@ -4,19 +4,19 @@ import { RouteComponentProps, WindowLocation } from '@reach/router';
 import { Browser } from './components/Browser';
 import { PathResource } from './PathResource';
 
-interface BrowseRouteProps extends RouteComponentProps {
-  location: WindowLocation;
+interface BrowseRouteProps {
   '*': string;
 }
 
-const BrowseRoute = (props: BrowseRouteProps) => {
-  const path = props['*'];
+const BrowseRoute = (props: RouteComponentProps<BrowseRouteProps>) => {
+  const path = props['*'] !== undefined ? props['*'] : '';
+
   useEffect(() => {
     PathResource.load(path);
   }, [path]);
 
   return (
-    <PageView location={props.location} title="Browse" description="Browse LWJGL files">
+    <PageView location={props.location as WindowLocation} title="Browse" description="Browse LWJGL files">
       <style
         dangerouslySetInnerHTML={{
           __html: `body { background: gray }`,
