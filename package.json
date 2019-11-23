@@ -74,6 +74,7 @@
     "lodash-es": "4.17.15",
     "node-sass": "4.13.0",
     "postcss-loader": "3.0.0",
+    "postcss-preset-env": "6.7.0",
     "prettier": "1.19.1",
     "react": "unstable",
     "react-dom": "unstable",
