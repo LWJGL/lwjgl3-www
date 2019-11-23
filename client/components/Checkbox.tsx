@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import uniqueId from 'lodash-es/uniqueId';
+import { cx } from 'emotion';
 
 interface Props {
   label: string;
@@ -25,7 +26,7 @@ export const Checkbox: React.FC<Props> = ({
   const htmlForId = useRef(uniqueId('checkbox'));
 
   return hidden === true ? null : (
-    <div className={`custom-control custom-${toggle === true ? 'switch' : 'checkbox'}`}>
+    <div className={cx('custom-control', toggle === true ? 'custom-switch' : 'custom-checkbox')}>
       <input
         type="checkbox"
         id={htmlForId.current}

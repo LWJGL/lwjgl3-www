@@ -77,13 +77,12 @@ export const Toggle = ({ label, value, onChange, checked = false, disabled = fal
   return hidden === true ? null : (
     <div className="custom-control">
       <input
-        className="custom-control-input"
+        className={`custom-control-input ${InputStyle}`}
         type="checkbox"
         id={htmlForId.current}
         checked={checked}
         disabled={disabled}
         onChange={() => onChange(value)}
-        css={InputStyle}
       />
       <label className={`custom-control-label ${LabelStyle}`} htmlFor={htmlForId.current}>
         {label}

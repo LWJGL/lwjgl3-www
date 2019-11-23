@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { css } from 'emotion';
 import { Link, RouteComponentProps } from '@reach/router';
 import { useBreakpoint } from '~/components/Breakpoint';
@@ -49,12 +49,12 @@ export const Header: React.FC<RouteComponentProps> = ({ location }) => {
   const [top, setTop] = useState(true);
   const [fixed, setFixed] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const menu = useRef<HTMLElement>(null);
 
   useEffect(() => {
     // Measure menu height, should be ~ 48 pixels
-    const menu: HTMLDivElement | null = document.querySelector(`.${HEADER_CLASSNAME}`);
-    if (menu !== null) {
-      offsetHeight = menu.offsetHeight;
+    if (menu.current !== null) {
+      offsetHeight = menu.current.offsetHeight;
     }
   }, []);
 
@@ -166,6 +166,7 @@ export const Header: React.FC<RouteComponentProps> = ({ location }) => {
 
   return (
     <header
+      ref={menu}
       role="navigation"
       className={cx(HEADER_CLASSNAME, isHome && cssIsHome, (!isHome || !top) && cssOpaque, {
         alt: IS_IOS,

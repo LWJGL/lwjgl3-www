@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { css, keyframes } from 'emotion';
+import { css, keyframes, cx } from 'emotion';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 
 const pulseAnimation = keyframes`
@@ -173,7 +173,7 @@ export function NavProgress() {
   }, [count]);
 
   return (
-    <div hidden={progress === 0} className={progress === 100 ? 'fade-out' : ''} css={cssProgressContainer}>
+    <div hidden={progress === 0} className={cx(cssProgressContainer, { 'fade-out': progress === 100 })}>
       <div
         className={cssProgressBar}
         style={{

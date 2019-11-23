@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { cx } from 'emotion';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
@@ -114,7 +115,7 @@ export function Sidebar() {
   }, [open, onToggle]);
 
   return (
-    <div ref={slidingMenu} className={`col sliding-menu${open ? ' open' : ''}`}>
+    <div ref={slidingMenu} className={cx('col', 'sliding-menu', { open: open })}>
       <button
         type="button"
         className="btn btn-link sliding-menu-icon"
