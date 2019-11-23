@@ -1,6 +1,4 @@
-'use strict';
-
-module.exports = req => {
+export default req => {
   let bodyClass = 'desktop';
 
   if (req.app.locals.production) {

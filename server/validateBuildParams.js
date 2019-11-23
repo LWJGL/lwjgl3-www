@@ -4,7 +4,7 @@ const builds = {
   nightly: true,
 };
 
-module.exports = function validateBuildParams(params, next) {
+export default function validateBuildParams(params, next) {
   if (!builds[params.build]) {
     next(new Error('Invalid build name'));
     return false;
@@ -27,4 +27,4 @@ module.exports = function validateBuildParams(params, next) {
   }
 
   return true;
-};
+}

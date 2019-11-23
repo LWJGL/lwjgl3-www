@@ -1,11 +1,14 @@
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
+
 const plugins = [
   // require('postcss-preset-env')({ stage: 0 }),
-  require('autoprefixer'),
+  autoprefixer,
 ];
 
 if (process.env.NODE_ENV === 'production') {
   plugins.push(
-    require('cssnano')({
+    cssnano({
       preset: [
         'default',
         {
@@ -18,6 +21,4 @@ if (process.env.NODE_ENV === 'production') {
   );
 }
 
-module.exports = {
-  plugins,
-};
+export default { plugins };

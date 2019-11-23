@@ -1,6 +1,5 @@
-'use strict';
-const chalk = require('chalk');
-const prettyBytes = require('./prettyBytes');
+import chalk from 'chalk';
+import prettyBytes from './prettyBytes.js';
 
 const kB = 1000;
 const warnFileSizes = [10, 150, 250];
@@ -10,7 +9,7 @@ const warnFileSizesRootGzipped = [100, 150, 250];
 const warnFileSizesCSS = [25, 75, 100];
 const warnFileSizesCSSGzipped = [10, 30, 60];
 
-const formatSize = (size, isGzip, isRoot, isCss) => {
+export default (size, isGzip, isRoot, isCss) => {
   let limits;
 
   if (isGzip) {
@@ -37,5 +36,3 @@ const formatSize = (size, isGzip, isRoot, isCss) => {
 
   return prettyBytes(size);
 };
-
-module.exports = formatSize;

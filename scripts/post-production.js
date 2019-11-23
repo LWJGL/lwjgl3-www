@@ -1,9 +1,14 @@
-'use strict';
-const path = require('path');
-const fs = require('fs');
-const chalk = require('chalk');
-const crypto = require('crypto');
-const gzipSize = require('gzip-size');
+import path from 'path';
+import fs from 'fs';
+import chalk from 'chalk';
+import crypto from 'crypto';
+import gzipSize from 'gzip-size';
+import CliTable from 'cli-table';
+import prettyBytes from './prettyBytes.js';
+import formatSize from './formatSize.js';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /*
   POST PRODUCTION:
@@ -24,7 +29,7 @@ const gzipSize = require('gzip-size');
 
 async function main() {
   // Read webpack's manifest & chunks into memory
-  const manifest = require('../public/js/webpack.manifest.json');
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/js/webpack.manifest.json')));
 
   // We'll use this to store final production manifest
   const productionManifest = {
@@ -109,17 +114,13 @@ const ellipsis = (str, maxlength = 30) => (str.length > maxlength ? `${str.subst
 main()
   .then(({ manifest, assetMap }) => {
     // Print file report
-    const CliTable = require('cli-table');
-    const prettyBytes = require('./prettyBytes');
-    const formatSize = require('./formatSize');
-
     let sum = 0;
     let sumGzip = 0;
 
     // Prepare table
     const tbl = new CliTable({
       head: ['File', 'Optimized', 'Gzipped'],
-      colAligns: ['left', 'left', 'right', 'right'],
+      colAligns: ['left', 'right', 'right'],
       style: { head: ['cyan'] },
     });
 

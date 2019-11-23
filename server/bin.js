@@ -1,10 +1,7 @@
-'use strict';
+import { S3 } from './AWS.js';
+import validateBuildParams from './validateBuildParams.js';
 
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
-const validateBuildParams = require('./validateBuildParams');
-
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   if (!validateBuildParams(req.params, next)) {
     return;
   }
@@ -17,7 +14,7 @@ module.exports = (req, res, next) => {
       req.params.build === 'release' ? `${req.params.build}/${req.params.version}/bin/` : `${req.params.build}/bin/`,
   };
 
-  s3.listObjectsV2(params, function(err, data) {
+  S3.listObjectsV2(params, function(err, data) {
     if (err) {
       next(err);
     } else {

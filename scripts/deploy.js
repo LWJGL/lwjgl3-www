@@ -1,10 +1,12 @@
-'use strict';
-const fs = require('fs');
-const crypto = require('crypto');
-const path = require('path');
-const manifest = require('../public/js/manifest.json');
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
+import path from 'path';
+import fs from 'fs';
+import crypto from 'crypto';
+import AWS from 'aws-sdk';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const S3 = new AWS.S3();
+const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/js/manifest.json')));
 
 async function uploadFile(file, basename) {
   const contents = await fs.promises.readFile(file, { encoding: 'utf-8' });
@@ -27,8 +29,8 @@ async function uploadFile(file, basename) {
     uploadSettings.CacheControl = 'public,max-age=31536000,immutable';
   }
 
-  const response = await new Promise((resolve, reject) => {
-    s3.putObject(uploadSettings, (err, response) => {
+  await new Promise((resolve, reject) => {
+    S3.putObject(uploadSettings, (err, response) => {
       if (err) {
         reject(err);
       } else {

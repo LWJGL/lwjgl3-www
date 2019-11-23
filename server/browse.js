@@ -1,9 +1,6 @@
-'use strict';
+import { S3 } from './AWS.js';
 
-const AWS = require('aws-sdk');
-const s3 = new AWS.S3();
-
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   let isRoot = true;
   let replacer = null;
 
@@ -20,7 +17,7 @@ module.exports = (req, res, next) => {
     replacer = new RegExp(`^${params.Prefix}`);
   }
 
-  s3.listObjectsV2(params, function(err, data) {
+  S3.listObjectsV2(params, function(err, data) {
     if (err) {
       next(err);
     } else {

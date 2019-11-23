@@ -1,6 +1,4 @@
-'use strict';
-
-const chunkMap = (routes, path) => {
+export const chunkMap = (routes, path) => {
   if (path === '/') {
     return routes.home;
   }
@@ -25,5 +23,3 @@ const chunkMap = (routes, path) => {
 
   return null;
 };
-
-module.exports = chunkMap;

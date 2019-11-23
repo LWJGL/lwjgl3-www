@@ -1,8 +1,11 @@
-'use strict';
-const path = require('path');
-const fs = require('fs');
-const webpack = require('webpack');
-const config = require('../webpack.config.js');
+import path from 'path';
+import fs from 'fs';
+import webpack from 'webpack';
+import config from '../webpack.config.cjs';
+
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 config.plugins.push(new webpack.ProgressPlugin());
 
 const compiler = webpack(config);

@@ -1,6 +1,4 @@
-'use strict';
-
-const helmetConfig = (production, hsts) => {
+export const helmetConfig = (production, hsts) => {
   const config = {
     contentSecurityPolicy: {
       directives: {
@@ -66,5 +64,3 @@ const helmetConfig = (production, hsts) => {
 
   return config;
 };
-
-module.exports = helmetConfig;

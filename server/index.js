@@ -1,18 +1,31 @@
-'use strict';
-const fs = require('fs');
-const path = require('path');
-const crypto = require('crypto');
-const express = require('express');
-const compression = require('compression');
-const helmet = require('helmet');
-const favicon = require('serve-favicon');
-const { argv } = require('yargs');
-const chalk = require('chalk');
-const request = require('request-promise-native');
-const cloudFrontSubnets = require('./cloudfront-subnets.json');
-const chunkMap = require('./chunkMap');
-const helmetConfig = require('./helmetConfig');
-const fileExists = require('./fileExists');
+import fs from 'fs';
+import path from 'path';
+import crypto from 'crypto';
+import express from 'express';
+import compression from 'compression';
+import helmet from 'helmet';
+import favicon from 'serve-favicon';
+import yargs from 'yargs';
+import chalk from 'chalk';
+import request from 'request-promise-native';
+
+import { fileExists } from './fileExists.js';
+import { subnets } from './cloudfront-subnets.js';
+import { chunkMap } from './chunkMap.js';
+import { helmetConfig } from './helmetConfig.js';
+
+import routeBin from './bin.js';
+import routeBuild from './build.js';
+import routeBrowse from './browse.js';
+
+import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
+
+const filePath = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(filePath);
+// const __filename = path.parse(filePath).base;
+const argv = yargs.argv;
+const require = createRequire(import.meta.url);
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
@@ -47,7 +60,7 @@ app.enable('strict routing');
 app.disable('x-powered-by');
 app.use(compression());
 
-app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...cloudFrontSubnets]);
+app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...subnets]);
 
 // ------------------------------------------------------------------------------
 // Configure Content-Type
@@ -66,7 +79,7 @@ express.static.mime.define(
 // ------------------------------------------------------------------------------
 if (app.locals.development) {
   const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config');
+  const webpackConfig = require('../webpack.config.cjs');
   const webpackCompiler = webpack(webpackConfig);
 
   app.use(
@@ -197,15 +210,13 @@ app.get('/dev/reload', (req, res) => {
 });
 
 // Retrieval of artifacts dir/file structure
-const routeBin = require('./bin');
 app.get('/bin/:build', routeBin);
 app.get('/bin/:build/:version', routeBin);
 
 // S3 bucket listing
-app.get('/list', require('./browse'));
+app.get('/list', routeBrowse);
 
 // S3 build information
-const routeBuild = require('./build');
 app.get('/build/:build', routeBuild);
 app.get('/build/:build/:version', routeBuild);
 

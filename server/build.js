@@ -1,8 +1,7 @@
-'use strict';
+import AWS from 'aws-sdk';
+import validateBuildParams from './validateBuildParams.js';
 
-const AWS = require('aws-sdk');
 const s3 = new AWS.S3();
-const validateBuildParams = require('./validateBuildParams');
 
 const fmt = new Intl.DateTimeFormat('en-us', {
   timeZone: 'UTC',
@@ -16,7 +15,7 @@ const fmt = new Intl.DateTimeFormat('en-us', {
   hour12: false,
 });
 
-module.exports = (req, res, next) => {
+export default (req, res, next) => {
   if (!validateBuildParams(req.params, next)) {
     return;
   }

@@ -1,11 +1,9 @@
-const fs = require('fs');
+import { statSync } from 'fs';
 
-function fileExists(path) {
+export function fileExists(path) {
   try {
-    return fs.statSync(path).isFile();
+    return statSync(path).isFile();
   } catch {
     return false;
   }
 }
-
-module.exports = fileExists;
