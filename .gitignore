@@ -5,6 +5,7 @@ config.json
 docker-compose.override.yml
 
 # Generated files
+dist
 /node_modules
 /public/**/*.map
 /public/js/**/*.js*

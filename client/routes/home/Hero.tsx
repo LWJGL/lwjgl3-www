@@ -2,8 +2,10 @@ import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { css } from 'emotion';
 import { Link } from '@reach/router';
 import { Icon, KeyboardArrowDown } from '~/components/icons';
-import { Logo } from './Logo';
 import { contextOptions } from './contextOptions';
+
+// Brands
+const Logo = require('../../../assets/logo/logo.svg').default as React.FC<React.SVGProps<'svg'>>;
 
 const Canvas = lazy(() => import(/* webpackChunkName: "route-home$canvas" */ './Canvas'));
 
@@ -33,56 +35,62 @@ const CssLogoContainer = css`
   z-index: 1;
   width: 100%;
   height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  @media (max-height: 420px) {
+    justify-content: flex-end;
+  }
 
   .logo {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-width: 700px;
-    padding: 1rem;
     transform: translateY(3rem);
     opacity: 0;
     animation: anim-reset-opacity-transform 1s ease forwards;
+    width: 140px;
+    margin-bottom: 1rem;
+    @media (max-width: 600px) {
+      max-width: 50%;
+    }
     @media (max-height: 420px) {
-      max-width: 75%;
+      max-width: 50%;
     }
   }
 `;
 
 const LogoContainer: React.FC = props => (
-  <div className={`d-flex flex-column justify-content-center align-items-center ${CssLogoContainer}`}>
-    {props.children}
-  </div>
+  <div className={`d-flex flex-column ${CssLogoContainer}`}>{props.children}</div>
 );
 
 const CssHeroContent = css`
   text-align: center;
-  padding: 0 2rem;
+  padding: 0 1rem;
   color: white;
+  font-size: 2rem;
+  line-height: 1em;
   font-weight: 300;
 
   .svg-icon {
-    font-size: 1.5rem;
+    font-size: 1.5em;
   }
 
   a {
     color: white;
   }
 
+  h1 {
+    font-size: 2em;
+    line-height: 1.25em;
+  }
+
   @media (max-width: 600px) {
-    h1 {
-      font-size: 1.4rem;
-    }
-    a {
-      font-size: 90%;
-    }
+    font-size: 1.5rem;
+    line-height: 1.25em;
   }
 
   @media (max-width: 400px), (max-height: 420px) {
-    h1 {
-      font-size: 1.1rem;
-      line-height: 1.5rem;
-    }
+    font-size: 1rem;
+    line-height: 1.5em;
   }
 `;
 
@@ -172,10 +180,10 @@ export function HomeHero() {
         <Logo className="logo" />
         <HeroContent>
           <h1>
-            Lightweight <b>Java&nbsp;Game&nbsp;Library&nbsp;3</b>
+            LW<b>JGL</b>
           </h1>
           <Link to="/#learn-more">
-            LEARN MORE
+            Lightweight Java Game Library
             <br />
             <Icon children={<KeyboardArrowDown />} />
           </Link>
