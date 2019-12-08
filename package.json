@@ -5,7 +5,7 @@
   "private": true,
   "license": "BSD-3-Clause",
   "description": "The website of LWJGL",
-  "author": "Apostolos Tsakpinis",
+  "author": "Apostolos Tsakpinis <apostolos.tsakpinis@gmail.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/LWJGL/lwjgl3-www.git"
@@ -76,6 +76,7 @@
     "postcss-loader": "3.0.0",
     "postcss-preset-env": "6.7.0",
     "prettier": "1.19.1",
+    "puppeteer": "2.0.0",
     "react": "unstable",
     "react-dom": "unstable",
     "react-fast-compare": "2.0.4",
