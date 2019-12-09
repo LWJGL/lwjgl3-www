@@ -440,13 +440,13 @@ const StaticContent = () => {
                 alt="BonusFinder New Zealand"
               />
             </a>
-            <a href="http://xn--smlnutensikkerhet-9qbb.com/" rel="noopener" target="_blank">
+            <a href="http://smålånutensikkerhet.com/" rel="noopener" target="_blank">
               <LazyImg
                 className="m-3"
-                width={87}
-                height={34}
-                style={{ border: '4px solid white' }}
-                src="/img/sponsors/smalan.jpg"
+                width={129}
+                height={34.5}
+                style={{ padding: '4px 3px 4px 2px', background: 'white' }}
+                src="/img/sponsors/smalan.png"
                 alt="Smålån uten sikkerhet"
               />
             </a>
