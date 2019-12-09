@@ -19,13 +19,10 @@
 
 ```bash
 # Generating assets requires the following software:
-
 # 1. Puppeteer for pixel perfect rendering and conversion of .SVGs to .PNGs
 yarn
-
 # 2. OptiPNG for optimizing .PNGs
 docker pull jess/imagemagick
-
 # 3. ImageMagick for combining multiple .PNGs to .ICO
 docker pull buffcode/docker-optipng
 ```
@@ -62,7 +59,7 @@ cp logo.svg ./dist/favicon.svg
 cp maskable.svg ./dist/maskable.svg
 ```
 
-# Design Guidlines
+# Design Guidelines
 
 ## Viewbox
 
@@ -85,7 +82,7 @@ Append the following in your SVG files to make sure icons fall in the safe zone.
 <circle cx="54" cy="54" r="18" fill="none" stroke-width="0.3" stroke="#000" opacity="0.3" />
 ```
 
-Sources:
+## Sources:
 
 - [W3 Web App Manifest - 9.4 Icon masks and safe zone](https://www.w3.org/TR/appmanifest/#icon-masks)
 - [Android Adaptive Icons](https://developer.android.com/guide/practices/ui_guidelines/icon_design_adaptive)
