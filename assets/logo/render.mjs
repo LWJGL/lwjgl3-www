@@ -36,6 +36,11 @@ const argv = yargs
     alias: 'p',
     type: 'number',
     describe: 'add padding to final image',
+  })
+  .option('radius', {
+    alias: 'r',
+    type: 'number',
+    describe: 'add border-radius to background',
   }).argv;
 
 async function main() {

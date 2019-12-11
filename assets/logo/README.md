@@ -36,8 +36,8 @@ docker pull buffcode/docker-optipng
 node render.mjs logo.svg dist/favicon-16x16.png --width 16 --height 16
 node render.mjs logo.svg dist/favicon-32x32.png --width 32 --height 32
 node render.mjs logo.svg dist/favicon-48x48.png --width 48 --height 48
-node render.mjs logo.svg dist/favicon-192x192.png -w 192 -h 192
-node render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512
+node render.mjs logo.svg dist/favicon-192x192.png -w 192 -h 192 --bg="#424242" --avatar -r 96
+node render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512 --bg="#424242" --avatar -r 256
 
 # Web App Manifest Icons
 
