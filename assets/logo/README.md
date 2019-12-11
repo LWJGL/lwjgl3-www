@@ -33,21 +33,25 @@ docker pull buffcode/docker-optipng
 
 ```bash
 # Favicon
-node index.mjs logo.svg dist/favicon-16x16.png --width 16 --height 16
-node index.mjs logo.svg dist/favicon-32x32.png --width 32 --height 32
-node index.mjs logo.svg dist/favicon-48x48.png --width 48 --height 48
+node render.mjs logo.svg dist/favicon-16x16.png --width 16 --height 16
+node render.mjs logo.svg dist/favicon-32x32.png --width 32 --height 32
+node render.mjs logo.svg dist/favicon-48x48.png --width 48 --height 48
+node render.mjs logo.svg dist/favicon-192x192.png -w 192 -h 192
+node render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512
 
 # Web App Manifest Icons
-# Places icon in  a safe zone with a radius of 2/5 (40%) of the icon size
-# https://www.w3.org/TR/appmanifest/#dfn-safe-zone
-node index.mjs logo.svg dist/favicon-192x192.png -w 192 -h 192 --bg="#424242" --safe
-node index.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512 --bg="#424242" --safe
+
+# # Places icon in  a safe zone with a radius of 2/5 (40%) of the icon size
+# # https://www.w3.org/TR/appmanifest/#dfn-safe-zone
+# # TODO: enable this after Chrome starts respecting "purpose": "maskable"
+# node render.mjs logo.svg dist/favicon-maskable-192x192.png -w 192 -h 192 --bg="#424242" --safe
+# node render.mjs logo.svg dist/favicon-maskable-512x512.png -w 512 -h 512 --bg="#424242" --safe
 
 # Social icon
-node index.mjs logo.svg dist/social-512x512.png --width 512 --height 512 --padding 72
+node render.mjs logo.svg dist/social-512x512.png --width 512 --height 512 --padding 72
 
 # Optimize with OptiPNG
-docker run -v $(pwd):/source --rm -it buffcode/docker-optipng -o 7 ./dist/favicon-*
+docker run -v $(pwd):/source --rm -it buffcode/docker-optipng -o 7 ./dist/*.png
 
 # Merge .PNGs to .ICO
 docker run -v $(pwd):/images --rm -it jess/imagemagick \

@@ -43,7 +43,7 @@ async function main() {
   let source = await fs.readFile(path.resolve(__dirname, argv._[0]), { encoding: 'utf-8' });
   const options = {
     type: 'png',
-    omitBackground: argv.background === undefined,
+    omitBackground: argv.background === undefined || argv.radius !== undefined,
   };
 
   if (argv.safe) {
@@ -62,6 +62,24 @@ async function main() {
     // A = sqrt(D^2 / 2)
     const side = Math.sqrt(Math.pow(r * 2, 2) / 2);
     argv.padding = (Math.max(argv.width, argv.height) - side) / 2;
+  } else if (argv.avatar) {
+    // Fit graphic inside a circle that touches the edges
+    const d = Math.min(argv.width, argv.height);
+    const side = Math.sqrt(Math.pow(d, 2) / 2);
+    argv.padding = (Math.max(argv.width, argv.height) - side) / 2;
+  }
+
+  const style = ['display:flex;justify-content:center;align-items:center'];
+  style.push(`width:${argv.width}px`);
+  style.push(`height:${argv.height}px`);
+  if (argv.padding !== undefined) {
+    style.push(`padding:${argv.padding}px`);
+  }
+  if (argv.background !== undefined) {
+    style.push(`background-color:${argv.background}`);
+  }
+  if (argv.radius !== undefined) {
+    style.push(`border-radius:${argv.radius}px`);
   }
 
   // prettier-ignore
@@ -69,10 +87,11 @@ async function main() {
 <html>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { background-color: ${argv.background || 'transparent'}; }
+    html, body { background: transparent; }
+    :root {${argv.var !== undefined ? argv.var : ''}}
   </style>
   <body>
-    <div style="width:${argv.width}px;height:${argv.height}px;padding:${argv.padding||0}px;display:flex;justify-content:center;align-items:center;">
+    <div style="${style.join(';')}">
       ${source.replace(/<svg/, `<svg width="100%" height="100%"`)}
     </div>
   </body>

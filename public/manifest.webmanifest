@@ -14,20 +14,17 @@
     {
       "src": "/img/fav/favicon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable any"
+      "type": "image/png"
     },
     {
       "src": "/img/fav/favicon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable any"
+      "type": "image/png"
     },
     {
-      "src": "/img/fav/maskable.svg",
+      "src": "/img/fav/logo.svg",
       "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "maskable any"
+      "type": "image/svg+xml"
     }
   ]
 }
