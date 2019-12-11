@@ -8,6 +8,7 @@ import { promisify } from 'util';
 
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PRODUCTION = process.env.NODE_ENV === 'production';
 
 const renderSass = promisify(sass.render);
 
@@ -21,14 +22,15 @@ const renderSass = promisify(sass.render);
   Output: /public/css/core.css
 
   CLI flags:
-    --sourcemap generates source map
+    --sourcemap generates source map for production
 */
 
-const process = async () => {
+const main = async () => {
+  const filename = PRODUCTION ? 'core' : 'core-dev';
   const sourcePath = path.resolve(__dirname, '../client/styles/layout.scss');
-  const targetPath = path.resolve(__dirname, '../public/css/core.css');
-  const sourceMapPath = path.resolve(__dirname, '../public/css/core.css.map');
-  const SOURCEMAP = yargs.argv.sourcemap === true;
+  const targetPath = path.resolve(__dirname, `../public/css/${filename}.css`);
+  const sourceMapPath = path.resolve(__dirname, `../public/css/${filename}.css.map`);
+  const SOURCEMAP = yargs.argv.sourcemap === true || !PRODUCTION;
 
   console.log('Rendering Sass to CSS');
 
@@ -60,4 +62,4 @@ const process = async () => {
   }
 };
 
-process();
+main();

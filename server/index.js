@@ -300,7 +300,7 @@ app.get('*', (req, res, next) => {
   } else {
     renderOptions.entry = 'main.js';
     if (CSS_MODE === 'LINK') {
-      renderOptions.css = 'core.css';
+      renderOptions.css = 'core-dev.css';
     }
   }
 
