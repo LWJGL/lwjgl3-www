@@ -86,7 +86,7 @@
     "scroll-into-view-if-needed": "2.2.20",
     "style-loader": "1.1.2",
     "terser": "4.4.3",
-    "three": "0.112.0",
+    "three": "0.112.1",
     "typescript": "3.7.4",
     "typescript-styled-plugin": "0.15.0",
     "webpack": "5.0.0-beta.11",
