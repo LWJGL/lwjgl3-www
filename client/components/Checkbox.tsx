@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import uniqueId from 'lodash-es/uniqueId';
-import { cx } from 'emotion';
+import { cx } from '@emotion/css';
 
 interface Props {
   label: string;

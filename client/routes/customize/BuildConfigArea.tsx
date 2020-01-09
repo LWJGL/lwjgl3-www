@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { css, cx } from 'emotion';
+import { css, cx } from '@emotion/css';
 import { COLOR_PRIMARY } from '~/theme';
 import { mediaBreakpointUp } from '~/theme/media';
 import { lighten } from '~/theme/color';

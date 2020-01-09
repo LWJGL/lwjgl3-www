@@ -3,7 +3,7 @@ import { useMemoSlice } from './Store';
 import { Addon, AddonDefinition, BuildStore } from './types';
 import { toggleAddon } from './actions';
 import { Checkbox } from '~/components/Checkbox';
-import { cx } from 'emotion';
+import { cx } from '@emotion/css';
 
 const getSlice = ({ mode, selectedAddons, descriptions, addons }: BuildStore) => ({
   mode,

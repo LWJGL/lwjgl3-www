@@ -48,7 +48,7 @@ node render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512 --bg="#424242" -
 # node render.mjs logo.svg dist/favicon-maskable-512x512.png -w 512 -h 512 --bg="#424242" --safe
 
 # Social icon
-node render.mjs logo.svg dist/social-512x512.png --width 512 --height 512 --padding 72
+node render.mjs logo.svg dist/social-512x512.png -w 512 -h 512 --bg="#424242" --padding 72
 
 # Optimize with OptiPNG
 docker run -v $(pwd):/source --rm -it buffcode/docker-optipng -o 7 ./dist/*.png

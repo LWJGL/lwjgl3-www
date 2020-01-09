@@ -6,7 +6,7 @@ import { toggleArtifact } from './actions';
 // UI
 import { Checkbox } from '~/components/Checkbox';
 import { getPlatformIcon } from './getPlatformIcon';
-import { cx } from 'emotion';
+import { cx } from '@emotion/css';
 
 const getPlatformIcons = (platforms: Array<Native>) => (
   <p>

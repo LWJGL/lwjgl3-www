@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Link } from '@reach/router';
 import { Icon, Folder as FolderIcon } from '~/components/icons';
 

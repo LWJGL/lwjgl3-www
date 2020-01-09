@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { Link } from '@reach/router';
 import { Icon, KeyboardArrowDown } from '~/components/icons';
 import { contextOptions } from './contextOptions';

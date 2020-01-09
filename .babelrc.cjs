@@ -17,7 +17,7 @@ const config = {
     PRODUCTION && 'babel-plugin-optimize-react',
     ['@babel/plugin-transform-react-jsx', { useBuiltIns: PRODUCTION, useSpread: !PRODUCTION }],
     [
-      'emotion',
+      '@emotion',
       {
         sourceMap: !PRODUCTION,
         // autoLabel: !PRODUCTION,

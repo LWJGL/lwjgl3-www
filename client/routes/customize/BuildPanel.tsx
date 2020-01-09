@@ -1,11 +1,11 @@
 import React, { Suspense, useState, useEffect, useMemo } from 'react';
-import { css } from 'emotion';
+import { css } from '@emotion/css';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { Icon, Close } from '~/components/icons';
 // import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { COLOR_PRIMARY } from '~/theme';
 import { mediaBreakpointDown, mediaBreakpointUp } from '~/theme/media';
-import { cx } from 'emotion';
+import { cx } from '@emotion/css';
 import { useMemoSlice } from './Store';
 import { selectBuildType } from './actions';
 import { BuildStatus } from './BuildStatus';

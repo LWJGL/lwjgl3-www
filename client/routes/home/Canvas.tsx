@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { css, keyframes } from 'emotion';
+import { css, keyframes } from '@emotion/css';
 import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';

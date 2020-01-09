@@ -1,5 +1,5 @@
 import React from 'react';
-import { css, cx } from 'emotion';
+import { css, cx } from '@emotion/css';
 import { PageView } from '~/components/routes/PageView';
 import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
