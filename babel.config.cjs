@@ -1,3 +1,4 @@
+'use strict';
 const { argv } = require('yargs');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -27,11 +28,8 @@ const config = {
     ],
 
     // Stage-3
-    '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-numeric-separator',
-    ['@babel/plugin-proposal-nullish-coalescing-operator', { loose: true }],
-    ['@babel/plugin-proposal-optional-chaining', { loose: true }],
 
     PRODUCTION && 'babel-plugin-transform-async-to-promises',
   ].filter(Boolean),
