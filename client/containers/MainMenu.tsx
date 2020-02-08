@@ -1,17 +1,10 @@
 import React from 'react';
-import { Link, LinkProps, LinkGetProps } from '@reach/router';
+import { NavLink } from 'react-router-dom';
 
 interface Props {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   className?: string;
 }
-
-const isActive = ({ isCurrent }: LinkGetProps) => {
-  return isCurrent ? { className: 'active' } : {};
-};
-
-//@ts-ignore
-const NavLink = (props: LinkProps<void>) => <Link {...props} getProps={isActive} />;
 
 export const MainMenu: React.FC<Props> = ({ onClick, className }) => (
   <div role="navigation" aria-label="Main Menu" className={className}>

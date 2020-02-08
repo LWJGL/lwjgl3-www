@@ -1,15 +1,26 @@
 import React, { memo, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';
 // import { trackView } from '~/services/ga';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
-import { WindowLocation } from '@reach/router';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
   x: number;
   y: number;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+interface PropsMemo {
+  location: any;
+  title?: string;
+  description?: string;
 }
 
 // The maximum number of pages in the browser's session history, i.e. the maximum number of URLs you can traverse purely through the Back/Forward buttons.
@@ -43,13 +54,7 @@ function storeScroll(key: string) {
   // console.table(Array.from(scrollEntries.keys()));
 }
 
-interface Props {
-  location: WindowLocation;
-  title?: string;
-  description?: string;
-}
-
-function arePropsEqual({ location: prevLocation }: Props, { location: nextLocation }: Props) {
+function arePropsEqual({ location: prevLocation }: PropsMemo, { location: nextLocation }: PropsMemo) {
   // EXPERIMENTAL: We want to prevent re-render when only hash changes
   // This unfortunately also changes the key which may result in bugs
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
@@ -61,7 +66,14 @@ function scrollToTop() {
   }
 }
 
-export const PageView: React.FC<Props> = memo(({ location: { key = 'root', hash }, title, description, children }) => {
+export const PageView: React.FC<Props> = props => {
+  const location = useLocation();
+  return <PageViewMemo location={location} {...props} />;
+};
+
+export const PageViewMemo: React.FC<PropsMemo> = memo(({ location, title, description, children }) => {
+  const { hash, key = 'root' } = location;
+
   // Update document title
   useDocumentTitle(title);
 

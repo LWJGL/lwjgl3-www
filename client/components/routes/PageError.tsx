@@ -7,7 +7,7 @@ export function PageError({ error }: ErrorProps) {
   useDocumentTitle('An error has occured');
 
   return (
-    <main style={{ backgroundColor: COLOR_RED.css(), color: '#fff' }}>
+    <div style={{ backgroundColor: COLOR_RED.css(), color: '#fff', marginTop: '-1rem', paddingTop: '1rem' }}>
       <section className="container text-center pt-5 pb-3">
         <h1>Something went wrong</h1>
         <h3>Oh no! It appears that the page has crashed or failed to load.</h3>
@@ -18,6 +18,6 @@ export function PageError({ error }: ErrorProps) {
         <p>{error.message}</p>
         <pre className="text-warning">{error.stack}</pre>
       </section>
-    </main>
+    </div>
   );
 }

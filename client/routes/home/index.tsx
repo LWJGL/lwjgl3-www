@@ -1,7 +1,7 @@
 import React from 'react';
 import { css, cx } from '@emotion/css';
 import { PageView } from '~/components/routes/PageView';
-import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
@@ -18,11 +18,8 @@ import {
   BatteryUnknown,
 } from '~/components/icons';
 
-const HomeRoute = (props: RouteComponentProps) => (
-  <PageView
-    location={props.location as WindowLocation}
-    description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL."
-  >
+const HomeRoute: React.FC<{ children?: never }> = () => (
+  <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
     <HomeHero />
     <HashLinkTarget id="learn-more" />
     <StaticContent />
@@ -168,7 +165,10 @@ const StaticContent = () => {
               <LazyImg width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
               <h3>
                 Vulkan
-                <sup>TM</sup> Bindings
+                <sup>
+                  <small>TM</small>
+                </sup>{' '}
+                Bindings
               </h3>
               <p>
                 A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
@@ -185,7 +185,10 @@ const StaticContent = () => {
               />
               <h3>
                 OpenCL
-                <sup>TM</sup> Bindings
+                <sup>
+                  <small>TM</small>
+                </sup>{' '}
+                Bindings
               </h3>
               <p>
                 The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all OpenCL
@@ -207,7 +210,10 @@ const StaticContent = () => {
               <LazyImg width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
               <h3>
                 OpenGL
-                <sup>®</sup> Bindings
+                <sup>
+                  <small>®</small>
+                </sup>{' '}
+                Bindings
               </h3>
               <p>
                 Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions (including
@@ -223,7 +229,10 @@ const StaticContent = () => {
               <LazyImg width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
               <h3>
                 OpenGL
-                <sup>®</sup> ES Bindings
+                <sup>
+                  <small>®</small>
+                </sup>{' '}
+                ES Bindings
               </h3>
               <p>
                 A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
@@ -235,7 +244,10 @@ const StaticContent = () => {
               <LazyImg width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
               <h3>
                 EGL
-                <sup>TM</sup> Bindings
+                <sup>
+                  <small>TM</small>
+                </sup>{' '}
+                Bindings
               </h3>
               <p>
                 An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native

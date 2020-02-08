@@ -1,11 +1,11 @@
 import React from 'react';
 import { PageView } from '~/components/routes/PageView';
-import { Link, RouteComponentProps, WindowLocation } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { Icon, Github, Checkbox, Folder } from '~/components/icons';
 import { CustomizePreload, BrowsePreload } from '../';
 
-const DownloadRoute: React.FC<RouteComponentProps> = props => (
-  <PageView location={props.location as WindowLocation} title="Download" description="Download LWJGL 3">
+const DownloadRoute: React.FC<{ children?: never }> = () => (
+  <PageView title="Download" description="Download LWJGL 3">
     <StaticContent />
   </PageView>
 );

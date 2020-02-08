@@ -6,31 +6,29 @@ import { PageError } from '../components/routes/PageError';
 import { PageBlank } from '../components/routes/PageBlank';
 
 // Routes
-import { Router } from '@reach/router';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home, Guide, Download, Customize, Browse, Source, License } from '../routes';
-import { Miss404 } from '../routes/miss404';
+import { NotFound } from '../routes/error/NotFound';
 
 export const Layout: React.FC<{ children?: never }> = () => (
-  <>
-    <Router primary={false} component={React.Fragment}>
-      <Header path="/*" />
-    </Router>
-    <ErrorBoundary fallback={PageError}>
-      <Suspense fallback={<PageBlank />} unstable_avoidThisFallback={true}>
-        <Router component="main">
-          <Home path="/" />
-          <Guide path="/guide" />
-          <Download path="/download" />
-          <Customize path="/customize" />
-          <Browse path="/browse/*" />
-          <Source path="/source" />
-          <License path="/license" />
-          <Miss404 default />
-        </Router>
-      </Suspense>
-    </ErrorBoundary>
-    <Router primary={false} component={React.Fragment}>
-      <Footer path="/*" />
-    </Router>
-  </>
+  <Router>
+    <Header />
+    <main>
+      <ErrorBoundary fallback={PageError}>
+        <Suspense fallback={<PageBlank />} unstable_avoidThisFallback={true}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/guide" element={<Guide />} />
+            <Route path="/download" element={<Download />} />
+            <Route path="/customize" element={<Customize />} />
+            <Route path="/browse/*" element={<Browse />} />
+            <Route path="/source" element={<Source />} />
+            <Route path="/license" element={<License />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </Suspense>
+      </ErrorBoundary>
+    </main>
+    <Footer />
+  </Router>
 );

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { css } from '@emotion/css';
-import { Link, RouteComponentProps } from '@reach/router';
+import { Link, useLocation } from 'react-router-dom';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
@@ -39,7 +39,8 @@ function ServiceWorkerUpdate() {
 
 let offsetHeight = 48;
 
-export const Header: React.FC<RouteComponentProps> = ({ location }) => {
+export const Header: React.FC<{ children?: never }> = () => {
+  const location = useLocation();
   const isHome = location !== undefined && location.pathname === '/';
   const {
     current: currentBreakpoint,

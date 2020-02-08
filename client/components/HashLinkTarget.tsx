@@ -1,14 +1,10 @@
 import React, { useRef, useEffect } from 'react';
-import { Location } from '@reach/router';
+import { useLocation } from 'react-router-dom';
 import { scrollSmooth } from '~/services/scrollSmooth';
 import { usePrevious } from '~/hooks/usePrevious';
 
-interface OwnProps {
+interface Props {
   id: string;
-}
-
-interface Props extends OwnProps {
-  hash: string;
 }
 
 // Remember position before we clicked on a HashLink
@@ -28,7 +24,8 @@ function scrollToTarget(el: HTMLAnchorElement) {
   }
 }
 
-const HashLinkTargetControlled: React.FC<Props> = ({ id, hash }) => {
+export const HashLinkTarget: React.FC<Props> = ({ id }) => {
+  const { hash } = useLocation();
   const el = useRef<HTMLAnchorElement>(null);
   const prevHash = usePrevious(hash);
 
@@ -56,7 +53,3 @@ const HashLinkTargetControlled: React.FC<Props> = ({ id, hash }) => {
 
   return <a ref={el} />;
 };
-
-export const HashLinkTarget = ({ id }: OwnProps) => (
-  <Location>{({ location }) => <HashLinkTargetControlled id={id} hash={location.hash} />}</Location>
-);

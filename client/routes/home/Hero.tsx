@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { css } from '@emotion/css';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { Icon, KeyboardArrowDown } from '~/components/icons';
 import { contextOptions } from './contextOptions';
 

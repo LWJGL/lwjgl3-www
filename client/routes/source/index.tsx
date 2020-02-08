@@ -1,15 +1,10 @@
 import React from 'react';
 import { PageView } from '~/components/routes/PageView';
-import { RouteComponentProps, WindowLocation } from '@reach/router';
 import { Icon, Github } from '~/components/icons';
 import { BuildBadge } from './BuildBadge';
 
-const SourceRoute = (props: RouteComponentProps) => (
-  <PageView
-    location={props.location as WindowLocation}
-    title="Source & Build Status"
-    description="Links to LWJGL Github repository and build status matrix"
-  >
+const SourceRoute: React.FC<{ children?: never }> = () => (
+  <PageView title="Source & Build Status" description="Links to LWJGL Github repository and build status matrix">
     <section className="container pb-5">
       <h1>
         LW

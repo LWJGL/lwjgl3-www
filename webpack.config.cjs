@@ -22,6 +22,7 @@ const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
     target: 'web',
+    amd: false,
     cache: {
       type: 'filesystem',
       buildDependencies: {

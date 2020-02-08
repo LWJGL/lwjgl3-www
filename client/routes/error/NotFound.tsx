@@ -1,8 +1,7 @@
 import React from 'react';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
-import { RouteComponentProps } from '@reach/router';
 
-export function Miss404(props: RouteComponentProps) {
+export const NotFound: React.FC<{ children?: never }> = () => {
   useDocumentTitle('Page not Found');
   return (
     <section className="container text-center py-5">
@@ -10,4 +9,4 @@ export function Miss404(props: RouteComponentProps) {
       <h3>Page not found</h3>
     </section>
   );
-}
+};

@@ -1,5 +1,5 @@
 import React, { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
-import { Link } from '@reach/router';
+import { Link } from 'react-router-dom';
 import { Icon, Cloud } from '~/components/icons';
 import { File } from './File';
 import { Folder, FolderWrap, SpinnerRow, FolderError } from './Folder';

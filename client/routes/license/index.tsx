@@ -1,9 +1,8 @@
 import React from 'react';
 import { PageView } from '~/components/routes/PageView';
-import { RouteComponentProps, WindowLocation } from '@reach/router';
 
-const LicenseRoute = (props: RouteComponentProps) => (
-  <PageView location={props.location as WindowLocation} title="License" description="LWJGL is licensed under BSD">
+const LicenseRoute: React.FC<{ children?: never }> = () => (
+  <PageView title="License" description="LWJGL is licensed under BSD">
     <section className="container">
       <h1>Lightweight Java Game Library License</h1>
       <hr />
