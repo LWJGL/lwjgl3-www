@@ -203,6 +203,9 @@ const buildConfiguration = () => {
     config.resolve.alias.three = path.resolve(__dirname, `./node_modules/three/build/three.min.js`);
     config.resolve.alias.jszip = path.resolve(__dirname, `./node_modules/jszip/dist/jszip.min.js`);
 
+    // For IE11 compatibility (uses String.endsWith)
+    config.module.rules[0].include.push(path.resolve(__dirname, 'node_modules/react-router'));
+
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
       config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
