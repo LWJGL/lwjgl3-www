@@ -6,13 +6,13 @@ import { CustomizePreload, BrowsePreload } from '../';
 
 const DownloadRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Download" description="Download LWJGL 3">
-    <StaticContent />
+    <DownloadLayout />
   </PageView>
 );
 
 export default DownloadRoute;
 
-const StaticContent = () => {
+const DownloadLayout = () => {
   return (
     <>
       <section className="container pb-4">

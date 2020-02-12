@@ -7,6 +7,14 @@ const Sample = lazy(() => import(/* webpackChunkName: "route-guide$sample" */ '.
 
 const GuideRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Get started with LWJGL 3" description="This guide will help you get started with LWJGL 3">
+    <GuideContent />
+  </PageView>
+);
+
+export default GuideRoute;
+
+const GuideContent: React.FC<{ children?: never }> = () => (
+  <>
     <section className="container">
       <h1>
         LW
@@ -49,7 +57,6 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
       >
         <Sample />
       </Suspense>
-      }
     </section>
 
     <section className="container pt-4">
@@ -270,7 +277,5 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
         , an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API.
       </p>
     </section>
-  </PageView>
+  </>
 );
-
-export default GuideRoute;
