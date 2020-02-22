@@ -81,13 +81,13 @@ if (app.locals.development) {
   const webpack = require('webpack');
   const webpackConfig = require('../webpack.config.cjs');
   const webpackCompiler = webpack(webpackConfig);
+  const wdm = require('webpack-dev-middleware').default;
 
   app.use(
-    require('webpack-dev-middleware')(webpackCompiler, {
-      lazy: false,
-      logLevel: 'error', // trace, debug, info, warn, error, silent
-      publicPath: webpackConfig.output.publicPath,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+    wdm(webpackCompiler, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
     })
   );
 
@@ -109,11 +109,11 @@ if (app.locals.development || argv.s3proxy) {
     In development these paths will hit Node, therefore we need to handle them.
     CAUTION: Internet connection is required!
   */
-  const proxy = require('http-proxy-middleware');
+  const { createProxyMiddleware } = require('http-proxy-middleware');
 
   // Proxy photos from S3
-  app.use('/img', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
-  app.use('/svg', proxy({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
+  app.use('/img', createProxyMiddleware({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
+  app.use('/svg', createProxyMiddleware({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
 }
 
 // ------------------------------------------------------------------------------

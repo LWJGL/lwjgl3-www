@@ -29,6 +29,9 @@ const buildConfiguration = () => {
         config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
       },
     },
+    infrastructureLogging: {
+      level: 'warn',
+    },
     optimization: {
       // minimize: false,
       minimizer: [
@@ -63,7 +66,7 @@ const buildConfiguration = () => {
         }),
       ],
       noEmitOnErrors: true,
-      moduleIds: 'deterministic',
+      moduleIds: PRODUCTION ? 'deterministic' : 'named',
       removeEmptyChunks: PRODUCTION,
       mergeDuplicateChunks: PRODUCTION,
       providedExports: PRODUCTION,
