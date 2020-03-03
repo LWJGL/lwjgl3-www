@@ -1,4 +1,4 @@
-import produce from 'immer';
+import produce, { enableES5 } from 'immer';
 import React from 'react';
 import { Action, ActionCreator } from './actions';
 import { config, getDefaultPlatform, OSGiVersionMax } from './config';
@@ -17,6 +17,7 @@ import {
 } from './types';
 
 // Reducer
+enableES5();
 
 export const reducer: React.Reducer<BuildStore, ActionCreator> = (
   state: BuildStore = config,
