@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { css, cx } from '@emotion/css';
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';
@@ -453,6 +453,15 @@ const StaticContent = () => (
               style={{ padding: '4px 3px 4px 2px', background: 'white' }}
               src="/img/sponsors/smalan.png"
               alt="Smålån uten sikkerhet"
+            />
+          </a>
+          <a href="http://nettikasinot.org/" rel="sponsored noopener" target="_blank">
+            <LazyImg
+              className="m-3"
+              width={585 / 3}
+              height={116 / 3}
+              src="/img/sponsors/nettikasinot-585x116.png"
+              alt="Nettikasinot"
             />
           </a>
         </div>
