@@ -373,15 +373,6 @@ const StaticContent = () => (
               alt="Loan Scouter"
             />
           </a>
-          <a href="https://matchbanker.no/" rel="noopener" target="_blank">
-            <LazyImg
-              className="m-3"
-              width={220}
-              height={20.5}
-              src="/img/sponsors/matchbanker-440x41.png"
-              alt="MatchBanker"
-            />
-          </a>
           <a href="https://fair-laan.se/" rel="noopener" target="_blank">
             <LazyImg className="m-3" width={190} height={42} src="/img/sponsors/fairplan.svg" alt="FairPlan" />
           </a>
@@ -452,6 +443,15 @@ const StaticContent = () => (
               height={34.5}
               style={{ padding: '4px 3px 4px 2px', background: 'white' }}
               src="/img/sponsors/smalan.png"
+              alt="Smålån uten sikkerhet"
+            />
+          </a>
+          <a href="https://emailmarketingservices.io/" rel="noopener" target="_blank">
+            <LazyImg
+              className="m-3"
+              width={354 / 3}
+              height={190 / 3}
+              src="/img/sponsors/emailmarketingservices-354x190.png"
               alt="Smålån uten sikkerhet"
             />
           </a>
