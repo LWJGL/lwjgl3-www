@@ -17,16 +17,14 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.DRIFTFX]: {
       id: Binding.DRIFTFX,
       title: 'DriftFX',
-      description:
-          'A library that allows you to render any OpenGL content directly into JavaFX nodes.',
+      description: 'A library that allows you to render any OpenGL content directly into JavaFX nodes.',
       natives: NATIVE_ALL,
       website: 'http://bulletphysics.org/',
     },
     [Binding.MESHOPTIMIZER]: {
       id: Binding.MESHOPTIMIZER,
       title: 'meshoptimizer',
-      description:
-          'A mesh optimization library that makes meshes smaller and faster to render.',
+      description: 'A mesh optimization library that makes meshes smaller and faster to render.',
       natives: NATIVE_ALL,
       website: 'http://bulletphysics.org/',
     },

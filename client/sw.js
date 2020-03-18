@@ -74,7 +74,10 @@ async function install() {
     }
     let deps = getDepsForRoute(new URL(client.url).pathname);
     if (deps !== null) {
-      files.push.apply(files, deps.map(id => `/js/${manifest.assets[id]}`));
+      files.push.apply(
+        files,
+        deps.map(id => `/js/${manifest.assets[id]}`)
+      );
     }
   }
 
