@@ -1,0 +1,115 @@
+<span class="hljs-keyword">import</span> org.lwjgl.*;
+<span class="hljs-keyword">import</span> org.lwjgl.glfw.*;
+<span class="hljs-keyword">import</span> org.lwjgl.opengl.*;
+<span class="hljs-keyword">import</span> org.lwjgl.system.*;
+
+<span class="hljs-keyword">import</span> java.nio.*;
+
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.lwjgl.glfw.Callbacks.*;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.lwjgl.glfw.GLFW.*;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.lwjgl.opengl.GL11.*;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.lwjgl.system.MemoryStack.*;
+<span class="hljs-keyword">import</span> <span class="hljs-keyword">static</span> org.lwjgl.system.MemoryUtil.*;
+
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HelloWorld</span> </span>{
+
+	<span class="hljs-comment">// The window handle</span>
+	<span class="hljs-keyword">private</span> <span class="hljs-keyword">long</span> window;
+
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
+		System.out.println(<span class="hljs-string">"Hello LWJGL "</span> + Version.getVersion() + <span class="hljs-string">"!"</span>);
+
+		init();
+		loop();
+
+		<span class="hljs-comment">// Free the window callbacks and destroy the window</span>
+		glfwFreeCallbacks(window);
+		glfwDestroyWindow(window);
+
+		<span class="hljs-comment">// Terminate GLFW and free the error callback</span>
+		glfwTerminate();
+		glfwSetErrorCallback(<span class="hljs-keyword">null</span>).free();
+	}
+
+	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">init</span><span class="hljs-params">()</span> </span>{
+		<span class="hljs-comment">// Setup an error callback. The default implementation</span>
+		<span class="hljs-comment">// will print the error message in System.err.</span>
+		GLFWErrorCallback.createPrint(System.err).set();
+
+		<span class="hljs-comment">// Initialize GLFW. Most GLFW functions will not work before doing this.</span>
+		<span class="hljs-keyword">if</span> ( !glfwInit() )
+			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">"Unable to initialize GLFW"</span>);
+
+		<span class="hljs-comment">// Configure GLFW</span>
+		glfwDefaultWindowHints(); <span class="hljs-comment">// optional, the current window hints are already the default</span>
+		glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); <span class="hljs-comment">// the window will stay hidden after creation</span>
+		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); <span class="hljs-comment">// the window will be resizable</span>
+
+		<span class="hljs-comment">// Create the window</span>
+		window = glfwCreateWindow(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-string">"Hello World!"</span>, NULL, NULL);
+		<span class="hljs-keyword">if</span> ( window == NULL )
+			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"Failed to create the GLFW window"</span>);
+
+		<span class="hljs-comment">// Setup a key callback. It will be called every time a key is pressed, repeated or released.</span>
+		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -&gt; {
+			<span class="hljs-keyword">if</span> ( key == GLFW_KEY_ESCAPE &amp;&amp; action == GLFW_RELEASE )
+				glfwSetWindowShouldClose(window, <span class="hljs-keyword">true</span>); <span class="hljs-comment">// We will detect this in the rendering loop</span>
+		});
+
+		<span class="hljs-comment">// Get the thread stack and push a new frame</span>
+		<span class="hljs-keyword">try</span> ( MemoryStack stack = stackPush() ) {
+			IntBuffer pWidth = stack.mallocInt(<span class="hljs-number">1</span>); <span class="hljs-comment">// int*</span>
+			IntBuffer pHeight = stack.mallocInt(<span class="hljs-number">1</span>); <span class="hljs-comment">// int*</span>
+
+			<span class="hljs-comment">// Get the window size passed to glfwCreateWindow</span>
+			glfwGetWindowSize(window, pWidth, pHeight);
+
+			<span class="hljs-comment">// Get the resolution of the primary monitor</span>
+			GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+			<span class="hljs-comment">// Center the window</span>
+			glfwSetWindowPos(
+				window,
+				(vidmode.width() - pWidth.get(<span class="hljs-number">0</span>)) / <span class="hljs-number">2</span>,
+				(vidmode.height() - pHeight.get(<span class="hljs-number">0</span>)) / <span class="hljs-number">2</span>
+			);
+		} <span class="hljs-comment">// the stack frame is popped automatically</span>
+
+		<span class="hljs-comment">// Make the OpenGL context current</span>
+		glfwMakeContextCurrent(window);
+		<span class="hljs-comment">// Enable v-sync</span>
+		glfwSwapInterval(<span class="hljs-number">1</span>);
+
+		<span class="hljs-comment">// Make the window visible</span>
+		glfwShowWindow(window);
+	}
+
+	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
+		<span class="hljs-comment">// This line is critical for LWJGL's interoperation with GLFW's</span>
+		<span class="hljs-comment">// OpenGL context, or any context that is managed externally.</span>
+		<span class="hljs-comment">// LWJGL detects the context that is current in the current thread,</span>
+		<span class="hljs-comment">// creates the GLCapabilities instance and makes the OpenGL</span>
+		<span class="hljs-comment">// bindings available for use.</span>
+		GL.createCapabilities();
+
+		<span class="hljs-comment">// Set the clear color</span>
+		glClearColor(<span class="hljs-number">1.0f</span>, <span class="hljs-number">0.0f</span>, <span class="hljs-number">0.0f</span>, <span class="hljs-number">0.0f</span>);
+
+		<span class="hljs-comment">// Run the rendering loop until the user has attempted to close</span>
+		<span class="hljs-comment">// the window or has pressed the ESCAPE key.</span>
+		<span class="hljs-keyword">while</span> ( !glfwWindowShouldClose(window) ) {
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); <span class="hljs-comment">// clear the framebuffer</span>
+
+			glfwSwapBuffers(window); <span class="hljs-comment">// swap the color buffers</span>
+
+			<span class="hljs-comment">// Poll for window events. The key callback above will only be</span>
+			<span class="hljs-comment">// invoked during this call.</span>
+			glfwPollEvents();
+		}
+	}
+
+	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+		<span class="hljs-keyword">new</span> HelloWorld().run();
+	}
+
+}

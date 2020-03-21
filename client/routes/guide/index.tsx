@@ -1,19 +1,18 @@
-import React, { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
-
-const Sample = lazy(() => import(/* webpackChunkName: "route-guide$sample" */ './Sample'));
+import { Sample } from './Sample';
 
 const GuideRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Get started with LWJGL 3" description="This guide will help you get started with LWJGL 3">
-    <GuideContent />
+    <Content />
   </PageView>
 );
 
 export default GuideRoute;
 
-const GuideContent: React.FC<{ children?: never }> = () => (
+const Content: React.FC<{ children?: never }> = () => (
   <>
     <section className="container">
       <h1>
