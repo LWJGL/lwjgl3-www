@@ -1,4 +1,4 @@
-import { BuildType, BuildStoreSnapshot, Mode, Preset, Language, Version, Native, Binding, Addon } from './types';
+import type { BuildType, BuildStoreSnapshot, Mode, Preset, Language, Version, Native, Binding, Addon } from './types';
 
 // Actions
 

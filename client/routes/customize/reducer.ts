@@ -1,19 +1,9 @@
 import produce, { enableES5 } from 'immer';
-import { Action, ActionCreator } from './actions';
 import { config, getDefaultPlatform, OSGiVersionMax } from './config';
-import {
-  Addon,
-  Binding,
-  BindingDefinition,
-  BindingMapSelection,
-  BuildStore,
-  BuildStoreSnapshot,
-  BuildType,
-  Mode,
-  NATIVE_ALL,
-  Preset,
-  Version,
-} from './types';
+import { Addon, BuildType, Mode, NATIVE_ALL, Preset } from './types';
+import { Action } from './actions';
+import type { ActionCreator } from './actions';
+import type { Binding, BindingDefinition, BindingMapSelection, BuildStore, BuildStoreSnapshot, Version } from './types';
 
 // Reducer
 enableES5();

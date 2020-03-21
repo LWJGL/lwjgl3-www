@@ -12,7 +12,7 @@ const config = {
       '@babel/preset-typescript',
       {
         allowDeclareFields: true, // TODO: Remove in Babel@8+ (it will be the default)
-        // onlyRemoveTypeImports: true,
+        onlyRemoveTypeImports: true,
       },
     ],
   ],

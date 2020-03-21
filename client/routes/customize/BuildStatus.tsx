@@ -1,4 +1,4 @@
-import { BuildType } from './types';
+import type { BuildType } from './types';
 import { ResourceCached } from '~/services/Resource';
 import { config } from './config';
 

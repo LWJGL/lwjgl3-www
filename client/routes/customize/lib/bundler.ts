@@ -1,14 +1,7 @@
 import JSZip from 'jszip';
 import { HTTP_OK } from '~/services/http_status_codes';
-import {
-  Binding,
-  BindingDefinition,
-  BindingMapSelection,
-  BuildStore,
-  BuildType,
-  Native,
-  PlatformSelection,
-} from '../types';
+import { Native, BuildType } from '../types';
+import type { Binding, BindingDefinition, BindingMapSelection, BuildStore, PlatformSelection } from '../types';
 
 type AddonSelection = Array<{ id: string; version: string }>;
 

@@ -4,13 +4,13 @@ import { useBreakpoint } from '~/components/Breakpoint';
 import { Icon, FileCopy, CloudDownload } from '~/components/icons';
 import { BuildToolbar } from './BuildToolbar';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
-import {
+import { BuildType } from './types';
+import type {
   Addon,
   AddonMap,
   Binding,
   BindingMapUnsafe,
   BuildStoreSnapshot,
-  BuildType,
   Language,
   ModeDefinition,
   Native,

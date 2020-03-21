@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useMemoSlice } from './Store';
-import { Binding, BindingDefinition, Native, NATIVE_ALL, BuildStore } from './types';
+import { NATIVE_ALL } from './types';
+import type { Binding, BindingDefinition, Native, BuildStore } from './types';
 import { toggleArtifact } from './actions';
 
 // UI

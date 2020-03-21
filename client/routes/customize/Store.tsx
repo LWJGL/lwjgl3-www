@@ -1,8 +1,9 @@
 import { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
-import { ActionCreator, configLoad } from './actions';
+import { configLoad } from './actions';
+import type { ActionCreator } from './actions';
 import { config, getConfigSnapshot } from './config';
 import { reducer } from './reducer';
-import { BuildStore, BuildStoreSnapshot } from './types';
+import type { BuildStore, BuildStoreSnapshot } from './types';
 import debounce from 'lodash-es/debounce';
 import isEqual from 'react-fast-compare';
 

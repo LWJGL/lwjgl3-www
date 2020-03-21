@@ -1,5 +1,6 @@
 import { State } from '../BuildScript';
-import { Addon, BuildType } from '../types';
+import { BuildType } from '../types';
+import type { Addon } from '../types';
 import { generateDependencies, getArtifactName, getVersion, isNativeApplicableToAllPlatforms } from './script';
 
 export function generateIvy({

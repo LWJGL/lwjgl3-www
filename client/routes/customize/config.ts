@@ -12,22 +12,10 @@ import lwjgl_322 from './versions/3.2.2';
 import lwjgl_323 from './versions/3.2.3';
 import lwjgl_nightly from './versions/nightly';
 import lwjgl_stable from './versions/stable';
+import { Native, BuildType, Mode, Version, Language, Preset, NATIVE_ALL, Addon } from './types';
 
 // Types
-import {
-  BuildStore,
-  BuildStoreSnapshot,
-  BuildBindings,
-  BuildType,
-  Mode,
-  Binding,
-  Preset,
-  Native,
-  NATIVE_ALL,
-  Addon,
-  Language,
-  Version,
-} from './types';
+import type { BuildStore, BuildStoreSnapshot, BuildBindings, Binding } from './types';
 type BuildBindingsReducer = (opt: BuildBindings) => BuildBindings;
 
 export function getDefaultPlatform(): Native {

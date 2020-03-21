@@ -1,4 +1,5 @@
-import { BuildBindings, Version } from '../types';
+import { Version } from '../types';
+import type { BuildBindings } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,

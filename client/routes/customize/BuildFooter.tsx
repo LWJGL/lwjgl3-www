@@ -6,7 +6,8 @@ import { BuildScript } from './BuildScript';
 import { BuildToolbar } from './BuildToolbar';
 import { configJSONfilename, getConfigSnapshot } from './config';
 import { useSlice, useStoreRef } from './Store';
-import { BuildStoreSnapshot, Mode } from './types';
+import { Mode } from './types';
+import type { BuildStoreSnapshot } from './types';
 
 interface Props {
   setIsDownloading: (state: boolean) => void;

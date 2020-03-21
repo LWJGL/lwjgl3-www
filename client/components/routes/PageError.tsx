@@ -1,6 +1,6 @@
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
-import { ErrorProps } from '../ErrorBoundary';
 import { COLOR_RED } from '~/theme';
+import type { ErrorProps } from '../ErrorBoundary';
 
 export function PageError({ error }: ErrorProps) {
   useDocumentTitle('An error has occured');

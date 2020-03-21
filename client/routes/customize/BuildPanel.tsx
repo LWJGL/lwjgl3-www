@@ -18,7 +18,7 @@ import {
   COLOR_STABLE,
   COLOR_STABLE_LIGHT,
 } from './theme';
-import { BuildDefinition, BuildType } from './types';
+import type { BuildDefinition, BuildType } from './types';
 
 type ConnectedProps = {
   buildSelected: boolean;

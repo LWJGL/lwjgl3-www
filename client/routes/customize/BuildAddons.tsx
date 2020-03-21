@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useMemoSlice } from './Store';
-import { Addon, AddonDefinition, BuildStore } from './types';
+import type { Addon, AddonDefinition, BuildStore } from './types';
 import { toggleAddon } from './actions';
 import { Checkbox } from '~/components/Checkbox';
 import { cx } from '@emotion/css';

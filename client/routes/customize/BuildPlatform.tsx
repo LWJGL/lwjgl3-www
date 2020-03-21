@@ -2,7 +2,8 @@ import { useMemo } from 'react';
 import { Checkbox } from '~/components/Checkbox';
 import { useMemoSlice } from './Store';
 import { togglePlatform } from './actions';
-import { BuildStore, Native } from './types';
+import { Native } from './types';
+import type { BuildStore } from './types';
 import { getPlatformIcon } from './getPlatformIcon';
 import { versionNum } from './reducer';
 

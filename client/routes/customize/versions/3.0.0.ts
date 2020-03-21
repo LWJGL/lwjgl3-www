@@ -1,4 +1,5 @@
-import { BuildBindings, Version, Binding, Preset, Native, NATIVE_LTE_322 } from '../types';
+import { Version, Binding, Preset, Native, NATIVE_LTE_322 } from '../types';
+import type { BuildBindings } from '../types';
 
 export default (): BuildBindings => ({
   version: Version.LWJGL300,

@@ -1,4 +1,5 @@
-import { BuildStore, BuildType, Language, Mode } from './types';
+import { BuildType, Mode } from './types';
+import type { BuildStore, Language } from './types';
 import { checkOSGiVersion } from './reducer';
 import { RadioOptions } from './ControlledRadio';
 import {

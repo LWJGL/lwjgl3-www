@@ -1,4 +1,5 @@
-import { BuildBindings, Binding, BindingDefinition, Native, NATIVE_LTE_322, Version } from '../types';
+import { Binding, Native, NATIVE_LTE_322, Version } from '../types';
+import type { BuildBindings, BindingDefinition } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,

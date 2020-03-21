@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { BreakpointContext } from '~/components/Breakpoint';
 import { Icon, Archive, SettingsBackupRestore } from '~/components/icons';
-import { BuildStoreSnapshot } from './types';
+import type { BuildStoreSnapshot } from './types';
 
 interface Props {
   configDownload: (event: React.MouseEvent<HTMLButtonElement>) => void;

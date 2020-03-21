@@ -1,13 +1,11 @@
 import { State } from '../BuildScript';
-import {
+import { BuildType, Mode, NATIVE_ALL } from '../types';
+import type {
   Binding,
   BindingDefinition,
   BindingMapUnsafe,
-  BuildType,
-  Mode,
   ModeDefinition,
   Native,
-  NATIVE_ALL,
   PlatformSelection,
   Version,
 } from '../types';
