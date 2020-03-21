@@ -1,4 +1,3 @@
-import React from 'react';
 import { css, keyframes } from '@emotion/css';
 import { COLOR_PRIMARY } from '~/theme';
 import { cx } from '@emotion/css';

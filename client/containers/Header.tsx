@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { css } from '@emotion/css';
 import { Link, useLocation } from 'react-router-dom';
 import { useBreakpoint } from '~/components/Breakpoint';

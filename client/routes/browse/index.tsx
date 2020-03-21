@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { PageView } from '~/components/routes/PageView';
 import { Browser } from './components/Browser';

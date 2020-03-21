@@ -1,4 +1,3 @@
-import React from 'react';
 import { Native } from './types';
 import { Icon, Apple, Linux, Windows } from '~/components/icons';
 

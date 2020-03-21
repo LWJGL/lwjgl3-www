@@ -1,4 +1,3 @@
-import React from 'react';
 import { BuildType } from './types';
 import { ResourceCached } from '~/services/Resource';
 import { config } from './config';

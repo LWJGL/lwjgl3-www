@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useEffect, useMemo } from 'react';
+import { Suspense, useState, useEffect, useMemo } from 'react';
 import { css } from '@emotion/css';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { Icon, Close } from '~/components/icons';

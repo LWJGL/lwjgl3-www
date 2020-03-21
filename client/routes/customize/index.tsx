@@ -1,4 +1,3 @@
-import React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { BuildConfigurator } from './BuildConfigurator';
 import { Provider } from './Store';

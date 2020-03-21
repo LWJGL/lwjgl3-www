@@ -1,4 +1,3 @@
-import React from 'react';
 import { useSlice } from './Store';
 import { BuildStore } from './types';
 

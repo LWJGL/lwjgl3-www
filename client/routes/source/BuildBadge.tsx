@@ -1,4 +1,3 @@
-import React from 'react';
 import { LazyImg } from '~/components/LazyImg';
 
 interface Props {

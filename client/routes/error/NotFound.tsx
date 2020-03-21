@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 
 export const NotFound: React.FC<{ children?: never }> = () => {

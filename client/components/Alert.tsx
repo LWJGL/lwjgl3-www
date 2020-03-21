@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dialog } from './Dialog';
 import { Trap } from './Trap';
 import { Icon, Close } from '~/components/icons';

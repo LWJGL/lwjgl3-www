@@ -1,4 +1,3 @@
-import React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';
 import { Icon, Github, Checkbox, Folder } from '~/components/icons';

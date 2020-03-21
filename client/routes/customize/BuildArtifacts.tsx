@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { useMemoSlice } from './Store';
 import { Binding, BindingDefinition, Native, NATIVE_ALL, BuildStore } from './types';
 import { toggleArtifact } from './actions';

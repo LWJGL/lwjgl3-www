@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
 import { Icon, KeyboardArrowDown } from '~/components/icons';

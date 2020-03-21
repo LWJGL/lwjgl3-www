@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { css, cx } from '@emotion/css';
 import { COLOR_PRIMARY } from '~/theme';
 import { mediaBreakpointUp } from '~/theme/media';

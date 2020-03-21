@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Checkbox } from '~/components/Checkbox';
 import { useMemoSlice } from './Store';
 import { togglePlatform } from './actions';
@@ -23,7 +23,7 @@ export function BuildPlatform() {
 
   return useMemo(
     () => (
-      <React.Fragment>
+      <>
         <h4 className="mt-3">Natives</h4>
         <div className="custom-controls-stacked">
           {platforms
@@ -43,7 +43,7 @@ export function BuildPlatform() {
               />
             ))}
         </div>
-      </React.Fragment>
+      </>
     ),
     [slice]
   );

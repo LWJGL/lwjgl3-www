@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import { useEffect, useState, createContext, useContext } from 'react';
 import { breakpoints, breakpointIndex, BreakPointIndex } from '~/theme/media';
 
 interface Context {
@@ -6,10 +6,14 @@ interface Context {
   breakpoints: BreakPointIndex;
 }
 
-export const BreakpointContext = React.createContext<Context>({
+export const BreakpointContext = createContext<Context>({
   current: breakpointIndex.lg,
   breakpoints: breakpointIndex,
 });
+
+if (!FLAG_PRODUCTION) {
+  BreakpointContext.displayName = 'BreakpointContext';
+}
 
 // export const Breakpoint = BreakpointContext.Consumer;
 

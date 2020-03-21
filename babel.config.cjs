@@ -7,16 +7,35 @@ const DEV = !PRODUCTION;
 const HMR = DEV && argv.nohmr === undefined;
 
 const config = {
-  presets: ['@babel/preset-typescript'],
+  presets: [
+    [
+      '@babel/preset-typescript',
+      {
+        allowDeclareFields: true, // TODO: Remove in Babel@8+ (it will be the default)
+        // onlyRemoveTypeImports: true,
+      },
+    ],
+  ],
   plugins: [
-    DEV && HMR && 'react-refresh/babel',
     // React
-    DEV && '@babel/plugin-transform-react-jsx-self',
-    DEV && '@babel/plugin-transform-react-jsx-source',
+    DEV && HMR && 'react-refresh/babel',
     DEV && '@babel/plugin-transform-react-display-name',
-    PRODUCTION && ['transform-react-remove-prop-types', { mode: 'remove', removeImport: true }],
+    PRODUCTION && [
+      'transform-react-remove-prop-types',
+      {
+        mode: 'remove',
+        removeImport: true,
+      },
+    ],
     PRODUCTION && 'babel-plugin-optimize-react',
-    ['@babel/plugin-transform-react-jsx', { useBuiltIns: PRODUCTION, useSpread: !PRODUCTION }],
+    [
+      PRODUCTION ? '@babel/plugin-transform-react-jsx' : '@babel/plugin-transform-react-jsx-development',
+      {
+        runtime: 'automatic',
+        useBuiltIns: true,
+        useSpread: !PRODUCTION,
+      },
+    ],
     [
       '@emotion',
       {
@@ -45,6 +64,7 @@ if (PRODUCTION) {
       debug: false,
       useBuiltIns: 'usage',
       corejs: 3,
+      bugfixes: true,
       exclude: ['transform-async-to-generator', 'transform-regenerator'],
     },
   ]);

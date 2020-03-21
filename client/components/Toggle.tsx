@@ -1,6 +1,6 @@
 import { css } from '@emotion/css';
 import uniqueId from 'lodash-es/uniqueId';
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 import { lighten, setSaturation } from '~/theme/color';
 

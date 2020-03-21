@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
+import { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
 import { ActionCreator, configLoad } from './actions';
 import { config, getConfigSnapshot } from './config';
 import { reducer } from './reducer';
@@ -11,6 +11,10 @@ const STORAGE_KEY = 'lwjgl-build-config';
 
 type StoreTuple = [BuildStore, React.Dispatch<ActionCreator>];
 export const StoreContext = createContext<StoreTuple>([config, () => {}]);
+
+if (!FLAG_PRODUCTION) {
+  StoreContext.displayName = 'StoreContext';
+}
 
 export function useStore(): StoreTuple {
   return useContext(StoreContext);

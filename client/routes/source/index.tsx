@@ -1,4 +1,3 @@
-import React from 'react';
 import { PageView } from '~/components/routes/PageView';
 import { Icon, Github } from '~/components/icons';
 import { BuildBadge } from './BuildBadge';

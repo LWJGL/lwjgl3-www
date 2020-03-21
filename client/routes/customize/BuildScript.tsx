@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import { useMemoSlice } from './Store';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { Icon, FileCopy, CloudDownload } from '~/components/icons';

@@ -1,4 +1,3 @@
-import React from 'react';
 import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
 import { Icon, Folder as FolderIcon } from '~/components/icons';

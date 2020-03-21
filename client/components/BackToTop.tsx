@@ -1,4 +1,3 @@
-import React from 'react';
 import { scrollSmooth } from '~/services/scrollSmooth';
 import { Icon, ArrowUpward } from '~/components/icons';
 

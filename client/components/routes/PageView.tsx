@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ErrorBoundary } from '../ErrorBoundary';
 import { PageError } from './PageError';

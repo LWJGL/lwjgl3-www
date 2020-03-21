@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { ScreenLock } from '~/components/ScreenLock';
 
 interface Props {

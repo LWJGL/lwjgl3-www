@@ -1,4 +1,3 @@
-import React from 'react';
 import { css, cx } from '@emotion/css';
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';

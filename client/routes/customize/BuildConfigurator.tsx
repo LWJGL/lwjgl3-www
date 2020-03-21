@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BuildAddons } from './BuildAddons';
 import { BuildArtifacts } from './BuildArtifacts';
 import { BuildConfigArea } from './BuildConfigArea';
@@ -18,7 +18,7 @@ export function BuildConfigurator() {
   const [isDownloading, setIsDownloading] = useState(false);
 
   return (
-    <React.Fragment>
+    <>
       <div className="row">
         <div className="col-lg p-0 px-lg-3">
           <BuildPanel build={BuildType.Release} />
@@ -81,6 +81,6 @@ export function BuildConfigurator() {
         </div>
       </ControlledPanel>
       {isDownloading && <BuildDownloaderSuspense setIsDownloading={setIsDownloading} />}
-    </React.Fragment>
+    </>
   );
 }

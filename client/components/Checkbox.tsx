@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import uniqueId from 'lodash-es/uniqueId';
 import { cx } from '@emotion/css';
 

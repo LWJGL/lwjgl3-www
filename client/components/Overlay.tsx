@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef, Fragment } from 'react';
 import { Portal } from './Portal';
 import { Backdrop } from './Backdrop';
 
@@ -29,7 +29,7 @@ export const Overlay: React.FC<Props> = ({
     }
   }
 
-  const Container = portal ? Portal : React.Fragment;
+  const Container = portal ? Portal : Fragment;
 
   return (
     <Container>

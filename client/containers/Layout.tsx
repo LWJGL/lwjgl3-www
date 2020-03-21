@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { ErrorBoundary } from '../components/ErrorBoundary';

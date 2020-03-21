@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { BreakpointContext } from '~/components/Breakpoint';
 import { Icon, Archive, SettingsBackupRestore } from '~/components/icons';
 import { BuildStoreSnapshot } from './types';

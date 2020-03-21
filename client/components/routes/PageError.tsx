@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { ErrorProps } from '../ErrorBoundary';
 import { COLOR_RED } from '~/theme';
