@@ -112,7 +112,7 @@ export function NavProgress() {
 
   useEffect(() => {
     function trickle() {
-      setProgress(progress => {
+      setProgress((progress) => {
         if (progress < PERC_MAX) {
           let step = 0;
 

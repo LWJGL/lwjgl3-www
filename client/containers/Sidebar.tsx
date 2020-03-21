@@ -14,7 +14,7 @@ export function Sidebar() {
   const focusTrap = useRef<FocusTrap | null>(null);
 
   const onToggle = useCallback(() => {
-    setOpen(open => !open);
+    setOpen((open) => !open);
   }, []);
 
   useEffect(() => {

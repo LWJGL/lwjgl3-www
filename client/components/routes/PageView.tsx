@@ -66,7 +66,7 @@ function scrollToTop() {
   }
 }
 
-export const PageView: React.FC<Props> = props => {
+export const PageView: React.FC<Props> = (props) => {
   const location = useLocation();
   return <PageViewMemo location={location} {...props} />;
 };

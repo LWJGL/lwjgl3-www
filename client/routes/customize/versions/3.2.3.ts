@@ -16,7 +16,7 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.LZ4]: { ...(prev.byId[Binding.LZ4] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.MEOW]: {
       ...(prev.byId[Binding.MEOW] as BindingDefinition),
-      natives: NATIVE_ALL.filter(it => it != Native.LinuxARM32),
+      natives: NATIVE_ALL.filter((it) => it != Native.LinuxARM32),
     },
     [Binding.NANOVG]: { ...(prev.byId[Binding.NANOVG] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.NUKLEAR]: { ...(prev.byId[Binding.NUKLEAR] as BindingDefinition), natives: NATIVE_ALL },

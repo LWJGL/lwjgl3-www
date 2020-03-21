@@ -193,7 +193,7 @@ function guardNative(artifact: BindingDefinition, platform: PlatformSelection) {
   return artifact.natives === undefined || isNativeApplicableToAllPlatforms(artifact, platform)
     ? ''
     : `if (${artifact.natives
-        .filter(p => platform[p])
-        .map(p => `lwjglNatives == "natives-${p}"`)
+        .filter((p) => platform[p])
+        .map((p) => `lwjglNatives == "natives-${p}"`)
         .join(' || ')}) `;
 }

@@ -46,7 +46,7 @@ breakpoints.forEach((limit, i) => {
   }
 });
 
-export const BreakpointProvider: React.FC = props => {
+export const BreakpointProvider: React.FC = (props) => {
   const [current, setCurrent] = useState(initialCurrent);
 
   useEffect(() => {

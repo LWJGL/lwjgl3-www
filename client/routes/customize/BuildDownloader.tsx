@@ -30,7 +30,7 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
 
     function downloadLog(msg: string) {
       if (isMounted.current) {
-        setProgress(progress => [...progress, msg]);
+        setProgress((progress) => [...progress, msg]);
       }
     }
 

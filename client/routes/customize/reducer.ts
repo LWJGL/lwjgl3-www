@@ -150,16 +150,16 @@ function selectPreset(state: BuildStore, preset: Preset) {
   state.preset = preset;
 
   if (preset === Preset.All) {
-    state.artifacts.allIds.forEach(artifact => {
+    state.artifacts.allIds.forEach((artifact) => {
       state.contents[artifact] = true;
     });
   } else if (preset !== Preset.Custom) {
-    state.artifacts.allIds.forEach(artifact => {
+    state.artifacts.allIds.forEach((artifact) => {
       state.contents[artifact] = false;
     });
     const configPreset = state.presets.byId[preset];
     if (configPreset.artifacts !== undefined) {
-      configPreset.artifacts.forEach(artifact => {
+      configPreset.artifacts.forEach((artifact) => {
         state.contents[artifact] = true;
       });
     }
@@ -174,33 +174,33 @@ function computeArtifacts(state: BuildStore) {
   state.artifacts = state.lwjgl[state.build === BuildType.Release ? state.version : state.build];
 
   const vnum = versionNum(state.artifacts.version);
-  NATIVE_ALL.forEach(p => {
+  NATIVE_ALL.forEach((p) => {
     if (state.platform[p] && vnum < versionNum(config.natives.byId[p].since)) {
       state.platform[p] = false;
     }
   });
-  if (!NATIVE_ALL.some(p => state.platform[p])) {
+  if (!NATIVE_ALL.some((p) => state.platform[p])) {
     state.platform[getDefaultPlatform()] = true;
   }
 
   // reset state
   state.availability = {} as BindingMapSelection;
-  state.presets.allIds.forEach(preset => {
+  state.presets.allIds.forEach((preset) => {
     state.presets.byId[preset].artifacts = [];
   });
 
-  state.artifacts.allIds.forEach(it => {
+  state.artifacts.allIds.forEach((it) => {
     const artifact = state.artifacts.byId[it] as BindingDefinition;
 
     state.availability[it] =
       artifact.natives === undefined ||
       artifact.nativesOptional === true ||
       artifact.natives.length === config.natives.allIds.length ||
-      artifact.natives.some(platform => !!state.platform[platform]);
+      artifact.natives.some((platform) => !!state.platform[platform]);
 
     if (state.availability[it] && artifact.presets !== undefined) {
       // Populate presets
-      artifact.presets.forEach(preset => {
+      artifact.presets.forEach((preset) => {
         const statePreset = state.presets.byId[preset];
         if (statePreset.artifacts !== undefined) {
           statePreset.artifacts.push(it);
@@ -232,7 +232,7 @@ const doToggleArtifact = (state: BuildStore, artifact: Binding) => {
 
   // MATCH PRESET
   // collect selected artifacts in an Array
-  const selected = state.artifacts.allIds.filter(artifact => state.contents[artifact]);
+  const selected = state.artifacts.allIds.filter((artifact) => state.contents[artifact]);
 
   if (selected.length === state.artifacts.allIds.length) {
     state.preset = Preset.All;
@@ -253,7 +253,7 @@ const doToggleArtifact = (state: BuildStore, artifact: Binding) => {
 
     // Get preset artifacts but keep only ones present in the current artifact collection
     if (preset.artifacts !== undefined) {
-      const artifacts = preset.artifacts.filter(it => !!state.artifacts.byId[it]);
+      const artifacts = preset.artifacts.filter((it) => !!state.artifacts.byId[it]);
 
       // first check length for speed, then do deep comparison
       if (artifacts.length === selected.length && artifacts.every((it, i) => it === selected[i])) {
@@ -273,7 +273,7 @@ const doToggleArtifact = (state: BuildStore, artifact: Binding) => {
 
 const doToggleAddon = (state: BuildStore, addon: Addon) => {
   if (state.selectedAddons.includes(addon)) {
-    state.selectedAddons = state.selectedAddons.filter(it => it !== addon);
+    state.selectedAddons = state.selectedAddons.filter((it) => it !== addon);
   } else {
     state.selectedAddons.push(addon);
   }
@@ -305,10 +305,10 @@ const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
   }
 
   if (config.mode === Mode.Zip) {
-    state.natives.allIds.forEach(platform => {
+    state.natives.allIds.forEach((platform) => {
       state.platform[platform] = false;
     });
-    config.platform.forEach(platform => {
+    config.platform.forEach((platform) => {
       state.platform[platform] = true;
     });
   }

@@ -82,7 +82,7 @@ const saveSnapshot = debounce((state: BuildStore) => {
 }, 1000);
 
 // Store Provider
-export const Provider: React.FC = props => {
+export const Provider: React.FC = (props) => {
   const [state, dispatch] = useReducer<React.Reducer<BuildStore, ActionCreator>>(reducer, config);
 
   useEffect(() => {

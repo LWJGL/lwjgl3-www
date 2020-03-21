@@ -6,6 +6,6 @@ interface Props {
 }
 
 export const ControlledPanel: React.FC<Props> = ({ children, predicate }) => {
-  const [visible] = useSlice(state => predicate(state));
+  const [visible] = useSlice((state) => predicate(state));
   return visible ? (children as JSX.Element) : null;
 };

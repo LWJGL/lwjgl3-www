@@ -56,7 +56,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
       // Artifacts
       const selected: Array<Binding> = [];
 
-      state.artifacts.allIds.forEach(artifact => {
+      state.artifacts.allIds.forEach((artifact) => {
         if (state.contents[artifact] === true && state.availability[artifact] === true) {
           selected.push(artifact);
         }
@@ -64,7 +64,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
 
       // Addons
       const selectedAddons: Array<Addon> = [];
-      state.selectedAddons.forEach(id => {
+      state.selectedAddons.forEach((id) => {
         const addon = state.addons.byId[id];
         if (addon.modes === undefined || addon.modes.indexOf(state.mode) > -1) {
           selectedAddons.push(id);

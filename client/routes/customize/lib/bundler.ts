@@ -40,7 +40,7 @@ export function getBuild(state: BuildStore): SelectedBuildConfig {
     throw new Error('no build selected');
   }
 
-  const selected = state.artifacts.allIds.filter(artifact => {
+  const selected = state.artifacts.allIds.filter((artifact) => {
     if (!state.contents[artifact]) {
       return false;
     }
@@ -51,11 +51,11 @@ export function getBuild(state: BuildStore): SelectedBuildConfig {
       spec.natives === undefined ||
       spec.nativesOptional === true ||
       spec.natives.length === platformCount ||
-      spec.natives.some(platform => selectedPlatforms[platform])
+      spec.natives.some((platform) => selectedPlatforms[platform])
     );
   });
 
-  const addons = state.selectedAddons.map(addon => ({
+  const addons = state.selectedAddons.map((addon) => ({
     id: addon,
     version: state.addons.byId[addon].maven.version,
   }));
@@ -107,13 +107,13 @@ export function getFiles(
 
   const selectedMap = {} as BindingMapSelection;
 
-  selected.forEach(key => {
+  selected.forEach((key) => {
     selectedMap[key] = true;
   });
 
   // TODO: Ensure the manifest isn't missing any of the selected bindings.
   //       If that happens, there's a bug somewhere (either in lwjgl3-www or in lwjgl3's build process).
-  manifest.forEach(file => {
+  manifest.forEach((file) => {
     const filepath = file.replace(rootRegExp, '');
 
     if (filepath.endsWith('/') || !filepath.length) {
@@ -180,7 +180,7 @@ function pathToNative(folder: string): Native | null {
 export function getAddons(addons: AddonSelection, source: boolean, javadoc: boolean) {
   const files: Array<string> = [];
 
-  addons.forEach(addon => {
+  addons.forEach((addon) => {
     const { id, version } = addon;
 
     files.push(`addons/${id}/${id}-${version}.jar`);

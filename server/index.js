@@ -202,10 +202,7 @@ app.get('/dev/reload', (req, res) => {
     // If a single byte has changed, clients should update their cache
     serviceWorkerCache = null;
 
-    res
-      .type('text')
-      .status(200)
-      .send('Manifest has been updated.');
+    res.type('text').status(200).send('Manifest has been updated.');
   });
 });
 
@@ -426,7 +423,7 @@ const launchServer = () => {
   process.on('SIGTERM', shutdown);
   process.on('SIGINT', shutdown);
 
-  process.on('uncaughtException', function(err) {
+  process.on('uncaughtException', function (err) {
     console.error(err.stack);
     shutdown(1);
   });

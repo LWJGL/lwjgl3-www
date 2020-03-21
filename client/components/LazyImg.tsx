@@ -11,7 +11,7 @@ if (!SUPPORTS_IMG_LOADING && SUPPORTS_INTERSECTION_OBSERVER) {
 }
 
 function observeEntries(entries: Array<IntersectionObserverEntry>) {
-  entries.forEach(entry => {
+  entries.forEach((entry) => {
     if (entry.intersectionRatio > 0) {
       const cb = map.get(entry.target);
       if (cb !== undefined) {

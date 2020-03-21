@@ -17,32 +17,32 @@ let saveAsWrapped;
 
 // IE 10+ (native saveAs)
 if (navigator.msSaveOrOpenBlob !== undefined) {
-  saveAsWrapped = function(blob: Blob, name: string, no_auto_bom?: boolean) {
+  saveAsWrapped = function (blob: Blob, name: string, no_auto_bom?: boolean) {
     return navigator.msSaveOrOpenBlob(no_auto_bom !== true ? blob : autoBOM(blob), name);
   };
 } else {
   // only get URL when necessary in case Blob.js hasn't overridden it yet
-  const getURL = function() {
+  const getURL = function () {
     //@ts-ignore
     return window.URL || window.webkitURL || window;
   };
 
   const saveLink = document.createElement('a');
 
-  const click = function(node: HTMLAnchorElement) {
+  const click = function (node: HTMLAnchorElement) {
     var event = new MouseEvent('click');
     node.dispatchEvent(event);
   };
 
-  const revoke = function(file: string) {
+  const revoke = function (file: string) {
     // the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
     setTimeout(() => getURL().revokeObjectURL(file), 1000 * 40);
   };
 
-  saveAsWrapped = function(blob: Blob, name: string, no_auto_bom?: boolean) {
+  saveAsWrapped = function (blob: Blob, name: string, no_auto_bom?: boolean) {
     const objectUrl = getURL().createObjectURL(no_auto_bom !== true ? blob : autoBOM(blob));
     if ('download' in saveLink) {
-      setTimeout(function() {
+      setTimeout(function () {
         saveLink.href = objectUrl;
         saveLink.download = name;
         click(saveLink);

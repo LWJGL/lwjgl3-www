@@ -11,7 +11,7 @@ import { cx } from '@emotion/css';
 const getPlatformIcons = (platforms: Array<Native>) => (
   <p>
     <em>Supported platforms: &nbsp;</em>
-    {platforms.map(platform => getPlatformIcon(platform))}
+    {platforms.map((platform) => getPlatformIcon(platform))}
   </p>
 );
 

@@ -122,8 +122,8 @@ export function generateIvy({
       }
     }
     let classifierOverrides = selected
-      .filter(binding => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
-      .map(binding => {
+      .filter((binding) => !isNativeApplicableToAllPlatforms(artifacts[binding], platform))
+      .map((binding) => {
         let artifact = artifacts[binding];
         if (artifact.natives === undefined) {
           // cannot happen
@@ -131,8 +131,8 @@ export function generateIvy({
         }
 
         let predicates = artifact.natives
-          .filter(p => platform[p])
-          .map(p => `<equals arg1="\${lwjgl.natives}" arg2="native-${p}"/>`);
+          .filter((p) => platform[p])
+          .map((p) => `<equals arg1="\${lwjgl.natives}" arg2="native-${p}"/>`);
 
         return `\t<condition property="lwjgl.natives.${getArtifactName(
           artifact

@@ -28,7 +28,7 @@ export default (req, res, next) => {
         : `${req.params.build}/bin/build.txt`,
   };
 
-  s3.getObject(params, function(err, data) {
+  s3.getObject(params, function (err, data) {
     if (err) {
       next(err);
     } else {

@@ -28,7 +28,7 @@ const CssHeroBox = css`
   position: relative;
 `;
 
-const HeroBox: React.FC = props => <section className={CssHeroBox}>{props.children}</section>;
+const HeroBox: React.FC = (props) => <section className={CssHeroBox}>{props.children}</section>;
 
 const CssLogoContainer = css`
   position: absolute;
@@ -58,7 +58,7 @@ const CssLogoContainer = css`
   }
 `;
 
-const LogoContainer: React.FC = props => (
+const LogoContainer: React.FC = (props) => (
   <div className={`d-flex flex-column ${CssLogoContainer}`}>{props.children}</div>
 );
 
@@ -94,7 +94,7 @@ const CssHeroContent = css`
   }
 `;
 
-const HeroContent: React.FC = props => <div className={CssHeroContent}>{props.children}</div>;
+const HeroContent: React.FC = (props) => <div className={CssHeroContent}>{props.children}</div>;
 
 enum UseWebGL {
   Unknown,

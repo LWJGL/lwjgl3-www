@@ -13,11 +13,11 @@ export class Resource<K, T> {
   constructor(key: K, resolver: Resolver<K, T>) {
     this.resolver = resolver(key);
     this.resolver
-      .then(data => {
+      .then((data) => {
         this.data = data;
         this.status = Resolved;
       })
-      .catch(err => {
+      .catch((err) => {
         this.data = err;
         this.status = Rejected;
       });

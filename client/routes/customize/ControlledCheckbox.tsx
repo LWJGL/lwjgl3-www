@@ -28,7 +28,7 @@ export function ControlledCheckbox({ spec }: Props) {
       disabled: spec.disabled !== undefined && spec.disabled(state),
       hidden: spec.hidden !== undefined && spec.hidden(state),
     }),
-    state => spec.inputs(state)
+    (state) => spec.inputs(state)
   );
 
   return useMemo(() => <Checkbox {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [

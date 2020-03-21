@@ -284,7 +284,7 @@ function getInitialConfig(): BuildStore {
 
   // Versions
   config.versions = Object.keys(config.lwjgl)
-    .map(it => config.lwjgl[it])
+    .map((it) => config.lwjgl[it])
     .filter((it: BuildBindings) => it.alias === undefined)
     .map((it: BuildBindings) => it.version)
     .reverse();
@@ -307,7 +307,7 @@ export const config: BuildStore = getInitialConfig();
 function keepChecked(src: { [key: string]: boolean | undefined }) {
   // Keep only checked items to avoid phantom selections
   // when new items (bindings,addons,platforms) are added
-  return Object.keys(src).filter(key => src[key] === true);
+  return Object.keys(src).filter((key) => src[key] === true);
 }
 
 export function getConfigSnapshot(state: BuildStore): BuildStoreSnapshot | null {

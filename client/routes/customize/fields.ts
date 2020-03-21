@@ -34,7 +34,7 @@ export const fields = {
     value: getMode,
     action: selectMode,
     options: ({ modes: { allIds, byId }, build }: BuildStore): RadioOptions =>
-      allIds.map(mode => ({
+      allIds.map((mode) => ({
         value: mode,
         label: byId[mode].title,
         disabled: build === BuildType.Stable && mode !== Mode.Zip,
@@ -46,7 +46,7 @@ export const fields = {
     value: getPreset,
     action: selectPreset,
     options: ({ presets: { allIds, byId }, preset }: BuildStore): RadioOptions =>
-      allIds.map(presetId => ({
+      allIds.map((presetId) => ({
         value: presetId,
         label: byId[presetId].title,
         disabled: preset !== presetId && presetId === 'custom',
@@ -69,7 +69,7 @@ export const fields = {
     value: getVersion,
     action: selectVersion,
     options: ({ versions }: BuildStore): RadioOptions =>
-      versions.map(version => ({
+      versions.map((version) => ({
         value: version,
         label: version,
         disabled: version === '3.0.0',

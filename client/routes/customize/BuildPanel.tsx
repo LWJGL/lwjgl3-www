@@ -47,7 +47,7 @@ export function BuildPanel({ build }: Props) {
       isSelected: state.build === build,
       spec: state.builds.byId[build],
     }),
-    state => [state.build, build]
+    (state) => [state.build, build]
   );
 
   useEffect(() => {

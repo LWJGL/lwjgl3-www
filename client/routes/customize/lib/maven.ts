@@ -43,7 +43,7 @@ export function generateMaven({
   if (platformSingle === null) {
     function generateProfile(profile: Native, family: string, arch: string, natives: String) {
       let dependencies = selected
-        .filter(binding => {
+        .filter((binding) => {
           const artifact = artifacts[binding];
           return (
             artifact.natives !== undefined &&
@@ -51,7 +51,7 @@ export function generateMaven({
             !isNativeApplicableToAllPlatforms(artifact, platform)
           );
         })
-        .map(binding => {
+        .map((binding) => {
           const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
           const artifactId = osgi ? `org.lwjgl.${getArtifactName(artifacts[binding])}` : binding;
           return `${nl4}<dependency>${nl5}<groupId>${groupId}</groupId>${nl5}<artifactId>${artifactId}</artifactId>${

@@ -44,8 +44,8 @@ export function isNativeApplicableToAllPlatforms(artifact: BindingDefinition, pl
     return true;
   }
 
-  let applicablePlatforms = artifact.natives.filter(p => platform[p]).length;
-  return applicablePlatforms === 0 || applicablePlatforms === NATIVE_ALL.filter(p => platform[p]).length;
+  let applicablePlatforms = artifact.natives.filter((p) => platform[p]).length;
+  return applicablePlatforms === 0 || applicablePlatforms === NATIVE_ALL.filter((p) => platform[p]).length;
 }
 
 export function getArtifactName(binding: BindingDefinition) {
@@ -103,12 +103,12 @@ export function generateDependencies(
   let nativesBundle = '';
   const groupId = osgi ? 'org.lwjgl.osgi' : 'org.lwjgl';
 
-  selected.forEach(binding => {
+  selected.forEach((binding) => {
     let artifact = artifacts[binding];
 
     let hasEnabledNativePlatform = false;
     if (artifact.natives !== undefined) {
-      hasEnabledNativePlatform = artifact.natives.some(it => platform[it]);
+      hasEnabledNativePlatform = artifact.natives.some((it) => platform[it]);
       if (!hasEnabledNativePlatform && artifact.nativesOptional !== true) {
         return;
       }

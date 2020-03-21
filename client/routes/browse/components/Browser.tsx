@@ -74,11 +74,11 @@ function FolderContents({ path, targetPath }: ContentProps) {
   const basePath = path.length ? path + '/' : '';
   return (
     <>
-      {folders.map(folder => {
+      {folders.map((folder) => {
         const fullPath = `${basePath}${folder}`;
         return <Folder key={fullPath} path={fullPath} loading={targetPath === fullPath} />;
       })}
-      {files.map(file => (
+      {files.map((file) => (
         <File key={`${basePath}${file}`} path={`${basePath}${file}`} />
       ))}
     </>

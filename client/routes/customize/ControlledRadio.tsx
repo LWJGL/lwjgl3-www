@@ -33,7 +33,7 @@ export function ControlledRadio({ spec }: Props) {
       value: spec.value(state),
       options: spec.options(state),
     }),
-    state => spec.inputs(state)
+    (state) => spec.inputs(state)
   );
 
   return useMemo(() => {

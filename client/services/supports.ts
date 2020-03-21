@@ -3,7 +3,7 @@ let supportsPassive: boolean = false;
 
 try {
   let opts = Object.defineProperty({}, 'passive', {
-    get: function() {
+    get: function () {
       supportsPassive = true;
     },
   });

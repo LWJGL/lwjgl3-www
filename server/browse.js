@@ -17,7 +17,7 @@ export default (req, res, next) => {
     replacer = new RegExp(`^${params.Prefix}`);
   }
 
-  S3.listObjectsV2(params, function(err, data) {
+  S3.listObjectsV2(params, function (err, data) {
     if (err) {
       next(err);
     } else {

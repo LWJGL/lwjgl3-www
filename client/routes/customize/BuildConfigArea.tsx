@@ -16,7 +16,7 @@ import {
 } from './theme';
 
 export const BuildConfigArea: React.FC = ({ children }) => {
-  const [slice] = useSlice(state => ({
+  const [slice] = useSlice((state) => ({
     build: state.build,
   }));
 

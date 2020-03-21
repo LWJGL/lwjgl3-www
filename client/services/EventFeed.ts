@@ -15,7 +15,7 @@ export class EventFeed {
   subscribers: Array<Function> = [];
 
   handle(...args: Array<any>) {
-    this.subscribers.forEach(listener => {
+    this.subscribers.forEach((listener) => {
       listener(...args);
     });
   }

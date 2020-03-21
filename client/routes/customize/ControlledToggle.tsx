@@ -28,7 +28,7 @@ export function ControlledToggle({ spec }: Props) {
       disabled: spec.disabled !== undefined && spec.disabled(state),
       hidden: spec.hidden !== undefined && spec.hidden(state),
     }),
-    state => spec.inputs(state)
+    (state) => spec.inputs(state)
   );
 
   return useMemo(() => <Checkbox toggle={true} {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [

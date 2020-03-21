@@ -35,7 +35,7 @@ async function fetchContents(path: string): Promise<FolderData> {
     contents.files = [];
   }
   contents.folders =
-    contents.folders === undefined ? [] : contents.folders.map(name => name.substring(0, name.length - 1));
+    contents.folders === undefined ? [] : contents.folders.map((name) => name.substring(0, name.length - 1));
 
   return contents as FolderData;
 }

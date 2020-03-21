@@ -70,7 +70,7 @@ if (typeof AudioContext !== 'undefined') {
   //@ts-ignore
   const oldFunc = webkitAudioContext.prototype.decodeAudioData;
   //@ts-ignore
-  webkitAudioContext.prototype.decodeAudioData = function(arraybuffer) {
+  webkitAudioContext.prototype.decodeAudioData = function (arraybuffer) {
     return new Promise((resolve, reject) => {
       oldFunc.call(this, arraybuffer, resolve, reject);
     });
