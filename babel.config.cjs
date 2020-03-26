@@ -15,6 +15,13 @@ const config = {
         onlyRemoveTypeImports: true,
       },
     ],
+    // [
+    //   '@babel/preset-react',
+    //   {
+    //     runtime: 'automatic',
+    //     development: DEV,
+    //   },
+    // ],
   ],
   plugins: [
     // React
