@@ -3,11 +3,17 @@ import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
 import { Icon, KeyboardArrowDown } from '~/components/icons';
 import { contextOptions } from './contextOptions';
+import { loadJS } from '~/services/loadJS';
 
 // Brands
 const Logo = require('../../../assets/logo/logo.svg').default as React.FC<React.SVGProps<'svg'>>;
 
-const Canvas = lazy(() => import(/* webpackChunkName: "route-home$canvas" */ './Canvas'));
+const Canvas = lazy(() =>
+  Promise.all([
+    import(/* webpackChunkName: "route-home$canvas" */ './Canvas'),
+    loadJS('https://unpkg.com/three@0.115.0/build/three.min.js'),
+  ]).then((values) => values[0])
+);
 
 const CssHeroBox = css`
   margin-top: -4rem;

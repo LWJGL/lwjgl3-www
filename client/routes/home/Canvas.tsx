@@ -1,8 +1,9 @@
 import { useRef, useEffect } from 'react';
 import { css, keyframes } from '@emotion/css';
-import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';
+// import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
+declare const THREE: any;
 
 const cssFadeInCanvas = keyframes`
   to {
@@ -21,6 +22,7 @@ const cssCanvas = css`
 
 export default function HomeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } = THREE;
 
   useEffect(() => {
     function resizeCanvas() {
