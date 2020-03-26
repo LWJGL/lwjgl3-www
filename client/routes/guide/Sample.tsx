@@ -10,7 +10,7 @@ const SampleResource = new ResourceCached<void, string>(async () => {
   return await response.text();
 });
 
-export const Sample: React.FC<void> = () => {
+export const Sample: React.FC<{ children?: never }> = () => {
   const sample = SampleResource.read();
   useCSS('https://unpkg.com/highlight.js@10.0.0-beta.0/styles/dracula.css');
 
