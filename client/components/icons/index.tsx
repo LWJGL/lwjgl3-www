@@ -5,7 +5,6 @@ import { css, cx } from '@emotion/css';
 const cssSvgIcon = css`
   display: inline-flex;
   align-self: center;
-  position: relative;
   height: 1em;
   width: 1em;
   svg {

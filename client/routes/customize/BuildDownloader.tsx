@@ -87,7 +87,7 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
         }
       }
 
-      // Generate ZPI files
+      // Generate ZIP files
       downloadLog('Compressing files');
       const blob = await jszip.generateAsync({
         type: 'blob',

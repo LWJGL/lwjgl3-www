@@ -27,7 +27,6 @@ export const BuildConfigArea: React.FC = ({ children }) => {
 };
 
 const CssConfigPanel = css`
-  position: relative;
   z-index: 0;
   margin-bottom: 66px;
   padding: 0 1rem 1rem 1rem;

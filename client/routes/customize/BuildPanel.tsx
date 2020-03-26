@@ -94,7 +94,6 @@ const CssPanelBox = css`
   cursor: pointer;
   will-change: transform, background-color;
   user-select: none;
-  position: relative;
   z-index: 1;
 
   > h2 {

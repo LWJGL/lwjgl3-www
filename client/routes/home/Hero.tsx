@@ -31,7 +31,6 @@ const CssHeroBox = css`
   );
   width: 100%;
   height: 100vh;
-  position: relative;
 `;
 
 const HeroBox: React.FC = (props) => <section className={CssHeroBox}>{props.children}</section>;
