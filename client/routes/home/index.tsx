@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
+import { GoldSponsors } from '../sponsors/Gold';
+import { HowToSupport } from '../sponsors/HowToSupport';
 import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/brands/apple';
 import '~/components/icons/fa/brands/github';
@@ -328,144 +330,8 @@ const StaticContent = () => (
 
     <HashLinkTarget id="credits" />
 
-    <section className="container py-5">
-      <div className="row justify-content-center text-center">
-        <div className="col-md-9">
-          <h1>Supporting this project</h1>
-
-          <p>
-            LWJGL exists thanks to{' '}
-            <a href="https://github.com/LWJGL/lwjgl3/blob/master/BACKERS.md" target="_blank" rel="noopener external">
-              all the people
-            </a>{' '}
-            who{' '}
-            <a
-              href="https://github.com/LWJGL/lwjgl3/blob/master/.github/CONTRIBUTING.md"
-              target="_blank"
-              rel="noopener external"
-            >
-              contribute
-            </a>{' '}
-            and back/sponsor our collective.
-          </p>
-
-          <p>
-            <a href="https://opencollective.com/lwjgl/donate" target="_blank" rel="noopener external">
-              <LazyImg width={300} height={50} src="/img/sponsors/donate-blue.png" alt="DONATE TO OUR COLLECTIVE" />
-            </a>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <div className="area-dark">
-      <section className="container py-5 text-center">
-        <h3>Our Gold Sponsors:</h3>
-
-        <div className="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center">
-          <a href="https://loanscouter.com/" rel="noopener" target="_blank">
-            <LazyImg
-              className="m-3"
-              width={120}
-              height={48}
-              src="/img/sponsors/loanscouter-white.svg"
-              alt="Loan Scouter"
-            />
-          </a>
-          <a href="https://fair-laan.se/" rel="noopener" target="_blank">
-            <LazyImg className="m-3" width={190} height={42} src="/img/sponsors/fairplan.svg" alt="FairPlan" />
-          </a>
-          <a
-            href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            rel="sponsored noopener"
-            target="_blank"
-          >
-            <LazyImg
-              className="m-3"
-              width={218}
-              height={50}
-              src="/img/sponsors/vpsserver.com.svg"
-              alt="VPSSERVER.com"
-            />
-          </a>
-          <a
-            href="https://www.bestvpn.co/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            rel="sponsored noopener"
-            target="_blank"
-          >
-            <LazyImg className="m-3" width={223} height={42} src="/img/sponsors/bestvpn.png" alt="BestVPN.co" />
-          </a>
-          <a
-            href="https://www.vpnranks.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            rel="sponsored noopener"
-            target="_blank"
-          >
-            <LazyImg className="m-3" width={50} height={50} src="/img/sponsors/vpnranks-white.png" alt="VPNRanks.com" />
-          </a>
-          <a
-            href="https://vpngorilla.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            rel="sponsored noopener"
-            target="_blank"
-          >
-            <LazyImg
-              className="m-3"
-              width={169}
-              height={22}
-              src="/img/sponsors/vpn-gorilla-white-169x22.png"
-              alt="VPNGorilla.com"
-            />
-          </a>
-          <a
-            href="https://www.casinotop.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            rel="sponsored noopener"
-            target="_blank"
-          >
-            <LazyImg className="m-3" width={64} height={64} src="/img/sponsors/casinotop.png" alt="Money Pug" />
-          </a>
-          <a
-            href="https://www.bonus.net.nz/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            rel="sponsored noopener"
-            target="_blank"
-          >
-            <LazyImg
-              className="m-3"
-              width={179.71}
-              height={38}
-              src="/img/sponsors/bonusfindernz.svg"
-              alt="BonusFinder New Zealand"
-            />
-          </a>
-          <a href="http://smålånutensikkerhet.com/" rel="noopener" target="_blank">
-            <LazyImg
-              className="m-3"
-              width={129}
-              height={34.5}
-              style={{ padding: '4px 3px 4px 2px', background: 'white' }}
-              src="/img/sponsors/smalan.png"
-              alt="Smålån uten sikkerhet"
-            />
-          </a>
-          <a href="https://emailmarketingservices.io/" rel="noopener" target="_blank">
-            <LazyImg
-              className="m-3"
-              width={354 / 3}
-              height={190 / 3}
-              src="/img/sponsors/emailmarketingservices-354x190.png"
-              alt="Smålån uten sikkerhet"
-            />
-          </a>
-          <a href="http://nettikasinot.org/" rel="sponsored noopener" target="_blank">
-            <LazyImg
-              className="m-3"
-              width={585 / 3}
-              height={116 / 3}
-              src="/img/sponsors/nettikasinot-585x116.png"
-              alt="Nettikasinot"
-            />
-          </a>
-        </div>
-      </section>
-    </div>
+    <HowToSupport />
+    <GoldSponsors />
 
     <section className="container pt-5 pb-3">
       <div className="row justify-content-center">

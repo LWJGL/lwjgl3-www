@@ -12,3 +12,4 @@ export const BrowsePreload = () => import(/* webpackChunkName: "route-browse" */
 export const Browse = lazy(BrowsePreload);
 export const Source = lazy(() => import(/* webpackChunkName: "route-source" */ './source'));
 export const License = lazy(() => import(/* webpackChunkName: "route-license" */ './license'));
+export const Sponsors = lazy(() => import(/* webpackChunkName: "route-sponsors" */ './sponsors'));

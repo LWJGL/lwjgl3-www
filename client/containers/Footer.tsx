@@ -23,6 +23,9 @@ const FOOTER = (
               <Link to="/source">Source</Link>
             </li>
             <li>
+              <Link to="/sponsors">Sponsors</Link>
+            </li>
+            <li>
               <Link to="/license">License</Link>
             </li>
           </ul>
@@ -91,9 +94,7 @@ const FOOTER = (
     </section>
     <section className="container copyright">
       <p>
-        LW
-        <b>JGL</b>
-        <sup>3</sup>
+        LW<b>JGL</b> 3
       </p>
       <p>
         Licensed under <Link to="/license">BSD</Link>
