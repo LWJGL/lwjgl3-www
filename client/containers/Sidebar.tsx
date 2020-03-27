@@ -3,8 +3,10 @@ import { cx } from '@emotion/css';
 import createFocusTrap, { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
-import { Icon, Menu, Close } from '~/components/icons';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/regular/bars';
+import '~/components/icons/fa/regular/times';
 
 export function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -123,7 +125,7 @@ export function Sidebar() {
         aria-hidden={open}
         title="Open navigation menu"
       >
-        <Icon children={<Menu />} />
+        <Icon name="fa/regular/bars" />
       </button>
       <div className="sliding-menu-overlay" onClick={onToggle} />
       <div ref={sideContainer} className="sliding-menu-container" role="menu" aria-hidden={!open} aria-expanded={open}>
@@ -136,7 +138,7 @@ export function Sidebar() {
             onClick={onToggle}
             title="Close navigation menu"
           >
-            <Icon children={<Close />} />
+            <Icon name="fa/regular/times" />
           </button>
         </div>
         {open && <MainMenu onClick={onToggle} />}

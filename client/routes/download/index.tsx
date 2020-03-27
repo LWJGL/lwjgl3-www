@@ -1,7 +1,10 @@
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';
-import { Icon, Github, Checkbox, Folder } from '~/components/icons';
 import { CustomizePreload, BrowsePreload } from '../';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/brands/github';
+import '~/components/icons/fa/solid/check-square';
+import '~/components/icons/fa/solid/folder';
 
 const DownloadRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Download" description="Download LWJGL 3">
@@ -30,7 +33,7 @@ const DownloadLayout = () => {
                 target="_blank"
                 rel="noopener external"
               >
-                <Icon children={<Github />} /> Download from Github
+                <Icon name="fa/brands/github" /> Download from Github
               </a>
             </p>
           </div>
@@ -38,7 +41,7 @@ const DownloadLayout = () => {
             <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-dark" to="/customize">
-                <Icon children={<Checkbox />} /> Customize LWJGL 3
+                <Icon name="fa/solid/check-square" /> Customize LWJGL 3
               </Link>
             </p>
           </div>
@@ -46,7 +49,7 @@ const DownloadLayout = () => {
             <p>Or you can browse and download individual LWJGL artifacts:</p>
             <p>
               <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/browse">
-                <Icon children={<Folder />} /> Browse LWJGL files
+                <Icon name="fa/solid/folder" /> Browse LWJGL files
               </Link>
             </p>
           </div>

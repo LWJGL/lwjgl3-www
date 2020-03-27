@@ -1,10 +1,13 @@
 import { useMemo, useRef } from 'react';
 import { useMemoSlice } from './Store';
 import { useBreakpoint } from '~/components/Breakpoint';
-import { Icon, FileCopy, CloudDownload } from '~/components/icons';
 import { BuildToolbar } from './BuildToolbar';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
 import { BuildType } from './types';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/duotone/cloud-download';
+import '~/components/icons/fa/duotone/copy';
+
 import type {
   Addon,
   AddonMap,
@@ -134,7 +137,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
               href={`data:${mime(mode)};base64,${btoa(script)}`}
               title={`Download ${mode.id} code snippet`}
             >
-              <Icon children={<CloudDownload />} /> {labels.download}
+              <Icon name="fa/duotone/cloud-download" /> {labels.download}
             </a>
           )}
           <button
@@ -143,7 +146,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
             disabled={!document.execCommand}
             title="Copy to clipboard"
           >
-            <Icon children={<FileCopy />} />
+            <Icon name="fa/duotone/copy" />
             {labels.copy}
           </button>
         </BuildToolbar>

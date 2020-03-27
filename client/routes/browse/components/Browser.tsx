@@ -1,10 +1,11 @@
 import { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
 import { Link } from 'react-router-dom';
-import { Icon, Cloud } from '~/components/icons';
 import { File } from './File';
 import { Folder, FolderWrap, SpinnerRow, FolderError } from './Folder';
 import { ErrorBoundary } from '~/components/ErrorBoundary';
 import { PathResource } from '../PathResource';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/solid/cloud';
 
 // Browser
 interface Props {
@@ -31,7 +32,7 @@ export function Browser({ path: targetPath }: Props) {
         <thead className="thead-light">
           <tr>
             <th colSpan={2}>
-              <Icon children={<Cloud />} /> &nbsp;
+              <Icon name="fa/solid/cloud" /> &nbsp;
               <Link to={'/browse'}>lwjgl</Link>
               {path.length
                 ? path.split('/').map((it, i, arr) => {

@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { Icon, CloudDownload } from '~/components/icons';
 import { saveAs } from '~/services/file-saver';
 import { configLoad } from './actions';
 import { BuildScript } from './BuildScript';
@@ -7,6 +6,9 @@ import { BuildToolbar } from './BuildToolbar';
 import { configJSONfilename, getConfigSnapshot } from './config';
 import { useSlice, useStoreRef } from './Store';
 import { Mode } from './types';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/duotone/cloud-download';
+
 import type { BuildStoreSnapshot } from './types';
 
 interface Props {
@@ -37,7 +39,7 @@ export function BuildFooter({ setIsDownloading }: Props) {
             setIsDownloading(true);
           }}
         >
-          <Icon children={<CloudDownload />} /> DOWNLOAD ZIP
+          <Icon name="fa/duotone/cloud-download" /> DOWNLOAD ZIP
         </button>
       </BuildToolbar>
     ) : (

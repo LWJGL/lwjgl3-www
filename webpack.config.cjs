@@ -117,36 +117,6 @@ const buildConfiguration = () => {
             },
           ],
         },
-        {
-          test: /\.svg$/,
-          use: [
-            { loader: 'babel-loader', options: { cacheDirectory: true } },
-            {
-              loader: 'react-svg-loader',
-              options: {
-                jsx: true,
-                svgo: {
-                  plugins: [
-                    // https://github.com/svg/svgo
-                    { removeXMLNS: true },
-                    { removeViewBox: false },
-                    {
-                      addAttributesToSVGElement: {
-                        attributes: [
-                          'focusable="false"',
-                          'aria-hidden="true"',
-                          // 'fill="currentColor"',
-                          'preserveAspectRatio="xMidYMid meet"',
-                        ],
-                      },
-                    },
-                  ],
-                  // floatPrecision: 2,
-                },
-              },
-            },
-          ],
-        },
       ],
     },
     plugins: [new webpack.DefinePlugin(env)],

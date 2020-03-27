@@ -1,16 +1,19 @@
 import { Native } from './types';
-import { Icon, Apple, Linux, Windows } from '~/components/icons';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/brands/apple';
+import '~/components/icons/fa/brands/linux';
+import '~/components/icons/fa/brands/windows';
 
 export const getPlatformIcon = (platform: Native) => {
   switch (platform) {
     case Native.Linux:
     case Native.LinuxARM64:
     case Native.LinuxARM32:
-      return <Icon children={<Linux />} key="fa-linux" />;
+      return <Icon name="fa/brands/linux" key="fa-linux" />;
     case Native.MacOS:
-      return <Icon children={<Apple />} key="fa-macos" />;
+      return <Icon name="fa/brands/apple" key="fa-macos" />;
     case Native.Windows:
     case Native.WindowsX86:
-      return <Icon children={<Windows />} key="fa-win" />;
+      return <Icon name="fa/brands/windows" key="fa-win" />;
   }
 };

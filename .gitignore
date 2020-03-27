@@ -10,6 +10,7 @@ dist
 /public/**/*.map
 /public/js/**/*.js*
 /public/css/**/*.css
+/scripts/icons
 *.manifest.json
 *.log
 

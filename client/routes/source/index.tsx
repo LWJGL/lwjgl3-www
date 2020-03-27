@@ -1,6 +1,7 @@
 import { PageView } from '~/components/routes/PageView';
-import { Icon, Github } from '~/components/icons';
 import { BuildBadge } from './BuildBadge';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/brands/github';
 
 const SourceRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Source & Build Status" description="Links to LWJGL Github repository and build status matrix">
@@ -13,7 +14,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
       <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
       <p>
         <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
-          <Icon children={<Github />} /> Github Repository
+          <Icon name="fa/brands/github" /> Github Repository
         </a>
         <a
           className="btn btn-xs-block btn-outline-dark"

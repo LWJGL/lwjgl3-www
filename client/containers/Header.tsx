@@ -6,10 +6,11 @@ import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
 import { cx } from '@emotion/css';
 import { mediaBreakpointUp } from '~/theme/media';
-import { Icon, CloudDownload } from '~/components/icons';
 import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/duotone/cloud-download';
 
 const HEADER_CLASSNAME = 'site-header';
 const cssIsHome = css`
@@ -32,7 +33,7 @@ function ServiceWorkerUpdate() {
       className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
       title="Update website to latest version"
     >
-      <Icon children={<CloudDownload />} />
+      <Icon name="fa/duotone/cloud-download" />
     </button>
   ) : null;
 }

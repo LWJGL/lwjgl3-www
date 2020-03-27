@@ -1,7 +1,10 @@
 import { useContext, useState } from 'react';
 import { BreakpointContext } from '~/components/Breakpoint';
-import { Icon, Archive, SettingsBackupRestore } from '~/components/icons';
 import type { BuildStoreSnapshot } from './types';
+
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/duotone/folder-download';
+import '~/components/icons/fa/duotone/folder-upload';
 
 interface Props {
   configDownload: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -62,11 +65,11 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     <div className="download-toolbar">
       {children}
       <button className="btn btn-outline-light" title="Load configuration file (JSON)" onClick={toggleFileUI}>
-        <Icon children={<SettingsBackupRestore />} />
+        <Icon name="fa/duotone/folder-upload" />
         {showLabels ? ` Load config` : null}
       </button>
       <button className="btn btn-outline-light" title="Save configuration (in JSON)" onClick={configDownload}>
-        <Icon children={<Archive />} />
+        <Icon name="fa/duotone/folder-download" />
         {showLabels ? ` Save config` : null}
       </button>
     </div>

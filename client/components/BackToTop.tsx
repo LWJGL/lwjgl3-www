@@ -1,5 +1,6 @@
 import { scrollSmooth } from '~/services/scrollSmooth';
-import { Icon, ArrowUpward } from '~/components/icons';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/regular/arrow-to-top';
 
 function scrollTopTop(e: React.MouseEvent<HTMLAnchorElement>) {
   e.preventDefault();
@@ -11,7 +12,7 @@ export function BackToTop() {
     <p className="text-center">
       <a className="btn btn-link" href="#" onClick={scrollTopTop}>
         top
-        <Icon children={<ArrowUpward />} />
+        <Icon name="fa/regular/arrow-to-top" />
       </a>
     </p>
   );

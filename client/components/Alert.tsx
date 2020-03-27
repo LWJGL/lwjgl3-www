@@ -1,6 +1,7 @@
 import { Dialog } from './Dialog';
 import { Trap } from './Trap';
-import { Icon, Close } from '~/components/icons';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/regular/times';
 
 type AlertType = 'primary' | 'success' | 'info' | 'warning' | 'danger';
 
@@ -34,7 +35,7 @@ export const Alert: React.FC<Props> = ({ type = 'primary', isOpen = true, onClos
         <div className={`dialog-header ${getDialogBg(type)}`}>
           <h3>{title}</h3>
           <div className="dialog-close-button">
-            <Icon children={<Close />} onClick={onClose} />
+            <Icon name="fa/regular/times" onClick={onClose} />
           </div>
         </div>
       )}

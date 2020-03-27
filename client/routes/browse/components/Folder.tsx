@@ -1,6 +1,7 @@
 import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
-import { Icon, Folder as FolderIcon } from '~/components/icons';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/solid/folder';
 
 export const FolderTH = css`
   padding: 0 !important;
@@ -49,7 +50,7 @@ export const Folder: React.FC<Props> = ({ path, loading = false }) => {
   return (
     <FolderWrap>
       <Link to={path}>
-        <Icon children={<FolderIcon />} /> {name}
+        <Icon name="fa/solid/folder" /> {name}
         {loading && (
           <div className="d-inline-block">
             <div className="spinner-grow spinner-grow-sm ml-1" role="status">

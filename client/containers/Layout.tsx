@@ -5,13 +5,22 @@ import { ErrorBoundary } from '../components/ErrorBoundary';
 import { PageError } from '../components/routes/PageError';
 import { PageBlank } from '../components/routes/PageBlank';
 
-// Routes
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home, Guide, Download, Customize, Browse, Source, License } from '../routes';
+// Router
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  // Routes
+  Home,
+  Guide,
+  Download,
+  Customize,
+  Browse,
+  Source,
+  License,
+} from '../routes';
 import { NotFound } from '../routes/error/NotFound';
 
 export const Layout: React.FC<{ children?: never }> = () => (
-  <Router>
+  <BrowserRouter>
     <Header />
     <main>
       <ErrorBoundary fallback={PageError}>
@@ -30,5 +39,5 @@ export const Layout: React.FC<{ children?: never }> = () => (
       </ErrorBoundary>
     </main>
     <Footer />
-  </Router>
+  </BrowserRouter>
 );

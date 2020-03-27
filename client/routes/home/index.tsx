@@ -4,18 +4,17 @@ import { Link } from 'react-router-dom';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
-import {
-  Icon,
-  Github,
-  Apple,
-  SettingsInputComposite,
-  LibraryBooks,
-  Widgets,
-  Forum,
-  Devices,
-  VideogameAsset,
-  BatteryUnknown,
-} from '~/components/icons';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/brands/apple';
+import '~/components/icons/fa/brands/github';
+import '~/components/icons/fa/brands/linux';
+import '~/components/icons/fa/duotone/book';
+import '~/components/icons/fa/duotone/comments';
+import '~/components/icons/fa/duotone/gamepad';
+import '~/components/icons/fa/duotone/microchip';
+import '~/components/icons/fa/duotone/phone-laptop';
+import '~/components/icons/fa/duotone/project-diagram';
+import '~/components/icons/fa/duotone/brackets-curly';
 
 const HomeRoute: React.FC<{ children?: never }> = () => (
   <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
@@ -99,7 +98,7 @@ const StaticContent = () => (
 
         <div className="row">
           <div className="col-md py-3">
-            <Icon children={<SettingsInputComposite />} />
+            <Icon name="fa/duotone/microchip" />
             <h3>Low-level Bindings</h3>
             <p>
               Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance and a
@@ -107,7 +106,7 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <Icon children={<Github />} />
+            <Icon name="fa/brands/github" />
             <h3>Open Source</h3>
             <p>
               LWJGL is available under a <Link to="/license">BSD license</Link>. Visit our{' '}
@@ -118,7 +117,7 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <Icon children={<LibraryBooks />} />
+            <Icon name="fa/duotone/book" />
             <h3>Built-in Documentation</h3>
             <p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
           </div>
@@ -126,12 +125,12 @@ const StaticContent = () => (
 
         <div className="row">
           <div className="col-md py-3">
-            <Icon children={<Devices />} />
+            <Icon name="fa/duotone/phone-laptop" />
             <h3>Cross-platform</h3>
             <p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
           </div>
           <div className="col-md py-3">
-            <Icon children={<Forum />} />
+            <Icon name="fa/duotone/comments" />
             <h3>Community</h3>
             <p>
               Need help? Our{' '}
@@ -145,7 +144,7 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <Icon children={<VideogameAsset />} />
+            <Icon name="fa/duotone/gamepad" />
             <h3>GLFW Bindings</h3>
             <p>
               Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts. Also
@@ -258,17 +257,18 @@ const StaticContent = () => (
 
         <div className="row">
           <div className="col-md py-3">
-            <LazyImg width={103} height={60} src="/svg/oculus.svg" alt="Oculus VR SDK" />
+            <LazyImg width={183} height={150} style={{ margin: -15 }} src="/svg/oculus.svg" alt="Oculus VR SDK" />
             <h3>LibOVR Bindings</h3>
             <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
           </div>
           <div className="col-md py-3">
-            <Icon children={<Apple />} />
+            <Icon name="fa/brands/apple" />
+            {/* <Icon children={<Apple />} /> */}
             <h3>Objective-C Bindings</h3>
             <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on macOS.</p>
           </div>
           <div className="col-md py-3">
-            <Icon children={<Widgets />} />
+            <Icon name="fa/duotone/project-diagram" />
             <h3>Customization & Utilities</h3>
             <p>
               Use{' '}
@@ -291,7 +291,7 @@ const StaticContent = () => (
         <div className="row">
           <div className="col pt-3">
             <div className="mb-3">
-              <Icon children={<BatteryUnknown />} style={{ fontSize: '6rem' }} color="yellow" />
+              <Icon name="fa/duotone/brackets-curly" style={{ fontSize: '6rem' }} color="yellow" />
             </div>
             <h3>Your favorite API here!</h3>
             <p>

@@ -1,7 +1,6 @@
 import { Suspense, useState, useEffect, useMemo } from 'react';
 import { css } from '@emotion/css';
 import { useBreakpoint } from '~/components/Breakpoint';
-import { Icon, Close } from '~/components/icons';
 // import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { COLOR_PRIMARY } from '~/theme';
 import { mediaBreakpointDown, mediaBreakpointUp } from '~/theme/media';
@@ -18,6 +17,9 @@ import {
   COLOR_STABLE,
   COLOR_STABLE_LIGHT,
 } from './theme';
+import { Icon } from '~/components/Icon';
+import '~/components/icons/fa/regular/times';
+
 import type { BuildDefinition, BuildType } from './types';
 
 type ConnectedProps = {
@@ -80,7 +82,7 @@ export function BuildPanel({ build }: Props) {
         ) : (
           <StatusFallback />
         )}
-        {isSelected ? <Icon children={<Close />} /> : null}
+        {isSelected ? <Icon name="fa/regular/times" /> : null}
       </div>
     );
   }, [slice, showStatus, breakpoint]);
