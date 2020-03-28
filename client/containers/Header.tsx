@@ -30,10 +30,11 @@ function ServiceWorkerUpdate() {
   return pending ? (
     <button
       onClick={update as any}
-      className="btn btn-primary btn-sm present-yourself py-0 px-1 ml-3"
+      style={{ marginTop: -4 }}
+      className="btn btn-primary btn-sm present-yourself py-0 ml-3"
       title="Update website to latest version"
     >
-      <Icon name="fa/duotone/cloud-download" />
+      <Icon name="fa/duotone/cloud-download" style={{ fontSize: '1.25em' }} />
     </button>
   ) : null;
 }
