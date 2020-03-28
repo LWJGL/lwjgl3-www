@@ -23,12 +23,13 @@ const buildConfiguration = () => {
     mode: PRODUCTION ? 'production' : 'development',
     target: 'web',
     amd: false,
-    cache: {
-      type: 'filesystem',
-      buildDependencies: {
-        config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
-      },
-    },
+    cache: true,
+    // cache: {
+    //   type: 'filesystem',
+    //   buildDependencies: {
+    //     config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
+    //   },
+    // },
     infrastructureLogging: {
       level: 'warn',
     },

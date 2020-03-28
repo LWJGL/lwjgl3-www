@@ -12,7 +12,6 @@ const cssSvgIcon = css`
     width: 1em;
     bottom: -0.125em;
     position: absolute;
-    fill: currentColor;
   }
 `;
 
