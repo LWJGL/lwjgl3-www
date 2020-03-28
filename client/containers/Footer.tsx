@@ -23,6 +23,9 @@ const FOOTER = (
               <Link to="/source">Source & Build Status</Link>
             </li>
             <li>
+              <Link to="/frameworks">Frameworks</Link>
+            </li>
+            <li>
               <Link to="/sponsors">Sponsors & Contributors</Link>
             </li>
             <li>

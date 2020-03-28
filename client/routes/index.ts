@@ -13,6 +13,7 @@ export const Browse = lazy(BrowsePreload);
 export const Source = lazy(() => import(/* webpackChunkName: "route-source" */ './source'));
 export const License = lazy(() => import(/* webpackChunkName: "route-license" */ './license'));
 export const Sponsors = lazy(() => import(/* webpackChunkName: "route-sponsors" */ './sponsors'));
+export const Frameworks = lazy(() => import(/* webpackChunkName: "route-frameworks" */ './frameworks'));
 
 // // Simulate network delay
 // export const Download = lazy(() => {

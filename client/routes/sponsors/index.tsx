@@ -5,7 +5,10 @@ import { HowToSupport } from '../sponsors/HowToSupport';
 
 export default function SponsorsRoute() {
   return (
-    <PageView title="Sponsors" description="LWJ">
+    <PageView
+      title="Sponsors"
+      description="LWJGL exists thanks to all the people who contribute and back/sponsor our collective."
+    >
       <StaticContent />
     </PageView>
   );

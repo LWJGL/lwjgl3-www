@@ -18,6 +18,7 @@ import {
   Source,
   License,
   Sponsors,
+  Frameworks,
 } from '../routes';
 import { NotFound } from '../routes/error/NotFound';
 
@@ -35,8 +36,9 @@ export const Layout: React.FC<{ children?: never }> = () => (
             <Route path="/customize" element={<Customize />} />
             <Route path="/browse/*" element={<Browse />} />
             <Route path="/source" element={<Source />} />
-            <Route path="/license" element={<License />} />
+            <Route path="/frameworks" element={<Frameworks />} />
             <Route path="/sponsors" element={<Sponsors />} />
+            <Route path="/license" element={<License />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
