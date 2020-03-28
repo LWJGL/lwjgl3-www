@@ -20,10 +20,10 @@ const FOOTER = (
               <Link to="/customize">Customize</Link>
             </li>
             <li>
-              <Link to="/source">Source</Link>
+              <Link to="/source">Source & Build Status</Link>
             </li>
             <li>
-              <Link to="/sponsors">Sponsors</Link>
+              <Link to="/sponsors">Sponsors & Contributors</Link>
             </li>
             <li>
               <Link to="/license">License</Link>
@@ -56,6 +56,11 @@ const FOOTER = (
             <li>
               <a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md" rel="noopener external">
                 Release notes
+              </a>
+            </li>
+            <li>
+              <a href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
+                Donate
               </a>
             </li>
           </ul>

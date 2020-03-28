@@ -15,11 +15,11 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aws-sdk": "2.647.0",
+    "aws-sdk": "2.648.0",
     "body-parser": "1.19.0",
     "chalk": "3.0.0",
     "compression": "1.7.4",
-    "express": "5.0.0-alpha.7",
+    "express": "5.0.0-alpha.8",
     "helmet": "3.22.0",
     "http-proxy-middleware": "1.0.3",
     "pug": "2.0.4",
