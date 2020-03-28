@@ -4,8 +4,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation: none !important;
-    transition: none !important;
+    // instead of disabling animations, reduce durations to 0
+    // this avoids having to work around fill-mode styling
+    // (e.g. "forwards" should leave the element in end state after
+    // the animation has completed)
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+    // disable smooth scrolling
     scroll-behavior: auto !important;
   }
 }

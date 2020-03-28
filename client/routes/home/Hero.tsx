@@ -159,12 +159,11 @@ function CanvasContainer() {
 
     // Skip if user prefers-reduced-motion
     // ! Bah! Disables animation under Windows if user has disabled OS window animations (Chrome)
-    // TODO: If the above is changed, re-enable
-    // const preferesReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    // if (preferesReducedMotion) {
-    //   useWebGL = UseWebGL.Off;
-    //   return;
-    // }
+    const preferesReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (preferesReducedMotion) {
+      useWebGL = UseWebGL.Off;
+      return;
+    }
 
     // Check device memory, skip for under 4GB
     if (navigator.deviceMemory !== undefined && navigator.deviceMemory < 4) {
