@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from 'react';
-import { css, keyframes, cx } from '@emotion/css';
+import { useEffect } from 'react';
+import { css, keyframes } from '@emotion/css';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
+import { usePending } from 'react-router-dom';
 
 const pulseAnimation = keyframes`
   0% {
@@ -19,6 +20,8 @@ const pulseAnimation = keyframes`
 
 const cssProgressContainer = css`
   position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 3px;
   z-index: ${ZINDEX_FIXED};
@@ -52,134 +55,99 @@ const cssProgressPulse = css`
   animation: ${pulseAnimation} 2.5s linear 10s both infinite;
 `;
 
-let counter = 0;
-let callback: null | ((count: number) => void) = null;
-let delayTimeout: number | null = null;
-
-export function start(delay: number = 0) {
-  counter += 1;
-  if (delay > 0 && delayTimeout === null) {
-    delayTimeout = window.setTimeout(delayedStart, delay);
-  } else {
-    delayedStart();
-  }
-
-  return end;
-}
-
-function delayedStart() {
-  cleanup();
-  if (callback) {
-    callback(counter);
-  }
-}
-
-function cleanup() {
-  if (delayTimeout !== null) {
-    clearTimeout(delayTimeout);
-    delayTimeout = null;
-    return true;
-  }
-  return false;
-}
-
-export function end() {
-  counter -= 1;
-  if (counter < 0) {
-    counter = 0;
-  }
-  cleanup();
-  if (callback) {
-    callback(counter);
-  }
-}
-
 const PERC_MAX = 99.4;
+let progress = 0;
+let delayTimeoutId: number | null = null;
+let trickleTimeoutId: number | null = null;
+let resetTimeoutId: number | null = null;
+let navProgress: HTMLDivElement;
+let bar: HTMLDivElement;
+
+function trickle() {
+  if (progress < PERC_MAX) {
+    let step = 0;
+
+    if (progress < 37) {
+      step = 13;
+    } else if (progress >= 37 && progress < 59) {
+      step = 7;
+    } else if (progress >= 59 && progress < 83) {
+      step = 3;
+    } else {
+      step = 0.5;
+    }
+
+    trickleTimeoutId = window.setTimeout(trickle, 200 + Math.floor(400 * Math.random()));
+    progress = progress >= PERC_MAX ? PERC_MAX : progress + step;
+    pos(progress);
+  }
+}
+
+function pos(progress: number) {
+  bar.style.transform = `scaleX(${progress / 100})`;
+}
+
+function start() {
+  if (navProgress === undefined) {
+    //@ts-ignore
+    navProgress = document.getElementById('nav-progress');
+    //@ts-ignore
+    bar = document.getElementById('nav-progress-bar');
+  }
+
+  if (delayTimeoutId !== null) {
+    clearTimeout(delayTimeoutId);
+    delayTimeoutId = null;
+  }
+  clearReset();
+  navProgress.removeAttribute('hidden');
+  progress = 1;
+  pos(1);
+  trickleTimeoutId = window.setTimeout(trickle);
+}
+
+function stop() {
+  pos(100);
+  progress = 100;
+  if (trickleTimeoutId !== null) {
+    clearTimeout(trickleTimeoutId);
+    trickleTimeoutId = null;
+  }
+  navProgress.classList.add('fade-out');
+  resetTimeoutId = window.setTimeout(reset, 750);
+}
+
+function clearReset() {
+  if (resetTimeoutId !== null) {
+    clearTimeout(resetTimeoutId);
+    resetTimeoutId = null;
+    navProgress.classList.remove('fade-out');
+  }
+}
+
+function reset() {
+  clearReset();
+  progress = 0;
+  navProgress.setAttribute('hidden', '');
+}
 
 export function NavProgress() {
-  const [count, setCount] = useState(0);
-  const [progress, setProgress] = useState(0);
-  const trickleTimeoutId = useRef<number | null>(null);
-  const resetTimeoutId = useRef<number | null>(null);
+  const isPending: boolean = usePending();
 
   useEffect(() => {
-    // Subscribe
-    callback = setCount;
-    return () => {
-      callback = null;
-    };
-  }, []);
-
-  useEffect(() => {
-    function trickle() {
-      setProgress((progress) => {
-        if (progress < PERC_MAX) {
-          let step = 0;
-
-          if (progress < 37) {
-            step = 13;
-          } else if (progress >= 37 && progress < 59) {
-            step = 7;
-          } else if (progress >= 59 && progress < 83) {
-            step = 3;
-          } else {
-            step = 0.5;
-          }
-
-          trickleTimeoutId.current = window.setTimeout(trickle, 200 + Math.floor(400 * Math.random()));
-          return progress >= PERC_MAX ? PERC_MAX : progress + step;
-        }
-
-        return progress;
-      });
+    if (isPending) {
+      delayTimeoutId = window.setTimeout(start, 250);
+    } else if (delayTimeoutId !== null) {
+      clearTimeout(delayTimeoutId);
+      delayTimeoutId = null;
+    } else if (progress > 0) {
+      stop();
     }
-
-    function resetTrickle() {
-      if (resetTimeoutId.current !== null) {
-        clearTimeout(resetTimeoutId.current);
-        resetTimeoutId.current = null;
-      }
-    }
-
-    function reset() {
-      if (count === 0) {
-        setProgress(0);
-      }
-    }
-
-    if (count > 0) {
-      if (progress === 0) {
-        trickle();
-      } else if (progress === 100) {
-        // This is caused by a quick "start → end → start"
-        setProgress(0);
-        resetTrickle();
-        trickle();
-      }
-    } else {
-      resetTrickle();
-      if (progress > 0) {
-        // Fill bar and wait 750ms before resetting
-        setProgress(100);
-        resetTimeoutId.current = window.setTimeout(reset, 750);
-
-        // Clear tricle timeout
-        if (trickleTimeoutId.current !== null) {
-          clearTimeout(trickleTimeoutId.current);
-          trickleTimeoutId.current = null;
-        }
-      }
-    }
-  }, [count]);
+  }, [isPending]);
 
   return (
-    <div hidden={progress === 0} className={cx(cssProgressContainer, { 'fade-out': progress === 100 })}>
-      <div
-        className={cssProgressBar}
-        style={{
-          transform: `scaleX(${progress / 100})`,
-        }}
-      />
+    <div hidden id="nav-progress" className={cssProgressContainer}>
+      <div id="nav-progress-bar" className={cssProgressBar} />
       <div className={cssProgressPulse} />
     </div>
   );
