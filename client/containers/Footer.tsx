@@ -28,9 +28,6 @@ const FOOTER = (
             <li>
               <Link to="/sponsors">Sponsors & Contributors</Link>
             </li>
-            <li>
-              <Link to="/license">License</Link>
-            </li>
           </ul>
         </div>
         <div className="col-sm">
@@ -95,6 +92,9 @@ const FOOTER = (
               <a href="http://slack.lwjgl.org/" rel="noopener external">
                 Slack
               </a>
+            </li>
+            <li>
+              <Link to="/license">License</Link>
             </li>
           </ul>
         </div>
