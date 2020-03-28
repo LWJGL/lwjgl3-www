@@ -70,8 +70,8 @@ const StaticContent = () => (
             LW
             <b>JGL</b> is an enabling technology and provides low-level access. It is not a framework and does not
             provide higher-level utilities than what the native libraries expose. As such, novice programmers are
-            encouraged to try one of the frameworks or game engines that make use of LWJGL, before working directly with
-            the library.
+            encouraged to try one of the <Link to="/frameworks">frameworks</Link> or{' '}
+            <Link to="/frameworks">game engines</Link> that make use of LWJGL, before working directly with the library.
           </p>
 
           <p>
