@@ -17,7 +17,7 @@ const FrameworksStatic = () => (
     <hr />
 
     <h2 className="mt-5">
-      <img src="/img/showcase/libGDX.png" alt="libGDX" />
+      <img className="img-fluid" src="/img/showcase/libGDX.png" alt="libGDX" width="300" height="50" />
     </h2>
     <p>
       <a href="https://libgdx.badlogicgames.com/">https://libgdx.badlogicgames.com/</a>
@@ -28,7 +28,7 @@ const FrameworksStatic = () => (
     </p>
 
     <h2 className="mt-5">
-      <img src="/img/showcase/jmonkeyengine.png" alt="jMonkeyEngine" />
+      <img className="img-fluid" src="/img/showcase/jmonkeyengine.png" alt="jMonkeyEngine" width="340" height="60" />
     </h2>
     <p>
       <a href="https://jmonkeyengine.org/">https://jmonkeyengine.org/</a>
