@@ -171,7 +171,7 @@ function getInitialConfig(): BuildStore {
           maven: {
             groupId: 'org.joml',
             artifactId: 'joml',
-            version: '1.9.23',
+            version: '1.9.24',
           },
         },
         [Addon.Steamworks4J]: {
