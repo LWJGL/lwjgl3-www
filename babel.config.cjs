@@ -34,7 +34,6 @@ const config = {
         removeImport: true,
       },
     ],
-    PRODUCTION && 'babel-plugin-optimize-react',
     [
       PRODUCTION ? '@babel/plugin-transform-react-jsx' : '@babel/plugin-transform-react-jsx-development',
       {
