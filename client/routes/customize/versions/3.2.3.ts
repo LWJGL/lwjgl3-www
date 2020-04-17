@@ -1,4 +1,4 @@
-import { Binding, Native, NATIVE_ALL, Version } from '../types';
+import { Binding, Native, NATIVE_X86, NATIVE_ALL, Version } from '../types';
 import type { BuildBindings, BindingDefinition } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
@@ -15,16 +15,16 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.LLVM]: { ...(prev.byId[Binding.LLVM] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LMDB]: { ...(prev.byId[Binding.LMDB] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LZ4]: { ...(prev.byId[Binding.LZ4] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.MEOW]: {
-      ...(prev.byId[Binding.MEOW] as BindingDefinition),
-      natives: NATIVE_ALL.filter((it) => it != Native.LinuxARM32),
-    },
+    [Binding.MEOW]: {...(prev.byId[Binding.MEOW] as BindingDefinition), natives: [...NATIVE_X86, Native.LinuxARM64] },
     [Binding.NANOVG]: { ...(prev.byId[Binding.NANOVG] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.NFD]: { ...(prev.byId[Binding.NFD] as BindingDefinition), natives: NATIVE_X86 },
     [Binding.NUKLEAR]: { ...(prev.byId[Binding.NUKLEAR] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.OPENAL]: { ...(prev.byId[Binding.OPENAL] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.OPENGL]: { ...(prev.byId[Binding.OPENGL] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.OPENGLES]: { ...(prev.byId[Binding.OPENGLES] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.OPENVR]: { ...(prev.byId[Binding.OPENVR] as BindingDefinition), natives: NATIVE_X86 },
     [Binding.OPUS]: { ...(prev.byId[Binding.OPUS] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.OVR]: { ...(prev.byId[Binding.OVR] as BindingDefinition), natives: [Native.Windows, Native.WindowsX86] },
     [Binding.PAR]: { ...(prev.byId[Binding.PAR] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.REMOTERY]: { ...(prev.byId[Binding.REMOTERY] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.RPMALLOC]: { ...(prev.byId[Binding.RPMALLOC] as BindingDefinition), natives: NATIVE_ALL },
@@ -35,9 +35,11 @@ export default (prev: BuildBindings): BuildBindings => ({
       natives: NATIVE_ALL,
       website: 'https://github.com/google/shaderc',
     },
+    [Binding.SSE]: { ...(prev.byId[Binding.SSE] as BindingDefinition), natives: NATIVE_X86 },
     [Binding.STB]: { ...(prev.byId[Binding.STB] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.TINYEXR]: { ...(prev.byId[Binding.TINYEXR] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.TINYFD]: { ...(prev.byId[Binding.TINYFD] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.TOOTLE]: { ...(prev.byId[Binding.TOOTLE] as BindingDefinition), natives: NATIVE_X86 },
     [Binding.VMA]: { ...(prev.byId[Binding.VMA] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.XXHASH]: { ...(prev.byId[Binding.XXHASH] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.YOGA]: { ...(prev.byId[Binding.YOGA] as BindingDefinition), natives: NATIVE_ALL },

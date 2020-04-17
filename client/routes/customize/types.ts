@@ -86,6 +86,7 @@ export enum Native {
 }
 
 export const NATIVE_LTE_322 = [Native.Linux, Native.MacOS, Native.Windows];
+export const NATIVE_X86 = [...NATIVE_LTE_322, Native.WindowsX86];
 export const NATIVE_ALL = [
   Native.Linux,
   Native.LinuxARM64,
