@@ -306,6 +306,7 @@ app.get('*', (req, res, next) => {
       'Cache-Control': 'no-cache, no-store, no-transform, max-age=0',
       'Content-Language': 'en',
       Expires: '-1',
+      Link: '<https://unpkg.com/>; rel=preconnect',
     })
     .render('index', renderOptions);
 });
