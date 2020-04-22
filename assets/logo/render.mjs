@@ -1,11 +1,24 @@
-import puppeteer from 'puppeteer';
-import yargs from 'yargs';
 import path from 'path';
 import { promises as fs } from 'fs';
 import { fileURLToPath } from 'url';
+import yargs from 'yargs';
+import puppeteer from 'puppeteer-core';
+import h2 from 'fetch-h2';
 
+const { fetch, disconnectAll } = h2;
 const filePath = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filePath);
+
+async function getDebuggerUrl() {
+  const response = await fetch('http://localhost:9222/json/version');
+  if (!response.ok) {
+    throw new Error('Failed to communicate with Chromium');
+  }
+
+  const data = await response.json();
+  await disconnectAll();
+  return data.webSocketDebuggerUrl;
+}
 
 const argv = yargs
   .usage('Usage: $0 <source.svg> <target.png> [options]')
@@ -105,7 +118,10 @@ async function main() {
   // await fs.writeFile(path.resolve(__dirname, 'output.html'), source);
 
   // Launch browser
-  const browser = await puppeteer.launch({
+
+  const debuggerUrl = await getDebuggerUrl();
+  const browser = await puppeteer.connect({
+    browserWSEndpoint: debuggerUrl,
     defaultViewport: {
       width: argv.w,
       height: argv.h,
@@ -120,7 +136,8 @@ async function main() {
 
   // Cleanup
   await page.close();
-  await browser.close();
+  await browser.disconnect();
+  // await browser.close();
 }
 
 main();

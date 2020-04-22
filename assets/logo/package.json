@@ -1,0 +1,10 @@
+{
+  "name": "lwjgl-logo",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "fetch-h2": "2.4.5",
+    "puppeteer-core": "3.0.0"
+  }
+}

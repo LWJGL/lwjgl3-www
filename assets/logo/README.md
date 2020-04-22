@@ -25,6 +25,10 @@ yarn
 docker pull jess/imagemagick
 # 3. ImageMagick for combining multiple .PNGs to .ICO
 docker pull buffcode/docker-optipng
+# 4. Chromium container for Puppeteer
+cd ../chromium
+docker build --rm -t headless-chrome .
+./run.sh
 ```
 
 ## Artifacts
@@ -38,6 +42,9 @@ node render.mjs logo.svg dist/favicon-32x32.png --width 32 --height 32
 node render.mjs logo.svg dist/favicon-48x48.png --width 48 --height 48
 node render.mjs logo.svg dist/favicon-192x192.png -w 192 -h 192 --bg="#424242" --avatar -r 96
 node render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512 --bg="#424242" --avatar -r 256
+
+# apple-touch-icon
+node render.mjs logo.svg dist/apple-touch-icon-192x192.png -w 192 -h 192 --bg="#424242" --safe
 
 # Web App Manifest Icons
 
