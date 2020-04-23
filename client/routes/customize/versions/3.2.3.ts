@@ -15,7 +15,7 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.LLVM]: { ...(prev.byId[Binding.LLVM] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LMDB]: { ...(prev.byId[Binding.LMDB] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LZ4]: { ...(prev.byId[Binding.LZ4] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.MEOW]: {...(prev.byId[Binding.MEOW] as BindingDefinition), natives: [...NATIVE_X86, Native.LinuxARM64] },
+    [Binding.MEOW]: { ...(prev.byId[Binding.MEOW] as BindingDefinition), natives: [...NATIVE_X86, Native.LinuxARM64] },
     [Binding.NANOVG]: { ...(prev.byId[Binding.NANOVG] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.NFD]: { ...(prev.byId[Binding.NFD] as BindingDefinition), natives: NATIVE_X86 },
     [Binding.NUKLEAR]: { ...(prev.byId[Binding.NUKLEAR] as BindingDefinition), natives: NATIVE_ALL },

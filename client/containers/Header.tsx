@@ -13,6 +13,9 @@ import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/duotone/cloud-download';
 
 const HEADER_CLASSNAME = 'site-header';
+const cssSafe = css`
+  margin-left: env(safe-area-inset-left);
+`;
 const cssIsHome = css`
   transition: background-color 0.75s ease-out;
 `;
@@ -181,7 +184,7 @@ export const Header: React.FC<{ children?: never }> = () => {
       <nav className="container-fluid">
         <div className="row">
           <div className="col col-auto">
-            <Link to="/">
+            <Link to="/" className={cx(cssSafe)}>
               LW
               <b>JGL</b> 3
             </Link>
