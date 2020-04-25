@@ -117,6 +117,15 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             alt="PELISIVUT"
           />
         </a>
+        <a href="https://alltimelist.com/" rel="sponsored noopener" target="_blank">
+          <LazyImg
+            className="m-3"
+            width={140}
+            height={29}
+            src="/img/sponsors/alltimelist-140x29.png"
+            alt="All Time List"
+          />
+        </a>
       </div>
     </section>
   </div>
