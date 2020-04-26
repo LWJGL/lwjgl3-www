@@ -58,7 +58,7 @@ const main = async () => {
 
   await fs.writeFile(targetPath, result.css);
   if (result.map) {
-    await fs.writeFile(sourceMapPath, result.map);
+    await fs.writeFile(sourceMapPath, result.map.toString());
   }
 };
 
