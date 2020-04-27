@@ -223,10 +223,18 @@ export function HomeHero() {
           <h1>
             LW<b>JGL</b>
           </h1>
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=LWJGL&repo=lwjgl3&type=star&count=true&size=large"
+            className="mb-2 border-0 overflow-hidden"
+            width="145"
+            height="30"
+            title="Star LWJGL/lwjgl3 on GitHub"
+          ></iframe>
+          <br />
           <Link to="/#learn-more">
             Lightweight Java Game Library
             <br />
-            <Icon name="fa/regular/chevron-down" />
+            <Icon className="mt-2" name="fa/regular/chevron-down" />
           </Link>
         </HeroContent>
       </LogoContainer>
