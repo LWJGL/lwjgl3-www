@@ -33,7 +33,7 @@ interface LazyImgProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 }
 
 export const LazyImg: React.FC<LazyImgProps> = lazyPolyfill
-  ? ({ src: lazySrc, srcSet: lazySrcSet, rootMargin = '0px', ...rest }) => {
+  ? function LazyImg({ src: lazySrc, srcSet: lazySrcSet, rootMargin = '0px', ...rest }) {
       const [src, setSrc] = useState<string | undefined>(getPlaceholder(rest));
       const [srcSet, setSrcSet] = useState<string | undefined>();
       const imgRef = useRef<HTMLImageElement>(null);
@@ -69,7 +69,7 @@ export const LazyImg: React.FC<LazyImgProps> = lazyPolyfill
 
       return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
     }
-  : ({ src, srcSet, ...rest }) => {
+  : function LazyImg({ src, srcSet, ...rest }) {
       //@ts-ignore
       return <img loading="lazy" src={src} srcSet={srcSet} {...rest} />;
     };
