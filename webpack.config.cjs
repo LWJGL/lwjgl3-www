@@ -1,4 +1,5 @@
 'use strict';
+const crypto = require('crypto');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const path = require('path');
@@ -40,6 +41,7 @@ const buildConfiguration = () => {
           cache: true,
           parallel: true,
           sourceMap: SOURCEMAP,
+          extractComments: false,
           terserOptions: {
             output: {
               comments: false,
@@ -72,6 +74,7 @@ const buildConfiguration = () => {
       mergeDuplicateChunks: PRODUCTION,
       providedExports: PRODUCTION,
       sideEffects: PRODUCTION,
+      innerGraph: PRODUCTION,
     },
     performance: { hints: false },
     entry: { main: ['./client/main.ts'] },
