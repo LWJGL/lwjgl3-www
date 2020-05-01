@@ -293,6 +293,7 @@ app.get('*', (req, res, next) => {
       preload.push(...routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
     }
 
+    preload.push(`\<https://unpkg.com/\>; rel=preconnect`);
     res.set('Link', preload);
   } else {
     renderOptions.entry = 'main.js';
@@ -306,7 +307,6 @@ app.get('*', (req, res, next) => {
       'Cache-Control': 'no-cache, no-store, no-transform, max-age=0',
       'Content-Language': 'en',
       Expires: '-1',
-      Link: '<https://unpkg.com/>; rel=preconnect',
     })
     .render('index', renderOptions);
 });
