@@ -293,7 +293,22 @@ app.get('*', (req, res, next) => {
       preload.push(...routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
     }
 
-    preload.push(`\<https://unpkg.com/\>; rel=preconnect`);
+    switch (req.path) {
+      case '/':
+        preload.push(`\<https://unpkg.com\>; rel=preconnect`);
+        preload.push(`\<https://api.github.com\>; rel=preconnect`);
+        preload.push(`\<https://ghbtns.com\>; rel=preconnect`);
+        break;
+      case '/guide':
+        preload.push(`\<https://unpkg.com\>; rel=preconnect`);
+        break;
+      case '/source':
+        preload.push(`\<https://api.travis-ci.org\>; rel=preconnect`);
+        preload.push(`\<https://ci.appveyor.com\>; rel=preconnect`);
+        preload.push(`\<https://travis-ci.org\>; rel=preconnect`);
+        break;
+    }
+
     res.set('Link', preload);
   } else {
     renderOptions.entry = 'main.js';
