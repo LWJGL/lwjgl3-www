@@ -101,7 +101,7 @@ const StaticContent = () => (
         <div className="row">
           <div className="col-md py-3">
             <Icon name="fa/duotone/microchip" />
-            <h3>Low-level Bindings</h3>
+            <h2>Low-level Bindings</h2>
             <p>
               Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance and a
               Java-friendly binding layer.
@@ -109,7 +109,7 @@ const StaticContent = () => (
           </div>
           <div className="col-md py-3">
             <Icon name="fa/brands/github" />
-            <h3>Open Source</h3>
+            <h2>Open Source</h2>
             <p>
               LWJGL is available under a <Link to="/license">BSD license</Link>. Visit our{' '}
               <a href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
@@ -120,7 +120,7 @@ const StaticContent = () => (
           </div>
           <div className="col-md py-3">
             <Icon name="fa/duotone/book" />
-            <h3>Built-in Documentation</h3>
+            <h2>Built-in Documentation</h2>
             <p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
           </div>
         </div>
@@ -128,12 +128,12 @@ const StaticContent = () => (
         <div className="row">
           <div className="col-md py-3">
             <Icon name="fa/duotone/phone-laptop" />
-            <h3>Cross-platform</h3>
+            <h2>Cross-platform</h2>
             <p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
           </div>
           <div className="col-md py-3">
             <Icon name="fa/duotone/comments" />
-            <h3>Community</h3>
+            <h2>Community</h2>
             <p>
               Need help? Our{' '}
               <a href="http://forum.lwjgl.org/" rel="noopener external">
@@ -147,7 +147,7 @@ const StaticContent = () => (
           </div>
           <div className="col-md py-3">
             <Icon name="fa/duotone/gamepad" />
-            <h3>GLFW Bindings</h3>
+            <h2>GLFW Bindings</h2>
             <p>
               Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts. Also
               features multi-monitor support, clipboard access, file drag-n-drop, and{' '}
@@ -162,13 +162,13 @@ const StaticContent = () => (
         <div className="row">
           <div className="col-md py-3">
             <LazyImg width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
-            <h3>
+            <h2>
               Vulkan
               <sup>
                 <small>TM</small>
               </sup>{' '}
               Bindings
-            </h3>
+            </h2>
             <p>
               A new generation graphics and compute API that provides high-efficiency, cross-platform access to modern
               GPUs used in a wide variety of devices from PCs and consoles to mobile phones and embedded platforms.
@@ -182,13 +182,13 @@ const StaticContent = () => (
               srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x"
               alt="OpenCL"
             />
-            <h3>
+            <h2>
               OpenCL
               <sup>
                 <small>TM</small>
               </sup>{' '}
               Bindings
-            </h3>
+            </h2>
             <p>
               The ultimate standard for cross-platform parallel programming on any hardware. LWJGL supports all OpenCL
               versions (including the latest 2.1 specification) and many useful extensions.
@@ -196,7 +196,7 @@ const StaticContent = () => (
           </div>
           <div className="col-md py-3">
             <LazyImg width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
-            <h3>OpenAL Bindings</h3>
+            <h2>OpenAL Bindings</h2>
             <p>
               Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback and
               audio effects. ALC and many extensions are also supported.
@@ -207,13 +207,13 @@ const StaticContent = () => (
         <div className="row">
           <div className="col-md py-3">
             <LazyImg width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
-            <h3>
+            <h2>
               OpenGL
               <sup>
                 <small>®</small>
               </sup>{' '}
               Bindings
-            </h3>
+            </h2>
             <p>
               Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions (including
               the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released and dozens of
@@ -226,13 +226,13 @@ const StaticContent = () => (
           </div>
           <div className="col-md py-3">
             <LazyImg width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
-            <h3>
+            <h2>
               OpenGL
               <sup>
                 <small>®</small>
               </sup>{' '}
               ES Bindings
-            </h3>
+            </h2>
             <p>
               A royalty-free, cross-platform API for full-function 2D and 3D graphics on embedded systems - including
               consoles, phones, appliances and vehicles. It consists of well-defined subsets of desktop OpenGL, creating
@@ -241,13 +241,13 @@ const StaticContent = () => (
           </div>
           <div className="col-md py-3">
             <LazyImg width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
-            <h3>
+            <h2>
               EGL
               <sup>
                 <small>TM</small>
               </sup>{' '}
               Bindings
-            </h3>
+            </h2>
             <p>
               An interface between Khronos rendering APIs such as OpenGL ES or OpenVG and the underlying native platform
               window system. It handles graphics context management, surface/buffer binding and rendering
@@ -260,18 +260,18 @@ const StaticContent = () => (
         <div className="row">
           <div className="col-md py-3">
             <LazyImg width={183} height={150} style={{ margin: -15 }} src="/svg/oculus.svg" alt="Oculus VR SDK" />
-            <h3>LibOVR Bindings</h3>
+            <h2>LibOVR Bindings</h2>
             <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
           </div>
           <div className="col-md py-3">
             <Icon name="fa/brands/apple" />
             {/* <Icon children={<Apple />} /> */}
-            <h3>Objective-C Bindings</h3>
+            <h2>Objective-C Bindings</h2>
             <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on macOS.</p>
           </div>
           <div className="col-md py-3">
             <Icon name="fa/duotone/project-diagram" />
-            <h3>Customization & Utilities</h3>
+            <h2>Customization & Utilities</h2>
             <p>
               Use{' '}
               <a href="http://www.dyncall.org/" rel="noopener external">
@@ -295,7 +295,7 @@ const StaticContent = () => (
             <div className="mb-3">
               <Icon name="fa/duotone/brackets-curly" style={{ fontSize: '6rem' }} color="yellow" />
             </div>
-            <h3>Your favorite API here!</h3>
+            <h2>Your favorite API here!</h2>
             <p>
               Think LWJGL should have bindings to your favorite API? Let us know or{' '}
               <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/4.3.-The-Generator" rel="noopener external">
