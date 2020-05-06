@@ -3,7 +3,7 @@ import { LazyImg } from '~/components/LazyImg';
 export const GoldSponsors: React.FC<{ children?: never }> = () => (
   <div className="area-dark">
     <section className="container py-5 text-center">
-      <h3>Our Gold Sponsors:</h3>
+      <h1>Our Gold Sponsors:</h1>
       <div className="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center">
         <a href="https://loanscouter.com/" rel="noopener" target="_blank">
           <LazyImg

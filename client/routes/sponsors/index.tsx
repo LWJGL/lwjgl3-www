@@ -22,7 +22,7 @@ const StaticContent = () => (
     <section className="container pt-5 pb-3">
       <div className="row justify-content-center">
         <div className="col-md-9 text-center">
-          <h2>Silver Sponsors:</h2>
+          <h1>Silver Sponsors:</h1>
           <p>
             {' '}
             <a href="https://moneyarcher.com/se/" rel="sponsored noopener" target="_blank">
@@ -36,12 +36,12 @@ const StaticContent = () => (
             </a>
           </p>
 
-          <h2>Backers:</h2>
+          <h1>Backers:</h1>
           <p>
             <img className="img-fluid" src="https://opencollective.com/lwjgl/backers.svg?width=825" />
           </p>
 
-          <h2>Contributors:</h2>
+          <h1>Contributors:</h1>
           <p>
             <a href="https://github.com/LWJGL/lwjgl3/graphs/contributors">
               <img className="img-fluid" src="https://opencollective.com/lwjgl/contributors.svg?width=825" />

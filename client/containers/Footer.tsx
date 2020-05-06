@@ -5,7 +5,7 @@ const FOOTER = (
     <section className="container">
       <nav className="row">
         <div className="col-sm">
-          <h3>About</h3>
+          <h1>About</h1>
           <ul className="list-unstyled">
             <li>
               <Link to="/">Home</Link>
@@ -31,7 +31,7 @@ const FOOTER = (
           </ul>
         </div>
         <div className="col-sm">
-          <h3>News</h3>
+          <h1>News</h1>
           <ul className="list-unstyled">
             <li>
               <a href="https://blog.lwjgl.org/" rel="noopener external">
@@ -66,7 +66,7 @@ const FOOTER = (
           </ul>
         </div>
         <div className="col-sm">
-          <h3>Developers</h3>
+          <h1>Developers</h1>
           <ul className="list-unstyled">
             <li>
               <a href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
