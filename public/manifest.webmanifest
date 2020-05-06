@@ -25,6 +25,12 @@
       "src": "/img/fav/logo.svg",
       "sizes": "any",
       "type": "image/svg+xml"
+    },
+    {
+      "src": "/img/fav/maskable.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ]
 }
