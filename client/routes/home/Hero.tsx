@@ -72,16 +72,35 @@ const CssHeroBox = css`
     #000
   );
   width: 100%;
-  height: 100vh;
+  /* height: 100vh; */
+  /* safari mobile viewport bug fix */
+  /* min-height: -webkit-fill-available; */
 `;
 
-const HeroBox: React.FC = (props) => <section className={CssHeroBox}>{props.children}</section>;
+const HeroBox: React.FC = (props) => {
+  // const [height, setHeight] = useState(window.innerHeight);
+  // useEffect(() => {
+  //   function setHeroHeight() {
+  //     setHeight(window.innerHeight);
+  //   }
+  //   window.addEventListener('resize', setHeroHeight);
+  //   return () => {
+  //     window.removeEventListener('resize', setHeroHeight);
+  //   };
+  // }, []);
+
+  return (
+    <section className={CssHeroBox} style={{ height: window.innerHeight }}>
+      {props.children}
+    </section>
+  );
+};
 
 const CssLogoContainer = css`
   position: absolute;
   z-index: 1;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   align-items: center;
   justify-content: center;
   padding: 1rem;
