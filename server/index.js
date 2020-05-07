@@ -295,10 +295,6 @@ app.get('*', (req, res, next) => {
 
     switch (req.path) {
       case '/':
-        preload.push(`\<https://unpkg.com\>; rel=preconnect`);
-        preload.push(`\<https://api.github.com\>; rel=preconnect`);
-        preload.push(`\<https://ghbtns.com\>; rel=preconnect`);
-        break;
       case '/guide':
         preload.push(`\<https://unpkg.com\>; rel=preconnect`);
         break;

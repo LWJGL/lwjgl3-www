@@ -3,6 +3,7 @@ import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
 import { contextOptions } from './contextOptions';
 import { loadJS } from '~/services/loadJS';
+import { Head } from '~/components/Head';
 import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/regular/chevron-down';
 
@@ -216,6 +217,9 @@ function CanvasContainer() {
 export function HomeHero() {
   return (
     <HeroBox>
+      <Head>
+        <link rel="preconnect" href="https://ghbtns.com" />
+      </Head>
       <CanvasContainer />
       <LogoContainer>
         {Logo}
@@ -226,6 +230,10 @@ export function HomeHero() {
           <iframe
             src="https://ghbtns.com/github-btn.html?user=LWJGL&repo=lwjgl3&type=star&count=true&size=large"
             className="mb-2 border-0 overflow-hidden"
+            sandbox="allow-scripts"
+            importance="low"
+            loading="lazy"
+            referrerPolicy="no-referrer"
             width="145"
             height="30"
             title="Star LWJGL/lwjgl3 on GitHub"
