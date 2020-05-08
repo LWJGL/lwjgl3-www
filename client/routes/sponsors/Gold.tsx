@@ -71,6 +71,19 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             alt="BonusFinder New Zealand"
           />
         </a>
+        <a
+          href="https://www.bonusfinder.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          rel="sponsored noopener"
+          target="_blank"
+        >
+          <LazyImg
+            className="m-3"
+            width={179.71}
+            height={38}
+            src="/img/sponsors/bonusfinderus.svg"
+            alt="BonusFinder USA"
+          />
+        </a>
         <a href="http://smålånutensikkerhet.com/" rel="noopener" target="_blank">
           <LazyImg
             className="m-3"
