@@ -63,7 +63,7 @@ function isPaused(el: HTMLMediaElement) {
   return el.paused || el.ended;
 }
 
-export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
+export function useMediaControls(playerRef: React.RefObject<HTMLMediaElement>) {
   const [state, dispatch] = useReducer(mediaReducer, {
     currentTime: 0,
     paused: true,
@@ -73,21 +73,21 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
   });
 
   function pause() {
-    if (player.current) {
-      player.current.pause();
+    if (playerRef.current) {
+      playerRef.current.pause();
     }
   }
 
   function play() {
-    if (player.current) {
-      return player.current.play();
+    if (playerRef.current) {
+      return playerRef.current.play();
     } else {
       return Promise.reject();
     }
   }
 
   function setVolume(volume: number) {
-    if (player.current) {
+    if (playerRef.current) {
       if (volume < 0) {
         if (state.volume > 0) {
           volume = 0;
@@ -102,13 +102,13 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
           return;
         }
       }
-      player.current.volume = volume;
+      playerRef.current.volume = volume;
 
       // no onmuted event, must set on volumechange
       if (volume === 0) {
-        player.current.muted = true;
+        playerRef.current.muted = true;
       } else {
-        player.current.muted = false;
+        playerRef.current.muted = false;
       }
       dispatch({ type: 'volume', volume });
     }
@@ -123,8 +123,8 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
   }
 
   function seek(value: number) {
-    if (player.current) {
-      player.current.currentTime = value;
+    if (playerRef.current) {
+      playerRef.current.currentTime = value;
     }
   }
 
@@ -139,15 +139,16 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
   }
 
   useEffect(() => {
-    if (player.current !== null) {
+    const player = playerRef.current;
+    if (player !== null) {
       dispatch({
         type: 'init',
         state: {
-          currentTime: player.current.currentTime,
-          paused: isPaused(player.current),
-          oldVolume: player.current.volume,
-          volume: player.current.volume,
-          muted: player.current.muted,
+          currentTime: player.currentTime,
+          paused: isPaused(player),
+          oldVolume: player.volume,
+          volume: player.volume,
+          muted: player.muted,
         },
       });
 
@@ -161,27 +162,27 @@ export function useMediaControls(player: React.RefObject<HTMLMediaElement>) {
         dispatch({ type: 'seek', currentTime: this.currentTime });
       }
 
-      player.current.addEventListener('play', playPauseHandler); // fired by play method or autoplay attribute
-      player.current.addEventListener('playing', playPauseHandler); // fired by resume after being paused due to lack of data
-      player.current.addEventListener('pause', playPauseHandler); // fired by pause method
-      player.current.addEventListener('waiting', playPauseHandler); // fired by pause due to lack of data
-      player.current.addEventListener('volumechange', volumeHandler); // fired by a change of volume
-      player.current.addEventListener('seeked', seekHandler); // fired on seek completed
-      player.current.addEventListener('timeupdate', seekHandler); // fired on currentTime update
+      player.addEventListener('play', playPauseHandler); // fired by play method or autoplay attribute
+      player.addEventListener('playing', playPauseHandler); // fired by resume after being paused due to lack of data
+      player.addEventListener('pause', playPauseHandler); // fired by pause method
+      player.addEventListener('waiting', playPauseHandler); // fired by pause due to lack of data
+      player.addEventListener('volumechange', volumeHandler); // fired by a change of volume
+      player.addEventListener('seeked', seekHandler); // fired on seek completed
+      player.addEventListener('timeupdate', seekHandler); // fired on currentTime update
 
       return () => {
-        if (player.current !== null) {
-          player.current.removeEventListener('play', playPauseHandler);
-          player.current.removeEventListener('playing', playPauseHandler);
-          player.current.removeEventListener('pause', playPauseHandler);
-          player.current.removeEventListener('waiting', playPauseHandler);
-          player.current.removeEventListener('volumechange', volumeHandler);
-          player.current.removeEventListener('seeked', seekHandler);
-          player.current.removeEventListener('timeupdate', seekHandler);
+        if (player !== null) {
+          player.removeEventListener('play', playPauseHandler);
+          player.removeEventListener('playing', playPauseHandler);
+          player.removeEventListener('pause', playPauseHandler);
+          player.removeEventListener('waiting', playPauseHandler);
+          player.removeEventListener('volumechange', volumeHandler);
+          player.removeEventListener('seeked', seekHandler);
+          player.removeEventListener('timeupdate', seekHandler);
         }
       };
     }
-  }, [player.current]);
+  }, [playerRef]);
 
   return {
     currentTime: state.currentTime,

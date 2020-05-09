@@ -16,7 +16,7 @@ export function useLocalStorageKey(key: string) {
     return () => {
       window.removeEventListener('storage', syncLocalStorage);
     };
-  }, []);
+  }, [key]);
 
   return localState;
 }

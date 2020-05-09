@@ -40,7 +40,15 @@ export function useMemoSlice<S>(
   getInputs: (state: BuildStore) => React.DependencyList
 ): SliceTuple<S> {
   const [state, dispatch] = useContext(StoreContext);
-  return [useMemo(() => getSlice(state), getInputs(state)), dispatch];
+
+  return [
+    useMemo(
+      () => getSlice(state),
+      // eslint-disable-next-line
+      getInputs(state)
+    ),
+    dispatch,
+  ];
 }
 
 // export function useStoreContext(): StoreContextType {

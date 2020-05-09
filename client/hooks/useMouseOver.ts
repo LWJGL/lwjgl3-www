@@ -17,7 +17,7 @@ export function useMouseOver(ref: React.RefObject<HTMLElement>) {
         node.removeEventListener('mouseout', handleMouseOut);
       };
     }
-  }, [ref.current]);
+  }, [ref]);
 
   return [value];
 }

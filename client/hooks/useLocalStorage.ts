@@ -22,7 +22,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       }
       setKeyValue(value);
     },
-    [setKeyValue]
+    [key, setKeyValue]
   );
 
   return [keyValue, setValue];

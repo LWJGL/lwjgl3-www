@@ -22,9 +22,10 @@ const cssCanvas = css`
 
 export default function HomeCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } = THREE;
 
   useEffect(() => {
+    const { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } = THREE;
+
     function resizeCanvas() {
       const canvas = canvasRef.current;
       if (canvas !== null && canvas.parentElement !== null) {

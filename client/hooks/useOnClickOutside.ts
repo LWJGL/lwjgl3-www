@@ -17,5 +17,5 @@ export function useOnClickOutside(ref: React.RefObject<HTMLElement>, handler: Re
       document.removeEventListener('mousedown', listener);
       document.removeEventListener('touchstart', listener);
     };
-  }, []);
+  }, [ref, handler]);
 }

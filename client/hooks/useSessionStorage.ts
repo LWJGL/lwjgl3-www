@@ -22,7 +22,7 @@ export function useSessionStorage<T>(key: string, initialValue: T) {
       }
       setKeyValue(value);
     },
-    [setKeyValue]
+    [key, setKeyValue]
   );
 
   return [keyValue, setValue];

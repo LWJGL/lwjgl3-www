@@ -20,7 +20,7 @@ export function useWindowScrollPosition(throttleMs: number = 0) {
     return () => {
       window.removeEventListener('scroll', handleScroll, false);
     };
-  }, []);
+  }, [throttleMs]);
 
   return position;
 }

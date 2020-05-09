@@ -23,7 +23,7 @@ export function useResizeObserver(target: React.RefObject<HTMLElement>) {
         observer.current = null;
       }
     };
-  }, []);
+  }, [target]);
 
   return rect;
 }

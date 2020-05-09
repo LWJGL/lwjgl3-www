@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 
-export function useScrollToMe(elementRef: React.RefObject<HTMLElement>) {
+export function useScrollToMe(ref: React.RefObject<HTMLElement>) {
   useEffect(() => {
-    if (elementRef.current != null) {
-      scrollIntoView(elementRef.current, {
+    if (ref.current != null) {
+      scrollIntoView(ref.current, {
         behavior: 'smooth',
         block: 'start',
         inline: 'start',
       });
     }
-  }, []);
+  }, [ref]);
 }

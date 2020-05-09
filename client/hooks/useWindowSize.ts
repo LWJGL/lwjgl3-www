@@ -27,7 +27,7 @@ export function useWindowSize(throttleMs: number = 0) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [throttleMs]);
 
   return windowSize;
 }

@@ -20,7 +20,7 @@ export function useMedia(query: string, defaultMatches: boolean = true) {
     return () => {
       mediaQueryList.removeListener(listener);
     };
-  }, []);
+  }, [query]);
 
   return matches;
 }
