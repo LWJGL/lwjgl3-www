@@ -3,7 +3,6 @@ import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
 import { contextOptions } from './contextOptions';
 import { loadJS } from '~/services/loadJS';
-import { Head } from '~/components/Head';
 import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/regular/chevron-down';
 
@@ -53,7 +52,7 @@ const Logo = (
 const Canvas = lazy(() =>
   Promise.all([
     import(/* webpackChunkName: "route-home$canvas" */ './Canvas'),
-    loadJS('https://unpkg.com/three@0.115.0/build/three.min.js'),
+    loadJS('https://unpkg.com/three@0.116.1/build/three.min.js'),
   ]).then((values) => values[0])
 );
 
