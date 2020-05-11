@@ -1,8 +1,7 @@
 'use strict';
-const crypto = require('crypto');
+const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-const path = require('path');
 const { argv } = require('yargs');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
@@ -24,12 +23,11 @@ const buildConfiguration = () => {
     mode: PRODUCTION ? 'production' : 'development',
     target: 'web',
     amd: false,
-    cache: true,
+    // cache: false,
+    cache: true, // in-memory cache
+    // ! Not yet support with DllReferencePlugin
     // cache: {
     //   type: 'filesystem',
-    //   buildDependencies: {
-    //     config: [__filename, path.resolve(__dirname, 'node_modules/.yarn-integrity')],
-    //   },
     // },
     infrastructureLogging: {
       level: 'warn',
@@ -77,7 +75,11 @@ const buildConfiguration = () => {
       innerGraph: PRODUCTION,
     },
     performance: { hints: false },
-    entry: { main: ['./client/main.ts'] },
+    entry: {
+      main: {
+        import: ['./client/main.ts'],
+      },
+    },
     // experiments: {
     //   outputModule: true,
     // },
@@ -96,7 +98,7 @@ const buildConfiguration = () => {
       alias: {
         '~': path.resolve(__dirname, './client'),
         // Use prebundled jszip that has smaller stream polyfill
-        jszip: path.resolve(__dirname, `./node_modules/jszip/dist/jszip.js`),
+        jszip: path.resolve(__dirname, `./node_modules/jszip/dist/jszip.min.js`),
         // // alternatively, use stream-browserify polyfill (~17KB larger)
         // stream: 'stream-browserify'
       },
@@ -129,17 +131,32 @@ const buildConfiguration = () => {
   if (DEV) {
     config.output.crossOriginLoading = 'anonymous';
 
+    // Load pre-built dependencies
+    config.plugins.push(
+      new webpack.DllReferencePlugin({
+        // context: __dirname,
+        name: 'vendor',
+        manifest: require('./public/js/vendor.manifest.json'),
+      })
+    );
+
     // Enable source maps
     config.devtool = SOURCEMAP ? 'inline-source-map' : 'cheap-module-source-map';
 
     if (HMR) {
       // Enable Hot Module Replacement
-      config.entry.main.unshift(require.resolve('webpack-hot-middleware/client'));
+      config.entry.main.import.unshift(require.resolve('webpack-hot-middleware/client'));
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
       // React Refresh
       const ReactRefreshPlugin = require('@webhotelier/webpack-fast-refresh');
       config.plugins.push(new ReactRefreshPlugin());
+      config.entry.main.import.unshift(require.resolve('@webhotelier/webpack-fast-refresh/runtime.js'));
+      config.module.rules[0].use.push(require.resolve('@webhotelier/webpack-fast-refresh/loader.js'));
+
+      // react-error-overlay
+      const ErrorOverlayPlugin = require('@webhotelier/webpack-fast-refresh/error-overlay/index.js');
+      config.plugins.push(new ErrorOverlayPlugin());
     }
 
     // Enable CSS HMR instead of loading CSS pre-built from disk
@@ -180,11 +197,11 @@ const buildConfiguration = () => {
     // config.optimization.chunkIds = 'named';
 
     // Use pre-built three.js to avoid breaking IE11
-    config.resolve.alias.three = path.resolve(__dirname, `./node_modules/three/build/three.min.js`);
-    config.resolve.alias.jszip = path.resolve(__dirname, `./node_modules/jszip/dist/jszip.min.js`);
+    // config.resolve.alias.three = path.resolve(__dirname, `./node_modules/three/build/three.min.js`);
+    // config.resolve.alias.jszip = path.resolve(__dirname, `./node_modules/jszip/dist/jszip.min.js`);
 
-    // For IE11 compatibility (uses String.endsWith)
-    config.module.rules[0].include.push(path.resolve(__dirname, 'node_modules/react-router'));
+    // // For IE11 compatibility (uses String.endsWith)
+    // config.module.rules[0].include.push(path.resolve(__dirname, 'node_modules/react-router'));
 
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
