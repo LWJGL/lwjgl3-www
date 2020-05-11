@@ -1,4 +1,4 @@
-import { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
+import { Fragment, Suspense, useState, useEffect, unstable_useTransition } from 'react';
 import { Link } from 'react-router-dom';
 import { File } from './File';
 import { Folder, FolderWrap, SpinnerRow, FolderError } from './Folder';
@@ -14,7 +14,7 @@ interface Props {
 
 export function Browser({ path: targetPath }: Props) {
   const [path, setPath] = useState(targetPath);
-  const [startTransition] = useTransition({
+  const [startTransition] = unstable_useTransition({
     timeoutMs: 2250, // 0.75 spinner circle * 3
   });
 
