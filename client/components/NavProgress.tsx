@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { css, keyframes } from '@emotion/css';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
-import { usePending } from 'react-router-dom';
+import { useLocationPending } from 'react-router-dom';
 
 const pulseAnimation = keyframes`
   0% {
@@ -132,7 +132,8 @@ function reset() {
 }
 
 export function NavProgress() {
-  const isPending: boolean = usePending();
+  const isPending: boolean = useLocationPending();
+  console.log(isPending);
 
   useEffect(() => {
     if (isPending) {

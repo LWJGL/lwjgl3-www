@@ -28,10 +28,11 @@ export class ErrorBoundary extends React.Component<Props, State> {
     };
   }
 
-  // ! Do not use this, React will log to the console anyway
-  // * Useful for sending client errors to a server logging service
+  // // TODO: Send client errors to a server logging service
   // componentDidCatch(error: Error, info?: ReactErrorInfo) {
-  //   console.error(error, info);
+  //   if (FLAG_PRODUCTION) {
+  //     console.error(error, info);
+  //   }
   // }
 
   render() {
