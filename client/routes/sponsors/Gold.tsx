@@ -139,6 +139,41 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             alt="All Time List"
           />
         </a>
+        <a
+          href="https://medium.com/@niksundin/best-web-design-companies-1872e445775f"
+          rel="sponsored noopener"
+          target="_blank"
+        >
+          <LazyImg
+            className="m-3"
+            width={64}
+            height={64}
+            src="/img/sponsors/top-web-design-agencies-256x256.png"
+            alt="Top 5 Web Design Agencies in the World"
+          />
+        </a>
+        <a
+          href="https://uxplanet.org/top-ui-ux-design-agencies-user-experience-firms-8c54697e290"
+          rel="sponsored noopener"
+          target="_blank"
+        >
+          <LazyImg
+            className="m-3"
+            width={64}
+            height={64}
+            src="/img/sponsors/top5-uiux-design-agencies-256x256.png"
+            alt="Top 5 UI/UX Design Agencies in the World"
+          />
+        </a>
+        <a href="https://casinohex.se/online-casinon/" rel="sponsored noopener" target="_blank">
+          <LazyImg
+            className="m-3"
+            width={200}
+            height={51}
+            src="/img/sponsors/casinohex.se-200x51.png"
+            alt="#1 Sweden Online Casinos Guide"
+          />
+        </a>
       </div>
     </section>
   </div>
