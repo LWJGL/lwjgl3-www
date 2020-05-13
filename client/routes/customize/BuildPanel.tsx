@@ -85,7 +85,7 @@ export function BuildPanel({ build }: Props) {
         {isSelected ? <Icon name="fa/regular/times" /> : null}
       </div>
     );
-  }, [slice, showStatus, breakpoint]);
+  }, [dispatch, build, slice, showStatus, breakpoint]);
 }
 
 const CssPanelBox = css`

@@ -18,12 +18,12 @@ const getInputs = (state: BuildStore) => [state.platform, state.artifacts];
 
 export function BuildPlatform() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
-  const { platforms, natives, version, selected } = slice;
 
-  const vnum = versionNum(version);
+  return useMemo(() => {
+    const { platforms, natives, version, selected } = slice;
+    const vnum = versionNum(version);
 
-  return useMemo(
-    () => (
+    return (
       <>
         <h4 className="mt-3">Natives</h4>
         <div className="custom-controls-stacked">
@@ -45,7 +45,6 @@ export function BuildPlatform() {
             ))}
         </div>
       </>
-    ),
-    [slice]
-  );
+    );
+  }, [dispatch, slice]);
 }

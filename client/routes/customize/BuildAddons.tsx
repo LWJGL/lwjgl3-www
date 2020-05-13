@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useMemoSlice } from './Store';
 import type { Addon, AddonDefinition, BuildStore } from './types';
 import { toggleAddon } from './actions';
@@ -17,10 +17,10 @@ const getInputs = (state: BuildStore) => [state.mode, state.selectedAddons, stat
 
 export function BuildAddons() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
-  const { mode, selectedAddons, descriptions, allIds, byId } = slice;
+  const onChange = useCallback((addon: Addon) => dispatch(toggleAddon(addon)), [dispatch]);
 
   return useMemo(() => {
-    const onChange = (addon: Addon) => dispatch(toggleAddon(addon));
+    const { mode, selectedAddons, descriptions, allIds, byId } = slice;
 
     return (
       <div className="custom-controls-stacked">
@@ -41,7 +41,7 @@ export function BuildAddons() {
         })}
       </div>
     );
-  }, [slice]);
+  }, [slice, onChange]);
 }
 
 interface Props {

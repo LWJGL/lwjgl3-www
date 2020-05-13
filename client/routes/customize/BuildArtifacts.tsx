@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useMemoSlice } from './Store';
 import { NATIVE_ALL } from './types';
 import type { Binding, BindingDefinition, Native, BuildStore } from './types';
@@ -28,10 +28,10 @@ const getInputs = (state: BuildStore) => [state.contents, state.availability, st
 
 export function BuildArtifacts() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
-  const { contents, availability, descriptions, allIds, byId } = slice;
+  const onChange = useCallback((artifact: Binding) => dispatch(toggleArtifact(artifact)), [dispatch]);
 
   return useMemo(() => {
-    const onChange = (artifact: Binding) => dispatch(toggleArtifact(artifact));
+    const { contents, availability, descriptions, allIds, byId } = slice;
 
     return (
       <div className="custom-controls-stacked">
@@ -52,7 +52,7 @@ export function BuildArtifacts() {
         })}
       </div>
     );
-  }, [slice]);
+  }, [slice, onChange]);
 }
 
 interface Props {
