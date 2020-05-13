@@ -1,20 +1,26 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
+    "target": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "checkJs": false,
+    "strict": true,
     "alwaysStrict": true,
     "noEmit": true,
     "noUnusedLocals": true,
-    "strict": true,
+    "skipLibCheck": true,
     "jsx": "preserve",
     "baseUrl": ".",
-    "lib": ["esnext", "dom", "dom.iterable"],
-    "paths": { "~/*": ["./client/*"] },
-    "plugins": [{ "name": "typescript-styled-plugin" }],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "paths": {
+      "~/*": ["./client/*"]
+    },
+    "plugins": [
+      {
+        "name": "typescript-styled-plugin"
+      }
+    ],
     "types": ["node", "react/experimental", "react-dom/experimental"]
   },
   "include": ["./types", "./client"],
