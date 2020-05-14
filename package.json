@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aws-sdk": "2.675.0",
+    "aws-sdk": "2.676.0",
     "body-parser": "1.19.0",
     "chalk": "4.0.0",
     "compression": "1.7.4",
@@ -56,7 +56,7 @@
     "css-loader": "3.5.3",
     "cssnano": "4.1.10",
     "eslint": "7.0.0",
-    "eslint-plugin-react-hooks": "4.0.1",
+    "eslint-plugin-react-hooks": "4.0.2",
     "focus-trap": "5.1.0",
     "gzip-size": "5.1.1",
     "highlight.js": "10.0.3",
