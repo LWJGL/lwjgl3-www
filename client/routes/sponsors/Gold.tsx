@@ -168,10 +168,21 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         <a href="https://casinohex.se/online-casinon/" rel="sponsored noopener" target="_blank">
           <LazyImg
             className="m-3"
-            width={200}
-            height={51}
-            src="/img/sponsors/casinohex.se-200x51.png"
+            width={170}
+            height={60}
+            src="/img/sponsors/casinohex_se_170x60px.svg"
+            style={{ padding: '4px 3px 4px 2px', background: 'white' }}
             alt="#1 Sweden Online Casinos Guide"
+          />
+        </a>
+        <a href="https://casinohex.co.za/online-casinos/" rel="sponsored noopener" target="_blank">
+          <LazyImg
+            className="m-3"
+            width={170}
+            height={60}
+            src="/img/sponsors/casinohex_za_170x60px.svg"
+            style={{ padding: '4px 3px 4px 2px', background: 'white' }}
+            alt="Best South African Online Gambling Guide"
           />
         </a>
       </div>
