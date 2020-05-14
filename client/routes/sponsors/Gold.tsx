@@ -112,6 +112,15 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             alt="Nettikasinot"
           />
         </a>
+        <a href="https://www.turtlebet.com/fi/kaikki-nettikasinot.html" rel="sponsored noopener" target="_blank">
+          <LazyImg
+            className="m-3"
+            width={632 / 3}
+            height={172 / 3}
+            src="/img/sponsors/turtlebet-632x172.png"
+            alt="Turtle Bet"
+          />
+        </a>
         <a href="https://www.kasinot.fi/" rel="sponsored noopener" target="_blank">
           <LazyImg
             className="m-3"
