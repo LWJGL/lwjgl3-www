@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { contextOptions } from './contextOptions';
 import { loadJS } from '~/services/loadJS';
 import { Icon } from '~/components/Icon';
+import debounce from 'lodash-es/debounce';
 import '~/components/icons/fa/regular/chevron-down';
 
 // Brands
@@ -49,12 +50,18 @@ const Logo = (
   </svg>
 );
 
-const Canvas = lazy(() =>
-  Promise.all([
+const Canvas = lazy(() => {
+  const route = Promise.all([
     import(/* webpackChunkName: "route-home$canvas" */ './Canvas'),
     loadJS('https://unpkg.com/three@0.116.1/build/three.min.js'),
-  ]).then((values) => values[0])
-);
+  ])
+    .then((values) => values[0])
+    .catch((err) => {
+      return { default: () => <></> };
+    });
+
+  return route;
+});
 
 const CssHeroBox = css`
   margin-top: -4rem;
@@ -76,21 +83,22 @@ const CssHeroBox = css`
   /* min-height: -webkit-fill-available; */
 `;
 
-const HeroBox: React.FC = (props) => {
-  // const [height, setHeight] = useState(window.innerHeight);
-  // useEffect(() => {
-  //   function setHeroHeight() {
-  //     setHeight(window.innerHeight);
-  //   }
-  //   window.addEventListener('resize', setHeroHeight);
-  //   return () => {
-  //     window.removeEventListener('resize', setHeroHeight);
-  //   };
-  // }, []);
+const HeroBox: React.FC = ({ children }) => {
+  const [height, setHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const resizeHnd = debounce(() => {
+      setHeight(window.innerHeight);
+    }, 360);
+    window.addEventListener('resize', resizeHnd);
+    return () => {
+      window.removeEventListener('resize', resizeHnd);
+    };
+  }, [setHeight]);
 
   return (
-    <section className={CssHeroBox} style={{ height: window.innerHeight }}>
-      {props.children}
+    <section className={CssHeroBox} style={{ height }}>
+      {children}
     </section>
   );
 };
@@ -102,9 +110,9 @@ const CssLogoContainer = css`
   height: 100%;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1rem 1rem 0 1rem;
 
-  @media (max-height: 420px) {
+  @media (min-aspect-ratio: 8/2) {
     justify-content: flex-end;
   }
 
@@ -113,12 +121,9 @@ const CssLogoContainer = css`
     opacity: 0;
     animation: anim-reset-opacity-transform 1s ease forwards;
     width: 140px;
-    margin-bottom: 1rem;
-    @media (max-width: 600px) {
-      max-width: 50%;
-    }
-    @media (max-height: 420px) {
-      max-width: 50%;
+    width: clamp(140px, 16vw, 220px);
+    @media (min-aspect-ratio: 4/2) {
+      display: none;
     }
   }
 `;
@@ -131,27 +136,18 @@ const CssHeroContent = css`
   text-align: center;
   padding: 0 1rem;
   color: white;
-  font-size: 2rem;
-  line-height: 1em;
   font-weight: 300;
+  line-height: 1.2;
+  font-size: 2rem;
+  font-size: clamp(1.2rem, 3.5vw, 2.1rem);
 
   a {
     color: white;
   }
 
   h1 {
-    font-size: 2em;
-    line-height: 1.25em;
-  }
-
-  @media (max-width: 600px) {
-    font-size: 1.5rem;
-    line-height: 1.25em;
-  }
-
-  @media (max-width: 400px), (max-height: 420px) {
-    font-size: 1rem;
-    line-height: 1.5em;
+    font-size: 4rem;
+    font-size: clamp(4rem, 15vw, 10rem);
   }
 `;
 
@@ -165,10 +161,9 @@ enum UseWebGL {
 }
 
 let useWebGL = UseWebGL.Unknown;
-const supportsWebGL = () => useWebGL === UseWebGL.On;
 
-function CanvasContainer() {
-  const [webGL, setGL] = useState(supportsWebGL);
+const CanvasContainer: React.FC = () => {
+  const [renderWebGL, toggleGL] = useState(useWebGL === UseWebGL.On);
 
   useEffect(() => {
     // If we detected WebGL before, the checks below already passed
@@ -219,18 +214,18 @@ function CanvasContainer() {
       (cnv.getContext('experimental-webgl', contextOptions) as WebGLRenderingContext | null) !== null
     ) {
       useWebGL = UseWebGL.On;
-      setGL(true);
+      toggleGL(true);
     } else {
       useWebGL = UseWebGL.NotSupported;
     }
   }, []);
 
-  return webGL ? (
+  return renderWebGL ? (
     <Suspense fallback={null}>
       <Canvas />
     </Suspense>
   ) : null;
-}
+};
 
 export function HomeHero() {
   return (
@@ -242,19 +237,7 @@ export function HomeHero() {
           <h1>
             LW<b>JGL</b>
           </h1>
-          <iframe
-            src="https://ghbtns.com/github-btn.html?user=LWJGL&repo=lwjgl3&type=star&count=true&size=large"
-            className="mb-2 border-0 overflow-hidden"
-            sandbox="allow-scripts allow-popups"
-            importance="low"
-            loading="lazy"
-            referrerPolicy="no-referrer"
-            width="145"
-            height="30"
-            title="Star LWJGL/lwjgl3 on GitHub"
-          ></iframe>
-          <br />
-          <Link to="/#learn-more">
+          <Link to="/#learn-more" className="d-block">
             Lightweight Java Game Library
             <br />
             <Icon className="mt-2" name="fa/regular/chevron-down" />

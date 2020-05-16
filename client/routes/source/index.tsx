@@ -5,16 +5,41 @@ import '~/components/icons/fa/brands/github';
 
 const SourceRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Source & Build Status" description="Links to LWJGL Github repository and build status matrix">
-    <section className="container pb-5">
+    <StaticContent />
+  </PageView>
+);
+
+const StaticContent = () => (
+  <>
+    <section className="container">
       <h1>
         LW
-        <b>JGL</b> Source
+        <b>JGL</b> Source{' '}
       </h1>
+
+      <iframe
+        src="https://ghbtns.com/github-btn.html?user=LWJGL&repo=lwjgl3&type=star&count=true&size=large"
+        className="border-0 overflow-hidden mt-1"
+        sandbox="allow-scripts allow-popups"
+        importance="low"
+        loading="lazy"
+        referrerPolicy="no-referrer"
+        width="145"
+        height="30"
+        title="Star LWJGL/lwjgl3 on GitHub"
+      />
 
       <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
       <p>
         <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
           <Icon name="fa/brands/github" /> Github Repository
+        </a>
+        <a
+          className="btn btn-xs-block btn-outline-dark"
+          href="https://github.com/LWJGL/lwjgl3/issues"
+          rel="noopener external"
+        >
+          Issue Tracker
         </a>
         <a
           className="btn btn-xs-block btn-outline-dark"
@@ -31,21 +56,11 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
           Changelog
         </a>
       </p>
-
-      <p>LWJGL's issue tracker is also hosted on Github.</p>
-      <a
-        className="btn btn-xs-block btn-outline-dark"
-        href="https://github.com/LWJGL/lwjgl3/issues"
-        rel="noopener external"
-      >
-        Issue Tracker
-      </a>
     </section>
 
-    <hr />
-
     <section className="container pt-4">
-      <h1 className="pb-4">Build Status</h1>
+      <h1 className="font-weight-bold">Build Status</h1>
+      <hr />
       <div className="row">
         <div className="col-lg-4">
           <h2>LWJGL</h2>
@@ -271,7 +286,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
         </div>
       </div>
     </section>
-  </PageView>
+  </>
 );
 
 export default SourceRoute;

@@ -2,6 +2,7 @@ import { useRef, useEffect } from 'react';
 import { css, keyframes } from '@emotion/css';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';
+import debounce from 'lodash-es/debounce';
 // import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 declare const THREE: any;
 
@@ -20,22 +21,22 @@ const cssCanvas = css`
   animation: ${cssFadeInCanvas} 2s ease 0.5s forwards;
 `;
 
-export default function HomeCanvas() {
+const HomeCanvas: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } = THREE;
 
-    function resizeCanvas() {
+    const resizeCanvas = debounce(() => {
       const canvas = canvasRef.current;
-      if (canvas !== null && canvas.parentElement !== null) {
-        const winW = canvas.parentElement.offsetWidth;
-        const winH = canvas.parentElement.offsetHeight;
+      if (canvas !== null) {
+        const winW = document.body.scrollWidth;
+        const winH = window.innerHeight;
         camera.aspect = winW / winH;
         camera.updateProjectionMatrix();
         renderer.setSize(winW, winH, false);
       }
-    }
+    }, 360);
 
     function animate() {
       rafId = requestAnimationFrame(animate);
@@ -67,7 +68,7 @@ export default function HomeCanvas() {
     }
 
     const canvas = canvasRef.current;
-    if (canvas === null || canvas.parentElement === null) {
+    if (canvas === null) {
       return;
     }
 
@@ -79,8 +80,9 @@ export default function HomeCanvas() {
       return;
     }
 
-    const winW = canvas.parentElement.offsetWidth;
-    const winH = canvas.parentElement.offsetHeight;
+    const winW = document.body.scrollWidth;
+    const winH = window.innerHeight;
+
     let io: IntersectionObserver | null = null;
     let rafId: number | null = null;
 
@@ -139,4 +141,6 @@ export default function HomeCanvas() {
   }, []);
 
   return <canvas className={cssCanvas} ref={canvasRef} />;
-}
+};
+
+export default HomeCanvas;
