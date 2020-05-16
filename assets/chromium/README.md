@@ -5,7 +5,12 @@ https://github.com/puppeteer/puppeteer/blob/master/docs/troubleshooting.md#runni
 # Build
 
 ```bash
+# update to latest node
+docker pull node:slim
+# build
 docker build --rm -t headless-chrome .
+# force rebnuild
+docker build --rm --no-cache -t headless-chrome .
 ```
 
 # Run
