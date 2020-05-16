@@ -9,7 +9,7 @@ import { PageBlank } from '../components/routes/PageBlank';
 import { RouterConfig } from '../routes';
 
 export const Layout: React.FC<{ children?: never }> = () => (
-  <BrowserRouter timeout={2000}>
+  <BrowserRouter>
     {/* <NavProgress /> */}
     <Header />
     <main>
