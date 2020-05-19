@@ -121,6 +121,7 @@ const CssLogoContainer = css`
     opacity: 0;
     animation: anim-reset-opacity-transform 1s ease forwards;
     width: 140px;
+    width: max(140px, min(16vw, 220px)); /* Safari */
     width: clamp(140px, 16vw, 220px);
     margin-bottom: 1rem;
     @media (min-aspect-ratio: 4/2) {
@@ -140,6 +141,7 @@ const CssHeroContent = css`
   font-weight: 300;
   line-height: 1.2;
   font-size: 2rem;
+  font-size: max(1.2rem, min(3.5vw, 2.1rem));
   font-size: clamp(1.2rem, 3.5vw, 2.1rem);
 
   a {
@@ -148,6 +150,7 @@ const CssHeroContent = css`
 
   h1 {
     font-size: 4rem;
+    font-size: max(4rem, min(15vw, 10rem));
     font-size: clamp(4rem, 15vw, 10rem);
   }
 `;
