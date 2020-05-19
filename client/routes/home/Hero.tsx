@@ -122,6 +122,7 @@ const CssLogoContainer = css`
     animation: anim-reset-opacity-transform 1s ease forwards;
     width: 140px;
     width: clamp(140px, 16vw, 220px);
+    margin-bottom: 1rem;
     @media (min-aspect-ratio: 4/2) {
       display: none;
     }

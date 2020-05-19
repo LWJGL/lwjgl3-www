@@ -9,7 +9,7 @@ export const MainMenu: React.FC<Props> = ({ onClick, className }) => (
   <div role="navigation" aria-label="Main Menu" className={className}>
     <ul className="list-unstyled m-0">
       <li>
-        <NavLink onClick={onClick} to="/">
+        <NavLink onClick={onClick} to="/" end>
           HOME
         </NavLink>
       </li>

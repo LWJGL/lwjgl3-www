@@ -8,7 +8,6 @@ function $R(fn: () => Promise<any>) {
     return lazy(fn);
   } else {
     // ! If we don't wrap the route, all chunks are loaded on mount
-    // TODO: Report this since it's probably a bug
     const Element = lazy(fn);
     function AsyncRoute() {
       return <Element />;
