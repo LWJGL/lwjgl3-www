@@ -83,25 +83,11 @@ const CssHeroBox = css`
   /* min-height: -webkit-fill-available; */
 `;
 
-const HeroBox: React.FC = ({ children }) => {
-  const [height, setHeight] = useState(window.innerHeight);
-
-  useEffect(() => {
-    const resizeHnd = debounce(() => {
-      setHeight(window.innerHeight);
-    }, 360);
-    window.addEventListener('resize', resizeHnd);
-    return () => {
-      window.removeEventListener('resize', resizeHnd);
-    };
-  }, [setHeight]);
-
-  return (
-    <section className={CssHeroBox} style={{ height }}>
-      {children}
-    </section>
-  );
-};
+const HeroBox: React.FC<{ height: number }> = ({ children, height }) => (
+  <section className={CssHeroBox} style={{ height }}>
+    {children}
+  </section>
+);
 
 const CssLogoContainer = css`
   position: absolute;
@@ -166,7 +152,7 @@ enum UseWebGL {
 
 let useWebGL = UseWebGL.Unknown;
 
-const CanvasContainer: React.FC = () => {
+const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, height }) => {
   const [renderWebGL, toggleGL] = useState(useWebGL === UseWebGL.On);
 
   useEffect(() => {
@@ -226,15 +212,31 @@ const CanvasContainer: React.FC = () => {
 
   return renderWebGL ? (
     <Suspense fallback={null}>
-      <Canvas />
+      <Canvas width={width} height={height} />
     </Suspense>
   ) : null;
 };
 
+function getCanvasDimensions() {
+  return [document.body.scrollWidth, window.innerHeight];
+}
+
 export function HomeHero() {
+  const [[width, height], setWH] = useState(getCanvasDimensions);
+
+  useEffect(() => {
+    const resizeHnd = debounce(() => {
+      setWH(getCanvasDimensions);
+    }, 120);
+    window.addEventListener('resize', resizeHnd);
+    return () => {
+      window.removeEventListener('resize', resizeHnd);
+    };
+  }, [setWH]);
+
   return (
-    <HeroBox>
-      <CanvasContainer />
+    <HeroBox height={height}>
+      <CanvasContainer width={width} height={height} />
       <LogoContainer>
         {Logo}
         <HeroContent>
