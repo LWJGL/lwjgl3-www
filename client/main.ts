@@ -9,8 +9,10 @@ if (FLAG_CSSMODULES) {
 const bootPromises = [];
 
 if (!('fetch' in window)) {
-  //@ts-ignore
-  bootPromises.push(import(/* webpackChunkName: "vendor-polyfill-fetch" */ 'whatwg-fetch'));
+  bootPromises.push(
+    //@ts-ignore
+    import(/* webpackChunkName: "vendor-polyfill-fetch" */ 'whatwg-fetch')
+  );
 }
 
 if (bootPromises.length) {
