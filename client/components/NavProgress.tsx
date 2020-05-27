@@ -133,7 +133,6 @@ function reset() {
 
 export function NavProgress() {
   const isPending: boolean = useLocationPending();
-  console.log(isPending);
 
   useEffect(() => {
     if (isPending) {

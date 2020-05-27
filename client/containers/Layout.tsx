@@ -5,12 +5,12 @@ import { Footer } from './Footer';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { PageError } from '../components/routes/PageError';
 import { PageBlank } from '../components/routes/PageBlank';
-// import { NavProgress } from '../components/NavProgress';
+import { NavProgress } from '../components/NavProgress';
 import { RouterConfig } from '../routes';
 
 export const Layout: React.FC<{ children?: never }> = () => (
   <BrowserRouter>
-    {/* <NavProgress /> */}
+    <NavProgress />
     <Header />
     <main>
       <ErrorBoundary fallback={PageError}>
