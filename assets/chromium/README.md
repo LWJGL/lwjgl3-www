@@ -9,7 +9,7 @@ https://github.com/puppeteer/puppeteer/blob/master/docs/troubleshooting.md#runni
 docker pull node:slim
 # build
 docker build --rm -t headless-chrome .
-# force rebnuild
+# force rebuild
 docker build --rm --no-cache -t headless-chrome .
 ```
 

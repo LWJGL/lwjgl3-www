@@ -11,7 +11,7 @@ const SOURCEMAP = argv.sourcemap !== undefined;
 const ENABLE_PROFILING = argv.profiling !== undefined;
 
 const env = {
-  // ANALYTICS_TRACKING_ID: JSON.stringify(globals.google_analytics_id),
+  ANALYTICS_TRACKING_ID: JSON.stringify('UA-83518-1'),
   FLAG_PRODUCTION: String(PRODUCTION),
   FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
   FLAG_HMR: String(HMR),

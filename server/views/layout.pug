@@ -15,7 +15,7 @@ html(lang="en-US", dir="ltr")
     link(rel="manifest", href="/manifest.webmanifest")
     if ( css !== undefined )
       link(rel="stylesheet", href=`/css/${css}`, media="print", onload="this.media='all'")
-    //- script.
-      window.dataLayer=[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','#{ga}',{send_page_view:false,transport_type:'beacon',anonymize_ip:true});
+    script.
+      window.dataLayer=[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','UA-83518-1',{send_page_view:false,transport_type:'beacon',anonymize_ip:true});
   body
     block content
