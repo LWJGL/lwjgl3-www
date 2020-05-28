@@ -41,7 +41,10 @@ const Content: React.FC<{ children?: never }> = () => (
       <p>
         You should now be ready to develop and launch an LWJGL application. Following is a simple example that utilizes
         GLFW to create a window and clear the background color to red, using OpenGL.
-        MacOSX users should start their application passing "-XstartOnFirstThread" as a VM option. 
+      </p>
+      
+      <p className="alert alert-info" role="alert">
+        MacOS users should start their application passing <em>"-XstartOnFirstThread"</em> as a VM option.
       </p>
     </section>
 
