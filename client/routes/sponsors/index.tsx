@@ -24,7 +24,6 @@ const StaticContent = () => (
         <div className="col-md-9 text-center">
           <h1>Silver Sponsors:</h1>
           <p>
-            {' '}
             <a href="https://moneyarcher.com/se/" rel="sponsored noopener" target="_blank">
               <LazyImg
                 className="m-3"
@@ -33,6 +32,9 @@ const StaticContent = () => (
                 src="/img/sponsors/money-archer-300x74.jpg"
                 alt="MoneyArcher"
               />
+            </a>
+            <a href="https://ats.io/" rel="sponsored noopener" target="_blank">
+              <LazyImg className="m-3" width={64} height={64} src="/img/sponsors/ats.io-1024x1024.png" alt="ATS.io" />
             </a>
           </p>
 

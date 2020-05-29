@@ -194,6 +194,15 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             alt="Best South African Online Gambling Guide"
           />
         </a>
+        <a href="https://www.parhaatnettikasinot.com/" rel="sponsored noopener" target="_blank">
+          <LazyImg
+            className="m-3"
+            width={330.8}
+            height={46.4}
+            src="/img/sponsors/parhaat-nettikasinot.svg"
+            alt="parhaat nettikasinot"
+          />
+        </a>
       </div>
     </section>
   </div>
