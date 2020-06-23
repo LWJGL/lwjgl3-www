@@ -29,17 +29,22 @@ export function Browser({ path: targetPath }: Props) {
   return (
     <div className="table-responsive-md mt-sm-4">
       <table className="table mb-0">
-        <thead className="thead-light">
+        <thead className="table-dark">
           <tr>
-            <th colSpan={2}>
+            <th>
               <Icon name="fa/solid/cloud" /> &nbsp;
-              <Link to={'/browse'}>lwjgl</Link>
+              <Link className="text-decoration-none link-light" to={'/browse'}>
+                lwjgl
+              </Link>
               {path.length
                 ? path.split('/').map((it, i, arr) => {
                     const subpath = arr.slice(0, i + 1).join('/');
                     return (
                       <Fragment key={subpath}>
-                        /<Link to={`/browse/${subpath}`}>{it}</Link>
+                        /
+                        <Link className="text-decoration-none link-light" to={`/browse/${subpath}`}>
+                          {it}
+                        </Link>
                       </Fragment>
                     );
                   })
@@ -50,7 +55,9 @@ export function Browser({ path: targetPath }: Props) {
         <tbody>
           {path !== '' && (
             <FolderWrap>
-              <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
+              <Link className="text-decoration-none" to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>
+                &hellip;
+              </Link>
             </FolderWrap>
           )}
           <ErrorBoundary fallback={FolderError}>

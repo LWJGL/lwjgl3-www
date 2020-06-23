@@ -8,25 +8,39 @@ const FOOTER = (
           <h1>About</h1>
           <ul className="list-unstyled">
             <li>
-              <Link to="/">Home</Link>
+              <Link className="link-light" to="/">
+                Home
+              </Link>
             </li>
             <li>
-              <Link to="/guide">Get Started</Link>
+              <Link className="link-light" to="/guide">
+                Get Started
+              </Link>
             </li>
             <li>
-              <Link to="/download">Download</Link>
+              <Link className="link-light" to="/download">
+                Download
+              </Link>
             </li>
             <li>
-              <Link to="/customize">Customize</Link>
+              <Link className="link-light" to="/customize">
+                Customize
+              </Link>
             </li>
             <li>
-              <Link to="/source">Source & Build Status</Link>
+              <Link className="link-light" to="/source">
+                Source & Build Status
+              </Link>
             </li>
             <li>
-              <Link to="/frameworks">Frameworks</Link>
+              <Link className="link-light" to="/frameworks">
+                Frameworks
+              </Link>
             </li>
             <li>
-              <Link to="/sponsors">Sponsors & Contributors</Link>
+              <Link className="link-light" to="/sponsors">
+                Sponsors & Contributors
+              </Link>
             </li>
           </ul>
         </div>
@@ -34,32 +48,36 @@ const FOOTER = (
           <h1>News</h1>
           <ul className="list-unstyled">
             <li>
-              <a href="https://blog.lwjgl.org/" rel="noopener external">
+              <a className="link-light" href="https://blog.lwjgl.org/" rel="noopener external">
                 Blog
               </a>
             </li>
             <li>
-              <a href="http://forum.lwjgl.org/" rel="noopener external">
+              <a className="link-light" href="http://forum.lwjgl.org/" rel="noopener external">
                 Forum
               </a>
             </li>
             <li>
-              <a href="https://twitter.com/lwjgl" rel="noopener external">
+              <a className="link-light" href="https://twitter.com/lwjgl" rel="noopener external">
                 Twitter
               </a>
             </li>
             <li>
-              <a href="https://github.com/LWJGL/lwjgl3/commits/master" rel="noopener external">
+              <a className="link-light" href="https://github.com/LWJGL/lwjgl3/commits/master" rel="noopener external">
                 Changelog
               </a>
             </li>
             <li>
-              <a href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md" rel="noopener external">
+              <a
+                className="link-light"
+                href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md"
+                rel="noopener external"
+              >
                 Release notes
               </a>
             </li>
             <li>
-              <a href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
+              <a className="link-light" href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
                 Donate
               </a>
             </li>
@@ -69,32 +87,34 @@ const FOOTER = (
           <h1>Developers</h1>
           <ul className="list-unstyled">
             <li>
-              <a href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
+              <a className="link-light" href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
                 GitHub
               </a>
             </li>
             <li>
-              <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki" rel="noopener external">
+              <a className="link-light" href="https://github.com/LWJGL/lwjgl3-wiki/wiki" rel="noopener external">
                 Wiki
               </a>
             </li>
             <li>
-              <a href="https://github.com/LWJGL/lwjgl3/issues" rel="noopener external">
+              <a className="link-light" href="https://github.com/LWJGL/lwjgl3/issues" rel="noopener external">
                 Issues
               </a>
             </li>
             <li>
-              <a href="http://javadoc.lwjgl.org/" rel="noopener external">
+              <a className="link-light" href="http://javadoc.lwjgl.org/" rel="noopener external">
                 JavaDoc
               </a>
             </li>
             <li>
-              <a href="http://slack.lwjgl.org/" rel="noopener external">
+              <a className="link-light" href="http://slack.lwjgl.org/" rel="noopener external">
                 Slack
               </a>
             </li>
             <li>
-              <Link to="/license">License</Link>
+              <Link className="link-light" to="/license">
+                License
+              </Link>
             </li>
           </ul>
         </div>
@@ -105,7 +125,10 @@ const FOOTER = (
         LW<b>JGL</b> 3
       </p>
       <p>
-        Licensed under <Link to="/license">BSD</Link>
+        Licensed under{' '}
+        <Link className="link-light" to="/license">
+          BSD
+        </Link>
       </p>
     </section>
   </footer>

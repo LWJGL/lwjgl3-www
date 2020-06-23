@@ -1,5 +1,5 @@
 import { PageView } from '~/components/routes/PageView';
-import { Link } from 'react-router-dom';
+import { LinkButton } from '~/components/LinkButton';
 import { CustomizePreload, BrowsePreload } from '../';
 import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/brands/github';
@@ -28,7 +28,7 @@ const DownloadLayout = () => {
             <p>All official releases are available for download from GitHub:</p>
             <p>
               <a
-                className="btn btn-xs-block btn-lg btn-dark"
+                className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-lg btn-dark"
                 href="https://github.com/LWJGL/lwjgl3/releases"
                 target="_blank"
                 rel="noopener external"
@@ -40,17 +40,17 @@ const DownloadLayout = () => {
           <div className="col-md-12 col-lg-4" onMouseOver={CustomizePreload}>
             <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
             <p>
-              <Link className="btn btn-xs-block btn-lg btn-dark" to="/customize">
+              <LinkButton className="btn-lg btn-dark" to="/customize">
                 <Icon name="fa/solid/check-square" /> Customize LWJGL 3
-              </Link>
+              </LinkButton>
             </p>
           </div>
           <div className="col-md-12 col-lg-4" onMouseOver={BrowsePreload}>
             <p>Or you can browse and download individual LWJGL artifacts:</p>
             <p>
-              <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/browse">
+              <LinkButton className="btn-lg btn-outline-dark" to="/browse">
                 <Icon name="fa/solid/folder" /> Browse LWJGL files
-              </Link>
+              </LinkButton>
             </p>
           </div>
         </div>
@@ -61,12 +61,12 @@ const DownloadLayout = () => {
           <h3>Build from source?</h3>
           <p>Click below if you prefer to build from source:</p>
           <p>
-            <Link className="btn btn-xs-block btn-info" to="/source">
+            <LinkButton className="btn-info" to="/source">
               Source
-            </Link>
-            <Link className="btn btn-xs-block btn-info" to="/guide#build-instructions">
+            </LinkButton>
+            <LinkButton className="btn-info" to="/guide#build-instructions">
               Build instructions
-            </Link>
+            </LinkButton>
           </p>
         </section>
       </div>
@@ -84,10 +84,18 @@ const DownloadLayout = () => {
 
         <p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
         <p>
-          <a className="btn btn-xs-block btn-outline-primary" href="http://legacy.lwjgl.org/" rel="noopener external">
+          <a
+            className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-primary"
+            href="http://legacy.lwjgl.org/"
+            rel="noopener external"
+          >
             LWJGL 2 WEBSITE
           </a>
-          <a className="btn btn-xs-block btn-outline-primary" href="http://wiki.lwjgl.org/" rel="noopener external">
+          <a
+            className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-primary"
+            href="http://wiki.lwjgl.org/"
+            rel="noopener external"
+          >
             LWJGL 2 WIKI
           </a>
         </p>

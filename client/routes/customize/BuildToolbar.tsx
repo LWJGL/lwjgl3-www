@@ -47,9 +47,12 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     return (
       <div className="download-toolbar">
         <div className="container d-flex">
-          <div className="custom-file mx-2">
-            <input type="file" className="custom-file-input" accept=".json" onChange={handleFile} />
-            <label className="custom-file-label" />
+          <div className="form-file flex-grow-1">
+            <input type="file" id="config-file" className="form-file-input" accept=".json" onChange={handleFile} />
+            <label className="form-file-label" htmlFor="config-file">
+              <span className="form-file-text">Choose file...</span>
+              <span className="form-file-button">Browse</span>
+            </label>
           </div>
           <button className="btn btn-outline-light mx-2" onClick={toggleFileUI}>
             Cancel

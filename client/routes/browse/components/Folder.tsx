@@ -36,7 +36,7 @@ interface Props {
 export const FolderWrap: React.FC<{}> = ({ children }) => {
   return (
     <tr>
-      <th className={FolderTH} scope="row" colSpan={2}>
+      <th className={FolderTH} scope="row">
         {children}
       </th>
     </tr>
@@ -49,12 +49,12 @@ export const Folder: React.FC<Props> = ({ path, loading = false }) => {
 
   return (
     <FolderWrap>
-      <Link to={path}>
+      <Link className="text-decoration-none" to={path}>
         <Icon name="fa/solid/folder" /> {name}
         {loading && (
           <div className="d-inline-block">
             <div className="spinner-grow spinner-grow-sm ml-1" role="status">
-              <span className="sr-only">Loading...</span>
+              <span className="sr-only">Loading&hellip;</span>
             </div>
           </div>
         )}
@@ -67,7 +67,7 @@ export const SpinnerRow: React.FC = () => (
   <tr>
     <td>
       <div className="spinner-grow" role="status">
-        <span className="sr-only">Loading...</span>
+        <span className="sr-only">Loading&hellip;</span>
       </div>
     </td>
   </tr>
@@ -76,9 +76,7 @@ export const SpinnerRow: React.FC = () => (
 export function FolderError({ error }: { error: Error }) {
   return (
     <tr>
-      <th className="text-danger" colSpan={2}>
-        {error.message}
-      </th>
+      <th className="text-danger">{error.message}</th>
     </tr>
   );
 }

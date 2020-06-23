@@ -1,6 +1,7 @@
 import { css, cx } from '@emotion/css';
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';
+import { LinkButton } from '~/components/LinkButton';
 import { HashLinkTarget } from '~/components/HashLinkTarget';
 import { LazyImg } from '~/components/LazyImg';
 import { HomeHero } from './Hero';
@@ -80,15 +81,15 @@ const StaticContent = () => (
           </p>
 
           <p className="text-center pt-1">
-            <Link className="btn btn-xs-block btn-lg btn-outline-dark" to="/download">
+            <LinkButton className="btn-lg btn-outline-dark" to="/download">
               DOWNLOAD
-            </Link>
-            <Link className="btn btn-xs-block btn-lg btn-outline-success" to="/guide">
+            </LinkButton>
+            <LinkButton className="btn-lg btn-outline-success" to="/guide">
               GET STARTED
-            </Link>
-            <Link className="btn btn-xs-block btn-lg btn-outline-info" to="/source">
+            </LinkButton>
+            <LinkButton className="btn-lg btn-outline-info" to="/source">
               SOURCE
-            </Link>
+            </LinkButton>
           </p>
         </div>
       </div>
@@ -335,7 +336,7 @@ const StaticContent = () => (
 
     <section className="container pt-5 pb-3">
       <div className="row justify-content-center">
-        <div className="col-md-9">
+        <div className="col-md-10">
           <h1>Looking for LWJGL 2?</h1>
           <p>
             LW
@@ -361,7 +362,7 @@ const StaticContent = () => (
 
           <p>
             <a
-              className="btn btn-xs-block btn-outline-dark"
+              className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-dark"
               href="http://legacy.lwjgl.org/"
               target="_blank"
               rel="noopener external"
@@ -369,7 +370,7 @@ const StaticContent = () => (
               LWJGL 2 WEBSITE
             </a>
             <a
-              className="btn btn-xs-block btn-outline-dark"
+              className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-dark"
               href="http://wiki.lwjgl.org/"
               target="_blank"
               rel="noopener external"

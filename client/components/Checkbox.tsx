@@ -26,16 +26,16 @@ export const Checkbox: React.FC<Props> = ({
   const htmlForId = useRef(uniqueId('checkbox'));
 
   return hidden === true ? null : (
-    <div className={cx('custom-control', toggle === true ? 'custom-switch' : 'custom-checkbox')}>
+    <div className={cx('form-check', { 'form-switch': toggle })}>
       <input
         type="checkbox"
         id={htmlForId.current}
-        className="custom-control-input"
+        className="form-check-input"
         disabled={disabled}
         checked={checked}
         onChange={() => onChange(value)}
       />
-      <label className="custom-control-label" htmlFor={htmlForId.current}>
+      <label className="form-check-label" htmlFor={htmlForId.current}>
         {icon}
         {icon != null ? ' ' : null}
         {label}

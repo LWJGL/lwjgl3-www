@@ -13,16 +13,16 @@ export const Radio = ({ label, value, checked = false, onChange, disabled = fals
   const htmlForId = useRef(uniqueId('radio'));
 
   return (
-    <div className="custom-control custom-radio">
+    <div className="form-check">
       <input
         type="radio"
         id={htmlForId.current}
-        className="custom-control-input"
+        className="form-check-input"
         disabled={disabled}
         checked={checked}
         onChange={() => onChange(value)}
       />
-      <label className="custom-control-label" htmlFor={htmlForId.current}>
+      <label className="form-check-label" htmlFor={htmlForId.current}>
         {label}
       </label>
     </div>

@@ -1,0 +1,17 @@
+.form-check-label {
+  // Prevent label selection (happens when clicking checkboxes very fast)
+  user-select: none;
+}
+
+// Animate programmatic value change
+.form-check-input:not(:focus) {
+  transition: background-color 0.15s ease-in-out, background-position 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+
+// Force-enable custom-switch transition and adjust margins to align with checkboxes
+.form-switch {
+  .form-check-input {
+    transition: background-position 0.15s ease-in-out;
+  }
+}

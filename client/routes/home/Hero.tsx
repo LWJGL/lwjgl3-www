@@ -243,7 +243,7 @@ export function HomeHero() {
           <h1>
             LW<b>JGL</b>
           </h1>
-          <Link to="/#learn-more" className="d-block">
+          <Link to="/#learn-more" className="d-block link-light text-decoration-none">
             Lightweight Java Game Library
             <br />
             <Icon className="mt-2" name="fa/regular/chevron-down" />

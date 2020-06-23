@@ -31,25 +31,29 @@ const StaticContent = () => (
 
       <p>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</p>
       <p>
-        <a className="btn btn-xs-block btn-success" href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
+        <a
+          className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-success"
+          href="https://github.com/LWJGL/lwjgl3"
+          rel="noopener external"
+        >
           <Icon name="fa/brands/github" /> Github Repository
         </a>
         <a
-          className="btn btn-xs-block btn-outline-dark"
+          className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-dark"
           href="https://github.com/LWJGL/lwjgl3/issues"
           rel="noopener external"
         >
           Issue Tracker
         </a>
         <a
-          className="btn btn-xs-block btn-outline-dark"
+          className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-dark"
           href="https://github.com/LWJGL/lwjgl3/releases"
           rel="noopener external"
         >
           Release notes
         </a>
         <a
-          className="btn btn-xs-block btn-outline-dark"
+          className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-dark"
           href="https://github.com/LWJGL/lwjgl3/commits/master"
           rel="noopener external"
         >
