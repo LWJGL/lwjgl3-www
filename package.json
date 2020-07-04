@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aws-sdk": "2.708.0",
+    "aws-sdk": "2.709.0",
     "body-parser": "1.19.0",
     "chalk": "4.1.0",
     "compression": "1.7.4",
@@ -26,7 +26,7 @@
     "request": "2.88.2",
     "request-promise-native": "1.0.8",
     "serve-favicon": "2.5.0",
-    "yargs": "15.3.1"
+    "yargs": "15.4.0"
   },
   "devDependencies": {
     "@babel/core": "7.10.4",
@@ -55,7 +55,7 @@
     "core-js": "3.6.5",
     "css-loader": "3.6.0",
     "cssnano": "4.1.10",
-    "eslint": "7.3.1",
+    "eslint": "7.4.0",
     "eslint-plugin-react": "7.20.3",
     "eslint-plugin-react-hooks": "4.0.5",
     "focus-trap": "5.1.0",
@@ -74,11 +74,11 @@
     "react-fast-compare": "3.2.0",
     "react-refresh": "0.8.3",
     "react-router-dom": "0.0.0-experimental-ffd8c7d0",
-    "sass-loader": "8.0.2",
+    "sass-loader": "9.0.1",
     "scroll-into-view-if-needed": "2.2.25",
     "style-loader": "1.2.1",
     "terser": "4.8.0",
-    "typescript": "3.9.5",
+    "typescript": "3.9.6",
     "typescript-styled-plugin": "0.15.0",
     "webpack": "5.0.0-beta.20",
     "webpack-cli": "4.0.0-beta.8",
