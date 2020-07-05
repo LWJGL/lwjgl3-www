@@ -217,7 +217,7 @@ const StaticContent = () => (
             </h2>
             <p>
               Everything you need to create exciting 2D and 3D graphics. LWJGL supports all OpenGL versions (including
-              the latest 4.5 specification), all ARB, Khronos, and OS-specific extensions ever released and dozens of
+              the latest 4.6 specification), all ARB, Khronos, and OS-specific extensions ever released and dozens of
               popular vendor-specific extensions. If your favorite extension is missing,{' '}
               <a href="https://github.com/LWJGL/lwjgl3/issues" rel="noopener external">
                 ask for it
