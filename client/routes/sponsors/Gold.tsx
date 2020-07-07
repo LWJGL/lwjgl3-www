@@ -5,18 +5,6 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
     <section className="container py-5 text-center">
       <h1>Our Gold Sponsors:</h1>
       <div className="d-flex flex-column flex-wrap flex-sm-row justify-content-center align-items-center">
-        <a href="https://loanscouter.com/" rel="noopener" target="_blank">
-          <LazyImg
-            className="m-3"
-            width={120}
-            height={48}
-            src="/img/sponsors/loanscouter-white.svg"
-            alt="Loan Scouter"
-          />
-        </a>
-        <a href="https://fair-laan.se/" rel="noopener" target="_blank">
-          <LazyImg className="m-3" width={190} height={42} src="/img/sponsors/fairplan.svg" alt="FairPlan" />
-        </a>
         <a
           href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
           rel="sponsored noopener"
@@ -37,19 +25,6 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
           target="_blank"
         >
           <LazyImg className="m-3" width={50} height={50} src="/img/sponsors/vpnranks-white.png" alt="VPNRanks.com" />
-        </a>
-        <a
-          href="https://vpngorilla.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-          rel="sponsored noopener"
-          target="_blank"
-        >
-          <LazyImg
-            className="m-3"
-            width={169}
-            height={22}
-            src="/img/sponsors/vpn-gorilla-white-169x22.png"
-            alt="VPNGorilla.com"
-          />
         </a>
         <a
           href="https://www.casinotop.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
@@ -94,15 +69,6 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             alt="Smålån uten sikkerhet"
           />
         </a>
-        <a href="https://emailmarketingservices.io/" rel="noopener" target="_blank">
-          <LazyImg
-            className="m-3"
-            width={354 / 3}
-            height={190 / 3}
-            src="/img/sponsors/emailmarketingservices-354x190.png"
-            alt="Smålån uten sikkerhet"
-          />
-        </a>
         <a href="http://nettikasinot.org/" rel="sponsored noopener" target="_blank">
           <LazyImg
             className="m-3"
@@ -137,41 +103,6 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             height={152 / 3}
             src="/img/sponsors/pelisivut-620x152.png"
             alt="PELISIVUT"
-          />
-        </a>
-        <a href="https://alltimelist.com/" rel="sponsored noopener" target="_blank">
-          <LazyImg
-            className="m-3"
-            width={140}
-            height={29}
-            src="/img/sponsors/alltimelist-140x29.png"
-            alt="All Time List"
-          />
-        </a>
-        <a
-          href="https://medium.com/@niksundin/best-web-design-companies-1872e445775f"
-          rel="sponsored noopener"
-          target="_blank"
-        >
-          <LazyImg
-            className="m-3"
-            width={64}
-            height={64}
-            src="/img/sponsors/top-web-design-agencies-256x256.png"
-            alt="Top 5 Web Design Agencies in the World"
-          />
-        </a>
-        <a
-          href="https://uxplanet.org/top-ui-ux-design-agencies-user-experience-firms-8c54697e290"
-          rel="sponsored noopener"
-          target="_blank"
-        >
-          <LazyImg
-            className="m-3"
-            width={64}
-            height={64}
-            src="/img/sponsors/top5-uiux-design-agencies-256x256.png"
-            alt="Top 5 UI/UX Design Agencies in the World"
           />
         </a>
         <a href="https://casinohex.se/online-casinon/" rel="sponsored noopener" target="_blank">

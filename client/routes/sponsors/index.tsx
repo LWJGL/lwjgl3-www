@@ -24,17 +24,17 @@ const StaticContent = () => (
         <div className="col-md-9 text-center">
           <h1>Silver Sponsors:</h1>
           <p>
-            <a href="https://moneyarcher.com/se/" rel="sponsored noopener" target="_blank">
-              <LazyImg
-                className="m-3"
-                width={300 / 3}
-                height={74 / 3}
-                src="/img/sponsors/money-archer-300x74.jpg"
-                alt="MoneyArcher"
-              />
-            </a>
             <a href="https://ats.io/" rel="sponsored noopener" target="_blank">
               <LazyImg className="m-3" width={64} height={64} src="/img/sponsors/ats.io-1024x1024.png" alt="ATS.io" />
+            </a>
+            <a href="https://nettikasinolista.com/" rel="sponsored noopener" target="_blank">
+              <LazyImg
+                className="m-3"
+                width={150}
+                height={40}
+                src="/img/sponsors/nettikasinolista.svg"
+                alt="Nettikasinolista"
+              />
             </a>
           </p>
 
