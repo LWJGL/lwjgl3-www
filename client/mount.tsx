@@ -6,6 +6,7 @@ export function mount(): void {
   const rootEl = document.getElementById('app-root');
   if (rootEl !== null) {
     rootEl.innerHTML = '';
-    unstable_createRoot(rootEl).render(<App />);
+    const root = unstable_createRoot(rootEl);
+    root.render(<App />);
   }
 }
