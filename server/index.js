@@ -12,7 +12,6 @@ import request from 'request-promise-native';
 import { fileExists } from './fileExists.js';
 import { subnets } from './cloudfront-subnets.js';
 import { chunkMap } from './chunkMap.js';
-import { helmetConfig } from './helmetConfig.js';
 
 import routeBin from './bin.js';
 import routeBuild from './build.js';
@@ -117,7 +116,7 @@ if (app.locals.development || argv.s3proxy) {
 }
 
 // ------------------------------------------------------------------------------
-// Routing
+// Static Routing
 // ------------------------------------------------------------------------------
 
 // Redirect requests from http://lwjgl.org/* to https://www.lwjgl.org/
@@ -185,14 +184,67 @@ if (app.locals.development) {
   );
 }
 
-let applyHelmet;
+// ------------------------------------------------------------------------------
+// Helmet
+// ------------------------------------------------------------------------------
+const referrerPolicy = {
+  policy: 'no-referrer-when-downgrade',
+};
 
+const frameguard = {
+  action: 'sameorigin',
+};
+
+const hsts = {
+  maxAge: 365 * 24 * 60 * 60,
+  includeSubDomains: false,
+  // TODO: includeSubDomains must be true for preloading to be approved
+  preload: false,
+};
+
+/*
 app.use((req, res, next) => {
-  if (!applyHelmet) {
-    applyHelmet = helmet(helmetConfig(app.locals.production, req.hostname === 'www.lwjgl.org'));
+  if (!req.accepts('html')) {
+    next();
+    return;
   }
-  applyHelmet(req, res, next);
+
+  app.locals.nonce = crypto.randomBytes(16).toString('base64');
+
+  // https://csp-evaluator.withgoogle.com/
+  helmet.contentSecurityPolicy({
+    directives: {
+      // defaultSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'unpkg.com'],
+      defaultSrc: ["'unsafe-eval'", `'nonce-${app.locals.nonce}'`, "'strict-dynamic'"],
+      blockAllMixedContent: [],
+      upgradeInsecureRequests: [],
+      // requireTrustedTypesFor: ["'script'"],
+      frameSrc: ['*'],
+      imgSrc: ['*', 'data:'],
+    },
+  })(req, res, next);
 });
+*/
+// app.use(helmet.dnsPrefetchControl());
+// app.use(helmet.expectCt());
+app.use(helmet.frameguard(frameguard));
+// app.use(helmet.hidePoweredBy());
+if (app.locals.production) {
+  app.use((req, res, next) => {
+    if (req.hostname === 'www.lwjgl.org') {
+      helmet.hsts(hsts)(req, res, next);
+    }
+  });
+}
+// app.use(helmet.ieNoOpen());
+app.use(helmet.noSniff());
+// app.use(helmet.permittedCrossDomainPolicies());
+app.use(helmet.referrerPolicy(referrerPolicy));
+app.use(helmet.xssFilter());
+
+// ------------------------------------------------------------------------------
+// Dynamic Routing & Rewrites
+// ------------------------------------------------------------------------------
 
 // Redownloads and parses JS manifest from S3
 app.get('/dev/reload', (req, res) => {
