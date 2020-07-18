@@ -29,8 +29,8 @@ export function Browser({ path: targetPath }: Props) {
   return (
     <div className="table-responsive-md mt-sm-4">
       <table className="table mb-0">
-        <thead className="table-dark">
-          <tr>
+        <thead>
+          <tr className="table-dark">
             <th>
               <Icon name="fa/solid/cloud" /> &nbsp;
               <Link className="text-decoration-none link-light" to={'/browse'}>
