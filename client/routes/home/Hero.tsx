@@ -63,6 +63,14 @@ const Canvas = lazy(() => {
   return route;
 });
 
+/*
+  height: 100vh;
+  @supports (-webkit-touch-callout: none) {
+    body {
+      height: -webkit-fill-available;
+    }
+  }
+*/
 const CssHeroBox = css`
   margin-top: -4rem;
   background: linear-gradient(
@@ -78,9 +86,6 @@ const CssHeroBox = css`
     #000
   );
   width: 100%;
-  /* height: 100vh; */
-  /* safari mobile viewport bug fix */
-  /* min-height: -webkit-fill-available; */
 `;
 
 const HeroBox: React.FC<{ height: number }> = ({ children, height }) => (
