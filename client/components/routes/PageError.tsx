@@ -15,6 +15,11 @@ export function PageError({ error }: ErrorProps) {
       <section className="container pt-3 pb-5 text-light" style={{ marginBottom: '-1rem' }}>
         <h5>Error information</h5>
         <p className="text-warning">{error.message}</p>
+        {FLAG_PRODUCTION || error.stack == null ? null : (
+          <pre>
+            <code>{error.stack}</code>
+          </pre>
+        )}
       </section>
     </div>
   );

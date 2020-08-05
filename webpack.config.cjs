@@ -149,14 +149,8 @@ const buildConfiguration = () => {
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
 
       // React Refresh
-      const ReactRefreshPlugin = require('@webhotelier/webpack-fast-refresh');
-      config.plugins.push(new ReactRefreshPlugin());
-      config.entry.main.import.unshift(require.resolve('@webhotelier/webpack-fast-refresh/runtime.js'));
-      config.module.rules[0].use.push(require.resolve('@webhotelier/webpack-fast-refresh/loader.js'));
-
-      // react-error-overlay
-      const ErrorOverlayPlugin = require('@webhotelier/webpack-fast-refresh/error-overlay/index.js');
-      config.plugins.push(new ErrorOverlayPlugin());
+      const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+      config.plugins.push(new ReactRefreshWebpackPlugin({ overlay: false }));
     }
 
     // Enable CSS HMR instead of loading CSS pre-built from disk
