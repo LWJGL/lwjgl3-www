@@ -66,7 +66,7 @@ const buildConfiguration = () => {
           },
         }),
       ],
-      noEmitOnErrors: true,
+      emitOnErrors: false,
       moduleIds: PRODUCTION ? 'deterministic' : 'named',
       removeEmptyChunks: PRODUCTION,
       mergeDuplicateChunks: PRODUCTION,
