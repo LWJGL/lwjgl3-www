@@ -19,7 +19,6 @@ module.exports = {
         'lodash-es',
         'react',
         'react-dom',
-        'react-error-overlay',
         'react-fast-compare',
         'react-router',
         'react-router-dom',
