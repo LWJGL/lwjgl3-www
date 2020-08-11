@@ -31,17 +31,17 @@ export function useFullScreen(ref?: React.RefObject<HTMLElement>) {
       setFullScreen(isFullScreen());
     };
 
-    document.addEventListener('webkitfullscreenchange', handleChange, false);
-    document.addEventListener('mozfullscreenchange', handleChange, false);
-    document.addEventListener('msfullscreenchange', handleChange, false);
-    document.addEventListener('MSFullscreenChange', handleChange, false); // IE11
-    document.addEventListener('fullscreenchange', handleChange, false);
+    // document.addEventListener('webkitfullscreenchange', handleChange, false);
+    // document.addEventListener('mozfullscreenchange', handleChange, false);
+    // document.addEventListener('msfullscreenchange', handleChange, false);
+    // document.addEventListener('MSFullscreenChange', handleChange, false); // IE11
+    document.addEventListener('fullscreenchange', handleChange, true);
 
     return () => {
-      document.removeEventListener('webkitfullscreenchange', handleChange);
-      document.removeEventListener('mozfullscreenchange', handleChange);
-      document.removeEventListener('msfullscreenchange', handleChange);
-      document.removeEventListener('MSFullscreenChange', handleChange);
+      // document.removeEventListener('webkitfullscreenchange', handleChange);
+      // document.removeEventListener('mozfullscreenchange', handleChange);
+      // document.removeEventListener('msfullscreenchange', handleChange);
+      // document.removeEventListener('MSFullscreenChange', handleChange);
       document.removeEventListener('fullscreenchange', handleChange);
     };
   }, []);

@@ -5,9 +5,14 @@ export function useMouseOver(ref: React.RefObject<HTMLElement>) {
 
   useEffect(() => {
     const node = ref.current;
+
     if (node !== null) {
-      const handleMouseOver = () => setValue(true);
-      const handleMouseOut = () => setValue(false);
+      const handleMouseOver = () => {
+        setValue(true);
+      };
+      const handleMouseOut = () => {
+        setValue(false);
+      };
 
       node.addEventListener('mouseover', handleMouseOver);
       node.addEventListener('mouseout', handleMouseOut);

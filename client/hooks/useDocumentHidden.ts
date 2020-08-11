@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
-export function useDocumentVisibility() {
-  const [documentVisibility, setDocumentVisibility] = useState(document?.visibilityState ?? 'visible');
+export function useDocumentHidden() {
+  const [hidden, setHidden] = useState(document?.hidden ?? false);
 
   useEffect(() => {
     const handler = () => {
-      setDocumentVisibility(document.visibilityState);
+      setHidden(document.hidden);
     };
     document.addEventListener('visibilitychange', handler);
     return () => {
@@ -13,5 +13,5 @@ export function useDocumentVisibility() {
     };
   }, []);
 
-  return documentVisibility;
+  return hidden;
 }

@@ -24,13 +24,9 @@ export function useDeviceMotion() {
   const [motion, setMotion] = useState(getBlankEvent);
 
   useEffect(() => {
-    const handle = (deviceMotionEvent: DeviceMotionEvent) => {
-      setMotion(deviceMotionEvent);
-    };
-
-    window.addEventListener('devicemotion', handle);
+    window.addEventListener('devicemotion', setMotion, true);
     return () => {
-      window.removeEventListener('devicemotion', handle);
+      window.removeEventListener('devicemotion', setMotion);
     };
   }, []);
 

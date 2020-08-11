@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
 
-export function getOnlineStatus() {
-  return typeof navigator !== 'undefined' && typeof navigator.onLine === 'boolean' ? navigator.onLine : true;
-}
-
 export function useOnlineStatus() {
-  let [onlineStatus, setOnlineStatus] = useState(getOnlineStatus);
-  function goOnline() {
-    setOnlineStatus(true);
-  }
-  function goOffline() {
-    setOnlineStatus(false);
-  }
+  let [onlineStatus, setOnlineStatus] = useState(globalThis?.navigator?.onLine ?? true);
+
   useEffect(() => {
+    const goOnline = () => {
+      setOnlineStatus(true);
+    };
+    const goOffline = () => {
+      setOnlineStatus(false);
+    };
+
     window.addEventListener('online', goOnline);
     window.addEventListener('offline', goOffline);
     return () => {

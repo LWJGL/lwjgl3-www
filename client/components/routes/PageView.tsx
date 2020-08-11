@@ -72,7 +72,7 @@ export const PageView: React.FC<Props> = (props) => {
 };
 
 const PageViewMemo: React.FC<PropsMemo> = memo(function PageViewMemo({ location, title, description, children }) {
-  const { pathname, search, hash, key = 'root' } = location;
+  const { /*pathname, search,*/ hash, key = 'root' } = location;
 
   // Update document title
   useDocumentTitle(title);

@@ -33,7 +33,7 @@ export function useComponentSize(ref: React.RefObject<HTMLElement>) {
     }
 
     if (SUPPORTS_RESIZE_OBSERVER) {
-      let resizeObserver = new ResizeObserver(() => handleResize());
+      let resizeObserver = new ResizeObserver(handleResize);
       resizeObserver.observe(ref.current);
 
       return () => {

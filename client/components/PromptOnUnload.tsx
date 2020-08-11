@@ -20,7 +20,9 @@ export const PromptOnUnload: React.FC<Props> = ({ when: enabled, message = 'Are 
         event.returnValue = ''; // Chrome requires setting this.
       };
       window.addEventListener('beforeunload', handleBeforeUnload);
-      return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+      return () => {
+        window.removeEventListener('beforeunload', handleBeforeUnload);
+      };
     }
   }, [enabled]);
 
