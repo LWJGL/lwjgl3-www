@@ -1,6 +1,5 @@
 import { css } from '@emotion/css';
-import uniqueId from 'lodash-es/uniqueId';
-import { useRef } from 'react';
+import { useCallback, unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG } from '~/theme';
 import { lighten, setSaturation } from '~/theme/color';
 
@@ -72,19 +71,22 @@ interface Props {
 }
 
 export const Toggle = ({ label, value, onChange, checked = false, disabled = false, hidden = false }: Props) => {
-  const htmlForId = useRef(uniqueId('toggle'));
+  const htmlForId = useOpaqueIdentifier();
+  const onChangeHnd = useCallback(() => {
+    onChange(value);
+  }, [value, onChange]);
 
   return hidden === true ? null : (
     <div className="custom-control">
       <input
         className={`custom-control-input ${InputStyle}`}
         type="checkbox"
-        id={htmlForId.current}
+        id={htmlForId}
         checked={checked}
         disabled={disabled}
-        onChange={() => onChange(value)}
+        onChange={onChangeHnd}
       />
-      <label className={`custom-control-label ${LabelStyle}`} htmlFor={htmlForId.current}>
+      <label className={`custom-control-label ${LabelStyle}`} htmlFor={htmlForId}>
         {label}
       </label>
     </div>

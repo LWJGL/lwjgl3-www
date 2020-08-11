@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
 import { BreakpointContext } from '~/components/Breakpoint';
 import type { BuildStoreSnapshot } from './types';
 
@@ -17,8 +17,8 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     breakpoints: { sm },
   } = useContext(BreakpointContext);
   const [fileUI, setFileUI] = useState(false);
-
   const toggleFileUI = () => setFileUI(!fileUI);
+  const configFileLabel = useOpaqueIdentifier();
 
   if (fileUI) {
     const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,8 +48,8 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
       <div className="download-toolbar">
         <div className="container d-flex">
           <div className="form-file flex-grow-1">
-            <input type="file" id="config-file" className="form-file-input" accept=".json" onChange={handleFile} />
-            <label className="form-file-label" htmlFor="config-file">
+            <input type="file" id={configFileLabel} className="form-file-input" accept=".json" onChange={handleFile} />
+            <label className="form-file-label" htmlFor={configFileLabel}>
               <span className="form-file-text">Choose file...</span>
               <span className="form-file-button">Browse</span>
             </label>

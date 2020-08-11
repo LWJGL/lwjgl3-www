@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import uniqueId from 'lodash-es/uniqueId';
+import { useCallback, unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
 import { cx } from '@emotion/css';
 
 interface Props {
@@ -23,19 +22,22 @@ export const Checkbox: React.FC<Props> = ({
   toggle = false,
   icon,
 }) => {
-  const htmlForId = useRef(uniqueId('checkbox'));
+  const htmlForId = useOpaqueIdentifier();
+  const onChangeHnd = useCallback(() => {
+    onChange(value);
+  }, [value, onChange]);
 
   return hidden === true ? null : (
     <div className={cx('form-check', { 'form-switch': toggle })}>
       <input
         type="checkbox"
-        id={htmlForId.current}
+        id={htmlForId}
         className="form-check-input"
         disabled={disabled}
         checked={checked}
-        onChange={() => onChange(value)}
+        onChange={onChangeHnd}
       />
-      <label className="form-check-label" htmlFor={htmlForId.current}>
+      <label className="form-check-label" htmlFor={htmlForId}>
         {icon}
         {icon != null ? ' ' : null}
         {label}

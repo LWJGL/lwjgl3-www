@@ -1,5 +1,4 @@
-import { useRef } from 'react';
-import uniqueId from 'lodash-es/uniqueId';
+import { useCallback, unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
 
 interface Props {
   value: any;
@@ -10,19 +9,22 @@ interface Props {
 }
 
 export const Radio = ({ label, value, checked = false, onChange, disabled = false }: Props) => {
-  const htmlForId = useRef(uniqueId('radio'));
+  const htmlForId = useOpaqueIdentifier();
+  const onChangeHnd = useCallback(() => {
+    onChange(value);
+  }, [value, onChange]);
 
   return (
     <div className="form-check">
       <input
         type="radio"
-        id={htmlForId.current}
+        id={htmlForId}
         className="form-check-input"
         disabled={disabled}
         checked={checked}
-        onChange={() => onChange(value)}
+        onChange={onChangeHnd}
       />
-      <label className="form-check-label" htmlFor={htmlForId.current}>
+      <label className="form-check-label" htmlFor={htmlForId}>
         {label}
       </label>
     </div>
