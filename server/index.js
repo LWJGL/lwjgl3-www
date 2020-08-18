@@ -233,6 +233,8 @@ if (app.locals.production) {
   app.use((req, res, next) => {
     if (req.hostname === 'www.lwjgl.org') {
       helmet.hsts(hsts)(req, res, next);
+    } else {
+      next();
     }
   });
 }
