@@ -1,4 +1,4 @@
-import { useCallback, unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
+import { unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
 
 interface Props {
   value: any;
@@ -10,9 +10,6 @@ interface Props {
 
 export const Radio = ({ label, value, checked = false, onChange, disabled = false }: Props) => {
   const htmlForId = useOpaqueIdentifier();
-  const onChangeHnd = useCallback(() => {
-    onChange(value);
-  }, [value, onChange]);
 
   return (
     <div className="form-check">
@@ -22,7 +19,9 @@ export const Radio = ({ label, value, checked = false, onChange, disabled = fals
         className="form-check-input"
         disabled={disabled}
         checked={checked}
-        onChange={onChangeHnd}
+        onChange={() => {
+          onChange(value);
+        }}
       />
       <label className="form-check-label" htmlFor={htmlForId}>
         {label}

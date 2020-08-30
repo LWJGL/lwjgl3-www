@@ -1,4 +1,4 @@
-import { useCallback, unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
+import { unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
 import { cx } from '@emotion/css';
 
 interface Props {
@@ -23,9 +23,6 @@ export const Checkbox: React.FC<Props> = ({
   icon,
 }) => {
   const htmlForId = useOpaqueIdentifier();
-  const onChangeHnd = useCallback(() => {
-    onChange(value);
-  }, [value, onChange]);
 
   return hidden === true ? null : (
     <div className={cx('form-check', { 'form-switch': toggle })}>
@@ -35,7 +32,9 @@ export const Checkbox: React.FC<Props> = ({
         className="form-check-input"
         disabled={disabled}
         checked={checked}
-        onChange={onChangeHnd}
+        onChange={() => {
+          onChange(value);
+        }}
       />
       <label className="form-check-label" htmlFor={htmlForId}>
         {icon}

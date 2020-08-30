@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import { useMemoSlice } from './Store';
 import { Radio } from '~/components/Radio';
 
@@ -36,9 +36,10 @@ export function ControlledRadio({ spec }: Props) {
     (state) => spec.inputs(state)
   );
 
+  const select = useCallback((value: any) => dispatch(spec.action(value)), [dispatch, spec]);
+
   return useMemo(() => {
     const { value: selectedValue, options } = slice;
-    const select = (value: any) => dispatch(spec.action(value));
 
     return (
       <div className="custom-controls-stacked">
@@ -54,5 +55,5 @@ export function ControlledRadio({ spec }: Props) {
         ))}
       </div>
     );
-  }, [spec, slice, dispatch]);
+  }, [slice, select, spec.name]);
 }

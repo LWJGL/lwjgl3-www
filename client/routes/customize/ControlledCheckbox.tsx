@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useCallback } from 'react';
 import { useMemoSlice } from './Store';
 import { Checkbox } from '~/components/Checkbox';
 
@@ -31,9 +31,7 @@ export function ControlledCheckbox({ spec }: Props) {
     (state) => spec.inputs(state)
   );
 
-  return useMemo(() => <Checkbox {...slice} onChange={() => dispatch(spec.action(!slice.checked))} />, [
-    spec,
-    slice,
-    dispatch,
-  ]);
+  const onChange = useCallback(() => dispatch(spec.action(!slice.checked)), [dispatch, spec, slice.checked]);
+
+  return <Checkbox {...slice} onChange={onChange} />;
 }
