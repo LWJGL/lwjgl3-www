@@ -15,7 +15,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "aws-sdk": "2.742.0",
+    "aws-sdk": "2.743.0",
     "body-parser": "1.19.0",
     "chalk": "4.1.0",
     "compression": "1.7.4",
@@ -29,10 +29,10 @@
     "yargs": "15.4.1"
   },
   "devDependencies": {
-    "@babel/core": "7.11.4",
+    "@babel/core": "7.11.5",
     "@babel/plugin-proposal-class-properties": "7.10.4",
     "@babel/plugin-proposal-numeric-separator": "7.10.4",
-    "@babel/preset-env": "7.11.0",
+    "@babel/preset-env": "7.11.5",
     "@babel/preset-react": "7.10.4",
     "@babel/preset-typescript": "7.10.4",
     "@emotion/babel-plugin": "11.0.0-next.15",
@@ -43,8 +43,8 @@
     "@types/lodash-es": "4.17.3",
     "@types/react-dom": "16.9.8",
     "@types/scheduler": "0.16.1",
-    "@typescript-eslint/eslint-plugin": "3.10.1",
-    "@typescript-eslint/parser": "3.10.1",
+    "@typescript-eslint/eslint-plugin": "4.0.1",
+    "@typescript-eslint/parser": "4.0.1",
     "autoprefixer": "9.8.6",
     "babel-loader": "8.1.0",
     "babel-plugin-transform-async-to-promises": "0.8.15",
