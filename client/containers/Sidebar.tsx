@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cx } from '@emotion/css';
-import createFocusTrap, { FocusTrap } from 'focus-trap';
+import { createFocusTrap } from 'focus-trap';
+import type { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
