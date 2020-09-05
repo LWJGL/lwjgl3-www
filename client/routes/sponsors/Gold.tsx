@@ -134,6 +134,25 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
             alt="parhaat nettikasinot"
           />
         </a>
+        <a href="https://nettikasinolista.com/" rel="sponsored noopener" target="_blank">
+          <LazyImg
+            className="m-3"
+            width={150}
+            height={40}
+            src="/img/sponsors/nettikasinolista.svg"
+            alt="Paras Nettikasino-lista"
+          />
+        </a>
+        <a href="https://buy.fineproxy.org/eng/" rel="sponsored noopener" target="_blank">
+          <LazyImg
+            className="m-3"
+            width={250 / 1.3}
+            height={70 / 1.3}
+            src="/img/sponsors/fineproxy-250x70.png"
+            style={{ background: 'white' }}
+            alt="Buy Proxy from Fineproxy"
+          />
+        </a>
       </div>
     </section>
   </div>
