@@ -63,6 +63,7 @@ export const Trap: React.FC<Props> = ({
       escapeDeactivates,
       clickOutsideDeactivates,
       returnFocusOnDeactivate: false,
+      preventScroll: true,
     });
 
     if (noScroll) {

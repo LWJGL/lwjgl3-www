@@ -25,6 +25,7 @@ export function Sidebar() {
       focusTrap.current = createFocusTrap(slidingMenu.current, {
         onDeactivate: onToggle,
         initialFocus: closeButton.current,
+        preventScroll: true,
         // clickOutsideDeactivates: true
       });
     }
