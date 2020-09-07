@@ -137,8 +137,8 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         <a href="https://nettikasinolista.com/" rel="sponsored noopener" target="_blank">
           <LazyImg
             className="m-3"
-            width={150}
-            height={40}
+            width={225}
+            height={60}
             src="/img/sponsors/nettikasinolista.svg"
             alt="Paras Nettikasino-lista"
           />
@@ -146,9 +146,9 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         <a href="https://buy.fineproxy.org/eng/" rel="sponsored noopener" target="_blank">
           <LazyImg
             className="m-3"
-            width={250 / 1.3}
-            height={70 / 1.3}
-            src="/img/sponsors/fineproxy-250x70.png"
+            width={900 / 5}
+            height={300 / 5}
+            src="/img/sponsors/fineproxy-900x300.png"
             style={{ background: 'white' }}
             alt="Buy Proxy from Fineproxy"
           />
