@@ -1,6 +1,6 @@
 import { css, keyframes } from '@emotion/css';
 import { COLOR_PRIMARY } from '~/theme';
-import { cx } from '@emotion/css';
+import { cc } from '~/theme/cc';
 import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 
 const SIZE = 44;
@@ -96,7 +96,7 @@ export function CircularProgress({
 
   return (
     <svg
-      className={cx(cssProgressStyle, className, {
+      className={cc(cssProgressStyle, className, {
         indeterminate: variant === 'indeterminate',
         static: variant === 'static',
       })}

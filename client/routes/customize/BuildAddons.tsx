@@ -3,7 +3,7 @@ import { useMemoSlice } from './Store';
 import type { Addon, AddonDefinition, BuildStore } from './types';
 import { toggleAddon } from './actions';
 import { Checkbox } from '~/components/Checkbox';
-import { cx } from '@emotion/css';
+import { cc } from '~/theme/cc';
 
 const getSlice = ({ mode, selectedAddons, descriptions, addons }: BuildStore) => ({
   mode,
@@ -57,7 +57,7 @@ const BuildAddon = ({ addon, disabled, selected, showDescriptions, onChange }: P
 
   if (showDescriptions) {
     return (
-      <div className={cx('artifact', { 'text-muted': disabled })}>
+      <div className={cc('artifact', { 'text-muted': disabled })}>
         <Checkbox
           value={addon.id}
           label={label}

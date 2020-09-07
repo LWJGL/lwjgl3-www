@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/css';
+import { cc } from '~/theme/cc';
 import { COLOR_PRIMARY } from '~/theme';
 import { mediaBreakpointUp } from '~/theme/media';
 import { lighten } from '~/theme/color';
@@ -21,7 +22,7 @@ export const BuildConfigArea: React.FC = ({ children }) => {
   }));
 
   return useMemo(
-    () => (slice.build !== null ? <div className={cx(CssConfigPanel, slice.build)}>{children}</div> : null),
+    () => (slice.build !== null ? <div className={cc(CssConfigPanel, slice.build)}>{children}</div> : null),
     [slice.build, children]
   );
 };

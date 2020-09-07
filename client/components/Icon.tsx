@@ -1,4 +1,5 @@
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/css';
+import { cc } from '~/theme/cc';
 import type { IconName } from './icons/types';
 
 // Based on https://blog.prototypr.io/align-svg-icons-to-text-and-say-goodbye-to-font-icons-d44b3d7b26b4#.58pqpyl6w
@@ -19,7 +20,7 @@ type Props = React.HTMLAttributes<HTMLSpanElement> & { name: IconName };
 
 export const Icon: React.FC<Props> = ({ name, className, ...props }) => {
   return (
-    <span className={cx('svg-icon', cssSvgIcon, className)} {...props}>
+    <span className={cc('svg-icon', cssSvgIcon, className)} {...props}>
       <svg focusable={false} aria-hidden={true} preserveAspectRatio="xMidYMid meet">
         <use href={`#${name}`} />
       </svg>

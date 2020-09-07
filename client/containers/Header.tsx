@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
-import { cx } from '@emotion/css';
+import { cc } from '~/theme/cc';
 import { mediaBreakpointUp } from '~/theme/media';
 import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
@@ -174,7 +174,9 @@ export const Header: React.FC<{ children?: never }> = () => {
     <header
       ref={menu}
       role="navigation"
-      className={cx(HEADER_CLASSNAME, isHome && cssIsHome, (!isHome || !top) && cssOpaque, {
+      className={cc(HEADER_CLASSNAME, {
+        [cssIsHome]: isHome,
+        [cssOpaque]: !isHome || !top,
         alt: IS_IOS,
         fixed,
         hidden,
@@ -184,7 +186,7 @@ export const Header: React.FC<{ children?: never }> = () => {
       <nav className="container-fluid">
         <div className="row">
           <div className="col col-auto">
-            <Link to="/" className={cx(cssSafe)}>
+            <Link to="/" className={cssSafe}>
               LW
               <b>JGL</b> 3
             </Link>

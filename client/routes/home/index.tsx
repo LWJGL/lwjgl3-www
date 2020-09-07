@@ -1,4 +1,5 @@
-import { css, cx } from '@emotion/css';
+import { css } from '@emotion/css';
+import { cc } from '~/theme/cc';
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';
 import { LinkButton } from '~/components/LinkButton';
@@ -95,7 +96,7 @@ const StaticContent = () => (
       </div>
     </section>
 
-    <div className={cx('area-dark', cssMainFeatures)}>
+    <div className={cc('area-dark', cssMainFeatures)}>
       <section className="container py-5 text-center features">
         <h1>Main Features</h1>
 

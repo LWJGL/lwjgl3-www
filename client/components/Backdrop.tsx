@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cx } from '@emotion/css';
+import { cc } from '~/theme/cc';
 
 interface Props {
   className?: string;
@@ -8,5 +8,5 @@ interface Props {
 export const Backdrop: React.FC<Props> = ({ className }) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => void setMounted(true), []);
-  return <div className={cx('overlay-backdrop', className, { open: mounted })} />;
+  return <div className={cc('overlay-backdrop', className, { open: mounted })} />;
 };

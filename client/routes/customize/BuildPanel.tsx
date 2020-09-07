@@ -4,7 +4,7 @@ import { useBreakpoint } from '~/components/Breakpoint';
 // import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { COLOR_PRIMARY } from '~/theme';
 import { mediaBreakpointDown, mediaBreakpointUp } from '~/theme/media';
-import { cx } from '@emotion/css';
+import { cc } from '~/theme/cc';
 import { useMemoSlice } from './Store';
 import { selectBuildType } from './actions';
 import { BuildStatus } from './BuildStatus';
@@ -68,7 +68,7 @@ export function BuildPanel({ build }: Props) {
     return (
       <div
         onClick={() => dispatch(selectBuildType(build))}
-        className={cx(CssPanelBox, build, {
+        className={cc(CssPanelBox, build, {
           selected: isSelected,
           active: buildSelected && current < lg,
         })}

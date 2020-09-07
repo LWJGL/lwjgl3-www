@@ -1,5 +1,5 @@
 import { unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
-import { cx } from '@emotion/css';
+import { cc } from '~/theme/cc';
 
 interface Props {
   label: string;
@@ -25,7 +25,7 @@ export const Checkbox: React.FC<Props> = ({
   const htmlForId = useOpaqueIdentifier();
 
   return hidden === true ? null : (
-    <div className={cx('form-check', { 'form-switch': toggle })}>
+    <div className={cc('form-check', { 'form-switch': toggle })}>
       <input
         type="checkbox"
         id={htmlForId}
