@@ -1,5 +1,5 @@
-import { S3 } from './AWS.js';
-import validateBuildParams from './validateBuildParams.js';
+import { S3 } from './AWS.mjs';
+import validateBuildParams from './validateBuildParams.mjs';
 
 export default (req, res, next) => {
   if (!validateBuildParams(req.params, next)) {

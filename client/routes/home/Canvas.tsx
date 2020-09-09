@@ -1,24 +1,24 @@
 import { useRef, useEffect } from 'react';
-import { css, keyframes } from '@emotion/css';
+import { styled, css } from '~/theme/stitches.config';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';
 // import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 declare const THREE: any;
 
-const cssFadeInCanvas = keyframes`
-  to {
-    opacity: 0.175;
-  }
-`;
+const fadeInCanvas = css.keyframes({
+  to: {
+    opacity: 0.175,
+  },
+});
 
-const cssCanvas = css`
-  position: absolute;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
-  animation: ${cssFadeInCanvas} 2s ease 0.5s forwards;
-`;
+const Canvas = styled('canvas', {
+  position: 'absolute',
+  zIndex: 0,
+  width: '100%',
+  height: '100%',
+  opacity: 0,
+  animation: `${fadeInCanvas} 2s ease 0.5s forwards`,
+});
 
 const HomeCanvas: React.FC<{ width: number; height: number }> = ({ width, height }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -136,7 +136,7 @@ const HomeCanvas: React.FC<{ width: number; height: number }> = ({ width, height
     []
   );
 
-  return <canvas className={cssCanvas} ref={canvasRef} />;
+  return <Canvas ref={canvasRef} />;
 };
 
 export default HomeCanvas;

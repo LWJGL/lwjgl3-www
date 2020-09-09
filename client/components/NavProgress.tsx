@@ -1,59 +1,59 @@
 import { useEffect } from 'react';
-import { css, keyframes } from '@emotion/css';
+import { styled, css } from '~/theme/stitches.config';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 import { useLocationPending } from 'react-router-dom';
 
-const pulseAnimation = keyframes`
-  0% {
-    transform: translateX(-20vw);
-  }
-  25% {
-    transform: translateX(-20vw);
-  }
-  75% {
-    transform: translateX(120vw);
-  }
-  100% {
-    transform: translateX(120vw);
-  }
-`;
+const pulseAnimation = css.keyframes({
+  '0%': {
+    transform: 'translateX(-20vw)',
+  },
+  '25%': {
+    transform: 'translateX(-20vw)',
+  },
+  '75%': {
+    transform: 'translateX(120vw)',
+  },
+  '100%': {
+    transform: 'translateX(120vw)',
+  },
+});
 
-const cssProgressContainer = css`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  z-index: ${ZINDEX_FIXED};
-  background: ${COLOR_CUSTOM_CONTROL_INDICATOR_BG.css()};
-  pointer-events: none;
-  will-change: opacity;
-  transition: opacity 0.75s 0.25s ease-out;
-  &.fade-out {
-    opacity: 0;
-  }
-`;
+const ProgressContainer = styled('div', {
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: 3,
+  zIndex: ZINDEX_FIXED,
+  background: COLOR_CUSTOM_CONTROL_INDICATOR_BG.css(),
+  pointerEvents: 'none',
+  willChange: 'opacity',
+  transition: 'opacity 0.75s 0.25s ease-out',
+  '&.fade-out': {
+    opacity: 0,
+  },
+});
 
-const cssProgressBar = css`
-  width: 100%;
-  height: 3px;
-  background: ${COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.css()};
-  will-change: transform;
-  transform-origin: left;
-  transition: transform 0.2s linear;
-`;
+const ProgressBar = styled('div', {
+  width: '100%',
+  height: 3,
+  background: COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG.css(),
+  willChange: 'transform',
+  transformOrigin: 'left',
+  transition: 'transform 0.2s linear',
+});
 
-const cssProgressPulse = css`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20vw;
-  height: 3px;
-  will-change: transform;
-  transform-origin: left;
-  background: linear-gradient(to right, transparent, ${COLOR_CUSTOM_CONTROL_INDICATOR_BG.css()} 50%, transparent);
-  animation: ${pulseAnimation} 2.5s linear 10s both infinite;
-`;
+const ProgressPulse = styled('div', {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '20vw',
+  height: 3,
+  willChange: 'transform',
+  transformOrigin: 'left',
+  background: `linear-gradient(to right, transparent, ${COLOR_CUSTOM_CONTROL_INDICATOR_BG.css()} 50%, transparent)`,
+  animation: `${pulseAnimation} 2.5s linear 10s both infinite`,
+});
 
 const PERC_MAX = 99.4;
 let progress = 0;
@@ -146,9 +146,9 @@ export function NavProgress() {
   }, [isPending]);
 
   return (
-    <div hidden id="nav-progress" className={cssProgressContainer}>
-      <div id="nav-progress-bar" className={cssProgressBar} />
-      <div className={cssProgressPulse} />
-    </div>
+    <ProgressContainer hidden id="nav-progress">
+      <ProgressBar id="nav-progress-bar" />
+      <ProgressPulse />
+    </ProgressContainer>
   );
 }

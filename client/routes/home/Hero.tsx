@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
-import { css } from '@emotion/css';
 import { Link } from 'react-router-dom';
+import { styled } from '~/theme/stitches.config';
 import { contextOptions } from './contextOptions';
 import { loadJS } from '~/services/loadJS';
 import { Icon } from '~/components/Icon';
@@ -63,18 +63,10 @@ const Canvas = lazy(() => {
   return route;
 });
 
-/*
-  height: 100vh;
-  @supports (-webkit-touch-callout: none) {
-    body {
-      height: -webkit-fill-available;
-    }
-  }
-*/
-const CssHeroBox = css`
-  margin-top: -4rem;
-  background: linear-gradient(
-    to top left,
+const HeroBox = styled('section', {
+  width: '100%',
+  marginTop: '-4rem',
+  linearGradient: `to top left,
     #4cddff,
     #3b9aca 10%,
     #2d6ca5 20%,
@@ -83,70 +75,75 @@ const CssHeroBox = css`
     #222654 50%,
     #1e1635 63%,
     #0c0010 93%,
-    #000
-  );
-  width: 100%;
-`;
+    #000`,
 
-const HeroBox: React.FC<{ height: number }> = ({ children, height }) => (
-  <section className={CssHeroBox} style={{ height }}>
-    {children}
-  </section>
-);
-
-const CssLogoContainer = css`
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem 1rem 0 1rem;
-
-  @media (min-aspect-ratio: 8/2) {
-    justify-content: flex-end;
-  }
-
-  .logo {
-    transform: translateY(3rem);
-    opacity: 0;
-    animation: anim-reset-opacity-transform 1s ease forwards;
-    width: 140px;
-    width: max(140px, min(16vw, 220px)); /* Safari */
-    width: clamp(140px, 16vw, 220px);
-    margin-bottom: 1rem;
-    @media (min-aspect-ratio: 4/2) {
-      display: none;
+  /*
+  height: 100vh;
+  @supports (-webkit-touch-callout: none) {
+    body {
+      height: -webkit-fill-available;
     }
   }
-`;
+*/
+});
 
-const LogoContainer: React.FC = (props) => (
-  <div className={`d-flex flex-column ${CssLogoContainer}`}>{props.children}</div>
-);
+const LogoContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'absolute',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 1,
+  width: '100%',
+  height: '100%',
+  padding: '1rem 1rem 0 1rem',
+  '@media (min-aspect-ratio: 8/2)': {
+    justifyContent: 'flex-end',
+  },
+  '.logo': {
+    transform: 'translateY(3rem)',
+    opacity: 0,
+    animation: 'anim-reset-opacity-transform 1s ease forwards',
+    marginBottom: '1rem',
+    width: 140,
+    minmax: {
+      width: 'max(140px, min(16vw, 220px))',
+    },
+    clamp: {
+      width: 'clamp(140px, 16vw, 220px)',
+    },
+    '@media (min-aspect-ratio: 8/2)': {
+      display: 'none',
+    },
+  },
+});
 
-const CssHeroContent = css`
-  text-align: center;
-  padding: 0 1rem;
-  color: white;
-  font-weight: 300;
-  line-height: 1.2;
-  font-size: 2rem;
-  font-size: max(1.2rem, min(3.5vw, 2.1rem));
-  font-size: clamp(1.2rem, 3.5vw, 2.1rem);
-
-  a {
-    color: white;
-  }
-
-  h1 {
-    font-size: 4rem;
-    font-size: max(4rem, min(15vw, 10rem));
-    font-size: clamp(4rem, 15vw, 10rem);
-  }
-`;
-
-const HeroContent: React.FC = (props) => <div className={CssHeroContent}>{props.children}</div>;
+const HeroContent = styled('div', {
+  textAlign: 'center',
+  padding: '0 1rem',
+  color: 'white',
+  fontWeight: 300,
+  lineHeight: 1.2,
+  fontSize: '2rem',
+  minmax: {
+    fontSize: 'max(1.2rem, min(3.5vw, 2.1rem))',
+  },
+  clamp: {
+    fontSize: 'clamp(1.2rem, 3.5vw, 2.1rem)',
+  },
+  a: {
+    color: 'white',
+  },
+  h1: {
+    fontSize: '4rem',
+    minmax: {
+      fontSize: 'max(4rem, min(15vw, 10rem))',
+    },
+    clamp: {
+      fontSize: 'clamp(4rem, 15vw, 10rem)',
+    },
+  },
+});
 
 enum UseWebGL {
   Unknown,
@@ -155,6 +152,7 @@ enum UseWebGL {
   On,
 }
 
+// let useWebGL = UseWebGL.Off;
 let useWebGL = UseWebGL.Unknown;
 
 const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, height }) => {
@@ -240,7 +238,7 @@ export function HomeHero() {
   }, [setWH]);
 
   return (
-    <HeroBox height={height}>
+    <HeroBox style={{ height }}>
       <CanvasContainer width={width} height={height} />
       <LogoContainer>
         {Logo}

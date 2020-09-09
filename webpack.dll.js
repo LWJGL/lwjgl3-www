@@ -11,7 +11,7 @@ module.exports = {
     vendor: {
       import: [
         // immediate dependencies
-        '@emotion/css',
+        '@stitches/react',
         'focus-trap',
         'history',
         'immer',

@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
-import config from '../webpack.config.cjs';
+import config from '../webpack.config.js';
 
 import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

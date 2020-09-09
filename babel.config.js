@@ -1,10 +1,8 @@
 'use strict';
-const { argv } = require('yargs');
-
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const MODERN = process.env.MODERN === 'true'; // https://jakearchibald.com/2017/es-modules-in-browsers/
 const DEV = !PRODUCTION;
-const HMR = DEV && argv.nohmr === undefined;
+const HMR = DEV && process.argv.includes('--nohmr');
 
 const config = {
   presets: [
@@ -40,15 +38,6 @@ const config = {
         runtime: 'automatic',
         useBuiltIns: true,
         useSpread: !PRODUCTION,
-      },
-    ],
-    [
-      '@emotion',
-      {
-        sourceMap: !PRODUCTION,
-        // autoLabel: !PRODUCTION,
-        // labelFormat: '[local]',
-        cssPropOptimization: false,
       },
     ],
 

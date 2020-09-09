@@ -1,32 +1,28 @@
-import { css } from '@emotion/css';
+import { styled } from '~/theme/stitches.config';
 import { Link } from 'react-router-dom';
 import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/solid/folder';
 
-export const FolderTH = css`
-  padding: 0 !important;
-  user-select: none;
-  a {
-    display: block;
-    padding: 0.75rem;
-    color: #333;
-    font-weight: normal;
-    &:hover {
-      text-decoration: none;
-      background-color: #5bc0de;
-      color: white;
-      svg {
-        color: white;
-      }
-    }
-    &:focus {
-      color: #0071eb;
-    }
-    &:hover:focus {
-      color: yellow;
-    }
-  }
-`;
+const FolderTH = styled('th', {
+  userSelect: 'none',
+  a: {
+    display: 'block',
+    padding: '0.75rem',
+    color: '#333',
+    fontWeight: 'normal',
+    ':hover': {
+      textDecoration: 'none',
+      backgroundColor: '#5bc0de',
+      color: 'white',
+      svg: {
+        color: 'white',
+      },
+    },
+    ':active': {
+      color: 'yellow',
+    },
+  },
+});
 
 interface Props {
   path: string;
@@ -36,9 +32,9 @@ interface Props {
 export const FolderWrap: React.FC<{}> = ({ children }) => {
   return (
     <tr>
-      <th className={FolderTH} scope="row">
+      <FolderTH style={{ padding: 0 }} scope="row">
         {children}
-      </th>
+      </FolderTH>
     </tr>
   );
 };

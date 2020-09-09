@@ -5,17 +5,16 @@ import express from 'express';
 import compression from 'compression';
 import helmet from 'helmet';
 import favicon from 'serve-favicon';
-import yargs from 'yargs';
 import chalk from 'chalk';
 import request from 'request-promise-native';
 
-import { fileExists } from './fileExists.js';
-import { subnets } from './cloudfront-subnets.js';
-import { chunkMap } from './chunkMap.js';
+import { fileExists } from './fileExists.mjs';
+import { subnets } from './cloudfront-subnets.mjs';
+import { chunkMap } from './chunkMap.mjs';
 
-import routeBin from './bin.js';
-import routeBuild from './build.js';
-import routeBrowse from './browse.js';
+import routeBin from './bin.mjs';
+import routeBuild from './build.mjs';
+import routeBrowse from './browse.mjs';
 
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
@@ -23,8 +22,36 @@ import { createRequire } from 'module';
 const filePath = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filePath);
 // const __filename = path.parse(filePath).base;
-const argv = yargs.argv;
 const require = createRequire(import.meta.url);
+
+// ------------------------------------------------------------------------------
+// Arguments
+// ------------------------------------------------------------------------------
+
+const argv = {};
+
+process.argv.slice(2).forEach(arg => {
+  switch (arg) {
+    case '--css':
+      argv.css = true;
+      break;
+    case '--pretty':
+      argv.pretty = true;
+      break;
+    case '--nocache':
+      argv.nocache = true;
+      break;
+    case '--nohmr':
+      argv.nohmr = true;
+      break;
+    case '--s3proxy':
+      argv.s3proxy = true;
+      break;
+    case '--test':
+      argv.test = true;
+      break;
+  }
+});
 
 // ------------------------------------------------------------------------------
 // Initialize & Configure Application
@@ -42,12 +69,12 @@ const app = express();
 app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
 
-const CSS_MODE = app.locals.development && argv.css ? 'HMR' : 'LINK';
+const CSS_MODE = app.locals.development && argv.css === true ? 'HMR' : 'LINK';
 let manifest = {};
 let serviceWorkerCache = null;
 
 // View options
-app.locals.pretty = app.locals.development || argv.pretty ? '  ' : false;
+app.locals.pretty = app.locals.development || argv.pretty === true ? '  ' : false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
 
 app.set('port', PORT);
@@ -78,7 +105,7 @@ express.static.mime.define(
 // ------------------------------------------------------------------------------
 if (app.locals.development) {
   const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config.cjs');
+  const webpackConfig = require('../webpack.config.js');
   const webpackCompiler = webpack(webpackConfig);
   const wdm = require('webpack-dev-middleware').default;
 
@@ -102,7 +129,7 @@ if (app.locals.development) {
   }
 }
 
-if (app.locals.development || argv.s3proxy) {
+if (app.locals.development || argv.s3proxy === true) {
   /*
     In production we handle photos and downloads at the CDN level.
     In development these paths will hit Node, therefore we need to handle them.
@@ -297,7 +324,7 @@ app.get('/sw.js', async (req, res) => {
     let swJS;
 
     // Read service worker source code
-    if (argv.test || app.locals.development) {
+    if (argv.test === true || app.locals.development) {
       swJS = await fs.promises.readFile(path.join(__dirname, '../client', 'sw.js'));
     } else {
       swJS = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js');
@@ -436,7 +463,7 @@ const downloadManifest = async cb => {
     cb();
     return;
   }
-  if (argv.test) {
+  if (argv.test === true) {
     manifest = require('../public/js/manifest.json');
     cb();
     return;

@@ -1,5 +1,5 @@
 import AWS from 'aws-sdk';
-import validateBuildParams from './validateBuildParams.js';
+import validateBuildParams from './validateBuildParams.mjs';
 
 const s3 = new AWS.S3();
 

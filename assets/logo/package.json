@@ -4,7 +4,11 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "fetch-h2": "2.4.5",
-    "puppeteer-core": "3.0.0"
+    "fetch-h2": "2.5.1",
+    "puppeteer-core": "5.2.1",
+    "yargs": "16.0.0"
+  },
+  "scripts": {
+    "ncu": "yarn upgrade-interactive --latest -E"
   }
 }

@@ -2,18 +2,35 @@
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
-const { argv } = require('yargs');
+const argv = {};
+
+process.argv.slice(2).forEach(arg => {
+  switch (arg) {
+    case '--nohmr':
+      argv.nohmr = true;
+      break;
+    case '--css':
+      argv.css = true;
+      break;
+    case '--sourcemap':
+      argv.sourcemap = true;
+      break;
+    case '--profiling':
+      argv.profiling = true;
+      break;
+  }
+});
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
 const HMR = DEV && argv.nohmr === undefined;
-const SOURCEMAP = argv.sourcemap !== undefined;
-const ENABLE_PROFILING = argv.profiling !== undefined;
+const SOURCEMAP = argv.sourcemap === true;
+const ENABLE_PROFILING = argv.profiling === true;
 
 const env = {
   ANALYTICS_TRACKING_ID: JSON.stringify('UA-83518-1'),
   FLAG_PRODUCTION: String(PRODUCTION),
-  FLAG_CSSMODULES: String(DEV && argv.css !== undefined),
+  FLAG_CSSMODULES: String(DEV && argv.css === true),
   FLAG_HMR: String(HMR),
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };

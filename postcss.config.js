@@ -1,7 +1,8 @@
-import purgecss from '@fullhuman/postcss-purgecss';
-import presetenv from 'postcss-preset-env';
-import autoprefixer from 'autoprefixer';
-import cssnano from 'cssnano';
+'use strict';
+const purgecss = require('@fullhuman/postcss-purgecss');
+const presetenv = require('postcss-preset-env');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
 
 const PROD = process.env.NODE_ENV === 'production';
 const plugins = [];
@@ -40,4 +41,6 @@ if (PROD) {
   );
 }
 
-export default { plugins };
+module.exports = {
+  plugins,
+};

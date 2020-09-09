@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import prettyBytes from './prettyBytes.js';
+import prettyBytes from './prettyBytes.mjs';
 
 const kB = 1000;
 const warnFileSizes = [10, 150, 250];
@@ -9,7 +9,7 @@ const warnFileSizesRootGzipped = [100, 150, 250];
 const warnFileSizesCSS = [25, 75, 100];
 const warnFileSizesCSSGzipped = [10, 30, 60];
 
-export default (size, isGzip, isRoot, isCss) => {
+export default function formatSize(size, isGzip, isRoot, isCss) {
   let limits;
 
   if (isGzip) {
@@ -35,4 +35,4 @@ export default (size, isGzip, isRoot, isCss) => {
   }
 
   return prettyBytes(size);
-};
+}

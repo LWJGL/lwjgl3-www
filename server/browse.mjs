@@ -1,4 +1,4 @@
-import { S3 } from './AWS.js';
+import { S3 } from './AWS.mjs';
 
 export default (req, res, next) => {
   let isRoot = true;

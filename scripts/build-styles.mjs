@@ -3,7 +3,6 @@ import { promises as fs } from 'fs';
 import sass from 'node-sass';
 import postcss from 'postcss';
 import config from '../postcss.config.js';
-import yargs from 'yargs';
 import { promisify } from 'util';
 
 import { fileURLToPath } from 'url';
@@ -30,7 +29,7 @@ const main = async () => {
   const sourcePath = path.resolve(__dirname, '../client/styles/layout.scss');
   const targetPath = path.resolve(__dirname, `../public/css/${filename}.css`);
   const sourceMapPath = path.resolve(__dirname, `../public/css/${filename}.css.map`);
-  const SOURCEMAP = yargs.argv.sourcemap === true || !PRODUCTION;
+  const SOURCEMAP = process.argv.includes('--sourcemap') || !PRODUCTION;
 
   console.log('Rendering Sass to CSS');
 

@@ -16,7 +16,7 @@ Notable features:
 - Build Customizer with smart download queue & client-side ZIP generator
 - Optional hot reloading for [Sass](https://sass-lang.com/)
 - Custom webpack manifest parsing + code minification
-- CSS-in-JS (Emotion) in combination with custom Bootstrap build
+- CSS-in-JS (Stitches) in combination with custom Bootstrap build
 - fast-async instead of regenerator
 - Client is written in Typescript
 

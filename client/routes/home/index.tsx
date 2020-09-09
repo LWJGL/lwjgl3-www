@@ -1,5 +1,4 @@
-import { css } from '@emotion/css';
-import { cc } from '~/theme/cc';
+import { styled } from '~/theme/stitches.config';
 import { PageView } from '~/components/routes/PageView';
 import { Link } from 'react-router-dom';
 import { LinkButton } from '~/components/LinkButton';
@@ -28,13 +27,10 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
   </PageView>
 );
 
-const cssMainFeatures = css`
-  .svg-icon,
-  img {
-    font-size: 4rem;
-    margin: 1rem 0 2rem 0;
-  }
-`;
+const FeatureImage = styled('div', {
+  fontSize: '4rem',
+  padding: '1rem 0 2rem 0',
+});
 
 const StaticContent = () => (
   <>
@@ -96,13 +92,15 @@ const StaticContent = () => (
       </div>
     </section>
 
-    <div className={cc('area-dark', cssMainFeatures)}>
+    <div className="area-dark">
       <section className="container py-5 text-center features">
         <h1>Main Features</h1>
 
         <div className="row">
           <div className="col-md py-3">
-            <Icon name="fa/duotone/microchip" />
+            <FeatureImage>
+              <Icon name="fa/duotone/microchip" />
+            </FeatureImage>
             <h2>Low-level Bindings</h2>
             <p>
               Direct access to OpenGL, OpenCL, OpenAL, GLFW and other native APIs with uncompromised performance and a
@@ -110,7 +108,9 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <Icon name="fa/brands/github" />
+            <FeatureImage>
+              <Icon name="fa/brands/github" />
+            </FeatureImage>
             <h2>Open Source</h2>
             <p>
               LWJGL is available under a <Link to="/license">BSD license</Link>. Visit our{' '}
@@ -121,7 +121,9 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <Icon name="fa/duotone/book" />
+            <FeatureImage>
+              <Icon name="fa/duotone/book" />
+            </FeatureImage>
             <h2>Built-in Documentation</h2>
             <p>Get great auto-complete and inline documentation without leaving the comfort of your favorite IDE.</p>
           </div>
@@ -129,12 +131,16 @@ const StaticContent = () => (
 
         <div className="row">
           <div className="col-md py-3">
-            <Icon name="fa/duotone/phone-laptop" />
+            <FeatureImage>
+              <Icon name="fa/duotone/phone-laptop" />
+            </FeatureImage>
             <h2>Cross-platform</h2>
             <p>Write your game or application once, deploy on Windows, Mac, Linux.</p>
           </div>
           <div className="col-md py-3">
-            <Icon name="fa/duotone/comments" />
+            <FeatureImage>
+              <Icon name="fa/duotone/comments" />
+            </FeatureImage>
             <h2>Community</h2>
             <p>
               Need help? Our{' '}
@@ -148,7 +154,9 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <Icon name="fa/duotone/gamepad" />
+            <FeatureImage>
+              <Icon name="fa/duotone/gamepad" />
+            </FeatureImage>
             <h2>GLFW Bindings</h2>
             <p>
               Create multiple windows, handle user input (keyboard, mouse, gaming peripherals) and manage contexts. Also
@@ -163,7 +171,9 @@ const StaticContent = () => (
 
         <div className="row">
           <div className="col-md py-3">
-            <LazyImg width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
+            <FeatureImage>
+              <LazyImg width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
+            </FeatureImage>
             <h2>
               Vulkan
               <sup>
@@ -177,13 +187,15 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <LazyImg
-              width={60}
-              height={60}
-              src="/img/opencl@x1.png"
-              srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x"
-              alt="OpenCL"
-            />
+            <FeatureImage>
+              <LazyImg
+                width={60}
+                height={60}
+                src="/img/opencl@x1.png"
+                srcSet="/img/opencl@x1.png 1x,/img/opencl@x2.png 2x,/img/opencl@x4.png 4x"
+                alt="OpenCL"
+              />
+            </FeatureImage>
             <h2>
               OpenCL
               <sup>
@@ -197,7 +209,9 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <LazyImg width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
+            <FeatureImage>
+              <LazyImg width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
+            </FeatureImage>
             <h2>OpenAL Bindings</h2>
             <p>
               Cross-platform multichannel three-dimensional positional audio. A powerful API for music playback and
@@ -208,7 +222,9 @@ const StaticContent = () => (
 
         <div className="row">
           <div className="col-md py-3">
-            <LazyImg width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
+            <FeatureImage>
+              <LazyImg width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
+            </FeatureImage>
             <h2>
               OpenGL
               <sup>
@@ -227,7 +243,9 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <LazyImg width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
+            <FeatureImage>
+              <LazyImg width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
+            </FeatureImage>
             <h2>
               OpenGL
               <sup>
@@ -242,7 +260,9 @@ const StaticContent = () => (
             </p>
           </div>
           <div className="col-md py-3">
-            <LazyImg width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
+            <FeatureImage>
+              <LazyImg width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
+            </FeatureImage>
             <h2>
               EGL
               <sup>
@@ -261,18 +281,23 @@ const StaticContent = () => (
 
         <div className="row">
           <div className="col-md py-3">
-            <LazyImg width={183} height={150} style={{ margin: -15 }} src="/svg/oculus.svg" alt="Oculus VR SDK" />
+            <FeatureImage>
+              <LazyImg width={183} height={150} style={{ margin: -15 }} src="/svg/oculus.svg" alt="Oculus VR SDK" />
+            </FeatureImage>
             <h2>LibOVR Bindings</h2>
             <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>
           </div>
           <div className="col-md py-3">
-            <Icon name="fa/brands/apple" />
-            {/* <Icon children={<Apple />} /> */}
+            <FeatureImage>
+              <Icon name="fa/brands/apple" />
+            </FeatureImage>
             <h2>Objective-C Bindings</h2>
             <p>Use the Objective-C Runtime to interface your JVM application with Cocoa APIs on macOS.</p>
           </div>
           <div className="col-md py-3">
-            <Icon name="fa/duotone/project-diagram" />
+            <FeatureImage>
+              <Icon name="fa/duotone/project-diagram" />
+            </FeatureImage>
             <h2>Customization & Utilities</h2>
             <p>
               Use{' '}
@@ -295,7 +320,7 @@ const StaticContent = () => (
         <div className="row">
           <div className="col pt-3">
             <div className="mb-3">
-              <Icon name="fa/duotone/brackets-curly" style={{ fontSize: '6rem' }} color="yellow" />
+              <Icon name="fa/duotone/brackets-curly" style={{ fontSize: '6rem', color: 'yellow' }} />
             </div>
             <h2>Your favorite API here!</h2>
             <p>

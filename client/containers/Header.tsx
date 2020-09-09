@@ -1,11 +1,10 @@
 import { useEffect, useState, useRef } from 'react';
-import { css } from '@emotion/css';
+import { styled } from '~/theme/stitches.config';
 import { Link, useLocation } from 'react-router-dom';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
 import { cc } from '~/theme/cc';
-import { mediaBreakpointUp } from '~/theme/media';
 import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
@@ -13,19 +12,28 @@ import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/duotone/cloud-download';
 
 const HEADER_CLASSNAME = 'site-header';
-const cssSafe = css`
-  margin-left: env(safe-area-inset-left);
-`;
-const cssIsHome = css`
-  transition: background-color 0.75s ease-out;
-`;
-const cssOpaque = css`
-  background-color: black;
 
-  ${mediaBreakpointUp('lg')} {
-    background-color: #1b2426;
-  }
-`;
+const SafeLogo = styled('div', {
+  marginLeft: 'env(safe-area-inset-left)',
+});
+
+const StyledHeader = styled('header', {
+  variants: {
+    home: {
+      true: {
+        transition: 'background-color 0.75s ease-out',
+      },
+    },
+    opaque: {
+      true: {
+        backgroundColor: 'black',
+        lg: {
+          backgroundColor: '#1b2426',
+        },
+      },
+    },
+  },
+});
 
 function ServiceWorkerUpdate() {
   const [pending, update] = useServiceWorker();
@@ -171,12 +179,12 @@ export const Header: React.FC<{ children?: never }> = () => {
   }, []);
 
   return (
-    <header
+    <StyledHeader
       ref={menu}
       role="navigation"
+      home={isHome}
+      opaque={!isHome || !top}
       className={cc(HEADER_CLASSNAME, {
-        [cssIsHome]: isHome,
-        [cssOpaque]: !isHome || !top,
         alt: IS_IOS,
         fixed,
         hidden,
@@ -185,16 +193,16 @@ export const Header: React.FC<{ children?: never }> = () => {
     >
       <nav className="container-fluid">
         <div className="row">
-          <div className="col col-auto">
-            <Link to="/" className={cssSafe}>
+          <SafeLogo className="col col-auto">
+            <Link to="/">
               LW
               <b>JGL</b> 3
             </Link>
             <ServiceWorkerUpdate />
-          </div>
+          </SafeLogo>
           {currentBreakpoint > md ? <MainMenu className="main-menu-horizontal col" /> : <Sidebar />}
         </div>
       </nav>
-    </header>
+    </StyledHeader>
   );
 };

@@ -1,10 +1,8 @@
 import { Suspense, useState, useEffect, useMemo } from 'react';
-import { css } from '@emotion/css';
+import { styled } from '~/theme/stitches.config';
 import { useBreakpoint } from '~/components/Breakpoint';
 // import { cc, COLOR_PRIMARY, mediaBreakpointDown, mediaBreakpointUp } from '~/theme';
 import { COLOR_PRIMARY } from '~/theme';
-import { mediaBreakpointDown, mediaBreakpointUp } from '~/theme/media';
-import { cc } from '~/theme/cc';
 import { useMemoSlice } from './Store';
 import { selectBuildType } from './actions';
 import { BuildStatus } from './BuildStatus';
@@ -23,7 +21,7 @@ import '~/components/icons/fa/regular/times';
 import type { BuildDefinition, BuildType } from './types';
 
 type ConnectedProps = {
-  buildSelected: boolean;
+  anyBuildSelected: boolean;
   isSelected: boolean;
   spec: BuildDefinition;
 };
@@ -45,7 +43,7 @@ export function BuildPanel({ build }: Props) {
   const [showStatus, setShowStatus] = useState(false);
   const [slice, dispatch] = useMemoSlice(
     (state): ConnectedProps => ({
-      buildSelected: state.build !== null,
+      anyBuildSelected: state.build !== null,
       isSelected: state.build === build,
       spec: state.builds.byId[build],
     }),
@@ -59,22 +57,21 @@ export function BuildPanel({ build }: Props) {
   }, [showStatus, setShowStatus]);
 
   return useMemo(() => {
-    const { buildSelected, isSelected, spec } = slice;
+    const { anyBuildSelected, isSelected, spec } = slice;
     const {
       current,
       breakpoints: { lg },
     } = breakpoint;
 
     return (
-      <div
+      <PanelBox
+        build={build}
+        selected={isSelected}
+        hidden={anyBuildSelected && !isSelected && current < lg}
         onClick={() => dispatch(selectBuildType(build))}
-        className={cc(CssPanelBox, build, {
-          selected: isSelected,
-          active: buildSelected && current < lg,
-        })}
       >
-        <h2>{spec.title}</h2>
-        <p>{spec.description}</p>
+        <PanelTitle>{spec.title}</PanelTitle>
+        <PanelDescription>{spec.description}</PanelDescription>
         {showStatus ? (
           <Suspense fallback={<StatusFallback />}>
             <BuildStatus name={build} />
@@ -82,90 +79,96 @@ export function BuildPanel({ build }: Props) {
         ) : (
           <StatusFallback />
         )}
-        {isSelected ? <Icon name="fa/regular/times" /> : null}
-      </div>
+        {isSelected && current < lg ? <Icon name="fa/regular/times" /> : null}
+      </PanelBox>
     );
   }, [dispatch, build, slice, showStatus, breakpoint]);
 }
 
-const CssPanelBox = css`
-  border: 2px solid ${COLOR_PRIMARY.css()};
-  padding: 1rem;
-  border-radius: ${BORDER_RADIUS};
-  text-align: center;
-  cursor: pointer;
-  will-change: transform, background-color;
-  user-select: none;
-  z-index: 1;
+const PanelTitle = styled('h2', {
+  fontWeight: 'normal',
+});
 
-  > h2 {
-    font-weight: normal;
-  }
+const PanelDescription = styled('p', {
+  color: COLOR_PRIMARY.css(),
+  margin: 0,
+});
 
-  > p {
-    color: ${COLOR_PRIMARY.css()};
-    margin: 0;
-  }
-
-  &.release {
-    background-color: ${COLOR_RELEASE_LIGHT.css()};
-    border-color: ${COLOR_RELEASE.css()};
-    color: ${COLOR_RELEASE.css()};
-  }
-  &.stable {
-    background-color: ${COLOR_STABLE_LIGHT.css()};
-    border-color: ${COLOR_STABLE.css()};
-    color: ${COLOR_STABLE.css()};
-  }
-  &.nightly {
-    background-color: ${COLOR_NIGHTLY_LIGHT.css()};
-    border-color: ${COLOR_NIGHTLY.css()};
-    color: ${COLOR_NIGHTLY.css()};
-  }
-
-  &:hover {
-    > h2 {
-      text-decoration: underline;
-    }
-  }
-
-  .svg-icon {
-    display: none;
-  }
-
-  ${mediaBreakpointDown('md')} {
-    margin: 0 1rem 1rem 1rem;
-    &.active {
-      display: none;
-    }
-    &.selected {
-      margin: 0;
-      display: block;
-      background-color: transparent;
-      border-top-color: transparent;
-      border-right-color: transparent;
-      border-left-color: transparent;
-      border-radius: 0 !important;
-    }
-    .svg-icon {
-      color: black;
-      display: block;
-      position: absolute;
-      top: 0.75rem;
-      right: 2rem;
-      font-size: 200%;
-      &:hover {
-        color: red;
-      }
-    }
-  }
-
-  ${mediaBreakpointUp('lg')} {
-    transition: transform 0.083s ease-out;
-    &.selected {
-      transform: translateY(1.25rem);
-      border-bottom: 0;
-      border-radius: ${BORDER_RADIUS} ${BORDER_RADIUS} 0 0;
-    }
-  }
-`;
+const PanelBox = styled('div', {
+  border: `2px solid ${COLOR_PRIMARY.css()}`,
+  padding: '1rem',
+  borderRadius: BORDER_RADIUS,
+  textAlign: 'center',
+  cursor: 'pointer',
+  willChange: 'transform, background-color',
+  userSelect: 'none',
+  zIndex: 1,
+  ':hover > h2': {
+    textDecoration: 'underline',
+  },
+  lg: {
+    transition: 'transform 0.083s ease-out',
+  },
+  mdDown: {
+    margin: '0 1rem 1rem 1rem',
+  },
+  variants: {
+    build: {
+      release: {
+        backgroundColor: COLOR_RELEASE_LIGHT.css(),
+        borderColor: COLOR_RELEASE.css(),
+        [`& ${PanelTitle}`]: {
+          color: COLOR_RELEASE.css(),
+        },
+      },
+      stable: {
+        backgroundColor: COLOR_STABLE_LIGHT.css(),
+        borderColor: COLOR_STABLE.css(),
+        [`& ${PanelTitle}`]: {
+          color: COLOR_STABLE.css(),
+        },
+      },
+      nightly: {
+        backgroundColor: COLOR_NIGHTLY_LIGHT.css(),
+        borderColor: COLOR_NIGHTLY.css(),
+        [`& ${PanelTitle}`]: {
+          color: COLOR_NIGHTLY.css(),
+        },
+      },
+    },
+    hidden: {
+      true: {
+        display: 'none',
+      },
+    },
+    selected: {
+      true: {
+        lg: {
+          transform: 'translateY(1.25rem)',
+          borderBottom: 0,
+          borderRadius: `${BORDER_RADIUS} ${BORDER_RADIUS} 0 0`,
+        },
+        mdDown: {
+          margin: 0,
+          display: 'block',
+          backgroundColor: 'transparent',
+          borderTopColor: 'transparent',
+          borderRightColor: 'transparent',
+          borderLeftColor: 'transparent',
+          borderRadius: 0,
+          '.svg-icon': {
+            display: 'block',
+            color: 'black',
+            position: 'absolute',
+            top: '0.75rem',
+            right: '2rem',
+            fontSize: '200%',
+            ':hover': {
+              color: 'red',
+            },
+          },
+        },
+      },
+    },
+  },
+});

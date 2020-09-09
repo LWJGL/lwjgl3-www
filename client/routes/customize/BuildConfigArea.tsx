@@ -1,8 +1,6 @@
 import { useMemo } from 'react';
-import { css } from '@emotion/css';
-import { cc } from '~/theme/cc';
+import { styled } from '~/theme/stitches.config';
 import { COLOR_PRIMARY } from '~/theme';
-import { mediaBreakpointUp } from '~/theme/media';
 import { lighten } from '~/theme/color';
 import { useSlice } from './Store';
 
@@ -21,80 +19,80 @@ export const BuildConfigArea: React.FC = ({ children }) => {
     build: state.build,
   }));
 
-  return useMemo(
-    () => (slice.build !== null ? <div className={cc(CssConfigPanel, slice.build)}>{children}</div> : null),
-    [slice.build, children]
-  );
+  return useMemo(() => (slice.build !== null ? <ConfigPanel build={slice.build}>{children}</ConfigPanel> : null), [
+    slice.build,
+    children,
+  ]);
 };
 
-const CssConfigPanel = css`
-  z-index: 0;
-  margin-bottom: 66px;
-  padding: 0 1rem 1rem 1rem;
-
-  ${mediaBreakpointUp('lg')} {
-    &.release {
-      background-color: ${`${COLOR_RELEASE_LIGHT.css()}`};
-      border-color: ${COLOR_RELEASE.css()};
-    }
-    &.stable {
-      background-color: ${COLOR_STABLE_LIGHT.css()};
-      border-color: ${COLOR_STABLE.css()};
-    }
-    &.nightly {
-      background-color: ${COLOR_NIGHTLY_LIGHT.css()};
-      border-color: ${COLOR_NIGHTLY.css()};
-    }
-    margin-top: 1rem;
-    border-width: 2px;
-    border-style: solid;
-  }
-
-  p {
-    line-height: 1.5rem;
-  }
-
-  .artifact {
-    margin-bottom: 1.25rem;
-
-    a {
-      word-wrap: break-word;
-    }
-
-    svg {
-      margin-right: 0.5rem;
-    }
-
-    p {
-      margin-left: 1.5rem;
-      margin-bottom: 0.25rem;
-      font-size: ${SMALL_FONT_SIZE};
-    }
-  }
-
-  pre {
-    background-color: #ffffe6;
-    font-size: 13px;
-    line-height: 1rem;
-    padding: 0.5rem;
-    tab-size: 4;
-  }
-
-  .download-toolbar {
-    background: ${lighten(COLOR_PRIMARY, 15).css()};
-    padding: 1rem 0;
-    text-align: center;
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-
-    .container {
-      text-align: left;
-    }
-
-    .btn + .btn {
-      margin-left: 0.5rem;
-    }
-  }
-`;
+const ConfigPanel = styled('div', {
+  zIndex: 0,
+  marginBottom: 66,
+  padding: '0 1rem 1rem 1rem',
+  p: {
+    lineHeight: '1.5rem',
+  },
+  '.artifact': {
+    marginBottom: '1.25rem',
+    a: {
+      wordWrap: 'break-word',
+    },
+    svg: {
+      marginRight: '0.5rem',
+    },
+    p: {
+      marginLeft: '1.5rem',
+      marginBottom: '0.25rem',
+      fontSize: SMALL_FONT_SIZE,
+    },
+  },
+  pre: {
+    backgroundColor: '#ffffe6',
+    fontSize: '13px',
+    lineHeight: '1rem',
+    padding: '0.5rem',
+    tabSize: 4,
+  },
+  '.download-toolbar': {
+    background: lighten(COLOR_PRIMARY, 15).css(),
+    padding: '1rem 0',
+    textAlign: 'center',
+    position: 'fixed',
+    left: 0,
+    bottom: 0,
+    width: '100%',
+    '.container': {
+      textAlign: 'left',
+    },
+    '.btn + .btn': {
+      marginLeft: '0.5rem',
+    },
+  },
+  lg: {
+    marginTop: '1rem',
+    borderWidth: 2,
+    borderStyle: 'solid',
+  },
+  variants: {
+    build: {
+      release: {
+        lg: {
+          backgroundColor: COLOR_RELEASE_LIGHT.css(),
+          borderColor: COLOR_RELEASE.css(),
+        },
+      },
+      stable: {
+        lg: {
+          backgroundColor: COLOR_STABLE_LIGHT.css(),
+          borderColor: COLOR_STABLE.css(),
+        },
+      },
+      nightly: {
+        lg: {
+          backgroundColor: COLOR_NIGHTLY_LIGHT.css(),
+          borderColor: COLOR_NIGHTLY.css(),
+        },
+      },
+    },
+  },
+});

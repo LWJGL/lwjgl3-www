@@ -4,8 +4,8 @@ import chalk from 'chalk';
 import crypto from 'crypto';
 import gzipSize from 'gzip-size';
 import CliTable from 'cli-table';
-import prettyBytes from './prettyBytes.js';
-import formatSize from './formatSize.js';
+import prettyBytes from './prettyBytes.mjs';
+import formatSize from './formatSize.mjs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
