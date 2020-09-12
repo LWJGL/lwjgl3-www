@@ -4,8 +4,6 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  target: 'web',
-  amd: false,
   devtool: 'cheap-module-source-map',
   entry: {
     vendor: {
@@ -38,7 +36,15 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/js/',
     crossOriginLoading: 'anonymous',
-    ecmaVersion: 5,
+    environment: {
+      arrowFunction: true,
+      bigIntLiteral: true,
+      const: true,
+      destructuring: true,
+      dynamicImport: true,
+      forOf: true,
+      module: true,
+    },
     library: '[name]',
   },
   resolve: {

@@ -46,24 +46,38 @@ async function main() {
   // Build a map that contains each chunk
   const assetMap = new Map();
 
-  manifest.assets.forEach(record => {
-    const name = record.chunkNames.length > 0 ? record.chunkNames[0] : record.name.split('.')[0];
-    const src = fs.readFileSync(path.resolve(__dirname, '../public/js', record.name), { encoding: 'utf-8' });
+  manifest.assets
+    // flatten assets
+    .reduce((partial, record) => {
+      switch (record.type) {
+        case 'asset':
+          return [...partial, record];
+        case 'assets by chunk':
+          return partial.concat(record.children);
+        default:
+          console.log(record);
+          throw new Error(`Unknown record type: ${record.type}`);
+      }
+    }, [])
+    // populate chunk map
+    .forEach(record => {
+      const name = record.chunkNames.length > 0 ? record.chunkNames[0] : record.name.split('.')[0];
+      const src = fs.readFileSync(path.resolve(__dirname, '../public/js', record.name), { encoding: 'utf-8' });
 
-    let asset = {
-      id: record.chunks[0],
-      name,
-      file: record.name,
-      cdn: record.name,
-      route: name.match(/^route[-]/) !== null && name.indexOf('$') === -1,
-      size: record.size,
-      gzipSize: gzipSize.sync(src),
-    };
+      let asset = {
+        id: record.chunks[0],
+        name,
+        file: record.name,
+        cdn: record.name,
+        route: name.match(/^route[-]/) !== null && name.indexOf('$') === -1,
+        size: record.size,
+        gzipSize: gzipSize.sync(src),
+      };
 
-    // Add to asset map
-    assetMap.set(asset.id, asset);
-    productionManifest.assets[asset.id] = asset.cdn;
-  });
+      // Add to asset map
+      assetMap.set(asset.id, asset);
+      productionManifest.assets[asset.id] = asset.cdn;
+    });
 
   // Append route chunk dependencies
   Object.keys(manifest.namedChunkGroups).forEach(chunkName => {

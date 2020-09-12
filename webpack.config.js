@@ -38,8 +38,6 @@ const env = {
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
-    target: 'web',
-    amd: false,
     // cache: false,
     cache: true, // in-memory cache
     // ! Not yet support with DllReferencePlugin
@@ -107,7 +105,15 @@ const buildConfiguration = () => {
       publicPath: '/js/',
       chunkLoadTimeout: 30 * 1000, // 30sec instead of 2min
       crossOriginLoading: false, // false | 'anonymous' | 'use-credentials'
-      ecmaVersion: 5,
+      environment: {
+        arrowFunction: DEV,
+        bigIntLiteral: DEV,
+        const: DEV,
+        destructuring: DEV,
+        dynamicImport: DEV,
+        forOf: DEV,
+        module: DEV,
+      },
       // module: true,
     },
     resolve: {
