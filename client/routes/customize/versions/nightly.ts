@@ -13,21 +13,21 @@ export default (prev: BuildBindings): BuildBindings => ({
       description:
         'Real-time collision detection and multi-physics simulation for VR, games, visual effects, robotics, machine learning etc.',
       natives: NATIVE_ALL,
-      website: 'http://bulletphysics.org/',
+      website: 'https://pybullet.org/',
     },
     [Binding.DRIFTFX]: {
       id: Binding.DRIFTFX,
       title: 'DriftFX',
       description: 'A library that allows you to render any OpenGL content directly into JavaFX nodes.',
       natives: NATIVE_ALL,
-      website: 'http://bulletphysics.org/',
+      website: 'https://github.com/eclipse-efx/efxclipse-drift',
     },
     [Binding.MESHOPTIMIZER]: {
       id: Binding.MESHOPTIMIZER,
       title: 'meshoptimizer',
       description: 'A mesh optimization library that makes meshes smaller and faster to render.',
       natives: NATIVE_ALL,
-      website: 'http://bulletphysics.org/',
+      website: 'https://github.com/zeux/meshoptimizer',
     },
     [Binding.SPVC]: {
       id: Binding.SPVC,
