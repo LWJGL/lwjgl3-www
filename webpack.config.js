@@ -131,12 +131,24 @@ const buildConfiguration = () => {
         {
           test: /\.(js|ts|tsx)$/,
           include: [path.resolve(__dirname, 'client')],
-          use: [{ loader: 'babel-loader', options: { cacheDirectory: true } }],
+          use: [
+            {
+              loader: 'babel-loader',
+              options: {
+                cacheDirectory: true,
+              },
+            },
+          ],
         },
         {
           test: /\.css?$/,
           use: [
-            { loader: 'style-loader', options: { injectType: 'lazyStyleTag' } },
+            {
+              loader: 'style-loader',
+              options: {
+                injectType: 'lazyStyleTag',
+              },
+            },
             {
               loader: 'css-loader',
               options: {
@@ -181,7 +193,12 @@ const buildConfiguration = () => {
       config.module.rules.push({
         test: /\.scss?$/,
         use: [
-          { loader: 'style-loader', options: { injectType: 'styleTag' } },
+          {
+            loader: 'style-loader',
+            options: {
+              injectType: 'styleTag',
+            },
+          },
           {
             loader: 'css-loader',
             options: {
