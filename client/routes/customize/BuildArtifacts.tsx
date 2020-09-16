@@ -1,25 +1,25 @@
 import { useMemo, useCallback } from 'react';
 import { useMemoSlice } from './Store';
 import { NATIVE_ALL } from './types';
-import type { Binding, BindingDefinition, Native, BuildStore } from './types';
+import type { Binding, BindingDefinition, Native, NativeMap, BuildStore } from './types';
 import { toggleArtifact } from './actions';
 
 // UI
 import { Checkbox } from '~/components/Checkbox';
-import { getPlatformIcon } from './getPlatformIcon';
 import { cc } from '~/theme/cc';
 
-const getPlatformIcons = (platforms: Array<Native>) => (
-  <p>
-    <em>Supported platforms: &nbsp;</em>
-    {platforms.map((platform) => getPlatformIcon(platform))}
+const getSupportedPlatforms = (natives: NativeMap, platforms: Array<Native>, disabled: boolean) => (
+  <p className={disabled ? 'text-danger' : 'text-secondary'}>
+    <em>Supported platforms: </em>
+    {platforms.map((platform) => natives[platform].title).join(', ')}
   </p>
 );
 
-const getSlice = ({ contents, availability, descriptions, artifacts }: BuildStore) => ({
+const getSlice = ({ contents, availability, descriptions, artifacts, natives }: BuildStore) => ({
   contents,
   availability,
   descriptions,
+  natives: natives.byId,
   allIds: artifacts.allIds,
   byId: artifacts.byId,
 });
@@ -31,7 +31,7 @@ export function BuildArtifacts() {
   const onChange = useCallback((artifact: Binding) => dispatch(toggleArtifact(artifact)), [dispatch]);
 
   return useMemo(() => {
-    const { contents, availability, descriptions, allIds, byId } = slice;
+    const { contents, availability, descriptions, allIds, byId, natives } = slice;
 
     return (
       <div className="custom-controls-stacked">
@@ -42,6 +42,7 @@ export function BuildArtifacts() {
           return (
             <BuildArtifact
               key={it}
+              natives={natives}
               artifact={artifact}
               disabled={!available || artifact.required === true}
               selected={available && contents[it] === true}
@@ -56,6 +57,7 @@ export function BuildArtifacts() {
 }
 
 interface Props {
+  natives: NativeMap;
   artifact: BindingDefinition;
   disabled: boolean;
   selected: boolean;
@@ -63,7 +65,7 @@ interface Props {
   onChange: any;
 }
 
-const BuildArtifact: React.FC<Props> = ({ artifact, selected, disabled, showDescriptions, onChange }) => {
+const BuildArtifact: React.FC<Props> = ({ natives, artifact, selected, disabled, showDescriptions, onChange }) => {
   if (showDescriptions) {
     return (
       <div className={cc('artifact', { 'text-muted': disabled })}>
@@ -77,7 +79,7 @@ const BuildArtifact: React.FC<Props> = ({ artifact, selected, disabled, showDesc
         {artifact.natives &&
           artifact.natives !== NATIVE_ALL &&
           artifact.nativesOptional !== true &&
-          getPlatformIcons(artifact.natives)}
+          getSupportedPlatforms(natives, artifact.natives, disabled)}
         <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
         {artifact.website !== undefined && (
           <p>
