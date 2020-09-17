@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/LWJGL/lwjgl3-www#readme",
   "dependencies": {
-    "@stitches/react": "0.0.3-canary.0",
+    "@stitches/react": "0.0.3-canary.1",
     "aws-sdk": "2.754.0",
     "body-parser": "1.19.0",
     "chalk": "4.1.0",
@@ -62,7 +62,7 @@
     "jszip": "3.5.0",
     "lodash-es": "4.17.15",
     "node-sass": "4.14.1",
-    "postcss": "8.0.3",
+    "postcss": "8.0.5",
     "postcss-loader": "4.0.2",
     "postcss-preset-env": "6.7.0",
     "prettier": "2.1.2",

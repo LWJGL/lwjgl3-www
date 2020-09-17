@@ -159,7 +159,7 @@ export const { styled, css } = createStyled({
     //   width: value,
     //   height: value,
     // }),
-    linearGradient: (config) => (value) => ({
+    linearGradient: (value, config) => ({
       backgroundImage: `linear-gradient(${value})`,
     }),
     // br: (config) => (value) => ({
