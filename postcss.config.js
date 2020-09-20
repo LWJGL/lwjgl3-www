@@ -13,7 +13,7 @@ if (PROD) {
   plugins.push(
     purgecss({
       content: ['./client/**/*.tsx'],
-      whitelist: ['iconsheet'],
+      safelist: ['iconsheet'],
       defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || [],
     })
   );
