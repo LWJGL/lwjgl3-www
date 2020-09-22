@@ -1,11 +1,11 @@
 import path from 'path';
 import { promises as fs } from 'fs';
 import { fileURLToPath } from 'url';
-import yargs from 'yargs';
 import puppeteer from 'puppeteer-core';
-import h2 from 'fetch-h2';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+import fetch from 'node-fetch';
 
-const { fetch, disconnectAll } = h2;
 const filePath = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filePath);
 
@@ -16,11 +16,10 @@ async function getDebuggerUrl() {
   }
 
   const data = await response.json();
-  await disconnectAll();
   return data.webSocketDebuggerUrl;
 }
 
-const argv = yargs
+const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <source.svg> <target.png> [options]')
   .demandCommand(2, 2)
   .option('width', {
