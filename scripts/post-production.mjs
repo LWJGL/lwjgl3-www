@@ -48,17 +48,24 @@ async function main() {
 
   manifest.assets
     // flatten assets
-    .reduce((partial, record) => {
-      switch (record.type) {
-        case 'asset':
-          return [...partial, record];
-        case 'assets by chunk':
-          return partial.concat(record.children);
-        default:
-          console.log(record);
-          throw new Error(`Unknown record type: ${record.type}`);
-      }
-    }, [])
+    .reduce(
+      // accumulator is a named function because it is used recursively (see "assets by status")
+      function accumulator(partial, record) {
+        switch (record.type) {
+          case 'asset':
+            return [...partial, record];
+          case 'assets by chunk':
+            return partial.concat(record.children);
+          case 'assets by status':
+            // this can be a collection of previously "cached" or newly "emitted" chunks
+            return partial.concat(record.children.reduce(accumulator, []));
+          default:
+            // console.log(record);
+            throw new Error(`Unknown record type: ${record.type}`);
+        }
+      },
+      []
+    )
     // populate chunk map
     .forEach(record => {
       const name = record.chunkNames.length > 0 ? record.chunkNames[0] : record.name.split('.')[0];
