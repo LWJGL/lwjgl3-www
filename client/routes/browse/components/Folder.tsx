@@ -50,7 +50,7 @@ export const Folder: React.FC<Props> = ({ path, loading = false }) => {
         {loading && (
           <div className="d-inline-block">
             <div className="spinner-grow spinner-grow-sm ml-1" role="status">
-              <span className="sr-only">Loading&hellip;</span>
+              <span className="visually-hidden">Loading&hellip;</span>
             </div>
           </div>
         )}
@@ -63,7 +63,7 @@ export const SpinnerRow: React.FC = () => (
   <tr>
     <td>
       <div className="spinner-grow" role="status">
-        <span className="sr-only">Loading&hellip;</span>
+        <span className="visually-hidden">Loading&hellip;</span>
       </div>
     </td>
   </tr>

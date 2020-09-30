@@ -4,6 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
+  target: 'browserslist',
   devtool: 'cheap-module-source-map',
   entry: {
     vendor: {

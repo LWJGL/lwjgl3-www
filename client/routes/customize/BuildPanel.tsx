@@ -33,7 +33,7 @@ interface Props {
 const StatusFallback = () => (
   <div className="d-flex align-items-center justify-content-center" style={{ height: 64 }}>
     <div className="spinner-grow" role="status">
-      <span className="sr-only">Loading...</span>
+      <span className="visually-hidden">Loading...</span>
     </div>
   </div>
 );

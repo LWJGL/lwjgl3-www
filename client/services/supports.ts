@@ -24,3 +24,11 @@ export const SUPPORTS_RESIZE_OBSERVER: boolean = 'ResizeObserver' in window;
 // Touch
 
 // export const supportsTouch = navigator.maxTouchPoints > 1;
+
+// export const SUPPORTS_CSS_SUPPORTS: boolean = 'CSS' in window && typeof CSS.supports === 'function';
+// export const SUPPORTS_CUSTOM_PROPERTIES: boolean = CSS.supports('color', 'var(--a)');
+// export const SUPPORTS_IMAGE_SET: boolean = CSS.supports('background-image', 'image-set(url("a") 1x, url("b") 2x)');
+// export const SUPPORTS_WEBKIT_IMAGE_SET: boolean = CSS.supports(
+//   'background-image',
+//   '-webkit-image-set(url("a") 1x, url("b") 2x)'
+// );

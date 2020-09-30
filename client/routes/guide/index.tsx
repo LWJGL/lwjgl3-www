@@ -53,7 +53,7 @@ const Content: React.FC<{ children?: never }> = () => (
         fallback={
           <div className="d-flex justify-content-center">
             <div className="spinner-grow text-light my-5" role="status">
-              <span className="sr-only">Loading...</span>
+              <span className="visually-hidden">Loading...</span>
             </div>
           </div>
         }

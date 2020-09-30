@@ -38,6 +38,7 @@ const env = {
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
+    target: 'browserslist',
     // cache: false,
     cache: true, // in-memory cache
     // ! Not yet support with DllReferencePlugin

@@ -23,7 +23,7 @@ const config = {
   ],
   plugins: [
     // React
-    DEV && HMR && 'react-refresh/babel',
+    HMR && 'react-refresh/babel',
     DEV && '@babel/plugin-transform-react-display-name',
     PRODUCTION && [
       'transform-react-remove-prop-types',
@@ -50,7 +50,7 @@ const config = {
 };
 
 if (PRODUCTION) {
-  config.presets.unshift([
+  config.presets.push([
     '@babel/env',
     {
       spec: false,
