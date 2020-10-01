@@ -249,7 +249,7 @@ To push the image to Docker Hub (requires access to LWJGL organization):
 docker push lwjgl/website:latest
 ```
 
-## IDE Setup
+## IDE Setup for user help
 
 We recommend [Visual Studio Code](https://code.visualstudio.com/) with the following plugins:
 
