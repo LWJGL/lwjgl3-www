@@ -16,11 +16,6 @@
     "paths": {
       "~/*": ["./client/*"]
     },
-    "plugins": [
-      {
-        "name": "typescript-styled-plugin"
-      }
-    ],
     "types": ["node", "react/experimental", "react-dom/experimental"]
   },
   "include": ["./types", "./client"],

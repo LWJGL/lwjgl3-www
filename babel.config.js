@@ -13,31 +13,24 @@ const config = {
         onlyRemoveTypeImports: true,
       },
     ],
-    // [
-    //   '@babel/preset-react',
-    //   {
-    //     runtime: 'automatic',
-    //     development: DEV,
-    //   },
-    // ],
+    [
+      '@babel/preset-react',
+      {
+        runtime: 'automatic',
+        development: DEV,
+        useBuiltIns: true,
+        useSpread: DEV,
+      },
+    ],
   ],
   plugins: [
     // React
     HMR && 'react-refresh/babel',
-    DEV && '@babel/plugin-transform-react-display-name',
     PRODUCTION && [
       'transform-react-remove-prop-types',
       {
         mode: 'remove',
         removeImport: true,
-      },
-    ],
-    [
-      PRODUCTION ? '@babel/plugin-transform-react-jsx' : '@babel/plugin-transform-react-jsx-development',
-      {
-        runtime: 'automatic',
-        useBuiltIns: true,
-        useSpread: !PRODUCTION,
       },
     ],
 
