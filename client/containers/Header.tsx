@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { memo, useEffect, useState, useRef } from 'react';
 import { styled } from '~/theme/stitches.config';
 import { Link, useLocation } from 'react-router-dom';
 import { useBreakpoint } from '~/components/Breakpoint';
@@ -54,7 +54,10 @@ let offsetHeight = 48;
 
 export const Header: React.FC<{ children?: never }> = () => {
   const location = useLocation();
-  const isHome = location !== undefined && location.pathname === '/';
+  return <HeaderNav isHome={location.pathname === '/'} />;
+};
+
+export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo(({ isHome }) => {
   const {
     current: currentBreakpoint,
     breakpoints: { md },
@@ -205,4 +208,4 @@ export const Header: React.FC<{ children?: never }> = () => {
       </nav>
     </StyledHeader>
   );
-};
+});

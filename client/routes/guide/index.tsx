@@ -6,14 +6,6 @@ import { Sample } from './Sample';
 
 const GuideRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Get started with LWJGL 3" description="This guide will help you get started with LWJGL 3">
-    <Content />
-  </PageView>
-);
-
-export default GuideRoute;
-
-const Content: React.FC<{ children?: never }> = () => (
-  <>
     <section className="container">
       <h1>
         LW
@@ -280,5 +272,7 @@ const Content: React.FC<{ children?: never }> = () => (
         , an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API.
       </p>
     </section>
-  </>
+  </PageView>
 );
+
+export default GuideRoute;

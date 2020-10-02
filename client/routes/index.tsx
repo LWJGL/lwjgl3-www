@@ -1,19 +1,19 @@
 import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { NotFound } from '../routes/error/NotFound';
+import { ErrorBoundary } from '../components/ErrorBoundary';
+import { PageError } from '../components/routes/PageError';
+import { NotFound } from './error/NotFound';
 // import { delay } from '../services/delay';
 
 function $R(fn: () => Promise<any>) {
-  if (FLAG_PRODUCTION) {
-    return lazy(fn);
-  } else {
-    // ! If we don't wrap the route, all chunks are loaded on mount
-    const Element = lazy(fn);
-    function AsyncRoute() {
-      return <Element />;
-    }
-    return AsyncRoute;
-  }
+  const RouteChunk = lazy(fn);
+  return function AsyncRoute() {
+    return (
+      <ErrorBoundary fallback={PageError}>
+        <RouteChunk />
+      </ErrorBoundary>
+    );
+  };
 }
 
 // Import causes routes to be code-split

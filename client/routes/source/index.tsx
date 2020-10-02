@@ -5,12 +5,6 @@ import '~/components/icons/fa/brands/github';
 
 const SourceRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Source & Build Status" description="Links to LWJGL Github repository and build status matrix">
-    <StaticContent />
-  </PageView>
-);
-
-const StaticContent = () => (
-  <>
     <section className="container">
       <h1>
         LW
@@ -290,7 +284,7 @@ const StaticContent = () => (
         </div>
       </div>
     </section>
-  </>
+  </PageView>
 );
 
 export default SourceRoute;

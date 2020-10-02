@@ -14,7 +14,7 @@ export const Layout: React.FC<{ children?: never }> = () => (
     <Header />
     <main>
       <ErrorBoundary fallback={PageError}>
-        <Suspense fallback={<PageBlank />} unstable_avoidThisFallback={true}>
+        <Suspense fallback={<PageBlank />}>
           <RouterConfig />
         </Suspense>
       </ErrorBoundary>

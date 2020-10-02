@@ -19,21 +19,15 @@ import '~/components/icons/fa/duotone/phone-laptop';
 import '~/components/icons/fa/duotone/project-diagram';
 import '~/components/icons/fa/duotone/brackets-curly';
 
-const HomeRoute: React.FC<{ children?: never }> = () => (
-  <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
-    <HomeHero />
-    <HashLinkTarget id="learn-more" />
-    <StaticContent />
-  </PageView>
-);
-
 const FeatureImage = styled('div', {
   fontSize: '4rem',
   padding: '1rem 0 2rem 0',
 });
 
-const StaticContent = () => (
-  <>
+const HomeRoute: React.FC<{ children?: never }> = () => (
+  <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
+    <HomeHero />
+    <HashLinkTarget id="learn-more" />
     <section className="container py-5">
       <h1 className="text-center">
         What is LW
@@ -413,7 +407,7 @@ const StaticContent = () => (
         </div>
       </div>
     </section>
-  </>
+  </PageView>
 );
 
 export default HomeRoute;

@@ -1,10 +1,8 @@
 import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ErrorBoundary } from '../ErrorBoundary';
-import { PageError } from './PageError';
-// import { trackView } from '~/services/ga';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
+// import { trackView } from '~/services/ga';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
@@ -54,24 +52,30 @@ function storeScroll(key: string) {
   // console.table(Array.from(scrollEntries.keys()));
 }
 
-function arePropsEqual({ location: prevLocation }: PropsMemo, { location: nextLocation }: PropsMemo) {
-  // EXPERIMENTAL: We want to prevent re-render when only hash changes
-  // This unfortunately also changes the key which may result in bugs
-  return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
-}
-
 function scrollToTop() {
   if (window.pageXOffset + window.pageYOffset > 0) {
     window.scroll(0, 0);
   }
 }
 
-export const PageView: React.FC<Props> = (props) => {
-  const location = useLocation();
-  return <PageViewMemo location={location} {...props} />;
-};
+function arePropsEqual({ location: prevLocation }: PropsMemo, { location: nextLocation }: PropsMemo) {
+  if (!FLAG_PRODUCTION) {
+    // Force re-render when locations match (so react-refresh continues to work for route modules)
+    // (alternatively, route modules should have all their content in different modules/files)
+    // This should never happen in production, therefore we do this only in DEV mode
+    if (prevLocation === nextLocation) {
+      return false;
+    }
+  }
 
-const PageViewMemo: React.FC<PropsMemo> = memo(function PageViewMemo({ location, title, description, children }) {
+  // We want to prevent re-renders when document hash changes
+  // Setting a #hash unfortunately also changes the `location.key` which can result in bugs
+  // so we ignore updates when pathname and search remain the same
+  return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
+}
+
+//@ts-ignore
+const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, description, children }) => {
   const { /*pathname, search,*/ hash, key = 'root' } = location;
 
   // Update document title
@@ -111,9 +115,12 @@ const PageViewMemo: React.FC<PropsMemo> = memo(function PageViewMemo({ location,
   //   trackView({ page_path: `${pathname}${search}` });
   // }, [pathname, search]);
 
-  if (FLAG_PRODUCTION) {
-    return <ErrorBoundary fallback={PageError}>{children}</ErrorBoundary>;
-  } else {
-    return <>{children}</>;
-  }
-}, arePropsEqual);
+  return children !== undefined ? children : null;
+};
+
+const PageViewMemo = memo(PageViewWithLocation, arePropsEqual);
+
+export const PageView: React.FC<Props> = (props) => {
+  const location = useLocation();
+  return <PageViewMemo location={location} {...props} />;
+};
