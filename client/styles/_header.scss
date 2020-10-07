@@ -25,14 +25,16 @@
     font-weight: 300;
     color: $white;
     text-decoration: none;
-    &:focus,
+    &:focus {
+      outline: none;
+    }
     &.active {
       color: yellow;
-      outline: none;
     }
     @include media-breakpoint-up(lg) {
       background: linear-gradient(currentColor, currentColor) bottom / 0 2px no-repeat;
       transition: 0.5s background-size ease-out;
+      &:focus-visible,
       &:hover,
       &.active {
         background-size: 100% 2px;
