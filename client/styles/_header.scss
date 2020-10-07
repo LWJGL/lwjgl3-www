@@ -23,7 +23,7 @@
   }
   a {
     font-weight: 300;
-    color: $white;
+    color: white;
     text-decoration: none;
     &:focus {
       outline: none;
@@ -38,6 +38,10 @@
       &:hover,
       &.active {
         background-size: 100% 2px;
+      }
+      &.active:focus-visible {
+        background-image: linear-gradient(white, white);
+        background-size: 90% 2px;
       }
     }
   }
