@@ -116,7 +116,8 @@ export const { styled, css } = createStyled({
     // lgDown: (rule) => `@media (max-width: ${1200 - 0.02}px) { ${rule} }`,
     // xl: (rule) => `@media (min-width: 1200px) { ${rule} }`,
     // xxl: (rule) => `@media (min-width: 1400px) { ${rule} }`,
-    minmax: (rule) => `@supports (width: max(1px, 2px)) { ${rule} }`,
+    max: (rule) => `@supports (width: max(1px, 2px)) { ${rule} }`,
+    min: (rule) => `@supports (width: min(1px, 2px)) { ${rule} }`,
     clamp: (rule) => `@supports (width: clamp(140px, 16vw, 220px)) { ${rule} }`,
   },
   utils: {

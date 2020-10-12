@@ -106,7 +106,7 @@ const LogoContainer = styled('div', {
     animation: 'anim-reset-opacity-transform 1s ease forwards',
     marginBottom: '1rem',
     width: 140,
-    minmax: {
+    max: {
       width: 'max(140px, min(16vw, 220px))',
     },
     clamp: {
@@ -125,7 +125,7 @@ const HeroContent = styled('div', {
   fontWeight: 300,
   lineHeight: 1.2,
   fontSize: '2rem',
-  minmax: {
+  max: {
     fontSize: 'max(1.2rem, min(3.5vw, 2.1rem))',
   },
   clamp: {
@@ -136,7 +136,7 @@ const HeroContent = styled('div', {
   },
   h1: {
     fontSize: '4rem',
-    minmax: {
+    max: {
       fontSize: 'max(4rem, min(15vw, 10rem))',
     },
     clamp: {
