@@ -213,6 +213,7 @@ const buildConfiguration = () => {
           {
             loader: 'style-loader',
             options: {
+              esModule: false,
               injectType: 'styleTag',
             },
           },

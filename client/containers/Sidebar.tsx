@@ -1,13 +1,66 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { styled } from '~/theme/stitches.config';
 import { cc } from '~/theme/cc';
 import { createFocusTrap } from 'focus-trap';
 import type { FocusTrap } from 'focus-trap';
 import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
-import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/regular/bars';
 import '~/components/icons/fa/regular/times';
+
+const MenuToggleButton = styled('button', {
+  height: 24,
+  width: 30,
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
+  alignItems: 'stretch',
+  padding: 0,
+  border: 0,
+  background: 'transparent',
+  position: 'absolute',
+  zIndex: 3,
+
+  ':focus': {
+    outline: 'none',
+  },
+
+  ':focus-visible': {
+    span: {
+      backgroundColor: 'yellow',
+    },
+  },
+
+  '> :nth-child(1)': {
+    transformOrigin: 'top right',
+  },
+  '> :nth-child(3)': {
+    transformOrigin: 'bottom right',
+  },
+  variants: {
+    open: {
+      true: {
+        '> :nth-child(1)': {
+          transform: 'rotate(-45deg)',
+        },
+        '> :nth-child(2)': {
+          transform: 'scale(0)',
+        },
+        '> :nth-child(3)': {
+          transform: 'rotate(45deg)',
+        },
+      },
+    },
+  },
+});
+
+const MenuToggleLine = styled('span', {
+  width: '100%',
+  height: 4,
+  backgroundColor: 'white',
+  transition: 'transform 0.2s',
+});
 
 export function Sidebar() {
   const [open, setOpen] = useState(false);
@@ -119,30 +172,20 @@ export function Sidebar() {
   }, [open, onToggle]);
 
   return (
-    <div ref={slidingMenu} className={cc('col', 'sliding-menu', { open: open })}>
-      <button
+    <div ref={slidingMenu} className={cc('col', 'text-right', 'sliding-menu', { open: open })}>
+      <MenuToggleButton
+        open={open}
         type="button"
-        className="btn btn-link sliding-menu-icon"
         onClick={onToggle}
-        aria-hidden={open}
-        title="Open navigation menu"
+        title={`${open ? 'Close' : 'Open'} navigation menu`}
       >
-        <Icon name="fa/regular/bars" />
-      </button>
+        <MenuToggleLine />
+        <MenuToggleLine />
+        <MenuToggleLine />
+      </MenuToggleButton>
       <div className="sliding-menu-overlay" onClick={onToggle} />
       <div ref={sideContainer} className="sliding-menu-container" role="menu" aria-hidden={!open} aria-expanded={open}>
-        <div className="text-right">
-          <button
-            tabIndex={open ? 0 : -1}
-            ref={closeButton}
-            type="button"
-            className="btn btn-link sliding-menu-icon"
-            onClick={onToggle}
-            title="Close navigation menu"
-          >
-            <Icon name="fa/regular/times" />
-          </button>
-        </div>
+        <div className="text-right"></div>
         {open && <MainMenu onClick={onToggle} />}
       </div>
     </div>

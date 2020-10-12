@@ -8,6 +8,8 @@
   line-height: 3rem;
   font-size: 1.2rem;
   will-change: background-color, top;
+  user-select: none;
+
   &.fixed {
     position: fixed;
   }
@@ -55,32 +57,18 @@
   }
   .sliding-menu {
     $gutter: $grid-gutter-width / 2;
+    padding: $gutter;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
     a {
       &:hover {
         text-decoration: underline;
       }
     }
-    .sliding-menu-icon {
-      display: flex;
-      align-items: center;
-      border: none;
-      padding: 0 $gutter;
-      margin: 0 (-$gutter) 0 auto;
-      color: $white;
-      height: 3rem;
-      .svg-icon {
-        font-size: 1.5rem;
-        svg {
-          bottom: auto;
-        }
-      }
-      &:hover,
-      &:focus,
-      &:active {
-        color: yellow;
-      }
-    }
     .sliding-menu-overlay {
+      z-index: 1;
       position: fixed;
       left: 0;
       top: 0;
@@ -93,9 +81,10 @@
       transition: opacity 0.3s cubic-bezier(0, 0, 0.3, 1);
     }
     .sliding-menu-container {
+      z-index: 2;
       background-color: black;
       position: fixed;
-      padding: 0 $gutter;
+      padding: 48px $gutter 0 $gutter;
       right: 0;
       top: 0;
       max-width: 320px;
