@@ -1,24 +1,79 @@
 import { memo, useEffect, useState, useRef } from 'react';
-import { styled } from '~/theme/stitches.config';
 import { Link, useLocation } from 'react-router-dom';
+import { styled } from '~/theme/stitches.config';
+import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import { useBreakpoint } from '~/components/Breakpoint';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
-import { cc } from '~/theme/cc';
 import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 import { Icon } from '~/components/Icon';
 import '~/components/icons/fa/duotone/cloud-download';
 
-const HEADER_CLASSNAME = 'site-header';
-
-const SafeLogo = styled('div', {
-  marginLeft: 'env(safe-area-inset-left)',
-});
-
 const StyledHeader = styled('header', {
+  // TODO: Add one more dash below in next @stitches version
+  '-safe-margin': 'env(safe-area-inset-left)',
+  position: 'absolute',
+  zIndex: ZINDEX_MODAL_BACKDROP - 1,
+  top: 0,
+  left: 0,
+  width: '100%',
+  color: 'white',
+  lineHeight: '3rem',
+  fontSize: '1.2rem',
+  willChange: 'background-color, top',
+  userSelect: 'none',
+  display: 'flex',
+  gap: '1rem',
+  alignItems: 'center',
+  padding: '0 1rem',
+
+  min: {
+    padding: '0 max(var(--safe-margin), 1rem)',
+  },
+
+  a: {
+    color: 'white',
+    fontWeight: 300,
+    textDecoration: 'none',
+    transition: '0.5s background-size ease-out',
+    ':focus': {
+      outline: 'none',
+    },
+    '&.active': {
+      color: 'yellow',
+    },
+
+    lg: {
+      backgroundSize: '0 3px',
+      background: 'linear-gradient(currentColor, currentColor) bottom no-repeat',
+      '&:focus-visible,&:hover,&.active': {
+        backgroundSize: '100% 3px',
+      },
+      '&.active:focus-visible': {
+        backgroundImage: 'linear-gradient(white, white)',
+        backgroundSize: '90% 3px',
+      },
+    },
+  },
+
   variants: {
+    fixed: {
+      true: {
+        position: 'fixed',
+      },
+    },
+    hidden: {
+      true: {},
+    },
+    alt: {
+      true: {
+        position: 'fixed',
+        willChange: 'top, background-color, opacity',
+        transition: 'top 0.3s cubic-bezier(0, 0, 0.3, 1), opacity 0.5s ease-out',
+      },
+    },
     home: {
       true: {
         transition: 'background-color 0.75s ease-out',
@@ -35,18 +90,32 @@ const StyledHeader = styled('header', {
   },
 });
 
+StyledHeader.compoundVariant(
+  {
+    alt: true,
+    hidden: true,
+  },
+  {
+    opacity: 0,
+    top: '-3rem',
+    pointerEvents: 'none',
+  }
+);
+
 function ServiceWorkerUpdate() {
   const [pending, update] = useServiceWorker();
 
   return pending ? (
-    <button
-      onClick={update as any}
-      style={{ marginTop: -4 }}
-      className="btn btn-primary btn-sm present-yourself py-0 ml-3"
-      title="Update website to latest version"
-    >
-      <Icon name="fa/duotone/cloud-download" style={{ fontSize: '1.25em' }} />
-    </button>
+    <div className="d-flex align-items-center">
+      <button
+        type="button"
+        onClick={update as any}
+        className="btn btn-primary btn-sm present-yourself"
+        title="Update website to latest version"
+      >
+        <Icon name="fa/duotone/cloud-download" style={{ fontSize: '1.25rem' }} />
+      </button>
+    </div>
   ) : null;
 }
 
@@ -187,25 +256,17 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
       role="navigation"
       home={isHome}
       opaque={!isHome || !top}
-      className={cc(HEADER_CLASSNAME, {
-        alt: IS_IOS,
-        fixed,
-        hidden,
-      })}
+      fixed={fixed}
+      hidden={hidden}
+      alt={IS_IOS}
       style={{ top: pos }}
     >
-      <nav className="container-fluid">
-        <div className="row">
-          <SafeLogo className="col col-auto">
-            <Link to="/">
-              LW
-              <b>JGL</b> 3
-            </Link>
-            <ServiceWorkerUpdate />
-          </SafeLogo>
-          {currentBreakpoint > md ? <MainMenu className="main-menu-horizontal col" /> : <Sidebar />}
-        </div>
-      </nav>
+      <Link to="/">
+        LW
+        <b>JGL</b> 3
+      </Link>
+      <ServiceWorkerUpdate />
+      {currentBreakpoint > md ? <MainMenu variant="horizontal" /> : <Sidebar />}
     </StyledHeader>
   );
 });

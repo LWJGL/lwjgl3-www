@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { styled } from '~/theme/stitches.config';
-import { cc } from '~/theme/cc';
-import { createFocusTrap } from 'focus-trap';
-import type { FocusTrap } from 'focus-trap';
-import { on, off } from '~/services/noscroll';
 import { MainMenu } from './MainMenu';
+import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
+import { FocusScope } from '@react-aria/focus';
+import { OverlayContainer, useOverlay, usePreventScroll, useModal } from '@react-aria/overlays';
 import '~/components/icons/fa/regular/bars';
 import '~/components/icons/fa/regular/times';
 
 const MenuToggleButton = styled('button', {
+  marginLeft: 'auto',
   height: 24,
   width: 30,
   display: 'flex',
@@ -19,19 +19,14 @@ const MenuToggleButton = styled('button', {
   padding: 0,
   border: 0,
   background: 'transparent',
-  position: 'absolute',
-  zIndex: 3,
-
   ':focus': {
     outline: 'none',
   },
-
   ':focus-visible': {
     span: {
       backgroundColor: 'yellow',
     },
   },
-
   '> :nth-child(1)': {
     transformOrigin: 'top right',
   },
@@ -60,29 +55,85 @@ const MenuToggleLine = styled('span', {
   height: 4,
   backgroundColor: 'white',
   transition: 'transform 0.2s',
+  pointerEvents: 'none',
 });
 
-export function Sidebar() {
+const Backdrop = styled('div', {
+  // backdropFilter: 'blur(3px)',
+  willChange: 'background-color',
+  transition: 'background-color 0.3s cubic-bezier(0, 0, 0.3, 1)',
+  variants: {
+    open: {
+      true: {
+        position: 'fixed',
+        zIndex: ZINDEX_MODAL_BACKDROP - 3,
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0,0,0,0.55)',
+      },
+    },
+  },
+});
+
+const MenuOverlay = styled('div', {
+  padding: '4rem 1rem 0 1rem',
+  backgroundColor: 'black',
+  zIndex: ZINDEX_MODAL_BACKDROP - 2,
+  position: 'fixed',
+  top: 0,
+  right: 0,
+  bottom: 0,
+  maxWidth: 320,
+  minWidth: 260,
+  overflowX: 'hidden',
+  overflowY: 'auto',
+  '-webkit-overflow-scrolling': 'touch',
+  overscrollBehavior: 'contain',
+  willChange: 'transform',
+  transform: 'translateX(102%) translate3d(0, 0, 0)',
+  transition: 'transform 0.3s cubic-bezier(0, 0, 0.3, 1)',
+  // pointerEvents: 'none',
+  variants: {
+    touching: {
+      true: {
+        transition: 'none',
+      },
+    },
+    open: {
+      true: {
+        pointerEvents: 'auto',
+        transform: 'none',
+      },
+    },
+  },
+});
+
+export const Sidebar: React.FC<{ children?: never }> = () => {
   const [open, setOpen] = useState(false);
-  const slidingMenu = useRef<HTMLDivElement>(null);
-  const sideContainer = useRef<HTMLDivElement>(null);
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const focusTrap = useRef<FocusTrap | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   const onToggle = useCallback(() => {
     setOpen((open) => !open);
   }, []);
 
-  useEffect(() => {
-    if (slidingMenu.current !== null && closeButton.current !== null) {
-      focusTrap.current = createFocusTrap(slidingMenu.current, {
-        onDeactivate: onToggle,
-        initialFocus: closeButton.current,
-        preventScroll: true,
-        // clickOutsideDeactivates: true
-      });
-    }
-  }, [onToggle]);
+  // @react-aria
+  usePreventScroll({ isDisabled: !open });
+
+  const { overlayProps } = useOverlay(
+    {
+      isOpen: open,
+      onClose: onToggle,
+      isDismissable: true,
+      shouldCloseOnInteractOutside: (el) => {
+        return el !== buttonRef.current && el !== backdropRef.current;
+      },
+    },
+    overlayRef
+  );
 
   useEffect(() => {
     if (!open) {
@@ -93,7 +144,7 @@ export function Sidebar() {
     let touchingSideNav = false;
     let startX = 0;
     let currentX = 0;
-    let sideDiv = sideContainer.current;
+    let sideDiv = overlayRef.current;
 
     function onTouchStart(evt: TouchEvent) {
       startX = evt.touches[0].pageX;
@@ -147,10 +198,6 @@ export function Sidebar() {
     }
 
     // On Open
-    on();
-    if (focusTrap.current !== null) {
-      focusTrap.current.activate();
-    }
     if (sideDiv !== null) {
       sideDiv.addEventListener('touchstart', onTouchStart, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
       // Disable passive to avoid triggering gestures in some devices
@@ -158,11 +205,15 @@ export function Sidebar() {
       sideDiv.addEventListener('touchend', onTouchEnd, false);
     }
 
-    return () => {
-      off();
-      if (focusTrap.current !== null) {
-        focusTrap.current.deactivate({ onDeactivate: () => {} });
+    // Auto-focus current active link
+    if (overlayRef.current !== null) {
+      const activeLink = overlayRef.current.querySelector('.active') as HTMLAnchorElement | null;
+      if (activeLink !== null) {
+        activeLink.focus();
       }
+    }
+
+    return () => {
       if (sideDiv !== null) {
         sideDiv.removeEventListener('touchstart', onTouchStart, false);
         sideDiv.removeEventListener('touchmove', onTouchMove, false);
@@ -171,23 +222,47 @@ export function Sidebar() {
     };
   }, [open, onToggle]);
 
+  // * Do not use <Portal> for menu because focus trap must
+  // * contain toggle button and the menu under the same tree
+
   return (
-    <div ref={slidingMenu} className={cc('col', 'text-right', 'sliding-menu', { open: open })}>
+    <>
       <MenuToggleButton
-        open={open}
         type="button"
+        ref={buttonRef}
         onClick={onToggle}
         title={`${open ? 'Close' : 'Open'} navigation menu`}
+        open={open}
       >
         <MenuToggleLine />
         <MenuToggleLine />
         <MenuToggleLine />
       </MenuToggleButton>
-      <div className="sliding-menu-overlay" onClick={onToggle} />
-      <div ref={sideContainer} className="sliding-menu-container" role="menu" aria-hidden={!open} aria-expanded={open}>
-        <div className="text-right"></div>
-        {open && <MainMenu onClick={onToggle} />}
-      </div>
-    </div>
+
+      <OverlayContainer>
+        <Backdrop ref={backdropRef} open={open} onClick={onToggle} />
+        <MenuOverlay
+          open={open}
+          role="menu"
+          ref={overlayRef}
+          aria-hidden={!open}
+          aria-expanded={open}
+          {...overlayProps}
+        >
+          {open && (
+            <FocusScope contain={open} restoreFocus>
+              <Modal>
+                <MainMenu variant="vertical" onClick={onToggle} />
+              </Modal>
+            </FocusScope>
+          )}
+        </MenuOverlay>
+      </OverlayContainer>
+    </>
   );
-}
+};
+
+const Modal: React.FC<{}> = ({ children }) => {
+  const { modalProps } = useModal();
+  return <div {...modalProps}>{children}</div>;
+};
