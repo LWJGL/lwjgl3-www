@@ -13,7 +13,7 @@ import '~/components/icons/fa/duotone/cloud-download';
 
 const StyledHeader = styled('header', {
   // TODO: Add one more dash below in next @stitches version
-  '-safe-margin': 'env(safe-area-inset-left)',
+  '--safe-margin': 'env(safe-area-inset-left)',
   position: 'absolute',
   zIndex: ZINDEX_MODAL_BACKDROP - 1,
   top: 0,
