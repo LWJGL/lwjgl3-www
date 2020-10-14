@@ -4,7 +4,9 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
+  // target: 'es2020',
   target: 'browserslist',
+  cache: false,
   devtool: 'cheap-module-source-map',
   entry: {
     vendor: {

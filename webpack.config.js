@@ -38,6 +38,7 @@ const env = {
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
+    // target: DEV ? 'es2020' : 'browserslist',
     target: 'browserslist',
     // cache: false,
     cache: true, // in-memory cache
