@@ -53,31 +53,29 @@ const buildConfiguration = () => {
       // minimize: false,
       minimizer: [
         new TerserPlugin({
-          cache: true,
           parallel: true,
-          sourceMap: SOURCEMAP,
           extractComments: false,
           terserOptions: {
+            mangle: true,
+            ecma: 5,
+            module: false,
+            // sourceMap: {
+            //   url: 'inline'
+            // },
             output: {
               comments: false,
             },
-            mangle: true,
-            // warnings: true,
-            ecma: 5,
-            module: false,
-            // safari10: true,
-            // toplevel: true,
             compress: {
               drop_console: true,
-              // drop_console: false,
-              // drop_debugger: false,
+              drop_debugger: true,
               hoist_funs: true,
-              inline: 1,
+              inline: 3,
               keep_fargs: false,
+              // keep_fnames: true,
               keep_infinity: true,
+              module: false,
               passes: 2,
               pure_getters: true,
-              // pure_getters: 'strict',
               unsafe_comps: true,
             },
           },
