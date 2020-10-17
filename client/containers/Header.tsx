@@ -266,7 +266,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
         <b>JGL</b> 3
       </Link>
       <ServiceWorkerUpdate />
-      {currentBreakpoint > md ? <MainMenu variant="horizontal" /> : <Sidebar />}
+      {currentBreakpoint > md ? <MainMenu horizontal /> : <Sidebar />}
     </StyledHeader>
   );
 });

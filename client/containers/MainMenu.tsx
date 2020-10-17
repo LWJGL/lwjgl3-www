@@ -4,7 +4,8 @@ import { styled } from '~/theme/stitches.config';
 interface Props {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   className?: string;
-  variant: string;
+  vertical?: boolean;
+  horizontal?: boolean;
 }
 
 const MainMenuContainer = styled('nav', {
@@ -44,8 +45,14 @@ const MainMenuContainer = styled('nav', {
   },
 });
 
-export const MainMenu: React.FC<Props> = ({ onClick, variant, className }) => (
-  <MainMenuContainer role="navigation" aria-label="Main Menu" {...{ [variant]: true }} className={className}>
+export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, className }) => (
+  <MainMenuContainer
+    role="navigation"
+    aria-label="Main Menu"
+    vertical={vertical === true}
+    horizontal={horizontal === true}
+    className={className}
+  >
     <NavLink onClick={onClick} to="/" end>
       HOME
     </NavLink>

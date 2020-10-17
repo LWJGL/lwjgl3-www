@@ -95,12 +95,12 @@ const MenuOverlay = styled('div', {
   transform: 'translateX(102%) translate3d(0, 0, 0)',
   transition: 'transform 0.3s cubic-bezier(0, 0, 0.3, 1)',
   // pointerEvents: 'none',
+
+  '&.touching': {
+    transition: 'none',
+  },
+
   variants: {
-    touching: {
-      true: {
-        transition: 'none',
-      },
-    },
     open: {
       true: {
         pointerEvents: 'auto',
@@ -252,7 +252,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           {open && (
             <FocusScope contain={open} restoreFocus>
               <Modal>
-                <MainMenu variant="vertical" onClick={onToggle} />
+                <MainMenu vertical onClick={onToggle} />
               </Modal>
             </FocusScope>
           )}
