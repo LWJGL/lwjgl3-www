@@ -80,7 +80,7 @@ const MenuOverlay = styled(animated.div, {
   overflowX: 'hidden',
   overflowY: 'auto',
   '-webkit-overflow-scrolling': 'touch',
-  'touch-action': 'none',
+  'touch-action': 'pan-y',
   overscrollBehavior: 'contain',
   willChange: 'transform',
   transform: `translate3d(${MENU_INITIAL}px, 0, 0)`,
@@ -100,7 +100,7 @@ const toggle = (state: boolean) => !state;
 const transformLine1 = (perc: number) => (perc > 0 ? `rotate(${perc * -45}deg)` : 'none');
 const transformLine2 = (perc: number) => (perc > 0 ? `scale(${1 - perc})` : 'none');
 const transformLine3 = (perc: number) => (perc > 0 ? `rotate(${perc * 45}deg)` : 'none');
-const computeBackground = (perc: number) => (perc > 0 ? `rgba(0,0,0,${perc * 0.55})` : 'transparent');
+const computeBackground = (perc: number) => (perc > 0 ? `rgba(0,0,0,${perc * 0.75})` : 'transparent');
 
 export const Sidebar: React.FC<{ children?: never }> = () => {
   const [isOpen, setOpen] = useState(false);
@@ -140,7 +140,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
   useDrag(
     ({ down, swipe, movement: [mx] }) => {
       if (!down && (swipe[0] === 1 || mx >= MENU_WIDTH / 3)) {
-        toggleOpen();
+        setOpen(toggle);
       } else {
         animate({
           x: down ? mx : 0,
@@ -152,12 +152,10 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
     {
       domTarget: overlayRef,
       enabled: isOpen,
-      // eventOptions: {
-      //   pointer: true,
-      // },
       initial: () => [x.get(), 0],
       axis: 'x',
       swipeDistance: [40, 0],
+      filterTaps: true,
       bounds: {
         left: 0,
         right: MENU_WIDTH,

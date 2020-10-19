@@ -73,7 +73,6 @@
     "react": "0.0.0-experimental-4ead6b530",
     "react-dom": "0.0.0-experimental-4ead6b530",
     "react-fast-compare": "3.2.0",
-    "react-reduce-motion": "2.0.2",
     "react-refresh": "0.9.0-rc.3",
     "react-router-dom": "0.0.0-experimental-ffd8c7d0",
     "react-use-gesture": "8.0.0-alpha.10",

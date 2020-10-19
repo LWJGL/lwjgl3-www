@@ -6870,11 +6870,6 @@ react-layout-effect@^1.0.1:
   resolved "https://registry.yarnpkg.com/react-layout-effect/-/react-layout-effect-1.0.5.tgz#0dc4e24452aee5de66c93c166f0ec512dfb1be80"
   integrity sha512-zdRXHuch+OBHU6bvjTelOGUCM+UDr/iCY+c0wXLEAc+G4/FlcJruD/hUOzlKH5XgO90Y/BUJPNhI/g9kl+VAsA==
 
-react-reduce-motion@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/react-reduce-motion/-/react-reduce-motion-2.0.2.tgz#cbe136f808a31e2c80f16660ce0f3156bb1e2be3"
-  integrity sha512-4E5oIMIb8PIfeKR9NJtkHTRCukSdkCkvlhsq+nB03CgIWnrX3wyM46LUlKxdHcFUyzmaGUD04BjkIxRFqtccLg==
-
 react-refresh@0.9.0-rc.3:
   version "0.9.0-rc.3"
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.9.0-rc.3.tgz#68e2bd0a3d54a478d70448c7ac9f52e30849ffb4"

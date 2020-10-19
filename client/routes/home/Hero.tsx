@@ -1,10 +1,11 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import debounce from 'lodash-es/debounce';
+import { useMedia } from '~/hooks/useMedia';
 import { styled } from '~/theme/stitches.config';
 import { contextOptions } from './contextOptions';
 import { loadJS } from '~/services/loadJS';
 import { Icon } from '~/components/Icon';
-import debounce from 'lodash-es/debounce';
 import '~/components/icons/fa/regular/chevron-down';
 
 // Brands
@@ -157,6 +158,7 @@ let useWebGL = UseWebGL.Unknown;
 
 const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, height }) => {
   const [renderWebGL, toggleGL] = useState(useWebGL === UseWebGL.On);
+  const prefersReducedMotion = useMedia('(prefers-reduced-motion: reduce)');
 
   useEffect(() => {
     // If we detected WebGL before, the checks below already passed
@@ -166,8 +168,7 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
 
     // Skip if user prefers-reduced-motion
     // ! Bah! Disables animation under Windows if user has disabled OS window animations (Chrome)
-    const preferesReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (preferesReducedMotion) {
+    if (prefersReducedMotion) {
       useWebGL = UseWebGL.Off;
       return;
     }
@@ -211,7 +212,7 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
     } else {
       useWebGL = UseWebGL.NotSupported;
     }
-  }, []);
+  }, [prefersReducedMotion]);
 
   return renderWebGL ? (
     <Suspense fallback={null}>

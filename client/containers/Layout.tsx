@@ -12,19 +12,7 @@ import { RouterConfig } from '../routes';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
-// Animation
-import { Globals } from '@react-spring/web';
-import { useReduceMotion } from 'react-reduce-motion';
-
 export const Layout: React.FC<{ children?: never }> = () => {
-  // Disable animations globally if reduce motion is enabled
-  const prefersReducedMotion = useReduceMotion();
-  useEffect(() => {
-    Globals.assign({
-      skipAnimation: prefersReducedMotion,
-    });
-  }, [prefersReducedMotion]);
-
   return (
     <BrowserRouter>
       <NavProgress />

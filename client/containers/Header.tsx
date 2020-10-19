@@ -1,4 +1,4 @@
-import { memo, useEffect, useState, useRef } from 'react';
+import { memo, useEffect, useLayoutEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { styled } from '~/theme/stitches.config';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
@@ -137,7 +137,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
   const [hidden, setHidden] = useState(false);
   const menu = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     // Measure menu height, should be ~ 48 pixels
     if (menu.current !== null) {
       offsetHeight = menu.current.offsetHeight;
