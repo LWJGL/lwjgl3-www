@@ -12,7 +12,7 @@ const SampleResource = new ResourceCached<void, string>(async () => {
 
 export const Sample: React.FC<{ children?: never }> = () => {
   const sample = SampleResource.read();
-  useCSS('https://unpkg.com/highlight.js@10.2.1/styles/dracula.css');
+  useCSS('https://unpkg.com/highlight.js@10.3.1/styles/dracula.css');
 
   return (
     <pre className="container" style={{ color: 'white', tabSize: 4 }}>

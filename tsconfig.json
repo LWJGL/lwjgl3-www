@@ -19,5 +19,5 @@
     "types": ["node", "react/experimental", "react-dom/experimental"]
   },
   "include": ["./types", "./client"],
-  "exclude": ["node_modules", "**/*.spec.ts", "public"]
+  "exclude": ["public", "scripts", "server"]
 }

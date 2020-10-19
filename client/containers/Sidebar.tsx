@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { OverlayContainer, useOverlay, usePreventScroll, useModal } from '@react-aria/overlays';
+import { FocusScope } from '@react-aria/focus';
+import { useSpring, animated } from '@react-spring/web';
+import { useDrag } from 'react-use-gesture';
 import { styled } from '~/theme/stitches.config';
 import { MainMenu } from './MainMenu';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
-import { FocusScope } from '@react-aria/focus';
-import { OverlayContainer, useOverlay, usePreventScroll, useModal } from '@react-aria/overlays';
 import '~/components/icons/fa/regular/bars';
 import '~/components/icons/fa/regular/times';
 
@@ -33,51 +34,39 @@ const MenuToggleButton = styled('button', {
   '> :nth-child(3)': {
     transformOrigin: 'bottom right',
   },
-  variants: {
-    open: {
-      true: {
-        '> :nth-child(1)': {
-          transform: 'rotate(-45deg)',
-        },
-        '> :nth-child(2)': {
-          transform: 'scale(0)',
-        },
-        '> :nth-child(3)': {
-          transform: 'rotate(45deg)',
-        },
-      },
-    },
-  },
 });
 
-const MenuToggleLine = styled('span', {
+const MenuToggleLine = styled(animated.span, {
   width: '100%',
   height: 4,
   backgroundColor: 'white',
-  transition: 'transform 0.2s',
+  willChange: 'transform',
   pointerEvents: 'none',
 });
 
-const Backdrop = styled('div', {
-  // backdropFilter: 'blur(3px)',
+const Backdrop = styled(animated.div, {
   willChange: 'background-color',
-  transition: 'background-color 0.3s cubic-bezier(0, 0, 0.3, 1)',
+  pointerEvents: 'none',
   variants: {
     open: {
       true: {
+        // backdropFilter: 'blur(3px)',
+        pointerEvents: 'auto',
         position: 'fixed',
         zIndex: ZINDEX_MODAL_BACKDROP - 3,
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: 'rgba(0,0,0,0.55)',
       },
     },
   },
 });
 
-const MenuOverlay = styled('div', {
+const MENU_WIDTH = 260;
+const MENU_INITIAL = MENU_WIDTH + 1;
+
+const MenuOverlay = styled(animated.div, {
   padding: '4rem 1rem 0 1rem',
   backgroundColor: 'black',
   zIndex: ZINDEX_MODAL_BACKDROP - 2,
@@ -85,48 +74,51 @@ const MenuOverlay = styled('div', {
   top: 0,
   right: 0,
   bottom: 0,
-  maxWidth: 320,
-  minWidth: 260,
+  width: MENU_WIDTH,
+  // maxWidth: 320,
+  // minWidth: 260,
   overflowX: 'hidden',
   overflowY: 'auto',
   '-webkit-overflow-scrolling': 'touch',
+  'touch-action': 'none',
   overscrollBehavior: 'contain',
   willChange: 'transform',
-  transform: 'translateX(102%) translate3d(0, 0, 0)',
-  transition: 'transform 0.3s cubic-bezier(0, 0, 0.3, 1)',
-  // pointerEvents: 'none',
-
-  '&.touching': {
-    transition: 'none',
-  },
+  transform: `translate3d(${MENU_INITIAL}px, 0, 0)`,
+  pointerEvents: 'none',
 
   variants: {
     open: {
       true: {
         pointerEvents: 'auto',
-        transform: 'none',
       },
     },
   },
 });
 
+const toggle = (state: boolean) => !state;
+// const clamp = (perc: number) => Math.min(perc, 1);
+const transformLine1 = (perc: number) => (perc > 0 ? `rotate(${perc * -45}deg)` : 'none');
+const transformLine2 = (perc: number) => (perc > 0 ? `scale(${1 - perc})` : 'none');
+const transformLine3 = (perc: number) => (perc > 0 ? `rotate(${perc * 45}deg)` : 'none');
+const computeBackground = (perc: number) => (perc > 0 ? `rgba(0,0,0,${perc * 0.55})` : 'transparent');
+
 export const Sidebar: React.FC<{ children?: never }> = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
-  const onToggle = useCallback(() => {
-    setOpen((open) => !open);
+  const toggleOpen = useCallback(() => {
+    setOpen(toggle);
   }, []);
 
   // @react-aria
-  usePreventScroll({ isDisabled: !open });
-
+  usePreventScroll({ isDisabled: !isOpen });
+  const { modalProps } = useModal();
   const { overlayProps } = useOverlay(
     {
-      isOpen: open,
-      onClose: onToggle,
+      isOpen: isOpen,
+      onClose: toggleOpen,
       isDismissable: true,
       shouldCloseOnInteractOutside: (el) => {
         return el !== buttonRef.current && el !== backdropRef.current;
@@ -135,134 +127,98 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
     overlayRef
   );
 
+  // Animation
+  const [{ x, perc }, animate] = useSpring(
+    {
+      x: MENU_INITIAL,
+      perc: 0,
+      config: { clamp: true },
+    },
+    []
+  );
+
+  useDrag(
+    ({ down, swipe, movement: [mx] }) => {
+      if (!down && (swipe[0] === 1 || mx >= MENU_WIDTH / 3)) {
+        toggleOpen();
+      } else {
+        animate({
+          x: down ? mx : 0,
+          perc: down ? 1 - mx / MENU_WIDTH : 1,
+          immediate: down,
+        });
+      }
+    },
+    {
+      domTarget: overlayRef,
+      enabled: isOpen,
+      // eventOptions: {
+      //   pointer: true,
+      // },
+      initial: () => [x.get(), 0],
+      axis: 'x',
+      swipeDistance: [40, 0],
+      bounds: {
+        left: 0,
+        right: MENU_WIDTH,
+        top: 0,
+        bottom: 0,
+      },
+    }
+  );
+
   useEffect(() => {
-    if (!open) {
-      // Skip effect when closed
-      return;
-    }
+    if (isOpen) {
+      animate({ x: 0, perc: 1, config: { velocity: 0 } });
 
-    let touchingSideNav = false;
-    let startX = 0;
-    let currentX = 0;
-    let sideDiv = overlayRef.current;
-
-    function onTouchStart(evt: TouchEvent) {
-      startX = evt.touches[0].pageX;
-      currentX = startX;
-
-      touchingSideNav = true;
-      if (sideDiv !== null) {
-        sideDiv.classList.add('touching');
-      }
-      requestAnimationFrame(update);
-    }
-
-    function onTouchMove(evt: TouchEvent) {
-      if (touchingSideNav) {
-        currentX = evt.touches[0].pageX;
-        evt.preventDefault();
-      }
-    }
-
-    function onTouchEnd() {
-      if (touchingSideNav) {
-        touchingSideNav = false;
-
-        if (sideDiv !== null) {
-          sideDiv.style.transform = '';
-          sideDiv.classList.remove('touching');
-        }
-
-        if (currentX - startX > 0) {
-          onToggle();
+      // Auto-focus current active link
+      if (overlayRef.current !== null) {
+        const activeLink = overlayRef.current.querySelector('.active') as HTMLAnchorElement | null;
+        if (activeLink !== null) {
+          activeLink.focus();
+        } else {
+          (overlayRef.current.querySelector('a') as HTMLAnchorElement).focus();
         }
       }
+    } else {
+      animate({ x: MENU_INITIAL, perc: 0 });
     }
-
-    function update() {
-      if (!touchingSideNav) {
-        return;
-      }
-
-      requestAnimationFrame(update);
-
-      let translateX = currentX - startX;
-
-      if (translateX < 0) {
-        translateX = 0;
-      }
-
-      if (sideDiv !== null) {
-        sideDiv.style.transform = `translateX(${translateX}px)`;
-      }
-    }
-
-    // On Open
-    if (sideDiv !== null) {
-      sideDiv.addEventListener('touchstart', onTouchStart, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
-      // Disable passive to avoid triggering gestures in some devices
-      sideDiv.addEventListener('touchmove', onTouchMove, SUPPORTS_PASSIVE_EVENTS ? { passive: false } : false);
-      sideDiv.addEventListener('touchend', onTouchEnd, false);
-    }
-
-    // Auto-focus current active link
-    if (overlayRef.current !== null) {
-      const activeLink = overlayRef.current.querySelector('.active') as HTMLAnchorElement | null;
-      if (activeLink !== null) {
-        activeLink.focus();
-      }
-    }
-
-    return () => {
-      if (sideDiv !== null) {
-        sideDiv.removeEventListener('touchstart', onTouchStart, false);
-        sideDiv.removeEventListener('touchmove', onTouchMove, false);
-        sideDiv.removeEventListener('touchend', onTouchEnd, false);
-      }
-    };
-  }, [open, onToggle]);
-
-  // * Do not use <Portal> for menu because focus trap must
-  // * contain toggle button and the menu under the same tree
+  }, [isOpen, animate]);
 
   return (
     <>
       <MenuToggleButton
         type="button"
         ref={buttonRef}
-        onClick={onToggle}
-        title={`${open ? 'Close' : 'Open'} navigation menu`}
-        open={open}
+        onClick={toggleOpen}
+        title={`${isOpen ? 'Close' : 'Open'} navigation menu`}
       >
-        <MenuToggleLine />
-        <MenuToggleLine />
-        <MenuToggleLine />
+        <MenuToggleLine style={{ transform: perc.to(transformLine1) }} />
+        <MenuToggleLine style={{ transform: perc.to(transformLine2) }} />
+        <MenuToggleLine style={{ transform: perc.to(transformLine3) }} />
       </MenuToggleButton>
 
       <OverlayContainer>
-        <Backdrop ref={backdropRef} open={open} onClick={onToggle} />
+        <Backdrop
+          ref={backdropRef}
+          open={isOpen}
+          onClick={toggleOpen}
+          style={{ backgroundColor: perc.to(computeBackground) }}
+        />
         <MenuOverlay
-          open={open}
+          open={isOpen}
           role="menu"
           ref={overlayRef}
-          aria-hidden={!open}
-          aria-expanded={open}
+          aria-hidden={!isOpen}
+          aria-expanded={isOpen}
           {...overlayProps}
+          style={{ x }}
         >
-          {open && (
-            <FocusScope contain={open} restoreFocus>
-              <Modal>
-                <MainMenu vertical onClick={onToggle} />
-              </Modal>
-            </FocusScope>
-          )}
+          <FocusScope contain={isOpen} restoreFocus>
+            <MainMenu vertical onClick={toggleOpen} {...modalProps} />
+          </FocusScope>
         </MenuOverlay>
       </OverlayContainer>
     </>
   );
-};
-
-const Modal: React.FC<{}> = ({ children }) => {
-  const { modalProps } = useModal();
-  return <div {...modalProps}>{children}</div>;
 };

@@ -12,6 +12,7 @@ module.exports = {
     vendor: {
       import: [
         // immediate dependencies
+        '@react-spring/web',
         '@stitches/react',
         'focus-trap',
         'history',
@@ -21,8 +22,10 @@ module.exports = {
         'react',
         'react-dom',
         'react-fast-compare',
+        'react-reduce-motion',
         'react-router',
         'react-router-dom',
+        'react-use-gesture',
         'scheduler',
         'scroll-into-view-if-needed',
         'tabbable',
