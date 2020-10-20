@@ -18,16 +18,18 @@ const MainMenuContainer = styled('nav', {
         flexWrap: 'wrap',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        gap: '0 1.5rem',
+        // gap: '0 1.5rem',
+        hstack: '1.5rem',
       },
     },
     vertical: {
       true: {
         display: 'flex',
         flexFlow: 'column nowrap',
-        gap: '1rem 0',
         fontSize: '1.25rem',
         textAlign: 'right',
+        // gap: '1rem 0',
+        vstack: '1rem',
         a: {
           color: 'white',
           textDecoration: 'none',

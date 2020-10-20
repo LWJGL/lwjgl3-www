@@ -25,7 +25,8 @@ const StyledHeader = styled('header', {
   willChange: 'background-color, top',
   userSelect: 'none',
   display: 'flex',
-  gap: '1rem',
+  // gap: '1rem',
+  hstack: '1rem',
   alignItems: 'center',
   padding: '0 1rem',
 

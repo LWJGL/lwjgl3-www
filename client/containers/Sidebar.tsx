@@ -9,6 +9,10 @@ import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import '~/components/icons/fa/regular/bars';
 import '~/components/icons/fa/regular/times';
 
+const MenuArea = styled('div', {
+  flex: '1 0 auto',
+});
+
 const MenuToggleButton = styled('button', {
   marginLeft: 'auto',
   height: 24,
@@ -184,7 +188,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
   }, [isOpen, animate]);
 
   return (
-    <>
+    <MenuArea>
       <MenuToggleButton
         type="button"
         ref={buttonRef}
@@ -217,6 +221,6 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           </FocusScope>
         </MenuOverlay>
       </OverlayContainer>
-    </>
+    </MenuArea>
   );
 };
