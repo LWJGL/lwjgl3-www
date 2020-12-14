@@ -9,7 +9,7 @@ function createDefs(): SVGDefsElement {
   let style = getNode('style');
   let defs = getNode('defs') as SVGDefsElement;
 
-  svg.style.height = '0px';
+  svg.style.display = 'none';
 
   style.innerHTML = `path {
   opacity: var(--icon-primary-opacity, 1);

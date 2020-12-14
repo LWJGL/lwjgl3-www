@@ -4,6 +4,7 @@ html(lang="en-US", dir="ltr")
     meta(charset="utf-8")
     title LWJGL - Lightweight Java Game Library
     meta(name="viewport", content="width=device-width,initial-scale=1,viewport-fit=cover")
+    meta(name="color-scheme", content="light dark")
     meta(name="theme-color", content="#1b2426")
     meta(name="application-name", content="LWJGL")
     meta(name="google", content="notranslate")
@@ -13,8 +14,10 @@ html(lang="en-US", dir="ltr")
     //- keep this for Lighthouse score
     link(rel="apple-touch-icon", href="/img/fav/apple-touch-icon-192x192.png")
     link(rel="manifest", href="/manifest.webmanifest")
-    if ( css !== undefined )
-      link(rel="stylesheet", href=`/css/${css}`, media="print", onload="this.media='all'")
+    if css
+      style= css
+    else
+      link(rel="stylesheet", href="/css/global.css")
     //- script.
       window.dataLayer=[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','UA-83518-1',{send_page_view:false,transport_type:'beacon',anonymize_ip:true});
   body

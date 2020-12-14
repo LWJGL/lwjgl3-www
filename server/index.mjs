@@ -9,8 +9,8 @@ import chalk from 'chalk';
 import request from 'request-promise-native';
 
 import { fileExists } from './fileExists.mjs';
-import { subnets } from './cloudfront-subnets.mjs';
 import { chunkMap } from './chunkMap.mjs';
+// import { css } from './styles.mjs';
 
 import routeBin from './bin.mjs';
 import routeBuild from './build.mjs';
@@ -32,9 +32,6 @@ const argv = {};
 
 process.argv.slice(2).forEach(arg => {
   switch (arg) {
-    case '--css':
-      argv.css = true;
-      break;
     case '--pretty':
       argv.pretty = true;
       break;
@@ -69,13 +66,18 @@ const app = express();
 app.locals.development = app.get('env') === 'development';
 app.locals.production = !app.locals.development;
 
-const CSS_MODE = app.locals.development && argv.css === true ? 'HMR' : 'LINK';
 let manifest = {};
 let serviceWorkerCache = null;
 
 // View options
 app.locals.pretty = app.locals.development || argv.pretty === true ? '  ' : false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
+// app.locals.css = css;
+
+if (app.locals.production) {
+  const styles = await import('./styles.mjs');
+  app.locals.css = styles.css;
+}
 
 app.set('port', PORT);
 app.set('view engine', 'pug');
@@ -86,7 +88,7 @@ app.enable('strict routing');
 app.disable('x-powered-by');
 app.use(compression());
 
-app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...subnets]);
+// app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...subnets]);
 
 // ------------------------------------------------------------------------------
 // Configure Content-Type
@@ -107,10 +109,11 @@ if (app.locals.development) {
   const webpack = require('webpack');
   const webpackConfig = require('../webpack.config.js');
   const webpackCompiler = webpack(webpackConfig);
-  const wdm = require('webpack-dev-middleware').default;
+  const wdm = require('webpack-dev-middleware');
 
   app.use(
     wdm(webpackCompiler, {
+      index: false,
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
@@ -122,6 +125,7 @@ if (app.locals.development) {
       require('webpack-hot-middleware')(webpackCompiler, {
         path: '/__webpack_hmr',
         heartbeat: 10 * 1000,
+        overlay: false, // broken on webpack@5
         noInfo: false,
         quiet: false,
       })
@@ -224,9 +228,8 @@ const frameguard = {
 
 const hsts = {
   maxAge: 365 * 24 * 60 * 60,
-  includeSubDomains: false,
-  // TODO: includeSubDomains must be true for preloading to be approved
-  preload: false,
+  includeSubDomains: false, // * no because we have non-ssl subdomains (e.g. legacy.lwjgl.org)
+  preload: false, // ! includeSubDomains must be true for preloading to be approved
 };
 
 /*
@@ -345,7 +348,17 @@ app.get('/sw.js', async (req, res) => {
   res.type('text/javascript').send(serviceWorkerCache);
 });
 
-// App
+// Return 404 for file requests that not match above
+// ! This is required for HMR to keep working after bad compilations
+app.get(/[.][a-zA-Z]{2,4}$/, (req, res) => {
+  res
+    .set({
+      'Cache-Control': 'no-transform, max-age=30',
+    })
+    .sendStatus(404);
+});
+
+// Handle everything else client-side
 app.get('*', (req, res, next) => {
   const renderOptions = {
     // ga: globals.google_analytics_id,
@@ -353,7 +366,6 @@ app.get('*', (req, res, next) => {
 
   if (app.locals.production) {
     renderOptions.entry = manifest.assets[manifest.entry];
-    renderOptions.css = manifest.assets.css;
 
     // Asset preloading
     // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
@@ -361,10 +373,7 @@ app.get('*', (req, res, next) => {
     // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
 
     // Push entries, we need to start loading as soon as possible
-    const preload = [
-      `\</js/${renderOptions.entry}\>; rel=preload; as=script`,
-      `\</css/${manifest.assets.css}\>; rel=preload; as=style`,
-    ];
+    const preload = [`\</js/${renderOptions.entry}\>; rel=preload; as=script`];
 
     // Append chunk of important routes to the preload list
     // Logic can be customized as needed. Can get complicated for recursive routes
@@ -389,9 +398,6 @@ app.get('*', (req, res, next) => {
     res.set('Link', preload);
   } else {
     renderOptions.entry = 'main.js';
-    if (CSS_MODE === 'LINK') {
-      renderOptions.css = 'core-dev.css';
-    }
   }
 
   res

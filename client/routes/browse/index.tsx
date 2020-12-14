@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { PageView } from '~/components/routes/PageView';
+import { PageView } from '~/routes/PageView';
 import { Browser } from './components/Browser';
 import { PathResource } from './PathResource';
+import { Container } from '~/components/layout/Container';
 
 const BrowseRoute: React.FC<{ children?: never }> = () => {
   const params = useParams();
@@ -12,18 +13,11 @@ const BrowseRoute: React.FC<{ children?: never }> = () => {
     PathResource.load(path);
   }, [path]);
 
-  useEffect(() => {
-    document.body.style.background = 'gray';
-    return () => {
-      document.body.style.background = '';
-    };
-  }, []);
-
   return (
     <PageView title="Browse" description="Browse LWJGL files">
-      <section className="container px-0 bg-white shadow" style={{ marginTop: '-1em' }}>
+      <Container padding>
         <Browser path={path} />
-      </section>
+      </Container>
     </PageView>
   );
 };

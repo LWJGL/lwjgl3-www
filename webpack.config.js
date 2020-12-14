@@ -9,9 +9,6 @@ process.argv.slice(2).forEach(arg => {
     case '--nohmr':
       argv.nohmr = true;
       break;
-    case '--css':
-      argv.css = true;
-      break;
     case '--sourcemap':
       argv.sourcemap = true;
       break;
@@ -30,7 +27,6 @@ const ENABLE_PROFILING = argv.profiling === true;
 const env = {
   ANALYTICS_TRACKING_ID: JSON.stringify('UA-83518-1'),
   FLAG_PRODUCTION: String(PRODUCTION),
-  FLAG_CSSMODULES: String(DEV && argv.css === true),
   FLAG_HMR: String(HMR),
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
@@ -39,6 +35,7 @@ const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
     // target: DEV ? 'es2020' : 'browserslist',
+    // target: ['web', 'es2020'],
     target: 'browserslist',
     // cache: false,
     cache: true, // in-memory cache
@@ -114,7 +111,6 @@ const buildConfiguration = () => {
         forOf: DEV,
         module: DEV,
       },
-      // module: true,
     },
     resolve: {
       extensions: ['.tsx', '.jsx', '.ts', '.js', '.json'],
@@ -203,56 +199,17 @@ const buildConfiguration = () => {
       // const ErrorOverlayPlugin = require('@webhotelier/webpack-fast-refresh/error-overlay/index.js');
       // config.plugins.push(new ErrorOverlayPlugin());
     }
-
-    // Enable CSS HMR instead of loading CSS pre-built from disk
-    if (argv.css) {
-      config.module.rules.push({
-        test: /\.scss?$/,
-        use: [
-          {
-            loader: 'style-loader',
-            options: {
-              esModule: false,
-              injectType: 'styleTag',
-            },
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              url: false,
-              import: false,
-              modules: false,
-              importLoaders: 2,
-            },
-          },
-          'postcss-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: false,
-              webpackImporter: false,
-              sassOptions: {
-                indentedSyntax: false,
-                sourceComments: false,
-                outputStyle: 'expanded',
-                precision: 6,
-              },
-            },
-          },
-        ],
-      });
-    }
   } else {
     // // Debug output
     // config.optimization.moduleIds = 'named';
     // config.optimization.chunkIds = 'named';
 
-    // Use pre-built three.js to avoid breaking IE11
+    // Use pre-built modules to avoid breaking legacy browsers
     // config.resolve.alias.three = path.resolve(__dirname, `./node_modules/three/build/three.min.js`);
     // config.resolve.alias.jszip = path.resolve(__dirname, `./node_modules/jszip/dist/jszip.min.js`);
 
-    // // For IE11 compatibility (uses String.endsWith)
-    // config.module.rules[0].include.push(path.resolve(__dirname, 'node_modules/react-router'));
+    // Transpile modules that are shipped as ESNext
+    // config.module.rules[0].include.push(path.resolve(__dirname, 'node_modules/recoil'));
 
     if (ENABLE_PROFILING) {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';

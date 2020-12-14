@@ -1,26 +1,59 @@
-import { Hsl } from './Hsl';
+export class Hsl {
+  hue: number;
+  saturation: number;
+  lightness: number;
+  alpha: number;
 
-export function hsl(hue: number, saturation: number, lightness: number, alpha?: number) {
-  return new Hsl(hue, saturation, lightness, alpha);
+  constructor(hue: number, saturation: number, lightness: number, alpha: number = 1) {
+    if (!FLAG_PRODUCTION) {
+      if (hue < 0 || hue > 360) {
+        throw new Error(`Invalid hue (0-360): ${hue}`);
+      }
+      if (saturation < 0 || saturation > 100) {
+        throw new Error(`Invalid saturation (0-100): ${saturation}`);
+      }
+      if (lightness < 0 || lightness > 100) {
+        throw new Error(`Invalid lightness (0-100): ${lightness}`);
+      }
+      if (alpha < 0 || alpha > 1) {
+        throw new Error(`Invalid alpha (0.0-1.0): ${alpha}`);
+      }
+    }
+
+    this.hue = hue;
+    this.saturation = saturation;
+    this.lightness = lightness;
+    this.alpha = alpha;
+  }
+
+  css() {
+    return this.alpha < 1.0
+      ? `hsla(${this.hue}, ${this.saturation}%, ${this.lightness}%, ${this.alpha})`
+      : `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+  }
+
+  toString() {
+    return this.alpha < 1.0
+      ? `hsla(${this.hue}, ${this.saturation}%, ${this.lightness}%, ${this.alpha})`
+      : `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+  }
 }
 
 /*
-  TODO:
-    If the following TC39 proposals are accepted:
-      https://github.com/rbuckton/proposal-partial-application
-      https://github.com/tc39/proposal-pipeline-operator
-
-    We can refactor color functions calls as follows:
-      const COLOR_LIGHT = COLOR
-        |> setLightness(97, ?)
-        |> rotateHue(15, ?)
-
-    Similarly, in css-in-js like so:
-      css`
-        background-color: ${COLOR |> rotateHue(15, ?) |> toCss}
-      `
-
   TODO: Add more functions from https://polished.js.org/docs/
+  TODO: If the following TC39 proposals are accepted:
+        https://github.com/rbuckton/proposal-partial-application
+        https://github.com/tc39/proposal-pipeline-operator
+
+        We can refactor color functions calls as follows:
+          const COLOR_LIGHT = COLOR
+            |> setLightness(97, ?)
+            |> rotateHue(15, ?)
+
+        Similarly, in css-in-js like so:
+          css`
+            background-color: ${COLOR |> rotateHue(15, ?) |> toCss}
+          `
 */
 
 export function setHue(color: Hsl, value: number) {

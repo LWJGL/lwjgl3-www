@@ -178,7 +178,7 @@ function getInitialConfig(): BuildStore {
           id: Addon.Steamworks4J,
           title: 'steamworks4j',
           description: 'Access the Steamworks C++ API using Java. Client library, sufficient for most uses.',
-          website: 'http://code-disaster.github.io/steamworks4j/',
+          website: 'https://code-disaster.github.io/steamworks4j/',
           maven: {
             groupId: 'com.code-disaster.steamworks4j',
             artifactId: 'steamworks4j',
@@ -190,7 +190,7 @@ function getInitialConfig(): BuildStore {
           title: 'steamworks4j-server',
           description:
             'Access the Steamworks C++ API using Java. Server library, if you need to support game servers or encrypted app tickets.',
-          website: 'http://code-disaster.github.io/steamworks4j/',
+          website: 'https://code-disaster.github.io/steamworks4j/',
           maven: {
             groupId: 'com.code-disaster.steamworks4j',
             artifactId: 'steamworks4j-server',

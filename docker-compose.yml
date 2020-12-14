@@ -11,8 +11,5 @@ services:
         source: ./public/js
         target: /srv/public/js
       - type: bind
-        source: ./public/css
-        target: /srv/public/css
-      - type: bind
         source: ./client
         target: /srv/client

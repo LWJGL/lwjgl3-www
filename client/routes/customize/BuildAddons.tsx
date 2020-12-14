@@ -2,8 +2,10 @@ import { useMemo, useCallback } from 'react';
 import { useMemoSlice } from './Store';
 import type { Addon, AddonDefinition, BuildStore } from './types';
 import { toggleAddon } from './actions';
-import { Checkbox } from '~/components/Checkbox';
-import { cc } from '~/theme/cc';
+
+// UI
+import { Checkbox } from '~/components/forms/Selection';
+import { Anchor } from '~/components/lwjgl/Anchor';
 
 const getSlice = ({ mode, selectedAddons, descriptions, addons }: BuildStore) => ({
   mode,
@@ -17,13 +19,13 @@ const getInputs = (state: BuildStore) => [state.mode, state.selectedAddons, stat
 
 export function BuildAddons() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
-  const onChange = useCallback((addon: Addon) => dispatch(toggleAddon(addon)), [dispatch]);
+  const onChange = useCallback((e, addon: Addon) => dispatch(toggleAddon(addon)), [dispatch]);
 
   return useMemo(() => {
     const { mode, selectedAddons, descriptions, allIds, byId } = slice;
 
     return (
-      <div className="custom-controls-stacked">
+      <>
         {allIds.map((it: Addon) => {
           const addon = byId[it];
           const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
@@ -39,7 +41,7 @@ export function BuildAddons() {
             />
           );
         })}
-      </div>
+      </>
     );
   }, [slice, onChange]);
 }
@@ -56,34 +58,35 @@ const BuildAddon = ({ addon, disabled, selected, showDescriptions, onChange }: P
   const label: string = `${addon.title} v${addon.maven.version}`;
 
   if (showDescriptions) {
-    return (
-      <div className={cc('artifact', { 'text-muted': disabled })}>
-        <Checkbox
-          value={addon.id}
-          label={label}
-          disabled={disabled}
-          checked={!disabled && selected}
-          onChange={onChange}
-        />
+    const desc = (
+      <>
         <p>{addon.description}</p>
         {addon.website && (
           <p>
-            <a href={addon.website} target="_blank" rel="noopener">
+            <Anchor href={addon.website} target="_blank">
               {addon.website}
-            </a>
+            </Anchor>
           </p>
         )}
-      </div>
+      </>
     );
-  } else {
+
     return (
       <Checkbox
+        description={desc}
         value={addon.id}
-        label={label}
         disabled={disabled}
         checked={!disabled && selected}
         onChange={onChange}
-      />
+      >
+        {label}
+      </Checkbox>
+    );
+  } else {
+    return (
+      <Checkbox value={addon.id} disabled={disabled} checked={!disabled && selected} onChange={onChange}>
+        {label}
+      </Checkbox>
     );
   }
 };

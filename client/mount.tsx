@@ -1,5 +1,5 @@
 import { unstable_createRoot } from 'react-dom';
-import { App } from './containers/App';
+import { App } from './app';
 // import './services/ga';
 
 export function mount(): void {

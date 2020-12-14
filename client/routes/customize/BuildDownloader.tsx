@@ -7,11 +7,24 @@ import { BuildType } from './types';
 import JSZip from 'jszip';
 import { useMountedRef } from '~/hooks/useMountedRef';
 
+// Layout
+import { styled } from '~/theme/stitches.config';
+import { Grid } from '~/components/layout/Grid';
+import { Flex } from '~/components/layout/Flex';
+import { CircularProgress } from '~/components/ui/CircularProgress';
+import { Button } from '~/components/forms/Button';
+
 interface Props {
   setIsDownloading: (state: boolean) => void;
 }
 
 type Progress = Array<string>;
+
+const Pre = styled('pre', {
+  overflow: 'hidden',
+  overflowY: 'auto',
+  fontSize: '$sm',
+});
 
 export default function BuildDownloader({ setIsDownloading }: Props) {
   const storeRef = useStoreRef();
@@ -116,28 +129,30 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
   }, [setIsDownloading, storeRef, isMounted]);
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col py-3">
-          <div className="text-center">
-            <div className="spinner-border text-white my-3" style={{ width: '3rem', height: '3rem' }} role="status" />
-            <h4>Generating ZIP bundle. Please wait...</h4>
-            <p>
-              <button className="btn btn-sm btn-danger" onClick={() => setIsDownloading(false)}>
-                Cancel
-              </button>
-            </p>
-          </div>
-          <pre style={{ color: 'white', height: '50vh', overflow: 'auto' }}>
-            {progress
-              .slice(0)
-              .reverse()
-              .map((line, i) => (
-                <div key={`log${i}`}>{line}</div>
-              ))}
-          </pre>
-        </div>
-      </div>
-    </div>
+    <Grid
+      css={{
+        gap: '$gap',
+        height: '100%',
+        sm: {
+          height: 'min(500px, 80vh)',
+        },
+        grid: 'auto min-content / minmax(auto, 600px)',
+      }}
+    >
+      <Pre>
+        {progress
+          .slice(0)
+          .reverse()
+          .map((line, i) => (
+            <div key={`log${i}`}>{line}</div>
+          ))}
+      </Pre>
+      <Flex css={{ justifyContent: 'space-between', alignItems: 'center' }}>
+        <Button autoFocus onClick={() => setIsDownloading(false)}>
+          Cancel
+        </Button>
+        <CircularProgress size={36} />
+      </Flex>
+    </Grid>
   );
 }

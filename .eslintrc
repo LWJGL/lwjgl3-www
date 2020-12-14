@@ -15,7 +15,12 @@
   "plugins": [/*"@typescript-eslint", "react", */ "react-hooks"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "additionalHooks": "useRecoilCallback"
+      }
+    ]
     // "react/react-in-jsx-scope": "off",
     // "@typescript-eslint/ban-ts-comment": "off"
   }

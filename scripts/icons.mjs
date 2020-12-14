@@ -24,9 +24,11 @@ fa/duotone/gamepad
 fa/duotone/gamepad-alt
 fa/duotone/joystick
 fa/duotone/microchip
+fa/duotone/moon
 fa/duotone/phone-laptop
 fa/duotone/project-diagram
 fa/duotone/sync
+fa/duotone/sun
 fa/duotone/terminal
 fa/regular/arrow-to-top
 fa/regular/bars
@@ -40,7 +42,7 @@ fa/solid/folder
   .filter(item => item.length > 0);
 
 const ICON_TYPES_TEMPLATE = `export type IconName = {{names}};`;
-const ICON_TEMPLATE = `import { register } from '~/components/icons/sheet';
+const ICON_TEMPLATE = `import { register } from '~/theme/icons/sheet';
 register(\`{{svg}}\`);`;
 
 const collectIcons = async folder => {
@@ -60,7 +62,7 @@ const collectIcons = async folder => {
 
 const main = async () => {
   const sourceDir = path.resolve(__dirname, './icons');
-  const targetDir = path.resolve(__dirname, '../client/components/icons');
+  const targetDir = path.resolve(__dirname, '../client/theme/icons');
   const sourceDirStringLength = sourceDir.length + 1;
   const icons = (await collectIcons(sourceDir))
     .map(file => ({

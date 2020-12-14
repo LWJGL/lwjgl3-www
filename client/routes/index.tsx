@@ -1,8 +1,8 @@
 import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from '../components/ErrorBoundary';
-import { PageError } from '../components/routes/PageError';
-import { NotFound } from './error/NotFound';
+import { PageError } from './PageError';
+import { PageNotFound } from './PageNotFound';
 // import { delay } from '../services/delay';
 
 function $R(fn: () => Promise<any>) {
@@ -47,7 +47,7 @@ export const RouterConfig: React.FC<{}> = () => {
       <Route path="/frameworks" element={<Frameworks />} />
       <Route path="/sponsors" element={<Sponsors />} />
       <Route path="/license" element={<License />} />
-      <Route path="*" element={<NotFound />} />
+      <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
 };

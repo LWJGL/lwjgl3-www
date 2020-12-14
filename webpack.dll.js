@@ -12,9 +12,15 @@ module.exports = {
     vendor: {
       import: [
         // immediate dependencies
+        '@react-aria/button',
+        '@react-aria/dialog',
+        '@react-aria/focus',
+        '@react-aria/interactions',
+        '@react-aria/link',
+        '@react-aria/overlays',
+        '@react-aria/utils',
         '@react-spring/web',
         '@stitches/react',
-        'focus-trap',
         'history',
         'immer',
         'jszip',
@@ -22,12 +28,12 @@ module.exports = {
         'react',
         'react-dom',
         'react-fast-compare',
-        'react-router',
+        'react-is',
+        'react-refresh/runtime',
         'react-router-dom',
         'react-use-gesture',
-        'scheduler',
         'scroll-into-view-if-needed',
-        'tabbable',
+        'valtio',
         'whatwg-fetch',
         // other
         'ansi-html',

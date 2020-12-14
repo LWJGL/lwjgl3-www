@@ -1,9 +1,10 @@
 [production]
+#defaults
+#supports es6-module
 > 1%
-# > 0.2%
 Firefox ESR
-# not dead
-not ie 11
+not dead
+not ie <= 11
 not op_mini all
 
 [development]

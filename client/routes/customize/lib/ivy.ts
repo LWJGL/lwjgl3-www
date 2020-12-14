@@ -19,106 +19,106 @@ export function generateIvy({
   const versionString = getVersion(version, build);
   let script = '';
   const v = hardcoded ? versionString : '${lwjgl.version}';
-  const nl1 = compact ? '' : '\n\t';
-  const nl2 = compact ? '' : '\n\t\t';
-  const nl3 = compact ? '' : '\n\t\t\t';
+  const nl1 = compact ? '' : '\n';
+  const nl2 = compact ? '' : '\n\t';
+  const nl3 = compact ? '' : '\n\t\t';
   const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
 
-  if (!hardcoded || build !== BuildType.Release) script += `\t<!-- Add to ivysettings.xml -->\n`;
+  if (!hardcoded || build !== BuildType.Release) script += `<!-- Add to ivysettings.xml -->\n`;
 
   if (!hardcoded) {
-    script += `\t<property name="lwjgl.version" value="${versionString}"/>`;
+    script += `<property name="lwjgl.version" value="${versionString}"/>`;
 
     selectedAddons.forEach((id: Addon) => {
-      script += `\n\t<property name="${id}.version" value="${addons[id].maven.version}"/>`;
+      script += `\n<property name="${id}.version" value="${addons[id].maven.version}"/>`;
     });
 
     if (platformSingle !== null) {
-      script += `\n\t<property name="lwjgl.natives" value="natives-${platformSingle}"/>`;
+      script += `\n<property name="lwjgl.natives" value="natives-${platformSingle}"/>`;
     }
     script += '\n\n';
   }
 
   if (build !== BuildType.Release) {
-    script += `\t<settings defaultResolver="maven-with-snapshots"/>
-\t<resolvers>
-\t\t<chain name="maven-with-snapshots">
-\t\t\t<ibiblio name="sonatype-snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>
-\t\t\t<ibiblio name="maven-central" m2compatible="true"/>
-\t\t</chain>
-\t</resolvers>\n\n`;
+    script += `<settings defaultResolver="maven-with-snapshots"/>
+<resolvers>
+\t<chain name="maven-with-snapshots">
+\t\t<ibiblio name="sonatype-snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>
+\t\t<ibiblio name="maven-central" m2compatible="true"/>
+\t</chain>
+</resolvers>\n\n`;
   }
 
   if (platformSingle === null) {
-    script += `\t<!-- Add to build.xml -->`;
+    script += `<!-- Add to build.xml -->`;
     const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
     if (linuxArches !== 0) {
       if (linuxArches === 1) {
         script += `
-\t<condition property="lwjgl.natives" value="natives-linux${
+<condition property="lwjgl.natives" value="natives-linux${
           platform.linux ? '' : platform['linux-arm64'] ? '-arm64' : '-arm32'
         }">${nl2}<os name="Linux"/>${nl1}</condition>`;
       } else {
         if (platform.linux) {
           script += `
-\t<condition property="lwjgl.natives" value="natives-linux">
-\t\t<and>
-\t\t\t<os name="Linux"/>
-\t\t\t<not><matches string="\${os.arch}" pattern="^(arm|aarch64)"/></not>
-\t\t</and>
-\t</condition>`;
+<condition property="lwjgl.natives" value="natives-linux">
+\t<and>
+\t\t<os name="Linux"/>
+\t\t<not><matches string="\${os.arch}" pattern="^(arm|aarch64)"/></not>
+\t</and>
+</condition>`;
         }
         if (platform['linux-arm64']) {
           script += `
-\t<condition property="lwjgl.natives" value="natives-linux-arm64">
-\t\t<and>
-\t\t\t<os name="Linux"/>
-\t\t\t<matches string="\${os.arch}" pattern="^(arm|aarch64)"/>
-\t\t\t<matches string="\${os.arch}" pattern="64|^armv8"/>
-\t\t</and>
-\t</condition>`;
+<condition property="lwjgl.natives" value="natives-linux-arm64">
+\t<and>
+\t\t<os name="Linux"/>
+\t\t<matches string="\${os.arch}" pattern="^(arm|aarch64)"/>
+\t\t<matches string="\${os.arch}" pattern="64|^armv8"/>
+\t</and>
+</condition>`;
         }
         if (platform['linux-arm32']) {
           script += `
-\t<condition property="lwjgl.natives" value="natives-linux-arm32">
-\t\t<and>
-\t\t\t<os name="Linux"/>
-\t\t\t<matches string="\${os.arch}" pattern="^(arm|aarch64)"/>
-\t\t\t<not><matches string="\${os.arch}" pattern="64|^armv8"/></not>
-\t\t</and>
-\t</condition>`;
+<condition property="lwjgl.natives" value="natives-linux-arm32">
+\t<and>
+\t\t<os name="Linux"/>
+\t\t<matches string="\${os.arch}" pattern="^(arm|aarch64)"/>
+\t\t<not><matches string="\${os.arch}" pattern="64|^armv8"/></not>
+\t</and>
+</condition>`;
         }
       }
     }
     if (platform.macos) {
       script += `
-\t<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
+<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
     }
     const windowsArches = +platform.windows + +platform['windows-x86'];
     if (windowsArches !== 0) {
       if (windowsArches === 1) {
         script += `
-\t<condition property="lwjgl.natives" value="natives-windows${
+<condition property="lwjgl.natives" value="natives-windows${
           platform.windows ? '' : '-x86'
         }">${nl2}<os family="Windows"/>${nl1}</condition>`;
       } else {
         if (platform.windows) {
           script += `
-\t<condition property="lwjgl.natives" value="natives-windows">
-\t\t<and>
-\t\t\t<os family="Windows"/>
-\t\t\t<matches string="\${os.arch}" pattern="64"/>
-\t\t</and>
-\t</condition>`;
+<condition property="lwjgl.natives" value="natives-windows">
+\t<and>
+\t\t<os family="Windows"/>
+\t\t<matches string="\${os.arch}" pattern="64"/>
+\t</and>
+</condition>`;
         }
         if (platform['windows-x86']) {
           script += `
-\t<condition property="lwjgl.natives" value="natives-windows-x86">
-\t\t<and>
-\t\t\t<os family="Windows"/>
-\t\t\t<not><matches string="\${os.arch}" pattern="64"/></not>
-\t\t</and>
-\t</condition>`;
+<condition property="lwjgl.natives" value="natives-windows-x86">
+\t<and>
+\t\t<os family="Windows"/>
+\t\t<not><matches string="\${os.arch}" pattern="64"/></not>
+\t</and>
+</condition>`;
         }
       }
     }
@@ -148,15 +148,15 @@ export function generateIvy({
     script += `\n\n`;
   }
 
-  script += `\t<!-- Add to ivy.xml (xmlns:m="http://ant.apache.org/ivy/maven") -->
-\t<dependencies>`;
+  script += `<!-- Add to ivy.xml (xmlns:m="http://ant.apache.org/ivy/maven") -->
+<dependencies>`;
   script += generateDependencies(
     selected,
     artifacts,
     platform,
     osgi,
     (artifact, groupId, artifactId, hasEnabledNativePlatform) =>
-      `\n\t\t<dependency org="${groupId}" name="${artifactId}" rev="${v}"${
+      `\n\t<dependency org="${groupId}" name="${artifactId}" rev="${v}"${
         hasEnabledNativePlatform
           ? `>${nl3}<artifact name="${artifactId}" type="jar"/>${nl3}<artifact name="${artifactId}" type="jar" m:classifier="${
               isNativeApplicableToAllPlatforms(artifact, platform)
@@ -171,12 +171,12 @@ export function generateIvy({
     const {
       maven: { groupId, artifactId, version },
     } = addons[id];
-    script += `\n\t\t<dependency org="${groupId}" name="${artifactId}" rev="${
+    script += `\n\t<dependency org="${groupId}" name="${artifactId}" rev="${
       hardcoded ? version : `\${${id}.version}`
     }"/>`;
   });
 
-  script += `\n\t</dependencies>`;
+  script += `\n</dependencies>`;
 
   return script;
 }

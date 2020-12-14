@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useMemoSlice } from './Store';
-import { Checkbox } from '~/components/Checkbox';
+import { Checkbox } from '~/components/forms/Selection';
 
 interface Props {
   spec: {
@@ -21,7 +21,7 @@ interface Slice {
 }
 
 export function ControlledCheckbox({ spec }: Props) {
-  const [slice, dispatch] = useMemoSlice(
+  const [{ label, hidden, ...slice }, dispatch] = useMemoSlice(
     (state): Slice => ({
       label: spec.label,
       checked: spec.checked !== undefined && spec.checked(state),
@@ -33,5 +33,9 @@ export function ControlledCheckbox({ spec }: Props) {
 
   const onChange = useCallback(() => dispatch(spec.action(!slice.checked)), [dispatch, spec, slice.checked]);
 
-  return <Checkbox {...slice} onChange={onChange} />;
+  return hidden ? null : (
+    <Checkbox {...slice} onChange={onChange}>
+      {label}
+    </Checkbox>
+  );
 }

@@ -9,15 +9,16 @@
     "alwaysStrict": true,
     "noEmit": true,
     "noUnusedLocals": true,
+    "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "jsx": "preserve",
-    "baseUrl": ".",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "baseUrl": ".",
     "paths": {
       "~/*": ["./client/*"]
     },
     "types": ["node", "react/experimental", "react-dom/experimental"]
   },
-  "include": ["./types", "./client"],
-  "exclude": ["public", "scripts", "server"]
+  "include": ["./types/**/*", "./client/**/*", "assets/palette/tailwind.ts"],
+  "exclude": ["public", "scripts", "server", "**/node_modules", "**/.*/"]
 }

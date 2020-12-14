@@ -19,27 +19,27 @@ export function generateMaven({
 }: State) {
   const versionAlias = getVersion(version, build);
   const v = hardcoded ? versionAlias : '${lwjgl.version}';
-  const nl2 = compact ? '' : '\n\t\t';
-  const nl3 = compact ? '' : '\n\t\t\t';
-  const nl4 = compact ? '' : '\n\t\t\t\t';
-  const nl5 = compact ? '' : '\n\t\t\t\t\t';
+  const nl2 = compact ? '' : '\n\t';
+  const nl3 = compact ? '' : '\n\t\t';
+  const nl4 = compact ? '' : '\n\t\t\t';
+  const nl5 = compact ? '' : '\n\t\t\t\t';
   const classifier = !hardcoded || platformSingle == null ? '${lwjgl.natives}' : `natives-${platformSingle}`;
   const hasBoM = 323 <= versionNum(version);
 
   let script = '';
   if (!hardcoded) {
-    script += `\t<properties>
-\t\t<lwjgl.version>${versionAlias}</lwjgl.version>`;
+    script += `<properties>
+\t<lwjgl.version>${versionAlias}</lwjgl.version>`;
 
     selectedAddons.forEach((id: Addon) => {
-      script += `\n\t\t<${id}.version>${addons[id].maven.version}</${id}.version>`;
+      script += `\n\t<${id}.version>${addons[id].maven.version}</${id}.version>`;
     });
 
     if (platformSingle !== null) {
-      script += `\n\t\t<lwjgl.natives>natives-${platformSingle}</lwjgl.natives>`;
+      script += `\n\t<lwjgl.natives>natives-${platformSingle}</lwjgl.natives>`;
     }
 
-    script += `\n\t</properties>\n\n`;
+    script += `\n</properties>\n\n`;
   }
   if (platformSingle === null) {
     function generateProfile(profile: Native, family: string, arch: string, natives: String) {
@@ -60,11 +60,11 @@ export function generateMaven({
           }${nl5}<classifier>${natives}</classifier>${nl4}</dependency>`;
         });
 
-      return `\n\t\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${nl3}</properties>${
+      return `\n\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${nl3}</properties>${
         dependencies.length === 0 ? '' : `${nl3}<dependencies>${dependencies.join(nl4)}${nl3}</dependencies>`
       }${nl2}</profile>`;
     }
-    script += '\t<profiles>';
+    script += '<profiles>';
     if (platform.linux) {
       script += generateProfile(Native.Linux, 'unix', 'amd64', 'natives-linux');
     }
@@ -84,7 +84,7 @@ export function generateMaven({
     if (platform['windows-x86']) {
       script += generateProfile(Native.Windows, 'windows', 'x86', 'natives-windows-x86');
     }
-    script += '\n\t</profiles>\n\n';
+    script += '\n</profiles>\n\n';
   }
 
   if (build !== BuildType.Release) {
@@ -99,20 +99,20 @@ export function generateMaven({
   }
 
   if (hasBoM) {
-    script += `\t<dependencyManagement>
-\t\t<dependencies>
-\t\t\t<dependency>
-\t\t\t\t<groupId>org.lwjgl</groupId>
-\t\t\t\t<artifactId>lwjgl-bom</artifactId>
-\t\t\t\t<version>${v}</version>
-\t\t\t\t<scope>import</scope>
-\t\t\t\t<type>pom</type>
-\t\t\t</dependency>
-\t\t</dependencies>
-\t</dependencyManagement>\n\n`;
+    script += `<dependencyManagement>
+\t<dependencies>
+\t\t<dependency>
+\t\t\t<groupId>org.lwjgl</groupId>
+\t\t\t<artifactId>lwjgl-bom</artifactId>
+\t\t\t<version>${v}</version>
+\t\t\t<scope>import</scope>
+\t\t\t<type>pom</type>
+\t\t</dependency>
+\t</dependencies>
+</dependencyManagement>\n\n`;
   }
 
-  script += `\t<dependencies>`;
+  script += `<dependencies>`;
 
   script += generateDependencies(
     selected,
@@ -120,14 +120,14 @@ export function generateMaven({
     platform,
     osgi,
     (artifact, groupId, artifactId) =>
-      `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
+      `\n\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
         hasBoM ? '' : `${nl3}<version>${v}</version>`
       }${nl2}</dependency>`,
     (artifact, groupId, artifactId) => {
       if (!isNativeApplicableToAllPlatforms(artifact, platform)) {
         return '';
       }
-      return `\n\t\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
+      return `\n\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
         hasBoM ? '' : `${nl3}<version>${v}</version>`
       }${nl3}<classifier>${classifier}</classifier>${nl2}</dependency>`;
     }
@@ -143,7 +143,7 @@ export function generateMaven({
     }</version>${nl2}</dependency>`;
   });
 
-  script += `\n\t</dependencies>`;
+  script += `\n</dependencies>`;
 
   return script;
 }

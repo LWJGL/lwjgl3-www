@@ -1,21 +1,85 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import debounce from 'lodash-es/debounce';
 import { useMedia } from '~/hooks/useMedia';
+import { useViewport } from '~/hooks/useViewport';
 import { styled } from '~/theme/stitches.config';
+import { resetOpacityTransform } from '~/theme/animations';
 import { contextOptions } from './contextOptions';
 import { loadJS } from '~/services/loadJS';
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/regular/chevron-down';
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/regular/chevron-down';
 
-// Brands
+const Canvas = lazy(() => {
+  const route = Promise.all([
+    import(/* webpackChunkName: "route-home$canvas" */ './Canvas'),
+    loadJS('https://unpkg.com/three@0.122.0/build/three.min.js'),
+  ])
+    .then((values) => values[0])
+    .catch((err) => {
+      return { default: () => <></> };
+    });
+
+  return route;
+});
+
+const HeroBox = styled('section', {
+  width: '100%',
+  mt: '-3rem',
+  backgroundImage: `linear-gradient(to top left,
+#4cddff,
+#3b9aca 10%,
+#2d6ca5 20%,
+#2a5291 27%,
+#283d81 35%,
+#222654 50%,
+#1e1635 63%,
+#0c0010 93%,
+#000)`,
+
+  /*
+  height: 100vh;
+  @supports (-webkit-touch-callout: none) {
+    body {
+      height: -webkit-fill-available;
+    }
+  }
+*/
+});
+
+const LogoContainer = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  position: 'absolute',
+  alignItems: 'center',
+  justifyContent: 'center',
+  zIndex: 1,
+  width: '100%',
+  height: '100%',
+  padding: '1rem 1rem 0 1rem',
+  '@media (min-aspect-ratio: 8/2)': {
+    justifyContent: 'flex-end',
+  },
+});
+
+const LogoSvg = styled('svg', {
+  transform: 'translateY(3rem)',
+  opacity: 0,
+  animation: `${resetOpacityTransform} 1s ease forwards`,
+  // mb: '$4',
+  width: 140,
+  max: {
+    width: 'max(140px, min(16vw, 220px))',
+  },
+  clamp: {
+    width: 'clamp(140px, 16vw, 220px)',
+  },
+  '@media (min-aspect-ratio: 8/2)': {
+    display: 'none',
+  },
+});
+
 const Logo = (
-  <svg
-    className="logo"
-    xmlns="http://www.w3.org/2000/svg"
-    xmlnsXlink="http://www.w3.org/1999/xlink"
-    viewBox="0 0 206 182"
-  >
+  <LogoSvg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 206 182">
     <defs>
       <linearGradient id="face" y1="0" x1="0" x2="100%" y2="0">
         <stop stopColor="#d7d7d7" offset="0" />
@@ -48,76 +112,8 @@ const Logo = (
     <text x="130" y="43" style={{ font: '900 18px sans-serif' }}>
       3
     </text>
-  </svg>
+  </LogoSvg>
 );
-
-const Canvas = lazy(() => {
-  const route = Promise.all([
-    import(/* webpackChunkName: "route-home$canvas" */ './Canvas'),
-    loadJS('https://unpkg.com/three@0.116.1/build/three.min.js'),
-  ])
-    .then((values) => values[0])
-    .catch((err) => {
-      return { default: () => <></> };
-    });
-
-  return route;
-});
-
-const HeroBox = styled('section', {
-  width: '100%',
-  marginTop: '-4rem',
-  linearGradient: `to top left,
-    #4cddff,
-    #3b9aca 10%,
-    #2d6ca5 20%,
-    #2a5291 27%,
-    #283d81 35%,
-    #222654 50%,
-    #1e1635 63%,
-    #0c0010 93%,
-    #000`,
-
-  /*
-  height: 100vh;
-  @supports (-webkit-touch-callout: none) {
-    body {
-      height: -webkit-fill-available;
-    }
-  }
-*/
-});
-
-const LogoContainer = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  position: 'absolute',
-  alignItems: 'center',
-  justifyContent: 'center',
-  zIndex: 1,
-  width: '100%',
-  height: '100%',
-  padding: '1rem 1rem 0 1rem',
-  '@media (min-aspect-ratio: 8/2)': {
-    justifyContent: 'flex-end',
-  },
-  '.logo': {
-    transform: 'translateY(3rem)',
-    opacity: 0,
-    animation: 'anim-reset-opacity-transform 1s ease forwards',
-    marginBottom: '1rem',
-    width: 140,
-    max: {
-      width: 'max(140px, min(16vw, 220px))',
-    },
-    clamp: {
-      width: 'clamp(140px, 16vw, 220px)',
-    },
-    '@media (min-aspect-ratio: 8/2)': {
-      display: 'none',
-    },
-  },
-});
 
 const HeroContent = styled('div', {
   textAlign: 'center',
@@ -137,6 +133,10 @@ const HeroContent = styled('div', {
   },
   h1: {
     fontSize: '4rem',
+    // fontWeight: '$thin',
+    b: {
+      fontWeight: '$bold',
+    },
     max: {
       fontSize: 'max(4rem, min(15vw, 10rem))',
     },
@@ -221,22 +221,8 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
   ) : null;
 };
 
-function getCanvasDimensions() {
-  return [document.body.scrollWidth, window.innerHeight];
-}
-
 export function HomeHero() {
-  const [[width, height], setWH] = useState(getCanvasDimensions);
-
-  useEffect(() => {
-    const resizeHnd = debounce(() => {
-      setWH(getCanvasDimensions);
-    }, 120);
-    window.addEventListener('resize', resizeHnd);
-    return () => {
-      window.removeEventListener('resize', resizeHnd);
-    };
-  }, [setWH]);
+  const { width, height } = useViewport();
 
   return (
     <HeroBox style={{ height }}>
@@ -247,10 +233,10 @@ export function HomeHero() {
           <h1>
             LW<b>JGL</b>
           </h1>
-          <Link to="/#learn-more" className="d-block link-light text-decoration-none">
+          <Link to="/#learn-more">
             Lightweight Java Game Library
             <br />
-            <Icon className="mt-2" name="fa/regular/chevron-down" />
+            <Icon display="block" name="fa/regular/chevron-down" />
           </Link>
         </HeroContent>
       </LogoContainer>

@@ -1,6 +1,8 @@
 import { useState, useCallback } from 'react';
 
-export function useLocalStorage<T>(key: string, initialValue: T) {
+type HookSignature<T> = [T, (value: T) => void];
+
+export function useLocalStorage<T>(key: string, initialValue: T): HookSignature<T> {
   const [keyValue, setKeyValue] = useState<T>(() => {
     try {
       let value = window.localStorage.getItem(key);

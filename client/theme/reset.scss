@@ -1,0 +1,353 @@
+/*
+  CSS Reset
+  https://codesandbox.io/s/html5-kitchen-sink-88445?file=/index.html
+  https://codepen.io/chriscoyier/full/JpLzjd
+*/
+
+*,
+*::before,
+*::after {
+  // * (opinionated) Default to border-box box model
+  box-sizing: border-box;
+  // * (opinionated) Default to relative position
+  // position: relative;
+  /*
+    ! (opinionated/tailwind)
+    Allow adding a border to an element by just adding a border-width.
+
+    By default, the way the browser specifies that an element should have no
+    border is by setting it's border-style to `none` in the user-agent
+    stylesheet.
+
+    In order to easily add borders to elements by just setting the `border-width`
+    property, we change the default border-style for all elements to `solid`, and
+    use border-width to hide them instead. This way our `border` utilities only
+    need to set the `border-width` property instead of the entire `border`
+    shorthand, making our border utilities much more straightforward to compose.
+  */
+  // border: 0px solid #e4e4e7;
+}
+
+// * (opinionated) Use a more readable tab size
+:root {
+  tab-size: 4;
+}
+
+// Correct the line height in all browsers.
+// Prevent adjustments of font size after orientation changes.
+html {
+  // line-height: 1.15;
+  // ! (opinionated/tailwind)
+  line-height: 1.5;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+// Consistent fonts (Tailwind sans-serif stack)
+body {
+  font-family: var(--fonts-sans, sans-serif);
+}
+
+// Render elements in IE with correct display.
+// main,
+// details,
+// dialog {
+//   display: block;
+// }
+
+// ! (opinionated/tailwind) Make replaced elements `display: block` by default
+// img,
+// svg,
+// video,
+// canvas,
+// audio,
+// iframe,
+// embed,
+// object {
+//   display: block;
+//   vertical-align: middle;
+// }
+
+// ! (opinionated/tailwind) Constrain images and videos to the parent width and preserve their instrinsic aspect ratio.
+// img,
+// video {
+//   max-width: 100%;
+//   // height: auto;
+// }
+
+// Remove default margins
+body,
+blockquote,
+ol,
+ul,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+figure,
+p,
+pre,
+fieldset {
+  margin: 0;
+}
+
+// ! (opinionated/tailwind)
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+// ! (opinionated/tailwind) Reset links to optimize for opt-in styling instead of opt-out
+a {
+  color: inherit;
+  text-decoration-line: inherit;
+}
+
+// Add the correct font weight in Chrome, Edge, and Safari.
+b,
+strong {
+  font-weight: bolder;
+}
+
+// ! (opinionated/tailwind)
+ol,
+ul {
+  list-style: none;
+  padding: 0;
+}
+small {
+  font-size: 80%;
+}
+// Add the correct display in all browsers.
+summary {
+  display: list-item;
+}
+// // Add the correct display in IE 10+.
+// template {
+//   display: none;
+// }
+
+// Add the correct box sizing in Firefox.
+// Add the correct height in Firefox.
+// Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)
+// Show the overflow in Edge and IE.
+// ! (opinionated/tailwind)
+// Ensure horizontal rules are visible by default
+hr {
+  // box-sizing: content-box;
+  height: 0;
+  color: inherit;
+  overflow: visible;
+  border: none;
+  border-top: 1px solid var(--colors-neutral300, #e4e4e7);
+}
+
+iframe {
+  border: none;
+}
+
+// Improve consistency of default fonts in all browsers
+// Correct the odd 'em' font sizing in all browsers.
+code,
+kbd,
+samp,
+pre {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  font-size: 1em;
+}
+abbr[title] {
+  border-bottom: none;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+// Prevent `sub` and `sup` elements from affecting the line height in all browsers
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+sub {
+  bottom: -0.25em;
+}
+sup {
+  top: -0.5em;
+}
+
+// // Remove the border on images within links in IE 10-.
+// img {
+//   border-style: none;
+// }
+
+// // Hide the overflow in IE.
+// svg:not(:root) {
+//   overflow: hidden;
+// }
+
+// Remove text indentation from table contents in Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=999088, https://bugs.webkit.org/show_bug.cgi?id=201297)
+// Correct table border color inheritance in all Chrome and Safari. (https://bugs.chromium.org/p/chromium/issues/detail?id=935729, https://bugs.webkit.org/show_bug.cgi?id=195016)
+table {
+  text-indent: 0;
+  border-color: inherit;
+  // ! (opinionated/tailwind)
+  border-collapse: collapse;
+}
+
+// Remove the margin in Firefox and Safari.
+// Change the font styles in all browsers.
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: 100%;
+  // line-height: 1.15;
+  // ! (opinionated/tailwind)
+  line-height: inherit;
+  // ! (opinionated/tailwind)
+  color: inherit;
+  // ! (opinionated/tailwind)
+  padding: 0;
+}
+// ! (opinionated/tailwind) Work around a Firefox/IE bug where the transparent `button` background results in a loss of the default `button` focus styles.
+button:focus {
+  outline: 1px dotted;
+}
+@supports (outline: 5px auto -webkit-focus-ring-color) {
+  button:focus {
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+}
+// ! (opinionated/tailwind)
+button:hover,
+[role='button']:hover {
+  cursor: pointer;
+}
+// Show the overflow in Edge/IE
+button,
+input {
+  overflow: visible;
+}
+// Remove text-transform inheritance (Firefox, Edge, IE)
+button,
+select {
+  text-transform: none;
+}
+// Correct the inability to style clickable types in iOS and Safari.
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  -webkit-appearance: button;
+}
+// Remove the inner border and padding in Firefox.
+::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+// Restore the focus styles unset by the previous rule.
+:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+:-moz-ui-invalid {
+  box-shadow: none;
+}
+// Correct the padding in Firefox.
+fieldset {
+  // padding: 0.35em 0.75em 0.625em;
+  // ! (opinionated/tailwind)
+  padding: 0;
+}
+// Correct the color inheritance from `fieldset` elements in IE.
+// Correct the text wrapping in Edge and IE.
+// Remove the padding so developers are not caught out when they zero out `fieldset` elements in all browsers.
+legend {
+  color: inherit;
+  display: table;
+  max-width: 100%;
+  white-space: normal;
+  padding: 0;
+}
+
+// Add the correct display in Edge 18- and IE.
+// Add the correct vertical alignment in Chrome, Firefox, and Opera.
+progress {
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+// ! (opinionated/tailwind) Prevent horizontal resize by default
+textarea {
+  resize: vertical;
+}
+
+// ! (opinionated/tailwind)
+input::placeholder,
+textarea::placeholder {
+  color: #a1a1aa;
+}
+
+// // Remove the default vertical scrollbar in IE 10+.
+// textarea {
+//   overflow: auto;
+// }
+
+// // Correct the cursor style of increment and decrement buttons in Chrome.
+// ::-webkit-inner-spin-button,::-webkit-outer-spin-button {
+//   height: auto;
+// }
+
+// // Correct the odd appearance in Chrome and Safari.
+// // Correct the outline style in Safari.
+// [type="search"] {
+//   -webkit-appearance: textfield;
+//    outline-offset: -2;
+// }
+
+// // Remove the inner padding in Chrome and Safari on macOS.
+// ::-webkit-search-decoration {
+//   -webkit-appearance: none;
+// }
+
+// Correct the inability to style clickable types in iOS and Safari.
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  font: inherit;
+}
+
+/*
+dialog {
+  background-color: white;
+  border: solid;
+  color: black;
+  display: block;
+  height: -moz-fit-content;
+  height: -webkit-fit-content;
+  height: fit-content;
+  left: 0;
+  margin: auto;
+  padding: 1em;
+  position: absolute;
+  right: 0;
+  width: -moz-fit-content;
+  width: -webkit-fit-content;
+  width: fit-content;
+}
+dialog:not([open]) {
+  display: none;
+}
+*/

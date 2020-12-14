@@ -1,0 +1,95 @@
+// Not actually SCSS, using this extension for inline comments syntax support
+
+@import 'reset.scss';
+
+body {
+  background-color: var(--colors-body);
+  color: var(--colors-text);
+
+  // Disables pull-to-refresh and overscroll glow effect. Still keeps swipe navigations.
+  // https://developers.google.com/web/updates/2017/11/overscroll-behavior
+  overscroll-behavior-y: none;
+
+  // // Always show scrollbar to avoid layout between page navigations
+  // overflow-y: scroll;
+
+  // Disable scroll anchoring
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
+  overflow-anchor: none;
+}
+
+pre {
+  overflow-x: auto;
+}
+
+:root {
+  --scale: 1;
+  --scale-sm: 1;
+
+  // // Responsive text-size
+  // // https://css-tricks.com/linearly-scale-font-size-with-css-clamp-based-on-the-viewport/
+  // --min-fs: 1;
+  // --max-fs: 1.25;
+  // --min-vw: 20;
+  // --max-vw: 87.5;
+
+  // --min-fs-rem: var(--min-fs) * 1rem;
+  // --max-fs-rem: var(--max-fs) * 1rem;
+  // --min-vw-rem: var(--min-vw) * 1rem;
+
+  // --slope: (var(--max-fs) - var(--min-fs)) * (100vw - var(--min-vw-rem)) / (var(--max-vw) - var(--min-vw));
+
+  // font-size: clamp(var(--min-fs-rem), var(--min-fs-rem) + var(--slope), var(--max-fs-rem));
+}
+
+@media (min-width: 768px) {
+  :root {
+    --scale: 1.125;
+    --scale-sm: 1.0625;
+  }
+}
+
+@media (min-width: 992px) {
+  :root {
+    --scale: 1.25;
+    --scale-sm: 1.125;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --scale: 1.5;
+    --scale-sm: 1.1875;
+  }
+}
+
+@media (min-width: 1400px) {
+  :root {
+    --scale: 2;
+    --scale-sm: 1.25;
+  }
+}
+
+// @media (prefers-reduced-motion: reduce) {
+//   * {
+//     // Instead of disabling animations, reduce durations to 0
+//     // This avoids having to work around fill-mode styling (e.g. "forwards" should leave the element in end state after the animation has completed)
+//     animation-delay: 0s !important;
+//     animation-duration: 0s !important;
+//     transition-duration: 0s !important;
+//     // disable smooth scrolling
+//     scroll-behavior: auto !important;
+//   }
+// }
+
+// .sr-only {
+//   position: absolute;
+//   width: 1px;
+//   height: 1px;
+//   padding: 0;
+//   margin: -1px;
+//   overflow: hidden;
+//   clip: rect(0, 0, 0, 0);
+//   white-space: nowrap;
+//   border: 0;
+// }

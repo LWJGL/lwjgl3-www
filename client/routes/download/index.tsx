@@ -1,97 +1,120 @@
-import { PageView } from '~/components/routes/PageView';
-import { LinkButton } from '~/components/LinkButton';
+import { PageView } from '~/routes/PageView';
 import { CustomizePreload, BrowsePreload } from '../';
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/brands/github';
-import '~/components/icons/fa/solid/check-square';
-import '~/components/icons/fa/solid/folder';
+import { Container } from '~/components/layout/Container';
+import { Grid } from '~/components/layout/Grid';
+import { Box } from '~/components/layout/Box';
+import { Text } from '~/components/ui/Text';
+import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
+import { Dark } from '~/components/lwjgl/Dark';
+import { Anchor } from '~/components/lwjgl/Anchor';
+import { Title } from '~/components/lwjgl/Title';
+// import { ScreenLock } from '~/components/layout/ScreenLock';
 
-const DownloadRoute: React.FC<{ children?: never }> = () => (
-  <PageView title="Download" description="Download LWJGL 3">
-    <section className="container pb-4">
-      <h1>
-        Download LW
-        <b>JGL</b> 3
-      </h1>
-      <hr />
-      <div className="row">
-        <div className="col-md-12 col-lg-4">
-          <p>All official releases are available for download from GitHub:</p>
-          <p>
-            <a
-              className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-lg btn-dark"
+// Icons
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/brands/github';
+import '~/theme/icons/fa/solid/check-square';
+import '~/theme/icons/fa/solid/folder';
+
+const buttonSizes: React.ComponentProps<typeof LinkButton>['size'] = {
+  initial: 'lg',
+  xl: 'xl',
+};
+
+const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
+  return (
+    <PageView title="Download" description="Download LWJGL 3">
+      <Container padding>
+        <Title>
+          Download LW
+          <b>JGL</b> 3
+        </Title>
+
+        <Grid
+          css={{
+            grid: 'auto-flow / 1fr',
+            gap: '$paragraph',
+            lg: {
+              grid: 'auto-flow / repeat(3, 1fr)',
+            },
+          }}
+        >
+          <Text>All official are available for download from GitHub:</Text>
+          <Box css={{ lg: { gridRow: 2 } }}>
+            <AnchorButton
+              fill="auto"
+              size={buttonSizes}
               href="https://github.com/LWJGL/lwjgl3/releases"
               target="_blank"
-              rel="noopener external"
+              rel="external"
             >
-              <Icon name="fa/brands/github" /> Download from Github
-            </a>
-          </p>
-        </div>
-        <div className="col-md-12 col-lg-4" onMouseOver={CustomizePreload}>
-          <p>You can customize your LWJGL build or use the latest stable & nightly releases:</p>
-          <p>
-            <LinkButton className="btn-lg btn-dark" to="/customize">
-              <Icon name="fa/solid/check-square" /> Customize LWJGL 3
+              <Icon name="fa/brands/github" css={{ mr: '$xsm' }} />
+              Download from Git
+            </AnchorButton>
+          </Box>
+
+          <Text>You can customize your LWJGL build or use the latest stable & nightly releases:</Text>
+          <Box css={{ lg: { gridRow: 2 } }} onMouseOver={CustomizePreload}>
+            <LinkButton fill="auto" size={buttonSizes} to="/customize">
+              <Icon name="fa/solid/check-square" css={{ mr: '$xsm' }} />
+              Customize LWJGL 3
             </LinkButton>
-          </p>
-        </div>
-        <div className="col-md-12 col-lg-4" onMouseOver={BrowsePreload}>
-          <p>Or you can browse and download individual LWJGL artifacts:</p>
-          <p>
-            <LinkButton className="btn-lg btn-outline-dark" to="/browse">
-              <Icon name="fa/solid/folder" /> Browse LWJGL files
+          </Box>
+
+          <Text>Or you can browse and download individual LWJGL artifacts:</Text>
+          <Box css={{ lg: { gridRow: 2 } }} onMouseOver={BrowsePreload}>
+            <LinkButton fill="auto" variant="outline" size={buttonSizes} to="/browse">
+              <Icon name="fa/solid/folder" css={{ mr: '$xsm' }} />
+              Browse LWJGL files
             </LinkButton>
-          </p>
-        </div>
-      </div>
-    </section>
+          </Box>
+        </Grid>
+      </Container>
 
-    <div className="area-dark py-5">
-      <section className="container">
-        <h3>Build from source?</h3>
-        <p>Click below if you prefer to build from source:</p>
-        <p>
-          <LinkButton className="btn-info" to="/source">
-            Source
-          </LinkButton>
-          <LinkButton className="btn-info" to="/guide#build-instructions">
-            Build instructions
-          </LinkButton>
-        </p>
-      </section>
-    </div>
+      <Dark>
+        <Container padding>
+          <Text as="h2" css={{ mt: -4 }}>
+            Build from source?
+          </Text>
 
-    <section className="container py-4">
-      <p>
-        Broken download? Let us know at the{' '}
-        <a href="http://forum.lwjgl.org/" rel="noopener external">
-          forums
-        </a>
-        .
-      </p>
+          <Text margin>Click below if you prefer to build from source:</Text>
+          <Grid css={{ gap: '$xsm', sm: { grid: 'auto-flow / repeat(2, max-content)' } }}>
+            <LinkButton variant="outline" to="/source">
+              Source
+            </LinkButton>
+            <LinkButton variant="outline" to="/guide#build-instructions">
+              Build instructions
+            </LinkButton>
+          </Grid>
+        </Container>
+      </Dark>
 
-      <h2>Looking for LWJGL 2?</h2>
+      <Container padding>
+        <Text margin>
+          Broken download? Let us know in the{' '}
+          <Anchor href="http://forum.lwjgl.org/" rel="noopener external">
+            forum
+          </Anchor>
+          .
+        </Text>
 
-      <p>LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:</p>
-      <p>
-        <a
-          className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-primary"
-          href="http://legacy.lwjgl.org/"
-          rel="noopener external"
-        >
-          LWJGL 2 WEBSITE
-        </a>
-        <a
-          className="btn d-block d-sm-inline-block mb-2 mb-sm-0 mr-sm-2 btn-outline-primary"
-          href="http://wiki.lwjgl.org/"
-          rel="noopener external"
-        >
-          LWJGL 2 WIKI
-        </a>
-      </p>
-    </section>
-  </PageView>
-);
+        <Text as="h2">Looking for LWJGL 2?</Text>
+
+        <Text margin>
+          LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:
+        </Text>
+
+        <Grid css={{ gap: '$xsm', sm: { grid: 'auto-flow / repeat(2, max-content)' } }}>
+          <AnchorButton variant="outline" href="http://legacy.lwjgl.org/" rel="noopener external">
+            LWJGL 2 WEBSITE
+          </AnchorButton>
+          <AnchorButton variant="outline" href="http://wiki.lwjgl.org/" rel="noopener external">
+            LWJGL 2 WIKI
+          </AnchorButton>
+        </Grid>
+      </Container>
+    </PageView>
+  );
+};
 
 export default DownloadRoute;

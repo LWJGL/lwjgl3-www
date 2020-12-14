@@ -1,10 +1,32 @@
-import { useContext, useState, unstable_useOpaqueIdentifier as useOpaqueIdentifier } from 'react';
-import { BreakpointContext } from '~/components/Breakpoint';
+import { useState } from 'react';
+import { useProxy } from 'valtio';
+import { breakpoint, Breakpoint } from '~/theme/breakpoints';
+import { Button } from '~/components/forms/Button';
+import { FilePicker } from '~/components/forms/FilePicker';
+import { Dark } from '~/components/lwjgl/Dark';
+
 import type { BuildStoreSnapshot } from './types';
 
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/duotone/folder-download';
-import '~/components/icons/fa/duotone/folder-upload';
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/duotone/folder-download';
+import '~/theme/icons/fa/duotone/folder-upload';
+
+import { styled } from '~/theme/stitches.config';
+
+const ToolbarContainer = styled(Dark, {
+  backgroundColor: '$primary200',
+  padding: '1rem 0',
+  textAlign: 'center',
+  position: 'fixed',
+  left: 0,
+  bottom: 0,
+  width: '100%',
+  display: 'grid',
+  gap: '0.5rem',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gridAutoFlow: 'column',
+});
 
 interface Props {
   configDownload: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -12,13 +34,9 @@ interface Props {
 }
 
 export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, children }) => {
-  const {
-    current,
-    breakpoints: { sm },
-  } = useContext(BreakpointContext);
   const [fileUI, setFileUI] = useState(false);
   const toggleFileUI = () => setFileUI(!fileUI);
-  const configFileLabel = useOpaqueIdentifier();
+  const { current: current } = useProxy(breakpoint);
 
   if (fileUI) {
     const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,44 +55,36 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
           }
           configLoad(JSON.parse(reader.result) as BuildStoreSnapshot);
           setFileUI(false);
-        } catch (ignore) {
-          alert('File does not contain a valid LWJGL configuration.');
+        } catch (e) {
+          alert(e.message);
         }
       };
       reader.readAsText(files[0]);
     };
 
     return (
-      <div className="download-toolbar">
-        <div className="container d-flex justify-content-center">
-          <div className="form-file">
-            <input type="file" id={configFileLabel} className="form-file-input" accept=".json" onChange={handleFile} />
-            <label className="form-file-label" htmlFor={configFileLabel}>
-              <span className="form-file-text">Choose file...</span>
-              <span className="form-file-button">Browse</span>
-            </label>
-          </div>
-          <button className="btn btn-outline-light mx-2" onClick={toggleFileUI}>
-            Cancel
-          </button>
-        </div>
-      </div>
+      <ToolbarContainer>
+        <FilePicker accept=".json" placeholder="Select build config…" onChange={handleFile} />
+        <Button variant="outline" onClick={toggleFileUI}>
+          Cancel
+        </Button>
+      </ToolbarContainer>
     );
   }
 
-  const showLabels = current > sm;
+  const showLabels = current > Breakpoint.sm;
 
   return (
-    <div className="download-toolbar">
+    <ToolbarContainer>
       {children}
-      <button className="btn btn-outline-light" title="Load configuration file (JSON)" onClick={toggleFileUI}>
+      <Button variant="outline" title="Load configuration file (JSON)" onClick={toggleFileUI}>
         <Icon name="fa/duotone/folder-upload" />
         {showLabels ? ` Load config` : null}
-      </button>
-      <button className="btn btn-outline-light" title="Save configuration (in JSON)" onClick={configDownload}>
+      </Button>
+      <Button variant="outline" title="Save configuration (in JSON)" onClick={configDownload}>
         <Icon name="fa/duotone/folder-download" />
         {showLabels ? ` Save config` : null}
-      </button>
-    </div>
+      </Button>
+    </ToolbarContainer>
   );
 };

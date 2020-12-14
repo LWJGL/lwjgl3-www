@@ -1,6 +1,7 @@
 import type { BuildType } from './types';
 import { ResourceCached } from '~/services/Resource';
 import { config } from './config';
+import { Text } from '~/components/ui/Text';
 
 interface BuildStatusSuccess {
   lastModified: string;
@@ -53,10 +54,10 @@ export const BuildStatus = ({ name }: Props) => {
   const status = BuildStatusResource.read(name);
 
   return (
-    <p className="my-0">
-      {'error' in status ? <span className="text-danger">{status.error}</span> : status.version}
+    <Text size="sm" css={{ color: 'error' in status ? '$critical700' : '$neutral700' }}>
+      {'error' in status ? status.error : status.version}
       <br />
       {'lastModified' in status ? status.lastModified : <br />}
-    </p>
+    </Text>
   );
 };

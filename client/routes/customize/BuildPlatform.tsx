@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Checkbox } from '~/components/Checkbox';
+import { Checkbox } from '~/components/forms/Selection';
 import { useMemoSlice } from './Store';
 import { togglePlatform } from './actions';
 import { Native } from './types';
@@ -25,25 +25,22 @@ export function BuildPlatform() {
 
     return (
       <>
-        <h4 className="mt-3">Natives</h4>
-        <div className="custom-controls-stacked">
-          {platforms
-            .filter((platform: Native) => versionNum(natives[platform].since) <= vnum)
-            .map((platform: Native) => (
-              <Checkbox
-                key={platform}
-                icon={getPlatformIcon(platform)}
-                label={
-                  platform === Native.Windows && vnum < versionNum(natives[Native.WindowsX86].since)
-                    ? 'Windows x64/x86'
-                    : natives[platform].title
-                }
-                checked={selected[platform]}
-                value={platform}
-                onChange={(platform: Native) => dispatch(togglePlatform(platform))}
-              />
-            ))}
-        </div>
+        <h4>Natives</h4>
+        {platforms
+          .filter((platform: Native) => versionNum(natives[platform].since) <= vnum)
+          .map((platform: Native) => (
+            <Checkbox
+              key={platform}
+              checked={selected[platform]}
+              value={platform}
+              onChange={(e, platform: Native) => dispatch(togglePlatform(platform))}
+            >
+              {getPlatformIcon(platform)}{' '}
+              {platform === Native.Windows && vnum < versionNum(natives[Native.WindowsX86].since)
+                ? 'Windows x64/x86'
+                : natives[platform].title}
+            </Checkbox>
+          ))}
       </>
     );
   }, [dispatch, slice]);

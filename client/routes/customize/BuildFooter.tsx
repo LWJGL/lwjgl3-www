@@ -6,8 +6,9 @@ import { BuildToolbar } from './BuildToolbar';
 import { configJSONfilename, getConfigSnapshot } from './config';
 import { useSlice, useStoreRef } from './Store';
 import { Mode } from './types';
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/duotone/cloud-download';
+import { Button } from '~/components/forms/Button';
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/duotone/cloud-download';
 
 import type { BuildStoreSnapshot } from './types';
 
@@ -29,18 +30,22 @@ export function BuildFooter({ setIsDownloading }: Props) {
       saveAs(blob, configJSONfilename(save));
     };
 
-    const dispatchConfigLoad = (payload: BuildStoreSnapshot) => dispatch(configLoad(payload));
+    const dispatchConfigLoad = (payload: BuildStoreSnapshot) => {
+      if (payload.build === undefined) {
+        throw new Error('File does not contain a valid LWJGL configuration.');
+      }
+      dispatch(configLoad(payload));
+    };
 
     return mode === Mode.Zip ? (
       <BuildToolbar configDownload={configDownload} configLoad={dispatchConfigLoad}>
-        <button
-          className="btn btn-success"
+        <Button
           onClick={() => {
             setIsDownloading(true);
           }}
         >
           <Icon name="fa/duotone/cloud-download" /> DOWNLOAD ZIP
-        </button>
+        </Button>
       </BuildToolbar>
     ) : (
       <BuildScript configDownload={configDownload} configLoad={dispatchConfigLoad} />

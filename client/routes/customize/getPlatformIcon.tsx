@@ -1,8 +1,8 @@
 import { Native } from './types';
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/brands/apple';
-import '~/components/icons/fa/brands/linux';
-import '~/components/icons/fa/brands/windows';
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/brands/apple';
+import '~/theme/icons/fa/brands/linux';
+import '~/theme/icons/fa/brands/windows';
 
 export const getPlatformIcon = (platform: Native) => {
   switch (platform) {

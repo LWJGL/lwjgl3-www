@@ -3,16 +3,17 @@ import { useMemoSlice } from './Store';
 import { NATIVE_ALL } from './types';
 import type { Binding, BindingDefinition, Native, NativeMap, BuildStore } from './types';
 import { toggleArtifact } from './actions';
+import { Text } from '~/components/ui/Text';
 
 // UI
-import { Checkbox } from '~/components/Checkbox';
-import { cc } from '~/theme/cc';
+import { Checkbox } from '~/components/forms/Selection';
+import { Anchor } from '~/components/lwjgl/Anchor';
 
 const getSupportedPlatforms = (natives: NativeMap, platforms: Array<Native>, disabled: boolean) => (
-  <p className={disabled ? 'text-danger' : 'text-secondary'}>
+  <Text css={{ color: disabled ? '$critical600' : '$positive500' }}>
     <em>Supported platforms: </em>
     {platforms.map((platform) => natives[platform].title).join(', ')}
-  </p>
+  </Text>
 );
 
 const getSlice = ({ contents, availability, descriptions, artifacts, natives }: BuildStore) => ({
@@ -28,13 +29,13 @@ const getInputs = (state: BuildStore) => [state.contents, state.availability, st
 
 export function BuildArtifacts() {
   const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
-  const onChange = useCallback((artifact: Binding) => dispatch(toggleArtifact(artifact)), [dispatch]);
+  const onChange = useCallback((e, artifact: Binding) => dispatch(toggleArtifact(artifact)), [dispatch]);
 
   return useMemo(() => {
     const { contents, availability, descriptions, allIds, byId, natives } = slice;
 
     return (
-      <div className="custom-controls-stacked">
+      <>
         {allIds.map((it: Binding) => {
           const artifact = byId[it] as BindingDefinition;
           const available = availability[it] === true;
@@ -51,7 +52,7 @@ export function BuildArtifacts() {
             />
           );
         })}
-      </div>
+      </>
     );
   }, [slice, onChange]);
 }
@@ -67,15 +68,8 @@ interface Props {
 
 const BuildArtifact: React.FC<Props> = ({ natives, artifact, selected, disabled, showDescriptions, onChange }) => {
   if (showDescriptions) {
-    return (
-      <div className={cc('artifact', { 'text-muted': disabled })}>
-        <Checkbox
-          value={artifact.id}
-          label={artifact.title}
-          disabled={disabled}
-          checked={selected}
-          onChange={onChange}
-        />
+    const desc = (
+      <>
         {artifact.natives &&
           artifact.natives !== NATIVE_ALL &&
           artifact.nativesOptional !== true &&
@@ -83,16 +77,24 @@ const BuildArtifact: React.FC<Props> = ({ natives, artifact, selected, disabled,
         <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
         {artifact.website !== undefined && (
           <p>
-            <a href={artifact.website} target="_blank" rel="noopener">
+            <Anchor href={artifact.website} target="_blank" css={{ wrap: 'all' }}>
               {artifact.website}
-            </a>
+            </Anchor>
           </p>
         )}
-      </div>
+      </>
+    );
+
+    return (
+      <Checkbox description={desc} value={artifact.id} disabled={disabled} checked={selected} onChange={onChange}>
+        {artifact.title}
+      </Checkbox>
     );
   } else {
     return (
-      <Checkbox value={artifact.id} label={artifact.title} disabled={disabled} checked={selected} onChange={onChange} />
+      <Checkbox value={artifact.id} disabled={disabled} checked={selected} onChange={onChange}>
+        {artifact.title}
+      </Checkbox>
     );
   }
 };

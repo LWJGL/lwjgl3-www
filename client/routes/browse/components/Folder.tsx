@@ -1,78 +1,30 @@
-import { styled } from '~/theme/stitches.config';
 import { Link } from 'react-router-dom';
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/solid/folder';
-
-const FolderTH = styled('th', {
-  userSelect: 'none',
-  a: {
-    display: 'block',
-    padding: '0.75rem',
-    color: '#333',
-    fontWeight: 'normal',
-    ':hover': {
-      textDecoration: 'none',
-      backgroundColor: '#5bc0de',
-      color: 'white',
-      svg: {
-        color: 'white',
-      },
-    },
-    ':active': {
-      color: 'yellow',
-    },
-  },
-});
+import { Icon } from '~/components/ui/Icon';
+import { LoadingPulse } from '~/components/ui/LoadingPulse';
+import '~/theme/icons/fa/solid/folder';
+import { Row } from './Row';
 
 interface Props {
   path: string;
   loading?: boolean;
 }
 
-export const FolderWrap: React.FC<{}> = ({ children }) => {
-  return (
-    <tr>
-      <FolderTH style={{ padding: 0 }} scope="row">
-        {children}
-      </FolderTH>
-    </tr>
-  );
-};
-
 export const Folder: React.FC<Props> = ({ path, loading = false }) => {
   const parts = path.split('/');
   const name = parts[parts.length - 1];
 
   return (
-    <FolderWrap>
-      <Link className="text-decoration-none" to={path}>
+    <Row type="folder">
+      <Link to={path}>
         <Icon name="fa/solid/folder" /> {name}
-        {loading && (
-          <div className="d-inline-block">
-            <div className="spinner-grow spinner-grow-sm ml-1" role="status">
-              <span className="visually-hidden">Loading&hellip;</span>
-            </div>
-          </div>
-        )}
+        {loading ? <LoadingPulse size="sm" css={{ ml: '$xxsm' }} /> : null}
       </Link>
-    </FolderWrap>
+    </Row>
   );
 };
 
-export const SpinnerRow: React.FC = () => (
-  <tr>
-    <td>
-      <div className="spinner-grow" role="status">
-        <span className="visually-hidden">Loading&hellip;</span>
-      </div>
-    </td>
-  </tr>
-);
+export const SpinnerRow: React.FC = () => <Row css={{ padding: '$sm', color: '$neutral500' }}>Loading&hellip;</Row>;
 
-export function FolderError({ error }: { error: Error }) {
-  return (
-    <tr>
-      <th className="text-danger">{error.message}</th>
-    </tr>
-  );
-}
+export const FolderError: React.FC<{ error: Error }> = ({ error }) => (
+  <Row css={{ padding: '$sm', backgroundColor: '$critical800', color: '$caution300' }}>{error.message}</Row>
+);

@@ -1,12 +1,17 @@
 import { useMemo, useRef } from 'react';
 import { useMemoSlice } from './Store';
-import { useBreakpoint } from '~/components/Breakpoint';
 import { BuildToolbar } from './BuildToolbar';
+import { useProxy } from 'valtio';
+import { breakpoint, Breakpoint } from '~/theme/breakpoints';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
 import { BuildType } from './types';
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/duotone/cloud-download';
-import '~/components/icons/fa/duotone/copy';
+import { Button } from '~/components/forms/Button';
+import { AnchorButton } from '~/components/ui/LinkButton';
+import { Text } from '~/components/ui/Text';
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/duotone/cloud-download';
+import '~/theme/icons/fa/duotone/copy';
+import { styled } from '~/theme/stitches.config';
 
 import type {
   Addon,
@@ -46,12 +51,7 @@ interface Props {
 
 export function BuildScript({ configDownload, configLoad }: Props) {
   const preRef = useRef<HTMLPreElement>(null);
-
-  // Breakpoint
-  const {
-    current,
-    breakpoints: { sm, md },
-  } = useBreakpoint();
+  const { current: current } = useProxy(breakpoint);
 
   // Slice
   const [slice] = useMemoSlice(
@@ -112,45 +112,61 @@ export function BuildScript({ configDownload, configLoad }: Props) {
       copy: ' COPY TO CLIPBOARD',
     };
 
-    if (current < sm) {
+    if (current < Breakpoint.sm) {
       labels.download = 'DOWNLOAD';
       labels.copy = '';
-    } else if (current < md) {
+    } else if (current < Breakpoint.md) {
       labels.copy = ' COPY';
     }
 
     const script = generateScript(mode.id, slice);
 
     return (
-      <div>
-        <h2 className="mt-1">
-          <img src={mode.logo} alt={mode.title} style={{ height: 60 }} />
-        </h2>
-        <pre ref={preRef} className="m-0">
+      <>
+        <Text as="h2" css={{ mt: '$gutter', sm: { mt: '1rem' } }}>
+          <ScriptLogo flipOnDark={mode.id === 'maven'} src={mode.logo} alt={mode.title} />
+        </Text>
+        <Pre ref={preRef}>
           <code>{script}</code>
-        </pre>
+        </Pre>
         <BuildToolbar configDownload={configDownload} configLoad={configLoad}>
           {ALLOW_DOWNLOAD && (
-            <a
-              className="btn btn-success"
+            <AnchorButton
               download={mode.file}
               href={`data:${mime(mode)};base64,${btoa(script)}`}
               title={`Download ${mode.id} code snippet`}
             >
               <Icon name="fa/duotone/cloud-download" /> {labels.download}
-            </a>
+            </AnchorButton>
           )}
-          <button
-            className="btn btn-success"
-            onClick={() => copyToClipboard(preRef)}
-            disabled={!document.execCommand}
-            title="Copy to clipboard"
-          >
+          <Button onClick={() => copyToClipboard(preRef)} disabled={!document.execCommand} title="Copy to clipboard">
             <Icon name="fa/duotone/copy" />
             {labels.copy}
-          </button>
+          </Button>
         </BuildToolbar>
-      </div>
+      </>
     );
-  }, [slice, current, sm, md, mode, configDownload, configLoad]);
+  }, [slice, current, mode, configDownload, configLoad]);
 }
+
+const ScriptLogo = styled('img', {
+  height: 60,
+  variants: {
+    flipOnDark: {
+      true: {
+        dark: {
+          filter: 'invert(90%)',
+        },
+      },
+    },
+  },
+});
+
+const Pre = styled('pre', {
+  maxWidth: 'calc(100vw - 3.6rem)',
+  overflow: 'auto',
+  padding: '$gutter',
+  backgroundColor: '$caution50',
+  border: '1px solid $gray700',
+  fontSize: '$sm',
+});

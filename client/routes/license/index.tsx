@@ -1,19 +1,34 @@
-import { PageView } from '~/components/routes/PageView';
+import { PageView } from '~/routes/PageView';
+import { Grid } from '~/components/layout/Grid';
+import { Container } from '~/components/layout/Container';
+import { Title } from '~/components/lwjgl/Title';
+import { Prose } from '~/components/ui/Prose';
 
 const LicenseRoute: React.FC<{ children?: never }> = () => (
   <PageView title="License" description="LWJGL is licensed under BSD">
-    <section className="container">
-      <h1>Lightweight Java Game Library License</h1>
-      <hr />
-
-      <article className="row">
-        <div className="col-lg">
+    <Container as="article" padding>
+      <Title>Lightweight Java Game Library License</Title>
+      <Grid
+        css={{
+          gap: '$gutter',
+          md: {
+            grid: 'auto-flow / 1fr 1fr',
+          },
+          xxl: {
+            grid: 'auto-flow / max-content 1fr 1fr',
+          },
+        }}
+      >
+        <Prose css={{ color: '$neutral700', md: { gridColumn: 1 } }}>
           <p>
-            Copyright © 2012-present Lightweight Java Game Library
-            <br />
-            All rights reserved.
+            <small>
+              Copyright © 2012-present Lightweight Java Game Library
+              <br />
+              All rights reserved.
+            </small>
           </p>
-
+        </Prose>
+        <Prose css={{ md: { gridRow: 2 }, xxl: { gridRow: 'auto' } }}>
           <p>
             Redistribution and use in source and binary forms, with or without modification, are permitted provided that
             the following conditions are met:
@@ -33,8 +48,8 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
               promote products derived from this software without specific prior written permission.
             </li>
           </ol>
-        </div>
-        <div className="col-lg">
+        </Prose>
+        <Prose css={{ md: { gridRow: '1/3' }, xxl: { gridRow: 'auto' } }}>
           <p>
             THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
             WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -45,9 +60,9 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
             NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
             POSSIBILITY OF SUCH DAMAGE.
           </p>
-        </div>
-      </article>
-    </section>
+        </Prose>
+      </Grid>
+    </Container>
   </PageView>
 );
 

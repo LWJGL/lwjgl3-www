@@ -1,4 +1,6 @@
 //@ts-check
+/// <reference no-default-lib="true"/>
+/// <reference lib="es2015" />
 /// <reference lib="webworker" />
 
 const CACHE_PREFIX = 'lwjgl-static-';
@@ -63,7 +65,7 @@ async function cacheFirstStrategy(event, req, url) {
 }
 
 async function install() {
-  const files = ['/', `/js/${manifest.assets[manifest.entry]}`, `/css/${manifest.assets.css}`, '/manifest.webmanifest'];
+  const files = ['/', `/js/${manifest.assets[manifest.entry]}`, '/manifest.webmanifest'];
 
   // Append route dependencies
   const clients = await self.clients.matchAll({ includeUncontrolled: true, type: 'window' });

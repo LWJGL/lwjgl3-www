@@ -3,23 +3,10 @@ extends layout
 block content
   #app-root
     style.
-      @keyframes fade-in{0%{opacity:0}to{opacity:1}}
+      @keyframes fade-in{from{opacity:0}to{opacity:1}}
     div(
-      style="height:90vh;display:flex;justify-content:center;align-items:center;font:xx-large sans-serif;color:silver;opacity:0;animation:fade-in 1s ease 1s alternate infinite forwards"
-    ) loading…
-  svg#iconsheet.d-none(xmlns="http://www.w3.org/2000/svg")
-    style.
-      path {
-        opacity: var(--icon-primary-opacity, 1);
-        fill: currentColor;
-        fill: var(--icon-primary, currentColor);
-      }
-      path.s {
-        opacity: 0.4;
-        opacity: var(--icon-secondary-opacity, 0.4);
-        fill: var(--icon-secondary, currentColor);
-      }
-    defs
+      style="height:90vh;display:flex;justify-content:center;align-items:center;font:300 200%/1 system-ui,sans-serif;animation:fade-in 1s ease 1s alternate infinite both"
+    ) LOADING…
 
   if development
     script(src=`/js/vendor.js`)

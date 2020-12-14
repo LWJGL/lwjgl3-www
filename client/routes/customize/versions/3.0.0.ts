@@ -27,7 +27,7 @@ export default (): BuildBindings => ({
       description:
         'A multi-platform library for OpenGL, OpenGL ES and Vulkan development on the desktop. It provides a simple API for creating windows, contexts and surfaces, receiving input and events.',
       natives: NATIVE_LTE_322,
-      website: 'http://www.glfw.org/',
+      website: 'https://www.glfw.org/',
       presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
     [Binding.JAWT]: {
@@ -135,7 +135,7 @@ export default (): BuildBindings => ({
       title: 'xxHash',
       description: 'An Extremely fast Hash algorithm, running at RAM speed limits.',
       natives: NATIVE_LTE_322,
-      website: 'http://www.xxhash.com/',
+      website: 'https://cyan4973.github.io/xxHash/',
     },
   },
 });

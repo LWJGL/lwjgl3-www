@@ -1,11 +1,11 @@
-import { Fragment, Suspense, useState, useEffect, unstable_useTransition } from 'react';
+import { Fragment, Suspense, useState, useEffect, unstable_useTransition as useTransition } from 'react';
 import { Link } from 'react-router-dom';
 import { File } from './File';
-import { Folder, FolderWrap, SpinnerRow, FolderError } from './Folder';
+import { Folder, SpinnerRow, FolderError } from './Folder';
 import { ErrorBoundary } from '~/components/ErrorBoundary';
 import { PathResource } from '../PathResource';
-import { Icon } from '~/components/Icon';
-import '~/components/icons/fa/solid/cloud';
+import { Box } from '~/components/layout/Box';
+import { Row } from './Row';
 
 // Browser
 interface Props {
@@ -14,9 +14,7 @@ interface Props {
 
 export function Browser({ path: targetPath }: Props) {
   const [path, setPath] = useState(targetPath);
-  const [startTransition] = unstable_useTransition({
-    timeoutMs: 2250, // 0.75 spinner circle * 3
-  });
+  const [startTransition] = useTransition();
 
   useEffect(() => {
     if (targetPath !== path) {
@@ -27,47 +25,32 @@ export function Browser({ path: targetPath }: Props) {
   }, [startTransition, targetPath, path]);
 
   return (
-    <div className="table-responsive-md mt-sm-4">
-      <table className="table mb-0">
-        <thead>
-          <tr className="table-dark">
-            <th>
-              <Icon name="fa/solid/cloud" /> &nbsp;
-              <Link className="text-decoration-none link-light" to={'/browse'}>
-                lwjgl
-              </Link>
-              {path.length
-                ? path.split('/').map((it, i, arr) => {
-                    const subpath = arr.slice(0, i + 1).join('/');
-                    return (
-                      <Fragment key={subpath}>
-                        /
-                        <Link className="text-decoration-none link-light" to={`/browse/${subpath}`}>
-                          {it}
-                        </Link>
-                      </Fragment>
-                    );
-                  })
-                : null}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {path !== '' && (
-            <FolderWrap>
-              <Link className="text-decoration-none" to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>
-                &hellip;
-              </Link>
-            </FolderWrap>
-          )}
-          <ErrorBoundary fallback={FolderError}>
-            <Suspense fallback={<SpinnerRow />}>
-              <FolderContents path={path} targetPath={targetPath} />
-            </Suspense>
-          </ErrorBoundary>
-        </tbody>
-      </table>
-    </div>
+    <Box css={{ light: { boxShadow: '$2xl' } }}>
+      <Row type="breadcrump">
+        <Link to={'/browse'}>lwjgl</Link>
+        {path.length
+          ? path.split('/').map((it, i, arr) => {
+              const subpath = arr.slice(0, i + 1).join('/');
+              return (
+                <Fragment key={subpath}>
+                  /<Link to={`/browse/${subpath}`}>{it}</Link>
+                </Fragment>
+              );
+            })
+          : null}
+        /
+      </Row>
+      {path !== '' && (
+        <Row type="folder">
+          <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
+        </Row>
+      )}
+      <ErrorBoundary fallback={FolderError}>
+        <Suspense fallback={<SpinnerRow />}>
+          <FolderContents path={path} targetPath={targetPath} />
+        </Suspense>
+      </ErrorBoundary>
+    </Box>
   );
 }
 

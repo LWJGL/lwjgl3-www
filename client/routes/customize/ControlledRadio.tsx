@@ -1,6 +1,6 @@
 import { useMemo, useCallback } from 'react';
 import { useMemoSlice } from './Store';
-import { Radio } from '~/components/Radio';
+import { Radio } from '~/components/forms/Selection';
 
 interface Props {
   spec: {
@@ -36,24 +36,25 @@ export function ControlledRadio({ spec }: Props) {
     (state) => spec.inputs(state)
   );
 
-  const select = useCallback((value: any) => dispatch(spec.action(value)), [dispatch, spec]);
+  const select = useCallback((e, value: any) => dispatch(spec.action(value)), [dispatch, spec]);
 
   return useMemo(() => {
     const { value: selectedValue, options } = slice;
 
     return (
-      <div className="custom-controls-stacked">
+      <>
         {options.map(({ value, label, disabled }: RadioOption, i: number) => (
           <Radio
             key={`${spec.name}-${typeof value === 'string' ? value : i}`}
             value={value}
             checked={value === selectedValue}
             onChange={select}
-            label={label}
             disabled={disabled === true}
-          />
+          >
+            {label}
+          </Radio>
         ))}
-      </div>
+      </>
     );
   }, [slice, select, spec.name]);
 }

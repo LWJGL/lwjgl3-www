@@ -1,7 +1,6 @@
 import path from 'path';
 import fs from 'fs';
 import chalk from 'chalk';
-import crypto from 'crypto';
 import gzipSize from 'gzip-size';
 import CliTable from 'cli-table';
 import prettyBytes from './prettyBytes.mjs';
@@ -98,28 +97,6 @@ async function main() {
   // Append manifest.json to deployment assets
   productionManifest.assets.manifest = 'manifest.json';
 
-  // Hash and append core.css
-  await (async () => {
-    let contents = await fs.promises.readFile(path.resolve(__dirname, '../public/css/core.css'), { encoding: 'utf-8' });
-    const MD5 = crypto.createHash('MD5');
-    MD5.update(contents);
-    const hash = MD5.digest('hex');
-
-    const asset = {
-      id: 'css',
-      name: 'core',
-      file: 'core.css',
-      cdn: `core.${hash}.css`,
-      route: false,
-      size: Buffer.byteLength(contents, 'utf8'),
-      gzipSize: gzipSize.sync(contents),
-    };
-
-    await fs.promises.writeFile(path.resolve(__dirname, `../public/css/${asset.cdn}`), contents);
-    productionManifest.assets.css = asset.cdn;
-    assetMap.set('css', asset);
-  })();
-
   // Store production manifest
   await fs.promises.writeFile(
     path.resolve(__dirname, '../public/js/manifest.json'),
@@ -151,7 +128,7 @@ main()
       sumGzip += asset.gzipSize;
 
       const row = [];
-      const isEntry = manifest.entry === asset.id || asset.id === 'css';
+      const isEntry = manifest.entry === asset.id;
 
       if (isEntry) {
         row.push(chalk`{cyan ${asset.name}}`);
