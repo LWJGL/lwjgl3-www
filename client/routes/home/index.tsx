@@ -323,7 +323,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
 
           <Feature>
             <FeatureImage>
-              <ImgLazy height={40} src="/svg/oculus-logo-white.svg" alt="" />
+              <ImgLazy width={1576.2 * 0.15} height={340.9 * 0.15} src="/svg/oculus-logo-white.svg" alt="" />
             </FeatureImage>
             <h3>LibOVR Bindings</h3>
             <p>Create exciting virtual reality experiences with LibOVR, the API of the Oculus VR SDK.</p>

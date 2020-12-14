@@ -3,6 +3,7 @@ import { Grid } from '~/components/layout/Grid';
 import { Container } from '~/components/layout/Container';
 import { Prose } from '~/components/ui/Prose';
 import { ImgDark } from '~/components/ui/ImgDark';
+import { ImgLazy } from '~/components/ui/ImgLazy';
 import { Hr } from '~/components/ui/Hr';
 import { Title } from '~/components/lwjgl/Title';
 
@@ -33,7 +34,6 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
             width="300"
             height="50"
           />
-          {/* <img src="/img/showcase/libGDX.png" alt="libGDX" width="300" height="50" /> */}
           <p>
             <a href="https://libgdx.badlogicgames.com/" target="_blank" title="libGDX">
               https://libgdx.badlogicgames.com/
@@ -45,7 +45,7 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
           </p>
         </Prose>
         <Prose as="section">
-          <img src="/img/showcase/jmonkeyengine.png" alt="jMonkeyEngine" width="283" height="50" />
+          <ImgLazy src="/img/showcase/jmonkeyengine.png" alt="jMonkeyEngine" width="283" height="50" />
           <p>
             <a href="https://jmonkeyengine.org/" target="_blank" title="jMonkeyEngine">
               https://jmonkeyengine.org/

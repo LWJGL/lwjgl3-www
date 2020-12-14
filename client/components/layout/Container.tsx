@@ -2,7 +2,7 @@ import { styled } from '~/theme/stitches.config';
 import { Breakpoint, boundaries } from '~/theme/breakpoints';
 
 export const Container = styled('div', {
-  width: '100%',
+  maxWidth: '100vw',
   sm: {
     maxWidth: boundaries[Breakpoint.sm],
   },

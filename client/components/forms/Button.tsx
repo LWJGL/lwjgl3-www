@@ -406,7 +406,9 @@ function getTranslationCoordinates(
 type Props = React.RefAttributes<HTMLButtonElement> & React.ComponentProps<typeof StyledButton>;
 
 export const Button: React.FC<Props> = ({
-  type = 'button',
+  //@ts-expect-error
+  as,
+  type,
   onPointerDown,
   onPointerUp,
   onKeyDown,
@@ -524,7 +526,13 @@ export const Button: React.FC<Props> = ({
   }, [rest.rounding, onPointerDown, onPointerUp, onKeyDown, onKeyUp]);
 
   return (
-    <StyledButton type={type} ref={ref} {...rippleHandlers} {...rest}>
+    <StyledButton
+      as={as}
+      type={type === undefined && as === undefined ? 'button' : type}
+      ref={ref}
+      {...rippleHandlers}
+      {...rest}
+    >
       <Ripple ref={rippleRef} variant={rest.variant} tone={rest.tone} size={rest.size} rounding={rest.rounding} />
       <ButtonLabel>{children}</ButtonLabel>
     </StyledButton>

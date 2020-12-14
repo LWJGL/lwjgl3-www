@@ -1,19 +1,7 @@
 import { styled } from '~/theme/stitches.config';
 
 export const Row = styled('div', {
-  // backgroundColor: '$neutral800',
-  // color: '$primary50',
-  // userSelect: 'none',
-  // padding: '$xsm $sm',
-  // borderBottom: '1px solid $neutral700',
-
-  // a: {
-  //   display: 'block',
-  //   color: '$primary200',
-  // },
-  // 'a[download]': {
-  //   color: '$info400',
-  // },
+  wrap: 'all',
 
   ':last-child': {
     borderBottom: 'none',
@@ -44,7 +32,6 @@ export const Row = styled('div', {
           display: 'block',
           ':hover': {
             backgroundColor: '$primary200',
-            // color: '$neutral50',
           },
         },
       },
@@ -56,7 +43,6 @@ export const Row = styled('div', {
         a: {
           color: '$info800',
           textDecoration: 'underline',
-          // ':hover': { color: '$caution700' },
         },
       },
     },

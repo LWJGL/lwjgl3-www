@@ -2,6 +2,7 @@
 #defaults
 #supports es6-module
 > 1%
+iOS >= 10
 Firefox ESR
 not dead
 not ie <= 11

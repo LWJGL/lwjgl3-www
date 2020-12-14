@@ -26,5 +26,13 @@ export const Folder: React.FC<Props> = ({ path, loading = false }) => {
 export const SpinnerRow: React.FC = () => <Row css={{ padding: '$sm', color: '$neutral500' }}>Loading&hellip;</Row>;
 
 export const FolderError: React.FC<{ error: Error }> = ({ error }) => (
-  <Row css={{ padding: '$sm', backgroundColor: '$critical800', color: '$caution300' }}>{error.message}</Row>
+  <Row
+    css={{
+      padding: '$sm',
+      backgroundColor: '$critical800',
+      color: '$caution300',
+    }}
+  >
+    {error.message}
+  </Row>
 );

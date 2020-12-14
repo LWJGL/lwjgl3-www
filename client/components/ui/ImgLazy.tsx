@@ -29,7 +29,12 @@ function getPlaceholder(params: Partial<React.ImgHTMLAttributes<HTMLImageElement
   return '';
 }
 
-const Img = styled('img', {});
+const Img = styled('img', {
+  'md-down': {
+    maxWidth: '90%',
+    height: 'auto',
+  },
+});
 
 export interface ImgLazyProps extends React.ComponentProps<typeof Img> {
   rootMargin?: string;

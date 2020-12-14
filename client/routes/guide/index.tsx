@@ -6,7 +6,6 @@ import { Sample } from './Sample';
 
 import { Container } from '~/components/layout/Container';
 import { Prose } from '~/components/ui/Prose';
-import { Box } from '~/components/layout/Box';
 import { LoadingSpinner } from '~/components/ui/LoadingSpinner';
 import { Title } from '~/components/lwjgl/Title';
 import { Dark } from '~/components/lwjgl/Dark';
@@ -57,7 +56,7 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
           </Container>
         }
       >
-        <Container padding>
+        <Container padding css={{ overflow: 'auto' }}>
           <Sample />
         </Container>
       </Suspense>
