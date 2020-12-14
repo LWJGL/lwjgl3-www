@@ -83,11 +83,9 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
           importance="low"
           loading="lazy"
           referrerPolicy="no-referrer"
-          width="150"
-          height="38"
+          width="141"
+          height="30"
           title="Star LWJGL/lwjgl3 on GitHub"
-          allowTransparency
-          seamless
         />
 
         <Text>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</Text>
