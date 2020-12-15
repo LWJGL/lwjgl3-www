@@ -377,21 +377,21 @@ export const { styled, css } = createStyled({
         marginTop: value,
       },
     }),
-    vh100: (value: any, config) => {
-      return {
-        // height: '100%',
-        // '@supports (height:100vh)': {
-        //   height: '100vh',
-        // },
-        height: '100vh',
-        '@supports (height:-moz-available)': {
-          height: '-moz-available',
-        },
-        '@supports (height:-webkit-fill-available)': {
-          height: '-webkit-fill-available',
-        },
-      };
-    },
+    // vh100: (value: any, config) => {
+    //   return {
+    //     // height: '100%',
+    //     // '@supports (height:100vh)': {
+    //     //   height: '100vh',
+    //     // },
+    //     height: '100vh',
+    //     '@supports (height:-moz-available)': {
+    //       height: '-moz-available',
+    //     },
+    //     '@supports (height:-webkit-fill-available)': {
+    //       height: '-webkit-fill-available',
+    //     },
+    //   };
+    // },
     dark: (value: any, config) => ({
       '.dark &': value,
     }),

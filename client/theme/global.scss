@@ -16,7 +16,15 @@ body {
   // Disable scroll anchoring
   // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
   overflow-anchor: none;
+
+  // https://css-tricks.com/css-fix-for-100vh-in-mobile-webkit/
+  // min-height: 100vh;
+  // min-height: -webkit-fill-available;
 }
+
+// html {
+//   height: -webkit-fill-available;
+// }
 
 pre {
   overflow-x: auto;

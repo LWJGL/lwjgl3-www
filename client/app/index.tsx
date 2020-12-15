@@ -1,54 +1,54 @@
 import { Suspense } from 'react';
-import { ErrorBoundary } from '../components/ErrorBoundary';
+import { ErrorBoundary } from '~/components/ErrorBoundary';
 import { OverlayProvider } from '@react-aria/overlays';
 import { Spring } from './SpringGlobals';
-import '../services/screenFit';
+import '~/services/screenFit';
 
 // Routing
 import { BrowserRouter } from 'react-router-dom';
-// import { NavProgress } from '../components/ui/NavProgress';
-import { PageError } from '../routes/PageError';
-import { PageBlank } from '../routes/PageBlank';
-import { RouterConfig } from '../routes';
+// import { NavProgress } from '~/components/ui/NavProgress';
+import { PageError } from '~/routes/PageError';
+import { PageBlank } from '~/routes/PageBlank';
+import { RouterConfig } from '~/routes';
 
 // Layout
 import { Header } from './Header';
 import { Footer } from './Footer';
-import { Grid } from '../components/layout/Grid';
-import { Box } from '../components/layout/Box';
+import { styled } from '~/theme/stitches.config';
 
 // Pull common modules on main bundle
-import '../routes/PageView';
-import '../components/ui/HashLinkTarget';
+import '~/routes/PageView';
+import '~/components/ui/HashLinkTarget';
+
+const Layout = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+  height: '100vh',
+  '& > *': {
+    flexShrink: 0,
+  },
+});
+
+const Main = styled('main', {
+  pt: '3rem',
+});
 
 export const App: React.FC<{ children?: never }> = () => (
-  <>
+  <BrowserRouter>
+    <OverlayProvider>
+      <Header />
+      <Layout>
+        <Main>
+          <ErrorBoundary fallback={PageError}>
+            <Suspense fallback={<PageBlank />}>
+              <RouterConfig />
+            </Suspense>
+          </ErrorBoundary>
+        </Main>
+        <Footer />
+      </Layout>
+    </OverlayProvider>
     <Spring />
-    <BrowserRouter>
-      <OverlayProvider>
-        {/* <NavProgress /> */}
-        <Header />
-        <Grid
-          css={{
-            vh100: true,
-            grid: 'auto min-content / auto',
-          }}
-        >
-          <Box
-            as="main"
-            css={{
-              pt: '3rem',
-            }}
-          >
-            <ErrorBoundary fallback={PageError}>
-              <Suspense fallback={<PageBlank />}>
-                <RouterConfig />
-              </Suspense>
-            </ErrorBoundary>
-          </Box>
-          <Footer />
-        </Grid>
-      </OverlayProvider>
-    </BrowserRouter>
-  </>
+    {/* <NavProgress /> */}
+  </BrowserRouter>
 );

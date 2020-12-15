@@ -35,7 +35,7 @@ const Heading = styled('h2', {
 });
 
 const FOOTER = (
-  <Dark as="footer">
+  <Dark as="footer" css={{ mt: 'auto' }}>
     <Container as="section" padding>
       <Grid
         as="nav"
