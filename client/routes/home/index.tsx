@@ -8,7 +8,6 @@ import { Grid } from '~/components/layout/Grid';
 import { Container } from '~/components/layout/Container';
 import { Prose } from '~/components/ui/Prose';
 import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
-import { HashLinkTarget } from '~/components/ui/HashLinkTarget';
 import { ImgLazy } from '~/components/ui/ImgLazy';
 import { Text } from '~/components/ui/Text';
 import { Hr } from '~/components/ui/Hr';
@@ -68,9 +67,8 @@ const Feature = styled('div', {
 const HomeRoute: React.FC<{ children?: never }> = () => (
   <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
     <HomeHero />
-    <HashLinkTarget id="learn-more" />
 
-    <Container as="section" padding>
+    <Container as="section" padding id="learn-more">
       <TitleSection>
         What is LW
         <b>JGL</b> 3?
@@ -410,9 +408,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
       </Container>
     </Dark>
 
-    <HashLinkTarget id="credits" />
-
-    <HowToSupport />
+    <HowToSupport id="credits" />
     <GoldSponsors />
 
     <Container as="section" padding>

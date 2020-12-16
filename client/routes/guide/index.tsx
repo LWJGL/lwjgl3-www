@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { PageView } from '~/routes/PageView';
-import { HashLinkTarget } from '~/components/ui/HashLinkTarget';
 import { Sample } from './Sample';
 
 import { Container } from '~/components/layout/Container';
@@ -103,8 +102,7 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
           .
         </p>
 
-        <HashLinkTarget id="build-instructions" />
-        <h3>Building from source</h3>
+        <h3 id="build-instructions">Building from source</h3>
 
         <p>
           Clone the{' '}

@@ -18,7 +18,6 @@ import { styled } from '~/theme/stitches.config';
 
 // Pull common modules on main bundle
 import '~/routes/PageView';
-import '~/components/ui/HashLinkTarget';
 
 const Layout = styled('div', {
   display: 'flex',

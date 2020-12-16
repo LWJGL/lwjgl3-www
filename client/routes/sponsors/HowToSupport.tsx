@@ -4,8 +4,8 @@ import { Text } from '~/components/ui/Text';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 
-export const HowToSupport: React.FC<{ children?: never }> = () => (
-  <Container as="section" padding css={{ sm: { textAlign: 'center' } }}>
+export const HowToSupport: React.FC<{ children?: never; id: string }> = ({ id }) => (
+  <Container id={id} as="section" padding css={{ sm: { textAlign: 'center' } }}>
     <TitleSection>Supporting this project</TitleSection>
     <Text margin>
       LWJGL exists thanks to{' '}

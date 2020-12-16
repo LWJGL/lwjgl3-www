@@ -2,6 +2,8 @@ import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
+import { scrollSmooth } from '~/services/scrollSmooth';
+import { usePrevious } from '~/hooks/usePrevious';
 // import { trackView } from '~/services/ga';
 
 // Store scroll position when leaving a route, restore if we return back to it
@@ -120,7 +122,47 @@ const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, descriptio
 
 const PageViewMemo = memo(PageViewWithLocation, arePropsEqual);
 
+let defaultScrollPos = [0, 0]; // Remember position before we clicked on a HashLink
+let scrolling = false; // Avoid calling reset position more than once when multiple <HashLinkTarget /> are on page
+function scrollEnd() {
+  scrolling = false;
+}
+function scrollToTarget(el: HTMLElement) {
+  var rect = el.getBoundingClientRect();
+  scrollSmooth(0, rect.top + window.pageYOffset);
+  window.setTimeout(scrollEnd, 0);
+}
+
 export const PageView: React.FC<Props> = (props) => {
   const location = useLocation();
+
+  // Hash scrolling
+  const { hash } = location;
+  const prevHash = usePrevious(hash);
+  useEffect(() => {
+    const targetEl = document.getElementById(hash.slice(1));
+
+    if (prevHash === null) {
+      if (targetEl) {
+        // Only runs on mount
+        scrollToTarget(targetEl);
+      }
+    } else if (prevHash !== hash) {
+      // Runs on re-render
+      if (hash.length && targetEl !== null) {
+        if (prevHash === '') {
+          defaultScrollPos = [window.pageXOffset, window.pageYOffset];
+        }
+        scrolling = true;
+        scrollToTarget(targetEl);
+      } else if (!scrolling) {
+        scrolling = true;
+        scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
+        setTimeout(scrollEnd, 0);
+      }
+    }
+  }, [hash, prevHash]);
+
+  // Actual PageView
   return <PageViewMemo location={location} {...props} />;
 };
