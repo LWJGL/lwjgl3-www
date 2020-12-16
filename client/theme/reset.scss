@@ -33,17 +33,20 @@
   tab-size: 4;
   @media (prefers-reduced-motion: no-preference) {
     scroll-behavior: smooth;
-}
+  }
 }
 
-// Correct the line height in all browsers.
-// Prevent adjustments of font size after orientation changes.
 html {
+  // Correct the line height in all browsers.
   // line-height: 1.15;
   // ! (opinionated/tailwind)
   line-height: 1.5;
+  // Prevent adjustments of font size after orientation changes.
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+  // Change the default tap highlight to be completely transparent in iOS.
+  // ! (opinionated/bootstrap)
+  -webkit-tap-highlight-color: transparent;
 }
 
 // Consistent fonts (Tailwind sans-serif stack)
