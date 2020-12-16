@@ -5,9 +5,10 @@ import { Grid } from '~/components/layout/Grid';
 import { Box } from '~/components/layout/Box';
 import { Dark } from '~/components/lwjgl/Dark';
 import { BackToTop } from '~/components/ui/BackToTop';
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/duotone/external-link';
 
 const FooterLink = styled('a', {
-  textDecoration: 'underline',
   lineHeight: '2rem',
   ':hover': {
     color: 'yellow',
@@ -33,6 +34,8 @@ const Heading = styled('h2', {
     mt: -2,
   },
 });
+
+const external = <Icon name="fa/duotone/external-link" css={{ fontSize: '$sm', color: '$neutral500', ml: '$xxsm' }} />;
 
 const FOOTER = (
   <Dark as="footer" css={{ mt: 'auto' }}>
@@ -101,12 +104,12 @@ const FOOTER = (
             </li>
             <li>
               <FooterLink href="https://twitter.com/lwjgl" rel="noopener external">
-                Twitter
+                Twitter {external}
               </FooterLink>
             </li>
             <li>
               <FooterLink href="https://github.com/LWJGL/lwjgl3/commits/master" rel="noopener external">
-                Changelog
+                Changelog {external}
               </FooterLink>
             </li>
             <li>
@@ -114,12 +117,12 @@ const FOOTER = (
                 href="https://github.com/LWJGL/lwjgl3/blob/master/doc/notes/latest.md"
                 rel="noopener external"
               >
-                Release notes
+                Release notes {external}
               </FooterLink>
             </li>
             <li>
               <FooterLink href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
-                Donate
+                Donate {external}
               </FooterLink>
             </li>
           </ul>
@@ -129,17 +132,17 @@ const FOOTER = (
           <ul>
             <li>
               <FooterLink href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
-                GitHub
+                GitHub {external}
               </FooterLink>
             </li>
             <li>
               <FooterLink href="https://github.com/LWJGL/lwjgl3-wiki/wiki" rel="noopener external">
-                Wiki
+                Wiki {external}
               </FooterLink>
             </li>
             <li>
               <FooterLink href="https://github.com/LWJGL/lwjgl3/issues" rel="noopener external">
-                Issues
+                Issues {external}
               </FooterLink>
             </li>
             <li>
@@ -149,7 +152,7 @@ const FOOTER = (
             </li>
             <li>
               <FooterLink href="http://slack.lwjgl.org/" rel="noopener external">
-                Slack
+                Slack {external}
               </FooterLink>
             </li>
             <li>

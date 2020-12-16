@@ -42,7 +42,10 @@ const MainMenuContainer = styled('nav', {
           fontWeight: 300,
           ':focus': {
             outline: 'none',
-            textDecoration: 'underline',
+            // textDecoration: 'underline',
+          },
+          ':active': {
+            transform: 'translateY(1px)',
           },
           ':hover,&.active': {
             color: 'yellow',

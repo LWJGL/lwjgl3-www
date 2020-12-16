@@ -26,12 +26,16 @@ export const Row = styled('div', {
       folder: {
         color: '$primary800',
         backgroundColor: '$neutral200',
-        borderBottom: '1px solid $neutral300',
         a: {
+          transition: 'filter 0.15s ease-in-out',
           padding: '$xsm $sm',
+          borderBottom: '1px solid $neutral300',
           display: 'block',
           ':hover': {
             backgroundColor: '$primary200',
+          },
+          '&:active': {
+            filter: 'brightness(.9)',
           },
         },
       },

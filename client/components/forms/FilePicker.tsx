@@ -2,6 +2,8 @@ import React, { useState, useRef, useCallback } from 'react';
 import { Flex } from '~/components/layout/Flex';
 import { Button } from '~/components/forms/Button';
 import { styled } from '~/theme/stitches.config';
+import { Icon } from '~/components/ui/Icon';
+import '~/theme/icons/fa/duotone/folder-open';
 
 // Based on: https://evergreen.segment.com/components/filepicker/
 
@@ -16,8 +18,19 @@ const FileList = styled('input', {
   userSelect: 'none',
   // pointerEvents: 'none',
   textOverflow: 'ellipsis',
+  width: 170,
+  sm: {
+    width: 300,
+  },
+
   '&:active': {
     filter: 'brightness(.9)',
+  },
+  '::placeholder': {
+    color: '$neutral400',
+  },
+  '&:hover': {
+    backgroundColor: '$primary100',
   },
   '&:focus': {
     outline: 'none',
@@ -57,16 +70,12 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
   }, [fileInputRef]);
 
   let inputValue;
-  let buttonText;
   if (files === null) {
     inputValue = '';
-    buttonText = 'Select file';
   } else if (files.length === 1) {
     inputValue = files[0].name;
-    buttonText = 'Replace file';
   } else {
     inputValue = `${files.length} files`;
-    buttonText = 'Replace files';
   }
 
   return (
@@ -81,7 +90,14 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
         {...rest}
       />
 
-      <FileList readOnly tabIndex={-1} value={inputValue} onClick={handleButtonClick} placeholder={placeholder} />
+      <FileList
+        size={15}
+        readOnly
+        tabIndex={-1}
+        value={inputValue}
+        onClick={handleButtonClick}
+        placeholder={placeholder}
+      />
 
       <Button
         disabled={disabled}
@@ -93,7 +109,7 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
           borderBottomLeftRadius: 0,
         }}
       >
-        {buttonText}
+        <Icon name="fa/duotone/folder-open" />
       </Button>
     </Flex>
   );

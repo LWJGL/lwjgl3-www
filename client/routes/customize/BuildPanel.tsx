@@ -117,6 +117,7 @@ const PanelBox = styled('div', {
       false: {
         '&:active': {
           filter: 'brightness(.9)',
+          transform: 'translateY(2px)',
         },
       },
       true: {

@@ -51,12 +51,13 @@ const StyledHeader = styled('header', {
 
     lg: {
       backgroundSize: '0 3px',
-      background: 'linear-gradient(currentColor, currentColor) bottom no-repeat',
-      '&:focus-visible,&:hover,&.active': {
+      background:
+        'linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent) bottom no-repeat',
+      '&.active': {
         backgroundSize: '100% 3px',
       },
-      '&.active:focus-visible': {
-        backgroundImage: 'linear-gradient(white, white)',
+      '&:not(.active):focus,&:not(.active):hover': {
+        // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
         backgroundSize: '90% 3px',
       },
     },

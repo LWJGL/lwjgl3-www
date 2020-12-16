@@ -50,12 +50,12 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
     <Dark>
       <Suspense
         fallback={
-          <Container padding css={{ display: 'flex', justifyContent: 'center' }}>
+          <Container padding css={{ display: 'flex', justifyContent: 'center', height: 2460 }}>
             <LoadingSpinner size={64} />
           </Container>
         }
       >
-        <Container padding css={{ overflow: 'auto' }}>
+        <Container padding css={{ overflow: 'auto', fontSize: '$sm' }}>
           <Sample />
         </Container>
       </Suspense>
