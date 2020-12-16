@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
 import { usePrevious } from '~/hooks/usePrevious';
+import { scrollSmooth } from '~/services/scrollSmooth';
 // import { trackView } from '~/services/ga';
 
 // Store scroll position when leaving a route, restore if we return back to it
@@ -56,7 +57,7 @@ function storeScroll(key: string) {
 
 function scrollToTop() {
   if (window.pageXOffset + window.pageYOffset > 0) {
-    window.scroll(0, 0);
+    scroll(0, 0);
   }
 }
 
@@ -97,7 +98,7 @@ const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, descriptio
       const entry = scrollEntries.get(key);
       if (entry !== undefined) {
         // Restore scroll position
-        window.scroll(entry.x, entry.y);
+        scroll(entry.x, entry.y);
       } else if (hash.length === 0) {
         scrollToTop();
       }
@@ -129,7 +130,7 @@ function scrollEnd() {
 }
 function scrollToTarget(el: HTMLElement) {
   var rect = el.getBoundingClientRect();
-  scroll(0, rect.top + window.pageYOffset);
+  scrollSmooth(0, rect.top + window.pageYOffset);
   window.setTimeout(scrollEnd, 0);
 }
 
@@ -157,7 +158,7 @@ export const PageView: React.FC<Props> = (props) => {
         scrollToTarget(targetEl);
       } else if (!scrolling) {
         scrolling = true;
-        scroll(defaultScrollPos[0], defaultScrollPos[1]);
+        scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
         setTimeout(scrollEnd, 0);
       }
     }

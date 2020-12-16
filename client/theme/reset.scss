@@ -31,9 +31,11 @@
 // * (opinionated) Use a more readable tab size
 :root {
   tab-size: 4;
-  @media (prefers-reduced-motion: no-preference) {
-    scroll-behavior: smooth;
-  }
+  // * Disable, because we want to control smooth scrolling dynamically (see PageView)
+  // // ! (opinionated/bootstrap)
+  // @media (prefers-reduced-motion: no-preference) {
+  //   scroll-behavior: smooth;
+  // }
 }
 
 html {
