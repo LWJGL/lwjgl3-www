@@ -24,12 +24,12 @@ export default function SponsorsRoute() {
             pt: '$sm',
             gap: '$safe',
             mb: '$safe',
-            justifyContent: 'center',
             alignItems: 'center',
-            // sm: {
-            //   textAlign: 'center',
-            //   grid: 'auto-flow / repeat(2, 1fr)',
-            // },
+            sm: {
+              justifyContent: 'center',
+              textAlign: 'center',
+              // grid: 'auto-flow / repeat(2, 1fr)',
+            },
             // md: {
             //   grid: 'auto-flow / repeat(3, 1fr)',
             // },

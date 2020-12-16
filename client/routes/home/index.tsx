@@ -30,10 +30,24 @@ import '~/theme/icons/fa/duotone/brackets-curly';
 const FeatureImage = styled('div', {
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-  height: 60,
-  fontSize: '4rem',
   mb: '$paragraph',
+  height: 30,
+  fontSize: '2rem',
+  img: {
+    width: 'auto',
+    height: 30,
+  },
+  sm: {
+    height: 45,
+    fontSize: '3rem',
+    justifyContent: 'center',
+    img: {
+      height: 45,
+    },
+  },
+  lg: {
+    fontSize: '4rem',
+  },
 });
 
 const Feature = styled('div', {
@@ -361,7 +375,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
 
           <Feature css={{ xl: { gridColumn: '1/-1' } }}>
             <FeatureImage>
-              <Icon display="block" name="fa/duotone/brackets-curly" css={{ fontSize: '6rem', color: '$caution700' }} />
+              <Icon display="block" name="fa/duotone/brackets-curly" css={{ color: '$caution700' }} />
             </FeatureImage>
             <h3>Your favorite API here!</h3>
             <p>

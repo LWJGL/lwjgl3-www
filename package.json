@@ -42,7 +42,7 @@
   "devDependencies": {
     "@adobe/leonardo-contrast-colors": "1.0.0-alpha.8",
     "@babel/core": "7.12.10",
-    "@babel/preset-env": "7.12.10",
+    "@babel/preset-env": "7.12.11",
     "@babel/preset-react": "7.12.10",
     "@babel/preset-typescript": "7.12.7",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.3",

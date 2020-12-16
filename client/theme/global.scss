@@ -30,6 +30,12 @@ pre {
   overflow-x: auto;
 }
 
+// // https://mobile.twitter.com/JoshWComeau/status/1332015868725891076
+// a {
+//   scroll-margin-top: 3rem;
+//   scroll-snap-margin-top: 3rem;  // Safari fallback
+// }
+
 :root {
   --scale: 1;
   --scale-sm: 1;
