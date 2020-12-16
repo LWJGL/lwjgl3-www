@@ -28,6 +28,7 @@ interface PropsMemo {
 const MAX_SCROLL_ENTRIES = 50;
 const SCROLL_ENTRIES_SESSION_KEY = 'scrollEntries';
 const SCROLL_RESTORATION = 'scrollRestoration' in window.history;
+const TERMINATION_EVENT = 'onpagehide' in self ? 'pagehide' : 'unload';
 let scrollEntries: Map<string, ScrollPosition> = new Map();
 
 if (SCROLL_RESTORATION) {
@@ -102,10 +103,10 @@ const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, descriptio
         scrollToTop();
       }
 
-      window.addEventListener('unload', storeScrollEntriesInSession);
+      window.addEventListener(TERMINATION_EVENT, storeScrollEntriesInSession);
       return () => {
         storeScroll(key);
-        window.removeEventListener('unload', storeScrollEntriesInSession);
+        window.removeEventListener(TERMINATION_EVENT, storeScrollEntriesInSession);
       };
     } else if (hash.length === 0) {
       scrollToTop();
