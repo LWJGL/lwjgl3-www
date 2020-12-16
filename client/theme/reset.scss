@@ -31,6 +31,9 @@
 // * (opinionated) Use a more readable tab size
 :root {
   tab-size: 4;
+  @media (prefers-reduced-motion: no-preference) {
+    scroll-behavior: smooth;
+}
 }
 
 // Correct the line height in all browsers.

@@ -2,7 +2,6 @@ import { memo, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
-import { scrollSmooth } from '~/services/scrollSmooth';
 import { usePrevious } from '~/hooks/usePrevious';
 // import { trackView } from '~/services/ga';
 
@@ -130,7 +129,7 @@ function scrollEnd() {
 }
 function scrollToTarget(el: HTMLElement) {
   var rect = el.getBoundingClientRect();
-  scrollSmooth(0, rect.top + window.pageYOffset);
+  scroll(0, rect.top + window.pageYOffset);
   window.setTimeout(scrollEnd, 0);
 }
 
@@ -158,7 +157,7 @@ export const PageView: React.FC<Props> = (props) => {
         scrollToTarget(targetEl);
       } else if (!scrolling) {
         scrolling = true;
-        scrollSmooth(defaultScrollPos[0], defaultScrollPos[1]);
+        scroll(defaultScrollPos[0], defaultScrollPos[1]);
         setTimeout(scrollEnd, 0);
       }
     }
