@@ -40,9 +40,9 @@ export default function SponsorsRoute() {
         >
           <a
             href="https://goread.io/buy-instagram-followers?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            rel="sponsored"
-            target="_blank"
             title="Buy Instagram Followers with Instant Delivery"
+            rel="sponsored noopener external"
+            target="_blank"
           >
             <ImgLazy width={1133 * 0.25} height={218 * 0.25} src="/img/sponsors/goread-1133x218.png" alt="Goread.io" />
           </a>

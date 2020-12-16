@@ -35,7 +35,7 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
             height="50"
           />
           <p>
-            <a href="https://libgdx.badlogicgames.com/" target="_blank" title="libGDX">
+            <a href="https://libgdx.badlogicgames.com/" rel="noopener external" target="_blank" title="libGDX">
               https://libgdx.badlogicgames.com/
             </a>
           </p>
@@ -47,7 +47,7 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
         <Prose as="section">
           <ImgLazy src="/img/showcase/jmonkeyengine.png" alt="jMonkeyEngine" width="283" height="50" />
           <p>
-            <a href="https://jmonkeyengine.org/" target="_blank" title="jMonkeyEngine">
+            <a href="https://jmonkeyengine.org/" rel="noopener external" target="_blank" title="jMonkeyEngine">
               https://jmonkeyengine.org/
             </a>
           </p>

@@ -77,7 +77,7 @@ const BuildArtifact: React.FC<Props> = ({ natives, artifact, selected, disabled,
         <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
         {artifact.website !== undefined && (
           <p>
-            <Anchor href={artifact.website} target="_blank" css={{ wrap: 'all' }}>
+            <Anchor href={artifact.website} rel="noopener external" target="_blank" css={{ wrap: 'all' }}>
               {artifact.website}
             </Anchor>
           </p>

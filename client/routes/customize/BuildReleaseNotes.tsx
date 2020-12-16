@@ -12,6 +12,7 @@ export function BuildReleaseNotes() {
         <Anchor
           css={{ fontSize: '$xs' }}
           href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
+          rel="noopener external"
           target="_blank"
         >
           release notes for {version}

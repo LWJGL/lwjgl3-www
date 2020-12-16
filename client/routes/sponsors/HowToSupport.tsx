@@ -9,7 +9,7 @@ export const HowToSupport: React.FC<{ children?: never; id: string }> = ({ id })
     <TitleSection>Supporting this project</TitleSection>
     <Text margin>
       LWJGL exists thanks to{' '}
-      <Anchor href="https://github.com/LWJGL/lwjgl3/blob/master/BACKERS.md" target="_blank" rel="external">
+      <Anchor href="https://github.com/LWJGL/lwjgl3/blob/master/BACKERS.md" target="_blank" rel="noopener external">
         all the people
       </Anchor>{' '}
       who{' '}
@@ -22,7 +22,7 @@ export const HowToSupport: React.FC<{ children?: never; id: string }> = ({ id })
       </Anchor>{' '}
       and back/sponsor our collective.
     </Text>
-    <a href="https://opencollective.com/lwjgl/donate" target="_blank" rel="external">
+    <a href="https://opencollective.com/lwjgl/donate" target="_blank" rel="noopener external">
       <ImgLazy width={300} height={50} src="/img/sponsors/donate-blue.png" alt="DONATE TO OUR COLLECTIVE" />
     </a>
   </Container>

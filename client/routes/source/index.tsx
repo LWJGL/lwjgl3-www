@@ -36,13 +36,15 @@ const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 90, h
       {title}
     </TextDivider>
 
-    <Anchor href={href} target="_blank" rel="external" css={{ justifySelf: 'end' }}>
+    <Anchor href={href} target="_blank" rel="noopener external" css={{ justifySelf: 'end' }}>
       <ImgLazy width={width} height={height} src={src} alt={`${title} build status`} />
     </Anchor>
   </Stack>
 );
 
-interface BuildProps extends React.ComponentProps<typeof Box> {
+type BoxClass = typeof Box;
+
+interface BuildProps extends React.ComponentProps<BoxClass> {
   title: string;
 }
 

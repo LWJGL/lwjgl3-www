@@ -118,7 +118,7 @@ const FOOTER = (
               </FooterLink>
             </li>
             <li>
-              <FooterLink href="https://opencollective.com/lwjgl" target="_blank" rel="external">
+              <FooterLink href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
                 Donate
               </FooterLink>
             </li>

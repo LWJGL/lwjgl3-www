@@ -25,12 +25,12 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
         <p>
           Please use the build configurator in our <Link to="/download">download page</Link> to configure and download
           an LWJGL release. You will also need a{' '}
-          <a href="https://jdk.java.net/" rel="external" target="_blank">
+          <a href="https://jdk.java.net/" rel="noopener external" target="_blank">
             Java SE Development Kit
           </a>{' '}
           (JDK), LWJGL requires version 8 or higher. Then proceed by setting up a project in your favorite IDE and
           configuring it as described in the{' '}
-          <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install" target="_blank" rel="external">
+          <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/1.2.-Install" target="_blank" rel="noopener external">
             Installation Guide
           </a>
           .

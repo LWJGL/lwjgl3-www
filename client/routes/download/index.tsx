@@ -45,8 +45,8 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
               fill="auto"
               size={buttonSizes}
               href="https://github.com/LWJGL/lwjgl3/releases"
+              rel="noopener external"
               target="_blank"
-              rel="external"
             >
               <Icon name="fa/brands/github" css={{ mr: '$xsm' }} />
               Download from Git

@@ -455,12 +455,12 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           size="xl"
           variant="outline"
           href="http://legacy.lwjgl.org/"
-          target="_blank"
           rel="noopener external"
+          target="_blank"
         >
           LWJGL 2 WEBSITE{' '}
         </AnchorButton>
-        <AnchorButton size="xl" variant="outline" href="http://wiki.lwjgl.org/" target="_blank" rel="external">
+        <AnchorButton size="xl" variant="outline" href="http://wiki.lwjgl.org/" target="_blank" rel="noopener external">
           LWJGL 2 WIKI
         </AnchorButton>
       </Grid>

@@ -63,7 +63,7 @@ const BuildAddon = ({ addon, disabled, selected, showDescriptions, onChange }: P
         <p>{addon.description}</p>
         {addon.website && (
           <p>
-            <Anchor href={addon.website} target="_blank">
+            <Anchor href={addon.website} rel="noopener external" target="_blank">
               {addon.website}
             </Anchor>
           </p>

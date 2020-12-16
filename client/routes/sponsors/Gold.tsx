@@ -29,16 +29,16 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         <a
           href="https://www.casinotop.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
           title="Online Casino Guide in Canada - Best Gaming Experience!"
-          rel="sponsored"
+          rel="sponsored noopener external"
           target="_blank"
         >
           <ImgLazy width={130 * 1.5} height={20 * 1.5} src="/img/sponsors/casinotop-129x20.svg" alt="CASINOTOP" />
         </a>
         <a
           href="https://www.parhaatnettikasinot.com/"
-          rel="sponsored"
-          target="_blank"
           title="Kaikki luotettavat ja parhaat nettikasinot"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy
             width={330.8 * 0.75}
@@ -50,7 +50,7 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         <a
           href="https://nettikasinot247.fi/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
           title="KÄRKITASON NETTIKASINOT"
-          rel="sponsored"
+          rel="sponsored noopener external"
           target="_blank"
         >
           <ImgLazy
@@ -63,17 +63,17 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         </a>
         <a
           href="https://nettikasinolista.com/"
-          rel="sponsored"
-          target="_blank"
           title="Se paras nettikasino-lista: arvostelut, bonukset ja kokemuksia"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy width={225} height={60} src="/img/sponsors/nettikasinolista.svg" alt="Nettikasino-lista" />
         </a>
         <a
           href="https://www.turtlebet.com/fi/kaikki-nettikasinot.html"
-          rel="sponsored"
-          target="_blank"
           title="Kaikki nettikasinot - Katso Turtlebetin kaikki kasinot lista!"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy
             width={173}
@@ -85,9 +85,9 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         </a>
         <a
           href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-          rel="sponsored"
-          target="_blank"
           title="VPS HOSTING - GET YOUR FREE VPS TRIAL NOW!"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy width={218} height={50} src="/img/sponsors/vpsserver.com.svg" alt="VPSSERVER.com" />
         </a>
@@ -102,17 +102,17 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         </a>
         <a
           href="https://www.bonus.net.nz/free-spins-no-deposit?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-          rel="sponsored"
-          target="_blank"
           title="Free Spins No Deposit"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy width={179.71} height={38} src="/img/sponsors/bonusfindernz.svg" alt="BonusFinder New Zealand" />
         </a>
         <a
           href="https://www.kasinot.fi/"
-          rel="sponsored"
-          target="_blank"
           title="Kasinot netissä: #1 opas nettikasinoiden maailmaan"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy width={384 / 3} height={128 / 3} src="/img/sponsors/kasinot-384x128.png" alt="Kasinot.fi" />
         </a>
@@ -121,25 +121,25 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         </a>
         <a
           href="https://www.pelisivut.com/"
-          rel="sponsored"
-          target="_blank"
           title="Rahapelit netissä laadukkaasti ja luotettavasti"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy width={620 / 3} height={152 / 3} src="/img/sponsors/pelisivut-620x152.png" alt="PELISIVUT" />
         </a>
         <a
           href="https://www.casinotopp.net/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
-          rel="sponsored"
-          target="_blank"
           title="Velkommen til CasinoTopp – Norges beste portal til online casino"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy width={144 * 1.25} height={20 * 1.25} src="/img/sponsors/casinotopp-143x20.svg" alt="CASINOTOPP" />
         </a>
         <a
           href="https://www.bonusfinder.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-          rel="sponsored"
-          target="_blank"
           title="Online Gambling at Bonusfinder USA"
+          rel="sponsored noopener external"
+          target="_blank"
         >
           <ImgLazy width={179.71} height={38} src="/img/sponsors/bonusfinderus.svg" alt="BonusFinder USA" />
         </a>
