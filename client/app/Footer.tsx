@@ -159,7 +159,7 @@ const FOOTER = (
             </li>
           </ul>
         </div>
-        <div>
+        <div style={{ margin: '-0.25rem 0 0 -0.75rem' }}>
           <BackToTop />
         </div>
       </Grid>
