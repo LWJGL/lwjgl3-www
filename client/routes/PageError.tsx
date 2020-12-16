@@ -3,7 +3,7 @@ import { Container } from '~/components/layout/Container';
 import { Text } from '~/components/ui/Text';
 import { Title } from '~/components/lwjgl/Title';
 
-import type { ErrorProps } from '~/components/ErrorBoundary';
+import type { ErrorProps } from '~/components/system/ErrorBoundary';
 
 function readableStack(stack: string) {
   const href = new URL(document.location.href);

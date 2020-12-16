@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ErrorBoundary } from '~/components/ErrorBoundary';
+import { ErrorBoundary } from '~/components/system/ErrorBoundary';
 import { OverlayProvider } from '@react-aria/overlays';
 import { Spring } from './SpringGlobals';
 import '~/services/screenFit';

@@ -2,7 +2,7 @@ import { Fragment, Suspense, useState, useEffect, unstable_useTransition as useT
 import { Link } from 'react-router-dom';
 import { File } from './File';
 import { Folder, SpinnerRow, FolderError } from './Folder';
-import { ErrorBoundary } from '~/components/ErrorBoundary';
+import { ErrorBoundary } from '~/components/system/ErrorBoundary';
 import { PathResource } from '../PathResource';
 import { Box } from '~/components/layout/Box';
 import { Row } from './Row';
