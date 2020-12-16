@@ -91,7 +91,12 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         >
           <ImgLazy width={218} height={50} src="/img/sponsors/vpsserver.com.svg" alt="VPSSERVER.com" />
         </a>
-        <a href="https://buy.fineproxy.org/eng/" rel="sponsored" target="_blank" title="BUY PROXY FROM FINEPROXY">
+        <a
+          href="https://buy.fineproxy.org/eng/"
+          rel="sponsored noopener external"
+          target="_blank"
+          title="BUY PROXY FROM FINEPROXY"
+        >
           <ImgLazy
             width={250 / 1.25}
             height={70 / 1.25}
@@ -116,7 +121,12 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         >
           <ImgLazy width={384 / 3} height={128 / 3} src="/img/sponsors/kasinot-384x128.png" alt="Kasinot.fi" />
         </a>
-        <a href="http://nettikasinot.org/" rel="sponsored" target="_blank" title="Universumin parhaat nettikasinot">
+        <a
+          href="http://nettikasinot.org/"
+          rel="sponsored noopener external"
+          target="_blank"
+          title="Universumin parhaat nettikasinot"
+        >
           <ImgLazy width={585 / 3} height={116 / 3} src="/img/sponsors/nettikasinot-585x116.png" alt="Nettikasinot" />
         </a>
         <a
