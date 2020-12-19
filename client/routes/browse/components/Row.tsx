@@ -24,15 +24,15 @@ export const Row = styled('div', {
         },
       },
       folder: {
-        color: '$primary800',
+        color: '$primary900',
         backgroundColor: '$neutral200',
+        borderBottom: '1px solid $neutral300',
         a: {
           transition: 'filter 0.15s ease-in-out',
           padding: '$xsm $sm',
-          borderBottom: '1px solid $neutral300',
           display: 'block',
           ':hover': {
-            backgroundColor: '$primary200',
+            backgroundColor: '$primary300',
           },
           '&:active': {
             filter: 'brightness(.9)',
