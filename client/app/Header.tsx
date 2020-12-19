@@ -1,4 +1,4 @@
-import { memo, useEffect, useLayoutEffect, useState, useRef } from 'react';
+import { memo, useEffect, useCallback, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useProxy } from 'valtio';
 import { styled } from '~/theme/stitches.config';
@@ -132,13 +132,14 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
   const [top, setTop] = useState(true);
   const [fixed, setFixed] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const menu = useRef<HTMLElement>(null);
   const { current: currentBreakpoint } = useProxy(breakpoint);
 
-  useLayoutEffect(() => {
-    // Measure menu height, should be ~ 48 pixels
-    if (menu.current !== null) {
-      offsetHeight = menu.current.offsetHeight;
+  // Save one render cycle by avoiding useLayoutEffect
+  // https://twitter.com/giuseppegurgone/status/1339327319090094080
+  const menuRef = useCallback((node) => {
+    if (node) {
+      // Measure menu height, should be ~ 48 pixels
+      offsetHeight = node.offsetHeight;
     }
   }, []);
 
@@ -250,7 +251,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
 
   return (
     <StyledHeader
-      ref={menu}
+      ref={menuRef}
       role="navigation"
       home={isHome}
       opaque={!isHome || !top}
