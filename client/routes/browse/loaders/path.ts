@@ -1,5 +1,6 @@
-import { ResourceCached } from '~/services/Resource';
-import { HTTP_OK } from '~/services/http_status_codes';
+import { unstable_getCacheForType as getCacheForType } from 'react';
+import { ResourceCache } from '~/services/Resource';
+import { StatusCode } from '~/services/http';
 
 interface FolderData {
   path: string;
@@ -15,7 +16,7 @@ interface FolderData {
 
 type FolderDataAPI = Partial<FolderData>;
 
-async function fetchContents(path: string): Promise<FolderData> {
+async function fetchPath(path: string): Promise<FolderData> {
   if (path === '') {
     return {
       path: '',
@@ -25,7 +26,7 @@ async function fetchContents(path: string): Promise<FolderData> {
   }
 
   const response = await fetch(`/list?path=${path}/`);
-  if (response.status !== HTTP_OK) {
+  if (response.status !== StatusCode.OK) {
     throw response.statusText;
   }
 
@@ -40,4 +41,10 @@ async function fetchContents(path: string): Promise<FolderData> {
   return contents as FolderData;
 }
 
-export const PathResource = new ResourceCached<string, FolderData>(fetchContents);
+function createPathCache() {
+  return new ResourceCache<string, FolderData>(fetchPath);
+}
+
+export function readPath(path: string) {
+  return getCacheForType(createPathCache).read(path);
+}

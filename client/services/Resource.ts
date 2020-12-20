@@ -1,40 +1,42 @@
-type Status = 0 | 1 | 2;
 type Resolver<K, T> = (key: K) => Promise<T>;
 
-const Pending: Status = 0;
-const Resolved: Status = 1;
-const Rejected: Status = 2;
+enum Status {
+  Pending,
+  Resolved,
+  Rejected,
+}
 
 export class Resource<K, T> {
-  status: Status = Pending;
+  status: Status = Status.Pending;
   resolver: Promise<T>;
-  data: T | null | Error = null;
+  data: T | null = null;
+  err: Error | null = null;
 
   constructor(key: K, resolver: Resolver<K, T>) {
     this.resolver = resolver(key);
     this.resolver
       .then((data) => {
         this.data = data;
-        this.status = Resolved;
+        this.status = Status.Resolved;
       })
       .catch((err) => {
-        this.data = err;
-        this.status = Rejected;
+        this.err = err;
+        this.status = Status.Rejected;
       });
   }
 
   read(): T {
-    if (this.status === Pending) {
+    if (this.status === Status.Pending) {
       throw this.resolver;
     }
-    if (this.status === Rejected) {
-      throw this.data as Error;
+    if (this.status === Status.Rejected) {
+      throw this.err;
     }
     return this.data as T;
   }
 }
 
-export class ResourceCached<K, T> {
+export class ResourceCache<K, T> {
   cache = new Map<K, Resource<K, T>>();
   resolver: Resolver<K, T>;
 

@@ -1,13 +1,25 @@
 import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { PageView } from '~/routes/PageView';
-import { Sample } from './Sample';
+import { useCSS } from '~/hooks/useCSS';
+import { readSample } from './loaders/sample';
 
 import { Container } from '~/components/layout/Container';
 import { Prose } from '~/components/ui/Prose';
 import { LoadingSpinner } from '~/components/ui/LoadingSpinner';
 import { Title } from '~/components/lwjgl/Title';
 import { Dark } from '~/components/lwjgl/Dark';
+
+const Sample: React.FC<{ children?: never }> = () => {
+  useCSS('https://unpkg.com/highlight.js@10.4.1/styles/dracula.css');
+  const sample = readSample();
+
+  return (
+    <pre>
+      <code className="java" dangerouslySetInnerHTML={{ __html: sample }}></code>
+    </pre>
+  );
+};
 
 const GuideRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Get started with LWJGL 3" description="This guide will help you get started with LWJGL 3">

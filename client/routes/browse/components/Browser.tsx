@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import { File } from './File';
 import { Folder, SpinnerRow, FolderError } from './Folder';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
-import { PathResource } from '../PathResource';
 import { Box } from '~/components/layout/Box';
 import { Row } from './Row';
+import { readPath } from '../loaders/path';
 
 // Browser
 interface Props {
@@ -61,7 +61,7 @@ interface ContentProps {
 }
 
 function FolderContents({ path, targetPath }: ContentProps) {
-  const { folders, files } = PathResource.read(path);
+  const { folders, files } = readPath(path);
   const basePath = path.length ? path + '/' : '';
   return (
     <>

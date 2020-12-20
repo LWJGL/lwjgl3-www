@@ -1,4 +1,4 @@
-import { Suspense, useState, useEffect, useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
 import { styled } from '~/theme/stitches.config';
 import { useProxy } from 'valtio';
 import { breakpoint, Breakpoint } from '~/theme/breakpoints';
@@ -25,7 +25,6 @@ interface Props {
 
 export function BuildPanel({ build }: Props) {
   const { current: current } = useProxy(breakpoint);
-  const [showStatus, setShowStatus] = useState(false);
   const [slice, dispatch] = useMemoSlice(
     (state): ConnectedProps => ({
       anyBuildSelected: state.build !== null,
@@ -34,12 +33,6 @@ export function BuildPanel({ build }: Props) {
     }),
     (state) => [state.build, build]
   );
-
-  useEffect(() => {
-    if (!showStatus) {
-      setShowStatus(true);
-    }
-  }, [showStatus, setShowStatus]);
 
   return useMemo(() => {
     const { anyBuildSelected, isSelected, spec } = slice;
@@ -53,13 +46,9 @@ export function BuildPanel({ build }: Props) {
       >
         <Text as="h2">{spec.title}</Text>
         <Text>{spec.description}</Text>
-        {showStatus ? (
-          <Suspense fallback={<LoadingPulse size="lg" />}>
-            <BuildStatus name={build} />
-          </Suspense>
-        ) : (
-          <LoadingPulse size="lg" />
-        )}
+        <Suspense fallback={<LoadingPulse size="lg" />}>
+          <BuildStatus name={build} />
+        </Suspense>
         {isSelected && current < Breakpoint.lg ? (
           <Button rounding="icon" variant="text" tone="neutral">
             <Icon name="fa/regular/times" />
@@ -67,7 +56,7 @@ export function BuildPanel({ build }: Props) {
         ) : null}
       </PanelBox>
     );
-  }, [dispatch, build, slice, showStatus, current]);
+  }, [dispatch, build, slice, current]);
 }
 
 const PanelBox = styled('div', {
