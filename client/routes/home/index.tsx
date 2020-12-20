@@ -2,10 +2,9 @@ import { styled } from '~/theme/stitches.config';
 import { Link } from 'react-router-dom';
 import { PageView } from '~/routes/PageView';
 import { HomeHero } from './Hero';
-import { GoldSponsors } from '../sponsors/Gold';
-import { HowToSupport } from '../sponsors/HowToSupport';
+import { GoldSponsors } from '~/routes/sponsors/Gold';
+import { HowToSupport } from '~/routes/sponsors/HowToSupport';
 import { Grid } from '~/components/layout/Grid';
-import { Container } from '~/components/layout/Container';
 import { Prose } from '~/components/ui/Prose';
 import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
 import { ImgLazy } from '~/components/ui/ImgLazy';
@@ -14,6 +13,7 @@ import { Hr } from '~/components/ui/Hr';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
+import { Section } from '~/components/ui/Section';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/brands/apple';
 import '~/theme/icons/fa/brands/github';
@@ -68,7 +68,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
   <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
     <HomeHero />
 
-    <Container as="section" padding id="learn-more">
+    <Section padding id="learn-more">
       <TitleSection>
         What is LW
         <b>JGL</b> 3?
@@ -130,10 +130,10 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           SOURCE
         </LinkButton>
       </Grid>
-    </Container>
+    </Section>
 
     <Dark>
-      <Container padding as="section">
+      <Section padding>
         <TitleSection>Main Features</TitleSection>
 
         <Hr margin="lg" />
@@ -405,13 +405,13 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
             VR, LLC.
           </small>
         </Text>
-      </Container>
+      </Section>
     </Dark>
 
     <HowToSupport id="credits" />
     <GoldSponsors />
 
-    <Container as="section" padding>
+    <Section padding>
       <TitleSection>Looking for LWJGL 2?</TitleSection>
       <Prose width="safe" align="center">
         <p>
@@ -464,7 +464,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           LWJGL 2 WIKI
         </AnchorButton>
       </Grid>
-    </Container>
+    </Section>
   </PageView>
 );
 

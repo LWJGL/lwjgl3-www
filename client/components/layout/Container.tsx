@@ -50,6 +50,9 @@ export const Container = styled('div', {
   },
 });
 
+type ContainerType = typeof Container;
+export type ContainerProps = React.ComponentProps<ContainerType>;
+
 //@ts-expect-error
 Container.defaultProps = {
   align: 'center',

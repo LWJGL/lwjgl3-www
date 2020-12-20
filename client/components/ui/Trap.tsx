@@ -1,3 +1,4 @@
+/*
 import { useEffect, useRef } from 'react';
 import { createFocusTrap } from 'focus-trap';
 import type { FocusTrap } from 'focus-trap';
@@ -109,3 +110,4 @@ export const Trap: React.FC<Props> = ({
     </div>
   );
 };
+*/

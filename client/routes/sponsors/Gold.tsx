@@ -1,12 +1,12 @@
 import { ImgLazy } from '~/components/ui/ImgLazy';
-import { Container } from '~/components/layout/Container';
 import { Grid } from '~/components/layout/Grid';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
+import { Section } from '~/components/ui/Section';
 
 export const GoldSponsors: React.FC<{ children?: never }> = () => (
   <Dark>
-    <Container as="section" padding>
+    <Section padding>
       <TitleSection>Our Gold Sponsors:</TitleSection>
       <Grid
         css={{
@@ -154,6 +154,6 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
           <ImgLazy width={179.71} height={38} src="/img/sponsors/bonusfinderus.svg" alt="BonusFinder USA" />
         </a>
       </Grid>
-    </Container>
+    </Section>
   </Dark>
 );
