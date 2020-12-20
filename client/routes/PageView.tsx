@@ -141,10 +141,10 @@ export const PageView: React.FC<Props> = (props) => {
   const { hash } = location;
   const prevHash = usePrevious(hash);
   useEffect(() => {
-    const targetEl = document.getElementById(hash.slice(1));
+    const targetEl = hash.length > 1 ? document.getElementById(hash.slice(1)) : null;
 
     if (prevHash === null) {
-      if (targetEl) {
+      if (targetEl !== null) {
         // Only runs on mount
         scrollToTarget(targetEl);
       }
