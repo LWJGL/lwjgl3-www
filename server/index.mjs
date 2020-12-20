@@ -10,7 +10,6 @@ import request from 'request-promise-native';
 
 import { fileExists } from './fileExists.mjs';
 import { chunkMap } from './chunkMap.mjs';
-// import { css } from './styles.mjs';
 
 import routeBin from './bin.mjs';
 import routeBuild from './build.mjs';
@@ -72,7 +71,6 @@ let serviceWorkerCache = null;
 // View options
 app.locals.pretty = app.locals.development || argv.pretty === true ? '  ' : false;
 app.locals.cache = app.locals.production && argv.nocache === undefined;
-// app.locals.css = css;
 
 if (app.locals.production) {
   const styles = await import('./styles.mjs');
@@ -339,6 +337,13 @@ app.get('/sw.js', async (req, res) => {
     // Hash SW code and set it as VERSION
     const MD5 = crypto.createHash('MD5');
     MD5.update(swJS);
+    // Also version based on global CSS content
+    if (app.locals.css !== undefined) {
+      MD5.update(app.locals.css);
+    }
+    // TODO: we need to also include the HTML content in MD5
+    // TODO: Maybe read and use pug files
+    // MD5.update(html);
     swJS = swJS.replace(/VERSION/, MD5.digest('hex'));
 
     // Store SW script source so we can serve from memory
