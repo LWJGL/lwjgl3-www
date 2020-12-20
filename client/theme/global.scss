@@ -84,6 +84,12 @@ pre {
   }
 }
 
+.dark {
+  // Smooth the font on the level of the pixel, as opposed to the subpixel. Switching from subpixel rendering to antialiasing for light text on dark backgrounds makes it look lighter.
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 // @media (prefers-reduced-motion: reduce) {
 //   * {
 //     // Instead of disabling animations, reduce durations to 0

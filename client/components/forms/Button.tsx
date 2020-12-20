@@ -25,7 +25,6 @@ const fgOpacityIn = css.keyframes({
     opacity: 0,
   },
   to: {
-    // opacity: 0.24,
     opacity: 1,
   },
 });
@@ -33,7 +32,6 @@ const fgOpacityIn = css.keyframes({
 const fgOpacityOut = css.keyframes({
   from: {
     animationTimingFunction: 'linear',
-    // opacity: 0.24,
     opacity: 1,
   },
   to: {
@@ -51,11 +49,12 @@ export const StyledButton = styled('button', {
   justifyContent: 'center',
   fontWeight: '$medium',
   userSelect: 'none',
+  touchAction: 'none',
   border: '1px solid transparent',
   willChange: 'transform,opacity,border,box-shadow',
   transition: 'box-shadow, border-color 150ms cubic-bezier(0.4, 0, 0.2, 1)', // Transition only box-shadow instead of all like Tailwind does, feels faster
   '-webkit-font-smoothing': 'antialiased',
-  '-webkit-tap-highlight-color': 'rgba(0,0,0,0)',
+  '-webkit-user-drag': 'none',
   '--ripple-size': 0, // initial circle size
   '--ripple-scale': 1, // target scale
   '--ripple-left': 0,
@@ -138,6 +137,9 @@ export const StyledButton = styled('button', {
   },
 });
 
+export type StyledButtonType = typeof StyledButton;
+export type StyledButtonProps = React.ComponentProps<StyledButtonType>;
+
 const Ripple = styled('span', {
   position: 'absolute',
   width: '100%',
@@ -154,7 +156,7 @@ const Ripple = styled('span', {
     position: 'absolute',
     borderRadius: '50%',
     opacity: 0,
-    backgroundColor: '$white',
+    backgroundColor: '$black',
     top: 0,
     left: 0,
     transformOrigin: 'center center',
@@ -222,17 +224,17 @@ StyledButton.compoundVariant({ rounding: 'icon', size: 'base' }, { width: '2.5re
 StyledButton.compoundVariant({ rounding: 'icon', size: 'lg' }, { width: '2.5rem', height: '2.5rem' });
 StyledButton.compoundVariant({ rounding: 'icon', size: 'xl' }, { width: '3rem', height: '3rem' });
 
-function generateVariants(tone: React.ComponentProps<typeof StyledButton>['tone'], color: any = tone) {
+function generateVariants(tone: StyledButtonProps['tone'], color: any = tone) {
   // Base
   StyledButton.compoundVariant(
     { variant: 'base', tone },
     {
       color: `$${color}50`,
-      backgroundColor: tone === 'primary' ? `$${color}700` : `$${color}600`,
+      backgroundColor: `$${color}600`,
       boxShadow: '$md',
       ':focus': {
         boxShadow: `0 0 0 3px $outline_${color}`,
-        borderColor: `$${color}800`,
+        borderColor: `$${color}700`,
       },
       ':focus:not(:focus-visible)': {
         boxShadow: '$md',
@@ -241,7 +243,7 @@ function generateVariants(tone: React.ComponentProps<typeof StyledButton>['tone'
         boxShadow: '$md',
       },
       ':hover,:active': {
-        backgroundColor: tone === 'primary' ? `$${color}800` : `$${color}500`,
+        backgroundColor: `$${color}700`,
       },
     }
   );
@@ -321,7 +323,7 @@ function generateVariants(tone: React.ComponentProps<typeof StyledButton>['tone'
 }
 
 function generateRippleVariants(
-  variant: React.ComponentProps<typeof StyledButton>['variant'],
+  variant: StyledButtonProps['variant'],
   level: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 ) {
   tones.forEach((tone) => {
@@ -329,7 +331,7 @@ function generateRippleVariants(
   });
 }
 
-const tones: Array<React.ComponentProps<typeof StyledButton>['tone']> = [
+const tones: Array<StyledButtonProps['tone']> = [
   'primary',
   'neutral',
   'critical',
@@ -345,8 +347,8 @@ tones.forEach((tone) => {
 });
 
 // Ripple tone variants
-generateRippleVariants('base', 700);
-generateRippleVariants('secondary', 200);
+generateRippleVariants('base', 800);
+generateRippleVariants('secondary', 400);
 generateRippleVariants('outline', 100);
 generateRippleVariants('text', 100);
 
@@ -403,16 +405,17 @@ function getTranslationCoordinates(
   };
 }
 
-type Props = React.RefAttributes<HTMLButtonElement> & React.ComponentProps<typeof StyledButton>;
+export type ButtonProps = React.RefAttributes<HTMLButtonElement> & StyledButtonProps;
 
-export const Button: React.FC<Props> = ({
+export const Button: React.FC<ButtonProps> = ({
   //@ts-expect-error
   as,
   type,
-  onPointerDown,
-  onPointerUp,
   onKeyDown,
   onKeyUp,
+  onPointerDown,
+  onPointerUp,
+  onClick,
   children,
   ...rest
 }) => {
@@ -479,7 +482,6 @@ export const Button: React.FC<Props> = ({
       if (rippleRef.current === null) {
         return;
       }
-
       if (!animationTimeout.current && isPressed.current === false) {
         rippleRef.current.classList.remove('pressed');
       }
@@ -491,6 +493,7 @@ export const Button: React.FC<Props> = ({
           //@ts-ignore
           onPointerDown.call(ref.current, e);
         }
+        e.currentTarget.setPointerCapture(e.nativeEvent.pointerId);
         init(e);
       },
       onPointerUp: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
@@ -498,9 +501,27 @@ export const Button: React.FC<Props> = ({
           //@ts-ignore
           onPointerUp.call(ref.current, e);
         }
+        e.currentTarget.releasePointerCapture(e.nativeEvent.pointerId);
         if (isPressed.current) {
           isPressed.current = false;
           deactivate();
+        }
+      },
+      onClick: (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
+        // Because we've enabled pointer capturing, click is always fired
+        // Make sure pointer is released inside Button's bounding box, otherwise abort click
+        const { x, y, width, height } = e.currentTarget.getBoundingClientRect();
+        const { clientX, clientY } = e.nativeEvent;
+
+        if (clientX < x || clientX > x + width || clientY < y || clientY > y + height) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
+
+        if (onClick) {
+          //@ts-ignore
+          onClick.call(ref.current, e);
         }
       },
       onKeyDown: (e: React.SyntheticEvent<HTMLButtonElement, KeyboardEvent>) => {
@@ -523,7 +544,7 @@ export const Button: React.FC<Props> = ({
         }
       },
     };
-  }, [rest.rounding, onPointerDown, onPointerUp, onKeyDown, onKeyUp]);
+  }, [rest.rounding, onPointerDown, onPointerUp, onClick, onKeyDown, onKeyUp]);
 
   return (
     <StyledButton

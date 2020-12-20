@@ -269,7 +269,9 @@ button,
 }
 // Restore the focus styles unset by the previous rule.
 :-moz-focusring {
-  outline: 1px dotted ButtonText;
+  // outline: 1px dotted ButtonText;
+  // ! (opinionated/lwjgl)
+  outline: none;
 }
 :-moz-ui-invalid {
   box-shadow: none;
