@@ -3,7 +3,8 @@ import { Flex } from './Flex';
 import { Box } from './Box';
 
 // Types
-export interface StackProps extends React.ComponentProps<typeof Flex> {
+type FlexType = typeof Flex;
+export interface StackProps extends React.ComponentProps<FlexType> {
   gap?: string | number;
 }
 type HVStackProps = Omit<StackProps, 'direction'>;

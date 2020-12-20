@@ -29,7 +29,7 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
           <ImgDark
             loading="lazy"
             src="/img/showcase/libGDX.png"
-            dark="/img/showcase/libGDX-dark.png"
+            darkSrc="/img/showcase/libGDX-dark.png"
             alt="libGDX"
             width="300"
             height="50"

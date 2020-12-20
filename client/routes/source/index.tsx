@@ -5,7 +5,6 @@ import '~/theme/icons/fa/brands/github';
 import { Container } from '~/components/layout/Container';
 import { Grid } from '~/components/layout/Grid';
 import { Stack } from '~/components/layout/FlexStack';
-import { Box } from '~/components/layout/Box';
 import { Text } from '~/components/ui/Text';
 import { Hr } from '~/components/ui/Hr';
 import { TextDivider } from '~/components/ui/TextDivider';
@@ -42,14 +41,13 @@ const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 90, h
   </Stack>
 );
 
-type BoxClass = typeof Box;
-
-interface BuildProps extends React.ComponentProps<BoxClass> {
+interface BuildProps {
   title: string;
+  className?: string;
 }
 
-const Build: React.FC<BuildProps> = ({ children, title, css }) => (
-  <Box css={css}>
+const BuildBox: React.FC<BuildProps> = ({ children, className, title }) => (
+  <div className={className}>
     <Text
       as="h3"
       css={{
@@ -60,8 +58,10 @@ const Build: React.FC<BuildProps> = ({ children, title, css }) => (
       {title}
     </Text>
     {children}
-  </Box>
+  </div>
 );
+
+const Build = styled(BuildBox, {});
 
 const IFrameThemeAware = styled('iframe', {
   dark: {

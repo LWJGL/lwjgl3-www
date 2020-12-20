@@ -137,8 +137,8 @@ export const StyledButton = styled('button', {
   },
 });
 
-export type StyledButtonType = typeof StyledButton;
-export type StyledButtonProps = React.ComponentProps<StyledButtonType>;
+type StyledButtonType = typeof StyledButton;
+export type ButtonProps = React.ComponentProps<StyledButtonType>;
 
 const Ripple = styled('span', {
   position: 'absolute',
@@ -224,7 +224,7 @@ StyledButton.compoundVariant({ rounding: 'icon', size: 'base' }, { width: '2.5re
 StyledButton.compoundVariant({ rounding: 'icon', size: 'lg' }, { width: '2.5rem', height: '2.5rem' });
 StyledButton.compoundVariant({ rounding: 'icon', size: 'xl' }, { width: '3rem', height: '3rem' });
 
-function generateVariants(tone: StyledButtonProps['tone'], color: any = tone) {
+function generateVariants(tone: ButtonProps['tone'], color: any = tone) {
   // Base
   StyledButton.compoundVariant(
     { variant: 'base', tone },
@@ -323,7 +323,7 @@ function generateVariants(tone: StyledButtonProps['tone'], color: any = tone) {
 }
 
 function generateRippleVariants(
-  variant: StyledButtonProps['variant'],
+  variant: ButtonProps['variant'],
   level: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
 ) {
   tones.forEach((tone) => {
@@ -331,15 +331,7 @@ function generateRippleVariants(
   });
 }
 
-const tones: Array<StyledButtonProps['tone']> = [
-  'primary',
-  'neutral',
-  'critical',
-  'caution',
-  'positive',
-  'info',
-  'promote',
-];
+const tones: Array<ButtonProps['tone']> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info', 'promote'];
 
 // Tone per variant
 tones.forEach((tone) => {
@@ -404,8 +396,6 @@ function getTranslationCoordinates(
     endPoint,
   };
 }
-
-export type ButtonProps = React.RefAttributes<HTMLButtonElement> & StyledButtonProps;
 
 export const Button: React.FC<ButtonProps> = ({
   //@ts-expect-error

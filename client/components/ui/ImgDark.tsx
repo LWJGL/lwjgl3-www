@@ -4,11 +4,11 @@ import { ImgLazy } from './ImgLazy';
 import type { ImgLazyProps } from './ImgLazy';
 
 interface Props extends ImgLazyProps {
-  dark: string;
+  darkSrc: string;
 }
 
-export const ImgDark: React.FC<Props> = ({ dark, src, loading, ...rest }) => {
+export const ImgDark: React.FC<Props> = ({ darkSrc, src, loading, ...rest }) => {
   const { scheme } = useProxy(theme);
-  const activeSrc = scheme === 'dark' ? dark : src;
+  const activeSrc = scheme === 'dark' ? darkSrc : src;
   return loading === 'lazy' ? <ImgLazy src={activeSrc} {...rest} /> : <img src={activeSrc} {...rest} />;
 };

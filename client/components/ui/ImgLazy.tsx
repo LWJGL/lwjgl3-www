@@ -29,18 +29,11 @@ function getPlaceholder(params: Partial<React.ImgHTMLAttributes<HTMLImageElement
   return '';
 }
 
-const Img = styled('img', {
-  'md-down': {
-    maxWidth: '90%',
-    height: 'auto',
-  },
-});
-
-export interface ImgLazyProps extends React.ComponentProps<typeof Img> {
+export interface ImgLazyProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   rootMargin?: string;
 }
 
-export const ImgLazy: React.FC<ImgLazyProps> = lazyPolyfill
+const ImgLazyComponent: React.FC<ImgLazyProps> = lazyPolyfill
   ? function ImgLazyPolyfill({ src: lazySrc, srcSet: lazySrcSet, rootMargin = '0px', ...rest }) {
       const [src, setSrc] = useState<string | undefined>(getPlaceholder(rest));
       const [srcSet, setSrcSet] = useState<string | undefined>();
@@ -75,9 +68,15 @@ export const ImgLazy: React.FC<ImgLazyProps> = lazyPolyfill
         }
       }, [lazySrc, lazySrcSet, rootMargin]);
 
-      return <Img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
+      return <img ref={imgRef} src={src} srcSet={srcSet} {...rest} />;
     }
   : function ImgLazyNative({ src, srcSet, ...rest }) {
-      //@ts-ignore
-      return <Img loading="lazy" src={src} srcSet={srcSet} {...rest} />;
+      return <img loading="lazy" src={src} srcSet={srcSet} {...rest} />;
     };
+
+export const ImgLazy = styled(ImgLazyComponent, {
+  'md-down': {
+    maxWidth: '90%',
+    height: 'auto',
+  },
+});

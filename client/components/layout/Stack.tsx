@@ -2,11 +2,6 @@ import { Fragment, Children } from 'react';
 import { Grid } from './Grid';
 import { styled } from '~/theme/stitches.config';
 
-export interface StackProps extends React.ComponentProps<typeof Grid> {
-  direction?: 'vertical' | 'horizontal';
-  divider?: true | React.ReactNode;
-}
-
 const DefaultDivider = styled('div', {
   backgroundColor: '$neutral100',
   variants: {
@@ -23,15 +18,27 @@ const DefaultDivider = styled('div', {
   },
 });
 
-export const Stack: React.FC<StackProps> = ({ direction = 'vertical', css, divider, children, ...rest }) => (
-  <Grid
-    css={{
-      gridAutoFlow: direction === 'vertical' ? 'row' : 'column',
-      //@ts-expect-error
-      ...css,
-    }}
-    {...rest}
-  >
+const StackGrid = styled(Grid, {
+  variants: {
+    direction: {
+      vertical: {
+        gridAutoFlow: 'row',
+      },
+      horizontal: {
+        gridAutoFlow: 'column',
+      },
+    },
+  },
+});
+
+type StackGridType = typeof StackGrid;
+
+export interface StackProps extends React.ComponentProps<StackGridType> {
+  divider?: true | React.ReactNode;
+}
+
+export const Stack: React.FC<StackProps> = ({ children, divider, direction, ...props }) => (
+  <StackGrid direction={direction} {...props}>
     {divider !== undefined
       ? Children.map(children, (child: React.ReactChild, index: number) => (
           <Fragment key={index}>
@@ -40,5 +47,5 @@ export const Stack: React.FC<StackProps> = ({ direction = 'vertical', css, divid
           </Fragment>
         ))
       : children}
-  </Grid>
+  </StackGrid>
 );
