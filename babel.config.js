@@ -2,7 +2,7 @@
 const PRODUCTION = process.env.NODE_ENV === 'production';
 // https://web.dev/publish-modern-javascript/
 // https://jakearchibald.com/2017/es-modules-in-browsers/
-const MODERN = process.env.MODERN === 'true';
+// const MODERN = process.env.MODERN === 'true';
 const DEV = !PRODUCTION;
 const HMR = DEV && process.argv.includes('--nohmr');
 
@@ -46,7 +46,7 @@ if (PRODUCTION) {
     {
       spec: false,
       loose: true,
-      modules: false,
+      // modules: false,
       debug: false,
       // useBuiltIns: 'entry', // To use uncomment core-js import in main.ts, this will result in increased size
       useBuiltIns: 'usage',

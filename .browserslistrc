@@ -1,11 +1,18 @@
 [production]
-#defaults
+# https://github.com/adobe/react-spectrum/blob/main/package.json#L10-L15
 #supports es6-module
-> 1%
-iOS >= 10
+chrome >= 61
+firefox >= 60
+safari >= 11
+edge >= 16
+
+[legacy]
+# https://github.com/browserslist/browserslist
+#defaults = > 0.5%, last 2 versions, Firefox ESR, not dead
+> 0.5%
+last 2 versions
 Firefox ESR
 not dead
-not ie <= 11
 not op_mini all
 
 [development]

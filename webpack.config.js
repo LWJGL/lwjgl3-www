@@ -34,8 +34,6 @@ const env = {
 const buildConfiguration = () => {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
-    // target: DEV ? 'es2020' : 'browserslist',
-    // target: ['web', 'es2020'],
     target: 'browserslist',
     // cache: false,
     cache: true, // in-memory cache
@@ -102,15 +100,15 @@ const buildConfiguration = () => {
       publicPath: '/js/',
       chunkLoadTimeout: 30 * 1000, // 30sec instead of 2min
       crossOriginLoading: false, // false | 'anonymous' | 'use-credentials'
-      environment: {
-        arrowFunction: DEV,
-        bigIntLiteral: DEV,
-        const: DEV,
-        destructuring: DEV,
-        dynamicImport: DEV,
-        forOf: DEV,
-        module: DEV,
-      },
+      // environment: {
+      //   arrowFunction: DEV,
+      //   bigIntLiteral: DEV,
+      //   const: DEV,
+      //   destructuring: DEV,
+      //   dynamicImport: DEV,
+      //   forOf: DEV,
+      //   module: DEV,
+      // },
     },
     resolve: {
       extensions: ['.tsx', '.jsx', '.ts', '.js', '.json'],
