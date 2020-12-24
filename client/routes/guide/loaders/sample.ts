@@ -1,11 +1,18 @@
 import { unstable_getCacheForType as getCacheForType } from 'react';
 import { ResourceCache } from '~/services/Resource';
-import { StatusCode } from '~/services/http';
+import { StatusCode, getResponseError } from '~/services/http';
 
 async function fetchSample() {
-  const response = await fetch('/sample.html');
+  const response = await fetch('/sample.html', {
+    method: 'GET',
+    mode: 'same-origin',
+    credentials: 'omit',
+    headers: {
+      Accept: 'text/html',
+    },
+  });
   if (response.status !== StatusCode.OK) {
-    throw response.statusText;
+    throw new Error(await getResponseError(response));
   }
 
   return await response.text();

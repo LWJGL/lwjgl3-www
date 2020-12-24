@@ -1,6 +1,6 @@
 import { unstable_getCacheForType as getCacheForType } from 'react';
 import { ResourceCache } from '~/services/Resource';
-import { StatusCode } from '~/services/http';
+import { StatusCode, getResponseError } from '~/services/http';
 
 interface FolderData {
   path: string;
@@ -25,9 +25,16 @@ async function fetchPath(path: string): Promise<FolderData> {
     };
   }
 
-  const response = await fetch(`/list?path=${path}/`);
+  const response = await fetch(`/list?path=${path}/`, {
+    method: 'GET',
+    mode: 'same-origin',
+    credentials: 'omit',
+    headers: {
+      Accept: 'application/json',
+    },
+  });
   if (response.status !== StatusCode.OK) {
-    throw response.statusText;
+    throw new Error(await getResponseError(response));
   }
 
   let contents: FolderDataAPI = await response.json();

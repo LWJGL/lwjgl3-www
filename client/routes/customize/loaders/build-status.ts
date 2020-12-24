@@ -1,6 +1,6 @@
 import { unstable_getCacheForType as getCacheForType } from 'react';
 import { ResourceCache } from '~/services/Resource';
-import { StatusCode } from '~/services/http';
+import { StatusCode, getResponseError } from '~/services/http';
 import { config } from '../config';
 import type { BuildType } from '../types';
 
@@ -40,7 +40,7 @@ async function fetchStatus(url: string) {
   });
 
   if (response.status !== StatusCode.OK) {
-    throw new Error(response.statusText);
+    throw new Error(await getResponseError(response));
   }
 
   return await response.json();

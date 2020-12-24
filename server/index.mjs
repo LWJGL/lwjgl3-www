@@ -438,7 +438,7 @@ app.use((err, req, res, next) => {
     })
     .status(500);
 
-  if (req.is('json')) {
+  if (req.accepts('json')) {
     // JSON
     if (err instanceof Error) {
       if (req.app.locals.development) {
@@ -456,14 +456,14 @@ app.use((err, req, res, next) => {
     } else {
       res.send({ error: err });
     }
-  } else if (req.is('text/plain')) {
+  } else if (req.accepts('text/plain')) {
     // default to plain-text.
     // keep only message
     res.type('text/plain').send(err.message);
+  } else {
+    // HTML
+    res.render('500', { error: err });
   }
-
-  // HTML
-  res.render('500', { error: err });
 });
 
 // ------------------------------------------------------------------------------

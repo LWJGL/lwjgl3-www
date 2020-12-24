@@ -1,5 +1,5 @@
 import JSZip from 'jszip';
-import { StatusCode } from '~/services/http';
+import { StatusCode, getResponseError } from '~/services/http';
 import { Native, BuildType } from '../types';
 import type { Binding, BindingDefinition, BindingMapSelection, BuildStore, PlatformSelection } from '../types';
 
@@ -77,7 +77,7 @@ export const fetchManifest = async (path: string): Promise<Array<string>> => {
   });
 
   if (response.status !== StatusCode.OK) {
-    throw response.statusText;
+    throw new Error(await getResponseError(response));
   }
 
   return await response.json();
@@ -200,7 +200,7 @@ async function fetchFile(path: string, abortSignal?: AbortSignal) {
   let response = await fetch(`https://build.lwjgl.org/${path}`, fetchOptions);
 
   if (response.status !== StatusCode.OK) {
-    throw response.statusText;
+    throw new Error(await getResponseError(response));
   }
 
   return {
