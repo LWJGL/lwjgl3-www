@@ -16,11 +16,11 @@ interface BuildStatusError {
 type BuildStatus = BuildStatusSuccess | BuildStatusError;
 
 async function loadStatus(name: BuildType): Promise<BuildStatus> {
-  let url = `/build/${name}`;
-
+  let url = `https://s3.amazonaws.com/build.lwjgl.org/${name}`;
   if (name === 'release') {
     url += `/${config.versions[0]}`;
   }
+  url += `/bin/build.txt`;
 
   try {
     return await fetchStatus(url);
@@ -32,7 +32,7 @@ async function loadStatus(name: BuildType): Promise<BuildStatus> {
 async function fetchStatus(url: string): Promise<BuildStatusSuccess> {
   const response = await fetch(url, {
     method: 'GET',
-    mode: 'same-origin',
+    mode: 'cors',
     credentials: 'omit',
     headers: {
       Accept: 'text/plain',

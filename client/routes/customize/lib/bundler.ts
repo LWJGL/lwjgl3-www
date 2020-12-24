@@ -193,6 +193,7 @@ async function fetchFile(path: string, abortSignal?: AbortSignal) {
   const fetchOptions: RequestInit = {
     method: 'GET',
     mode: 'cors',
+    credentials: 'omit',
   };
   if (abortSignal !== undefined) {
     fetchOptions.signal = abortSignal;

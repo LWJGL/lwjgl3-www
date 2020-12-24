@@ -12,7 +12,6 @@ import { fileExists } from './fileExists.mjs';
 import { chunkMap } from './chunkMap.mjs';
 
 import routeBin from './bin.mjs';
-import routeBuild from './build.mjs';
 import routeBrowse from './browse.mjs';
 
 import { fileURLToPath } from 'url';
@@ -294,10 +293,6 @@ app.get('/bin/:build/:version', routeBin);
 
 // S3 bucket listing
 app.get('/list', routeBrowse);
-
-// S3 build information
-app.get('/build/:build', routeBuild);
-app.get('/build/:build/:version', routeBuild);
 
 // Legacy re-directs
 app.get('/license.php', (req, res) => res.redirect(301, '/license'));
