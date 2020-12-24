@@ -1,41 +1,49 @@
-import AWS from 'aws-sdk';
+import { s3 } from './AWS.mjs';
 import validateBuildParams from './validateBuildParams.mjs';
 
-const s3 = new AWS.S3();
+// const fmt = new Intl.DateTimeFormat('en-us', {
+//   timeZone: 'UTC',
+//   year: 'numeric',
+//   month: 'short',
+//   day: 'numeric',
+//   hour: 'numeric',
+//   minute: 'numeric',
+//   second: 'numeric',
+//   timeZoneName: 'short',
+//   hour12: false,
+// });
 
-const fmt = new Intl.DateTimeFormat('en-us', {
-  timeZone: 'UTC',
-  year: 'numeric',
-  month: 'short',
-  day: 'numeric',
-  hour: 'numeric',
-  minute: 'numeric',
-  second: 'numeric',
-  timeZoneName: 'short',
-  hour12: false,
-});
-
-export default (req, res, next) => {
+export default async (req, res, next) => {
   if (!validateBuildParams(req.params, next)) {
     return;
   }
 
-  const params = {
-    Bucket: 'build.lwjgl.org',
-    Key:
-      req.params.build === 'release'
-        ? `${req.params.build}/${req.params.version}/bin/build.txt`
-        : `${req.params.build}/bin/build.txt`,
-  };
+  let build;
 
-  s3.getObject(params, function (err, data) {
-    if (err) {
-      next(err);
-    } else {
-      res.send({
-        version: data.Body.toString(),
-        lastModified: fmt.format(data.LastModified),
-      });
-    }
-  });
+  try {
+    build = await s3.getObject({
+      Bucket: 'build.lwjgl.org',
+      Key:
+        req.params.build === 'release'
+          ? `${req.params.build}/${req.params.version}/bin/build.txt`
+          : `${req.params.build}/bin/build.txt`,
+    });
+  } catch (err) {
+    next(err);
+    return;
+  }
+
+  res.setHeader('Content-Type', 'text/plain');
+  res.setHeader('Last-Modified', build.LastModified.toUTCString());
+  build.Body.pipe(res);
+
+  // const chunks = [];
+  // for await (const chunk of build.Body) {
+  //   chunks.push(chunk);
+  // }
+
+  // res.send({
+  //   version: chunks.join(''),
+  //   lastModified: fmt.format(build.LastModified),
+  // });
 };

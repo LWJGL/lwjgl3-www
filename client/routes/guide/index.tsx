@@ -11,7 +11,7 @@ import { Title } from '~/components/lwjgl/Title';
 import { Dark } from '~/components/lwjgl/Dark';
 
 const Sample: React.FC<{ children?: never }> = () => {
-  useCSS('https://unpkg.com/highlight.js@10.4.1/styles/dracula.css');
+  useCSS('https://unpkg.com/highlight.js@10.5.0/styles/dracula.css');
   const sample = readSample();
 
   return (

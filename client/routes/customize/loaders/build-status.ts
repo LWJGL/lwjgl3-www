@@ -6,7 +6,7 @@ import type { BuildType } from '../types';
 
 interface BuildStatusSuccess {
   lastModified: string;
-  version?: string;
+  version: string;
 }
 
 interface BuildStatusError {
@@ -29,13 +29,13 @@ async function loadStatus(name: BuildType): Promise<BuildStatus> {
   }
 }
 
-async function fetchStatus(url: string) {
+async function fetchStatus(url: string): Promise<BuildStatusSuccess> {
   const response = await fetch(url, {
     method: 'GET',
     mode: 'same-origin',
     credentials: 'omit',
     headers: {
-      Accept: 'application/json',
+      Accept: 'text/plain',
     },
   });
 
@@ -43,7 +43,10 @@ async function fetchStatus(url: string) {
     throw new Error(await getResponseError(response));
   }
 
-  return await response.json();
+  return {
+    lastModified: response.headers.get('Last-Modified') ?? 'N/A',
+    version: await response.text(),
+  };
 }
 
 function createBuildStatusCache() {

@@ -1,7 +1,7 @@
-import { S3 } from './AWS.mjs';
+import { s3 } from './AWS.mjs';
 import validateBuildParams from './validateBuildParams.mjs';
 
-export default (req, res, next) => {
+export default async (req, res, next) => {
   if (!validateBuildParams(req.params, next)) {
     return;
   }
@@ -14,15 +14,23 @@ export default (req, res, next) => {
       req.params.build === 'release' ? `${req.params.build}/${req.params.version}/bin/` : `${req.params.build}/bin/`,
   };
 
-  S3.listObjectsV2(params, function (err, data) {
-    if (err) {
-      next(err);
-    } else {
-      const result = data.Contents.map(item => {
-        return item.Key;
-      });
+  let data;
 
-      res.send(result);
-    }
+  try {
+    data = await s3.listObjectsV2(params);
+  } catch (err) {
+    next(err);
+    return;
+  }
+
+  if (!data.Contents) {
+    next(new Error('No files found!'));
+    return;
+  }
+
+  const result = data.Contents.map(item => {
+    return item.Key;
   });
+
+  res.send(result);
 };

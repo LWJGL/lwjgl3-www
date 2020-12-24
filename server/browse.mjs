@@ -1,6 +1,6 @@
-import { S3 } from './AWS.mjs';
+import { s3 } from './AWS.mjs';
 
-export default (req, res, next) => {
+export default async (req, res, next) => {
   let isRoot = true;
   let replacer = null;
 
@@ -17,35 +17,38 @@ export default (req, res, next) => {
     replacer = new RegExp(`^${params.Prefix}`);
   }
 
-  S3.listObjectsV2(params, function (err, data) {
-    if (err) {
-      next(err);
-    } else {
-      const result = {};
+  let data;
 
-      if (data.Contents.length) {
-        result.files = data.Contents.filter(item => {
-          if (!isRoot) {
-            if (item.Key === params.Prefix) {
-              return false;
-            }
-          }
-          return true;
-        }).map(item => (isRoot ? item.Key : item.Key.replace(replacer, '')));
+  try {
+    data = await s3.listObjectsV2(params);
+  } catch (err) {
+    next(err);
+    return;
+  }
+
+  const result = {};
+
+  if (data.Contents && data.Contents.length) {
+    result.files = data.Contents.filter(item => {
+      if (!isRoot) {
+        if (item.Key === params.Prefix) {
+          return false;
+        }
       }
+      return true;
+    }).map(item => (isRoot ? item.Key : item.Key.replace(replacer, '')));
+  }
 
-      if (data.CommonPrefixes.length) {
-        result.folders = data.CommonPrefixes.filter(folder => {
-          if (isRoot) {
-            if (!['release/', 'stable/', 'nightly/'].includes(folder.Prefix)) {
-              return false;
-            }
-          }
-          return true;
-        }).map(folder => (isRoot ? folder.Prefix : folder.Prefix.replace(replacer, '')));
+  if (data.CommonPrefixes && data.CommonPrefixes.length) {
+    result.folders = data.CommonPrefixes.filter(folder => {
+      if (isRoot) {
+        if (!['release/', 'stable/', 'nightly/'].includes(folder.Prefix)) {
+          return false;
+        }
       }
+      return true;
+    }).map(folder => (isRoot ? folder.Prefix : folder.Prefix.replace(replacer, '')));
+  }
 
-      res.send(result);
-    }
-  });
+  res.send(result);
 };
