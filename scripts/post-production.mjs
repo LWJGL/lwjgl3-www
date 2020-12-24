@@ -94,9 +94,6 @@ async function main() {
     }
   });
 
-  // Append manifest.json to deployment assets
-  productionManifest.assets.manifest = 'manifest.json';
-
   // Store production manifest
   await fs.promises.writeFile(
     path.resolve(__dirname, '../public/js/manifest.json'),
