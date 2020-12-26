@@ -32,7 +32,7 @@ files.push(path.join(__dirname, '../client/sw.js'));
 // files.push(path.join(__dirname, '../client/sw-destroy.js'));
 
 let deployed = 0;
-await asyncPool(1, files, async file => {
+await asyncPool(4, files, async file => {
   const basename = path.basename(file);
   const extension = path.extname(basename);
 
