@@ -23,9 +23,7 @@ export function useStore(): StoreTuple {
 
 export function useStoreRef() {
   const [state] = useContext(StoreContext);
-  const storeRef = useRef<BuildStore>(state);
-  storeRef.current = state;
-  return storeRef;
+  return useRef<BuildStore>(state);
 }
 
 type SliceTuple<S> = [S, React.Dispatch<ActionCreator>];
