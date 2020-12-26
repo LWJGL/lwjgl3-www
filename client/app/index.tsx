@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
+import { RecoilRoot } from 'recoil';
 import { OverlayProvider } from '@react-aria/overlays';
 import { Spring } from './SpringGlobals';
 import '~/services/screenFit';
@@ -35,17 +36,19 @@ const Main = styled('main', {
 export const App: React.FC<{ children?: never }> = () => (
   <BrowserRouter>
     <OverlayProvider>
-      <Header />
-      <Layout>
-        <Main>
-          <ErrorBoundary fallback={PageError}>
-            <Suspense fallback={<PageBlank />}>
-              <RouterConfig />
-            </Suspense>
-          </ErrorBoundary>
-        </Main>
-        <Footer />
-      </Layout>
+      <RecoilRoot>
+        <Header />
+        <Layout>
+          <Main>
+            <ErrorBoundary fallback={PageError}>
+              <Suspense fallback={<PageBlank />}>
+                <RouterConfig />
+              </Suspense>
+            </ErrorBoundary>
+          </Main>
+          <Footer />
+        </Layout>
+      </RecoilRoot>
     </OverlayProvider>
     <Spring />
     {/* <NavProgress /> */}

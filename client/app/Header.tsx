@@ -1,8 +1,8 @@
 import { memo, useEffect, useCallback, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { useProxy } from 'valtio';
-import { styled } from '~/theme/stitches.config';
+import { useRecoilValue } from 'recoil';
 import { breakpoint, Breakpoint } from '~/theme/breakpoints';
+import { styled } from '~/theme/stitches.config';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
@@ -132,7 +132,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
   const [top, setTop] = useState(true);
   const [fixed, setFixed] = useState(false);
   const [hidden, setHidden] = useState(false);
-  const { current: currentBreakpoint } = useProxy(breakpoint);
+  const currentBreakpoint = useRecoilValue(breakpoint);
 
   // Save one render cycle by avoiding useLayoutEffect
   // https://twitter.com/giuseppegurgone/status/1339327319090094080

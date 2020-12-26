@@ -1,7 +1,7 @@
 import { useMemo, useRef } from 'react';
 import { useMemoSlice } from './Store';
 import { BuildToolbar } from './BuildToolbar';
-import { useProxy } from 'valtio';
+import { useRecoilValue } from 'recoil';
 import { breakpoint, Breakpoint } from '~/theme/breakpoints';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
 import { BuildType } from './types';
@@ -51,7 +51,7 @@ interface Props {
 
 export function BuildScript({ configDownload, configLoad }: Props) {
   const preRef = useRef<HTMLPreElement>(null);
-  const { current: current } = useProxy(breakpoint);
+  const currentBreakpoint = useRecoilValue(breakpoint);
 
   // Slice
   const [slice] = useMemoSlice(
@@ -112,10 +112,10 @@ export function BuildScript({ configDownload, configLoad }: Props) {
       copy: ' COPY TO CLIPBOARD',
     };
 
-    if (current < Breakpoint.sm) {
+    if (currentBreakpoint < Breakpoint.sm) {
       labels.download = 'DOWNLOAD';
       labels.copy = '';
-    } else if (current < Breakpoint.md) {
+    } else if (currentBreakpoint < Breakpoint.md) {
       labels.copy = ' COPY';
     }
 
@@ -146,7 +146,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
         </BuildToolbar>
       </>
     );
-  }, [slice, current, mode, configDownload, configLoad]);
+  }, [slice, currentBreakpoint, mode, configDownload, configLoad]);
 }
 
 const ScriptLogo = styled('img', {

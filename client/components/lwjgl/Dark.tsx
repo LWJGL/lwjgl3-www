@@ -1,6 +1,5 @@
 import { styled } from '~/theme/stitches.config';
-import { theme } from '~/theme';
-import { useProxy } from 'valtio';
+import { dark } from '~/theme';
 import { cc } from '~/theme/cc';
 
 interface DarkDivProps {
@@ -9,7 +8,6 @@ interface DarkDivProps {
 }
 
 const DarkDiv: React.FC<DarkDivProps> = ({ children, as = 'div', className, ...rest }) => {
-  const { dark } = useProxy(theme);
   const Tag = as;
 
   return (

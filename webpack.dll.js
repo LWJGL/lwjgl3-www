@@ -4,8 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  // target: 'es2020',
-  target: 'browserslist',
+  target: 'web',
   cache: false,
   devtool: 'cheap-module-source-map',
   entry: {
@@ -32,8 +31,8 @@ module.exports = {
         'react-refresh/runtime',
         'react-router-dom',
         'react-use-gesture',
+        'recoil',
         'scroll-into-view-if-needed',
-        'valtio',
         'whatwg-fetch',
         // other
         'ansi-html',

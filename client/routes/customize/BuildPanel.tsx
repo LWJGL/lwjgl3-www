@@ -1,6 +1,6 @@
 import { Suspense, useMemo } from 'react';
 import { styled } from '~/theme/stitches.config';
-import { useProxy } from 'valtio';
+import { useRecoilValue } from 'recoil';
 import { breakpoint, Breakpoint } from '~/theme/breakpoints';
 import { useMemoSlice } from './Store';
 import { selectBuildType } from './actions';
@@ -24,7 +24,7 @@ interface Props {
 }
 
 export function BuildPanel({ build }: Props) {
-  const { current: current } = useProxy(breakpoint);
+  const currentBreakpoint = useRecoilValue(breakpoint);
   const [slice, dispatch] = useMemoSlice(
     (state): ConnectedProps => ({
       anyBuildSelected: state.build !== null,
@@ -41,7 +41,7 @@ export function BuildPanel({ build }: Props) {
       <PanelBox
         build={build}
         selected={isSelected}
-        hidden={anyBuildSelected && !isSelected && current < Breakpoint.lg}
+        hidden={anyBuildSelected && !isSelected && currentBreakpoint < Breakpoint.lg}
         onClick={() => dispatch(selectBuildType(build))}
       >
         <Text as="h2">{spec.title}</Text>
@@ -49,14 +49,14 @@ export function BuildPanel({ build }: Props) {
         <Suspense fallback={<LoadingPulse size="lg" />}>
           <BuildStatus name={build} />
         </Suspense>
-        {isSelected && current < Breakpoint.lg ? (
+        {isSelected && currentBreakpoint < Breakpoint.lg ? (
           <Button rounding="icon" variant="text" tone="neutral">
             <Icon name="fa/regular/times" />
           </Button>
         ) : null}
       </PanelBox>
     );
-  }, [dispatch, build, slice, current]);
+  }, [dispatch, build, slice, currentBreakpoint]);
 }
 
 const PanelBox = styled('div', {

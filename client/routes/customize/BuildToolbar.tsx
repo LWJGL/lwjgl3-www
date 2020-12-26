@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useProxy } from 'valtio';
+import { useRecoilValue } from 'recoil';
 import { breakpoint, Breakpoint } from '~/theme/breakpoints';
 import { Button } from '~/components/forms/Button';
 import { FilePicker } from '~/components/forms/FilePicker';
@@ -36,7 +36,7 @@ interface Props {
 export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, children }) => {
   const [fileUI, setFileUI] = useState(false);
   const toggleFileUI = () => setFileUI(!fileUI);
-  const { current: current } = useProxy(breakpoint);
+  const currentBreakpoint = useRecoilValue(breakpoint);
 
   if (fileUI) {
     const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +72,7 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     );
   }
 
-  const showLabels = current > Breakpoint.sm;
+  const showLabels = currentBreakpoint > Breakpoint.sm;
 
   return (
     <ToolbarContainer>

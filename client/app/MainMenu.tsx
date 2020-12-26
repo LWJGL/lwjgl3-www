@@ -1,12 +1,12 @@
+import { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useProxy } from 'valtio';
+import { useRecoilState } from 'recoil';
+import { scheme } from '~/theme';
 import { styled } from '~/theme/stitches.config';
 import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/duotone/moon';
 import '~/theme/icons/fa/duotone/sun';
-
-import { theme, toggleScheme } from '~/theme';
 
 interface Props {
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
@@ -57,7 +57,12 @@ const MainMenuContainer = styled('nav', {
 });
 
 export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, ...rest }) => {
-  const { scheme } = useProxy(theme);
+  const [currentScheme, setScheme] = useRecoilState(scheme);
+
+  const toggleScheme = useCallback(() => {
+    setScheme(currentScheme === 'light' ? 'dark' : 'light');
+  }, [currentScheme, setScheme]);
+
   return (
     <MainMenuContainer
       role="navigation"
@@ -86,7 +91,7 @@ export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, ...re
       </NavLink>
       <div>
         <Button size="sm" rounding="icon" variant="text" onClick={toggleScheme}>
-          <Icon display="block" name={scheme === 'dark' ? 'fa/duotone/sun' : 'fa/duotone/moon'} />{' '}
+          <Icon display="block" name={currentScheme === 'dark' ? 'fa/duotone/sun' : 'fa/duotone/moon'} />{' '}
         </Button>
       </div>
     </MainMenuContainer>

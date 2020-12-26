@@ -1,4 +1,4 @@
-import { proxy } from 'valtio';
+import { atom, DefaultValue } from 'recoil';
 import { mediaQueryListener } from '../services/mediaQueryListener';
 import { themes } from '~/theme/stitches.config';
 
@@ -15,118 +15,92 @@ export const ZINDEX_TOOLTIP = 1070;
 export type Scheme = 'light' | 'dark';
 export type ThemeName = 'default';
 
-interface ThemeConfig {
-  name: ThemeName;
-  scheme: Scheme;
-  prefers: Scheme;
-  stored: Scheme | null;
-  dark: string;
-  light: string;
-}
-
-const themeMap: { [key in ThemeName]: [string, string] } = {
-  default: ['', themes.dark],
-};
-
 const SCHEME_STORAGE_KEY = 'color-theme';
+const schemeClasses: [string, string] = ['', themes.dark];
 
-export const theme = proxy<ThemeConfig>({
-  name: 'default',
-  scheme: 'light',
-  prefers: 'light',
-  stored: null,
-  dark: themes.dark,
-  light: '', // defaults to no theme override
-});
-
-function toggleThemeClasses(prevName: ThemeName = theme.name, prevScheme: Scheme = theme.scheme) {
+function toggleScheme(prevScheme: Scheme, newScheme: Scheme) {
   const cl = document.body.classList;
-  const { name, scheme } = theme;
+  cl.remove(prevScheme);
+  cl.add(newScheme);
 
-  if (scheme !== prevScheme) {
-    if (scheme === 'dark') {
-      cl.remove('light');
-      cl.add('dark');
-    } else {
-      cl.add('light');
-      cl.remove('dark');
-    }
+  const darkBit = newScheme === 'dark' ? 1 : 0;
+  let classToRemove = schemeClasses[darkBit ^ 1];
+  let classToAdd = schemeClasses[darkBit ^ 0];
+
+  if (classToRemove) {
+    cl.remove(classToRemove);
+  }
+  if (classToAdd) {
+    cl.add(classToAdd);
   }
 
-  let classToRemove = themeMap[prevName][prevScheme === 'dark' ? 1 : 0];
-  let classToAdd = themeMap[name][scheme === 'dark' ? 1 : 0];
-
-  if (classToAdd !== classToRemove) {
-    if (classToRemove) {
-      cl.remove(classToRemove);
-    }
-    if (classToAdd) {
-      cl.add(classToAdd);
-    }
-  }
-
-  setRootColorScheme(scheme);
-}
-
-export function setTheme(name: ThemeName) {
-  if (name !== theme.name) {
-    const prevTheme = theme.name;
-    theme.name = name;
-    theme.light = themeMap[name][0];
-    theme.dark = themeMap[name][1];
-    toggleThemeClasses(prevTheme, theme.scheme);
-  }
-}
-
-function setScheme(scheme: Scheme) {
-  if (theme.scheme !== scheme) {
-    const prevScheme = theme.scheme;
-    theme.scheme = scheme;
-    toggleThemeClasses(theme.name, prevScheme);
-  }
+  setRootColorScheme(newScheme);
 }
 
 function setRootColorScheme(scheme: Scheme) {
   document.documentElement.style.setProperty('color-scheme', scheme);
 }
 
-export function toggleScheme(scheme?: Scheme | React.SyntheticEvent) {
-  if (scheme === theme.scheme) {
-    // early out
-    return;
-  } else if (typeof scheme !== 'string') {
-    scheme = theme.scheme === 'light' ? 'dark' : 'light';
-  }
+export const dark = themes.dark;
+export const light = ''; // defaults to no theme override
+let isStored = false;
+let agentTriggered = false;
 
-  setScheme(scheme);
+export const scheme = atom<Scheme>({
+  key: SCHEME_STORAGE_KEY,
+  default: 'light',
+  effects_UNSTABLE: [
+    ({ setSelf }) => {
+      let activeScheme: Scheme = 'light';
 
-  try {
-    window.localStorage.setItem(SCHEME_STORAGE_KEY, scheme);
-  } catch {}
-}
+      const schemeStored = window.localStorage.getItem(SCHEME_STORAGE_KEY);
+      if (schemeStored === 'dark' || schemeStored === 'light') {
+        isStored = true;
+        activeScheme = schemeStored;
+      }
 
-{
-  const schemeStored = window.localStorage.getItem(SCHEME_STORAGE_KEY);
-  if (schemeStored === 'dark' || schemeStored === 'light') {
-    theme.stored = schemeStored;
-    if (schemeStored === 'dark') {
-      theme.scheme = 'dark';
-      toggleThemeClasses(theme.name, 'light');
-    } else {
-      setRootColorScheme('light');
-    }
-  }
-}
+      let unsubscribe;
+      if (!isStored) {
+        unsubscribe = mediaQueryListener('(prefers-color-scheme: dark)', (list: MediaQueryList) => {
+          if (!isStored) {
+            // Change scheme automatically if we haven't set a preference
+            activeScheme = list.matches ? 'dark' : 'light';
+            // First this fires will be synchronous, scheme will change below
+            // Next times will be async, scheme whill change by onSet
+            agentTriggered = true;
+            setSelf(activeScheme);
+          }
+        });
+        // Reset immediately the first time
+        agentTriggered = false;
+      }
 
-mediaQueryListener('(prefers-color-scheme: dark)', (list: MediaQueryList) => {
-  const prefers = list.matches ? 'dark' : 'light';
+      if (activeScheme === 'dark') {
+        setSelf('dark');
+        toggleScheme('light', 'dark');
+      } else {
+        setRootColorScheme('light');
+      }
 
-  if (prefers !== theme.prefers) {
-    theme.prefers = prefers;
+      return unsubscribe;
+    },
+    ({ onSet }) => {
+      onSet((newValue, oldValue) => {
+        if (newValue instanceof DefaultValue || oldValue instanceof DefaultValue) {
+          return;
+        }
+        if (newValue !== oldValue) {
+          toggleScheme(oldValue, newValue);
 
-    // Change scheme automatically if we haven't set a preference
-    if (theme.stored === null) {
-      setScheme(prefers);
-    }
-  }
+          if (!agentTriggered) {
+            try {
+              window.localStorage.setItem(SCHEME_STORAGE_KEY, newValue);
+            } catch {}
+          } else {
+            agentTriggered = false;
+          }
+        }
+      });
+    },
+  ],
 });
