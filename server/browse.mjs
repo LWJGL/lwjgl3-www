@@ -52,7 +52,7 @@ export default async (req, res, next) => {
 
   res
     .set({
-      'Cache-Control': 'public, max-age=60, s-max-age=3600, stale-while-revalidate=60',
+      'Cache-Control': 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60',
     })
     .send(result);
 };

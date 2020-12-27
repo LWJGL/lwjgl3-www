@@ -182,7 +182,7 @@ app.use(
         case '/robots.txt':
         case '/sample.html':
           res.set({
-            'Cache-Control': 'public, max-age=3600, s-max-age=86400, stale-while-revalidate=3600',
+            'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=3600',
           });
           break;
 
@@ -422,7 +422,7 @@ app.get('*', (req, res, next) => {
   res
     .set({
       // 'Cache-Control': 'no-store,max-age=0',
-      'Cache-Control': 'public, max-age=60, s-max-age=3600, stale-while-revalidate=60',
+      'Cache-Control': 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60',
       'Content-Language': 'en',
     })
     .render('index', renderOptions);
