@@ -48,7 +48,7 @@ if (PRODUCTION) {
       loose: true,
       // modules: false,
       debug: false,
-      // useBuiltIns: 'entry', // To use uncomment core-js import in main.ts, this will result in increased size
+      // useBuiltIns: 'entry', // To use add a core-js import in main.tsx, this will result in increased size
       useBuiltIns: 'usage',
       corejs: 3,
       bugfixes: true,

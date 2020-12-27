@@ -50,5 +50,9 @@ export default async (req, res, next) => {
     }).map(folder => (isRoot ? folder.Prefix : folder.Prefix.replace(replacer, '')));
   }
 
-  res.send(result);
+  res
+    .set({
+      'Cache-Control': 'public, max-age=60, s-max-age=3600, stale-while-revalidate=60',
+    })
+    .send(result);
 };

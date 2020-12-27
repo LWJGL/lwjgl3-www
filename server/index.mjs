@@ -30,21 +30,26 @@ const argv = {};
 
 process.argv.slice(2).forEach(arg => {
   switch (arg) {
-    case '--pretty':
+    case '--pretty': {
       argv.pretty = true;
       break;
-    case '--nocache':
+    }
+    case '--nocache': {
       argv.nocache = true;
       break;
-    case '--nohmr':
+    }
+    case '--nohmr': {
       argv.nohmr = true;
       break;
-    case '--s3proxy':
+    }
+    case '--s3proxy': {
       argv.s3proxy = true;
       break;
-    case '--test':
+    }
+    case '--test': {
       argv.test = true;
       break;
+  }
   }
 });
 
@@ -52,12 +57,9 @@ process.argv.slice(2).forEach(arg => {
 // Initialize & Configure Application
 // ------------------------------------------------------------------------------
 
-const configFile = path.resolve(__dirname, '../config.json');
-const config = fileExists(configFile) ? JSON.parse(fs.readFileSync(configFile)) : {};
-
 const PRODUCT = 'lwjgl.org';
-const PORT = config.port || parseInt(process.env.PORT, 10) || 80;
-const HOST = config.host || process.env.HOST || '0.0.0.0';
+const PORT = parseInt(process.env.PORT, 10) || 80;
+const HOST = process.env.HOST || '0.0.0.0';
 
 const app = express();
 
@@ -148,7 +150,6 @@ if (app.locals.development || argv.s3proxy === true) {
 // ------------------------------------------------------------------------------
 
 // Redirect requests from http://lwjgl.org/* to https://www.lwjgl.org/
-// TODO: Use a reverse-proxy for this
 app.use((req, res, next) => {
   if (req.hostname === 'lwjgl.org') {
     res.redirect(301, `https://www.lwjgl.org${req.originalUrl}`);
@@ -158,30 +159,40 @@ app.use((req, res, next) => {
 });
 
 // Static Assets
-// TODO: Use a reverse-proxy for these
 app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
 app.use(
   express.static(path.join(__dirname, '../public'), {
-    index: false,
+    fallthrough: true,
     etag: true,
-    immutable: true,
     lastModified: true,
-    maxAge: 365 * 24 * 60 * 60 * 1000,
+    index: false,
+    extensions: false,
+    redirect: false,
+    cacheControl: false, // we'll set cache-control headers manually
+    // immutable: true,
+    // maxAge: 365 * 24 * 60 * 60 * 1000,
     setHeaders: (res, path, stat) => {
       if (app.locals.development) {
         res.set('Access-Control-Allow-Origin', '*');
       }
       switch (res.req.url) {
+        case '/favicon.ico':
         case '/manifest.webmanifest':
         case '/sitemap.xml':
-        case '/browserconfig.xml':
+        case '/robots.txt':
+        case '/sample.html':
           res.set({
-            'Cache-Control': 'private, max-age=0',
-            Expires: '-1',
+            'Cache-Control': 'public, max-age=3600, s-max-age=86400, stale-while-revalidate=3600',
           });
           break;
-        default:
-          res.set('Cache-Control', 'public,max-age=31536000,immutable');
+
+        case '/sw.js': {
+          // Skip Cache-Control since browsers ignore the header and re-check based on their own policies
+          break;
+      }
+        default: {
+          res.set('Cache-Control', 'public, max-age=31536000, immutable');
+        }
       }
     },
   })
@@ -295,12 +306,18 @@ app.get('/bin/:build/:version', routeBin);
 app.get('/list', routeBrowse);
 
 // Legacy re-directs
-app.get('/license.php', (req, res) => res.redirect(301, '/license'));
+app.get('/license.php', (req, res) => {
+  res.redirect(301, '/license');
+});
 app.get('/demos.php', (req, res) => {
   res.redirect(302, 'http://legacy.lwjgl.org/demos.php.html');
 });
-app.get('/download.php', (req, res) => res.redirect(301, '/download'));
-app.get('/credits.php', (req, res) => res.redirect(301, '/#credits'));
+app.get('/download.php', (req, res) => {
+  res.redirect(301, '/download');
+});
+app.get('/credits.php', (req, res) => {
+  res.redirect(301, '/#credits');
+});
 app.get('/projects.php', (req, res) => {
   res.redirect(302, 'http://legacy.lwjgl.org/projects.php.html');
 });
@@ -385,14 +402,16 @@ app.get('*', (req, res, next) => {
 
     switch (req.path) {
       case '/':
-      case '/guide':
+      case '/guide': {
         preload.push(`\<https://unpkg.com\>; rel=preconnect`);
         break;
-      case '/source':
+      }
+      case '/source': {
         preload.push(`\<https://api.travis-ci.org\>; rel=preconnect`);
         preload.push(`\<https://ci.appveyor.com\>; rel=preconnect`);
         preload.push(`\<https://travis-ci.org\>; rel=preconnect`);
         break;
+    }
     }
 
     res.set('Link', preload);
@@ -402,9 +421,9 @@ app.get('*', (req, res, next) => {
 
   res
     .set({
-      'Cache-Control': 'no-cache, no-store, no-transform, max-age=0',
+      // 'Cache-Control': 'no-store,max-age=0',
+      'Cache-Control': 'public, max-age=60, s-max-age=3600, stale-while-revalidate=60',
       'Content-Language': 'en',
-      Expires: '-1',
     })
     .render('index', renderOptions);
 });
@@ -413,7 +432,7 @@ app.get('*', (req, res, next) => {
 app.use((req, res) => {
   res
     .set({
-      'Cache-Control': 'no-transform, max-age=30',
+      'Cache-Control': 'public, max-age=30, s-maxage=0',
     })
     .status(404);
 
@@ -429,7 +448,7 @@ app.use((req, res) => {
 app.use((err, req, res, next) => {
   res
     .set({
-      'Cache-Control': 'no-transform, max-age=5',
+      'Cache-Control': 'public, max-age=5, s-maxage=0',
     })
     .status(500);
 

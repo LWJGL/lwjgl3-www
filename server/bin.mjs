@@ -32,5 +32,9 @@ export default async (req, res, next) => {
     return item.Key;
   });
 
-  res.send(result);
+  res
+    .set({
+      'Cache-Control': 'public, max-age=60, s-max-age=3600, stale-while-revalidate=60',
+    })
+    .send(result);
 };

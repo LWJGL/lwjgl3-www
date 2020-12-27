@@ -33,7 +33,6 @@ module.exports = {
         'react-use-gesture',
         'recoil',
         'scroll-into-view-if-needed',
-        'whatwg-fetch',
         // other
         'ansi-html',
         'ansi-regex',

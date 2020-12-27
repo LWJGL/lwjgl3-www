@@ -87,7 +87,7 @@ const buildConfiguration = () => {
     performance: { hints: false },
     entry: {
       main: {
-        import: ['./client/main.ts'],
+        import: ['./client/main.tsx'],
       },
     },
     // experiments: {
