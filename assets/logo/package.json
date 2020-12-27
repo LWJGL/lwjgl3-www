@@ -5,10 +5,12 @@
   "private": true,
   "dependencies": {
     "node-fetch": "3.0.0-beta.9",
-    "puppeteer-core": "5.3.1",
-    "yargs": "16.0.3"
+    "puppeteer-core": "5.5.0",
+    "yargs": "16.2.0"
   },
   "scripts": {
-    "ncu": "yarn upgrade-interactive --latest -E"
+    "ncu": "npx npm-check-updates -i",
+    "ncut": "npx npm-check-updates -t greatest",
+    "ncun": "npx npm-check-updates -t newest"
   }
 }
