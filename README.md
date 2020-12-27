@@ -1,6 +1,6 @@
-# [LWJGL.org](https://www.lwjgl.org) - The home of Lightweight Java Game Library 3
+# [lwjgl.org](https://www.lwjgl.org) - home of Lightweight Java Game Library 3
 
-The website for LWJGL 3 is build with React. It is a single-page application with client-side routing. It installs a Service Worker in order to work offline.
+The website for LWJGL is build with React. It is a single-page application with client-side routing. It installs a Service Worker in order to work offline.
 
 There is no server-side rendering because of hosting constraints.
 
@@ -21,7 +21,7 @@ Notable features:
 
 ## Dependencies
 
-Static assets are loaded from LWJGL's CDN ( AWS CloudFront ).
+Static assets are loaded from LWJGL's CDN (AWS CloudFront).
 
 <!-- We use [Google Analytics](https://www.google.com/analytics) for tracking. -->
 
