@@ -35,4 +35,14 @@
     <changefreq>monthly</changefreq>
     <priority>0.1</priority>
   </url>
+  <url>
+    <loc>https://www.lwjgl.org/frameworks</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.1</priority>
+  </url>
+  <url>
+    <loc>https://www.lwjgl.org/sponsors</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.1</priority>
+  </url>
 </urlset>
