@@ -112,7 +112,7 @@ export default (): BuildBindings => ({
       title: 'SSE',
       description: 'Simple SSE intrinsics.',
       natives: NATIVE_LTE_322,
-      website: 'https://software.intel.com/en-us/node/523328',
+      website: 'https://software.intel.com/sites/landingpage/IntrinsicsGuide/',
     },
     [Binding.STB]: {
       id: Binding.STB,
