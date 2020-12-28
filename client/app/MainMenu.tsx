@@ -63,6 +63,8 @@ export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, ...re
     setScheme(currentScheme === 'light' ? 'dark' : 'light');
   }, [currentScheme, setScheme]);
 
+  const schemeSwitchButtonTitle = `Switch to ${currentScheme === 'dark' ? 'light' : 'dark'} theme`;
+
   return (
     <MainMenuContainer
       role="navigation"
@@ -90,7 +92,14 @@ export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, ...re
         FRAMEWORKS
       </NavLink>
       <div>
-        <Button size="sm" rounding="icon" variant="text" onClick={toggleScheme}>
+        <Button
+          size="sm"
+          rounding="icon"
+          variant="text"
+          onClick={toggleScheme}
+          title={schemeSwitchButtonTitle}
+          aria-label={schemeSwitchButtonTitle}
+        >
           <Icon display="block" name={currentScheme === 'dark' ? 'fa/duotone/sun' : 'fa/duotone/moon'} />{' '}
         </Button>
       </div>

@@ -73,15 +73,17 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
   }
 
   const showLabels = currentBreakpoint > Breakpoint.sm;
+  const loadButtonTitle = 'Load configuration file (JSON)';
+  const saveButtonTitle = 'Save configuration file (in JSON)';
 
   return (
     <ToolbarContainer>
       {children}
-      <Button variant="outline" title="Load configuration file (JSON)" onClick={toggleFileUI}>
+      <Button variant="outline" title={loadButtonTitle} aria-label={loadButtonTitle} onClick={toggleFileUI}>
         <Icon name="fa/duotone/folder-upload" />
         {showLabels ? ` Load config` : null}
       </Button>
-      <Button variant="outline" title="Save configuration (in JSON)" onClick={configDownload}>
+      <Button variant="outline" title={saveButtonTitle} aria-label={saveButtonTitle} onClick={configDownload}>
         <Icon name="fa/duotone/folder-download" />
         {showLabels ? ` Save config` : null}
       </Button>

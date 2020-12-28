@@ -6,8 +6,8 @@ interface Props extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const IconSpan: React.FC<Props> = ({ name, ...props }) => (
-  <span {...props}>
-    <svg focusable={false} aria-hidden={true} preserveAspectRatio="xMidYMid meet">
+  <span aria-hidden={true} {...props}>
+    <svg focusable={false} preserveAspectRatio="xMidYMid meet">
       <use href={`#${name}`} />
     </svg>
   </span>

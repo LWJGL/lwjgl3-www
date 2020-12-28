@@ -50,7 +50,7 @@ export function BuildPanel({ build }: Props) {
           <BuildStatus name={build} />
         </Suspense>
         {isSelected && currentBreakpoint < Breakpoint.lg ? (
-          <Button rounding="icon" variant="text" tone="neutral">
+          <Button rounding="icon" variant="text" tone="neutral" title="Close" aria-label="Close">
             <Icon name="fa/regular/times" />
           </Button>
         ) : null}

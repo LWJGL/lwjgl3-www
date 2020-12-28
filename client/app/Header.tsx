@@ -112,9 +112,17 @@ StyledHeader.compoundVariant(
 
 function ServiceWorkerUpdate() {
   const [pending, update] = useServiceWorker();
+  const buttonTitle = 'Update website to latest version';
 
   return pending ? (
-    <Button size="sm" rounding="icon" tone="positive" onClick={update as any} title="Update website to latest version">
+    <Button
+      size="sm"
+      rounding="icon"
+      tone="positive"
+      onClick={update as any}
+      title={buttonTitle}
+      aria-label={buttonTitle}
+    >
       <Icon name="fa/duotone/cloud-download" />
     </Button>
   ) : null;

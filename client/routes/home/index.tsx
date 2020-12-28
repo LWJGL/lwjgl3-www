@@ -49,6 +49,11 @@ const FeatureImage = styled('div', {
   },
 });
 
+//@ts-expect-error
+FeatureImage.defaultProps = {
+  'aria-hidden': true,
+};
+
 const Feature = styled('div', {
   // fontSize: 'calc(1rem * var(--scale-sm, 1))',
   sm: {

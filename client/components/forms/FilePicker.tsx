@@ -78,6 +78,8 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
     inputValue = `${files.length} files`;
   }
 
+  const folderButtonTitle = 'Select file to upload';
+
   return (
     <Flex>
       <input
@@ -108,6 +110,8 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
           borderTopLeftRadius: 0,
           borderBottomLeftRadius: 0,
         }}
+        title={folderButtonTitle}
+        aria-label={folderButtonTitle}
       >
         <Icon name="fa/duotone/folder-open" />
       </Button>

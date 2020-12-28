@@ -169,13 +169,16 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
     }
   }, [isOpen, animate]);
 
+  const toggleButtonTitle = `${isOpen ? 'Close' : 'Open'} navigation menu`;
+
   return (
     <MenuArea>
       <MenuToggleButton
         type="button"
         ref={buttonRef}
         onClick={toggleOpen}
-        title={`${isOpen ? 'Close' : 'Open'} navigation menu`}
+        title={toggleButtonTitle}
+        aria-label={toggleButtonTitle}
       >
         <MenuToggleLine style={{ transform: perc.to(transformLine1) }} />
         <MenuToggleLine style={{ transform: perc.to(transformLine2) }} />
@@ -190,7 +193,10 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           css={{
             zIndex: ZINDEX_MODAL_BACKDROP - 2,
           }}
-          style={{ backgroundColor: perc.to(getBackdropOpacity) }}
+          style={{
+            //@ts-expect-error
+            backgroundColor: perc.to(getBackdropOpacity),
+          }}
         />
         <MenuOverlay
           open={isOpen}
