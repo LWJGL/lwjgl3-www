@@ -58,8 +58,8 @@ await asyncPool(4, files, async file => {
   const headers = {};
   switch (extension) {
     case '.js': {
-      headers.ContentType = 'text/javascript;charset=utf-8';
-      headers.CacheControl = 'public,max-age=31536000,immutable';
+      headers.ContentType = 'text/javascript; charset=utf-8';
+      headers.CacheControl = 'public, max-age=31536000, immutable';
       break;
     }
     case '.json': {
@@ -68,7 +68,7 @@ await asyncPool(4, files, async file => {
     }
     case '.css': {
       headers.ContentType = 'text/css';
-      headers.CacheControl = 'public,max-age=31536000,immutable';
+      headers.CacheControl = 'public, max-age=31536000, immutable';
       break;
     }
   }
@@ -82,7 +82,7 @@ await asyncPool(4, files, async file => {
       Key: `${extension === '.css' ? 'css' : 'js'}/${basename}`,
       Body: createReadStream(file),
       ACL: 'public-read',
-      ContentMD5: Buffer(digest, 'hex').toString('base64'),
+      ContentMD5: Buffer.from(digest, 'hex').toString('base64'),
       ...headers,
     });
   } catch (err) {
