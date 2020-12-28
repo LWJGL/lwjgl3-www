@@ -13,6 +13,7 @@ interface Props {
   vertical?: boolean;
   horizontal?: boolean;
   'data-ismodal'?: boolean; // @react-aria/overlays::ModalAriaProps
+  focusableProps: Partial<React.Attributes<HTMLElement>>;
 }
 
 const MainMenuContainer = styled('nav', {
@@ -56,7 +57,7 @@ const MainMenuContainer = styled('nav', {
   },
 });
 
-export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, ...rest }) => {
+export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, focusableProps, ...rest }) => {
   const [currentScheme, setScheme] = useRecoilState(scheme);
 
   const toggleScheme = useCallback(() => {
@@ -73,22 +74,22 @@ export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, ...re
       horizontal={horizontal === true}
       {...rest}
     >
-      <NavLink onClick={onClick} to="/" end>
+      <NavLink {...focusableProps} onClick={onClick} to="/" end>
         HOME
       </NavLink>
-      <NavLink onClick={onClick} to="/guide">
+      <NavLink {...focusableProps} onClick={onClick} to="/guide">
         GET STARTED
       </NavLink>
-      <NavLink onClick={onClick} to="/download">
+      <NavLink {...focusableProps} onClick={onClick} to="/download">
         DOWNLOAD
       </NavLink>
-      <NavLink onClick={onClick} to="/customize">
+      <NavLink {...focusableProps} onClick={onClick} to="/customize">
         CUSTOMIZE
       </NavLink>
-      <NavLink onClick={onClick} to="/source">
+      <NavLink {...focusableProps} onClick={onClick} to="/source">
         SOURCE
       </NavLink>
-      <NavLink onClick={onClick} to="/frameworks">
+      <NavLink {...focusableProps} onClick={onClick} to="/frameworks">
         FRAMEWORKS
       </NavLink>
       <div>
@@ -99,8 +100,9 @@ export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, ...re
           onClick={toggleScheme}
           title={schemeSwitchButtonTitle}
           aria-label={schemeSwitchButtonTitle}
+          {...focusableProps}
         >
-          <Icon display="block" name={currentScheme === 'dark' ? 'fa/duotone/sun' : 'fa/duotone/moon'} />{' '}
+          <Icon display="block" name={currentScheme === 'dark' ? 'fa/duotone/sun' : 'fa/duotone/moon'} />
         </Button>
       </div>
     </MainMenuContainer>

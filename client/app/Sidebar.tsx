@@ -170,6 +170,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
   }, [isOpen, animate]);
 
   const toggleButtonTitle = `${isOpen ? 'Close' : 'Open'} navigation menu`;
+  const focusableProps = isOpen ? {} : { tabIndex: -1 };
 
   return (
     <MenuArea>
@@ -208,7 +209,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           style={{ x }}
         >
           <FocusScope contain={isOpen} restoreFocus>
-            <MainMenu vertical onClick={toggleOpen} {...modalProps} />
+            <MainMenu vertical onClick={toggleOpen} focusableProps={focusableProps} {...modalProps} />
           </FocusScope>
         </MenuOverlay>
       </OverlayContainer>
