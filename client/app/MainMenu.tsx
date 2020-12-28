@@ -13,7 +13,7 @@ interface Props {
   vertical?: boolean;
   horizontal?: boolean;
   'data-ismodal'?: boolean; // @react-aria/overlays::ModalAriaProps
-  focusableProps: Partial<React.Attributes<HTMLElement>>;
+  focusableProps?: Partial<React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement>>;
 }
 
 const MainMenuContainer = styled('nav', {
@@ -57,7 +57,7 @@ const MainMenuContainer = styled('nav', {
   },
 });
 
-export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, focusableProps, ...rest }) => {
+export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, focusableProps = {}, ...rest }) => {
   const [currentScheme, setScheme] = useRecoilState(scheme);
 
   const toggleScheme = useCallback(() => {
