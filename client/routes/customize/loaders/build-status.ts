@@ -16,7 +16,7 @@ interface BuildStatusError {
 type BuildStatus = BuildStatusSuccess | BuildStatusError;
 
 async function loadStatus(name: BuildType): Promise<BuildStatus> {
-  let url = `https://s3.amazonaws.com/build.lwjgl.org/${name}`;
+  let url = `https://build.lwjgl.org/${name}`;
   if (name === 'release') {
     url += `/${config.versions[0]}`;
   }
