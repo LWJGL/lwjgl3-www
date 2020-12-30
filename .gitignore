@@ -1,6 +1,3 @@
-# Configuration
-config.json
-
 # Docker
 docker-compose.override.yml
 
@@ -8,9 +5,9 @@ docker-compose.override.yml
 .yarn
 dist
 node_modules
-/public/**/*.map
-/public/js/**/*.js*
-/public/css/**/*.css
+/public/js/**/*
+/public/css/**/*
+
 /scripts/icons
 *.manifest.json
 *.log

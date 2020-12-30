@@ -1,7 +1,27 @@
-node_modules
 .git
+.github
 .vscode
 .idea
+node_modules
 client
-public/**/*.map
-public/js/**/*.js*
+assets
+scripts
+types
+public/css/global.css
+public/js/vendor*
+public/js/*.manifest.json
+public/js/deploy.json
+.git*
+# .gitattributes
+# .gitignore
+.prettier*
+.prettierrc
+.prettierignore
+.browserslistrc
+.editorconfig
+.eslintrc
+babel.config.js
+*.md
+tsconfig.json
+webpack.config.js
+webpack.dll.js

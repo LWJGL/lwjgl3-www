@@ -2,6 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const terserOptions = require('./scripts/terser-config.json');
 const argv = {};
 
 process.argv.slice(2).forEach(arg => {
@@ -50,30 +51,7 @@ const buildConfiguration = () => {
         new TerserPlugin({
           parallel: true,
           extractComments: false,
-          terserOptions: {
-            mangle: true,
-            ecma: 5,
-            module: false,
-            // sourceMap: {
-            //   url: 'inline'
-            // },
-            output: {
-              comments: false,
-            },
-            compress: {
-              drop_console: true,
-              drop_debugger: true,
-              hoist_funs: true,
-              inline: 3,
-              keep_fargs: false,
-              // keep_fnames: true,
-              keep_infinity: true,
-              module: false,
-              passes: 2,
-              pure_getters: true,
-              unsafe_comps: true,
-            },
-          },
+          terserOptions,
         }),
       ],
       emitOnErrors: false,

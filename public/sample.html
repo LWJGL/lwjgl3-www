@@ -17,7 +17,7 @@
 	<span class="hljs-keyword">private</span> <span class="hljs-keyword">long</span> window;
 
 	<span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>{
-		System.out.println(<span class="hljs-string">"Hello LWJGL "</span> + Version.getVersion() + <span class="hljs-string">"!"</span>);
+		System.out.println(<span class="hljs-string">&quot;Hello LWJGL &quot;</span> + Version.getVersion() + <span class="hljs-string">&quot;!&quot;</span>);
 
 		init();
 		loop();
@@ -38,7 +38,7 @@
 
 		<span class="hljs-comment">// Initialize GLFW. Most GLFW functions will not work before doing this.</span>
 		<span class="hljs-keyword">if</span> ( !glfwInit() )
-			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">"Unable to initialize GLFW"</span>);
+			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">&quot;Unable to initialize GLFW&quot;</span>);
 
 		<span class="hljs-comment">// Configure GLFW</span>
 		glfwDefaultWindowHints(); <span class="hljs-comment">// optional, the current window hints are already the default</span>
@@ -46,9 +46,9 @@
 		glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE); <span class="hljs-comment">// the window will be resizable</span>
 
 		<span class="hljs-comment">// Create the window</span>
-		window = glfwCreateWindow(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-string">"Hello World!"</span>, NULL, NULL);
+		window = glfwCreateWindow(<span class="hljs-number">300</span>, <span class="hljs-number">300</span>, <span class="hljs-string">&quot;Hello World!&quot;</span>, NULL, NULL);
 		<span class="hljs-keyword">if</span> ( window == NULL )
-			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">"Failed to create the GLFW window"</span>);
+			<span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;Failed to create the GLFW window&quot;</span>);
 
 		<span class="hljs-comment">// Setup a key callback. It will be called every time a key is pressed, repeated or released.</span>
 		glfwSetKeyCallback(window, (window, key, scancode, action, mods) -&gt; {
@@ -85,7 +85,7 @@
 	}
 
 	<span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loop</span><span class="hljs-params">()</span> </span>{
-		<span class="hljs-comment">// This line is critical for LWJGL's interoperation with GLFW's</span>
+		<span class="hljs-comment">// This line is critical for LWJGL&#x27;s interoperation with GLFW&#x27;s</span>
 		<span class="hljs-comment">// OpenGL context, or any context that is managed externally.</span>
 		<span class="hljs-comment">// LWJGL detects the context that is current in the current thread,</span>
 		<span class="hljs-comment">// creates the GLCapabilities instance and makes the OpenGL</span>

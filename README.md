@@ -2,13 +2,13 @@
 
 The website for LWJGL is build with React. It is a single-page application with client-side routing. It installs a Service Worker in order to work offline.
 
-There is no server-side rendering because of hosting constraints.
+Warning: There is currently no server-side rendering because of hosting constraints.
 
-Notable features:
+### Notable features:
 
 - Client-side routing
 - Service Worker (works offline)
-- Tiny production build (entire codebase + content weights less than 350KB gzipped)
+- Tiny production build (entire codebase + content weights less than 300KB gzipped)
 - Code splitting at route & component level
 - Scroll restoration
 - Route preloading
@@ -16,14 +16,11 @@ Notable features:
 - Build Customizer with smart download queue & client-side ZIP generator
 - Custom webpack manifest parsing + code minification
 - CSS-in-JS (Stitches)
-- fast-async instead of regenerator
 - Client is written in Typescript
 
 ## Dependencies
 
 Static assets are loaded from LWJGL's CDN (AWS CloudFront).
-
-<!-- We use [Google Analytics](https://www.google.com/analytics) for tracking. -->
 
 Build status icons are loaded directly from travis-ci.org and appveyor.com.
 
@@ -41,23 +38,21 @@ Other LWJGL subdomains:
 
 ## Development
 
-### Build/running in development
-
 1.  To install all required npm packages:
 
-```bash
+```shell
 npm i
 ```
 
-2. To build global styles for dev mode:
+2. To build styles:
 
-```bash
+```shell
 npm run styles
 ```
 
 3.  To start the server in dev mode:
 
-```bash
+```shell
 node server
 # or
 npm start
@@ -65,13 +60,13 @@ npm start
 
 _OPTIONAL_: Monitor for /server changes & auto-restart with:
 
-```bash
+```shell
 npm run watch
 ```
 
 ### CLI flags
 
-```bash
+```shell
 --sourcemap # Enables inline JS source-maps
 --nohmr # Disables Webpack Hot Module Replacement
 ```
@@ -79,18 +74,8 @@ npm run watch
 The following flags are used for testing production builds locally.
 NODE_ENV environment variable must be set to "production".
 
-```bash
---test # Enables production test mode (loads assets from disk instead of S3)
---nocache # Disables Pug view caching
---pretty # Pretty prints HTML
---s3proxy # Proxies S3 images
-```
-
-The following flags are used for testing production builds locally.
-NODE_ENV environment variable must be set to "production".
-
-```bash
---test # Enables production test mode (loads assets from disk instead of S3)
+```shell
+--test # Enables production test mode (e.g. disables HSTS)
 --nocache # Disables Pug view caching
 --pretty # Pretty prints HTML
 --s3proxy # Proxies S3 images
@@ -98,74 +83,34 @@ NODE_ENV environment variable must be set to "production".
 
 Flag usage examples:
 
-```bash
+```shell
 node server --async --nohmr
 npm run watch -- --async --nohmr
 ```
 
-### Configuration file (_OPTIONAL_)
-
-Default config if file is missing:
-
-```json
-{
-  "port": 80,
-  "host": "0.0.0.0"
-}
-```
-
 ### Environment variables
 
-NODE_ENV=production (default=development)
-PORT=8088 (default=80)
-HOST=127.0.0.1 (default=0.0.0.0)
+```shell
+NODE_ENV="production" # default: development
+PORT="8080" # default: 80
+HOST="127.0.0.1" # default: 0.0.0.0
+```
 
 ## Production
 
-The website is served via Amazon CloudFront using the server's hostname & port as origin.
-SSL Termination happens on the CDN (using a certificate issued by AWS Certificate Manager).
+To deploy LWJGL in production please read the separate guide: [DEPLOYMENT.md](./DEPLOYMENT.md).
 
-The production process involves the following steps:
+### Testing production builds
 
-- Compile JS files with webpack (_babel_) and store the manifest on disk
-- Process the manifest:
-  - Read the webpack manifest and compile list of files & routes
-  - Process each file with terser
-  - Compute hashes of final files
-  - Store each production file on disk
-  - Generate production manifest that also needs to be shipped
-  - Generate & print file size report
-- Deploy files to S3
-- Start or reload node app
-
-### Build for production
-
-```bash
+```shell
 git pull
 npm i
 npm run release
 ```
 
-To run the production build (\*nix only)
+You can run the production build locally:
 
-```bash
-NODE_ENV=production node server
-```
-
-you can simulate and run the production build locally:
-
-```bash
-# will use production assets on disk
-npm run test-production
-# will download production assets from S3, only proxies request that pass through Cloudfront
-npm run run-production
-```
-
-To test the production build with [React DevTools Profiler](https://reactjs.org/blog/2018/09/10/introducing-the-react-profiler.html) enabled:
-
-```bash
-npm run production-profiling
-npm run post-production
+```shell
 npm run test-production
 ```
 
@@ -173,76 +118,8 @@ npm run test-production
 
 The following debugging tips may come in handy:
 
-- Disable minification by uncommenting `minimize: false` in `webpack.config.js`
-- Prevent Terser from dropping `console.log` or `debugger` by changing `terserOptions` in `webpack.config.js`
+- Disable minification by uncommenting `minimize: false` in [webpack.config.js](./webpack.config.js)
+- Prevent Terser from dropping `console.log` or `debugger` by changing `terserOptions` in [terser-config.json](./scripts/terser-config.json)
 - Pass `--profiling` to load React profiling builds
-- Output `named` module & chunk ids in `webpack.config.js`
-- Analyze build output with `npx webpack-bundle-analyzer public/js/webpack.manifest.json -h 0.0.0.0` (for full breakdown, change to `all: true` when writing `webpack.manifest.json` in `build-production.js`)
-
-### Run in production with PM2
-
-[https://github.com/Unitech/pm2](https://github.com/Unitech/pm2)
-
-```bash
-cd /path/to/lwjgl3-www
-NODE_ENV=production pm2 start server/index.js --name lwjgl
-pm2 save
-```
-
-or place a process.json file anywhere with the following contents:
-
-```json
-{
-  "apps": [
-    {
-      "name": "lwjgl-site",
-      "cwd": "/path/to/lwjgl3-www",
-      "script": "./server/index.js",
-      "env": {
-        "NODE_ENV": "production",
-        "PORT": 7687
-      }
-    }
-  ]
-}
-```
-
-and then run:
-
-```bash
-pm2 start process.json --only lwjgl-site
-pm2 save
-```
-
-## Docker
-
-To build the production docker image:
-
-```bash
-docker build --rm -t lwjgl/website:latest .
-```
-
-To test the production docker image (after running release):
-
-```bash
-docker-compose up
-```
-
-In order to access AWS resources in development, you'll need to create
-a `docker-compose.override.yml` file and populate it with the following configuration:
-
-```yml
-version: '3.7'
-
-services:
-  lwjgl:
-    environment:
-      - AWS_ACCESS_KEY_ID=XXXXX
-      - AWS_SECRET_ACCESS_KEY=XXXXX
-```
-
-To push the image to Docker Hub (requires access to LWJGL organization):
-
-```bash
-docker push lwjgl/website:latest
-```
+- Output `named` module & chunk ids in [webpack.config.js](./webpack.config.js)
+- Analyze build output with `npx webpack-bundle-analyzer public/js/webpack.manifest.json -h 0.0.0.0` (for full breakdown, change to `all: true` when writing `webpack.manifest.json` in [build-production.js](./scripts/build-production.mjs))

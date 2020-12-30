@@ -1,110 +1,211 @@
-import fs from 'fs';
 import path from 'path';
-import crypto from 'crypto';
-import express from 'express';
-import compression from 'compression';
-import helmet from 'helmet';
-import favicon from 'serve-favicon';
-import chalk from 'chalk';
-import request from 'request-promise-native';
-
-import { fileExists } from './fileExists.mjs';
-import { chunkMap } from './chunkMap.mjs';
-
-import routeBin from './bin.mjs';
-import routeBrowse from './browse.mjs';
-
+import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
+import fastify from 'fastify';
+import fastifyGracefulShutdown from 'fastify-graceful-shutdown';
+import fastifyAccepts from 'fastify-accepts';
+import fastifyHealthcheck from 'fastify-healthcheck';
+import fastifyStatic from 'fastify-static';
+import fastifyEtag from 'fastify-etag';
+import fastifyPointOfView from 'point-of-view';
+import helmet from 'fastify-helmet';
+// import { mime } from 'send';
+import pug from 'pug';
+
+import chunkMap from './routes/chunkMap.mjs';
+import routeBin from './routes/bin.mjs';
+import routeBrowse from './routes/browse.mjs';
 
 const filePath = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filePath);
-// const __filename = path.parse(filePath).base;
 const require = createRequire(import.meta.url);
 
+const PRODUCTION = process.env.NODE_ENV === 'production';
+const DEVELOPMENT = !PRODUCTION;
+const PORT = parseInt(process.env.PORT, 10) || 80;
+const HOST = process.env.HOST || '0.0.0.0';
+
 // ------------------------------------------------------------------------------
-// Arguments
+// CLI ARGS
 // ------------------------------------------------------------------------------
 
 const argv = {};
 
 process.argv.slice(2).forEach(arg => {
   switch (arg) {
-    case '--pretty': {
+    case '--pretty':
       argv.pretty = true;
       break;
-    }
-    case '--nocache': {
+    case '--nocache':
       argv.nocache = true;
       break;
-    }
-    case '--nohmr': {
+    case '--nohmr':
       argv.nohmr = true;
       break;
-    }
-    case '--s3proxy': {
+    case '--s3proxy':
       argv.s3proxy = true;
       break;
-    }
-    case '--test': {
+    case '--test':
       argv.test = true;
       break;
-  }
   }
 });
 
 // ------------------------------------------------------------------------------
-// Initialize & Configure Application
+// PRELOAD FILES
 // ------------------------------------------------------------------------------
 
-const PRODUCT = 'lwjgl.org';
-const PORT = parseInt(process.env.PORT, 10) || 80;
-const HOST = process.env.HOST || '0.0.0.0';
+if (PRODUCTION) {
+  global.manifest = JSON.parse(
+    await readFile(path.resolve(__dirname, '../public/js/manifest.json'), {
+      encoding: 'utf-8',
+    })
+  );
 
-const app = express();
-
-app.locals.development = app.get('env') === 'development';
-app.locals.production = !app.locals.development;
-
-let manifest = {};
-let serviceWorkerCache = null;
-
-// View options
-app.locals.pretty = app.locals.development || argv.pretty === true ? '  ' : false;
-app.locals.cache = app.locals.production && argv.nocache === undefined;
-
-if (app.locals.production) {
-  const styles = await import('./styles.mjs');
-  app.locals.css = styles.css;
+  global.globalCss = await readFile(path.resolve(__dirname, '../public/css/global.min.css'), {
+    encoding: 'utf-8',
+  });
 }
 
-app.set('port', PORT);
-app.set('view engine', 'pug');
-app.set('views', __dirname + '/views');
-
-app.enable('case sensitive routing');
-app.enable('strict routing');
-app.disable('x-powered-by');
-app.use(compression());
-
-// app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal', ...subnets]);
-
 // ------------------------------------------------------------------------------
-// Configure Content-Type
+// CREATE SERVER
 // ------------------------------------------------------------------------------
-express.static.mime.define(
-  {
-    'text/javascript; charset=utf-8': ['js'],
-    'application/json; charset=utf-8': ['json'],
-    'application/manifest+json; charset=utf-8': ['webmanifest'],
+
+export const app = fastify({
+  connectionTimeout: 0,
+  keepAliveTimeout: 5000,
+  maxParamLength: 100,
+  bodyLimit: 1024 * 1024 * 1, // 1MB
+  caseSensitive: true,
+  ignoreTrailingSlash: false,
+  disableRequestLogging: PRODUCTION,
+  return503OnClosing: true,
+  logger: {
+    level: PRODUCTION ? 'error' : 'info',
   },
-  true
-);
+  onProtoPoisoning: 'error',
+  onConstructorPoisoning: 'error',
+  trustProxy: ['127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'],
+});
+
+// ! `send` package still depends on older `mime`
+// mime.define(
+//   {
+//     'text/javascript; charset=utf-8': ['js'],
+//     'application/json; charset=utf-8': ['json'],
+//     'application/manifest+json; charset=utf-8': ['webmanifest'],
+//   },
+//   true
+// );
 
 // ------------------------------------------------------------------------------
-// Middleware
+// PLUGINS
 // ------------------------------------------------------------------------------
-if (app.locals.development) {
+
+app.register(fastifyGracefulShutdown);
+app.register(fastifyEtag);
+app.register(fastifyAccepts);
+
+// Helmet config
+// Defaults are commented out
+app.register(helmet, {
+  contentSecurityPolicy: false,
+  dnsPrefetchControl: false,
+  expectCt: false,
+  // frameguard: {
+  //   action: 'sameorigin',
+  // },
+  hidePoweredBy: false,
+  hsts:
+    PRODUCTION && !argv.test
+      ? {
+          maxAge: 365 * 24 * 60 * 60,
+          includeSubDomains: false, // * no because we have non-ssl subdomains (e.g. legacy.lwjgl.org)
+          preload: false, // ! includeSubDomains must be true for preloading to be approved
+        }
+      : false,
+  ieNoOpen: false,
+  // noSniff
+  permittedCrossDomainPolicies: false,
+  referrerPolicy: {
+    policy: 'no-referrer-when-downgrade',
+  },
+  // xssFilter:
+});
+
+// Template
+app.register(fastifyPointOfView, {
+  engine: { pug },
+  root: path.join(__dirname, 'views'),
+  options: {
+    pretty: DEVELOPMENT || argv.pretty === true ? '  ' : false,
+    cache: PRODUCTION && argv.nocache === undefined,
+  },
+});
+
+if (PRODUCTION) {
+  // Health checks
+  app.register(fastifyHealthcheck, {
+    healthcheckUrl: '/health',
+  });
+}
+
+// Static files
+app.register(fastifyStatic, {
+  root: path.resolve(__dirname, '../public'),
+  wildcard: false,
+  acceptRanges: true,
+  cacheControl: false,
+  // dotfiles
+  etag: true,
+  extensions: false,
+  immutable: false,
+  index: false,
+  lastModified: true,
+  // maxAge: 31536000,
+  setHeaders: (res, filepath, stat) => {
+    switch (path.basename(filepath)) {
+      case 'favicon.ico':
+      case 'manifest.webmanifest':
+      case 'sitemap.xml':
+      case 'robots.txt':
+      case 'sample.html':
+        res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=3600');
+        break;
+      case 'sw.js': {
+        // Skip Cache-Control since browsers ignore the header and re-check based on their own policies
+        break;
+      }
+      default: {
+        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      }
+    }
+  },
+});
+
+// ------------------------------------------------------------------------------
+// DEVELOPMENT
+// ------------------------------------------------------------------------------
+
+if (DEVELOPMENT) {
+  // Add compatibility with express
+  await app.register(require('fastify-express'));
+
+  // Allow source access in development
+  // Required for Sass source maps to be resolved by browsers when HMR is off
+  app.register(fastifyStatic, {
+    root: path.resolve(__dirname, '../client'),
+    prefix: '/client/',
+    decorateReply: false,
+  });
+  app.register(fastifyStatic, {
+    root: path.resolve(__dirname, '../node_modules'),
+    prefix: '/node_modules/',
+    decorateReply: false,
+  });
+
+  // Webpack
   const webpack = require('webpack');
   const webpackConfig = require('../webpack.config.js');
   const webpackCompiler = webpack(webpackConfig);
@@ -129,422 +230,188 @@ if (app.locals.development) {
         quiet: false,
       })
     );
+
+    // Reply with a 404 on bad compilations
+    // ! This is required for HMR to resume after code is fixed
+    app.get('/js/*', (request, reply) => {
+      reply.code(404).send('');
+    });
   }
 }
 
-if (app.locals.development || argv.s3proxy === true) {
-  /*
-    In production we handle photos and downloads at the CDN level.
-    In development these paths will hit Node, therefore we need to handle them.
-    CAUTION: Internet connection is required!
-  */
-  const { createProxyMiddleware } = require('http-proxy-middleware');
+// Proxy
+// In production we handle photos and downloads at the CDN level.
+// In development these paths will hit Node, therefore we need to handle them.
+// CAUTION: Internet connection is required!
+if (DEVELOPMENT || argv.s3proxy === true) {
+  const httpProxy = require('fastify-http-proxy');
 
   // Proxy photos from S3
-  app.use('/img', createProxyMiddleware({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
-  app.use('/svg', createProxyMiddleware({ target: 'http://cdn.lwjgl.org.s3.amazonaws.com', changeOrigin: true }));
+  await app.register(httpProxy, { prefix: '/img', rewritePrefix: '/img', upstream: 'https://cdn.lwjgl.org' });
+  await app.register(httpProxy, { prefix: '/svg', rewritePrefix: '/svg', upstream: 'https://cdn.lwjgl.org' });
 }
 
 // ------------------------------------------------------------------------------
-// Static Routing
+// ROUTES
 // ------------------------------------------------------------------------------
 
-// Redirect requests from http://lwjgl.org/* to https://www.lwjgl.org/
-app.use((req, res, next) => {
-  if (req.hostname === 'lwjgl.org') {
-    res.redirect(301, `https://www.lwjgl.org${req.originalUrl}`);
-    return;
-  }
-  next();
+// Legacy re-directs
+app.get('/license.php', (request, reply) => {
+  reply.redirect(301, '/license');
 });
-
-// Static Assets
-app.use(favicon(path.join(__dirname, '../public', 'favicon.ico')));
-app.use(
-  express.static(path.join(__dirname, '../public'), {
-    fallthrough: true,
-    etag: true,
-    lastModified: true,
-    index: false,
-    extensions: false,
-    redirect: false,
-    cacheControl: false, // we'll set cache-control headers manually
-    // immutable: true,
-    // maxAge: 365 * 24 * 60 * 60 * 1000,
-    setHeaders: (res, path, stat) => {
-      if (app.locals.development) {
-        res.set('Access-Control-Allow-Origin', '*');
-      }
-      switch (res.req.url) {
-        case '/favicon.ico':
-        case '/manifest.webmanifest':
-        case '/sitemap.xml':
-        case '/robots.txt':
-        case '/sample.html':
-          res.set({
-            'Cache-Control': 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=3600',
-          });
-          break;
-
-        case '/sw.js': {
-          // Skip Cache-Control since browsers ignore the header and re-check based on their own policies
-          break;
-      }
-        default: {
-          res.set('Cache-Control', 'public, max-age=31536000, immutable');
-        }
-      }
-    },
-  })
-);
-
-if (app.locals.development) {
-  // Allow source access in development
-  // Required for Sass source maps to be resolved by browsers when HMR is off
-  app.use(
-    '/client',
-    express.static(path.join(__dirname, '../client'), {
-      index: false,
-      etag: true,
-      immutable: false,
-      lastModified: true,
-      maxAge: -1,
-    })
-  );
-  app.use(
-    '/node_modules',
-    express.static(path.join(__dirname, '../node_modules'), {
-      index: false,
-      etag: true,
-      immutable: false,
-      lastModified: true,
-      maxAge: -1,
-    })
-  );
-}
-
-// ------------------------------------------------------------------------------
-// Helmet
-// ------------------------------------------------------------------------------
-const referrerPolicy = {
-  policy: 'no-referrer-when-downgrade',
-};
-
-const frameguard = {
-  action: 'sameorigin',
-};
-
-const hsts = {
-  maxAge: 365 * 24 * 60 * 60,
-  includeSubDomains: false, // * no because we have non-ssl subdomains (e.g. legacy.lwjgl.org)
-  preload: false, // ! includeSubDomains must be true for preloading to be approved
-};
-
-/*
-app.use((req, res, next) => {
-  if (!req.accepts('html')) {
-    next();
-    return;
-  }
-
-  app.locals.nonce = crypto.randomBytes(16).toString('base64');
-
-  // https://csp-evaluator.withgoogle.com/
-  helmet.contentSecurityPolicy({
-    directives: {
-      // defaultSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", 'unpkg.com'],
-      defaultSrc: ["'unsafe-eval'", `'nonce-${app.locals.nonce}'`, "'strict-dynamic'"],
-      blockAllMixedContent: [],
-      upgradeInsecureRequests: [],
-      // requireTrustedTypesFor: ["'script'"],
-      frameSrc: ['*'],
-      imgSrc: ['*', 'data:'],
-    },
-  })(req, res, next);
+app.get('/demos.php', (request, reply) => {
+  reply.redirect(302, 'http://legacy.lwjgl.org/demos.php.html');
 });
-*/
-// app.use(helmet.dnsPrefetchControl());
-// app.use(helmet.expectCt());
-app.use(helmet.frameguard(frameguard));
-// app.use(helmet.hidePoweredBy());
-if (app.locals.production) {
-  app.use((req, res, next) => {
-    if (req.hostname === 'www.lwjgl.org') {
-      helmet.hsts(hsts)(req, res, next);
-    } else {
-      next();
-    }
-  });
-}
-// app.use(helmet.ieNoOpen());
-app.use(helmet.noSniff());
-// app.use(helmet.permittedCrossDomainPolicies());
-app.use(helmet.referrerPolicy(referrerPolicy));
-app.use(helmet.xssFilter());
-
-// ------------------------------------------------------------------------------
-// Dynamic Routing & Rewrites
-// ------------------------------------------------------------------------------
-
-// Redownloads and parses JS manifest from S3
-app.get('/dev/reload', (req, res) => {
-  // Update manifest
-  downloadManifest(() => {
-    // Reset service worker cache so it gets rebuilt on next request
-    // If a single byte has changed, clients should update their cache
-    serviceWorkerCache = null;
-
-    res.type('text').status(200).send('Manifest has been updated.');
-  });
+app.get('/download.php', (request, reply) => {
+  reply.redirect(301, '/download');
+});
+app.get('/credits.php', (request, reply) => {
+  reply.redirect(301, '/#credits');
+});
+app.get('/projects.php', (request, reply) => {
+  reply.redirect(302, 'http://legacy.lwjgl.org/projects.php.html');
+});
+app.get('/links.php', (request, reply) => {
+  reply.redirect(302, 'http://wiki.lwjgl.org/wiki/Links_and_Resources.html');
+});
+app.get('/forum/*', (request, reply) => {
+  reply.redirect(302, `http://forum.lwjgl.org${request.url.replace(/^\/forum/, '')}`);
+});
+app.get('/wiki/*', (request, reply) => {
+  reply.redirect(302, `http://wiki.lwjgl.org${request.url.replace(/^\/wiki/, '')}`);
 });
 
 // Retrieval of artifacts dir/file structure
-app.get('/bin/:build', routeBin);
-app.get('/bin/:build/:version', routeBin);
+async function routeBinHandler(request, reply) {
+  reply.header('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60');
+  return await routeBin(request.params);
+}
+
+app.get('/bin/:build', routeBinHandler);
+app.get('/bin/:build/:version', routeBinHandler);
 
 // S3 bucket listing
-app.get('/list', routeBrowse);
-
-// Legacy re-directs
-app.get('/license.php', (req, res) => {
-  res.redirect(301, '/license');
-});
-app.get('/demos.php', (req, res) => {
-  res.redirect(302, 'http://legacy.lwjgl.org/demos.php.html');
-});
-app.get('/download.php', (req, res) => {
-  res.redirect(301, '/download');
-});
-app.get('/credits.php', (req, res) => {
-  res.redirect(301, '/#credits');
-});
-app.get('/projects.php', (req, res) => {
-  res.redirect(302, 'http://legacy.lwjgl.org/projects.php.html');
-});
-app.get('/links.php', (req, res) => {
-  res.redirect(302, 'http://wiki.lwjgl.org/wiki/Links_and_Resources.html');
-});
-app.get('/forum/*', (req, res) => {
-  res.redirect(302, `http://forum.lwjgl.org${req.originalUrl.replace(/^\/forum/, '')}`);
-});
-app.get('/wiki/*', (req, res) => {
-  res.redirect(302, `http://wiki.lwjgl.org${req.originalUrl.replace(/^\/wiki/, '')}`);
+app.get('/list', async (request, reply) => {
+  reply.header('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60');
+  return await routeBrowse(request.query);
 });
 
-// Service Worker
-app.get('/sw.js', async (req, res) => {
-  if (serviceWorkerCache === null) {
-    let swJS;
-
-    // Read service worker source code
-    if (argv.test === true || app.locals.development) {
-      swJS = await fs.promises.readFile(path.join(__dirname, '../client', 'sw.js'));
-    } else {
-      swJS = await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js');
+app.route({
+  method: 'GET',
+  url: '/*',
+  handler: async (request, reply) => {
+    if (!request.accepts('text/html')) {
+      reply.header('Cache-Control', 'public, max-age=30, s-maxage=0');
+      reply.code(404);
+      return reply.view('404.pug');
     }
 
-    // Append manifest as JS object
-    swJS = swJS.toString().replace(/manifest = {}/, `manifest = ${JSON.stringify(manifest)}`);
-
-    // Hash SW code and set it as VERSION
-    const MD5 = crypto.createHash('MD5');
-    MD5.update(swJS);
-    // Also version based on global CSS content
-    if (app.locals.css !== undefined) {
-      MD5.update(app.locals.css);
-    }
-    // TODO: we need to also include the HTML content in MD5
-    // TODO: Maybe read and use pug files
-    // MD5.update(html);
-    swJS = swJS.replace(/VERSION/, MD5.digest('hex'));
-
-    // Store SW script source so we can serve from memory
-    serviceWorkerCache = swJS;
-  }
-
-  res.type('text/javascript').send(serviceWorkerCache);
-});
-
-// Return 404 for file requests that not match above
-// ! This is required for HMR to keep working after bad compilations
-app.get(/[.][a-zA-Z]{2,4}$/, (req, res) => {
-  res
-    .set({
-      'Cache-Control': 'no-transform, max-age=30',
-    })
-    .sendStatus(404);
-});
-
-// Handle everything else client-side
-app.get('*', (req, res, next) => {
-  const renderOptions = {
-    // ga: globals.google_analytics_id,
-  };
-
-  if (app.locals.production) {
-    renderOptions.entry = manifest.assets[manifest.entry];
-
-    // Asset preloading
-    // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
-    // To disable PUSH, append "; nopush"
-    // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
-
-    // Push entries, we need to start loading as soon as possible
-    const preload = [`\</js/${renderOptions.entry}\>; rel=preload; as=script`];
-
-    // Append chunk of important routes to the preload list
-    // Logic can be customized as needed. Can get complicated for recursive routes
-    // or routes deep in site's hierarchy, so not always worth it
-    const routes = chunkMap(manifest.routes, req.path);
-    if (routes !== null) {
-      preload.push(...routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
+    if (request.hostname === 'lwjgl.org') {
+      reply.redirect(301, `https://www.lwjgl.org${request.raw.originalUrl}`);
+      return;
     }
 
-    switch (req.path) {
-      case '/':
-      case '/guide': {
-        preload.push(`\<https://unpkg.com\>; rel=preconnect`);
-        break;
+    const template = {
+      development: DEVELOPMENT,
+      // ga: globals.google_analytics_id,
+    };
+
+    if (PRODUCTION) {
+      template.css = globalCss;
+      template.entry = manifest.assets[manifest.entry];
+      // Asset preloading
+      // These headers may be picked by supported CDNs or other reverse-proxies and push the assets via HTTP/2
+      // To disable PUSH, append "; nopush"
+      // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
+      // Push entries, we need to start loading as soon as possible
+      const preload = [`\</js/${template.entry}\>; rel=preload; as=script`];
+      // Append chunk of important routes to the preload list
+      // Logic can be customized as needed. Can get complicated for recursive routes
+      // or routes deep in site's hierarchy, so not always worth it
+      const routes = chunkMap(manifest.routes, request.url);
+      if (routes !== null) {
+        preload.push(...routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
       }
-      case '/source': {
-        preload.push(`\<https://api.travis-ci.org\>; rel=preconnect`);
-        preload.push(`\<https://ci.appveyor.com\>; rel=preconnect`);
-        preload.push(`\<https://travis-ci.org\>; rel=preconnect`);
-        break;
-    }
+      switch (request.path) {
+        case '/':
+        case '/guide':
+          preload.push(`\<https://unpkg.com\>; rel=preconnect`);
+          break;
+        case '/source':
+          preload.push(`\<https://api.travis-ci.org\>; rel=preconnect`);
+          preload.push(`\<https://ci.appveyor.com\>; rel=preconnect`);
+          preload.push(`\<https://travis-ci.org\>; rel=preconnect`);
+          break;
+      }
+      reply.header('Link', preload);
+    } else {
+      template.entry = 'main.js';
     }
 
-    res.set('Link', preload);
-  } else {
-    renderOptions.entry = 'main.js';
-  }
-
-  res
-    .set({
-      // 'Cache-Control': 'no-store,max-age=0',
-      'Cache-Control': 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60',
-      'Content-Language': 'en',
-    })
-    .render('index', renderOptions);
+    reply.header('Content-Language', 'en');
+    reply.header('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60');
+    return reply.view('index.pug', template);
+  },
+  bodyLimit: 1,
 });
 
-// Page not found
-app.use((req, res) => {
-  res
-    .set({
-      'Cache-Control': 'public, max-age=30, s-maxage=0',
-    })
-    .status(404);
+// ------------------------------------------------------------------------------
+// ERROR HANDLING
+// ------------------------------------------------------------------------------
 
-  if (req.is('json')) {
-    res.json({ error: 'Not found' });
-    return;
-  }
+// // This will never fire, since we capture all requests above
+// app.setNotFoundHandler((request, reply) => {
+//   reply.header('Cache-Control', 'public, max-age=30, s-maxage=0');
+//   reply.code(404);
+// });
 
-  res.render('404');
-});
+app.setErrorHandler((error, request, reply) => {
+  // Log error
+  app.log.error(error);
 
-// Error handling
-app.use((err, req, res, next) => {
-  res
-    .set({
-      'Cache-Control': 'public, max-age=5, s-maxage=0',
-    })
-    .status(500);
+  reply.header('Cache-Control', 'public, max-age=5, s-maxage=0');
+  reply.code(500);
 
-  if (req.accepts('json')) {
-    // JSON
-    if (err instanceof Error) {
-      if (req.app.locals.development) {
-        const errorResponse = {};
+  const accept = request.accepts();
+  switch (accept.type(['html', 'json'])) {
+    case 'html':
+      // HTML
+      reply.view('500.pug', { error });
+      break;
+    case 'json': {
+      // JSON
+      if (error instanceof Error) {
+        if (DEVELOPMENT) {
+          const errorResponse = {};
 
-        Object.getOwnPropertyNames(err).forEach(key => {
-          errorResponse[key] = err[key];
-        });
+          Object.getOwnPropertyNames(error).forEach(key => {
+            errorResponse[key] = error[key];
+          });
 
-        res.json({ error: errorResponse });
+          reply.send({ error: errorResponse });
+        } else {
+          // Only keep message in production because Error() may contain sensitive information
+          reply.send({ error: { message: error.message } });
+        }
       } else {
-        // Only keep message in production because Error() may contain sensitive information
-        res.json({ error: { message: err.message } });
+        reply.send({ error });
       }
-    } else {
-      res.send({ error: err });
+      break;
     }
-  } else if (req.accepts('text/plain')) {
-    // default to plain-text.
-    // keep only message
-    res.type('text/plain').send(err.message);
-  } else {
-    // HTML
-    res.render('500', { error: err });
+    default:
+      // default to plain-text.
+      // keep only message
+      reply.type('text/plain').send(error.message);
   }
 });
 
 // ------------------------------------------------------------------------------
-// JS Manifest
-// ------------------------------------------------------------------------------
-const downloadManifest = async cb => {
-  if (app.locals.development) {
-    cb();
-    return;
-  }
-  if (argv.test === true) {
-    manifest = require('../public/js/manifest.json');
-    cb();
-    return;
-  }
-
-  // Load manifest from S3
-  if (app.locals.development) {
-    console.log('Downloading manifest');
-  }
-
-  try {
-    manifest = JSON.parse(await request.get('http://s3.amazonaws.com/cdn.lwjgl.org/js/manifest.json'));
-  } catch (err) {
-    console.error(chalk`{red failed to download manifest files: ${err.message}}`);
-    process.exit(1);
-  }
-  cb();
-};
-
-// ------------------------------------------------------------------------------
-// Launch Server
+// LAUNCH
 // ------------------------------------------------------------------------------
 
-const launchServer = () => {
-  console.log(chalk`{yellow Starting {green.bold ${PRODUCT}} in ${app.get('env')} mode}`);
-
-  const server = app.listen(PORT, HOST, () => {
-    let host = server.address().address;
-    let port = server.address().port;
-
-    console.log(chalk`{green.bold ${PRODUCT}} {yellow listening at http://${host}:${port}}`);
-  });
-
-  server.on('error', err => {
-    if (err.code === 'EADDRINUSE') {
-      console.error(chalk`{red {green.bold ${PRODUCT}} address in use, exiting...}`);
-      process.exit(1);
-    } else {
-      console.error(err.stack);
-      throw err;
-    }
-  });
-
-  function shutdown(code) {
-    console.log(chalk`{red Shutting down} {green.bold ${PRODUCT}}`);
-    server.close();
-    process.exit(code || 0);
-  }
-
-  process.on('SIGTERM', shutdown);
-  process.on('SIGINT', shutdown);
-
-  process.on('uncaughtException', function (err) {
-    console.error(err.stack);
-    shutdown(1);
-  });
-};
-
-downloadManifest(launchServer);
+try {
+  await app.listen(PORT, HOST);
+} catch (err) {
+  app.log.error(err);
+  process.exit(1);
+}

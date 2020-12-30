@@ -5,11 +5,8 @@ services:
     image: lwjgl/website:latest
     ports:
       - 80:80
-    command: node server --s3proxy --test
+    command: node server/index.mjs --s3proxy --test
     volumes:
       - type: bind
         source: ./public/js
         target: /srv/public/js
-      - type: bind
-        source: ./client
-        target: /srv/client

@@ -1,11 +1,18 @@
+// Imports
 import path from 'path';
-import fs from 'fs';
+import crypto from 'crypto';
+import { readFileSync } from 'fs';
+import { readFile, writeFile } from 'fs/promises';
+import { fileURLToPath } from 'url';
+import { minify } from 'terser';
 import chalk from 'chalk';
 import gzipSize from 'gzip-size';
 import CliTable from 'cli-table';
-import prettyBytes from './prettyBytes.mjs';
-import formatSize from './formatSize.mjs';
-import { fileURLToPath } from 'url';
+
+// Utils
+import prettyBytes from './lib/prettyBytes.mjs';
+import formatSize from './lib/formatSize.mjs';
+import ellipsis from './lib/ellipsis.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -26,126 +33,125 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
   * Display report
 */
 
-async function main() {
-  // Read webpack's manifest & chunks into memory
-  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, '../public/js/webpack.manifest.json')));
+// Read webpack's manifest & chunks into memory
+const manifest = JSON.parse(readFileSync(path.join(__dirname, '../public/js/webpack.manifest.json')));
 
-  // We'll use this to store final production manifest
-  const productionManifest = {
-    // Boot the app from here
-    entry: manifest.entrypoints.main.chunks[0],
+// We'll use this to store final production manifest
+const productionManifest = {
+  // Boot the app from here
+  entry: manifest.entrypoints.main.chunks[0],
 
-    // Build a map of route paths->assets in order to preload chunks as needed
-    routes: {},
+  // Build a map of route paths->assets in order to preload chunks as needed
+  routes: {},
 
-    // Keep a list of files that we need to upload on the CDN
-    assets: {},
-  };
+  // Keep a list of files that we need to upload on the CDN
+  assets: {},
+};
 
-  // Build a map that contains each chunk
-  const assetMap = new Map();
+// Build a map that contains each chunk
+const assetMap = new Map();
 
-  manifest.assets
-    // flatten assets
-    .reduce(
-      // accumulator is a named function because it is used recursively (see "assets by status")
-      function accumulator(partial, record) {
-        switch (record.type) {
-          case 'asset':
-            return [...partial, record];
-          case 'assets by chunk':
-            return partial.concat(record.children);
-          case 'assets by status':
-            // this can be a collection of previously "cached" or newly "emitted" chunks
-            return partial.concat(record.children.reduce(accumulator, []));
-          default:
-            // console.log(record);
-            throw new Error(`Unknown record type: ${record.type}`);
-        }
-      },
-      []
-    )
-    // populate chunk map
-    .forEach(record => {
-      const name = record.chunkNames.length > 0 ? record.chunkNames[0] : record.name.split('.')[0];
-      const src = fs.readFileSync(path.resolve(__dirname, '../public/js', record.name), { encoding: 'utf-8' });
+manifest.assets
+  // flatten assets
+  .reduce(
+    // accumulator is a named function because it is used recursively (see "assets by status")
+    function accumulator(partial, record) {
+      switch (record.type) {
+        case 'asset':
+          return [...partial, record];
+        case 'assets by chunk':
+          return partial.concat(record.children);
+        case 'assets by status':
+          // this can be a collection of previously "cached" or newly "emitted" chunks
+          return partial.concat(record.children.reduce(accumulator, []));
+        default:
+          // console.log(record);
+          throw new Error(`Unknown record type: ${record.type}`);
+      }
+    },
+    []
+  )
+  // populate chunk map
+  .forEach(record => {
+    const name = record.chunkNames.length > 0 ? record.chunkNames[0] : record.name.split('.')[0];
+    const src = readFileSync(path.resolve(__dirname, '../public/js', record.name), { encoding: 'utf-8' });
 
-      let asset = {
-        id: record.chunks[0],
-        name,
-        file: record.name,
-        cdn: record.name,
-        route: name.match(/^route[-]/) !== null && name.indexOf('$') === -1,
-        size: record.size,
-        gzipSize: gzipSize.sync(src),
-      };
+    let asset = {
+      id: record.chunks[0],
+      name,
+      file: record.name,
+      cdn: record.name,
+      route: name.match(/^route[-]/) !== null && name.indexOf('$') === -1,
+      size: record.size,
+      gzipSize: gzipSize.sync(src),
+    };
 
-      // Add to asset map
-      assetMap.set(asset.id, asset);
-      productionManifest.assets[asset.id] = asset.cdn;
-    });
-
-  // Append route chunk dependencies
-  Object.keys(manifest.namedChunkGroups).forEach(chunkName => {
-    const groupData = manifest.namedChunkGroups[chunkName];
-    const asset = assetMap.get(groupData.chunks.slice(-1)[0]); // chunk id is always the last
-    if (asset !== undefined && asset.route === true) {
-      productionManifest.routes[asset.name.substr('route-'.length)] = groupData.chunks.reverse();
-    }
+    // Add to asset map
+    assetMap.set(asset.id, asset);
+    productionManifest.assets[asset.id] = asset.cdn;
   });
 
-  // Store production manifest
-  await fs.promises.writeFile(
-    path.resolve(__dirname, '../public/js/manifest.json'),
-    JSON.stringify(productionManifest, null, 2)
-  );
-
-  // Done!
-  return { manifest: productionManifest, assetMap };
+// Append route chunk dependencies
+for (let chunkName of Object.keys(manifest.namedChunkGroups)) {
+  const groupData = manifest.namedChunkGroups[chunkName];
+  const asset = assetMap.get(groupData.chunks.slice(-1)[0]); // chunk id is always the last
+  if (asset !== undefined && asset.route === true) {
+    productionManifest.routes[asset.name.substr('route-'.length)] = groupData.chunks.reverse();
+  }
 }
 
-const ellipsis = (str, maxlength = 30) => (str.length > maxlength ? `${str.substr(0, maxlength)}…` : str);
+// Store production manifest
+await writeFile(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
 
-main()
-  .then(({ manifest, assetMap }) => {
-    // Print file report
-    let sum = 0;
-    let sumGzip = 0;
+// Generate Service Worker
+let sw = await readFile(path.resolve(__dirname, '../client/sw.js'), { encoding: 'utf-8' });
+let css = await readFile(path.resolve(__dirname, '../public/css/global.min.css'), { encoding: 'utf-8' });
+sw = sw.replace(/manifest = {}/, `manifest = ${JSON.stringify(productionManifest)}`);
 
-    // Prepare table
-    const tbl = new CliTable({
-      head: ['File', 'Optimized', 'Gzipped'],
-      colAligns: ['left', 'right', 'right'],
-      style: { head: ['cyan'] },
-    });
+const swMD5 = crypto.createHash('MD5');
+swMD5.update(sw);
+swMD5.update(css);
+// TODO: also hash based on HTML template?
+sw = sw.replace(/VERSION/, swMD5.digest('hex'));
 
-    // Add rows
-    Array.from(assetMap.values()).forEach(asset => {
-      sum += asset.size;
-      sumGzip += asset.gzipSize;
+// optimize
+const terserConfig = JSON.parse(await readFile(path.resolve(__dirname, '../scripts/terser-config.json')));
+sw = (await minify(sw, terserConfig)).code;
+await writeFile(path.resolve(__dirname, '../public/js/sw.js'), sw, { encoding: 'utf-8' });
 
-      const row = [];
-      const isEntry = manifest.entry === asset.id;
+// Print file report
+let sum = 0;
+let sumGzip = 0;
 
-      if (isEntry) {
-        row.push(chalk`{cyan ${asset.name}}`);
-      } else if (asset.route) {
-        row.push(chalk`{yellow ${asset.name}}`);
-      } else {
-        row.push(`${ellipsis(asset.name)}`);
-      }
+// Prepare table
+const tbl = new CliTable({
+  head: ['File', 'Optimized', 'Gzipped'],
+  colAligns: ['left', 'right', 'right'],
+  style: { head: ['cyan'] },
+});
 
-      row.push(formatSize(asset.size, false, isEntry, false), formatSize(asset.gzipSize, true, isEntry, false));
-      tbl.push(row);
-    });
+// Add rows
+for (let asset of assetMap.values()) {
+  sum += asset.size;
+  sumGzip += asset.gzipSize;
 
-    // Push totals
-    tbl.push([chalk`{cyan TOTAL}`, prettyBytes(sum), prettyBytes(sumGzip)]);
+  const row = [];
+  const isEntry = productionManifest.entry === asset.id;
 
-    // Print report
-    console.log(tbl.toString());
-  })
-  .catch(e => {
-    console.log(e);
-    process.exit(1);
-  });
+  if (isEntry) {
+    row.push(chalk`{cyan ${asset.name}}`);
+  } else if (asset.route) {
+    row.push(chalk`{yellow ${asset.name}}`);
+  } else {
+    row.push(`${ellipsis(asset.name)}`);
+  }
+
+  row.push(formatSize(asset.size, false, isEntry, false), formatSize(asset.gzipSize, true, isEntry, false));
+  tbl.push(row);
+}
+
+// Push totals
+tbl.push([chalk`{cyan TOTAL}`, prettyBytes(sum), prettyBytes(sumGzip)]);
+
+// Print report
+console.log(tbl.toString());

@@ -1,0 +1,20 @@
+{
+  "mangle": true,
+  "ecma": 5,
+  "module": false,
+  "output": {
+    "comments": false
+  },
+  "compress": {
+    "drop_console": true,
+    "drop_debugger": true,
+    "hoist_funs": true,
+    "inline": 3,
+    "keep_fargs": false,
+    "keep_infinity": true,
+    "module": false,
+    "passes": 2,
+    "pure_getters": true,
+    "unsafe_comps": true
+  }
+}
