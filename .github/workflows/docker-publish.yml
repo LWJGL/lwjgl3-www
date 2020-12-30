@@ -20,6 +20,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '15'
+
+      - name: Compile files
+        run: npm install
+        run: npm run release
 
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
