@@ -11,7 +11,7 @@ on:
       - v*
 
 env:
-  IMAGE_NAME: lwjgl/website
+  IMAGE_NAME: lwjgl-website
 
 jobs:
   push:
