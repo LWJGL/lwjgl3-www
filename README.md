@@ -1,8 +1,8 @@
-# [lwjgl.org](https://www.lwjgl.org) - home of Lightweight Java Game Library 3
+![lwjgl3-www docker](https://github.com/LWJGL/lwjgl3-www/workflows/lwjgl3-www%20docker/badge.svg?event=push)
+
+# [lwjgl.org](https://www.lwjgl.org) - Home of Lightweight Java Game Library
 
 The website for LWJGL is build with React. It is a single-page application with client-side routing. It installs a Service Worker in order to work offline.
-
-Warning: There is currently no server-side rendering because of hosting constraints.
 
 ### Notable features:
 
@@ -18,13 +18,19 @@ Warning: There is currently no server-side rendering because of hosting constrai
 - CSS-in-JS (Stitches)
 - Client is written in Typescript
 
+### Warning:
+
+There is currently no server-side rendering because of hosting constraints.
+
 ## Dependencies
 
 Static assets are loaded from LWJGL's CDN (AWS CloudFront).
 
 Build status icons are loaded directly from travis-ci.org and appveyor.com.
 
-Other LWJGL subdomains:
+Three.js is loaded from [unpkg.com](unpkg.com).
+
+## Other LWJGL subdomains:
 
 - The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www). A static copy of the old LWJGL website is now hosted directly from S3
 - The blog is powered by [Ghost](https://ghost.org/).
