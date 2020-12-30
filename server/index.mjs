@@ -58,12 +58,12 @@ process.argv.slice(2).forEach(arg => {
 
 if (PRODUCTION) {
   global.manifest = JSON.parse(
-    await readFile(path.resolve(__dirname, '../public/js/manifest.json'), {
+    await readFile(path.resolve(__dirname, '../public/manifest.json'), {
       encoding: 'utf-8',
     })
   );
 
-  global.globalCss = await readFile(path.resolve(__dirname, '../public/css/global.min.css'), {
+  global.globalCss = await readFile(path.resolve(__dirname, '../public/global.min.css'), {
     encoding: 'utf-8',
   });
 }

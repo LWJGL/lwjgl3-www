@@ -101,11 +101,11 @@ for (let chunkName of Object.keys(manifest.namedChunkGroups)) {
 }
 
 // Store production manifest
-await writeFile(path.resolve(__dirname, '../public/js/manifest.json'), JSON.stringify(productionManifest, null, 2));
+await writeFile(path.resolve(__dirname, '../public/manifest.json'), JSON.stringify(productionManifest, null, 2));
 
 // Generate Service Worker
 let sw = await readFile(path.resolve(__dirname, '../client/sw.js'), { encoding: 'utf-8' });
-let css = await readFile(path.resolve(__dirname, '../public/css/global.min.css'), { encoding: 'utf-8' });
+let css = await readFile(path.resolve(__dirname, '../public/global.min.css'), { encoding: 'utf-8' });
 sw = sw.replace(/manifest = {}/, `manifest = ${JSON.stringify(productionManifest)}`);
 
 const swMD5 = crypto.createHash('MD5');
@@ -117,7 +117,7 @@ sw = sw.replace(/VERSION/, swMD5.digest('hex'));
 // optimize
 const terserConfig = JSON.parse(await readFile(path.resolve(__dirname, '../scripts/terser-config.json')));
 sw = (await minify(sw, terserConfig)).code;
-await writeFile(path.resolve(__dirname, '../public/js/sw.js'), sw, { encoding: 'utf-8' });
+await writeFile(path.resolve(__dirname, '../public/sw.js'), sw, { encoding: 'utf-8' });
 
 // Print file report
 let sum = 0;

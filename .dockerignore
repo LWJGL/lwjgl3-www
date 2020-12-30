@@ -1,24 +1,25 @@
+# dev
 .git
 .github
 .vscode
 .idea
+.git*
+.prettier*
+.prettierrc
+.prettierignore
+.editorconfig
+
+# generated
 node_modules
 client
 assets
 scripts
 types
-public/css/global.css
-public/js/vendor*
-public/js/*.manifest.json
-public/js/deploy.json
-.git*
-# .gitattributes
-# .gitignore
-.prettier*
-.prettierrc
-.prettierignore
+public/css
+public/js
+
+# configs
 .browserslistrc
-.editorconfig
 .eslintrc
 babel.config.js
 *.md

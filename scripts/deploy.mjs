@@ -7,7 +7,7 @@ import { s3 } from '../server/AWS.mjs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildManifestPath = path.join(__dirname, '../public/js/manifest.json');
+const buildManifestPath = path.join(__dirname, '../public/manifest.json');
 const deployManifestPath = path.join(__dirname, '../public/js/deploy.json');
 
 const buildManifest = JSON.parse(await readFile(buildManifestPath));
@@ -27,9 +27,6 @@ const files = Object.keys(buildManifest.assets).map(id => {
   generated.add(filename);
   return filename;
 });
-files.push(path.join(__dirname, '../public/js/manifest.json'));
-files.push(path.join(__dirname, '../client/sw.js'));
-// files.push(path.join(__dirname, '../client/sw-destroy.js'));
 
 let deployed = 0;
 await asyncPool(4, files, async file => {

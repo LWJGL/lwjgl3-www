@@ -2,19 +2,19 @@
 docker-compose.override.yml
 
 # Generated files
-.yarn
-dist
 node_modules
+/public/sw.js
+/public/manifest.json
+/public/global.min.css
 /public/js/**/*
 /public/css/**/*
-
 /scripts/icons
 *.manifest.json
 *.log
 
 # IDE files
-/.idea
-/.vscode
+.idea
+.vscode
 
 # OS
 .DS_Store
