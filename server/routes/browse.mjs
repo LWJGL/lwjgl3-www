@@ -1,6 +1,6 @@
-import { s3 } from './AWS.mjs';
+import { s3 } from '../AWS.mjs';
 
-export default async (req, res, next) => {
+export default async query => {
   let isRoot = true;
   let replacer = null;
 
@@ -11,20 +11,13 @@ export default async (req, res, next) => {
     MaxKeys: 100,
   };
 
-  if (req.query.path !== undefined) {
+  if (query.path !== undefined) {
     isRoot = false;
-    params.Prefix = req.query.path;
+    params.Prefix = query.path;
     replacer = new RegExp(`^${params.Prefix}`);
   }
 
-  let data;
-
-  try {
-    data = await s3.listObjectsV2(params);
-  } catch (err) {
-    next(err);
-    return;
-  }
+  let data = await s3.listObjectsV2(params);
 
   const result = {};
 
@@ -50,9 +43,5 @@ export default async (req, res, next) => {
     }).map(folder => (isRoot ? folder.Prefix : folder.Prefix.replace(replacer, '')));
   }
 
-  res
-    .set({
-      'Cache-Control': 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60',
-    })
-    .send(result);
+  return result;
 };

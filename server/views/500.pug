@@ -1,15 +1,16 @@
 extends layout
 
 block content
-  h1 500
-  p An error has occured
+  main(style="display: grid; justify-content: center; margin: 10vh 0; gap: 1rem")
+    h1(style="color: red; font-size: 3em; line-height: 1") ERROR 500
+    p An error occured while rendering this page
 
-  h4 Error Details
-  if error.message !== undefined && error.message.length > 0
-    pre= error.message
-  else if typeof error === 'string'
-    pre= error
-  else if development
-    pre= JSON.stringify(error, null, ' ')
-  if error.stack && development
-    pre= error.stack
+    h4(style="color: gray; font-size: 1.5em") Error Details
+    if error.message !== undefined && error.message.length > 0
+      pre= error.message
+    else if typeof error === 'string'
+      pre= error
+    else if development
+      pre= JSON.stringify(error, null, ' ')
+    if error.stack && development
+      pre= error.stack

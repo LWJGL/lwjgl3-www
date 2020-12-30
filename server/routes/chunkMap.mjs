@@ -1,4 +1,4 @@
-export const chunkMap = (routes, path) => {
+export default function chunkMap(routes, path) {
   if (path === '/') {
     return routes.home;
   }
@@ -22,4 +22,4 @@ export const chunkMap = (routes, path) => {
   */
 
   return null;
-};
+}
