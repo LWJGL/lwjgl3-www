@@ -27,6 +27,10 @@ const files = Object.keys(buildManifest.assets).map(id => {
   generated.add(filename);
   return filename;
 });
+files.push(path.join(__dirname, '../public/manifest.json'));
+files.push(path.join(__dirname, '../public/global.min.css'));
+files.push(path.join(__dirname, '../public/sw.js'));
+// files.push(path.join(__dirname, '../client/sw-destroy.js'));
 
 let deployed = 0;
 await asyncPool(4, files, async file => {

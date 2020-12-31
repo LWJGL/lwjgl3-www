@@ -24,10 +24,11 @@ jobs:
         with:
           node-version: '15'
 
-      - name: Compile files
+      - name: Download artifacts
         run: |
-          npm install
-          npm run release
+          curl https://s3.amazonaws.com/cdn.lwjgl.org/js/sw.js -o /srv/public/sw.js
+          curl https://s3.amazonaws.com/cdn.lwjgl.org/js/manifest.json -o /srv/public/manifest.json
+          curl https://s3.amazonaws.com/cdn.lwjgl.org/css/global.min.css -o /srv/public/global.min.css
 
       - name: Build image
         run: docker build . --file Dockerfile --tag $IMAGE_NAME
