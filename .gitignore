@@ -5,9 +5,8 @@ docker-compose.override.yml
 node_modules
 /public/sw.js
 /public/manifest.json
-/public/global.min.css
+/public/*.css
 /public/js/**/*
-/public/css/**/*
 /scripts/icons
 *.manifest.json
 *.log

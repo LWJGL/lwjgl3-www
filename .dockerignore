@@ -15,7 +15,9 @@ client
 assets
 scripts
 types
-public/css
+public/*.css
+public/manifest.json
+public/sw.js
 public/js
 
 # configs
