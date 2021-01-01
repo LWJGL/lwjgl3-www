@@ -19,11 +19,13 @@ async function computeMD5(file) {
 // ------------------------------------------------------------------------------
 
 let useCache = true;
+let failOnError = false;
 
 process.argv.slice(2).forEach(arg => {
   switch (arg) {
-    case '--nocache':
+    case '--ci':
       useCache = false;
+      failOnError = true;
       break;
   }
 });
@@ -113,7 +115,7 @@ await asyncPool(4, files, async file => {
     });
   } catch (err) {
     console.error(`${basename}: ${err.message}`);
-    return;
+    process.exit(1);
   }
 
   // Save file & content hash so we know that we have already uploaded it
