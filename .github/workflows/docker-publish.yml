@@ -14,7 +14,7 @@ env:
   IMAGE_NAME: lwjgl-website
 
 jobs:
-  push:
+  build:
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
 
