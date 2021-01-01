@@ -52,8 +52,8 @@ const files = Object.keys(buildManifest.assets).map(id => {
   return filename;
 });
 
-// Useful for debugging dependency issues (CI)
-files.push(path.join(__dirname, '../package-lock.json'));
+// // Useful for debugging dependency issues (CI)
+// files.push(path.join(__dirname, '../package-lock.json'));
 
 // ------------------------------------------------------------------------------
 // UPLOAD FILES
