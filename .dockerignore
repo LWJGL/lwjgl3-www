@@ -9,15 +9,13 @@
 .prettierignore
 .editorconfig
 
-# generated
+# generated or dev-only
 node_modules
 client
 assets
 scripts
 types
-public/*.css
-public/manifest.json
-public/sw.js
+public/global.css
 public/js
 
 # configs

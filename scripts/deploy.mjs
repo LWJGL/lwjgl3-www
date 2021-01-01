@@ -7,11 +7,6 @@ import { s3 } from '../server/AWS.mjs';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildManifestPath = path.join(__dirname, '../public/manifest.json');
-const deployManifestPath = path.join(__dirname, '../public/js/deploy.json');
-
-const buildManifest = JSON.parse(await readFile(buildManifestPath));
-const deployManifest = existsSync(deployManifestPath) ? JSON.parse(await readFile(deployManifestPath)) : {};
 
 async function computeMD5(file) {
   const hash = crypto.createHash('MD5');
@@ -19,7 +14,34 @@ async function computeMD5(file) {
   return hash.digest('hex');
 }
 
-// Collect files
+// ------------------------------------------------------------------------------
+// CLI ARGS
+// ------------------------------------------------------------------------------
+
+let useCache = true;
+
+process.argv.slice(2).forEach(arg => {
+  switch (arg) {
+    case '--nocache':
+      useCache = false;
+      break;
+  }
+});
+
+// ------------------------------------------------------------------------------
+// READ MANIFEST
+// ------------------------------------------------------------------------------
+
+const buildManifestPath = path.join(__dirname, '../public/manifest.json');
+const deployManifestPath = path.join(__dirname, '../public/js/deploy.json');
+
+const buildManifest = JSON.parse(await readFile(buildManifestPath));
+const deployManifest = useCache && existsSync(deployManifestPath) ? JSON.parse(await readFile(deployManifestPath)) : {};
+
+// ------------------------------------------------------------------------------
+// COLLECT FILES
+// ------------------------------------------------------------------------------
+
 const generated = new Set(); // Collect generated files here (that are already pre-hashed).
 const files = Object.keys(buildManifest.assets).map(id => {
   const extension = path.extname(buildManifest.assets[id]);
@@ -27,10 +49,13 @@ const files = Object.keys(buildManifest.assets).map(id => {
   generated.add(filename);
   return filename;
 });
-files.push(path.join(__dirname, '../public/manifest.json'));
-files.push(path.join(__dirname, '../public/global.min.css'));
-files.push(path.join(__dirname, '../public/sw.js'));
-// files.push(path.join(__dirname, '../client/sw-destroy.js'));
+
+// Useful for debugging dependency issues (CI)
+files.push(path.join(__dirname, '../package-lock.json'));
+
+// ------------------------------------------------------------------------------
+// UPLOAD FILES
+// ------------------------------------------------------------------------------
 
 let deployed = 0;
 await asyncPool(4, files, async file => {
@@ -40,7 +65,7 @@ await asyncPool(4, files, async file => {
   let digest;
 
   // Skip already deployed files
-  if (deployManifest[basename]) {
+  if (useCache && deployManifest[basename]) {
     if (generated.has(file)) {
       // Skip pre-hashed files if in deploy manifest already
       return;
@@ -97,7 +122,9 @@ await asyncPool(4, files, async file => {
 });
 
 if (deployed > 0) {
-  await writeFile(deployManifestPath, JSON.stringify(deployManifest, null, 2));
+  if (useCache) {
+    await writeFile(deployManifestPath, JSON.stringify(deployManifest, null, 2));
+  }
   console.log(`${deployed} file(s) uploaded`);
 } else {
   console.log(`No files were uploaded`);
