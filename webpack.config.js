@@ -57,6 +57,7 @@ const buildConfiguration = () => {
       emitOnErrors: false,
       moduleIds: PRODUCTION ? 'deterministic' : 'named',
       removeEmptyChunks: PRODUCTION,
+      removeAvailableModules: PRODUCTION,
       mergeDuplicateChunks: PRODUCTION,
       providedExports: PRODUCTION,
       sideEffects: PRODUCTION,
@@ -73,7 +74,7 @@ const buildConfiguration = () => {
     // },
     output: {
       path: path.resolve(__dirname, 'public/js'),
-      filename: PRODUCTION ? '[name].[fullhash].js' : '[name].js',
+      filename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
       chunkFilename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
       publicPath: '/js/',
       chunkLoadTimeout: 30 * 1000, // 30sec instead of 2min
