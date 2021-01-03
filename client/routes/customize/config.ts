@@ -209,6 +209,17 @@ function getInitialConfig(): BuildStore {
             version: '1.0.0',
           },
         },
+        [Addon.LWJGLXLWJGL3Awt]: {
+          id: Addon.LWJGLXLWJGL3Awt,
+          title: 'LWJGLX/lwjgl3-awt',
+          description: 'OpenGL and Vulkan support for AWT with LWJGL 3.',
+          website: 'https://github.com/LWJGLX/lwjgl3-awt',
+          maven: {
+            groupId: 'org.lwjglx',
+            artifactId: 'lwjgl3-awt',
+            version: '0.1.8',
+          },
+        },
       },
     },
 
