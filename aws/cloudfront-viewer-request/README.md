@@ -12,4 +12,5 @@ This λ function performs the following functions:
 ts-node test/host-redirect
 ts-node test/legacy-redirect
 ts-node test/optimize-headers
+ts-node test/query-normalize
 ```

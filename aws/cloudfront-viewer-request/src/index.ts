@@ -1,4 +1,9 @@
+import qry from 'querystring';
+
 import type { CloudFrontRequestEvent, CloudFrontRequestResult } from 'aws-lambda';
+
+const QUERY_ALLOW_LIST = new Map();
+QUERY_ALLOW_LIST.set('path', true);
 
 function getStatus(status: 301 | 302 | 303 | 307 | 308): string {
   switch (status) {
@@ -41,7 +46,7 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
 
   const host = headers['host'][0].value;
 
-  if (host === 'lwjgl.org') {
+  if (host !== 'www.lwjgl.org') {
     return redirect(308, `https://www.lwjgl.org${uri}${querystring.length ? `?${querystring}` : ''}`);
   }
 
@@ -83,6 +88,28 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
   }
   if (headers['accept'].length > 1) {
     headers['accept'] = [headers['accept'][0]];
+  }
+
+  // Normalize Query string
+  if (request.querystring.length) {
+    // 1. Get all keys
+    // 2. Sort alphabetically
+    // 3. Lowercase
+    // 4. Check allow list
+    // 5. Set & replace original querystring
+    const params = qry.parse(request.querystring, '&', '=', { maxKeys: 10 });
+    const sortedParams: typeof params = {};
+
+    Object.keys(params)
+      .sort()
+      .forEach((key) => {
+        const normalized = key.toLowerCase();
+        if (QUERY_ALLOW_LIST.has(normalized)) {
+          sortedParams[normalized] = params[key];
+        }
+      });
+
+    request.querystring = qry.stringify(sortedParams);
   }
 
   return request;
