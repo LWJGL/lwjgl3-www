@@ -163,22 +163,30 @@ app.register(fastifyStatic, {
   immutable: false,
   index: false,
   lastModified: true,
-  // maxAge: 31536000,
+  // maxAge: 3600 * 24 * 365,
   setHeaders: (res, filepath, stat) => {
     switch (path.basename(filepath)) {
       case 'favicon.ico':
+        res.setHeader(
+          'Cache-Control',
+          `public, max-age=${3600 * 24 * 7}, s-maxage=${3600 * 24 * 30}, stale-while-revalidate=3600`
+        );
+        break;
       case 'manifest.webmanifest':
       case 'sitemap.xml':
       case 'robots.txt':
       case 'sample.html':
-        res.setHeader('Cache-Control', 'public, max-age=3600, s-maxage=86400, stale-while-revalidate=3600');
+        res.setHeader(
+          'Cache-Control',
+          `public, max-age=${3600 * 24}, s-maxage=${3600 * 24 * 30}, stale-while-revalidate=3600`
+        );
         break;
       case 'sw.js': {
         // Skip Cache-Control since browsers ignore the header and re-check based on their own policies
         break;
       }
       default: {
-        res.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+        res.setHeader('Cache-Control', `public, max-age=${3600 * 24 * 365}, immutable`);
       }
     }
   },
@@ -257,7 +265,7 @@ if (DEVELOPMENT || argv.s3proxy === true) {
 
 // Retrieval of artifacts dir/file structure
 async function routeBinHandler(request, reply) {
-  reply.header('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60');
+  reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
   return await routeBin(request.params);
 }
 
@@ -266,7 +274,7 @@ app.get('/bin/:build/:version', routeBinHandler);
 
 // S3 bucket listing
 app.get('/list', async (request, reply) => {
-  reply.header('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60');
+  reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
   return await routeBrowse(request.query);
 });
 
