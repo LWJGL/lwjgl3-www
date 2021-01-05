@@ -63,7 +63,7 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     };
 
     return (
-      <ToolbarContainer>
+      <ToolbarContainer key="picker">
         <FilePicker accept=".json" placeholder="Select build config…" onChange={handleFile} />
         <Button variant="outline" onClick={toggleFileUI}>
           Cancel
@@ -77,7 +77,7 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
   const saveButtonTitle = 'Save configuration file (in JSON)';
 
   return (
-    <ToolbarContainer>
+    <ToolbarContainer key="default">
       {children}
       <Button variant="outline" title={loadButtonTitle} aria-label={loadButtonTitle} onClick={toggleFileUI}>
         <Icon name="fa/duotone/folder-upload" />
