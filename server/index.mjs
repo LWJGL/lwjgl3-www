@@ -326,7 +326,7 @@ app.route({
     }
 
     reply.header('Content-Language', 'en');
-    reply.header('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60');
+    reply.header('Cache-Control', `public, max-age=3600, s-maxage=${3600 * 24}`);
     return reply.view('index.pug', template);
   },
   bodyLimit: 1,
