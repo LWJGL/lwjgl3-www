@@ -1,6 +1,18 @@
-import type { CloudFrontRequestEvent } from 'aws-lambda';
+import type { CloudFrontRequestEvent, Context } from 'aws-lambda';
 
-export const cf_event: CloudFrontRequestEvent = {
+//@ts-expect-error
+export const context: Context = {};
+
+export function callback(err, result) {
+  if (err) {
+    console.error(err);
+    return;
+  }
+
+  console.log(JSON.stringify(result, null, 2));
+}
+
+export const requestEvent: CloudFrontRequestEvent = {
   Records: [
     {
       cf: {

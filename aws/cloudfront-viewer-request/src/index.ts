@@ -1,6 +1,6 @@
 import qry from 'querystring';
 
-import type { CloudFrontRequestEvent, CloudFrontRequestResult } from 'aws-lambda';
+import type { CloudFrontRequestHandler, CloudFrontResultResponse } from 'aws-lambda';
 
 const QUERY_ALLOW_LIST = new Map();
 QUERY_ALLOW_LIST.set('path', true);
@@ -25,7 +25,7 @@ function getStatus(status: 301 | 302 | 303 | 307 | 308): string {
   }
 }
 
-function redirect(status: 301 | 302 | 303 | 307 | 308, location: string) {
+function redirect(status: 301 | 302 | 303 | 307 | 308, location: string): CloudFrontResultResponse {
   return {
     status: status.toString(),
     statusDescription: getStatus(status),
@@ -40,41 +40,54 @@ function redirect(status: 301 | 302 | 303 | 307 | 308, location: string) {
   };
 }
 
-export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFrontRequestResult> => {
+export const handler: CloudFrontRequestHandler = (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
   const request = event.Records[0].cf.request;
   const { headers, uri, querystring } = request;
 
   const host = headers['host'][0].value;
 
   if (host !== 'www.lwjgl.org') {
-    return redirect(308, `https://www.lwjgl.org${uri}${querystring.length ? `?${querystring}` : ''}`);
+    callback(null, redirect(308, `https://www.lwjgl.org${uri}${querystring.length ? `?${querystring}` : ''}`));
+    return;
   }
 
   switch (uri) {
     case '/license.php':
-      return redirect(301, 'https://www.lwjgl.org/license');
+      callback(null, redirect(301, 'https://www.lwjgl.org/license'));
+      return;
     case '/download.php':
-      return redirect(301, 'https://www.lwjgl.org/download');
+      callback(null, redirect(301, 'https://www.lwjgl.org/download'));
+      return;
     case '/demos.php':
-      return redirect(301, 'http://legacy.lwjgl.org/demos.php.html');
+      callback(null, redirect(301, 'http://legacy.lwjgl.org/demos.php.html'));
+      return;
     case '/credits.php':
-      return redirect(301, 'http://legacy.lwjgl.org/credits.php.html');
+      callback(null, redirect(301, 'http://legacy.lwjgl.org/credits.php.html'));
+      return;
     case '/projects.php':
-      return redirect(301, 'http://legacy.lwjgl.org/projects.php.html');
+      callback(null, redirect(301, 'http://legacy.lwjgl.org/projects.php.html'));
+      return;
     case '/links.php':
-      return redirect(301, 'http://wiki.lwjgl.org/wiki/Links_and_Resources.html');
+      callback(null, redirect(301, 'http://wiki.lwjgl.org/wiki/Links_and_Resources.html'));
+      return;
   }
 
   if (uri.startsWith('/forum/')) {
-    return redirect(
-      308,
-      `http://forum.lwjgl.org${uri.replace(/^\/forum/, '')}${querystring.length ? `?${querystring}` : ''}`
+    callback(
+      null,
+      redirect(
+        308,
+        `http://forum.lwjgl.org${uri.replace(/^\/forum/, '')}${querystring.length ? `?${querystring}` : ''}`
+      )
     );
+    return;
   } else if (uri.startsWith('/wiki/')) {
-    return redirect(
-      308,
-      `http://wiki.lwjgl.org${uri.replace(/^\/wiki/, '')}${querystring.length ? `?${querystring}` : ''}`
+    callback(
+      null,
+      redirect(308, `http://wiki.lwjgl.org${uri.replace(/^\/wiki/, '')}${querystring.length ? `?${querystring}` : ''}`)
     );
+    return;
   }
 
   // Normalize Accept header to improve the cache hit ratio
@@ -112,5 +125,5 @@ export const handler = async (event: CloudFrontRequestEvent): Promise<CloudFront
     request.querystring = qry.stringify(sortedParams);
   }
 
-  return request;
+  callback(null, request);
 };
