@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "pretty": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "outDir": "dist"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "bin", "dist", "**/*.spec.ts"]
+}

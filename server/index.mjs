@@ -255,32 +255,6 @@ if (DEVELOPMENT || argv.s3proxy === true) {
 // ROUTES
 // ------------------------------------------------------------------------------
 
-// Legacy re-directs
-app.get('/license.php', (request, reply) => {
-  reply.redirect(301, '/license');
-});
-app.get('/demos.php', (request, reply) => {
-  reply.redirect(302, 'http://legacy.lwjgl.org/demos.php.html');
-});
-app.get('/download.php', (request, reply) => {
-  reply.redirect(301, '/download');
-});
-app.get('/credits.php', (request, reply) => {
-  reply.redirect(301, '/#credits');
-});
-app.get('/projects.php', (request, reply) => {
-  reply.redirect(302, 'http://legacy.lwjgl.org/projects.php.html');
-});
-app.get('/links.php', (request, reply) => {
-  reply.redirect(302, 'http://wiki.lwjgl.org/wiki/Links_and_Resources.html');
-});
-app.get('/forum/*', (request, reply) => {
-  reply.redirect(302, `http://forum.lwjgl.org${request.url.replace(/^\/forum/, '')}`);
-});
-app.get('/wiki/*', (request, reply) => {
-  reply.redirect(302, `http://wiki.lwjgl.org${request.url.replace(/^\/wiki/, '')}`);
-});
-
 // Retrieval of artifacts dir/file structure
 async function routeBinHandler(request, reply) {
   reply.header('Cache-Control', 'public, max-age=60, s-maxage=3600, stale-while-revalidate=60');
@@ -304,11 +278,6 @@ app.route({
       reply.header('Cache-Control', 'public, max-age=30, s-maxage=0');
       reply.code(404);
       return reply.view('404.pug');
-    }
-
-    if (request.hostname === 'lwjgl.org') {
-      reply.redirect(301, `https://www.lwjgl.org${request.raw.originalUrl}`);
-      return;
     }
 
     const template = {

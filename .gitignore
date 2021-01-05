@@ -3,6 +3,7 @@ docker-compose.override.yml
 
 # Generated files
 node_modules
+dist
 /public/sw.js
 /public/manifest.json
 /public/*.css
