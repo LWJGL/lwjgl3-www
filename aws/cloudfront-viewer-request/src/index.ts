@@ -91,16 +91,27 @@ export const handler: CloudFrontRequestHandler = (event, context, callback) => {
   }
 
   // Normalize Accept header to improve the cache hit ratio
-  const accept = headers['accept'] ? headers['accept'][0].value : '*/*';
-  if (accept.includes('*/*') || accept.includes('text/html')) {
-    // This will send */* for most request
-    headers['accept'][0].value = '*/*';
+  if (headers.accept !== undefined) {
+    // Make sure there is only one header
+    if (headers.accept.length > 1) {
+      headers.accept.splice(1);
+    }
+
+    const accept = headers.accept[0];
+    if (accept.value.includes('*/*') || accept.value.includes('text/html')) {
+      // This will send */* for most requests
+      accept.value = '*/*';
+    } else {
+      // Keep only first value, remove q or other modifiers
+      accept.value = accept.value.split(',')[0].split(';')[0];
+    }
   } else {
-    // Keep only first value, remove q or other modifiers
-    headers['accept'][0].value = accept.split(',')[0].split(';')[0];
-  }
-  if (headers['accept'].length > 1) {
-    headers['accept'] = [headers['accept'][0]];
+    headers.accept = [
+      {
+        key: 'Accept',
+        value: '*/*',
+      },
+    ];
   }
 
   // Normalize Query string
