@@ -1,4 +1,4 @@
-import { useRef, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
 import { styled, css } from '~/theme/stitches.config';
 
 // Button style is a mix of
@@ -352,11 +352,24 @@ StyledButton.defaultProps = Ripple.defaultProps = {
   rounding: 'normal',
 };
 
-function getBoundedRadius(frame: DOMRect) {
+interface Coordinates {
+  x: number;
+  y: number;
+}
+
+interface Translation {
+  start: Coordinates;
+  end: Coordinates;
+}
+
+function getBoundedRadius(frame: DOMRect): number {
   return Math.sqrt(Math.pow(frame.width, 2) + Math.pow(frame.height, 2)) + 10;
 }
 
-function getNormalizedEventCoords(e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>, frame: DOMRect) {
+function getNormalizedEventCoords(
+  e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>,
+  frame: DOMRect
+): Coordinates {
   const x = window.pageXOffset;
   const y = window.pageYOffset;
   const documentX = x + frame.left;
@@ -372,9 +385,9 @@ function getTranslationCoordinates(
   e: React.SyntheticEvent<HTMLButtonElement, PointerEvent | KeyboardEvent>,
   frame: DOMRect,
   initialSize: number
-) {
+): Translation {
   const halfSize = initialSize / 2;
-  const startPoint =
+  const start: Coordinates =
     e.type === 'pointerdown'
       ? getNormalizedEventCoords(e as React.SyntheticEvent<HTMLButtonElement, PointerEvent>, frame)
       : {
@@ -383,18 +396,53 @@ function getTranslationCoordinates(
         };
 
   // Center the element around the start point.
-  startPoint.x -= halfSize;
-  startPoint.y -= halfSize;
+  start.x -= halfSize;
+  start.y -= halfSize;
 
-  const endPoint = {
+  const end = {
     x: frame.width / 2 - halfSize,
     y: frame.height / 2 - halfSize,
   };
 
   return {
-    startPoint,
-    endPoint,
+    start,
+    end,
   };
+}
+
+function initTransition(
+  e: React.SyntheticEvent<HTMLButtonElement, PointerEvent | KeyboardEvent>,
+  btn: HTMLButtonElement,
+  rounding?: ButtonProps['rounding']
+) {
+  const isUnbounded = rounding === 'icon';
+  const frame = btn.getBoundingClientRect();
+  const maxDim = Math.max(frame.height, frame.width);
+  const maxRadius = isUnbounded ? maxDim : getBoundedRadius(frame);
+
+  // Ripple is sized as a fraction of the largest dimension of the surface, then scales up using a CSS scale transform
+  let initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
+
+  // Unbounded ripple size should always be even number to equally center align.
+  if (isUnbounded && initialSize % 2 !== 0) {
+    initialSize -= 1;
+  }
+
+  const { start, end } = getTranslationCoordinates(e, frame, initialSize);
+  const translateStart = `${start.x}px, ${start.y}px`;
+  const translateEnd = `${end.x}px, ${end.y}px`;
+
+  // Update Custom Properties
+  btn.style.setProperty('--ripple-size', `${initialSize}px`);
+  btn.style.setProperty('--ripple-scale', (maxRadius / initialSize).toString(10));
+  btn.style.setProperty('--ripple-translate-start', translateStart);
+  btn.style.setProperty('--ripple-translate-end', translateEnd);
+}
+
+enum ButtonState {
+  Idle,
+  Pressed,
+  Released,
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -411,137 +459,152 @@ export const Button: React.FC<ButtonProps> = ({
 }) => {
   const ref = useRef<HTMLButtonElement>(null);
   const rippleRef = useRef<HTMLSpanElement>(null);
+  // Use timeout to allow for the ripple animation to complete even when we release the button
   const animationTimeout = useRef(0);
-  const isPressed = useRef(false);
+  // Keep a reference to the current state so we can read it in our timeout handler
+  const currentState = useRef(ButtonState.Idle);
+  // Simple state machine, we initially use the Idle state to avoid unecessary DOM mutations
+  const [state, setState] = useState<ButtonState>(ButtonState.Idle);
 
-  // Register handlers
-  const rippleHandlers = useMemo(() => {
-    function init(e: React.SyntheticEvent<HTMLButtonElement, PointerEvent | KeyboardEvent>) {
-      if (ref.current === null) {
-        return;
-      }
-      const isUnbounded = rest.rounding === 'icon';
-      const frame = ref.current.getBoundingClientRect();
-      const maxDim = Math.max(frame.height, frame.width);
-      const maxRadius = isUnbounded ? maxDim : getBoundedRadius(frame);
-
-      // Ripple is sized as a fraction of the largest dimension of the surface, then scales up using a CSS scale transform
-      let initialSize = Math.floor(maxDim * INITIAL_ORIGIN_SCALE);
-
-      // Unbounded ripple size should always be even number to equally center align.
-      if (isUnbounded && initialSize % 2 !== 0) {
-        initialSize -= 1;
-      }
-
-      const { startPoint, endPoint } = getTranslationCoordinates(e, frame, initialSize);
-      const translateStart = `${startPoint.x}px, ${startPoint.y}px`;
-      const translateEnd = `${endPoint.x}px, ${endPoint.y}px`;
-
-      // Update Custom Properties
-      ref.current.style.setProperty('--ripple-size', `${initialSize}px`);
-      ref.current.style.setProperty('--ripple-scale', (maxRadius / initialSize).toString(10));
-      ref.current.style.setProperty('--ripple-translate-start', translateStart);
-      ref.current.style.setProperty('--ripple-translate-end', translateEnd);
-
-      if (animationTimeout.current) {
-        clearTimeout(animationTimeout.current);
-        animationTimeout.current = 0;
-        deactivate();
-        requestAnimationFrame(activate);
-      } else {
-        activate();
-      }
-
-      isPressed.current = true;
-    }
-
+  useEffect(() => {
     function activate() {
-      if (rippleRef.current === null) {
-        return;
+      if (rippleRef.current !== null) {
+        // Adding the class fires the ripple animation
+        rippleRef.current.classList.add('pressed');
+        animationTimeout.current = window.setTimeout(reset, RIPPLE_DURATION_MS);
       }
-
-      animationTimeout.current = window.setTimeout(() => {
-        animationTimeout.current = 0;
-        deactivate();
-      }, RIPPLE_DURATION_MS);
-
-      rippleRef.current.classList.add('pressed');
     }
 
     function deactivate() {
-      if (rippleRef.current === null) {
-        return;
-      }
-      if (!animationTimeout.current && isPressed.current === false) {
+      if (rippleRef.current !== null) {
+        // Removing the class fires the fade-out animation
         rippleRef.current.classList.remove('pressed');
       }
     }
 
-    return {
+    function reset() {
+      clearTimeout(animationTimeout.current);
+      animationTimeout.current = 0;
+
+      // If we released the button during the animation
+      // we should now revert the pressed state on the DOM
+      // ! Warning: we do not always call deactivate because we may hold the pointerdown,
+      // in this case the .pressed class should be preserved on the button
+      if (currentState.current === ButtonState.Released) {
+        deactivate();
+      }
+    }
+
+    currentState.current = state;
+
+    switch (state) {
+      case ButtonState.Pressed: {
+        if (animationTimeout.current) {
+          reset();
+          deactivate();
+          requestAnimationFrame(activate);
+        } else {
+          activate();
+        }
+        break;
+      }
+      case ButtonState.Released: {
+        if (animationTimeout.current === 0) {
+          deactivate();
+        }
+        break;
+      }
+    }
+  }, [state]);
+
+  const eventHandlers = useMemo(
+    () => ({
       onPointerDown: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
+        if (ref.current === null) {
+          return;
+        }
         if (onPointerDown) {
           //@ts-ignore
           onPointerDown.call(ref.current, e);
         }
         e.currentTarget.setPointerCapture(e.nativeEvent.pointerId);
-        init(e);
+        initTransition(e, ref.current, rest.rounding);
+        setState(ButtonState.Pressed);
       },
       onPointerUp: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
+        if (ref.current === null) {
+          return;
+        }
         if (onPointerUp) {
           //@ts-ignore
           onPointerUp.call(ref.current, e);
         }
         e.currentTarget.releasePointerCapture(e.nativeEvent.pointerId);
-        if (isPressed.current) {
-          isPressed.current = false;
-          deactivate();
-        }
+        setState(ButtonState.Released);
       },
       onClick: (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
         // Because we've enabled pointer capturing, click is always fired
         // Make sure pointer is released inside Button's bounding box, otherwise abort click
-        const { x, y, width, height } = e.currentTarget.getBoundingClientRect();
-        const { clientX, clientY } = e.nativeEvent;
+        const { detail, clientX, clientY } = e.nativeEvent;
+        // Detail will be 0 if we pressed Enter key, use this to distinguish between pointer and simulated clicks (see onKeyUp)
+        if (detail > 0) {
+          const { x, y, width, height } = e.currentTarget.getBoundingClientRect();
 
-        if (clientX < x || clientX > x + width || clientY < y || clientY > y + height) {
-          e.preventDefault();
-          e.stopPropagation();
-          return false;
+          if (clientX < x || clientX > x + width || clientY < y || clientY > y + height) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          }
         }
 
-        if (onClick) {
+        if (onClick && ref.current !== null) {
           //@ts-ignore
           onClick.call(ref.current, e);
         }
       },
       onKeyDown: (e: React.SyntheticEvent<HTMLButtonElement, KeyboardEvent>) => {
+        if (ref.current === null) {
+          return;
+        }
         if (onKeyDown) {
           //@ts-ignore
           onKeyDown.call(ref.current, e);
         }
         if (e.nativeEvent.key === 'Enter' || e.nativeEvent.key === ' ') {
-          init(e);
+          e.preventDefault();
+          // Check if we are in a Pressed state already to avoid key repeat
+          // TODO: This behavior should be customizable
+          if (currentState.current !== ButtonState.Pressed) {
+            initTransition(e, ref.current, rest.rounding);
+            setState(ButtonState.Pressed);
+          }
         }
       },
       onKeyUp: (e: React.SyntheticEvent<HTMLButtonElement, KeyboardEvent>) => {
+        if (ref.current === null) {
+          return;
+        }
         if (onKeyUp) {
           //@ts-ignore
           onKeyUp.call(ref.current, e);
         }
-        if (isPressed.current) {
-          isPressed.current = false;
-          deactivate();
+        if (currentState.current !== ButtonState.Released) {
+          if (e.nativeEvent.key === 'Enter' || e.nativeEvent.key === ' ') {
+            setState(ButtonState.Released);
+            ref.current.click();
+          }
         }
       },
-    };
-  }, [rest.rounding, onPointerDown, onPointerUp, onClick, onKeyDown, onKeyUp]);
+    }),
+    [onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rest.rounding]
+  );
 
   return (
     <StyledButton
       as={as}
       type={type === undefined && as === undefined ? 'button' : type}
       ref={ref}
-      {...rippleHandlers}
+      {...eventHandlers}
       {...rest}
     >
       <Ripple ref={rippleRef} variant={rest.variant} tone={rest.tone} size={rest.size} rounding={rest.rounding} />
