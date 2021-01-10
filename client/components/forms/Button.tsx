@@ -70,6 +70,13 @@ export const StyledButton = styled('button', {
     transform: 'translateY(1px)',
   },
 
+  '&[disabled]': {
+    pointerEvents: 'none',
+    filter: 'grayscale(100%)',
+    boxShadow: 'none',
+    opacity: 0.45,
+  },
+
   // Ripple
   position: 'relative',
 
@@ -108,7 +115,6 @@ export const StyledButton = styled('button', {
       caution: {},
       positive: {},
       info: {},
-      promote: {},
     },
     rounding: {
       normal: {
@@ -188,7 +194,6 @@ const Ripple = styled('span', {
       caution: {},
       positive: {},
       info: {},
-      promote: {},
     },
     variant: {
       base: {
@@ -331,7 +336,7 @@ function generateRippleVariants(
   });
 }
 
-const tones: Array<ButtonProps['tone']> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info', 'promote'];
+const tones: Array<ButtonProps['tone']> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info'];
 
 // Tone per variant
 tones.forEach((tone) => {
