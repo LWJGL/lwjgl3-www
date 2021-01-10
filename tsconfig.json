@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "module": "ESNext",
+    "target": "ES5",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "strict": true,
     "alwaysStrict": true,
     "noEmit": true,
@@ -19,6 +21,6 @@
     },
     "types": ["node", "react/experimental", "react-dom/experimental"]
   },
-  "include": ["./types/**/*", "./client/**/*", "assets/palette/tailwind.ts"],
+  "include": ["types", "client"],
   "exclude": ["public", "scripts", "server", "**/node_modules", "**/.*/"]
 }

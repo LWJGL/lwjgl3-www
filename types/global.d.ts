@@ -26,18 +26,6 @@ interface Navigator {
   readonly connection?: NetworkInformation;
 }
 
-interface BlobPropertyBag {
-  endings?: 'transparent' | 'native';
-}
-
-interface HTMLImageElement {
-  loading?: 'auto' | 'lazy' | 'eager';
-}
-
-// Code-split components
-
-declare type ComponentImport = () => Promise<{ default: React.ComponentType<any> }>;
-
 // Type definitions for LWJGL
 
 declare const FLAG_PRODUCTION: boolean;

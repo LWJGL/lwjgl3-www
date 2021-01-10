@@ -1,7 +1,7 @@
 FROM node:alpine AS build
 WORKDIR /srv
 COPY package.json package-lock.json .npmrc ./
-RUN npm i --prod --no-audit --no-fund
+RUN npm ci --prod --no-audit --no-fund
 
 FROM node:alpine
 ENV NODE_ENV production

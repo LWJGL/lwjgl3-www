@@ -6,7 +6,7 @@ import { themes } from './themes.mjs';
 
 /*
   1. Base Scale (background)
-  2. Tones (neutral, critical, caution, positive, info, promote)
+  2. Tones (neutral, critical, caution, positive, info)
   3. Brand (primary)
 
   * Tones follow Braid Design System conventions:
