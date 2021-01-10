@@ -27,7 +27,7 @@ const output = await cloudfront.createInvalidation({
     CallerReference: Date.now(),
     Paths: {
       Quantity: 1,
-      Items: ['/'],
+      Items: ['/*'],
     },
   },
 });
