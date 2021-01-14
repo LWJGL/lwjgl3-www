@@ -10,7 +10,7 @@ export interface ErrorProps {
 
 interface Props {
   children: React.ReactNode;
-  fallback: React.ComponentType<any>;
+  fallback?: React.ComponentType<any>;
 }
 
 type State = {
@@ -39,6 +39,6 @@ export class ErrorBoundary extends React.Component<Props, State> {
     const { children, fallback: Component } = this.props;
     const { error } = this.state;
 
-    return error !== null ? <Component error={error} /> : children;
+    return error === null ? children : Component != null ? <Component error={error} /> : null;
   }
 }
