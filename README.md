@@ -6,7 +6,7 @@ The website for LWJGL is build with React. It is a single-page application with 
 
 ### Notable features:
 
-- Client-side routing
+- Client-side [routing](https://github.com/ReactTraining/react-router)
 - Service Worker (works offline)
 - Tiny production build (entire codebase + content weights less than 300KB gzipped)
 - Code splitting at route & component level
@@ -14,9 +14,9 @@ The website for LWJGL is build with React. It is a single-page application with 
 - Route preloading
 - Proximity based route preloading (see /download page)
 - Build Customizer with smart download queue & client-side ZIP generator
-- Custom webpack manifest parsing + code minification
-- CSS-in-JS (Stitches)
-- Client is written in Typescript
+- Custom [webpack](http://webpack.js.org/) manifest parsing + code minification
+- CSS-in-JS with [Stitches](https://stitches.dev/)
+- Client is written in [Typescript](https://www.typescriptlang.org/)
 
 ### Warning:
 
@@ -24,11 +24,11 @@ There is currently no server-side rendering because of hosting constraints.
 
 ## Dependencies
 
-Static assets are loaded from LWJGL's CDN (AWS CloudFront).
+Static assets are loaded from LWJGL's CDN ([AWS CloudFront](https://aws.amazon.com/cloudfront/)).
 
-Build status icons are loaded directly from travis-ci.org and appveyor.com.
+Build status icons are loaded directly from [travis-ci.org](https://travis-ci.org/) and [appveyor.com](https://www.appveyor.com/).
 
-Three.js is loaded from [unpkg.com](unpkg.com).
+[Three.js](https://threejs.org/) is loaded from [jsDelivr](https://www.jsdelivr.com/).
 
 ## Other LWJGL subdomains:
 
