@@ -1,9 +1,9 @@
-FROM node:alpine AS build
+FROM node:slim AS build
 WORKDIR /srv
 COPY package.json package-lock.json .npmrc ./
 RUN npm ci --prod --no-audit --no-fund
 
-FROM node:alpine
+FROM node:slim
 ENV NODE_ENV production
 WORKDIR /srv
 COPY --from=build /srv/node_modules ./node_modules
