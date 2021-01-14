@@ -310,9 +310,9 @@ app.route({
         preload.push(...routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
       }
       switch (request.path) {
-        case '/':
+        // case '/':
         case '/guide':
-          preload.push(`\<https://unpkg.com\>; rel=preconnect`);
+          preload.push(`\<https://cdn.jsdelivr.net\>; rel=preconnect`);
           break;
         case '/source':
           preload.push(`\<https://api.travis-ci.org\>; rel=preconnect`);
