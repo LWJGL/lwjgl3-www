@@ -1,5 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { ErrorBoundary } from '~/components/system/ErrorBoundary';
 import { useMedia } from '~/hooks/useMedia';
 import { useViewport } from '~/hooks/useViewport';
 import { styled } from '~/theme/stitches.config';
@@ -10,16 +11,10 @@ import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/regular/chevron-down';
 
 const Canvas = lazy(() => {
-  const route = Promise.all([
+  return Promise.all([
+    loadJS('https://cdn.jsdelivr.net/npm/three@0.124.0/build/three.min.js'),
     import(/* webpackChunkName: "route-home$canvas" */ './Canvas'),
-    loadJS('https://unpkg.com/three@0.122.0/build/three.min.js'),
-  ])
-    .then((values) => values[0])
-    .catch((err) => {
-      return { default: () => <></> };
-    });
-
-  return route;
+  ]).then((values) => values[1]);
 });
 
 const HeroBox = styled('section', {
@@ -215,9 +210,11 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
   }, [prefersReducedMotion]);
 
   return renderWebGL ? (
-    <Suspense fallback={null}>
-      <Canvas width={width} height={height} />
-    </Suspense>
+    <ErrorBoundary>
+      <Suspense fallback={null}>
+        <Canvas width={width} height={height} />
+      </Suspense>
+    </ErrorBoundary>
   ) : null;
 };
 
