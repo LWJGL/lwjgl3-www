@@ -3,7 +3,7 @@ import { existsSync, createReadStream } from 'fs';
 import { readFile, writeFile } from 'fs/promises';
 import crypto from 'crypto';
 import asyncPool from 'tiny-async-pool';
-import { s3 } from '../server/AWS.mjs';
+import { S3 } from '@aws-sdk/client-s3';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -59,7 +59,9 @@ const files = Object.keys(buildManifest.assets).map(id => {
 // UPLOAD FILES
 // ------------------------------------------------------------------------------
 
+const s3 = new S3({ region: 'us-east-1' });
 let deployed = 0;
+
 await asyncPool(4, files, async file => {
   const basename = path.basename(file);
   const extension = path.extname(basename);
@@ -115,7 +117,11 @@ await asyncPool(4, files, async file => {
     });
   } catch (err) {
     console.error(`${basename}: ${err.message}`);
-    process.exit(1);
+    if (failOnError) {
+      process.exit(1);
+    } else {
+      return;
+    }
   }
 
   // Save file & content hash so we know that we have already uploaded it
