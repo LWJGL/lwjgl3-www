@@ -3,9 +3,16 @@ extends layout
 block content
   #app-root
     style.
-      @keyframes fade-in{from{opacity:0}to{opacity:1}}
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
     div(
-      style="height:90vh;display:flex;justify-content:center;align-items:center;font:300 200%/1 system-ui,sans-serif;animation:fade-in 1s ease 1s alternate infinite both"
+      style="height: 90vh; display: flex; justify-content: center; align-items: center; font: 300 200%/1 system-ui, sans-serif; animation: fade-in 1s ease 1s alternate infinite both"
     ) LOADING…
 
   if development

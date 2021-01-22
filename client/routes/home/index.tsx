@@ -15,6 +15,7 @@ import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Section } from '~/components/ui/Section';
 import { Icon } from '~/components/ui/Icon';
+
 import '~/theme/icons/fa/brands/apple';
 import '~/theme/icons/fa/brands/github';
 import '~/theme/icons/fa/brands/linux';

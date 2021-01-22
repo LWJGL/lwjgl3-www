@@ -10,7 +10,7 @@ module.exports = {
   entry: {
     vendor: {
       import: [
-        // immediate dependencies
+        // common
         '@react-aria/button',
         '@react-aria/dialog',
         '@react-aria/focus',
@@ -21,19 +21,22 @@ module.exports = {
         '@react-spring/web',
         '@stitches/react',
         'history',
-        'immer',
-        'jszip',
-        'lodash-es',
-        'react',
-        'react-dom',
-        'react-fast-compare',
-        'react-is',
-        'react-refresh/runtime',
         'react-router-dom',
         'react-use-gesture',
-        'recoil',
         'scroll-into-view-if-needed',
-        // other
+        'lodash-es',
+        'recoil',
+
+        // customizer
+        'immer',
+        'jszip',
+        'react-fast-compare',
+
+        // framework
+        'react',
+        'react-dom',
+        'react-is',
+        'react-refresh/runtime',
         'ansi-html',
         'ansi-regex',
         'html-entities',

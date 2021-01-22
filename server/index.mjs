@@ -3,7 +3,6 @@ import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import fastify from 'fastify';
-import fastifyGracefulShutdown from 'fastify-graceful-shutdown';
 import fastifyAccepts from 'fastify-accepts';
 import fastifyHealthcheck from 'fastify-healthcheck';
 import fastifyStatic from 'fastify-static';
@@ -100,10 +99,38 @@ export const app = fastify({
 // );
 
 // ------------------------------------------------------------------------------
+// Graceful shutdown
+// ------------------------------------------------------------------------------
+
+let terminating = false;
+let terminationTimeout;
+function gracefulShutdown() {
+  if (terminating) {
+    return;
+  }
+  terminating = true;
+
+  function forceShutdown() {
+    app.log.error('Termination timeout. Forcing shutdown...');
+    process.exit(1);
+  }
+
+  terminationTimeout = setTimeout(forceShutdown, PRODUCTION ? 5000 : 1000);
+  app.log.info('Shutting down...');
+  app.close().then(() => {
+    clearTimeout(terminationTimeout);
+    process.exit(0);
+  });
+}
+
+// Comment-out events below when using `node --cpu-prof`
+process.on('SIGINT', gracefulShutdown);
+process.on('SIGTERM', gracefulShutdown);
+
+// ------------------------------------------------------------------------------
 // PLUGINS
 // ------------------------------------------------------------------------------
 
-app.register(fastifyGracefulShutdown);
 app.register(fastifyEtag);
 app.register(fastifyAccepts);
 

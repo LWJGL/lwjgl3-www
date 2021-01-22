@@ -28,7 +28,6 @@ const ENABLE_PROFILING = argv.profiling === true;
 const env = {
   ANALYTICS_TRACKING_ID: JSON.stringify('UA-83518-1'),
   FLAG_PRODUCTION: String(PRODUCTION),
-  FLAG_HMR: String(HMR),
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
@@ -70,7 +69,8 @@ const buildConfiguration = () => {
       },
     },
     // experiments: {
-    //   outputModule: true,
+    //   lazyCompilation: true,
+    //   //   // outputModule: true,
     // },
     output: {
       path: path.resolve(__dirname, 'public/js'),
@@ -166,15 +166,6 @@ const buildConfiguration = () => {
           // },
         })
       );
-      // // React Refresh
-      // const ReactRefreshPlugin = require('@webhotelier/webpack-fast-refresh');
-      // config.plugins.push(new ReactRefreshPlugin());
-      // config.entry.main.import.unshift(require.resolve('@webhotelier/webpack-fast-refresh/runtime.js'));
-      // config.module.rules[0].use.push(require.resolve('@webhotelier/webpack-fast-refresh/loader.js'));
-
-      // // react-error-overlay
-      // const ErrorOverlayPlugin = require('@webhotelier/webpack-fast-refresh/error-overlay/index.js');
-      // config.plugins.push(new ErrorOverlayPlugin());
     }
   } else {
     // // Debug output

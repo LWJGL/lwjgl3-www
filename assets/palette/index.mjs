@@ -115,6 +115,8 @@ async function writeTheme(theme, filePath) {
     lines.push(`];`);
   });
 
+  lines.push(``);
+
   await fs.writeFile(path.resolve(filePath), lines.join('\n'));
 }
 
