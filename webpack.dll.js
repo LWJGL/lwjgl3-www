@@ -27,11 +27,6 @@ module.exports = {
         'lodash-es',
         'recoil',
 
-        // customizer
-        'immer',
-        'jszip',
-        'react-fast-compare',
-
         // framework
         'react',
         'react-dom',

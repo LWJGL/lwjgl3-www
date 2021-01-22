@@ -3,27 +3,12 @@ const path = require('path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const terserOptions = require('./scripts/terser-config.json');
-const argv = {};
-
-process.argv.slice(2).forEach(arg => {
-  switch (arg) {
-    case '--nohmr':
-      argv.nohmr = true;
-      break;
-    case '--sourcemap':
-      argv.sourcemap = true;
-      break;
-    case '--profiling':
-      argv.profiling = true;
-      break;
-  }
-});
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEV = !PRODUCTION;
-const HMR = DEV && argv.nohmr === undefined;
-const SOURCEMAP = argv.sourcemap === true;
-const ENABLE_PROFILING = argv.profiling === true;
+const WDS = process.env.WDS !== undefined;
+const SOURCEMAP = process.env.SOURCEMAP !== undefined;
+const ENABLE_PROFILING = process.env.PROFILING !== undefined;
 
 const env = {
   ANALYTICS_TRACKING_ID: JSON.stringify('UA-83518-1'),
@@ -36,11 +21,10 @@ const buildConfiguration = () => {
     mode: PRODUCTION ? 'production' : 'development',
     target: PRODUCTION ? 'browserslist' : 'web',
     // cache: false,
-    cache: true, // in-memory cache
-    // ! Not yet support with DllReferencePlugin
-    // cache: {
-    //   type: 'filesystem',
-    // },
+    // cache: true, // in-memory cache
+    cache: {
+      type: 'filesystem',
+    },
     infrastructureLogging: {
       level: 'warn',
     },
@@ -68,10 +52,10 @@ const buildConfiguration = () => {
         import: ['./client/main.tsx'],
       },
     },
-    // experiments: {
-    //   lazyCompilation: true,
-    //   //   // outputModule: true,
-    // },
+    experiments: {
+      lazyCompilation: true,
+      //   // outputModule: true,
+    },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
@@ -139,22 +123,32 @@ const buildConfiguration = () => {
   if (DEV) {
     config.output.crossOriginLoading = 'anonymous';
 
-    // Load pre-built dependencies
-    config.plugins.push(
-      new webpack.DllReferencePlugin({
-        // context: __dirname,
-        name: 'vendor',
-        manifest: require('./public/js/vendor.manifest.json'),
-      })
-    );
+    // // Load pre-built dependencies
+    // config.plugins.push(
+    //   new webpack.DllReferencePlugin({
+    //     // context: __dirname,
+    //     name: 'vendor',
+    //     manifest: require('./public/js/vendor.manifest.json'),
+    //   })
+    // );
 
     // Enable source maps
     config.devtool = SOURCEMAP ? 'inline-source-map' : 'cheap-module-source-map';
 
-    if (HMR) {
-      // Enable Hot Module Replacement
-      config.entry.main.import.unshift(require.resolve('webpack-hot-middleware/client'));
-      config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    if (WDS) {
+      config.devServer = {
+        host: '0.0.0.0',
+        port: 8081,
+        // hot: 'only',
+        hot: true,
+        static: false,
+        overlay: false,
+        compress: false,
+        firewall: false,
+        dev: {
+          index: false,
+        },
+      };
 
       // React Refresh
       const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');

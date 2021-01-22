@@ -53,29 +53,16 @@ npm i
 2. To build styles:
 
 ```shell
-npm run styles
+npm run styles:dev
 ```
 
 3.  To start the server in dev mode:
 
 ```shell
-node server
-# or
 npm start
 ```
 
-_OPTIONAL_: Monitor for /server changes & auto-restart with:
-
-```shell
-npm run watch
-```
-
 ### CLI flags
-
-```shell
---sourcemap # Enables inline JS source-maps
---nohmr # Disables Webpack Hot Module Replacement
-```
 
 The following flags are used for testing production builds locally.
 NODE_ENV environment variable must be set to "production".
@@ -85,13 +72,6 @@ NODE_ENV environment variable must be set to "production".
 --nocache # Disables Pug view caching
 --pretty # Pretty prints HTML
 --s3proxy # Proxies S3 images
-```
-
-Flag usage examples:
-
-```shell
-node server --async --nohmr
-npm run watch -- --async --nohmr
 ```
 
 ### Environment variables
@@ -117,7 +97,7 @@ npm run release
 You can run the production build locally:
 
 ```shell
-npm run test-production
+npm run server:test
 ```
 
 ### Debugging production output
@@ -126,6 +106,6 @@ The following debugging tips may come in handy:
 
 - Disable minification by uncommenting `minimize: false` in [webpack.config.js](./webpack.config.js)
 - Prevent Terser from dropping `console.log` or `debugger` by changing `terserOptions` in [terser-config.json](./scripts/terser-config.json)
-- Pass `--profiling` to load React profiling builds
+- Set `PROFILING=1` env variable to load React profiling builds
 - Output `named` module & chunk ids in [webpack.config.js](./webpack.config.js)
 - Analyze build output with `npx webpack-bundle-analyzer public/js/webpack.manifest.json -h 0.0.0.0` (for full breakdown, change to `all: true` when writing `webpack.manifest.json` in [build-production.js](./scripts/build-production.mjs))

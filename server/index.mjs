@@ -224,9 +224,6 @@ app.register(fastifyStatic, {
 // ------------------------------------------------------------------------------
 
 if (DEVELOPMENT) {
-  // Add compatibility with express
-  await app.register(require('fastify-express'));
-
   // Allow source access in development
   // Required for Sass source maps to be resolved by browsers when HMR is off
   app.register(fastifyStatic, {
@@ -240,38 +237,9 @@ if (DEVELOPMENT) {
     decorateReply: false,
   });
 
-  // Webpack
-  const webpack = require('webpack');
-  const webpackConfig = require('../webpack.config.js');
-  const webpackCompiler = webpack(webpackConfig);
-  const wdm = require('webpack-dev-middleware');
-
-  app.use(
-    wdm(webpackCompiler, {
-      index: false,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    })
-  );
-
-  if (argv.nohmr === undefined) {
-    app.use(
-      require('webpack-hot-middleware')(webpackCompiler, {
-        path: '/__webpack_hmr',
-        heartbeat: 10 * 1000,
-        overlay: false, // broken on webpack@5
-        noInfo: false,
-        quiet: false,
-      })
-    );
-
-    // Reply with a 404 on bad compilations
-    // ! This is required for HMR to resume after code is fixed
-    app.get('/js/*', (request, reply) => {
-      reply.code(404).send('');
-    });
-  }
+  // Proxy webpack-dev-server generated files
+  const httpProxy = require('fastify-http-proxy');
+  await app.register(httpProxy, { prefix: '/js', rewritePrefix: '/js', upstream: 'http://localhost:8081' });
 }
 
 // Proxy
