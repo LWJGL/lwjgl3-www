@@ -53,7 +53,7 @@ const buildConfiguration = () => {
       },
     },
     experiments: {
-      lazyCompilation: true,
+      lazyCompilation: !PRODUCTION,
       //   // outputModule: true,
     },
     output: {

@@ -81,7 +81,8 @@ export const app = fastify({
   disableRequestLogging: PRODUCTION,
   return503OnClosing: true,
   logger: {
-    level: PRODUCTION ? 'error' : 'info',
+    // level: PRODUCTION ? 'error' : 'info',
+    level: 'error',
   },
   onProtoPoisoning: 'error',
   onConstructorPoisoning: 'error',
