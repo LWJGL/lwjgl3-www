@@ -1,4 +1,4 @@
-import { useSlice } from './Store';
+import { useSelector } from './Store';
 import { BuildStore } from './types';
 
 interface Props {
@@ -6,6 +6,6 @@ interface Props {
 }
 
 export const ControlledPanel: React.FC<Props> = ({ children, predicate }) => {
-  const [visible] = useSlice((state) => predicate(state));
+  const visible = useSelector(predicate);
   return visible ? (children as JSX.Element) : null;
 };

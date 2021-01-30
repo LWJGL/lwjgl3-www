@@ -1,50 +1,46 @@
-import { useMemo, useCallback } from 'react';
-import { useMemoSlice } from './Store';
-import type { Addon, AddonDefinition, BuildStore } from './types';
-import { toggleAddon } from './actions';
-
-// UI
+import { useCallback } from 'react';
+import { Box } from '~/components/layout/Box';
 import { Checkbox } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
+import { useSelector, useDispatch } from './Store';
+import {
+  createActionAddonToggle,
+  selectorMode,
+  selectorAddons,
+  selectorAddonsSelected,
+  selectorDescriptions,
+} from './reducer';
 
-const getSlice = ({ mode, selectedAddons, descriptions, addons }: BuildStore) => ({
-  mode,
-  selectedAddons,
-  descriptions,
-  allIds: addons.allIds,
-  byId: addons.byId,
-});
+import type { Addon, AddonDefinition } from './types';
 
-const getInputs = (state: BuildStore) => [state.mode, state.selectedAddons, state.descriptions];
+export const BuildAddons: React.FC<{ children?: never }> = () => {
+  const dispatch = useDispatch();
+  const mode = useSelector(selectorMode);
+  const { allIds, byId } = useSelector(selectorAddons);
+  const selectedAddons = useSelector(selectorAddonsSelected);
+  const descriptions = useSelector(selectorDescriptions);
+  const onChange = useCallback((e, addon: Addon) => dispatch(createActionAddonToggle(addon)), [dispatch]);
 
-export function BuildAddons() {
-  const [slice, dispatch] = useMemoSlice(getSlice, getInputs);
-  const onChange = useCallback((e, addon: Addon) => dispatch(toggleAddon(addon)), [dispatch]);
+  return (
+    <>
+      {allIds.map((it: Addon) => {
+        const addon = byId[it];
+        const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
 
-  return useMemo(() => {
-    const { mode, selectedAddons, descriptions, allIds, byId } = slice;
-
-    return (
-      <>
-        {allIds.map((it: Addon) => {
-          const addon = byId[it];
-          const disabled = addon.modes !== undefined && !addon.modes.includes(mode);
-
-          return (
-            <BuildAddon
-              key={it}
-              addon={addon}
-              disabled={disabled}
-              selected={selectedAddons.includes(it)}
-              showDescriptions={descriptions}
-              onChange={onChange}
-            />
-          );
-        })}
-      </>
-    );
-  }, [slice, onChange]);
-}
+        return (
+          <BuildAddon
+            key={it}
+            addon={addon}
+            disabled={disabled}
+            selected={selectedAddons.includes(it)}
+            showDescriptions={descriptions}
+            onChange={onChange}
+          />
+        );
+      })}
+    </>
+  );
+};
 
 interface Props {
   addon: AddonDefinition;
@@ -59,7 +55,7 @@ const BuildAddon = ({ addon, disabled, selected, showDescriptions, onChange }: P
 
   if (showDescriptions) {
     const desc = (
-      <>
+      <Box css={{ mb: '$sm' }}>
         <p>{addon.description}</p>
         {addon.website && (
           <p>
@@ -68,7 +64,7 @@ const BuildAddon = ({ addon, disabled, selected, showDescriptions, onChange }: P
             </Anchor>
           </p>
         )}
-      </>
+      </Box>
     );
 
     return (

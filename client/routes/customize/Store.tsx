@@ -1,72 +1,39 @@
-import { createContext, useContext, useReducer, useEffect, useRef, useMemo } from 'react';
-import { configLoad } from './actions';
-import type { ActionCreator } from './actions';
+import { useReducer, useEffect } from 'react';
+import { createContext, useContextSelector, useContext /*, useContextUpdate*/ } from 'use-context-selector';
 import { config, getConfigSnapshot } from './config';
-import { reducer } from './reducer';
-import type { BuildStore, BuildStoreSnapshot } from './types';
+import { reducer, createActionConfigLoad } from './reducer';
 import debounce from 'lodash-es/debounce';
 import isEqual from 'react-fast-compare';
+
+import type { ActionMessage } from './reducer';
+import type { BuildStore, BuildStoreSnapshot } from './types';
 
 // Constants
 const STORAGE_KEY = 'lwjgl-build-config';
 
-type StoreTuple = [BuildStore, React.Dispatch<ActionCreator>];
-export const StoreContext = createContext<StoreTuple>([config, () => {}]);
+export const StoreContext = createContext<BuildStore>(config);
+export const DispatchContext = createContext<React.Dispatch<ActionMessage>>(() => {});
 
 if (!FLAG_PRODUCTION) {
   StoreContext.displayName = 'StoreContext';
+  DispatchContext.displayName = 'DispatchContext';
 }
 
-export function useStore(): StoreTuple {
+export function useStore(): BuildStore {
   return useContext(StoreContext);
 }
 
-export function useStoreRef() {
-  const [state] = useContext(StoreContext);
-  return useRef<BuildStore>(state);
+export function useDispatch(): React.Dispatch<ActionMessage> {
+  return useContext(DispatchContext);
 }
 
-type SliceTuple<S> = [S, React.Dispatch<ActionCreator>];
-
-export function useSlice<S>(slicer: (state: BuildStore) => S): SliceTuple<S> {
-  const [state, dispatch] = useContext(StoreContext);
-  return [slicer(state), dispatch];
+export function useSelector<T>(selector: (store: BuildStore) => T): T {
+  return useContextSelector(StoreContext, selector);
 }
 
-export function useMemoSlice<S>(
-  getSlice: (state: BuildStore) => S,
-  getInputs: (state: BuildStore) => React.DependencyList
-): SliceTuple<S> {
-  const [state, dispatch] = useContext(StoreContext);
-
-  return [
-    useMemo(
-      () => getSlice(state),
-      // eslint-disable-next-line
-      getInputs(state)
-    ),
-    dispatch,
-  ];
-}
-
-// export function useStoreContext(): StoreContextType {
-//   return useContext(StoreContext);
-// }
-
-// export function useDispatch<T>(actionCreator: T): T {
-//   const { dispatch } = useContext(StoreContext);
-//   //@ts-ignore
-//   return (...args: any[]) => dispatch(actionCreator.apply(null, args));
-// }
-
-// export function readContext<T>(Context: React.Context<T>, observedBits?: number) {
-//   //@ts-ignore
-//   const dispatcher = React.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.ReactCurrentOwner.currentDispatcher;
-//   return dispatcher.readContext(Context, observedBits) as T;
-// }
-
+export let latestStore: BuildStore;
 let prevConfig: BuildStoreSnapshot | null;
-const saveSnapshot = debounce((state: BuildStore) => {
+function saveSnapshot(state: BuildStore) {
   if (state === config) {
     // Skip default state
     return;
@@ -86,31 +53,40 @@ const saveSnapshot = debounce((state: BuildStore) => {
     prevConfig = save;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(save));
   }
-}, 1000);
+}
+
+const saveSnapshotDebounced = debounce(saveSnapshot, 1000);
 
 // Store Provider
 export const Provider: React.FC = (props) => {
-  const [state, dispatch] = useReducer<React.Reducer<BuildStore, ActionCreator>>(reducer, config);
+  const [state, dispatch] = useReducer<React.Reducer<BuildStore, ActionMessage>>(reducer, config);
+  // const update = useContextUpdate(StoreContext);
+  // const safeDispatch = update(() => {});
 
   useEffect(() => {
     const restore = localStorage.getItem(STORAGE_KEY);
     if (restore !== null) {
       try {
         prevConfig = JSON.parse(restore) as BuildStoreSnapshot;
-        dispatch(configLoad(prevConfig));
+        dispatch(createActionConfigLoad(prevConfig));
       } catch (err) {
         localStorage.removeItem(STORAGE_KEY);
       }
     }
     return () => {
       // Immediately flush pending unsaved config changes
-      saveSnapshot.flush();
+      saveSnapshotDebounced.flush();
     };
   }, []);
 
   useEffect(() => {
-    saveSnapshot(state);
+    latestStore = state;
+    saveSnapshotDebounced(state);
   });
 
-  return <StoreContext.Provider value={[state, dispatch]}>{props.children}</StoreContext.Provider>;
+  return (
+    <DispatchContext.Provider value={dispatch}>
+      <StoreContext.Provider value={state}>{props.children}</StoreContext.Provider>
+    </DispatchContext.Provider>
+  );
 };

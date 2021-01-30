@@ -184,7 +184,7 @@ export const SelectionLabelDescription = styled('div', {
   color: '$neutral600',
 });
 
-interface CheckboxProps {
+export interface CheckboxProps {
   value?: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, value: any) => void;
   checked?: boolean;
@@ -232,7 +232,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
   </SelectionLabel>
 );
 
-interface RadioProps {
+export interface RadioProps {
   value: any;
   onChange: (event: React.ChangeEvent<HTMLInputElement>, value: any) => void;
   checked?: boolean;

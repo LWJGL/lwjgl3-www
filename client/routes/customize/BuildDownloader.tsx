@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { saveAs } from '~/services/file-saver';
 import { configJSONfilename, getConfigSnapshot } from './config';
 import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getFiles } from './lib/bundler';
-import { useStoreRef } from './Store';
+import { useStore } from './Store';
 import { BuildType } from './types';
 import JSZip from 'jszip';
 import { useMountedRef } from '~/hooks/useMountedRef';
@@ -27,7 +27,7 @@ const Pre = styled('pre', {
 });
 
 export default function BuildDownloader({ setIsDownloading }: Props) {
-  const storeRef = useStoreRef();
+  const store = useStore();
   const isMounted = useMountedRef();
   const usingNetwork = useRef(false);
 
@@ -53,9 +53,7 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
 
     async function beginDownload() {
       // Fetch all data that we will need from the store
-      const { build, path, selected, platforms, source, javadoc, includeJSON, version, addons } = getBuild(
-        storeRef.current
-      );
+      const { build, path, selected, platforms, source, javadoc, includeJSON, version, addons } = getBuild(store);
 
       // Download latest manifest
       let manifest: Array<string>;
@@ -90,7 +88,7 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
 
       // Include JSON Config
       if (includeJSON) {
-        const save = getConfigSnapshot(storeRef.current);
+        const save = getConfigSnapshot(store);
         if (save !== null) {
           const blob = new Blob([JSON.stringify(save, null, 2)], {
             type: 'application/json',
@@ -126,7 +124,7 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
         abortDownload();
       }
     };
-  }, [setIsDownloading, storeRef, isMounted]);
+  }, [setIsDownloading, store, isMounted]);
 
   return (
     <Grid

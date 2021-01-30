@@ -1,24 +1,22 @@
-import { useMemo } from 'react';
-import { useSlice } from './Store';
-
+import { useSelector } from './Store';
 import { Anchor } from '~/components/lwjgl/Anchor';
+import type { BuildStore } from './types';
 
-export function BuildReleaseNotes() {
-  const [version] = useSlice(({ version }) => version);
+const selector = (state: BuildStore) => state.version;
 
-  return useMemo(
-    () => (
-      <p>
-        <Anchor
-          css={{ fontSize: '$xs' }}
-          href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
-          rel="noopener external"
-          target="_blank"
-        >
-          release notes for {version}
-        </Anchor>
-      </p>
-    ),
-    [version]
+export const BuildReleaseNotes: React.FC<{ children?: never }> = () => {
+  const version = useSelector(selector);
+
+  return (
+    <p>
+      <Anchor
+        css={{ fontSize: '$xs' }}
+        href={`https://github.com/LWJGL/lwjgl3/releases/tag/${version}`}
+        rel="noopener external"
+        target="_blank"
+      >
+        release notes for {version}
+      </Anchor>
+    </p>
   );
-}
+};

@@ -1,9 +1,9 @@
-import { Suspense, useMemo } from 'react';
+import { Suspense, useCallback } from 'react';
 import { styled } from '~/theme/stitches.config';
 import { useRecoilValue } from 'recoil';
 import { breakpoint, Breakpoint } from '~/theme/breakpoints';
-import { useMemoSlice } from './Store';
-import { selectBuildType } from './actions';
+import { useSelector, useDispatch } from './Store';
+import { createActionBuiltTypeSelect, selectorBuild, selectorBuilds } from './reducer';
 import { BuildStatus } from './BuildStatus';
 import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
@@ -11,53 +11,46 @@ import { Text } from '~/components/ui/Text';
 import { LoadingPulse } from '~/components/ui/LoadingPulse';
 import '~/theme/icons/fa/regular/times';
 
-import type { BuildDefinition, BuildType } from './types';
-
-type ConnectedProps = {
-  anyBuildSelected: boolean;
-  isSelected: boolean;
-  spec: BuildDefinition;
-};
+import type { BuildType } from './types';
 
 interface Props {
   build: BuildType;
 }
 
-export function BuildPanel({ build }: Props) {
+export const BuildPanel: React.FC<Props> = ({ build }) => {
   const currentBreakpoint = useRecoilValue(breakpoint);
-  const [slice, dispatch] = useMemoSlice(
-    (state): ConnectedProps => ({
-      anyBuildSelected: state.build !== null,
-      isSelected: state.build === build,
-      spec: state.builds.byId[build],
-    }),
-    (state) => [state.build, build]
+  const dispatch = useDispatch();
+
+  const onPanelClick = useCallback(() => {
+    dispatch(createActionBuiltTypeSelect(build));
+  }, [dispatch, build]);
+
+  const selectedBuild = useSelector(selectorBuild);
+  const { byId } = useSelector(selectorBuilds);
+
+  const isSelected = selectedBuild === build;
+  const spec = byId[build];
+
+  return (
+    <PanelBox
+      build={build}
+      selected={isSelected}
+      hidden={selectedBuild !== null && !isSelected && currentBreakpoint < Breakpoint.lg}
+      onClick={onPanelClick}
+    >
+      <Text as="h2">{spec.title}</Text>
+      <Text>{spec.description}</Text>
+      <Suspense fallback={<LoadingPulse size="lg" />}>
+        <BuildStatus name={build} />
+      </Suspense>
+      {isSelected && currentBreakpoint < Breakpoint.lg ? (
+        <Button rounding="icon" variant="text" tone="neutral" title="Close" aria-label="Close">
+          <Icon name="fa/regular/times" />
+        </Button>
+      ) : null}
+    </PanelBox>
   );
-
-  return useMemo(() => {
-    const { anyBuildSelected, isSelected, spec } = slice;
-
-    return (
-      <PanelBox
-        build={build}
-        selected={isSelected}
-        hidden={anyBuildSelected && !isSelected && currentBreakpoint < Breakpoint.lg}
-        onClick={() => dispatch(selectBuildType(build))}
-      >
-        <Text as="h2">{spec.title}</Text>
-        <Text>{spec.description}</Text>
-        <Suspense fallback={<LoadingPulse size="lg" />}>
-          <BuildStatus name={build} />
-        </Suspense>
-        {isSelected && currentBreakpoint < Breakpoint.lg ? (
-          <Button rounding="icon" variant="text" tone="neutral" title="Close" aria-label="Close">
-            <Icon name="fa/regular/times" />
-          </Button>
-        ) : null}
-      </PanelBox>
-    );
-  }, [dispatch, build, slice, currentBreakpoint]);
-}
+};
 
 const PanelBox = styled('div', {
   backgroundColor: '$primary100',

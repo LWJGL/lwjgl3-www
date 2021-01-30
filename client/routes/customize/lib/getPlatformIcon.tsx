@@ -1,4 +1,4 @@
-import { Native } from './types';
+import { Native } from '../types';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/brands/apple';
 import '~/theme/icons/fa/brands/linux';

@@ -3,9 +3,9 @@ import { useOverlay, usePreventScroll, useModal, OverlayContainer } from '@react
 import { useDialog } from '@react-aria/dialog';
 import { FocusScope } from '@react-aria/focus';
 import { styled } from '~/theme/stitches.config';
-import { Text } from '~/components/ui/Text';
 import { useSpring } from '@react-spring/web';
 import { Backdrop, getBackdropOpacity } from '~/components/layout/Backdrop';
+import { CircularProgress } from '~/components/ui/CircularProgress';
 
 import type { OverlayProps } from '@react-aria/overlays';
 
@@ -37,6 +37,7 @@ interface ModalProps extends OverlayProps, AriaDialogProps {
 const Modal = styled('div', {
   background: '$body',
   padding: '$gutter',
+  borderRadius: '$rounded',
 
   '&:focus': {
     outline: 'none',
@@ -113,7 +114,7 @@ export const BuildDownloaderDialog: React.FC<BuildDownloaderDialogProps> = ({ se
         setIsDownloading(false);
       }}
     >
-      <Suspense fallback={null}>
+      <Suspense fallback={<CircularProgress size={36} />}>
         <BuildDownloader setIsDownloading={setIsDownloading} />
       </Suspense>
     </ModalDialog>

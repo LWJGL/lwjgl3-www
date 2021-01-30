@@ -1,4 +1,11 @@
 import { useState } from 'react';
+import { Grid } from '~/components/layout/Grid';
+import { ConnectedCheckbox } from './ConnectedCheckbox';
+import { ConnectedRadio } from './ConnectedRadio';
+import { fields, selectorHasLanguageOption, selectorIsBuildRelease, selectorIsBuildSelected } from './reducer';
+import { BuildType } from './types';
+
+import { ControlStack } from '~/components/forms/ControlStack';
 import { BuildAddons } from './BuildAddons';
 import { BuildArtifacts } from './BuildArtifacts';
 import { BuildConfigArea } from './BuildConfigArea';
@@ -7,24 +14,10 @@ import { BuildFooter } from './BuildFooter';
 import { BuildPanel } from './BuildPanel';
 import { BuildPlatform } from './BuildPlatform';
 import { BuildReleaseNotes } from './BuildReleaseNotes';
-import { ControlledCheckbox } from './ControlledCheckbox';
 import { ControlledPanel } from './ControlledPanel';
-import { ControlledRadio } from './ControlledRadio';
-import { ControlledToggle } from './ControlledToggle';
-import { fields, hasLanguageOption, isBuildRelease, isBuildSelected } from './fields';
-import { BuildType, BuildStore } from './types';
-import { Grid } from '~/components/layout/Grid';
-import { ControlStack } from '~/components/forms/ControlStack';
-import { useMemoSlice } from './Store';
 
-export function BuildConfigurator() {
+export const BuildConfigurator: React.FC<{ children?: never }> = () => {
   const [isDownloading, setIsDownloading] = useState(false);
-  const [slice] = useMemoSlice(
-    ({ descriptions }: BuildStore) => ({
-      descriptions,
-    }),
-    (state: BuildStore) => [state.descriptions]
-  );
 
   return (
     <>
@@ -42,9 +35,9 @@ export function BuildConfigurator() {
         <BuildPanel build={BuildType.Stable} />
         <BuildPanel build={BuildType.Nightly} />
       </Grid>
-      <ControlledPanel predicate={isBuildSelected}>
+      <ControlledPanel predicate={selectorIsBuildSelected}>
         <BuildConfigArea>
-          <ControlledToggle spec={fields.descriptions} />
+          <ConnectedCheckbox variant="switch" {...fields.descriptions} />
 
           <Grid
             css={{
@@ -63,27 +56,27 @@ export function BuildConfigurator() {
             <Grid css={{ gap: '$gutter' }}>
               <ControlStack>
                 <h4>Mode</h4>
-                <ControlledRadio spec={fields.mode} />
+                <ConnectedRadio {...fields.mode} />
               </ControlStack>
 
               <ControlStack>
                 <h4>Options</h4>
-                <ControlledCheckbox spec={fields.source} />
-                <ControlledCheckbox spec={fields.javadoc} />
-                <ControlledCheckbox spec={fields.includeJSON} />
-                <ControlledToggle spec={fields.hardcoded} />
-                <ControlledToggle spec={fields.compact} />
-                <ControlledToggle spec={fields.osgi} />
+                <ConnectedCheckbox {...fields.source} />
+                <ConnectedCheckbox {...fields.javadoc} />
+                <ConnectedCheckbox {...fields.includeJSON} />
+                <ConnectedCheckbox variant="switch" {...fields.hardcoded} />
+                <ConnectedCheckbox variant="switch" {...fields.compact} />
+                <ConnectedCheckbox variant="switch" {...fields.osgi} />
               </ControlStack>
 
               <ControlStack>
                 <BuildPlatform />
               </ControlStack>
 
-              <ControlledPanel predicate={hasLanguageOption}>
+              <ControlledPanel predicate={selectorHasLanguageOption}>
                 <ControlStack>
                   <h4>Language</h4>
-                  <ControlledRadio spec={fields.language} />
+                  <ConnectedRadio {...fields.language} />
                 </ControlStack>
               </ControlledPanel>
             </Grid>
@@ -91,13 +84,13 @@ export function BuildConfigurator() {
             <Grid css={{ gap: '$gutter' }}>
               <ControlStack>
                 <h4>Presets</h4>
-                <ControlledRadio spec={fields.preset} />
+                <ConnectedRadio {...fields.preset} />
               </ControlStack>
 
               <ControlStack
                 css={{
                   sm: {
-                    gap: slice.descriptions ? '$sm' : '$xxsm',
+                    gap: '$xxsm',
                   },
                 }}
               >
@@ -105,10 +98,10 @@ export function BuildConfigurator() {
                 <BuildAddons />
               </ControlStack>
 
-              <ControlledPanel predicate={isBuildRelease}>
+              <ControlledPanel predicate={selectorIsBuildRelease}>
                 <ControlStack>
                   <h4>Version</h4>
-                  <ControlledRadio spec={fields.version} />
+                  <ConnectedRadio {...fields.version} />
                   <BuildReleaseNotes />
                 </ControlStack>
               </ControlledPanel>
@@ -117,7 +110,7 @@ export function BuildConfigurator() {
             <ControlStack
               css={{
                 sm: {
-                  gap: slice.descriptions ? '$sm' : '$xxsm',
+                  gap: '$xxsm',
                   gridArea: ' 1 / 2 / span 2 / span 1',
                 },
                 lg: {
@@ -135,4 +128,4 @@ export function BuildConfigurator() {
       {isDownloading && <BuildDownloaderDialog setIsDownloading={setIsDownloading} />}
     </>
   );
-}
+};

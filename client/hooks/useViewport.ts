@@ -6,7 +6,6 @@
 
 import { useState, useEffect } from 'react';
 import { viewport } from '~/services/screenFit';
-// import debounce from 'lodash-es/debounce';
 
 interface HookSignature {
   width: number;
