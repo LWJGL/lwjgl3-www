@@ -25,7 +25,7 @@ module.exports = {
         'react-use-gesture',
         'scroll-into-view-if-needed',
         'lodash-es',
-        'recoil',
+        'use-context-selector',
 
         // framework
         'react',

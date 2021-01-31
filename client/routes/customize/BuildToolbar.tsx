@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { breakpoint, Breakpoint } from '~/theme/breakpoints';
+import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
 import { Button } from '~/components/forms/Button';
 import { FilePicker } from '~/components/forms/FilePicker';
 import { Dark } from '~/components/lwjgl/Dark';
@@ -36,7 +35,7 @@ interface Props {
 export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, children }) => {
   const [fileUI, setFileUI] = useState(false);
   const toggleFileUI = () => setFileUI(!fileUI);
-  const currentBreakpoint = useRecoilValue(breakpoint);
+  const currentBreakpoint = useBreakpoint();
 
   if (fileUI) {
     const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
-import { RecoilRoot } from 'recoil';
+import { Spring } from '~/components/system/SpringGlobals';
 import { OverlayProvider } from '@react-aria/overlays';
-import { Spring } from './SpringGlobals';
+import { BreakpointProvider } from './context/Breakpoint';
+import { ColorSchemeProvider } from './context/ColorScheme';
 import '~/services/screenFit';
 
 // Routing
@@ -36,19 +37,21 @@ const Main = styled('main', {
 export const App: React.FC<{ children?: never }> = () => (
   <BrowserRouter>
     <OverlayProvider>
-      <RecoilRoot>
-        <Header />
-        <Layout>
-          <Main>
-            <ErrorBoundary fallback={PageError}>
-              <Suspense fallback={<PageBlank />}>
-                <RouterConfig />
-              </Suspense>
-            </ErrorBoundary>
-          </Main>
-          <Footer />
-        </Layout>
-      </RecoilRoot>
+      <BreakpointProvider>
+        <ColorSchemeProvider>
+          <Header />
+          <Layout>
+            <Main>
+              <ErrorBoundary fallback={PageError}>
+                <Suspense fallback={<PageBlank />}>
+                  <RouterConfig />
+                </Suspense>
+              </ErrorBoundary>
+            </Main>
+            <Footer />
+          </Layout>
+        </ColorSchemeProvider>
+      </BreakpointProvider>
     </OverlayProvider>
     <Spring />
     {/* <NavProgress /> */}

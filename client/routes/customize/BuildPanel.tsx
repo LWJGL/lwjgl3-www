@@ -1,7 +1,6 @@
 import { Suspense, useCallback } from 'react';
 import { styled } from '~/theme/stitches.config';
-import { useRecoilValue } from 'recoil';
-import { breakpoint, Breakpoint } from '~/theme/breakpoints';
+import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
 import { useSelector, useDispatch } from './Store';
 import { createActionBuiltTypeSelect, selectorBuild, selectorBuilds } from './reducer';
 import { BuildStatus } from './BuildStatus';
@@ -18,7 +17,7 @@ interface Props {
 }
 
 export const BuildPanel: React.FC<Props> = ({ build }) => {
-  const currentBreakpoint = useRecoilValue(breakpoint);
+  const currentBreakpoint = useBreakpoint();
   const dispatch = useDispatch();
 
   const onPanelClick = useCallback(() => {

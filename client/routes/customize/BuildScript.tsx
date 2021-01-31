@@ -5,8 +5,7 @@ import { AnchorButton } from '~/components/ui/LinkButton';
 import { useSelector } from './Store';
 import { createSelectorDeepEqual } from '~/services/selector';
 import { BuildToolbar } from './BuildToolbar';
-import { useRecoilValue } from 'recoil';
-import { breakpoint, Breakpoint } from '~/theme/breakpoints';
+import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
 import { Text } from '~/components/ui/Text';
 import { Icon } from '~/components/ui/Icon';
@@ -87,7 +86,7 @@ const selector = createSelectorDeepEqual(
 
 export function BuildScript({ configDownload, configLoad }: Props) {
   const preRef = useRef<HTMLPreElement>(null);
-  const currentBreakpoint = useRecoilValue(breakpoint);
+  const currentBreakpoint = useBreakpoint();
 
   const slice = useSelector(selector);
   const { mode } = slice;

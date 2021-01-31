@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { scheme } from '~/theme';
+import { useColorScheme, useColorSchemeToggle } from '~/app/context/ColorScheme';
 import { styled } from '~/theme/stitches.config';
 import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
@@ -58,13 +57,14 @@ const MainMenuContainer = styled('nav', {
 });
 
 export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, focusableProps = {}, ...rest }) => {
-  const [currentScheme, setScheme] = useRecoilState(scheme);
+  const colorScheme = useColorScheme();
+  const setScheme = useColorSchemeToggle();
 
   const toggleScheme = useCallback(() => {
-    setScheme(currentScheme === 'light' ? 'dark' : 'light');
-  }, [currentScheme, setScheme]);
+    setScheme(colorScheme === 'light' ? 'dark' : 'light');
+  }, [colorScheme, setScheme]);
 
-  const schemeSwitchButtonTitle = `Switch to ${currentScheme === 'dark' ? 'light' : 'dark'} theme`;
+  const schemeSwitchButtonTitle = `Switch to ${colorScheme === 'dark' ? 'light' : 'dark'} theme`;
 
   return (
     <MainMenuContainer
@@ -102,7 +102,7 @@ export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, focus
           aria-label={schemeSwitchButtonTitle}
           {...focusableProps}
         >
-          <Icon display="block" name={currentScheme === 'dark' ? 'fa/duotone/sun' : 'fa/duotone/moon'} />
+          <Icon display="block" name={colorScheme === 'dark' ? 'fa/duotone/sun' : 'fa/duotone/moon'} />
         </Button>
       </div>
     </MainMenuContainer>
