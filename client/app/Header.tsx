@@ -5,12 +5,12 @@ import { styled } from '~/theme/stitches.config';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
-import { useServiceWorker } from '~/hooks/useServiceWorker';
+// import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
-import { Button } from '~/components/forms/Button';
+// import { Button } from '~/components/forms/Button';
 import { Sidebar } from './Sidebar';
-import { Icon } from '~/components/ui/Icon';
-import '~/theme/icons/fa/duotone/cloud-download';
+// import { Icon } from '~/components/ui/Icon';
+// import '~/theme/icons/fa/duotone/cloud-download';
 
 const StyledHeader = styled('header', {
   '--safe-margin': 'env(safe-area-inset-left)',
@@ -109,6 +109,7 @@ StyledHeader.compoundVariant(
   }
 );
 
+/*
 function ServiceWorkerUpdate() {
   const [pending, update] = useServiceWorker();
   const buttonTitle = 'Update website to latest version';
@@ -126,6 +127,7 @@ function ServiceWorkerUpdate() {
     </Button>
   ) : null;
 }
+*/
 
 let offsetHeight = 48;
 
@@ -271,7 +273,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
         LW
         <b>JGL</b> 3
       </Link>
-      <ServiceWorkerUpdate />
+      {/* <ServiceWorkerUpdate /> */}
       {currentBreakpoint > Breakpoint.md ? <MainMenu horizontal /> : <Sidebar />}
     </StyledHeader>
   );
