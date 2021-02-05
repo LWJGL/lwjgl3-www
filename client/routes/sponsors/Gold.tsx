@@ -153,6 +153,14 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
         >
           <ImgLazy width={179.71} height={38} src="/img/sponsors/bonusfinderus.svg" alt="BonusFinder USA" />
         </a>
+        <a
+          href="https://kajino.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          title="オンラインカジノ リストとランキング 2021 - カジノ .com | Kajino"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={189} height={30} src="/img/sponsors/kajino.com-189x30.svg" alt="Kajino.com" />
+        </a>
       </Grid>
     </Section>
   </Dark>
