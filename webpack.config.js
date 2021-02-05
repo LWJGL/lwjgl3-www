@@ -52,12 +52,6 @@ const buildConfiguration = () => {
         import: ['./client/main.tsx'],
       },
     },
-    experiments: {
-      lazyCompilation: {
-        imports: !PRODUCTION,
-      },
-      //   // outputModule: true,
-    },
     output: {
       path: path.resolve(__dirname, 'public/js'),
       filename: PRODUCTION ? '[name].[contenthash].js' : '[name].js',
@@ -124,6 +118,12 @@ const buildConfiguration = () => {
 
   if (DEV) {
     config.output.crossOriginLoading = 'anonymous';
+
+    config.experiments = {
+      lazyCompilation: {
+        imports: true,
+      },
+    };
 
     // // Load pre-built dependencies
     // config.plugins.push(
