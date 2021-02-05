@@ -6,6 +6,7 @@ import { HowToSupport } from '../sponsors/HowToSupport';
 import { Grid } from '~/components/layout/Grid';
 import { Container } from '~/components/layout/Container';
 import { Box } from '~/components/layout/Box';
+import { Section } from '~/components/ui/Section';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 
 export default function SponsorsRoute() {
@@ -15,39 +16,39 @@ export default function SponsorsRoute() {
       description="LWJGL exists thanks to all the people who contribute and back/sponsor our collective."
     >
       <HowToSupport />
-      <GoldSponsors />
+      <GoldSponsors>
+        <Section css={{ pt: '$lg' }}>
+          <hr />
+          <TitleSection css={{ pt: '$lg', color: 'silver' }}>Silver Sponsors:</TitleSection>
+          <Grid
+            css={{
+              pt: '$sm',
+              gap: '$safe',
+              alignItems: 'center',
+              sm: {
+                justifyContent: 'center',
+                textAlign: 'center',
+              },
+            }}
+          >
+            <a
+              href="https://goread.io/buy-instagram-followers?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+              title="Buy Instagram Followers with Instant Delivery"
+              rel="sponsored noopener external"
+              target="_blank"
+            >
+              <ImgLazy
+                width={1133 * 0.25}
+                height={218 * 0.25}
+                src="/img/sponsors/goread-1133x218.png"
+                alt="Goread.io"
+              />
+            </a>
+          </Grid>
+        </Section>
+      </GoldSponsors>
 
       <Container as="section" padding>
-        <TitleSection>Silver Sponsors:</TitleSection>
-        <Grid
-          css={{
-            pt: '$sm',
-            gap: '$safe',
-            mb: '$safe',
-            alignItems: 'center',
-            sm: {
-              justifyContent: 'center',
-              textAlign: 'center',
-              // grid: 'auto-flow / repeat(2, 1fr)',
-            },
-            // md: {
-            //   grid: 'auto-flow / repeat(3, 1fr)',
-            // },
-            // lg: {
-            //   grid: 'auto-flow / repeat(4, 1fr)',
-            // },
-          }}
-        >
-          <a
-            href="https://goread.io/buy-instagram-followers?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
-            title="Buy Instagram Followers with Instant Delivery"
-            rel="sponsored noopener external"
-            target="_blank"
-          >
-            <ImgLazy width={1133 * 0.25} height={218 * 0.25} src="/img/sponsors/goread-1133x218.png" alt="Goread.io" />
-          </a>
-        </Grid>
-
         <TitleSection>Backers:</TitleSection>
         <Box css={{ textAlign: 'center', pt: '$sm', pb: '$gap' }}>
           <ImgLazy alt="LWJGL backers list" src="https://opencollective.com/lwjgl/backers.svg?width=825" />

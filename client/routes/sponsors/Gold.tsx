@@ -4,10 +4,10 @@ import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Section } from '~/components/ui/Section';
 
-export const GoldSponsors: React.FC<{ children?: never }> = () => (
+export const GoldSponsors: React.FC = ({ children }) => (
   <Dark>
     <Section padding>
-      <TitleSection>Our Gold Sponsors:</TitleSection>
+      <TitleSection css={{ color: 'gold' }}>Our Gold Sponsors:</TitleSection>
       <Grid
         css={{
           gap: '$safe',
@@ -162,6 +162,7 @@ export const GoldSponsors: React.FC<{ children?: never }> = () => (
           <ImgLazy width={189} height={30} src="/img/sponsors/kajino.com-189x30.svg" alt="Kajino.com" />
         </a>
       </Grid>
+      {children}
     </Section>
   </Dark>
 );

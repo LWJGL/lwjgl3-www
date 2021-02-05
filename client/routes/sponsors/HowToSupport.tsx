@@ -4,7 +4,7 @@ import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Section } from '~/components/ui/Section';
 
-export const HowToSupport: React.FC<{ children?: never; id: string }> = ({ id }) => (
+export const HowToSupport: React.FC<{ children?: never; id?: string }> = ({ id }) => (
   <Section padding id={id} css={{ sm: { textAlign: 'center' } }}>
     <TitleSection>Supporting this project</TitleSection>
     <Text margin>
