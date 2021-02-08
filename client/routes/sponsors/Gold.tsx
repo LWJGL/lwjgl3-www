@@ -106,7 +106,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
           />
         </a>
         <a
-          href="https://www.bonus.net.nz/free-spins-no-deposit
+          href="https://www.bonus.net.nz/free-spins-no-deposit"
           title="Free Spins No Deposit"
           rel="sponsored noopener external"
           target="_blank"
