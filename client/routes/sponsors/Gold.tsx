@@ -27,7 +27,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
         }}
       >
         <a
-          href="https://www.casinotop.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          href="https://www.casinotop.com/"
           title="Online Casino Guide in Canada - Best Gaming Experience!"
           rel="sponsored noopener external"
           target="_blank"
@@ -48,7 +48,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
           />
         </a>
         <a
-          href="https://nettikasinot247.fi/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          href="https://nettikasinot247.fi/"
           title="KÄRKITASON NETTIKASINOT"
           rel="sponsored noopener external"
           target="_blank"
@@ -84,7 +84,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
           />
         </a>
         <a
-          href="https://www.vpsserver.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          href="https://www.vpsserver.com/"
           title="VPS HOSTING - GET YOUR FREE VPS TRIAL NOW!"
           rel="sponsored noopener external"
           target="_blank"
@@ -106,7 +106,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
           />
         </a>
         <a
-          href="https://www.bonus.net.nz/free-spins-no-deposit?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          href="https://www.bonus.net.nz/free-spins-no-deposit
           title="Free Spins No Deposit"
           rel="sponsored noopener external"
           target="_blank"
@@ -138,7 +138,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
           <ImgLazy width={620 / 3} height={152 / 3} src="/img/sponsors/pelisivut-620x152.png" alt="PELISIVUT" />
         </a>
         <a
-          href="https://www.casinotopp.net/?utm_source=opencollective&utm_medium=github&utm_campaign=lwjgl"
+          href="https://www.casinotopp.net/"
           title="Velkommen til CasinoTopp – Norges beste portal til online casino"
           rel="sponsored noopener external"
           target="_blank"
@@ -146,7 +146,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
           <ImgLazy width={144 * 1.25} height={20 * 1.25} src="/img/sponsors/casinotopp-143x20.svg" alt="CASINOTOPP" />
         </a>
         <a
-          href="https://www.bonusfinder.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          href="https://www.bonusfinder.com/"
           title="Online Gambling at Bonusfinder USA"
           rel="sponsored noopener external"
           target="_blank"
@@ -154,7 +154,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
           <ImgLazy width={179.71} height={38} src="/img/sponsors/bonusfinderus.svg" alt="BonusFinder USA" />
         </a>
         <a
-          href="https://kajino.com/?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+          href="https://kajino.com/"
           title="オンラインカジノ リストとランキング 2021 - カジノ .com | Kajino"
           rel="sponsored noopener external"
           target="_blank"
