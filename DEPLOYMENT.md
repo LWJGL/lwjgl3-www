@@ -65,3 +65,11 @@ services:
       - AWS_ACCESS_KEY_ID=XXXXX
       - AWS_SECRET_ACCESS_KEY=XXXXX
 ```
+
+## Deploy on ECS
+
+```bash
+./aws/update.sh
+# after rollout has completed, run
+./aws/invalidate.sh
+```
