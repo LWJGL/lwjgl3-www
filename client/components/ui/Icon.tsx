@@ -21,8 +21,7 @@ export const Icon = styled(IconSpan, {
   // width: '1em',
   // position: 'relative',
   svg: {
-    height: '1em',
-    width: '1em',
+    square: '1em',
   },
   variants: {
     display: {
@@ -38,9 +37,7 @@ export const Icon = styled(IconSpan, {
       block: {},
     },
   },
+  defaultVariants: {
+    display: 'inline',
+  },
 });
-
-//@ts-expect-error
-Icon.defaultProps = {
-  display: 'inline',
-};

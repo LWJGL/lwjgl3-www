@@ -107,7 +107,17 @@ export function BuildScript({ configDownload, configLoad }: Props) {
 
   return (
     <>
-      <Text as="h2" css={{ mt: '$gutter', sm: { mt: '1rem' } }}>
+      <Text
+        as="h2"
+        css={{
+          mt: '$gutter',
+          when: {
+            sm: {
+              mt: '1rem',
+            },
+          },
+        }}
+      >
         <ScriptLogo flipOnDark={mode.id === 'maven'} src={mode.logo} alt={mode.title} />
       </Text>
       <Pre ref={preRef}>

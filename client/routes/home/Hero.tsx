@@ -62,11 +62,13 @@ const LogoSvg = styled('svg', {
   animation: `${resetOpacityTransform} 1s ease forwards`,
   // mb: '$4',
   width: 140,
-  max: {
-    width: 'max(140px, min(16vw, 220px))',
-  },
-  clamp: {
-    width: 'clamp(140px, 16vw, 220px)',
+  when: {
+    max: {
+      width: 'max(140px, min(16vw, 220px))',
+    },
+    clamp: {
+      width: 'clamp(140px, 16vw, 220px)',
+    },
   },
   '@media (min-aspect-ratio: 8/2)': {
     display: 'none',
@@ -117,11 +119,13 @@ const HeroContent = styled('div', {
   fontWeight: 300,
   lineHeight: 1.2,
   fontSize: '2rem',
-  max: {
-    fontSize: 'max(1.2rem, min(3.5vw, 2.1rem))',
-  },
-  clamp: {
-    fontSize: 'clamp(1.2rem, 3.5vw, 2.1rem)',
+  when: {
+    max: {
+      fontSize: 'max(1.2rem, min(3.5vw, 2.1rem))',
+    },
+    clamp: {
+      fontSize: 'clamp(1.2rem, 3.5vw, 2.1rem)',
+    },
   },
   a: {
     color: 'white',
@@ -132,11 +136,13 @@ const HeroContent = styled('div', {
     b: {
       fontWeight: '$bold',
     },
-    max: {
-      fontSize: 'max(4rem, min(15vw, 10rem))',
-    },
-    clamp: {
-      fontSize: 'clamp(4rem, 15vw, 10rem)',
+    when: {
+      max: {
+        fontSize: 'max(4rem, min(15vw, 10rem))',
+      },
+      clamp: {
+        fontSize: 'clamp(4rem, 15vw, 10rem)',
+      },
     },
   },
 });

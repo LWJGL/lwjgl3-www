@@ -8,28 +8,25 @@ import '~/theme/icons/fa/duotone/moon';
 import '~/theme/icons/fa/duotone/sun';
 
 interface Props {
+  direction: 'vertical' | 'horizontal';
   onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
-  vertical?: boolean;
-  horizontal?: boolean;
   'data-ismodal'?: boolean; // @react-aria/overlays::ModalAriaProps
   focusableProps?: Partial<React.HTMLAttributes<HTMLButtonElement | HTMLAnchorElement>>;
 }
 
 const MainMenuContainer = styled('nav', {
   variants: {
-    horizontal: {
-      true: {
+    direction: {
+      horizontal: {
         flex: '1 0 auto',
         display: 'inline-flex',
         flexWrap: 'wrap',
         justifyContent: 'flex-end',
         alignItems: 'center',
         // gap: '0 1.5rem',
-        hgap: '1.5rem',
+        hgap: '$gutter',
       },
-    },
-    vertical: {
-      true: {
+      vertical: {
         display: 'flex',
         flexFlow: 'column nowrap',
         textAlign: 'right',
@@ -40,14 +37,14 @@ const MainMenuContainer = styled('nav', {
           color: 'white',
           textDecoration: 'none',
           fontWeight: 300,
-          ':focus': {
+          '&:focus': {
             outline: 'none',
             // textDecoration: 'underline',
           },
-          ':active': {
+          '&:active': {
             transform: 'translateY(1px)',
           },
-          ':hover,&.active': {
+          '&:hover,&.active': {
             color: 'yellow',
           },
         },
@@ -56,7 +53,7 @@ const MainMenuContainer = styled('nav', {
   },
 });
 
-export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, focusableProps = {}, ...rest }) => {
+export const MainMenu: React.FC<Props> = ({ onClick, direction, focusableProps = {}, ...rest }) => {
   const colorScheme = useColorScheme();
   const setScheme = useColorSchemeToggle();
 
@@ -67,13 +64,7 @@ export const MainMenu: React.FC<Props> = ({ onClick, vertical, horizontal, focus
   const schemeSwitchButtonTitle = `Switch to ${colorScheme === 'dark' ? 'light' : 'dark'} theme`;
 
   return (
-    <MainMenuContainer
-      role="navigation"
-      aria-label="Main Menu"
-      vertical={vertical === true}
-      horizontal={horizontal === true}
-      {...rest}
-    >
+    <MainMenuContainer role="navigation" aria-label="Main Menu" direction={direction} {...rest}>
       <NavLink {...focusableProps} onClick={onClick} to="/" end>
         HOME
       </NavLink>

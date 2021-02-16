@@ -6,16 +6,16 @@ export const TitleSection = styled(Text, {
   lineHeight: 1,
   mt: 'calc(var(--scale-sm, 1) * -4px)', // adjust for internal & external leading
   fontWeight: '$light',
-  sm: {
-    textAlign: 'center',
+  when: {
+    sm: {
+      textAlign: 'center',
+    },
   },
-  '> b,> strong': {
-    fontWeight: '$bold',
+  // '> b,> strong': {
+  //   fontWeight: '$bold',
+  // },
+  defaultVariants: {
+    as: 'h2',
+    margin: true,
   },
 });
-
-//@ts-expect-error
-TitleSection.defaultProps = {
-  as: 'h2',
-  margin: true,
-};

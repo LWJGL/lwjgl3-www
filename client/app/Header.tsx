@@ -29,8 +29,10 @@ const StyledHeader = styled('header', {
   hgap: '1rem',
   alignItems: 'center',
 
-  min: {
-    padding: '0 max(var(--safe-margin), 1rem)',
+  when: {
+    min: {
+      padding: '0 max(var(--safe-margin), 1rem)',
+    },
   },
 
   a: {
@@ -41,23 +43,24 @@ const StyledHeader = styled('header', {
     b: {
       fontWeight: '$bold',
     },
-    ':focus': {
+    '&:focus': {
       outline: 'none',
     },
     '&.active': {
       color: 'yellow',
     },
 
-    lg: {
-      backgroundSize: '0 3px',
-      background:
-        'linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent) bottom no-repeat',
-      '&.active': {
-        backgroundSize: '100% 3px',
-      },
-      '&:not(.active):focus,&:not(.active):hover': {
-        // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
-        backgroundSize: '90% 3px',
+    when: {
+      lg: {
+        background:
+          'linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent) bottom / 0 3px no-repeat',
+        '&.active': {
+          backgroundSize: '100% 3px',
+        },
+        '&:not(.active):focus,&:not(.active):hover': {
+          // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
+          backgroundSize: '90% 3px',
+        },
       },
     },
   },
@@ -95,19 +98,19 @@ const StyledHeader = styled('header', {
       },
     },
   },
-});
 
-StyledHeader.compoundVariant(
-  {
-    alt: true,
-    hidden: true,
-  },
-  {
-    opacity: 0,
-    top: '-3rem',
-    pointerEvents: 'none',
-  }
-);
+  compoundVariants: [
+    {
+      alt: true,
+      hidden: true,
+      css: {
+        opacity: 0,
+        top: '-3rem',
+        pointerEvents: 'none',
+      },
+    },
+  ],
+});
 
 /*
 function ServiceWorkerUpdate() {
@@ -274,7 +277,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
         <b>JGL</b> 3
       </Link>
       {/* <ServiceWorkerUpdate /> */}
-      {currentBreakpoint > Breakpoint.md ? <MainMenu horizontal /> : <Sidebar />}
+      {currentBreakpoint > Breakpoint.md ? <MainMenu direction="horizontal" /> : <Sidebar />}
     </StyledHeader>
   );
 });

@@ -5,7 +5,7 @@ import { Anchor } from '~/components/lwjgl/Anchor';
 import { Section } from '~/components/ui/Section';
 
 export const HowToSupport: React.FC<{ children?: never; id?: string }> = ({ id }) => (
-  <Section padding id={id} css={{ sm: { textAlign: 'center' } }}>
+  <Section padding id={id} css={{ when: { sm: { textAlign: 'center' } } }}>
     <TitleSection>Supporting this project</TitleSection>
     <Text margin>
       LWJGL exists thanks to{' '}

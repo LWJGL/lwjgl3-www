@@ -23,11 +23,13 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
     <>
       <Grid
         css={{
-          mb: '$gutter',
           gap: '$safe',
+          mb: '$gutter',
           px: '$safe',
-          lg: {
-            grid: 'auto / 1fr 1fr 1fr',
+          when: {
+            lg: {
+              grid: 'auto / 1fr 1fr 1fr',
+            },
           },
         }}
       >
@@ -45,11 +47,13 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
               gap: '$gutter',
               alignItems: 'start',
               gridTemplateRows: 'minmax(0, min-content)',
-              sm: {
-                gridTemplateColumns: '1fr 1fr',
-              },
-              lg: {
-                gridTemplateColumns: '1fr 1fr 2fr',
+              when: {
+                sm: {
+                  gridTemplateColumns: '1fr 1fr',
+                },
+                lg: {
+                  gridTemplateColumns: '1fr 1fr 2fr',
+                },
               },
             }}
           >
@@ -89,8 +93,10 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
 
               <ControlStack
                 css={{
-                  sm: {
-                    gap: '$xxsm',
+                  when: {
+                    sm: {
+                      gap: '$xxsm',
+                    },
                   },
                 }}
               >
@@ -109,12 +115,14 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
 
             <ControlStack
               css={{
-                sm: {
-                  gap: '$xxsm',
-                  gridArea: ' 1 / 2 / span 2 / span 1',
-                },
-                lg: {
-                  gridArea: 'auto',
+                when: {
+                  sm: {
+                    gap: '$xxsm',
+                    gridArea: ' 1 / 2 / span 2 / span 1',
+                  },
+                  lg: {
+                    gridArea: 'auto',
+                  },
                 },
               }}
             >

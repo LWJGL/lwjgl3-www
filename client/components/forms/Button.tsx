@@ -1,5 +1,25 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { styled, css } from '~/theme/stitches.config';
+import { styled, keyframes } from '~/theme/stitches.config';
+// import type { StitchesVariants } from '@stitches/react';
+import type { Tone, Level, CSS } from '~/theme/stitches.config';
+
+type Variant = 'base' | 'secondary' | 'outline' | 'text';
+
+interface ButtonCompoundVariant {
+  variant: Variant;
+  tone: Tone;
+  css: CSS;
+}
+
+interface Coordinates {
+  x: number;
+  y: number;
+}
+
+interface Translation {
+  start: Coordinates;
+  end: Coordinates;
+}
 
 // Button style is a mix of
 // a) Material Buttons: https://material.io/components/buttons
@@ -9,7 +29,7 @@ const RIPPLE_DURATION_MS = 225; // Corresponds to ripple translate duration (i.e
 const DEACTIVATION_MS = 150; // Corresponds to ripple fade-out duration (i.e. deactivation animation duration)
 const INITIAL_ORIGIN_SCALE = 0.6;
 
-const fgRadiusIn = css.keyframes({
+const fgRadiusIn = keyframes({
   from: {
     animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
     transform: 'translate(var(--ripple-translate-start, 0)) scale(1)',
@@ -19,7 +39,7 @@ const fgRadiusIn = css.keyframes({
   },
 });
 
-const fgOpacityIn = css.keyframes({
+const fgOpacityIn = keyframes({
   from: {
     animationTimingFunction: 'linear',
     opacity: 0,
@@ -29,7 +49,7 @@ const fgOpacityIn = css.keyframes({
   },
 });
 
-const fgOpacityOut = css.keyframes({
+const fgOpacityOut = keyframes({
   from: {
     animationTimingFunction: 'linear',
     opacity: 1,
@@ -42,6 +62,110 @@ const fgOpacityOut = css.keyframes({
 const ButtonLabel = styled('span', {
   position: 'relative',
 });
+
+function generateButtonCompoundVariants(tone: Tone): ButtonCompoundVariant[] {
+  return [
+    // Base
+    {
+      variant: 'base',
+      tone,
+      css: {
+        color: `$${tone}50`,
+        backgroundColor: `$${tone}600`,
+        boxShadow: '$md',
+        '&:focus': {
+          boxShadow: `0 0 0 3px $outline_${tone}`,
+          borderColor: `$${tone}700`,
+        },
+        '&:focus:not(:focus-visible)': {
+          boxShadow: '$md',
+        },
+        '&:focus:not(:-moz-focusring)': {
+          boxShadow: '$md',
+        },
+        '&:hover,&:active': {
+          backgroundColor: `$${tone}700`,
+        },
+      },
+    },
+
+    // Secondary
+    {
+      variant: 'secondary',
+      tone,
+      css: {
+        color: `$${tone}700`,
+        backgroundColor: `$${tone}200`,
+        '&:focus': {
+          borderColor: `$${tone}400`,
+          boxShadow: `0 0 0 3px $outline_${tone}`,
+        },
+        '&:focus:not(:focus-visible)': {
+          borderColor: `$${tone}300`,
+          boxShadow: 'none',
+        },
+        '&:focus:not(:-moz-focusring)': {
+          borderColor: `$${tone}300`,
+          boxShadow: 'none',
+        },
+        '&:hover,&:active': {
+          color: `$${tone}800`,
+          backgroundColor: `$${tone}300`,
+        },
+      },
+    },
+
+    // Outline
+    {
+      variant: 'outline',
+      tone,
+      css: {
+        color: `$${tone}600`,
+        borderColor: `$${tone}400`,
+        boxShadow: '$sm',
+        '&:focus': {
+          borderColor: `$${tone}500`,
+          boxShadow: `0 0 0 3px $outline_${tone}`,
+        },
+        '&:focus:not(:focus-visible)': {
+          borderColor: `$${tone}600`,
+          boxShadow: '$sm',
+        },
+        '&:focus:not(:-moz-focusring)': {
+          borderColor: `$${tone}600`,
+          boxShadow: '$sm',
+        },
+        '&:hover,&:active': {
+          color: `$${tone}700`,
+          borderColor: `$${tone}600`,
+          backgroundColor: `$${tone}50`,
+        },
+      },
+    },
+
+    // Text
+    {
+      variant: 'text',
+      tone,
+      css: {
+        color: `$${tone}600`,
+        '&:focus': {
+          boxShadow: `0 0 0 3px $outline_${tone}`,
+        },
+        '&:focus:not(:focus-visible)': {
+          boxShadow: 'none',
+        },
+        '&:focus:not(:-moz-focusring)': {
+          boxShadow: 'none',
+        },
+        '&:hover,&:active': {
+          color: `$${tone}700`,
+          backgroundColor: `$${tone}50`,
+        },
+      },
+    },
+  ];
+}
 
 export const StyledButton = styled('button', {
   display: 'inline-flex',
@@ -62,11 +186,11 @@ export const StyledButton = styled('button', {
   '--ripple-translate-start': 0,
   '--ripple-translate-end': 0,
 
-  ':active,:focus': {
+  '&:active,&:focus': {
     outline: 'none',
   },
 
-  ':active': {
+  '&:active': {
     transform: 'translateY(1px)',
   },
 
@@ -118,22 +242,22 @@ export const StyledButton = styled('button', {
     },
     rounding: {
       normal: {
-        px: '$sm',
-        py: '$xsm',
+        padding: '$xsm $sm',
         borderRadius: '$md',
         lineHeight: '1.5rem',
       },
       icon: {
         borderRadius: '$full',
-        width: '2em',
-        height: '2em',
+        square: '2em',
       },
     },
     fill: {
       auto: {
         display: 'flex',
-        sm: {
-          display: 'inline-flex',
+        when: {
+          sm: {
+            display: 'inline-flex',
+          },
         },
       },
       full: {
@@ -141,15 +265,44 @@ export const StyledButton = styled('button', {
       },
     },
   },
+  compoundVariants: [
+    { rounding: 'normal', size: 'xs', css: { borderRadius: '$rounded', padding: '$xxsm $xsm', lineHeight: '1rem' } },
+    { rounding: 'normal', size: 'sm', css: { lineHeight: '1rem' } },
+    { rounding: 'normal', size: 'xl', css: { padding: '$sm $gutter' } },
+    { rounding: 'icon', size: 'xs', css: { square: '1.7rem' } },
+    { rounding: 'icon', size: 'sm', css: { square: '2.1rem' } },
+    { rounding: 'icon', size: 'base', css: { square: '2.5rem' } },
+    { rounding: 'icon', size: 'lg', css: { square: '2.5rem' } },
+    { rounding: 'icon', size: 'xl', css: { square: '3rem' } },
+    ...generateButtonCompoundVariants('primary'),
+    ...generateButtonCompoundVariants('neutral'),
+    ...generateButtonCompoundVariants('critical'),
+    ...generateButtonCompoundVariants('caution'),
+    ...generateButtonCompoundVariants('positive'),
+    ...generateButtonCompoundVariants('info'),
+  ],
 });
 
-type StyledButtonType = typeof StyledButton;
-export type ButtonProps = React.ComponentProps<StyledButtonType>;
+export type ButtonProps = React.ComponentProps<typeof StyledButton>;
+// export type ButtonVariants = StitchesVariants<typeof StyledButton>;
+
+const tones: Array<Tone> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info'];
+
+function generateRippleCompoundVariants(variant: Variant, level: Level): ButtonCompoundVariant[] {
+  return tones.map((tone) => ({
+    variant,
+    tone,
+    css: {
+      '&::after': {
+        backgroundColor: `$${tone}${level}`,
+      },
+    },
+  }));
+}
 
 const Ripple = styled('span', {
   position: 'absolute',
-  width: '100%',
-  height: '100%',
+  square: '100%',
   overflow: 'hidden',
   borderRadius: '$md',
   top: 0,
@@ -157,7 +310,7 @@ const Ripple = styled('span', {
   boxSizing: 'content-box',
   pointerEvents: 'none',
   zIndex: 0,
-  '::after': {
+  '&::after': {
     content: `""`,
     position: 'absolute',
     borderRadius: '50%',
@@ -166,18 +319,15 @@ const Ripple = styled('span', {
     top: 0,
     left: 0,
     transformOrigin: 'center center',
-    width: 'var(--ripple-size, 100%)',
-    height: 'var(--ripple-size, 100%)',
+    square: 'var(--ripple-size, 100%)',
     transition: 'opacity 75ms linear',
     willChange: 'transform,opacity',
     // transform: 'scale(1)',
     animation: `${fgOpacityOut} ${DEACTIVATION_MS}ms`,
     transform: 'translate(var(--ripple-translate-end, 0)) scale(var(--ripple-scale, 1))',
   },
-  '&.pressed': {
-    '::after': {
-      animation: `${fgRadiusIn} ${RIPPLE_DURATION_MS}ms forwards,${fgOpacityIn} 75ms forwards`,
-    },
+  '&.pressed::after': {
+    animation: `${fgRadiusIn} ${RIPPLE_DURATION_MS}ms forwards,${fgOpacityIn} 75ms forwards`,
   },
   variants: {
     size: {
@@ -197,7 +347,7 @@ const Ripple = styled('span', {
     },
     variant: {
       base: {
-        '::after': {
+        '&::after': {
           backgroundColor: '$white',
         },
       },
@@ -214,158 +364,14 @@ const Ripple = styled('span', {
       },
     },
   },
+  compoundVariants: [
+    { rounding: 'normal', size: 'xs', css: { borderRadius: '$rounded' } },
+    ...generateRippleCompoundVariants('base', 800),
+    ...generateRippleCompoundVariants('secondary', 400),
+    ...generateRippleCompoundVariants('outline', 100),
+    ...generateRippleCompoundVariants('text', 100),
+  ],
 });
-
-Ripple.compoundVariant({ rounding: 'normal', size: 'xs' }, { borderRadius: '$rounded' });
-StyledButton.compoundVariant(
-  { rounding: 'normal', size: 'xs' },
-  { borderRadius: '$rounded', px: '$xsm', py: '$xxsm', lineHeight: '1rem' }
-);
-StyledButton.compoundVariant({ rounding: 'normal', size: 'sm' }, { lineHeight: '1rem' });
-StyledButton.compoundVariant({ rounding: 'normal', size: 'xl' }, { px: '$gutter', py: '$sm' });
-StyledButton.compoundVariant({ rounding: 'icon', size: 'xs' }, { width: '1.7rem', height: '1.7rem' });
-StyledButton.compoundVariant({ rounding: 'icon', size: 'sm' }, { width: '2.1rem', height: '2.1rem' });
-StyledButton.compoundVariant({ rounding: 'icon', size: 'base' }, { width: '2.5rem', height: '2.5rem' });
-StyledButton.compoundVariant({ rounding: 'icon', size: 'lg' }, { width: '2.5rem', height: '2.5rem' });
-StyledButton.compoundVariant({ rounding: 'icon', size: 'xl' }, { width: '3rem', height: '3rem' });
-
-function generateVariants(tone: ButtonProps['tone'], color: any = tone) {
-  // Base
-  StyledButton.compoundVariant(
-    { variant: 'base', tone },
-    {
-      color: `$${color}50`,
-      backgroundColor: `$${color}600`,
-      boxShadow: '$md',
-      ':focus': {
-        boxShadow: `0 0 0 3px $outline_${color}`,
-        borderColor: `$${color}700`,
-      },
-      ':focus:not(:focus-visible)': {
-        boxShadow: '$md',
-      },
-      ':focus:not(:-moz-focusring)': {
-        boxShadow: '$md',
-      },
-      ':hover,:active': {
-        backgroundColor: `$${color}700`,
-      },
-    }
-  );
-
-  // Secondary
-  StyledButton.compoundVariant(
-    { variant: 'secondary', tone },
-    {
-      color: `$${color}700`,
-      backgroundColor: `$${color}200`,
-      ':focus': {
-        borderColor: `$${color}400`,
-        boxShadow: `0 0 0 3px $outline_${color}`,
-      },
-      ':focus:not(:focus-visible)': {
-        borderColor: `$${color}300`,
-        boxShadow: 'none',
-      },
-      ':focus:not(:-moz-focusring)': {
-        borderColor: `$${color}300`,
-        boxShadow: 'none',
-      },
-      ':hover,:active': {
-        color: `$${color}800`,
-        backgroundColor: `$${color}300`,
-      },
-    }
-  );
-
-  // Outline
-  StyledButton.compoundVariant(
-    { variant: 'outline', tone },
-    {
-      color: `$${color}600`,
-      borderColor: `$${color}400`,
-      boxShadow: '$sm',
-      ':focus': {
-        borderColor: `$${color}500`,
-        boxShadow: `0 0 0 3px $outline_${color}`,
-      },
-      ':focus:not(:focus-visible)': {
-        borderColor: `$${color}600`,
-        boxShadow: '$sm',
-      },
-      ':focus:not(:-moz-focusring)': {
-        borderColor: `$${color}600`,
-        boxShadow: '$sm',
-      },
-      ':hover,:active': {
-        color: `$${color}700`,
-        borderColor: `$${color}600`,
-        backgroundColor: `$${color}50`,
-      },
-    }
-  );
-
-  // Text
-  StyledButton.compoundVariant(
-    { variant: 'text', tone },
-    {
-      color: `$${color}600`,
-      ':focus': {
-        boxShadow: `0 0 0 3px $outline_${color}`,
-      },
-      ':focus:not(:focus-visible)': {
-        boxShadow: 'none',
-      },
-      ':focus:not(:-moz-focusring)': {
-        boxShadow: 'none',
-      },
-      ':hover,:active': {
-        color: `$${color}700`,
-        backgroundColor: `$${color}50`,
-      },
-    }
-  );
-}
-
-function generateRippleVariants(
-  variant: ButtonProps['variant'],
-  level: 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900
-) {
-  tones.forEach((tone) => {
-    Ripple.compoundVariant({ variant, tone }, { '::after': { backgroundColor: `$${tone}${level}` } });
-  });
-}
-
-const tones: Array<ButtonProps['tone']> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info'];
-
-// Tone per variant
-tones.forEach((tone) => {
-  generateVariants(tone);
-});
-
-// Ripple tone variants
-generateRippleVariants('base', 800);
-generateRippleVariants('secondary', 400);
-generateRippleVariants('outline', 100);
-generateRippleVariants('text', 100);
-
-//@ts-ignore
-StyledButton.defaultProps = Ripple.defaultProps = {
-  size: 'base',
-  variant: 'base',
-  tone: 'primary',
-  rounding: 'normal',
-};
-
-interface Coordinates {
-  x: number;
-  y: number;
-}
-
-interface Translation {
-  start: Coordinates;
-  end: Coordinates;
-}
 
 function getBoundedRadius(frame: DOMRect): number {
   return Math.sqrt(Math.pow(frame.width, 2) + Math.pow(frame.height, 2)) + 10;
@@ -451,7 +457,6 @@ enum ButtonState {
 }
 
 export const Button: React.FC<ButtonProps> = ({
-  //@ts-expect-error
   as,
   type,
   onKeyDown,
@@ -460,6 +465,10 @@ export const Button: React.FC<ButtonProps> = ({
   onPointerUp,
   onClick,
   children,
+  size = 'base',
+  variant = 'base',
+  tone = 'primary',
+  rounding = 'normal',
   ...rest
 }) => {
   const ref = useRef<HTMLButtonElement>(null);
@@ -533,7 +542,7 @@ export const Button: React.FC<ButtonProps> = ({
           onPointerDown.call(ref.current, e);
         }
         e.currentTarget.setPointerCapture(e.nativeEvent.pointerId);
-        initTransition(e, ref.current, rest.rounding);
+        initTransition(e, ref.current, rounding);
         setState(ButtonState.Pressed);
       },
       onPointerUp: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
@@ -580,7 +589,7 @@ export const Button: React.FC<ButtonProps> = ({
           // Check if we are in a Pressed state already to avoid key repeat
           // TODO: This behavior should be customizable
           if (currentState.current !== ButtonState.Pressed) {
-            initTransition(e, ref.current, rest.rounding);
+            initTransition(e, ref.current, rounding);
             setState(ButtonState.Pressed);
           }
         }
@@ -601,7 +610,7 @@ export const Button: React.FC<ButtonProps> = ({
         }
       },
     }),
-    [onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rest.rounding]
+    [onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rounding]
   );
 
   return (
@@ -609,10 +618,14 @@ export const Button: React.FC<ButtonProps> = ({
       as={as}
       type={type === undefined && as === undefined ? 'button' : type}
       ref={ref}
+      size={size}
+      variant={variant}
+      tone={tone}
+      rounding={rounding}
       {...eventHandlers}
       {...rest}
     >
-      <Ripple ref={rippleRef} variant={rest.variant} tone={rest.tone} size={rest.size} rounding={rest.rounding} />
+      <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
       <ButtonLabel>{children}</ButtonLabel>
     </StyledButton>
   );

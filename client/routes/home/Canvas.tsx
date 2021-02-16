@@ -1,11 +1,11 @@
 import { useRef, useEffect } from 'react';
-import { styled, css } from '~/theme/stitches.config';
+import { styled, keyframes } from '~/theme/stitches.config';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';
 // import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
 declare const THREE: any;
 
-const fadeInCanvas = css.keyframes({
+const fadeInCanvas = keyframes({
   to: {
     opacity: 0.175,
   },

@@ -49,11 +49,13 @@ const Modal = styled('div', {
   '-webkit-overflow-scrolling': 'touch',
   overscrollBehavior: 'contain',
 
-  sm: {
-    background: '$neutral50',
-    height: 'auto',
-    width: 'auto',
-    boxShadow: '$2xl',
+  when: {
+    sm: {
+      background: '$neutral50',
+      height: 'auto',
+      width: 'auto',
+      boxShadow: '$2xl',
+    },
   },
 });
 

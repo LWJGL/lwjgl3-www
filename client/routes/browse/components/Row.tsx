@@ -1,9 +1,9 @@
 import { styled } from '~/theme/stitches.config';
 
 export const Row = styled('div', {
-  wrap: 'all',
+  wordBreak: 'break-all',
 
-  ':last-child': {
+  '&:last-child': {
     borderBottom: 'none',
   },
 
@@ -18,7 +18,7 @@ export const Row = styled('div', {
           color: '$info700',
         },
         a: {
-          ':hover': {
+          '&:hover': {
             textDecoration: 'underline',
           },
         },
@@ -31,7 +31,7 @@ export const Row = styled('div', {
           transition: 'filter 0.15s ease-in-out',
           padding: '$xsm $sm',
           display: 'block',
-          ':hover': {
+          '&:hover': {
             backgroundColor: '$primary300',
           },
           '&:active': {
@@ -51,9 +51,7 @@ export const Row = styled('div', {
       },
     },
   },
+  defaultVariants: {
+    type: 'default',
+  },
 });
-
-//@ts-expect-error
-Row.defaultProps = {
-  type: 'default',
-};

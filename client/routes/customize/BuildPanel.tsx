@@ -65,12 +65,15 @@ const PanelBox = styled('div', {
     borderColor: '$darker',
   },
 
-  lg: {
-    transition: 'transform, filter 0.083s ease-out',
+  when: {
+    lg: {
+      transition: 'transform, filter 0.083s ease-out',
+    },
+    // 'md-down': {
+    //   margin: '0 1rem 1rem 1rem',
+    // },
   },
-  // 'md-down': {
-  //   margin: '0 1rem 1rem 1rem',
-  // },
+
   variants: {
     build: {
       release: {
@@ -104,28 +107,25 @@ const PanelBox = styled('div', {
       true: {
         borderBottomLeftRadius: 0,
         borderBottomRightRadius: 0,
-        lg: {
-          transform: 'translateY(calc(1.5rem + 2px))',
-          borderBottom: 'none',
-        },
-        'lg-down': {
-          margin: '0 -$gutter',
-          // display: 'block',
-          backgroundColor: 'transparent',
-          borderTop: 'none',
-          borderLeft: 'none',
-          borderRight: 'none',
+        when: {
+          lg: {
+            transform: 'translateY(calc(1.5rem + 2px))',
+            borderBottom: 'none',
+          },
+          'lg-down': {
+            // display: 'block',
+            margin: '0 calc($gutter * -1)',
+            backgroundColor: 'transparent',
+            borderTop: 'none',
+            borderLeft: 'none',
+            borderRight: 'none',
 
-          button: {
-            //   display: 'block',
-            //   color: 'black',
-            position: 'absolute',
-            top: 0,
-            right: '$sm',
-            fontSize: '1.5rem',
-            //   ':hover': {
-            //     color: 'red',
-            //   },
+            button: {
+              position: 'absolute',
+              top: 0,
+              right: '$sm',
+              fontSize: '1.5rem',
+            },
           },
         },
       },

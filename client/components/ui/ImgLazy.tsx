@@ -23,10 +23,9 @@ function observeEntries(entries: Array<IntersectionObserverEntry>) {
 }
 
 function getPlaceholder(params: Partial<React.ImgHTMLAttributes<HTMLImageElement>>) {
-  if (params.width !== undefined && params.height !== undefined) {
-    return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="${params.width}" height="${params.height}" />`;
-  }
-  return '';
+  return params.width !== undefined && params.height !== undefined
+    ? `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="${params.width}" height="${params.height}" />`
+    : '';
 }
 
 export interface ImgLazyProps extends React.ImgHTMLAttributes<HTMLImageElement> {

@@ -1,16 +1,11 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
-import { themes } from '~/theme/stitches.config';
 
 type Scheme = 'light' | 'dark';
 type Toggle = (scheme: Scheme) => void;
 
 const SCHEME_STORAGE_KEY = 'color-theme';
-const schemeClasses: [string, string] = ['', themes.dark];
-// export const dark = themes.dark;
-// export const light = ''; // defaults to no theme override
 let schemeDefault: Scheme = 'light';
 let isStored = false;
-// let agentTriggered = false;
 
 const schemeStored = window.localStorage.getItem(SCHEME_STORAGE_KEY);
 if (schemeStored === 'dark' || schemeStored === 'light') {
@@ -71,17 +66,6 @@ export const ColorSchemeProvider: React.FC = ({ children }) => {
     const cl = document.body.classList;
     cl.remove(prevScheme);
     cl.add(current);
-
-    const darkBit = current === 'dark' ? 1 : 0;
-    let classToRemove = schemeClasses[darkBit ^ 1];
-    let classToAdd = schemeClasses[darkBit ^ 0];
-
-    if (classToRemove) {
-      cl.remove(classToRemove);
-    }
-    if (classToAdd) {
-      cl.add(classToAdd);
-    }
 
     document.documentElement.style.setProperty('color-scheme', current);
   }, [current]);

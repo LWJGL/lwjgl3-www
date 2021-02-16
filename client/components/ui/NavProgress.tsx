@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
-import { styled, css } from '~/theme/stitches.config';
+import { styled, keyframes } from '~/theme/stitches.config';
 import { COLOR_CUSTOM_CONTROL_INDICATOR_BG, COLOR_CUSTOM_CONTROL_INDICATOR_CHECKED_BG, ZINDEX_FIXED } from '~/theme';
 import { useLocationPending } from 'react-router-dom';
 
-const pulseAnimation = css.keyframes({
+const pulseAnimation = keyframes({
   '0%': {
     transform: 'translateX(-20vw)',
   },

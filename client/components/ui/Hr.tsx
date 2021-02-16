@@ -20,9 +20,7 @@ export const Hr = styled('hr', {
       },
     },
   },
+  defaultVariants: {
+    margin: 'auto',
+  },
 });
-
-//@ts-ignore
-Hr.defaultProps = {
-  margin: 'auto',
-};

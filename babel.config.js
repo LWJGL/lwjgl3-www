@@ -29,9 +29,6 @@ const config = {
     // React
     HMR && 'react-refresh/babel',
 
-    // @stitches/react
-    DEV && 'transform-stitches-display-name',
-
     // Stage-3
     ['@babel/plugin-proposal-class-properties', { loose: true }],
     '@babel/plugin-proposal-numeric-separator',

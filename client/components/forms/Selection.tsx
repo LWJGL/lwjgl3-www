@@ -32,13 +32,14 @@ const SelectionLabel = styled('label', {
   userSelect: 'none',
   cursor: 'pointer',
 
-  'sm-down': {
-    flexDirection: 'row-reverse',
-    justifyContent: 'space-between',
-    // expand hit area
-    py: '$xsm',
-    px: '$sm',
-    mx: '-$sm',
+  when: {
+    'sm-down': {
+      flexDirection: 'row-reverse',
+      justifyContent: 'space-between',
+      // expand hit area
+      padding: '$xsm $sm',
+      margin: '0 calc($sm * -1)',
+    },
   },
 
   variants: {
@@ -143,41 +144,34 @@ const Visual = styled('div', {
       },
     },
   },
-});
-
-Visual.compoundVariant(
-  {
-    checked: true,
-    disabled: true,
-  },
-  {
-    backgroundColor: '$neutral600',
-  }
-);
-
-Visual.compoundVariant(
-  {
-    checked: true,
-    variant: 'switch',
-  },
-  {
-    color: '$primary50',
-  }
-);
-
-Visual.compoundVariant(
-  {
-    variant: 'switch',
-    checked: true,
-  },
-  {
-    backgroundColor: '$primary600',
-    borderColor: '$primary600',
-    [`${Mark}`]: {
-      transform: 'translateX(.38em)',
+  compoundVariants: [
+    {
+      checked: true,
+      disabled: true,
+      css: {
+        backgroundColor: '$neutral600',
+      },
     },
-  }
-);
+    {
+      checked: true,
+      variant: 'switch',
+      css: {
+        color: '$primary50',
+      },
+    },
+    {
+      variant: 'switch',
+      checked: true,
+      css: {
+        backgroundColor: '$primary600',
+        borderColor: '$primary600',
+        [`${Mark}`]: {
+          transform: 'translateX(.38em)',
+        },
+      },
+    },
+  ],
+});
 
 export const SelectionLabelDescription = styled('div', {
   fontSize: '$sm',

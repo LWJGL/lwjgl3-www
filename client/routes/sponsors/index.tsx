@@ -25,9 +25,11 @@ export default function SponsorsRoute() {
               pt: '$sm',
               gap: '$safe',
               alignItems: 'center',
-              sm: {
-                justifyContent: 'center',
-                textAlign: 'center',
+              when: {
+                sm: {
+                  justifyContent: 'center',
+                  textAlign: 'center',
+                },
               },
             }}
           >

@@ -11,15 +11,26 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
       <Grid
         css={{
           gap: '$gutter',
-          md: {
-            grid: 'auto-flow / 1fr 1fr',
-          },
-          xxl: {
-            grid: 'auto-flow / max-content 1fr 1fr',
+          when: {
+            md: {
+              grid: 'auto-flow / 1fr 1fr',
+            },
+            xxl: {
+              grid: 'auto-flow / max-content 1fr 1fr',
+            },
           },
         }}
       >
-        <Prose css={{ color: '$neutral700', md: { gridColumn: 1 } }}>
+        <Prose
+          css={{
+            color: '$neutral700',
+            when: {
+              md: {
+                gridColumn: 1,
+              },
+            },
+          }}
+        >
           <p>
             <small>
               Copyright © 2012-present Lightweight Java Game Library
@@ -28,7 +39,14 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
             </small>
           </p>
         </Prose>
-        <Prose css={{ md: { gridRow: 2 }, xxl: { gridRow: 'auto' } }}>
+        <Prose
+          css={{
+            when: {
+              md: { gridRow: 2 },
+              xxl: { gridRow: 'auto' },
+            },
+          }}
+        >
           <p>
             Redistribution and use in source and binary forms, with or without modification, are permitted provided that
             the following conditions are met:
@@ -49,7 +67,14 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
             </li>
           </ol>
         </Prose>
-        <Prose css={{ md: { gridRow: '1/3' }, xxl: { gridRow: 'auto' } }}>
+        <Prose
+          css={{
+            when: {
+              md: { gridRow: '1/3' },
+              xxl: { gridRow: 'auto' },
+            },
+          }}
+        >
           <p>
             THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED
             WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A

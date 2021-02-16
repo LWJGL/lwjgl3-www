@@ -10,10 +10,10 @@ import '~/theme/icons/fa/duotone/external-link';
 
 const FooterLink = styled('a', {
   lineHeight: '2rem',
-  ':hover': {
+  '&:hover': {
     color: 'yellow',
   },
-  ':focus-visible': {
+  '&:focus-visible': {
     color: 'yellow',
     outline: 'none',
   },
@@ -29,23 +29,43 @@ const Heading = styled('h2', {
   lineHeight: 1,
   mb: '$xsm',
   mt: -4,
-  'md-down': {
-    fontSize: '1.5rem',
-    mt: -2,
+
+  when: {
+    'md-down': {
+      fontSize: '1.5rem',
+      mt: -2,
+    },
   },
 });
 
-const external = <Icon name="fa/duotone/external-link" css={{ fontSize: '$sm', color: '$neutral500', ml: '$xxsm' }} />;
+const external = (
+  <Icon
+    name="fa/duotone/external-link"
+    css={{
+      fontSize: '$sm',
+      color: '$neutral500',
+      ml: '$xxsm',
+    }}
+  />
+);
 
 const FOOTER = (
-  <Dark as="footer" css={{ mt: 'auto' }}>
+  <Dark
+    as="footer"
+    css={{
+      // This is needed for the full page grid
+      mt: 'auto',
+    }}
+  >
     <Container as="section" padding>
       <Grid
         as="nav"
         css={{
           gap: '$safe',
-          md: {
-            grid: 'auto-flow / 3fr 3fr 3fr 1fr',
+          when: {
+            md: {
+              grid: 'auto-flow / 3fr 3fr 3fr 1fr',
+            },
           },
         }}
       >

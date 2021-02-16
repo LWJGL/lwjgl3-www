@@ -17,10 +17,11 @@ import '~/theme/icons/fa/brands/github';
 import '~/theme/icons/fa/solid/check-square';
 import '~/theme/icons/fa/solid/folder';
 
-const buttonSizes: LinkButtonProps['size'] = {
-  initial: 'lg',
-  xl: 'xl',
-};
+const buttonSizes = 'lg';
+// const buttonSizes: LinkButtonProps['size'] = {
+//   initial: 'lg',
+//   xl: 'xl',
+// };
 
 const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
   return (
@@ -32,16 +33,10 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
         </Title>
 
         <Grid
-          css={{
-            grid: 'auto-flow / 1fr',
-            gap: '$paragraph',
-            lg: {
-              grid: 'auto-flow / repeat(3, 1fr)',
-            },
-          }}
+          css={{ grid: 'auto-flow / 1fr', gap: '$paragraph', when: { lg: { grid: 'auto-flow / repeat(3, 1fr)' } } }}
         >
           <Text>All official are available for download from GitHub:</Text>
-          <Box css={{ lg: { gridRow: 2 } }}>
+          <Box css={{ when: { lg: { gridRow: 2 } } }}>
             <AnchorButton
               fill="auto"
               size={buttonSizes}
@@ -55,7 +50,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           </Box>
 
           <Text>You can customize your LWJGL build or use the latest stable & nightly releases:</Text>
-          <Box css={{ lg: { gridRow: 2 } }} onMouseOver={CustomizePreload}>
+          <Box css={{ when: { lg: { gridRow: 2 } } }} onMouseOver={CustomizePreload}>
             <LinkButton fill="auto" size={buttonSizes} to="/customize">
               <Icon name="fa/solid/check-square" css={{ mr: '$xsm' }} />
               Customize LWJGL 3
@@ -63,7 +58,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           </Box>
 
           <Text>Or you can browse and download individual LWJGL artifacts:</Text>
-          <Box css={{ lg: { gridRow: 2 } }} onMouseOver={BrowsePreload}>
+          <Box css={{ when: { lg: { gridRow: 2 } } }} onMouseOver={BrowsePreload}>
             <LinkButton fill="auto" variant="outline" size={buttonSizes} to="/browse">
               <Icon name="fa/solid/folder" css={{ mr: '$xsm' }} />
               Browse LWJGL files
@@ -79,7 +74,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           </Text>
 
           <Text margin>Click below if you prefer to build from source:</Text>
-          <Grid css={{ gap: '$xsm', sm: { grid: 'auto-flow / repeat(2, max-content)' } }}>
+          <Grid css={{ gap: '$xsm', when: { sm: { grid: 'auto-flow / repeat(2, max-content)' } } }}>
             <LinkButton variant="outline" to="/source">
               Source
             </LinkButton>
@@ -105,7 +100,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:
         </Text>
 
-        <Grid css={{ gap: '$xsm', sm: { grid: 'auto-flow / repeat(2, max-content)' } }}>
+        <Grid css={{ gap: '$xsm', when: { sm: { grid: 'auto-flow / repeat(2, max-content)' } } }}>
           <AnchorButton variant="outline" href="http://legacy.lwjgl.org/" rel="noopener external">
             LWJGL 2 WEBSITE
           </AnchorButton>

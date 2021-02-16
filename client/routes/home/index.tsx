@@ -37,29 +37,27 @@ const FeatureImage = styled('div', {
     width: 'auto',
     height: 30,
   },
-  sm: {
-    height: 45,
-    fontSize: '3rem',
-    justifyContent: 'center',
-    img: {
+  when: {
+    sm: {
       height: 45,
+      fontSize: '3rem',
+      justifyContent: 'center',
+      img: {
+        height: 45,
+      },
     },
-  },
-  lg: {
-    fontSize: '4rem',
+    lg: {
+      fontSize: '4rem',
+    },
   },
 });
 
-//@ts-expect-error
 FeatureImage.defaultProps = {
   'aria-hidden': true,
 };
 
 const Feature = styled('div', {
   // fontSize: 'calc(1rem * var(--scale-sm, 1))',
-  sm: {
-    textAlign: 'center',
-  },
   h3: {
     color: '$neutral700',
     // fontSize: '1.5rem',
@@ -67,6 +65,11 @@ const Feature = styled('div', {
     fontSize: '$2xl',
     // fontWeight: '$thin',
     mb: '$xxsm',
+  },
+  when: {
+    sm: {
+      textAlign: 'center',
+    },
   },
 });
 
@@ -123,7 +126,11 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           justifyContent: 'center',
           gap: '$xsm',
           grid: 'auto-flow / 1fr',
-          sm: { grid: 'auto-flow / repeat(3, max-content)' },
+          when: {
+            sm: {
+              grid: 'auto-flow / repeat(3, max-content)',
+            },
+          },
         }}
       >
         <LinkButton size="xl" tone="positive" variant="outline" to="/download">
@@ -147,12 +154,14 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
         <Grid
           css={{
             gap: '$lg',
-            md: {
-              grid: 'auto-flow / repeat(2, 1fr)',
-            },
-            xl: {
-              gap: '$xl',
-              grid: 'auto-flow / repeat(3, 1fr)',
+            when: {
+              md: {
+                grid: 'auto-flow / repeat(2, 1fr)',
+              },
+              xl: {
+                gap: '$xl',
+                grid: 'auto-flow / repeat(3, 1fr)',
+              },
             },
           }}
         >
@@ -377,7 +386,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
             </p>
           </Feature>
 
-          <Feature css={{ xl: { gridColumn: '1/-1' } }}>
+          <Feature css={{ when: { xl: { gridColumn: '1/-1' } } }}>
             <FeatureImage>
               <Icon display="block" name="fa/duotone/brackets-curly" css={{ color: '$caution700' }} />
             </FeatureImage>
@@ -394,7 +403,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
 
         <Hr margin="lg" />
 
-        <Text css={{ sm: { textAlign: 'center' }, color: '$primary400' }}>
+        <Text css={{ when: { sm: { textAlign: 'center' } }, color: '$primary400' }}>
           <small>
             OpenGL® and the oval logo are trademarks or registered trademarks of Silicon Graphics, Inc. in the United
             States and/or other countries worldwide.
@@ -454,7 +463,11 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           justifyContent: 'center',
           gap: '$xsm',
           grid: 'auto-flow / 1fr',
-          sm: { grid: 'auto-flow / repeat(2, max-content)' },
+          when: {
+            sm: {
+              grid: 'auto-flow / repeat(2, max-content)',
+            },
+          },
         }}
       >
         <AnchorButton

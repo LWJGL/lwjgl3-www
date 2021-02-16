@@ -14,15 +14,17 @@ export const GoldSponsors: React.FC = ({ children }) => (
           alignItems: 'center',
           width: '100%',
           pt: '$gap',
-          sm: {
-            textAlign: 'center',
-            grid: 'auto-flow / repeat(2, 1fr)',
-          },
-          md: {
-            grid: 'auto-flow / repeat(3, 1fr)',
-          },
-          lg: {
-            grid: 'auto-flow / repeat(4, 1fr)',
+          when: {
+            sm: {
+              textAlign: 'center',
+              grid: 'auto-flow / repeat(2, 1fr)',
+            },
+            md: {
+              grid: 'auto-flow / repeat(3, 1fr)',
+            },
+            lg: {
+              grid: 'auto-flow / repeat(4, 1fr)',
+            },
           },
         }}
       >

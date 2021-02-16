@@ -3,6 +3,7 @@ import { Box } from '~/components/layout/Box';
 import { Checkbox } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
+import { wrap } from '~/theme/lib';
 import { useSelector, useDispatch } from './Store';
 import { NATIVE_ALL } from './types';
 import {
@@ -74,7 +75,7 @@ const BuildArtifact: React.FC<Props> = ({ natives, artifact, selected, disabled,
         <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
         {artifact.website !== undefined && (
           <p>
-            <Anchor href={artifact.website} rel="noopener external" target="_blank" css={{ wrap: 'all' }}>
+            <Anchor href={artifact.website} rel="noopener external" target="_blank" css={{ wordBreak: 'break-all' }}>
               {artifact.website}
             </Anchor>
           </p>

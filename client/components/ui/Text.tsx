@@ -16,19 +16,12 @@ export const Text = styled('p', {
       h2: {
         '--text-size': '1.75em',
         fontWeight: '$bold',
-        // fontWeight: '$light',
-        // '> b,> strong': {
-        //   fontWeight: '$bold',
-        // },
       },
       h3: {
         '--text-size': '1.25em',
         fontWeight: '$bold',
-        // fontWeight: '$light',
       },
-      span: {
-        // '--text-size': '1rem',
-      },
+      span: {},
       // h4: {
       //   '--text-size': '1rem',
       // },
@@ -47,7 +40,7 @@ export const Text = styled('p', {
         fontSize: 'calc(var(--text-size, 1rem) * 0.875)',
       },
       base: {
-        fontSize: 'calc(var(--text-size, 1rem) * 1)',
+        fontSize: 'var(--text-size, 1rem)',
       },
       lg: {
         fontSize: 'calc(var(--text-size, 1rem) * 1.125)',

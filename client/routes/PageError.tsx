@@ -19,15 +19,7 @@ export function PageError({ error }: ErrorProps) {
   return (
     <>
       <Container as="section" padding css={{ textAlign: 'center' }}>
-        <Title
-          css={
-            {
-              // pb: '$2',
-            }
-          }
-        >
-          Something went wrong
-        </Title>
+        <Title>Something went wrong</Title>
         <Text>Oh no! It appears that the page has crashed or failed to load.</Text>
         <Text css={{ color: '$critical600' }}>{error.message}</Text>
       </Container>
@@ -35,8 +27,6 @@ export function PageError({ error }: ErrorProps) {
         as="pre"
         padding
         css={{
-          // mt: '$6',
-          // py: '$6',
           color: '$critical600',
           fontSize: '$sm',
           whiteSpace: 'pre-wrap',

@@ -13,7 +13,7 @@ const MenuArea = styled('div', {
 });
 
 const MenuToggleButton = styled('button', {
-  marginLeft: 'auto',
+  ml: 'auto',
   height: 24,
   width: 30,
   display: 'flex',
@@ -23,10 +23,10 @@ const MenuToggleButton = styled('button', {
   padding: 0,
   border: 0,
   background: 'transparent',
-  ':focus': {
+  '&:focus': {
     outline: 'none',
   },
-  ':focus-visible': {
+  '&:focus-visible': {
     span: {
       backgroundColor: 'yellow',
     },
@@ -39,7 +39,7 @@ const MenuToggleButton = styled('button', {
   },
 });
 
-const MenuToggleLine = styled(animated.span, {
+const MenuToggleLine = styled('span', {
   width: '100%',
   height: 4,
   backgroundColor: '$white',
@@ -50,7 +50,7 @@ const MenuToggleLine = styled(animated.span, {
 const MENU_WIDTH = 260;
 const MENU_INITIAL = MENU_WIDTH + 1;
 
-const MenuOverlay = styled(animated.div, {
+const MenuOverlay = styled('div', {
   padding: '4rem 1rem 0 1rem',
   backgroundColor: '$dark',
   dark: {
@@ -181,9 +181,9 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
         title={toggleButtonTitle}
         aria-label={toggleButtonTitle}
       >
-        <MenuToggleLine style={{ transform: perc.to(transformLine1) }} />
-        <MenuToggleLine style={{ transform: perc.to(transformLine2) }} />
-        <MenuToggleLine style={{ transform: perc.to(transformLine3) }} />
+        <MenuToggleLine as={animated.span} style={{ transform: perc.to(transformLine1) }} />
+        <MenuToggleLine as={animated.span} style={{ transform: perc.to(transformLine2) }} />
+        <MenuToggleLine as={animated.span} style={{ transform: perc.to(transformLine3) }} />
       </MenuToggleButton>
 
       <OverlayContainer>
@@ -200,6 +200,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           }}
         />
         <MenuOverlay
+          as={animated.div}
           open={isOpen}
           role="menu"
           ref={overlayRef}
@@ -209,7 +210,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           style={{ x }}
         >
           <FocusScope contain={isOpen} restoreFocus>
-            <MainMenu vertical onClick={toggleOpen} focusableProps={focusableProps} {...modalProps} />
+            <MainMenu direction="vertical" onClick={toggleOpen} focusableProps={focusableProps} {...modalProps} />
           </FocusScope>
         </MenuOverlay>
       </OverlayContainer>

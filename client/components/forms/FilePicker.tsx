@@ -19,14 +19,17 @@ const FileList = styled('input', {
   // pointerEvents: 'none',
   textOverflow: 'ellipsis',
   width: 170,
-  sm: {
-    width: 300,
+
+  when: {
+    sm: {
+      width: 300,
+    },
   },
 
   '&:active': {
     filter: 'brightness(.9)',
   },
-  '::placeholder': {
+  '&::placeholder': {
     color: '$neutral400',
   },
   '&:hover': {
@@ -51,8 +54,7 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFiles(
         e.target.files && e.target.files.length
-          ? // Firefox returns the same array instance each time for some reason
-            [...e.target.files]
+          ? [...Array.from(e.target.files)] // Firefox returns the same array instance each time for some reason
           : null
       );
 

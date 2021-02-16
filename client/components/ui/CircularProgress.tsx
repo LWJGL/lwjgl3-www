@@ -1,4 +1,4 @@
-import { styled, css } from '~/theme/stitches.config';
+import { styled, keyframes } from '~/theme/stitches.config';
 import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 
 // TODO: Use react-spring for animation
@@ -14,13 +14,13 @@ function easeOut(t: number) {
   return easeOutCubic(getRelativeValue(t, 0, 1));
 }
 
-const indeterminateAnimation = css.keyframes({
+const indeterminateAnimation = keyframes({
   to: {
     transform: 'rotate(360deg)',
   },
 });
 
-const indeterminateStrokeAnimation = css.keyframes({
+const indeterminateStrokeAnimation = keyframes({
   '0%': {
     strokeDasharray: '1px, 200px',
     strokeDashoffset: 0,

@@ -4,8 +4,7 @@ import { grow } from '~/theme/animations';
 export const LoadingPulse = styled('div', {
   display: 'inline-block',
   opacity: 0,
-  width: '1em',
-  height: '1em',
+  square: '1em',
   // verticalAlign: 'text-bottom',
   backgroundColor: 'currentColor',
   borderRadius: '$full',
@@ -14,20 +13,16 @@ export const LoadingPulse = styled('div', {
   variants: {
     size: {
       xs: {
-        width: '0.5em',
-        height: '0.5em',
+        square: '0.5em',
       },
       sm: {
-        width: '0.75em',
-        height: '0.75em',
+        square: '0.75em',
       },
       lg: {
-        width: '1.5em',
-        height: '1.5em',
+        square: '1.5em',
       },
       xl: {
-        width: '2em',
-        height: '2em',
+        square: '2em',
       },
     },
   },

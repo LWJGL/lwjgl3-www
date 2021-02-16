@@ -90,17 +90,17 @@ pre {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// @media (prefers-reduced-motion: reduce) {
-//   * {
-//     // Instead of disabling animations, reduce durations to 0
-//     // This avoids having to work around fill-mode styling (e.g. "forwards" should leave the element in end state after the animation has completed)
-//     animation-delay: 0s !important;
-//     animation-duration: 0s !important;
-//     transition-duration: 0s !important;
-//     // disable smooth scrolling
-//     scroll-behavior: auto !important;
-//   }
-// }
+@media (prefers-reduced-motion: reduce) {
+  * {
+    // Instead of disabling animations, reduce durations to 0
+    // This avoids having to work around fill-mode styling (e.g. "forwards" should leave the element in end state after the animation has completed)
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+    // disable smooth scrolling
+    scroll-behavior: auto !important;
+  }
+}
 
 // .sr-only {
 //   position: absolute;

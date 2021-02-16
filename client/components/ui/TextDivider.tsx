@@ -5,38 +5,37 @@ export const TextDivider = styled(Text, {
   display: 'flex',
   alignItems: 'center',
   textAlign: 'center',
-  '--text-divider-gap': 'var(--space-xsm)',
-  '--text-divider-color': 'var(--colors-neutral300)',
+  // '--text-divider-gap': 'var(--space-xsm, 1rem)',
+  '--text-divider-color': 'var(--colors-neutral300, silver)',
 
-  '::after,::before': {
+  '&::after,&::before': {
     content: `''`,
     flexGrow: 1,
-    // backgroundColor: 'var(--text-divider-color, $neutral200)',
     backgroundImage:
-      'linear-gradient(to right, transparent 1%, var(--text-divider-color, silver) 15%, var(--text-divider-color, silver) 85%, transparent 99%)',
+      'linear-gradient(to right, transparent 1%, var(--text-divider-color) 15%, var(--text-divider-color) 85%, transparent 99%)',
     height: 1,
     minWidth: '1rem',
   },
 
-  // '::after': {
-  //   marginLeft: 'var(--text-divider-gap, 1rem)',
+  // '&::after': {
+  //   ml: 'var(--text-divider-gap)',
   // },
 
-  // '::before': {
-  //   marginRight: 'var(--text-divider-gap, 1rem)',
+  // '&::before': {
+  //   mr: 'var(--text-divider-gap)',
   // },
 
   variants: {
     align: {
       start: {
         textAlign: 'left',
-        '::before': {
+        '&::before': {
           display: 'none',
         },
       },
       end: {
         textAlign: 'right',
-        '::after': {
+        '&::after': {
           display: 'none',
         },
       },

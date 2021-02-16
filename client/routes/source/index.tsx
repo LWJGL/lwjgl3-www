@@ -1,7 +1,8 @@
 import { PageView } from '~/routes/PageView';
-import { styled } from '~/theme/stitches.config';
+import { styled, CSS } from '~/theme/stitches.config';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/brands/github';
+import { Box } from '~/components/layout/Box';
 import { Container } from '~/components/layout/Container';
 import { Grid } from '~/components/layout/Grid';
 import { Stack } from '~/components/layout/FlexStack';
@@ -43,11 +44,11 @@ const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 90, h
 
 interface BuildProps {
   title: string;
-  className?: string;
+  css?: CSS;
 }
 
-const BuildBox: React.FC<BuildProps> = ({ children, className, title }) => (
-  <div className={className}>
+const Build: React.FC<BuildProps> = ({ children, title, ...rest }) => (
+  <Box {...rest}>
     <Text
       as="h3"
       css={{
@@ -58,10 +59,8 @@ const BuildBox: React.FC<BuildProps> = ({ children, className, title }) => (
       {title}
     </Text>
     {children}
-  </div>
+  </Box>
 );
-
-const Build = styled(BuildBox, {});
 
 const IFrameThemeAware = styled('iframe', {
   dark: {
@@ -92,7 +91,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
 
         <Text>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</Text>
 
-        <Grid css={{ gap: '$xsm', md: { grid: 'auto-flow / repeat(4,max-content)' } }}>
+        <Grid css={{ gap: '$xsm', when: { md: { grid: 'auto-flow / repeat(4,max-content)' } } }}>
           <AnchorButton href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
             <Icon name="fa/brands/github" /> Github Repository
           </AnchorButton>
@@ -116,12 +115,14 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
         as="section"
         css={{
           gap: '$gap',
-          lg: {
-            grid: 'auto-flow / repeat(3, 1fr)',
+          when: {
+            lg: {
+              grid: 'auto-flow / repeat(3, 1fr)',
+            },
           },
         }}
       >
-        <Build title="LWJGL" css={{ lg: { gridRow: '1/7' } }}>
+        <Build title="LWJGL" css={{ when: { lg: { gridRow: '1/7' } } }}>
           <BuildBadge
             title="Linux/macOS"
             href="https://travis-ci.org/LWJGL-CI/lwjgl3"

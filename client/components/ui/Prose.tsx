@@ -39,8 +39,7 @@ export const Prose = styled('div', {
     content: '""',
     backgroundColor: '$neutral300',
     borderRadius: '50%',
-    width: em(6, 16),
-    height: em(6, 16),
+    square: em(6, 16),
     top: `calc(${em(28 / 2, 16)} - ${em(3, 16)})`,
     left: em(4, 16),
   },
@@ -51,7 +50,7 @@ export const Prose = styled('div', {
     position: 'relative',
     pl: em(28, 16),
     mb: '$xsm',
-    ':last-child': {
+    '&:last-child': {
       mb: 0,
     },
   },
@@ -120,9 +119,7 @@ export const Prose = styled('div', {
       },
     },
   },
+  // defaultVariants: {
+  //   size: 'auto'
+  // }
 });
-
-// //@ts-expect-error
-// Prose.defaultProps = {
-//   size: 'auto',
-// };

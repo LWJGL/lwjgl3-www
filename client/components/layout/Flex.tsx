@@ -74,12 +74,10 @@ export const Flex = styled('div', {
       },
     },
   },
+  defaultVariants: {
+    direction: 'horizontal',
+    justify: 'start',
+    align: 'start',
+    wrap: 'nowrap',
+  },
 });
-
-//@ts-ignore
-Flex.defaultProps = {
-  direction: 'horizontal',
-  justify: 'start',
-  align: 'start',
-  wrap: 'nowrap',
-};
