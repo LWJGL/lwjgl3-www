@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
 import { PageView } from '~/routes/PageView';
-import { useCSS } from '~/hooks/useCSS';
 import { readSample } from './loaders/sample';
 
 import { Container } from '~/components/layout/Container';
@@ -11,12 +10,11 @@ import { Title } from '~/components/lwjgl/Title';
 import { Dark } from '~/components/lwjgl/Dark';
 
 const Sample: React.FC<{ children?: never }> = () => {
-  useCSS('https://cdn.jsdelivr.net/npm/highlight.js@10.6.0/styles/darcula.min.css');
   const sample = readSample();
 
   return (
     <pre>
-      <code className="java" dangerouslySetInnerHTML={{ __html: sample }}></code>
+      <code dangerouslySetInnerHTML={{ __html: sample }}></code>
     </pre>
   );
 };
