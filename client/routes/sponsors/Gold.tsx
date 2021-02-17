@@ -163,6 +163,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={189} height={30} src="/img/sponsors/kajino.com-189x30.svg" alt="Kajino.com" />
         </a>
+        <a
+          href="https://www.nettikasinot.media/"
+          title="Nettikasinot: Mitkä ovat parhaat nettikasinot"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={48} height={48} src="/img/sponsors/nettikasinot.media.svg" alt="nettikasinot.media" />
+        </a>
       </Grid>
       {children}
     </Section>
