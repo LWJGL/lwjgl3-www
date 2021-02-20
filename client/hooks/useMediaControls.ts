@@ -28,9 +28,9 @@ interface SeekEvent {
   currentTime: number;
 }
 
-type Event = InitEvent | PlayPauseEvent | VolumeEvent | SeekEvent;
+type MediaEvent = InitEvent | PlayPauseEvent | VolumeEvent | SeekEvent;
 
-function mediaReducer(state: State, event: Event): State {
+function mediaReducer(state: State, event: MediaEvent): State {
   switch (event.type) {
     case 'playPause':
       if (event.paused !== state.paused) {
@@ -152,15 +152,15 @@ export function useMediaControls(playerRef: React.RefObject<HTMLMediaElement>) {
         },
       });
 
-      function playPauseHandler(this: HTMLMediaElement) {
-        dispatch({ type: 'playPause', paused: isPaused(this) });
-      }
-      function volumeHandler(this: HTMLMediaElement) {
-        dispatch({ type: 'volume', volume: this.volume });
-      }
-      function seekHandler(this: HTMLMediaElement) {
-        dispatch({ type: 'seek', currentTime: this.currentTime });
-      }
+      const playPauseHandler = () => {
+        dispatch({ type: 'playPause', paused: isPaused(player) });
+      };
+      const volumeHandler = () => {
+        dispatch({ type: 'volume', volume: player.volume });
+      };
+      const seekHandler = () => {
+        dispatch({ type: 'seek', currentTime: player.currentTime });
+      };
 
       player.addEventListener('play', playPauseHandler); // fired by play method or autoplay attribute
       player.addEventListener('playing', playPauseHandler); // fired by resume after being paused due to lack of data

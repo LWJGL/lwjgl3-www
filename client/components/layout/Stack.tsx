@@ -40,10 +40,10 @@ export interface StackProps extends React.ComponentProps<StackGridType> {
 export const Stack: React.FC<StackProps> = ({ children, divider, direction, ...props }) => (
   <StackGrid direction={direction} {...props}>
     {divider !== undefined
-      ? Children.map(children, (child: React.ReactChild, index: number) => (
+      ? Children.toArray(children).map((child, index, arr) => (
           <Fragment key={index}>
             {child}
-            {index + 1 < children.length ? <DefaultDivider direction={direction} /> : null}
+            {index + 1 < arr.length ? <DefaultDivider direction={direction} /> : null}
           </Fragment>
         ))
       : children}

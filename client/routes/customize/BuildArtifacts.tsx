@@ -3,7 +3,6 @@ import { Box } from '~/components/layout/Box';
 import { Checkbox } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
-import { wrap } from '~/theme/lib';
 import { useSelector, useDispatch } from './Store';
 import { NATIVE_ALL } from './types';
 import {

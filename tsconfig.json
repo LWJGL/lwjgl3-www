@@ -6,6 +6,7 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
     "isolatedModules": true,
     "strict": true,
     "alwaysStrict": true,

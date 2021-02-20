@@ -60,7 +60,7 @@ const Modal = styled('div', {
 });
 
 const ModalDialog: React.FC<ModalProps> = (props) => {
-  let { title, children } = props;
+  let { /*title,*/ children } = props;
   // Handle interacting outside the dialog and pressing
   // the Escape key to close the modal.
   let ref = useRef<HTMLDivElement>(null);
@@ -72,7 +72,7 @@ const ModalDialog: React.FC<ModalProps> = (props) => {
   let { modalProps } = useModal();
 
   // Get props for the dialog and its title
-  let { dialogProps, titleProps } = useDialog(props, ref);
+  let { dialogProps /*, titleProps*/ } = useDialog(props, ref);
 
   // useSpring
   const [{ perc }] = useSpring(
@@ -89,7 +89,14 @@ const ModalDialog: React.FC<ModalProps> = (props) => {
   );
 
   return (
-    <Backdrop open style={{ backgroundColor: perc.to(getBackdropOpacity) }}>
+    //@ts-expect-error
+    <Backdrop
+      open
+      style={{
+        //@ts-expect-error
+        backgroundColor: perc.to(getBackdropOpacity),
+      }}
+    >
       <FocusScope contain restoreFocus>
         <Modal ref={ref} {...overlayProps} {...dialogProps} {...modalProps}>
           {/* <Text as="h3" {...titleProps} css={{ mt: -7 }}>

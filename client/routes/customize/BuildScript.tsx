@@ -11,9 +11,37 @@ import { Text } from '~/components/ui/Text';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/duotone/cloud-download';
 import '~/theme/icons/fa/duotone/copy';
-
 import { BuildType } from './types';
-import type { BuildStore, Addon, Binding, BindingMapUnsafe, BuildStoreSnapshot } from './types';
+
+import type {
+  BuildStore,
+  Addon,
+  AddonMap,
+  Binding,
+  BindingMapUnsafe,
+  BuildStoreSnapshot,
+  ModeDefinition,
+  Version,
+  Language,
+  PlatformSelection,
+  Native,
+} from './types';
+
+export interface ScriptState {
+  build: BuildType;
+  mode: ModeDefinition;
+  version: Version;
+  hardcoded: boolean;
+  compact: boolean;
+  osgi: boolean;
+  language: Language;
+  platform: PlatformSelection;
+  platformSingle: Native | null;
+  artifacts: BindingMapUnsafe;
+  selected: Array<Binding>;
+  addons: AddonMap;
+  selectedAddons: Array<Addon>;
+}
 
 interface Props {
   configDownload: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -79,7 +107,7 @@ const selector = createSelectorDeepEqual(
       selected,
       addons: state.addons.byId,
       selectedAddons,
-    };
+    } as ScriptState;
   },
   (data) => data
 );

@@ -283,7 +283,9 @@ export const StyledButton = styled('button', {
   ],
 });
 
-export type ButtonProps = React.ComponentProps<typeof StyledButton>;
+export type ButtonProps = React.ComponentProps<typeof StyledButton> & {
+  as?: keyof JSX.IntrinsicElements | React.ReactElement | React.ForwardRefExoticComponent<any>;
+};
 // export type ButtonVariants = StitchesVariants<typeof StyledButton>;
 
 const tones: Array<Tone> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info'];
@@ -615,6 +617,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <StyledButton
+      //@ts-expect-error
       as={as}
       type={type === undefined && as === undefined ? 'button' : type}
       ref={ref}

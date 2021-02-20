@@ -1,3 +1,4 @@
+export {};
 /*
 import { useEffect, useRef } from 'react';
 import { createFocusTrap } from 'focus-trap';

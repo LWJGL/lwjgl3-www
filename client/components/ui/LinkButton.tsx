@@ -7,15 +7,13 @@ export type LinkButtonProps = ButtonProps & LinkProps;
 export type AnchorButtonProps = ButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>;
 
 export const LinkButton: React.FC<LinkButtonProps> = ({ children, ...rest }) => (
-  //@ts-expect-error
-  <Button draggable="false" as={Link} {...rest}>
+  <Button draggable="false" {...rest} as={Link}>
     {children}
   </Button>
 );
 
 export const AnchorButton: React.FC<AnchorButtonProps> = ({ children, ...rest }) => (
-  //@ts-expect-error
-  <Button draggable="false" as="a" {...rest}>
+  <Button draggable="false" {...rest} as={'a'}>
     {children}
   </Button>
 );

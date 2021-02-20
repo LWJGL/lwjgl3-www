@@ -1,5 +1,5 @@
-import { State } from '../BuildScript';
 import { BuildType, Mode, NATIVE_ALL } from '../types';
+import type { ScriptState } from '../BuildScript';
 import type {
   Binding,
   BindingDefinition,
@@ -71,7 +71,7 @@ export function getSelectedPlatforms(natives: Array<Native>, platform: PlatformS
   return result;
 }
 
-export function generateScript(mode: Mode, state: State): string {
+export function generateScript(mode: Mode, state: ScriptState): string {
   switch (mode) {
     case Mode.Maven:
       return generateMaven(state);

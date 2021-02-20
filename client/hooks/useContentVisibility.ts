@@ -42,7 +42,7 @@ function init() {
     { rootMargin: '50px 0px 100px 0px' }
   );
 
-  resizeObservers = new ResizeObserver((entries) => {
+  resizeObservers = new ResizeObserver((entries: ResizeObserverEntry[]) => {
     entries.forEach((entry) => {
       if (entry.contentRect.height) {
         reserveSpace(entry.target, entry.contentRect);

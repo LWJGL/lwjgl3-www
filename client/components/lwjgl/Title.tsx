@@ -6,11 +6,11 @@ export const Title = styled(Text, {
   mt: 'calc(var(--scale-sm, 1) * -6px)', // adjust for internal & external leading
   defaultVariants: {
     as: 'h1',
-    margin: true,
   },
 });
 
 Title.defaultProps = {
+  margin: true,
   size: {
     xl: 'xl',
   },

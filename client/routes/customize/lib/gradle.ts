@@ -1,4 +1,4 @@
-import { State } from '../BuildScript';
+import { ScriptState } from '../BuildScript';
 import { Language, BuildType } from '../types';
 import type { Addon, BindingDefinition, PlatformSelection } from '../types';
 import { generateDependencies, getVersion, isNativeApplicableToAllPlatforms } from './script';
@@ -16,7 +16,7 @@ export function generateGradle({
   selected,
   addons,
   selectedAddons,
-}: State) {
+}: ScriptState) {
   const versionString = getVersion(version, build);
   const hasBoM = 323 <= versionNum(version);
 

@@ -5,7 +5,7 @@ import { Grid } from '~/components/layout/Grid';
 import { Box } from '~/components/layout/Box';
 import { Text } from '~/components/ui/Text';
 import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
-import type { LinkButtonProps } from '~/components/ui/LinkButton';
+// import type { LinkButtonProps } from '~/components/ui/LinkButton';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Title } from '~/components/lwjgl/Title';

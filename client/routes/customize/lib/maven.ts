@@ -1,8 +1,9 @@
-import { State } from '../BuildScript';
 import { BuildType, Native } from '../types';
-import type { Addon } from '../types';
 import { generateDependencies, getArtifactName, getVersion, isNativeApplicableToAllPlatforms } from './script';
 import { versionNum } from '../reducer';
+
+import type { ScriptState } from '../BuildScript';
+import type { Addon } from '../types';
 
 export function generateMaven({
   build,
@@ -16,7 +17,7 @@ export function generateMaven({
   selected,
   addons,
   selectedAddons,
-}: State) {
+}: ScriptState) {
   const versionAlias = getVersion(version, build);
   const v = hardcoded ? versionAlias : '${lwjgl.version}';
   const nl2 = compact ? '' : '\n\t';
@@ -27,6 +28,7 @@ export function generateMaven({
   const hasBoM = 323 <= versionNum(version);
 
   let script = '';
+
   if (!hardcoded) {
     script += `<properties>
 \t<lwjgl.version>${versionAlias}</lwjgl.version>`;
@@ -41,8 +43,9 @@ export function generateMaven({
 
     script += `\n</properties>\n\n`;
   }
+
   if (platformSingle === null) {
-    function generateProfile(profile: Native, family: string, arch: string, natives: String) {
+    const generateProfile = (profile: Native, family: string, arch: string, natives: String) => {
       let dependencies = selected
         .filter((binding) => {
           const artifact = artifacts[binding];
@@ -63,7 +66,8 @@ export function generateMaven({
       return `\n\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${nl3}</properties>${
         dependencies.length === 0 ? '' : `${nl3}<dependencies>${dependencies.join(nl4)}${nl3}</dependencies>`
       }${nl2}</profile>`;
-    }
+    };
+
     script += '<profiles>';
     if (platform.linux) {
       script += generateProfile(Native.Linux, 'unix', 'amd64', 'natives-linux');

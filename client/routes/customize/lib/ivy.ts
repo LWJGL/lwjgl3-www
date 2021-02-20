@@ -1,4 +1,4 @@
-import { State } from '../BuildScript';
+import { ScriptState } from '../BuildScript';
 import { BuildType } from '../types';
 import type { Addon } from '../types';
 import { generateDependencies, getArtifactName, getVersion, isNativeApplicableToAllPlatforms } from './script';
@@ -15,7 +15,7 @@ export function generateIvy({
   selected,
   addons,
   selectedAddons,
-}: State) {
+}: ScriptState) {
   const versionString = getVersion(version, build);
   let script = '';
   const v = hardcoded ? versionString : '${lwjgl.version}';

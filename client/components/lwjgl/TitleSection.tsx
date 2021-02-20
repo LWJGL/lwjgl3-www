@@ -16,6 +16,9 @@ export const TitleSection = styled(Text, {
   // },
   defaultVariants: {
     as: 'h2',
-    margin: true,
   },
 });
+
+TitleSection.defaultProps = {
+  margin: true,
+};

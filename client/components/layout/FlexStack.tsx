@@ -1,6 +1,6 @@
 import { Fragment, Children } from 'react';
 import { Flex } from './Flex';
-import { Box } from './Box';
+import { styled } from '~/theme/stitches.config';
 
 // Types
 type FlexType = typeof Flex;
@@ -9,17 +9,18 @@ export interface StackProps extends React.ComponentProps<FlexType> {
 }
 type HVStackProps = Omit<StackProps, 'direction'>;
 
-const Gap: React.FC<{ gap: string | number }> = ({ gap }) => {
-  return <Box css={{ flexGrow: 0, flexShrink: 0, flexBasis: gap }} />;
-};
+const Gap = styled('div', {
+  flexGrow: 0,
+  flexShrink: 0,
+});
 
 export const Stack: React.FC<StackProps> = ({ gap, children, ...rest }) => (
   <Flex {...rest}>
     {gap !== undefined
-      ? Children.map(children, (child: React.ReactChild, index: number) => (
+      ? Children.toArray(children).map((child, index, arr) => (
           <Fragment key={index}>
             {child}
-            {index + 1 < children.length ? <Gap gap={gap} /> : null}
+            {index + 1 < arr.length ? <Gap css={{ flexBasis: gap }} /> : null}
           </Fragment>
         ))
       : children}
