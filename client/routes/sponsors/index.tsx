@@ -2,8 +2,8 @@ import { PageView } from '~/routes/PageView';
 import { ImgLazy } from '~/components/ui/ImgLazy';
 import { GoldSponsors } from '../sponsors/Gold';
 import { HowToSupport } from '../sponsors/HowToSupport';
-
 import { Grid } from '~/components/layout/Grid';
+import { FlexStack } from '~/components/layout/FlexStack';
 import { Container } from '~/components/layout/Container';
 import { Box } from '~/components/layout/Box';
 import { Section } from '~/components/ui/Section';
@@ -27,14 +27,21 @@ export default function SponsorsRoute() {
               alignItems: 'center',
               when: {
                 sm: {
+                  grid: 'auto-flow / repeat(2, 1fr)',
                   justifyContent: 'center',
                   textAlign: 'center',
+                },
+                md: {
+                  grid: 'auto-flow / repeat(3, 1fr)',
+                },
+                lg: {
+                  grid: 'auto-flow / repeat(4, 1fr)',
                 },
               },
             }}
           >
             <a
-              href="https://goread.io/buy-instagram-followers?utm_source=opencollective&utm_medium=affiliate&utm_campaign=lwjgl"
+              href="https://goread.io/buy-instagram-followers"
               title="Buy Instagram Followers with Instant Delivery"
               rel="sponsored noopener external"
               target="_blank"
@@ -45,6 +52,33 @@ export default function SponsorsRoute() {
                 src="/img/sponsors/goread-1133x218.png"
                 alt="Goread.io"
               />
+            </a>
+            <a
+              href="https://www.vpnconexion.es/vpn-gratis/"
+              title="VPN CONEXIÓN"
+              rel="sponsored noopener external"
+              target="_blank"
+            >
+              <FlexStack
+                gap="0.5rem"
+                css={{
+                  color: '#577BFA',
+                  fontWeight: 'bold',
+                  when: {
+                    md: {
+                      justifyContent: 'center',
+                    },
+                  },
+                }}
+              >
+                <ImgLazy
+                  width={460 / 8}
+                  height={279 / 8}
+                  src="/img/sponsors/connessionivpn.it-460x279.svg"
+                  alt="VPN CONEXIÓN"
+                />{' '}
+                <span>VPN CONEXIÓN</span>
+              </FlexStack>
             </a>
           </Grid>
         </Section>

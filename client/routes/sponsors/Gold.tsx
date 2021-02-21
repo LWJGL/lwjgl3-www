@@ -1,5 +1,6 @@
 import { ImgLazy } from '~/components/ui/ImgLazy';
 import { Grid } from '~/components/layout/Grid';
+import { FlexStack } from '~/components/layout/FlexStack';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Section } from '~/components/ui/Section';
@@ -10,10 +11,13 @@ export const GoldSponsors: React.FC = ({ children }) => (
       <TitleSection css={{ color: 'gold' }}>Our Gold Sponsors:</TitleSection>
       <Grid
         css={{
+          pt: '$gap',
           gap: '$safe',
           alignItems: 'center',
           width: '100%',
-          pt: '$gap',
+          img: {
+            maxWidth: '100%',
+          },
           when: {
             sm: {
               textAlign: 'center',
@@ -170,6 +174,33 @@ export const GoldSponsors: React.FC = ({ children }) => (
           target="_blank"
         >
           <ImgLazy width={48} height={48} src="/img/sponsors/nettikasinot.media.svg" alt="nettikasinot.media" />
+        </a>
+        <a
+          href="https://www.connessionivpn.it/"
+          title="Connessioni VPN"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <FlexStack
+            gap="0.5rem"
+            css={{
+              color: '#577BFA',
+              fontWeight: 'bold',
+              when: {
+                md: {
+                  justifyContent: 'center',
+                },
+              },
+            }}
+          >
+            <ImgLazy
+              width={460 / 8}
+              height={279 / 8}
+              src="/img/sponsors/connessionivpn.it-460x279.svg"
+              alt="Connessioni VPN"
+            />{' '}
+            <span>CONNESSIONI VPN</span>
+          </FlexStack>
         </a>
       </Grid>
       {children}
