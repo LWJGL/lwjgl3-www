@@ -14,7 +14,7 @@ const Gap = styled('div', {
   flexShrink: 0,
 });
 
-export const Stack: React.FC<StackProps> = ({ gap, children, ...rest }) => (
+export const FlexStack: React.FC<StackProps> = ({ gap, children, ...rest }) => (
   <Flex {...rest}>
     {gap !== undefined
       ? Children.toArray(children).map((child, index, arr) => (
@@ -27,6 +27,6 @@ export const Stack: React.FC<StackProps> = ({ gap, children, ...rest }) => (
   </Flex>
 );
 
-export const HStack: React.FC<HVStackProps> = (props) => <Stack direction="horizontal" {...props} />;
+export const HStack: React.FC<HVStackProps> = (props) => <FlexStack direction="horizontal" {...props} />;
 
-export const VStack: React.FC<HVStackProps> = (props) => <Stack direction="vertical" {...props} />;
+export const VStack: React.FC<HVStackProps> = (props) => <FlexStack direction="vertical" {...props} />;

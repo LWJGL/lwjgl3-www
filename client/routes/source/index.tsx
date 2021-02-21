@@ -5,7 +5,7 @@ import '~/theme/icons/fa/brands/github';
 import { Box } from '~/components/layout/Box';
 import { Container } from '~/components/layout/Container';
 import { Grid } from '~/components/layout/Grid';
-import { Stack } from '~/components/layout/FlexStack';
+import { FlexStack } from '~/components/layout/FlexStack';
 import { Text } from '~/components/ui/Text';
 import { Hr } from '~/components/ui/Hr';
 import { TextDivider } from '~/components/ui/TextDivider';
@@ -23,7 +23,7 @@ interface BuildBadgeProps {
 }
 
 const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 90, height = 20 }) => (
-  <Stack width="full">
+  <FlexStack width="full">
     <TextDivider
       align="start"
       as="span"
@@ -39,7 +39,7 @@ const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 90, h
     <Anchor href={href} target="_blank" rel="noopener external" css={{ justifySelf: 'end' }}>
       <ImgLazy width={width} height={height} src={src} alt={`${title} build status`} />
     </Anchor>
-  </Stack>
+  </FlexStack>
 );
 
 interface BuildProps {
