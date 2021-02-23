@@ -4,9 +4,35 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 // https://jakearchibald.com/2017/es-modules-in-browsers/
 // const MODERN = process.env.MODERN === 'true';
 const DEV = !PRODUCTION;
-const HMR = DEV && process.argv.includes('--nohmr');
 
 const config = {
+  browserslistEnv: PRODUCTION ? 'production' : 'development',
+  parserOpts: {
+    strictMode: true,
+  },
+  assumptions: {
+    noClassCalls: true,
+    arrayLikeIsIterable: true,
+    constantReexports: true,
+    constantSuper: true,
+    enumerableModuleMeta: true,
+    ignoreFunctionLength: true,
+    ignoreToPrimitiveHint: true,
+    iterableIsArray: true,
+    mutableTemplateObject: true,
+    noClassCalls: true,
+    noDocumentAll: true,
+    noNewArrows: true,
+    objectRestNoSymbols: true,
+    privateFieldsAsProperties: true,
+    pureGetters: true,
+    setClassMethods: true,
+    setComputedProperties: true,
+    setPublicClassFields: true,
+    setSpreadProperties: true,
+    skipForOfIteratorClosing: true,
+    superIsCallableConstructor: true,
+  },
   presets: [
     [
       '@babel/preset-typescript',
@@ -15,44 +41,23 @@ const config = {
         onlyRemoveTypeImports: true,
       },
     ],
-    [
-      '@babel/preset-react',
-      {
-        runtime: 'automatic',
-        development: DEV,
-        useBuiltIns: true,
-        useSpread: DEV,
-      },
-    ],
+    ['@babel/preset-react', { runtime: 'automatic', development: DEV }],
   ],
-  plugins: [
-    // React
-    HMR && 'react-refresh/babel',
-
-    // Stage-3
-    ['@babel/plugin-proposal-class-properties', { loose: true }],
-    '@babel/plugin-proposal-numeric-separator',
-
-    // PRODUCTION && 'babel-plugin-transform-async-to-promises',
-  ].filter(Boolean),
+  plugins: ['@babel/plugin-proposal-class-properties'],
 };
 
-if (PRODUCTION) {
+if (DEV) {
+  config.plugins.unshift('react-refresh/babel');
+} else if (PRODUCTION) {
   config.presets.push([
     '@babel/env',
     {
-      spec: false,
-      loose: true,
-      // modules: false,
-      debug: false,
-      // useBuiltIns: 'entry', // To use add a core-js import in main.tsx, this will result in increased size
-      useBuiltIns: 'usage',
-      corejs: 3,
-      bugfixes: true,
+      bugfixes: true, // TODO: Remove in Babel@8+ (it will be the default)
       shippedProposals: true,
-      // exclude: ['transform-async-to-generator', 'transform-regenerator'],
     },
   ]);
+
+  config.plugins.push(['polyfill-corejs3', { method: 'usage-global' }]);
 }
 
 module.exports = config;

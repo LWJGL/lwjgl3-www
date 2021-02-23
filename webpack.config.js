@@ -70,7 +70,7 @@ const buildConfiguration = () => {
       // },
     },
     resolve: {
-      extensions: ['.tsx', '.jsx', '.ts', '.js', '.json'],
+      extensions: ['.tsx', '.jsx', '.ts', '.wasm', '.js', '.mjs', '.json'],
       alias: {
         '~': path.resolve(__dirname, './client'),
         // Use prebundled jszip that has smaller stream polyfill
@@ -82,7 +82,7 @@ const buildConfiguration = () => {
     module: {
       rules: [
         {
-          test: /\.(js|ts|tsx)$/,
+          test: /\.(mjs|js|ts|tsx)$/,
           include: [path.resolve(__dirname, 'client')],
           use: [
             {
