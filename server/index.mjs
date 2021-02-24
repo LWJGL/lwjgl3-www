@@ -75,18 +75,27 @@ export const app = fastify({
   connectionTimeout: 0,
   keepAliveTimeout: 5000,
   maxParamLength: 100,
-  bodyLimit: 1024 * 1024 * 1, // 1MB
+  // bodyLimit: 1024 * 1024 * 1, // 1MB
+  bodyLimit: 256 * 1024 * 1, // 256KB
   caseSensitive: true,
   ignoreTrailingSlash: false,
   disableRequestLogging: PRODUCTION,
   return503OnClosing: true,
   logger: {
     // level: PRODUCTION ? 'error' : 'info',
+    // level: 'info',
     level: 'error',
   },
   onProtoPoisoning: 'error',
   onConstructorPoisoning: 'error',
   trustProxy: ['127.0.0.0/8', '10.0.0.0/8', '172.16.0.0/12', '192.168.0.0/16'],
+});
+
+// Body content-type parsing
+// https://www.fastify.io/docs/latest/ContentTypeParser/
+app.addContentTypeParser('*', function (request, payload, done) {
+  // pipe-it directly, we don't care for it
+  done();
 });
 
 // ! `send` package still depends on older `mime`
@@ -325,7 +334,6 @@ app.route({
     reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
     return reply.view('index.pug', template);
   },
-  bodyLimit: 1,
 });
 
 // ------------------------------------------------------------------------------
