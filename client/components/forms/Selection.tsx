@@ -87,7 +87,7 @@ const Mark = styled('svg', {
 function getVisualMark(id: string): React.ReactNode {
   return (
     <Mark focusable={false} aria-hidden={true} preserveAspectRatio="xMidYMid meet">
-      <use href={`#${id}`} />
+      <use xlinkHref={`#${id}`} />
     </Mark>
   );
 }

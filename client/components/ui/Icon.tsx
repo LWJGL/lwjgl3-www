@@ -5,10 +5,11 @@ interface Props extends React.HTMLAttributes<HTMLSpanElement> {
   name: IconName;
 }
 
+// ! use `xlink:href` because `href` is not supported in Safari 11 and lower
 const IconSpan: React.FC<Props> = ({ name, ...props }) => (
   <span aria-hidden={true} {...props}>
     <svg focusable={false} preserveAspectRatio="xMidYMid meet">
-      <use href={`#${name}`} />
+      <use xlinkHref={`#${name}`} />
     </svg>
   </span>
 );
