@@ -234,6 +234,7 @@ const themeTokens = {
 };
 
 type SpaceValue = `$${keyof typeof themeTokens.space}` | number | (string & {});
+type SizeValue = `$${keyof typeof themeTokens.sizes}` | number | (string & {});
 // type ColorValue = `$${keyof typeof themeTokens.colors}` | (string & {});
 
 const stitchesConfig = createCss({
@@ -308,7 +309,7 @@ const stitchesConfig = createCss({
       paddingTop: value,
       paddingBottom: value,
     }),
-    square: (config) => (value: `$${keyof typeof config.theme.sizes}` | number | (string & {})) => ({
+    square: (config) => (value: SizeValue) => ({
       width: value,
       height: value,
     }),
@@ -346,6 +347,17 @@ const stitchesConfig = createCss({
     //     },
     //   };
     // },
+    // ! Polyfills
+    gap: (config) => (value: SpaceValue) => ({
+      gridGap: value,
+      gap: value,
+    }),
+    userSelect: (config) => (value: 'none' | 'auto' | 'text' | 'all' | 'contain') => ({
+      MsUserSelect: value,
+      MozUserSelect: value,
+      WebkitUserSelect: value,
+      userSelect: value,
+    }),
   },
 });
 

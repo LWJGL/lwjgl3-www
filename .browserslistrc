@@ -1,10 +1,11 @@
 [production]
-# https://github.com/adobe/react-spectrum/blob/main/package.json#L10-L15
-#supports es6-module
+# Run `npx autoprefixer --info` to view CSS properties that need polyfill
+# From: https://github.com/adobe/react-spectrum/blob/main/package.json#L10-L15
 chrome >= 61
 firefox >= 60
 safari >= 11
 edge >= 16
+#supports es6-module
 
 [legacy]
 # https://github.com/browserslist/browserslist
