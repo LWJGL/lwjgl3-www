@@ -18,7 +18,6 @@ compiler.run((err, stats) => {
         console.error(err.details);
       }
       process.exit(1);
-      return;
     }
 
     if (stats.hasErrors()) {
@@ -33,7 +32,6 @@ compiler.run((err, stats) => {
         })
       );
       process.exit(1);
-      return;
     }
 
     if (stats.hasWarnings()) {
