@@ -83,23 +83,47 @@ export function generateIvy({
 <condition property="lwjgl.natives" value="natives-linux-arm32">
 \t<and>
 \t\t<os name="Linux"/>
-\t\t<matches string="\${os.arch}" pattern="^(arm|aarch64)"/>
+\t\t<matches string="\${os.arch}" pattern="^arm"/>
 \t\t<not><matches string="\${os.arch}" pattern="64|^armv8"/></not>
 \t</and>
 </condition>`;
         }
       }
     }
-    if (platform.macos) {
-      script += `
-<condition property="lwjgl.natives" value="natives-macos">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
+    const macosArches = +platform.macos + +platform['macos-arm64'];
+    if (macosArches !== 0) {
+      if (macosArches === 1) {
+        script += `
+<condition property="lwjgl.natives" value="natives-macos${
+          platform.macos ? '' : '-arm64'
+        }">${nl2}<os name="Mac OS X"/>${nl1}</condition>`;
+      } else {
+        if (platform.macos) {
+          script += `
+<condition property="lwjgl.natives" value="natives-macos">
+\t<and>
+\t\t<os name="Mac OS X"/>
+\t\t<not><matches string="\${os.arch}" pattern="aarch64"/></not>
+\t</and>
+</condition>`;
+        }
+        if (platform['macos-arm64']) {
+          script += `
+<condition property="lwjgl.natives" value="natives-macos-arm64">
+\t<and>
+\t\t<os name="Mac OS X"/>
+\t\t<matches string="\${os.arch}" pattern="aarch64"/>
+\t</and>
+</condition>`;
+        }
+      }
     }
-    const windowsArches = +platform.windows + +platform['windows-x86'];
+    const windowsArches = +platform.windows + +platform['windows-x86'] + +platform['windows-arm64'];
     if (windowsArches !== 0) {
       if (windowsArches === 1) {
         script += `
 <condition property="lwjgl.natives" value="natives-windows${
-          platform.windows ? '' : '-x86'
+          platform.windows ? '' : platform['windows-arm64'] ? '-arm64' : '-x86'
         }">${nl2}<os family="Windows"/>${nl1}</condition>`;
       } else {
         if (platform.windows) {
@@ -108,6 +132,7 @@ export function generateIvy({
 \t<and>
 \t\t<os family="Windows"/>
 \t\t<matches string="\${os.arch}" pattern="64"/>
+\t\t<not><matches string="\${os.arch}" pattern="aarch64"/></not>
 \t</and>
 </condition>`;
         }
@@ -117,6 +142,15 @@ export function generateIvy({
 \t<and>
 \t\t<os family="Windows"/>
 \t\t<not><matches string="\${os.arch}" pattern="64"/></not>
+\t</and>
+</condition>`;
+        }
+        if (platform['windows-arm64']) {
+          script += `
+<condition property="lwjgl.natives" value="natives-windows-arm64">
+\t<and>
+\t\t<os family="Windows"/>
+\t\t<matches string="\${os.arch}" pattern="aarch64"/>
 \t</and>
 </condition>`;
         }

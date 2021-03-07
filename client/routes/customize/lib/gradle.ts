@@ -46,7 +46,8 @@ export function generateGradle({
   }
   if (platformSingle === null) {
     const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
-    const windowsArches = +platform.windows + +platform['windows-x86'];
+    const macosArches = +platform.macos + +platform['macos-arm64'];
+    const windowsArches = +platform.windows + +platform['windows-x86'] + +platform['windows-arm64'];
     if (language === Language.Groovy) {
       script += `switch (OperatingSystem.current()) {`;
       if (linuxArches != 0) {
@@ -64,20 +65,29 @@ export function generateGradle({
 \t\t\t: "natives-linux"
 \t\tbreak`;
       }
-      if (platform.macos) {
+      if (macosArches != 0) {
         script += `
 \tcase OperatingSystem.MAC_OS:
-\t\tproject.ext.lwjglNatives = "natives-macos"
+\t\tproject.ext.lwjglNatives = ${
+          macosArches == 1
+            ? `natives-macos${platform.macos ? '' : '-arm64'}`
+            : `System.getProperty("os.arch").startsWith("aarch64") ? "natives-macos-arm64" : "natives-macos"`
+        }
 \t\tbreak`;
       }
       if (windowsArches != 0) {
-        script += `
+        script +=
+            windowsArches == 1
+            ? `
 \tcase OperatingSystem.WINDOWS:
-\t\tproject.ext.lwjglNatives = ${
-          windowsArches == 1
-            ? `"natives-windows${platform.windows ? '' : '-x86'}"`
-            : `System.getProperty("os.arch").contains("64") ? "natives-windows" : "natives-windows-x86"`
-        }
+\t\tproject.ext.lwjglNatives = "natives-windows${platform.windows ? '' : platform['windows-arm64'] ? '-arm64' : '-x86'}"
+\t\tbreak`
+            : `
+\tcase OperatingSystem.WINDOWS:
+\t\tdef osArch = System.getProperty("os.arch")
+\t\tproject.ext.lwjglNatives = osArch.contains("64")
+\t\t\t? "natives-windows\${osArch.startsWith("aarch64") ? "-arm64" : ""}"
+\t\t\t: "natives-windows-x86"
 \t\tbreak`;
       }
       script += `
@@ -97,15 +107,24 @@ export function generateGradle({
 \t\t\t"natives-linux"
 \t}`;
       }
-      if (platform.macos) {
-        script += `\n\tOperatingSystem.MAC_OS  -> "natives-macos"`;
+      if (macosArches != 0) {
+        script +=
+          macosArches == 1
+            ? `\n\tOperatingSystem.MAC_OS  -> "natives-macos${platform.macos ? '' : '-arm64'}"`
+            : `\n\tOperatingSystem.MAC_OS  -> if (System.getProperty("os.arch").startsWith("aarch64")) "natives-macos-arm64" else "natives-macos"`;
       }
       if (windowsArches != 0) {
-        script += `\n\tOperatingSystem.WINDOWS -> ${
+        script +=
           windowsArches == 1
-            ? `"natives-windows${platform.windows ? '' : '-x86'}"`
-            : `if (System.getProperty("os.arch").contains("64")) "natives-windows" else "natives-windows-x86"`
-        }`;
+            ? `\n\tOperatingSystem.WINDOWS -> "natives-windows${
+                platform.windows ? '' : platform['windows-arm64'] ? '-arm64' : '-x86'
+              }"`
+            : `\n\tOperatingSystem.WINDOWS -> System.getProperty("os.arch").let {
+\t\tif (it.contains("64"))
+\t\t\t"natives-linux\${if (it.startsWith("aarch64")) "-arm64" else ""}"
+\t\telse
+\t\t\t"natives-linux-x86"
+\t}`;
       }
       script += `
 \telse -> throw Error("Unrecognized or unsupported Operating system. Please set \\"lwjglNatives\\" manually")

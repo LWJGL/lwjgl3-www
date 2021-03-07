@@ -82,11 +82,17 @@ export function generateMaven({
     if (platform.macos) {
       script += generateProfile(Native.MacOS, 'mac', 'amd64', 'natives-macos');
     }
+    if (platform['macos-arm64']) {
+      script += generateProfile(Native.MacOS, 'mac', 'aarch64', 'natives-macos-arm64');
+    }
     if (platform.windows) {
       script += generateProfile(Native.Windows, 'windows', 'amd64', 'natives-windows');
     }
     if (platform['windows-x86']) {
       script += generateProfile(Native.Windows, 'windows', 'x86', 'natives-windows-x86');
+    }
+    if (platform['windows-arm64']) {
+      script += generateProfile(Native.Windows, 'windows', 'aarch64', 'natives-windows-arm64');
     }
     script += '\n</profiles>\n\n';
   }
