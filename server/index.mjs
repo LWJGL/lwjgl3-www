@@ -326,12 +326,14 @@ app.route({
           break;
       }
       reply.header('Link', preload);
+      reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
     } else {
       template.entry = 'main.js';
     }
 
     reply.header('Content-Language', 'en');
-    reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
+    // reply.header('Cross-Origin-Embedder-Policy', 'require-corp');
+    // reply.header('Cross-Origin-Opener-Policy', 'same-origin');
     return reply.view('index.pug', template);
   },
 });
