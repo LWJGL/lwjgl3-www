@@ -39,12 +39,12 @@ function getInitialConfig(): BuildStore {
         [BuildType.Release]: {
           id: BuildType.Release,
           title: 'Release',
-          description: 'Latest official release',
+          description: '“Latest stable build”',
         },
         [BuildType.Nightly]: {
           id: BuildType.Nightly,
-          title: 'Nightly',
-          description: 'Bleeding edge, possibly broken',
+          title: 'Early Access',
+          description: '“Snapshot build, possibly broken”',
         },
       },
       allIds: [BuildType.Release, BuildType.Nightly],
