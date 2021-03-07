@@ -1,5 +1,5 @@
-import { Binding, NATIVE_LTE_322, NATIVE_ALL, Version } from '../types';
-import type { BuildBindings } from '../types';
+import { Binding, NATIVE_LTE_322, NATIVE_ALL, Native, Version } from '../types';
+import type { BuildBindings, BindingDefinition } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
@@ -9,7 +9,10 @@ export default (prev: BuildBindings): BuildBindings => ({
     ...prev.byId,
     [Binding.LWJGL]: { ...(prev.byId[Binding.LWJGL] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.ASSIMP]: { ...(prev.byId[Binding.ASSIMP] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.BGFX]: { ...(prev.byId[Binding.BGFX] as BindingDefinition), natives: [...NATIVE_LTE_322, Native.LinuxARM32, Native.LinuxARM64, Native.MacOSARM64, Native.WindowsX86] },
+    [Binding.BGFX]: {
+      ...(prev.byId[Binding.BGFX] as BindingDefinition),
+      natives: [...NATIVE_LTE_322, Native.LinuxARM32, Native.LinuxARM64, Native.MacOSARM64, Native.WindowsX86],
+    },
     /*[Binding.BULLET]: {
       id: Binding.BULLET,
       title: 'Bullet Physics',
@@ -31,7 +34,10 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.LLVM]: { ...(prev.byId[Binding.LLVM] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LMDB]: { ...(prev.byId[Binding.LMDB] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LZ4]: { ...(prev.byId[Binding.LZ4] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.MEOW]: { ...(prev.byId[Binding.MEOW] as BindingDefinition), natives: [...NATIVE_LTE_322, Native.LinuxARM64, Native.MacOSARM64, Native.WindowsX86, Native.WindowsARM64] },
+    [Binding.MEOW]: {
+      ...(prev.byId[Binding.MEOW] as BindingDefinition),
+      natives: [...NATIVE_LTE_322, Native.LinuxARM64, Native.MacOSARM64, Native.WindowsX86, Native.WindowsARM64],
+    },
     [Binding.MESHOPTIMIZER]: {
       id: Binding.MESHOPTIMIZER,
       title: 'meshoptimizer',
@@ -62,7 +68,10 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.TINYEXR]: { ...(prev.byId[Binding.TINYEXR] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.TINYFD]: { ...(prev.byId[Binding.TINYFD] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.VMA]: { ...(prev.byId[Binding.VMA] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.VULKAN]: { ...(prev.byId[Binding.VULKAN] as BindingDefinition), natives: [Native.MacOS, Native.MacOSARM64] },
+    [Binding.VULKAN]: {
+      ...(prev.byId[Binding.VULKAN] as BindingDefinition),
+      natives: [Native.MacOS, Native.MacOSARM64],
+    },
     [Binding.XXHASH]: { ...(prev.byId[Binding.XXHASH] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.YOGA]: { ...(prev.byId[Binding.YOGA] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.ZSTD]: { ...(prev.byId[Binding.ZSTD] as BindingDefinition), natives: NATIVE_ALL },
