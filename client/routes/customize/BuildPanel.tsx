@@ -38,7 +38,7 @@ export const BuildPanel: React.FC<Props> = ({ build }) => {
       onClick={onPanelClick}
     >
       <Text as="h2">{spec.title}</Text>
-      <Text>{spec.description}</Text>
+      <Text css={{ fontFamily: '$serif', fontStyle: 'italic' }}>{spec.description}</Text>
       <Suspense fallback={<LoadingPulse size="lg" />}>
         <BuildStatus name={build} />
       </Suspense>
@@ -83,7 +83,7 @@ const PanelBox = styled('div', {
       },
       nightly: {
         h2: {
-          color: '$critical700',
+          color: '$caution700',
         },
       },
     },
