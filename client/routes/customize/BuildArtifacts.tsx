@@ -16,12 +16,25 @@ import {
 
 import type { Binding, BindingDefinition, Native, NativeMap } from './types';
 
-const getSupportedPlatforms = (natives: NativeMap, platforms: Array<Native>, disabled: boolean) => (
-  <Text css={{ color: disabled ? '$critical600' : '$positive500' }}>
-    <em>Supported platforms: </em>
-    {platforms.map((platform) => natives[platform].title).join(', ')}
-  </Text>
-);
+const getSupportedPlatforms = (natives: NativeMap, platforms: Array<Native>, disabled: boolean) => {
+  let missing = Object.keys(natives).filter((key) => !platforms.includes(key as Native)) as Native[];
+
+  if (missing.length >= platforms.length) {
+    return (
+      <Text css={{ color: disabled ? '$caution600' : '$caution500' }}>
+        <em>* Supported platforms: </em>
+        {platforms.map((platform) => natives[platform].title).join(', ')}
+      </Text>
+    );
+  } else {
+    return (
+      <Text css={{ color: disabled ? '$critical600' : '$critical500' }}>
+        <em>* Not available on: </em>
+        {missing.map((platform) => natives[platform].title).join(', ')}
+      </Text>
+    );
+  }
+};
 
 export const BuildArtifacts: React.FC<{ children?: never }> = () => {
   const dispatch = useDispatch();
