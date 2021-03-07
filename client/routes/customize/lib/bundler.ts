@@ -161,10 +161,14 @@ function pathToNative(folder: string): Native | null {
       return Native.LinuxARM32;
     case 'macos':
       return Native.MacOS;
+    case 'macos-arm64':
+      return Native.MacOSARM64;
     case 'windows':
       return Native.Windows;
     case 'windows-x86':
       return Native.WindowsX86;
+    case 'windows-arm64':
+      return Native.WindowsARM64;
   }
 
   return null;
