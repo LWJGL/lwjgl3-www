@@ -28,13 +28,12 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
           px: '$safe',
           when: {
             lg: {
-              grid: 'auto / 1fr 1fr 1fr',
+              grid: 'auto / 1fr 1fr',
             },
           },
         }}
       >
         <BuildPanel build={BuildType.Release} />
-        <BuildPanel build={BuildType.Stable} />
         <BuildPanel build={BuildType.Nightly} />
       </Grid>
       <ControlledPanel predicate={selectorIsBuildSelected}>

@@ -11,7 +11,6 @@ import lwjgl_321 from './versions/3.2.1';
 import lwjgl_322 from './versions/3.2.2';
 import lwjgl_323 from './versions/3.2.3';
 import lwjgl_nightly from './versions/nightly';
-import lwjgl_stable from './versions/stable';
 import { Native, BuildType, Mode, Version, Language, Preset, NATIVE_ALL, Addon } from './types';
 
 // Types
@@ -42,18 +41,13 @@ function getInitialConfig(): BuildStore {
           title: 'Release',
           description: 'Latest official release',
         },
-        [BuildType.Stable]: {
-          id: BuildType.Stable,
-          title: 'Stable',
-          description: 'Beta quality, verified to work',
-        },
         [BuildType.Nightly]: {
           id: BuildType.Nightly,
           title: 'Nightly',
           description: 'Bleeding edge, possibly broken',
         },
       },
-      allIds: [BuildType.Release, BuildType.Stable, BuildType.Nightly],
+      allIds: [BuildType.Release, BuildType.Nightly],
     },
     modes: {
       byId: {
@@ -261,7 +255,6 @@ function getInitialConfig(): BuildStore {
     lwjgl_321,
     lwjgl_322,
     lwjgl_323,
-    lwjgl_stable,
     lwjgl_nightly,
   ].reduce((previousBuild: BuildBindings, nextBuildConfig: BuildBindingsReducer) => {
     const build = nextBuildConfig(previousBuild);

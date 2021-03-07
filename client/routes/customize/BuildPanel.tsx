@@ -81,11 +81,6 @@ const PanelBox = styled('div', {
           color: '$positive700',
         },
       },
-      stable: {
-        h2: {
-          color: '$caution700',
-        },
-      },
       nightly: {
         h2: {
           color: '$critical700',

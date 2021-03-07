@@ -59,7 +59,7 @@ export interface ActionToggle<T> {
   type: T;
 }
 
-// Select/deselect a build type (e.g. Release, Stable, Nightly)
+// Select/deselect a build type (e.g. Release, Nightly)
 export interface ActionBuildTypeSelect {
   type: Action.SELECT_TYPE;
   build: BuildType | null;
@@ -229,7 +229,6 @@ export const fields = {
       allIds.map((mode) => ({
         value: mode,
         label: byId[mode].title,
-        disabled: build === BuildType.Stable && mode !== Mode.Zip,
       })),
   },
   descriptions: {
@@ -321,7 +320,7 @@ export const reducer: React.Reducer<BuildStore, ActionMessage> = (
         selectBuild(draft, action.build !== state.build ? action.build : null);
         break;
       case Action.SELECT_MODE:
-        if (state.build !== BuildType.Stable && state.mode !== action.mode) {
+        if (state.mode !== action.mode) {
           selectMode(draft, action.mode);
         }
         break;
@@ -501,11 +500,6 @@ function computeArtifacts(state: BuildStore) {
 
   if (state.preset !== Preset.Custom) {
     selectPreset(state, state.preset);
-  }
-
-  // Stable builds are only available in ZIP
-  if (state.build === BuildType.Stable && state.mode !== Mode.Zip) {
-    state.mode = Mode.Zip;
   }
 }
 
