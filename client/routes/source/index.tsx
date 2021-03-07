@@ -1,5 +1,4 @@
 import { PageView } from '~/routes/PageView';
-import { styled, CSS } from '~/theme/stitches.config';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/brands/github';
 import { Box } from '~/components/layout/Box';
@@ -22,7 +21,7 @@ interface BuildBadgeProps {
   height?: number;
 }
 
-const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 90, height = 20 }) => (
+const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 88, height = 20 }) => (
   <FlexStack width="full">
     <TextDivider
       align="start"
@@ -30,43 +29,23 @@ const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 90, h
       size="base"
       css={{
         flexGrow: 1,
-        color: '$neutral600',
+        fontSize: '$lg',
       }}
     >
       {title}
     </TextDivider>
 
     <Anchor href={href} target="_blank" rel="noopener external" css={{ justifySelf: 'end' }}>
-      <ImgLazy width={width} height={height} src={src} alt={`${title} build status`} />
+      <ImgLazy
+        css={{ display: 'block' }}
+        width={width * 1.35}
+        height={height * 1.35}
+        src={src}
+        alt={`${title} build status`}
+      />
     </Anchor>
   </FlexStack>
 );
-
-interface BuildProps {
-  title: string;
-  css?: CSS;
-}
-
-const Build: React.FC<BuildProps> = ({ children, title, ...rest }) => (
-  <Box {...rest}>
-    <Text
-      as="h3"
-      css={{
-        mb: '$xxsm',
-        lineHeight: 1,
-      }}
-    >
-      {title}
-    </Text>
-    {children}
-  </Box>
-);
-
-const IFrameThemeAware = styled('iframe', {
-  dark: {
-    filter: 'invert(90%)',
-  },
-});
 
 const SourceRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Source & Build Status" description="Links to LWJGL Github repository and build status matrix">
@@ -77,17 +56,14 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
       </Title>
 
       <Grid as="section" css={{ gap: '$paragraph' }}>
-        <IFrameThemeAware
-          src="https://ghbtns.com/github-btn.html?user=LWJGL&repo=lwjgl3&type=star&count=true&size=large"
-          sandbox="allow-scripts allow-popups"
-          //@ts-ignore https://www.chromestatus.com/feature/5273474901737472
-          importance="low"
-          loading="lazy"
-          referrerPolicy="no-referrer"
-          width="141"
-          height="30"
-          title="Star LWJGL/lwjgl3 on GitHub"
-        />
+        <a href="https://github.com/LWJGL/lwjgl3" rel="external">
+          <img
+            width={90 * 1.77}
+            height={20 * 1.77}
+            alt="GitHub Repo stars"
+            src="https://img.shields.io/github/stars/LWJGL/lwjgl3?style=social"
+          />
+        </a>
 
         <Text>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</Text>
 
@@ -122,167 +98,93 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
           },
         }}
       >
-        <Build title="LWJGL" css={{ when: { lg: { gridRow: '1/7' } } }}>
+        <Box css={{ when: { lg: { gridRow: '1/7' } } }}>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/lwjgl3"
-            src="https://api.travis-ci.org/LWJGL-CI/lwjgl3.svg"
+            title="LWJGL"
+            href="https://github.com/LWJGL-CI/lwjgl3/actions/workflows/CI.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/lwjgl3/LWJGL%20Build"
           />
-          <BuildBadge
-            width={106}
-            title="Windows"
-            href="https://ci.appveyor.com/project/LWJGL-CI/lwjgl3"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/lwjgl3?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="Assimp">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/assimp"
-            src="https://api.travis-ci.org/LWJGL-CI/assimp.svg"
+            title="Assimp"
+            href="https://github.com/LWJGL-CI/assimp/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/assimp/LWJGL%20Build"
           />
-          <BuildBadge
-            width={106}
-            title="Windows"
-            href="https://ci.appveyor.com/project/LWJGL-CI/assimp"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/assimp?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="bgfx">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/bgfx"
-            src="https://travis-ci.org/LWJGL-CI/bgfx.svg"
+            title="bgfx"
+            href="https://github.com/LWJGL-CI/bgfx/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/bgfx/LWJGL%20Build"
           />
-          <BuildBadge
-            width={106}
-            title="Windows"
-            href="https://ci.appveyor.com/project/LWJGL-CI/bgfx"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/bgfx?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="dyncall">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/dyncall"
-            src="https://travis-ci.org/LWJGL-CI/dyncall.svg"
+            title="libffi"
+            href="https://github.com/LWJGL-CI/libffi/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/libffi/LWJGL%20Build"
           />
-          <BuildBadge
-            width={106}
-            title="Windows"
-            href="https://ci.appveyor.com/project/LWJGL-CI/dyncall"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/dyncall?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="GLFW">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/glfw"
-            src="https://travis-ci.org/LWJGL-CI/glfw.svg"
+            title="GLFW"
+            href="https://github.com/LWJGL-CI/glfw/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/glfw/LWJGL%20Build"
           />
-          <BuildBadge
-            width={106}
-            title="Windows"
-            href="https://ci.appveyor.com/project/LWJGL-CI/glfw"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/glfw?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="jemalloc">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/jemalloc"
-            src="https://travis-ci.org/LWJGL-CI/jemalloc.svg"
+            title="jemalloc"
+            href="https://github.com/LWJGL-CI/jemalloc/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/jemalloc/LWJGL%20Build"
           />
-          <BuildBadge
-            title="Windows"
-            width={106}
-            href="https://ci.appveyor.com/project/LWJGL-CI/jemalloc"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/jemalloc?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="MoltenVK">
+        <Box>
           <BuildBadge
-            title="macOS"
-            href="https://travis-ci.org/LWJGL-CI/MoltenVK"
-            src="https://travis-ci.org/LWJGL-CI/MoltenVK.svg"
+            title="MoltenVK"
+            href="https://github.com/LWJGL-CI/MoltenVK/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/MoltenVK/LWJGL%20Build"
           />
-        </Build>
+        </Box>
 
-        <Build title="OpenAL Soft">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/openal-soft"
-            src="https://travis-ci.org/LWJGL-CI/openal-soft.svg"
+            title="OpenAL Soft"
+            href="https://github.com/LWJGL-CI/openal-soft/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/openal-soft/LWJGL%20Build"
           />
-          <BuildBadge
-            title="Windows"
-            width={106}
-            href="https://ci.appveyor.com/project/LWJGL-CI/openal-soft"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/openal-soft?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="Opus">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/opus"
-            src="https://travis-ci.org/LWJGL-CI/opus.svg"
+            title="Opus"
+            href="https://github.com/LWJGL-CI/opus/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/opus/LWJGL%20Build"
           />
-          <BuildBadge
-            title="Windows"
-            width={106}
-            href="https://ci.appveyor.com/project/LWJGL-CI/opus"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/opus?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="Shaderc">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/shaderc"
-            src="https://travis-ci.org/LWJGL-CI/shaderc.svg"
+            title="Shaderc"
+            href="https://github.com/LWJGL-CI/shaderc/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/shaderc/LWJGL%20Build"
           />
-          <BuildBadge
-            title="Windows"
-            width={106}
-            href="https://ci.appveyor.com/project/LWJGL-CI/shaderc"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/shaderc?svg=true"
-          />
-        </Build>
+        </Box>
 
-        <Build title="SPIRV-Cross">
+        <Box>
           <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/SPIRV-Cross"
-            src="https://travis-ci.org/LWJGL-CI/SPIRV-Cross.svg"
+            title="SPIRV-Cross"
+            href="https://github.com/LWJGL-CI/SPIRV-Cross/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/workflow/status/LWJGL-CI/SPIRV-Cross/LWJGL%20Build"
           />
-          <BuildBadge
-            title="Windows"
-            width={106}
-            href="https://ci.appveyor.com/project/LWJGL-CI/SPIRV-Cross"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/SPIRV-Cross?svg=true"
-          />
-        </Build>
-
-        <Build title="TinyCC">
-          <BuildBadge
-            title="Linux/macOS"
-            href="https://travis-ci.org/LWJGL-CI/tinycc"
-            src="https://travis-ci.org/LWJGL-CI/tinycc.svg"
-          />
-          <BuildBadge
-            title="Windows"
-            width={106}
-            href="https://ci.appveyor.com/project/LWJGL-CI/tinycc"
-            src="https://ci.appveyor.com/api/projects/status/github/LWJGL-CI/tinycc?svg=true"
-          />
-        </Build>
+        </Box>
       </Grid>
     </Container>
   </PageView>
