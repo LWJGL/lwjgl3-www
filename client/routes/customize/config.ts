@@ -178,29 +178,6 @@ function getInitialConfig(): BuildStore {
             version: '1.10.0',
           },
         },
-        [Addon.Steamworks4J]: {
-          id: Addon.Steamworks4J,
-          title: 'steamworks4j',
-          description: 'Access the Steamworks C++ API using Java. Client library, sufficient for most uses.',
-          website: 'https://code-disaster.github.io/steamworks4j/',
-          maven: {
-            groupId: 'com.code-disaster.steamworks4j',
-            artifactId: 'steamworks4j',
-            version: '1.8.0',
-          },
-        },
-        [Addon.Steamworks4JServer]: {
-          id: Addon.Steamworks4JServer,
-          title: 'steamworks4j-server',
-          description:
-            'Access the Steamworks C++ API using Java. Server library, if you need to support game servers or encrypted app tickets.',
-          website: 'https://code-disaster.github.io/steamworks4j/',
-          maven: {
-            groupId: 'com.code-disaster.steamworks4j',
-            artifactId: 'steamworks4j-server',
-            version: '1.8.0',
-          },
-        },
         [Addon.LWJGLXDebug]: {
           id: Addon.LWJGLXDebug,
           title: 'LWJGLX/debug',
@@ -222,6 +199,29 @@ function getInitialConfig(): BuildStore {
             groupId: 'org.lwjglx',
             artifactId: 'lwjgl3-awt',
             version: '0.1.8',
+          },
+        },
+        [Addon.Steamworks4J]: {
+          id: Addon.Steamworks4J,
+          title: 'steamworks4j',
+          description: 'Access the Steamworks C++ API using Java. Client library, sufficient for most uses.',
+          website: 'https://code-disaster.github.io/steamworks4j/',
+          maven: {
+            groupId: 'com.code-disaster.steamworks4j',
+            artifactId: 'steamworks4j',
+            version: '1.8.0',
+          },
+        },
+        [Addon.Steamworks4JServer]: {
+          id: Addon.Steamworks4JServer,
+          title: 'steamworks4j-server',
+          description:
+            'Access the Steamworks C++ API using Java. Server library, if you need to support game servers or encrypted app tickets.',
+          website: 'https://code-disaster.github.io/steamworks4j/',
+          maven: {
+            groupId: 'com.code-disaster.steamworks4j',
+            artifactId: 'steamworks4j-server',
+            version: '1.8.0',
           },
         },
       },
