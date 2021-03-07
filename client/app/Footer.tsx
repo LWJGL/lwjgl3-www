@@ -31,7 +31,7 @@ const Heading = styled('h2', {
   mt: -4,
 
   when: {
-    'md-down': {
+    'lg-down': {
       fontSize: '1.5rem',
       mt: -2,
     },
@@ -64,7 +64,7 @@ const FOOTER = (
           gap: '$safe',
           when: {
             md: {
-              grid: 'auto-flow / 3fr 3fr 3fr 1fr',
+              grid: 'auto-flow / 3fr 3fr 3fr 3fr 1fr',
             },
           },
         }}
@@ -102,11 +102,6 @@ const FOOTER = (
                 Frameworks
               </FooterLink>
             </li>
-            <li>
-              <FooterLink as={Link} to="/sponsors">
-                Sponsors & Contributors
-              </FooterLink>
-            </li>
           </ul>
         </div>
         <div>
@@ -115,11 +110,6 @@ const FOOTER = (
             <li>
               <FooterLink href="https://blog.lwjgl.org/" rel="noopener external">
                 Blog
-              </FooterLink>
-            </li>
-            <li>
-              <FooterLink href="http://forum.lwjgl.org/" rel="noopener external">
-                Forum
               </FooterLink>
             </li>
             <li>
@@ -138,11 +128,6 @@ const FOOTER = (
                 rel="noopener external"
               >
                 Release notes {external}
-              </FooterLink>
-            </li>
-            <li>
-              <FooterLink href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
-                Donate {external}
               </FooterLink>
             </li>
           </ul>
@@ -171,13 +156,38 @@ const FOOTER = (
               </FooterLink>
             </li>
             <li>
+              <FooterLink as={Link} to="/license">
+                License
+              </FooterLink>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <Heading>Community</Heading>
+          <ul>
+            <li>
               <FooterLink href="http://slack.lwjgl.org/" rel="noopener external">
                 Slack {external}
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/license">
-                License
+              <FooterLink href="https://discord.gg/6CywMCs" rel="noopener external">
+                Discord {external}
+              </FooterLink>
+            </li>
+            <li>
+              <FooterLink href="http://forum.lwjgl.org/" rel="noopener external">
+                Forum
+              </FooterLink>
+            </li>
+            <li>
+              <FooterLink href="https://opencollective.com/lwjgl" target="_blank" rel="noopener external">
+                Donate {external}
+              </FooterLink>
+            </li>
+            <li>
+              <FooterLink as={Link} to="/sponsors">
+                Sponsors & Contributors
               </FooterLink>
             </li>
           </ul>
