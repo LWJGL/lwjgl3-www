@@ -175,7 +175,7 @@ function getInitialConfig(): BuildStore {
           maven: {
             groupId: 'org.joml',
             artifactId: 'joml',
-            version: '1.10.0',
+            version: '1.10.1',
           },
         },
         [Addon.LWJGLXDebug]: {
