@@ -4,7 +4,6 @@ import { Checkbox } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
 import { useSelector, useDispatch } from './Store';
-import { NATIVE_ALL } from './types';
 import {
   createActionArtifactToggle,
   selectorContents,
@@ -12,12 +11,22 @@ import {
   selectorDescriptions,
   selectorNatives,
   selectorArtifacts,
+  selectorPlatformsSelected,
 } from './reducer';
 
 import type { Binding, BindingDefinition, Native, NativeMap } from './types';
 
-const getSupportedPlatforms = (natives: NativeMap, platforms: Array<Native>, disabled: boolean) => {
-  let missing = Object.keys(natives).filter((key) => !platforms.includes(key as Native)) as Native[];
+const getSupportedPlatforms = (
+  natives: NativeMap,
+  platformsSelected: Native[],
+  platforms: Array<Native>,
+  disabled: boolean
+) => {
+  let missing = platformsSelected.filter((key) => !platforms.includes(key as Native)) as Native[];
+
+  if (missing.length === 0) {
+    return null;
+  }
 
   if (missing.length >= platforms.length) {
     return (
@@ -42,8 +51,14 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
   const contents = useSelector(selectorContents);
   const availability = useSelector(selectorAvailability);
   const descriptions = useSelector(selectorDescriptions);
+  const platformsSelected = useSelector(selectorPlatformsSelected);
   const { byId: natives } = useSelector(selectorNatives);
   const { allIds, byId } = useSelector(selectorArtifacts);
+
+  const platformsSelectedArr = Object.keys(platformsSelected).filter(
+    //@ts-ignore
+    (key) => platformsSelected[key] === true
+  ) as Native[];
 
   return (
     <>
@@ -55,6 +70,7 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
           <BuildArtifact
             key={it}
             natives={natives}
+            platformsSelected={platformsSelectedArr}
             artifact={artifact}
             disabled={!available || artifact.required === true}
             selected={available && contents[it] === true}
@@ -69,6 +85,7 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
 
 interface Props {
   natives: NativeMap;
+  platformsSelected: Native[];
   artifact: BindingDefinition;
   disabled: boolean;
   selected: boolean;
@@ -76,14 +93,21 @@ interface Props {
   onChange: any;
 }
 
-const BuildArtifact: React.FC<Props> = ({ natives, artifact, selected, disabled, showDescriptions, onChange }) => {
+const BuildArtifact: React.FC<Props> = ({
+  natives,
+  platformsSelected,
+  artifact,
+  disabled,
+  selected,
+  showDescriptions,
+  onChange,
+}) => {
   if (showDescriptions) {
     const desc = (
       <Box css={{ mb: '$sm' }}>
         {artifact.natives &&
-          artifact.natives !== NATIVE_ALL &&
           artifact.nativesOptional !== true &&
-          getSupportedPlatforms(natives, artifact.natives, disabled)}
+          getSupportedPlatforms(natives, platformsSelected, artifact.natives, disabled)}
         <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
         {artifact.website !== undefined && (
           <p>
