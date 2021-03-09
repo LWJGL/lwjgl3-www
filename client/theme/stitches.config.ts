@@ -471,5 +471,6 @@ export const themes = {
   dark: generateTheme('dark', { palette: dark, outlineStop: 6 }),
 };
 
-// Access theme so styles are generated & injected immediatelly
+// Access themes so styles are generated & injected immediatelly
+themes.light.toString();
 themes.dark.toString();
