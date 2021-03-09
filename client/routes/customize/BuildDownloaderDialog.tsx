@@ -3,8 +3,8 @@ import { useOverlay, usePreventScroll, useModal, OverlayContainer } from '@react
 import { useDialog } from '@react-aria/dialog';
 import { FocusScope } from '@react-aria/focus';
 import { styled } from '~/theme/stitches.config';
-import { useSpring } from '@react-spring/web';
-import { Backdrop, getBackdropOpacity } from '~/components/layout/Backdrop';
+import { useSpring, animated } from '@react-spring/web';
+import { BackdropCss, getBackdropOpacity } from '~/components/layout/Backdrop';
 import { CircularProgress } from '~/components/ui/CircularProgress';
 
 import type { OverlayProps } from '@react-aria/overlays';
@@ -89,9 +89,8 @@ const ModalDialog: React.FC<ModalProps> = (props) => {
   );
 
   return (
-    //@ts-expect-error
-    <Backdrop
-      open
+    <animated.div
+      className={BackdropCss({ open: true })}
       style={{
         //@ts-expect-error
         backgroundColor: perc.to(getBackdropOpacity),
@@ -105,7 +104,7 @@ const ModalDialog: React.FC<ModalProps> = (props) => {
           {children}
         </Modal>
       </FocusScope>
-    </Backdrop>
+    </animated.div>
   );
 };
 

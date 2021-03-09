@@ -6,7 +6,7 @@ import { useDrag } from 'react-use-gesture';
 import { styled } from '~/theme/stitches.config';
 import { MainMenu } from './MainMenu';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { Backdrop, getBackdropOpacity } from '~/components/layout/Backdrop';
+import { BackdropCss, getBackdropOpacity } from '~/components/layout/Backdrop';
 
 const MenuArea = styled('div', {
   flex: '1 0 auto',
@@ -187,14 +187,13 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
       </MenuToggleButton>
 
       <OverlayContainer>
-        <Backdrop
+        <animated.div
           ref={backdropRef}
-          open={isOpen}
+          className={BackdropCss({ open: isOpen })}
           onClick={toggleOpen}
-          css={{
-            zIndex: ZINDEX_MODAL_BACKDROP - 2,
-          }}
           style={{
+            //@ts-expect-error
+            zIndex: ZINDEX_MODAL_BACKDROP - 2,
             //@ts-expect-error
             backgroundColor: perc.to(getBackdropOpacity),
           }}

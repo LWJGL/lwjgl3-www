@@ -1,10 +1,9 @@
-import { animated } from '@react-spring/web';
-import { styled } from '~/theme/stitches.config';
+import { css } from '~/theme/stitches.config';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 
-export const getBackdropOpacity = (perc: number) => (perc > 0 ? `rgba(0,0,0,${perc * 0.75})` : 'transparent');
+export const getBackdropOpacity = (perc: number) => (perc > 0 ? `rgba(0,0,0,${perc * 0.75})` : 'rgba(0,0,0,0)');
 
-export const Backdrop = styled(animated.div, {
+export const BackdropCss = css({
   willChange: 'background-color',
   pointerEvents: 'none',
   display: 'flex',

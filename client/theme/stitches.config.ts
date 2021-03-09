@@ -472,5 +472,5 @@ export const themes = {
 };
 
 // Access themes so styles are generated & injected immediatelly
-themes.light.toString();
+theme.toString();
 themes.dark.toString();
