@@ -13,7 +13,7 @@ export const Row = styled('div', {
         padding: '$xsm $sm',
         backgroundColor: '$primary700',
         color: '$primary100',
-        dark: {
+        '.dark &': {
           backgroundColor: '$dark',
           color: '$info700',
         },

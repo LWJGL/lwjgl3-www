@@ -25,7 +25,7 @@ export function Browser({ path: targetPath }: Props) {
   }, [startTransition, targetPath, path]);
 
   return (
-    <Box css={{ light: { boxShadow: '$sm' } }}>
+    <Box css={{ '.light &': { boxShadow: '$sm' } }}>
       <Row type="breadcrump">
         <Link to={'/browse'}>lwjgl</Link>
         {path.length

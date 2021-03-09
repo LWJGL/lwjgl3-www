@@ -61,7 +61,7 @@ const PanelBox = styled('div', {
   userSelect: 'none',
   zIndex: 1,
   border: `2px solid $dark`,
-  dark: {
+  '.dark &': {
     borderColor: '$darker',
   },
 

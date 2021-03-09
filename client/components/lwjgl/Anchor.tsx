@@ -6,7 +6,7 @@ export const Anchor = styled('a', {
   textUnderlineOffset: '1px',
   color: '$primary800',
   fontWeight: '$medium',
-  dark: {
+  '.dark &': {
     color: '$primary600',
   },
 });

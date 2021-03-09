@@ -53,7 +53,7 @@ const MENU_INITIAL = MENU_WIDTH + 1;
 const MenuOverlay = styled('div', {
   padding: '4rem 1rem 0 1rem',
   backgroundColor: '$dark',
-  dark: {
+  '.dark &': {
     backgroundColor: '$darker',
   },
   zIndex: ZINDEX_MODAL_BACKDROP - 2,

@@ -19,7 +19,7 @@ export const BuildConfigArea = styled('div', {
       backgroundColor: '$primary100',
       border: '2px solid $dark',
       py: '$gutter',
-      dark: {
+      '.dark &': {
         borderColor: '$darker',
       },
     },

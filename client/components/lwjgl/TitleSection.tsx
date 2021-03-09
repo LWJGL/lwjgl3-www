@@ -15,10 +15,10 @@ export const TitleSection = styled(Text, {
   //   fontWeight: '$bold',
   // },
   defaultVariants: {
-    as: 'h2',
+    margin: true,
   },
 });
 
 TitleSection.defaultProps = {
-  margin: true,
+  as: 'h2',
 };

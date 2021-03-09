@@ -21,7 +21,7 @@ const FooterLink = styled('a', {
 
 const Heading = styled('h2', {
   color: '$primary700',
-  dark: {
+  '.dark &': {
     color: '$primary800',
   },
   fontWeight: '$light',
@@ -202,7 +202,9 @@ const FOOTER = (
           textAlign: 'center',
           color: '$primary500',
           pt: '$safe',
-          dark: { color: '$primary800' },
+          '.dark &': {
+            color: '$primary800',
+          },
         }}
       >
         <p>

@@ -16,7 +16,7 @@ export const Prose = styled('div', {
     textDecorationThickness: '1.5px',
     textUnderlineOffset: '1px',
     fontWeight: '$medium',
-    dark: {
+    '.dark &': {
       color: '$primary600',
     },
   },

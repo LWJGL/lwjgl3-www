@@ -55,7 +55,7 @@ const ScriptLogo = styled('img', {
   variants: {
     flipOnDark: {
       true: {
-        dark: {
+        '.dark &': {
           filter: 'invert(90%)',
         },
       },

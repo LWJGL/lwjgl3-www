@@ -5,7 +5,6 @@ import { Grid } from '~/components/layout/Grid';
 import { Box } from '~/components/layout/Box';
 import { Text } from '~/components/ui/Text';
 import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
-// import type { LinkButtonProps } from '~/components/ui/LinkButton';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Title } from '~/components/lwjgl/Title';
@@ -17,11 +16,12 @@ import '~/theme/icons/fa/brands/github';
 import '~/theme/icons/fa/solid/check-square';
 import '~/theme/icons/fa/solid/folder';
 
-const buttonSizes = 'lg';
-// const buttonSizes: LinkButtonProps['size'] = {
-//   initial: 'lg',
-//   xl: 'xl',
-// };
+import type { LinkButtonProps } from '~/components/ui/LinkButton';
+
+const buttonSizes: LinkButtonProps['size'] = {
+  initial: 'lg',
+  xl: 'xl',
+};
 
 const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
   return (

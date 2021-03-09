@@ -85,7 +85,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
 
       <Hr margin="xl" />
 
-      <Title margin>Build Status</Title>
+      <Title>Build Status</Title>
 
       <Grid
         as="section"

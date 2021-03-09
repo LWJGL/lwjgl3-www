@@ -239,6 +239,7 @@ type SizeValue = `$${keyof typeof themeTokens.sizes}` | number | (string & {});
 
 const stitchesConfig = createCss({
   // prefix: '',
+  insertMethod: 'append',
   theme: themeTokens,
   conditions: {
     // The maximum value is reduced by 0.02px to work around the limitations of
@@ -263,12 +264,6 @@ const stitchesConfig = createCss({
     // prefersLight: `@media(prefers-color-scheme:light)`,
   },
   utils: {
-    dark: (config) => (value: any) => ({
-      '.dark &': value,
-    }),
-    light: (config) => (value: any) => ({
-      '.light &': value,
-    }),
     mt: (config) => (value: SpaceValue) => ({
       marginTop: value,
     }),
