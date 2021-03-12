@@ -371,8 +371,8 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
             <h3>Customization & Utilities</h3>
             <p>
               Use{' '}
-              <Anchor href="http://www.dyncall.org/" rel="noopener external">
-                dyncall
+              <Anchor href="https://sourceware.org/libffi/" rel="noopener external">
+                libffi
               </Anchor>{' '}
               to call functions from any native library, use{' '}
               <Anchor href="http://jemalloc.net/" rel="noopener external">
