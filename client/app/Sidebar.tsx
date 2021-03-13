@@ -123,7 +123,11 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
       if (!down && (swipe[0] === 1 || mx >= MENU_WIDTH / 3)) {
         setOpen(toggle);
       } else {
-        animate(x, down ? mx : 0);
+        if (down) {
+          x.set(mx);
+        } else {
+          animate(x, 0);
+        }
       }
     },
     {
@@ -187,6 +191,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           className={BackdropCss({ open: isOpen })}
           onClick={toggleOpen}
         />
+        {/* @ts-expect-error */}
         <motion.div
           ref={overlayRef}
           style={{ x }}
