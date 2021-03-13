@@ -15,6 +15,36 @@ interface Props {
 }
 
 const MainMenuContainer = styled('nav', {
+  a: {
+    display: 'inline-block',
+    color: 'white',
+    fontWeight: '$light',
+    textDecoration: 'none',
+    transition: '0.5s background-size ease-out',
+    b: {
+      fontWeight: '$bold',
+    },
+    '&:focus': {
+      outline: 'none',
+    },
+    '&.active': {
+      color: 'yellow',
+    },
+    when: {
+      lg: {
+        lineHeight: '2.25rem',
+        background:
+          'linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent) bottom / 0 3px no-repeat',
+        '&.active': {
+          backgroundSize: '100% 3px',
+        },
+        '&:not(.active):focus,&:not(.active):hover': {
+          // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
+          backgroundSize: '90% 3px',
+        },
+      },
+    },
+  },
   variants: {
     direction: {
       horizontal: {
@@ -30,9 +60,10 @@ const MainMenuContainer = styled('nav', {
         display: 'flex',
         flexFlow: 'column nowrap',
         textAlign: 'right',
-        // gap: '1rem 0',
-        vgap: '1rem',
+        vgap: '0.25rem',
         a: {
+          padding: '$xsm',
+          marginRight: '-$xsm',
           fontSize: '$xl',
           color: 'white',
           textDecoration: 'none',
@@ -65,24 +96,36 @@ export const MainMenu: React.FC<Props> = ({ onClick, direction, focusableProps =
 
   return (
     <MainMenuContainer role="navigation" aria-label="Main Menu" direction={direction} {...rest}>
-      <NavLink {...focusableProps} onClick={onClick} to="/" end>
-        HOME
-      </NavLink>
-      <NavLink {...focusableProps} onClick={onClick} to="/guide">
-        GET STARTED
-      </NavLink>
-      <NavLink {...focusableProps} onClick={onClick} to="/download">
-        DOWNLOAD
-      </NavLink>
-      <NavLink {...focusableProps} onClick={onClick} to="/customize">
-        CUSTOMIZE
-      </NavLink>
-      <NavLink {...focusableProps} onClick={onClick} to="/source">
-        SOURCE
-      </NavLink>
-      <NavLink {...focusableProps} onClick={onClick} to="/frameworks">
-        FRAMEWORKS
-      </NavLink>
+      <div>
+        <NavLink {...focusableProps} onClick={onClick} to="/" end>
+          HOME
+        </NavLink>
+      </div>
+      <div>
+        <NavLink {...focusableProps} onClick={onClick} to="/guide">
+          GET STARTED
+        </NavLink>
+      </div>
+      <div>
+        <NavLink {...focusableProps} onClick={onClick} to="/download">
+          DOWNLOAD
+        </NavLink>
+      </div>
+      <div>
+        <NavLink {...focusableProps} onClick={onClick} to="/customize">
+          CUSTOMIZE
+        </NavLink>
+      </div>
+      <div>
+        <NavLink {...focusableProps} onClick={onClick} to="/source">
+          SOURCE
+        </NavLink>
+      </div>
+      <div>
+        <NavLink {...focusableProps} onClick={onClick} to="/frameworks">
+          FRAMEWORKS
+        </NavLink>
+      </div>
       <div>
         <Button
           size="sm"

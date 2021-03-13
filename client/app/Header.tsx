@@ -35,36 +35,6 @@ const StyledHeader = styled('header', {
     },
   },
 
-  a: {
-    color: 'white',
-    fontWeight: '$light',
-    textDecoration: 'none',
-    transition: '0.5s background-size ease-out',
-    b: {
-      fontWeight: '$bold',
-    },
-    '&:focus': {
-      outline: 'none',
-    },
-    '&.active': {
-      color: 'yellow',
-    },
-
-    when: {
-      lg: {
-        background:
-          'linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent) bottom / 0 3px no-repeat',
-        '&.active': {
-          backgroundSize: '100% 3px',
-        },
-        '&:not(.active):focus,&:not(.active):hover': {
-          // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
-          backgroundSize: '90% 3px',
-        },
-      },
-    },
-  },
-
   variants: {
     fixed: {
       true: {
