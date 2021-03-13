@@ -1,7 +1,7 @@
 import { styled, keyframes } from '~/theme/stitches.config';
 import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 
-// TODO: Use react-spring for animation
+// TODO: Use framer-motion for animation
 
 const SIZE = 44;
 

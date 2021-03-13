@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { OverlayContainer, useOverlay, usePreventScroll, useModal } from '@react-aria/overlays';
 import { FocusScope } from '@react-aria/focus';
-import { useSpring, animated } from '@react-spring/web';
+import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { useDrag } from 'react-use-gesture';
-import { styled } from '~/theme/stitches.config';
+import { styled, css } from '~/theme/stitches.config';
 import { MainMenu } from './MainMenu';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { BackdropCss, getBackdropOpacity } from '~/components/layout/Backdrop';
+import { BackdropCss } from '~/components/layout/Backdrop';
 
 const MenuArea = styled('div', {
   flex: '1 0 auto',
@@ -39,7 +39,7 @@ const MenuToggleButton = styled('button', {
   },
 });
 
-const MenuToggleLine = styled('span', {
+const MenuToggleLine = css({
   width: '100%',
   height: 4,
   backgroundColor: '$white',
@@ -50,7 +50,7 @@ const MenuToggleLine = styled('span', {
 const MENU_WIDTH = 260;
 const MENU_INITIAL = MENU_WIDTH + 1;
 
-const MenuOverlay = styled('div', {
+const MenuOverlay = css({
   padding: '4rem 1rem 0 1rem',
   backgroundColor: '$dark',
   '.dark &': {
@@ -83,10 +83,6 @@ const MenuOverlay = styled('div', {
 });
 
 const toggle = (state: boolean) => !state;
-// const clamp = (perc: number) => Math.min(perc, 1);
-const transformLine1 = (perc: number) => (perc > 0 ? `rotate(${perc * -45}deg)` : 'none');
-const transformLine2 = (perc: number) => (perc > 0 ? `scale(${1 - perc})` : 'none');
-const transformLine3 = (perc: number) => (perc > 0 ? `rotate(${perc * 45}deg)` : 'none');
 
 export const Sidebar: React.FC<{ children?: never }> = () => {
   const [isOpen, setOpen] = useState(false);
@@ -114,25 +110,20 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
   );
 
   // Animation
-  const [{ x, perc }, animate] = useSpring(
-    {
-      x: MENU_INITIAL,
-      perc: 0,
-      config: { clamp: true },
-    },
-    []
-  );
+
+  const x = useMotionValue(MENU_INITIAL);
+  const perc = useTransform(x, (value) => 1 - value / MENU_WIDTH);
+  const rotateLine1 = useTransform(perc, (value) => value * -45);
+  const scaleLine2 = useTransform(perc, (value) => 1 - value);
+  const rotateLine3 = useTransform(perc, (value) => value * 45);
+  const backdropColor = useTransform(x, [0, MENU_WIDTH], ['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']);
 
   useDrag(
     ({ down, swipe, movement: [mx] }) => {
       if (!down && (swipe[0] === 1 || mx >= MENU_WIDTH / 3)) {
         setOpen(toggle);
       } else {
-        animate({
-          x: down ? mx : 0,
-          perc: down ? 1 - mx / MENU_WIDTH : 1,
-          immediate: down,
-        });
+        animate(x, down ? mx : 0);
       }
     },
     {
@@ -153,7 +144,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
 
   useEffect(() => {
     if (isOpen) {
-      animate({ x: 0, perc: 1, config: { velocity: 0 } });
+      animate(x, 0);
 
       // Auto-focus current active link
       if (overlayRef.current !== null) {
@@ -165,9 +156,9 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
         }
       }
     } else {
-      animate({ x: MENU_INITIAL, perc: 0 });
+      animate(x, MENU_INITIAL);
     }
-  }, [isOpen, animate]);
+  }, [isOpen, x]);
 
   const toggleButtonTitle = `${isOpen ? 'Close' : 'Open'} navigation menu`;
   const focusableProps = isOpen ? {} : { tabIndex: -1 };
@@ -181,37 +172,34 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
         title={toggleButtonTitle}
         aria-label={toggleButtonTitle}
       >
-        <MenuToggleLine as={animated.span} style={{ transform: perc.to(transformLine1) }} />
-        <MenuToggleLine as={animated.span} style={{ transform: perc.to(transformLine2) }} />
-        <MenuToggleLine as={animated.span} style={{ transform: perc.to(transformLine3) }} />
+        <motion.span className={MenuToggleLine()} style={{ rotate: rotateLine1 }} />
+        <motion.span className={MenuToggleLine()} style={{ scale: scaleLine2 }} />
+        <motion.span className={MenuToggleLine()} style={{ rotate: rotateLine3 }} />
       </MenuToggleButton>
 
       <OverlayContainer>
-        <animated.div
+        <motion.div
           ref={backdropRef}
+          style={{
+            zIndex: ZINDEX_MODAL_BACKDROP - 2,
+            backgroundColor: backdropColor,
+          }}
           className={BackdropCss({ open: isOpen })}
           onClick={toggleOpen}
-          style={{
-            //@ts-expect-error
-            zIndex: ZINDEX_MODAL_BACKDROP - 2,
-            //@ts-expect-error
-            backgroundColor: perc.to(getBackdropOpacity),
-          }}
         />
-        <MenuOverlay
-          as={animated.div}
-          open={isOpen}
-          role="menu"
+        <motion.div
           ref={overlayRef}
+          style={{ x }}
+          className={MenuOverlay({ open: isOpen })}
+          role="menu"
           aria-hidden={!isOpen}
           aria-expanded={isOpen}
           {...overlayProps}
-          style={{ x }}
         >
           <FocusScope contain={isOpen} restoreFocus>
             <MainMenu direction="vertical" onClick={toggleOpen} focusableProps={focusableProps} {...modalProps} />
           </FocusScope>
-        </MenuOverlay>
+        </motion.div>
       </OverlayContainer>
     </MenuArea>
   );

@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
-import { Spring } from '~/components/system/SpringGlobals';
 import { OverlayProvider } from '@react-aria/overlays';
 import { BreakpointProvider } from './context/Breakpoint';
 import { ColorSchemeProvider } from './context/ColorScheme';
@@ -53,7 +52,6 @@ export const App: React.FC<{ children?: never }> = () => (
         </ColorSchemeProvider>
       </BreakpointProvider>
     </OverlayProvider>
-    <Spring />
     {/* <NavProgress /> */}
   </BrowserRouter>
 );

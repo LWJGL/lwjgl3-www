@@ -3,8 +3,8 @@ import { useOverlay, usePreventScroll, useModal, OverlayContainer } from '@react
 import { useDialog } from '@react-aria/dialog';
 import { FocusScope } from '@react-aria/focus';
 import { styled } from '~/theme/stitches.config';
-import { useSpring, animated } from '@react-spring/web';
-import { BackdropCss, getBackdropOpacity } from '~/components/layout/Backdrop';
+import { motion } from 'framer-motion';
+import { BackdropCss } from '~/components/layout/Backdrop';
 import { CircularProgress } from '~/components/ui/CircularProgress';
 
 import type { OverlayProps } from '@react-aria/overlays';
@@ -74,27 +74,11 @@ const ModalDialog: React.FC<ModalProps> = (props) => {
   // Get props for the dialog and its title
   let { dialogProps /*, titleProps*/ } = useDialog(props, ref);
 
-  // useSpring
-  const [{ perc }] = useSpring(
-    {
-      from: {
-        perc: 0,
-      },
-      to: {
-        perc: 1,
-      },
-      config: { clamp: true },
-    },
-    []
-  );
-
   return (
-    <animated.div
+    <motion.div
       className={BackdropCss({ open: true })}
-      style={{
-        //@ts-expect-error
-        backgroundColor: perc.to(getBackdropOpacity),
-      }}
+      style={{ backgroundColor: 'rgba(0,0,0,.01)' }}
+      animate={{ backgroundColor: 'rgba(0,0,0,.75)' }}
     >
       <FocusScope contain restoreFocus>
         <Modal ref={ref} {...overlayProps} {...dialogProps} {...modalProps}>
@@ -104,7 +88,7 @@ const ModalDialog: React.FC<ModalProps> = (props) => {
           {children}
         </Modal>
       </FocusScope>
-    </animated.div>
+    </motion.div>
   );
 };
 
