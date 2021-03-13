@@ -1,8 +1,6 @@
 import { styled, keyframes } from '~/theme/stitches.config';
 import { easeInQuad as easeIn, easeOutCubic } from '~/theme/easing';
 
-// TODO: Use framer-motion for animation
-
 const SIZE = 44;
 
 function getRelativeValue(value: number, min: number, max: number) {

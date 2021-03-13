@@ -2,11 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { OverlayContainer, useOverlay, usePreventScroll, useModal } from '@react-aria/overlays';
 import { FocusScope } from '@react-aria/focus';
 import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { useDrag } from 'react-use-gesture';
 import { styled, css } from '~/theme/stitches.config';
 import { MainMenu } from './MainMenu';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import { BackdropCss } from '~/components/layout/Backdrop';
+
+import type { DragHandlers } from 'framer-motion';
 
 const MenuArea = styled('div', {
   flex: '1 0 auto',
@@ -110,40 +111,23 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
   );
 
   // Animation
-
   const x = useMotionValue(MENU_INITIAL);
   const perc = useTransform(x, (value) => 1 - value / MENU_WIDTH);
   const rotateLine1 = useTransform(perc, (value) => value * -45);
   const scaleLine2 = useTransform(perc, (value) => 1 - value);
   const rotateLine3 = useTransform(perc, (value) => value * 45);
   const backdropColor = useTransform(x, [0, MENU_WIDTH], ['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']);
-
-  useDrag(
-    ({ down, swipe, movement: [mx] }) => {
-      if (!down && (swipe[0] === 1 || mx >= MENU_WIDTH / 3)) {
-        setOpen(toggle);
+  const onDragEnd: DragHandlers['onDragEnd'] = useCallback(
+    (event, info): void => {
+      if (info.velocity.x > 200 && info.offset.x > MENU_WIDTH * 0.33) {
+        toggleOpen();
       } else {
-        if (down) {
-          x.set(mx);
-        } else {
-          animate(x, 0);
-        }
+        animate(x, 0, {
+          velocity: info.velocity.x,
+        });
       }
     },
-    {
-      domTarget: overlayRef,
-      enabled: isOpen,
-      initial: () => [x.get(), 0],
-      axis: 'x',
-      swipeDistance: [40, 0],
-      filterTaps: true,
-      bounds: {
-        left: 0,
-        right: MENU_WIDTH,
-        top: 0,
-        bottom: 0,
-      },
-    }
+    [x, toggleOpen]
   );
 
   useEffect(() => {
@@ -191,7 +175,6 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           className={BackdropCss({ open: isOpen })}
           onClick={toggleOpen}
         />
-        {/* @ts-expect-error */}
         <motion.div
           ref={overlayRef}
           style={{ x }}
@@ -199,6 +182,12 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           role="menu"
           aria-hidden={!isOpen}
           aria-expanded={isOpen}
+          drag="x"
+          dragConstraints={{ left: 0, right: MENU_INITIAL }}
+          dragElastic={0}
+          dragMomentum={false}
+          // @ts-ignore
+          onDragEnd={onDragEnd}
           {...overlayProps}
         >
           <FocusScope contain={isOpen} restoreFocus>
