@@ -28,7 +28,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'Nuklear',
       description: 'A minimal state immediate mode graphical user interface toolkit.',
       natives: NATIVE_LTE_322,
-      website: 'https://github.com/vurtun/nuklear',
+      website: 'https://github.com/Immediate-Mode-UI/Nuklear',
       presets: [Preset.GettingStarted],
     },
     [Binding.TINYFD]: {
