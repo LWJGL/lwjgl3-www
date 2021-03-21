@@ -12,23 +12,21 @@ export const GoldSponsors: React.FC = ({ children }) => (
       <Grid
         css={{
           pt: '$gap',
-          gap: '$safe',
+          gridGap: '$safe',
           alignItems: 'center',
           width: '100%',
           img: {
             maxWidth: '100%',
           },
-          when: {
-            sm: {
-              textAlign: 'center',
-              grid: 'auto-flow / repeat(2, 1fr)',
-            },
-            md: {
-              grid: 'auto-flow / repeat(3, 1fr)',
-            },
-            lg: {
-              grid: 'auto-flow / repeat(4, 1fr)',
-            },
+          '@sm': {
+            textAlign: 'center',
+            grid: 'auto-flow / repeat(2, 1fr)',
+          },
+          '@md': {
+            grid: 'auto-flow / repeat(3, 1fr)',
+          },
+          '@lg': {
+            grid: 'auto-flow / repeat(4, 1fr)',
           },
         }}
       >
@@ -186,10 +184,8 @@ export const GoldSponsors: React.FC = ({ children }) => (
             css={{
               color: '#577BFA',
               fontWeight: 'bold',
-              when: {
-                md: {
-                  justifyContent: 'center',
-                },
+              '@md': {
+                justifyContent: 'center',
               },
             }}
           >

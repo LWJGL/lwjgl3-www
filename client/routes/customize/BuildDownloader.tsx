@@ -130,12 +130,10 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
     <Grid
       css={{
         height: '100%',
-        gap: '$gap',
+        gridGap: '$gap',
         grid: 'auto min-content / minmax(auto, 600px)',
-        when: {
-          sm: {
-            height: 'min(500px, 80vh)',
-          },
+        '@sm': {
+          height: 'min(500px, 80vh)',
         },
       }}
     >

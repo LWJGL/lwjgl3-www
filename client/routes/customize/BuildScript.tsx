@@ -139,10 +139,8 @@ export function BuildScript({ configDownload, configLoad }: Props) {
         as="h2"
         css={{
           mt: '$gutter',
-          when: {
-            sm: {
-              mt: '1rem',
-            },
+          '@sm': {
+            mt: '1rem',
           },
         }}
       >

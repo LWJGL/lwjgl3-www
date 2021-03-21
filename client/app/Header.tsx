@@ -29,10 +29,8 @@ const StyledHeader = styled('header', {
   hgap: '1rem',
   alignItems: 'center',
 
-  when: {
-    min: {
-      padding: '0 max(var(--safe-margin), 1rem)',
-    },
+  '@min': {
+    padding: '0 max(var(--safe-margin), 1rem)',
   },
 
   variants: {

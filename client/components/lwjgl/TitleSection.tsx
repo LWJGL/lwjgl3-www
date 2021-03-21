@@ -6,10 +6,8 @@ export const TitleSection = styled(Text, {
   lineHeight: 1,
   mt: 'calc(var(--scale-sm, 1) * -4px)', // adjust for internal & external leading
   fontWeight: '$light',
-  when: {
-    sm: {
-      textAlign: 'center',
-    },
+  '@sm': {
+    textAlign: 'center',
   },
   // '> b,> strong': {
   //   fontWeight: '$bold',

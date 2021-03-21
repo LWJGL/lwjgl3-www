@@ -254,10 +254,8 @@ export const StyledButton = styled('button', {
     fill: {
       auto: {
         display: 'flex',
-        when: {
-          sm: {
-            display: 'inline-flex',
-          },
+        '@sm': {
+          display: 'inline-flex',
         },
       },
       full: {

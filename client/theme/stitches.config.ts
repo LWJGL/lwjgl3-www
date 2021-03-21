@@ -238,88 +238,84 @@ type SizeValue = `$${keyof typeof themeTokens.sizes}` | number | (string & {});
 // type ColorValue = `$${keyof typeof themeTokens.colors}` | (string & {});
 
 const stitchesConfig = createCss({
-  // prefix: '',
-  insertMethod: 'append',
+  insertionMethod: 'append',
   theme: themeTokens,
-  conditions: {
+  media: {
     // The maximum value is reduced by 0.02px to work around the limitations of
     // `min-` and `max-` prefixes and viewports with fractional widths.
     // See https://www.w3.org/TR/mediaqueries-4/#mq-min-max
     // Uses 0.02px rather than 0.01px to work around a current rounding bug in Safari.
     // See https://bugs.webkit.org/show_bug.cgi?id=178261
-    'sm-down': `@media(max-width:${576 - 0.02}px)`,
-    sm: `@media(min-width:576px)`,
-    'md-down': `@media(max-width:${768 - 0.02}px)`,
-    md: `@media(min-width:768px)`,
-    'lg-down': `@media (max-width:${992 - 0.02}px)`,
-    lg: `@media(min-width:992px)`,
-    'xl-down': `@media(max-width:${1200 - 0.02}px)`,
-    xl: `@media(min-width:1200px)`,
-    'xxl-down': `@media(max-width:${1400 - 0.02}px)`,
-    xxl: `@media(min-width:1400px)`,
-    max: `@supports(width:max(1px,2px))`,
-    min: `@supports(width:min(1px,2px))`,
-    clamp: `@supports(width:clamp(140px,16vw,220px))`,
-    // prefersDark: `@media(prefers-color-scheme:dark)`,
-    // prefersLight: `@media(prefers-color-scheme:light)`,
+    'sm-down': `(max-width:${576 - 0.02}px)`,
+    sm: `(min-width:576px)`,
+    'md-down': `(max-width:${768 - 0.02}px)`,
+    md: `(min-width:768px)`,
+    'lg-down': ` (max-width:${992 - 0.02}px)`,
+    lg: `(min-width:992px)`,
+    'xl-down': `(max-width:${1200 - 0.02}px)`,
+    xl: `(min-width:1200px)`,
+    'xxl-down': `(max-width:${1400 - 0.02}px)`,
+    xxl: `(min-width:1400px)`,
+    // prefersDark: `(prefers-color-scheme:dark)`,
+    // prefersLight: `(prefers-color-scheme:light)`,
   },
   utils: {
-    mt: (config) => (value: SpaceValue) => ({
+    mt: () => (value: SpaceValue) => ({
       marginTop: value,
     }),
-    mr: (config) => (value: SpaceValue) => ({
+    mr: () => (value: SpaceValue) => ({
       marginRight: value,
     }),
-    mb: (config) => (value: SpaceValue) => ({
+    mb: () => (value: SpaceValue) => ({
       marginBottom: value,
     }),
-    ml: (config) => (value: SpaceValue) => ({
+    ml: () => (value: SpaceValue) => ({
       marginLeft: value,
     }),
-    mx: (config) => (value: SpaceValue) => ({
+    mx: () => (value: SpaceValue) => ({
       marginLeft: value,
       marginRight: value,
     }),
-    my: (config) => (value: SpaceValue) => ({
+    my: () => (value: SpaceValue) => ({
       marginTop: value,
       marginBottom: value,
     }),
-    pt: (config) => (value: SpaceValue) => ({
+    pt: () => (value: SpaceValue) => ({
       paddingTop: value,
     }),
-    pr: (config) => (value: SpaceValue) => ({
+    pr: () => (value: SpaceValue) => ({
       paddingRight: value,
     }),
-    pb: (config) => (value: SpaceValue) => ({
+    pb: () => (value: SpaceValue) => ({
       paddingBottom: value,
     }),
-    pl: (config) => (value: SpaceValue) => ({
+    pl: () => (value: SpaceValue) => ({
       paddingLeft: value,
     }),
-    px: (config) => (value: SpaceValue) => ({
+    px: () => (value: SpaceValue) => ({
       paddingLeft: value,
       paddingRight: value,
     }),
-    py: (config) => (value: SpaceValue) => ({
+    py: () => (value: SpaceValue) => ({
       paddingTop: value,
       paddingBottom: value,
     }),
-    square: (config) => (value: SizeValue) => ({
+    square: () => (value: SizeValue) => ({
       width: value,
       height: value,
     }),
-    hgap: (config) => (value: SpaceValue) => ({
+    hgap: () => (value: SpaceValue) => ({
       '& > * + *': {
         marginLeft: value,
       },
     }),
-    vgap: (config) => (value: SpaceValue) => ({
+    vgap: () => (value: SpaceValue) => ({
       '& > * + *': {
         marginTop: value,
       },
     }),
     // // Use this inside another container
-    // flexGap: (config) => (value) => ({
+    // flexGap: () => (value) => ({
     //   '--gap': value,
     //   margin: 'calc(var(--gap) / -2)',
     //   '& > *': {
@@ -327,7 +323,7 @@ const stitchesConfig = createCss({
     //   },
     // }),
     // // Use this to make full height containers
-    // vh100: (config) => (value: any) => {
+    // vh100: () => (value: any) => {
     //   return {
     //     // height: '100%',
     //     // '@supports (height:100vh)': {
@@ -343,15 +339,41 @@ const stitchesConfig = createCss({
     //   };
     // },
     // ! Polyfills
-    gap: (config) => (value: SpaceValue) => ({
-      gridGap: value,
-      gap: value,
+    // gap: () => (value: SpaceValue) => ({
+    //   gridGap: value,
+    //   gap: value,
+    // }),
+    wrap: () => (value: 'normal' | 'word' | 'all' | 'truncate') => {
+      switch (value) {
+        case 'normal':
+          return {
+            overflowWrap: 'normal',
+            wordBreak: 'normal',
+          };
+        case 'word':
+          return {
+            overflowWrap: 'break-word',
+          };
+        case 'all':
+          return {
+            wordBreak: 'break-all',
+          };
+        case 'truncate':
+          return {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+          };
+      }
+    },
+    '@max': () => (value: any) => ({
+      '@supports(width:max(1px,2px))': value,
     }),
-    userSelect: (config) => (value: 'none' | 'auto' | 'text' | 'all' | 'contain') => ({
-      MsUserSelect: value,
-      MozUserSelect: value,
-      WebkitUserSelect: value,
-      userSelect: value,
+    '@min': () => (value: any) => ({
+      '@supports(width:min(1px,2px))': value,
+    }),
+    '@clamp': () => (value: any) => ({
+      '@supports(width:clamp(140px,16vw,220px))': value,
     }),
   },
 });

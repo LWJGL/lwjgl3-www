@@ -19,11 +19,9 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
 
       <Grid
         css={{
-          gap: '$safe',
-          when: {
-            lg: {
-              grid: 'auto-flow / repeat(3, 1fr)',
-            },
+          gridGap: '$safe',
+          '@lg': {
+            grid: 'auto-flow / repeat(3, 1fr)',
           },
         }}
       >

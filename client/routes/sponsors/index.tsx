@@ -23,20 +23,18 @@ export default function SponsorsRoute() {
           <Grid
             css={{
               pt: '$sm',
-              gap: '$safe',
+              gridGap: '$safe',
               alignItems: 'center',
-              when: {
-                sm: {
-                  grid: 'auto-flow / repeat(2, 1fr)',
-                  justifyContent: 'center',
-                  textAlign: 'center',
-                },
-                md: {
-                  grid: 'auto-flow / repeat(3, 1fr)',
-                },
-                lg: {
-                  grid: 'auto-flow / repeat(4, 1fr)',
-                },
+              '@sm': {
+                grid: 'auto-flow / repeat(2, 1fr)',
+                justifyContent: 'center',
+                textAlign: 'center',
+              },
+              '@md': {
+                grid: 'auto-flow / repeat(3, 1fr)',
+              },
+              '@lg': {
+                grid: 'auto-flow / repeat(4, 1fr)',
               },
             }}
           >
@@ -64,10 +62,8 @@ export default function SponsorsRoute() {
                 css={{
                   color: '#577BFA',
                   fontWeight: 'bold',
-                  when: {
-                    md: {
-                      justifyContent: 'center',
-                    },
+                  '@md': {
+                    justifyContent: 'center',
                   },
                 }}
               >

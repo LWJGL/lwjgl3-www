@@ -55,7 +55,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
         <b>JGL</b> Source
       </Title>
 
-      <Grid as="section" css={{ gap: '$paragraph' }}>
+      <Grid as="section" css={{ gridGap: '$paragraph' }}>
         <a href="https://github.com/LWJGL/lwjgl3" rel="external">
           <img
             width={90 * 1.77}
@@ -67,7 +67,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
 
         <Text>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</Text>
 
-        <Grid css={{ gap: '$xsm', when: { md: { grid: 'auto-flow / repeat(4,max-content)' } } }}>
+        <Grid css={{ gridGap: '$xsm', '@md': { grid: 'auto-flow / repeat(4,max-content)' } }}>
           <AnchorButton href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
             <Icon name="fa/brands/github" /> Github Repository
           </AnchorButton>
@@ -90,15 +90,11 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
       <Grid
         as="section"
         css={{
-          gap: '$gap',
-          when: {
-            lg: {
-              grid: 'auto-flow / repeat(3, 1fr)',
-            },
-          },
+          gridGap: '$gap',
+          '@lg': { grid: 'auto-flow / repeat(3, 1fr)' },
         }}
       >
-        <Box css={{ when: { lg: { gridRow: '1/7' } } }}>
+        <Box css={{ '@lg': { gridRow: '1/7' } }}>
           <BuildBadge
             title="LWJGL"
             href="https://github.com/LWJGL-CI/lwjgl3/actions/workflows/CI.yml"

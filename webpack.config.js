@@ -47,6 +47,7 @@ const buildConfiguration = () => {
       innerGraph: PRODUCTION,
     },
     performance: { hints: false },
+    devtool: false,
     entry: {
       main: {
         import: ['./client/main.tsx'],
@@ -83,7 +84,10 @@ const buildConfiguration = () => {
       rules: [
         {
           test: /\.(mjs|js|ts|tsx)$/,
-          include: [path.resolve(__dirname, 'client')],
+          include: [
+            path.resolve(__dirname, 'client'),
+            //path.resolve(__dirname, 'node_modules/@stitches')
+          ],
           use: [
             {
               loader: 'babel-loader',
@@ -120,9 +124,7 @@ const buildConfiguration = () => {
     config.output.crossOriginLoading = 'anonymous';
 
     config.experiments = {
-      lazyCompilation: {
-        imports: true,
-      },
+      lazyCompilation: true,
     };
 
     // // Load pre-built dependencies

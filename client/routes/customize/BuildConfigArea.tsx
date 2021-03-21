@@ -10,18 +10,16 @@ export const BuildConfigArea = styled('div', {
     fontWeight: '$medium',
     color: '$primary700',
   },
-  when: {
-    md: {
-      ml: '$gutter',
-      mr: '$gutter',
-    },
-    lg: {
-      backgroundColor: '$primary100',
-      border: '2px solid $dark',
-      py: '$gutter',
-      '.dark &': {
-        borderColor: '$darker',
-      },
+  '@md': {
+    ml: '$gutter',
+    mr: '$gutter',
+  },
+  '@lg': {
+    backgroundColor: '$primary100',
+    border: '2px solid $dark',
+    py: '$gutter',
+    '.dark &': {
+      borderColor: '$darker',
     },
   },
 });

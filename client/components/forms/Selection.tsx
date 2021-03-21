@@ -32,14 +32,12 @@ const SelectionLabel = styled('label', {
   userSelect: 'none',
   cursor: 'pointer',
 
-  when: {
-    'sm-down': {
-      flexDirection: 'row-reverse',
-      justifyContent: 'space-between',
-      // expand hit area
-      padding: '$xsm $sm',
-      margin: '0 calc($sm * -1)',
-    },
+  '@sm-down': {
+    flexDirection: 'row-reverse',
+    justifyContent: 'space-between',
+    // expand hit area
+    padding: '$xsm $sm',
+    margin: '0 calc($sm * -1)',
   },
 
   variants: {

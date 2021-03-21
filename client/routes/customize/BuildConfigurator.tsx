@@ -23,13 +23,11 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
     <>
       <Grid
         css={{
-          gap: '$safe',
+          gridGap: '$safe',
           mb: '$gutter',
           px: '$safe',
-          when: {
-            lg: {
-              grid: 'auto / 1fr 1fr',
-            },
+          '@lg': {
+            grid: 'auto / 1fr 1fr',
           },
         }}
       >
@@ -43,20 +41,18 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
           <Grid
             css={{
               mt: '$sm',
-              gap: '$gutter',
+              gridGap: '$gutter',
               alignItems: 'start',
               gridTemplateRows: 'minmax(0, min-content)',
-              when: {
-                sm: {
-                  gridTemplateColumns: '1fr 1fr',
-                },
-                lg: {
-                  gridTemplateColumns: '1fr 1fr 2fr',
-                },
+              '@sm': {
+                gridTemplateColumns: '1fr 1fr',
+              },
+              '@lg': {
+                gridTemplateColumns: '1fr 1fr 2fr',
               },
             }}
           >
-            <Grid css={{ gap: '$gutter' }}>
+            <Grid css={{ gridGap: '$gutter' }}>
               <ControlStack>
                 <h4>Mode</h4>
                 <ConnectedRadio {...fields.mode} />
@@ -84,7 +80,7 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
               </ControlledPanel>
             </Grid>
 
-            <Grid css={{ gap: '$gutter' }}>
+            <Grid css={{ gridGap: '$gutter' }}>
               <ControlStack>
                 <h4>Presets</h4>
                 <ConnectedRadio {...fields.preset} />
@@ -92,10 +88,8 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
 
               <ControlStack
                 css={{
-                  when: {
-                    sm: {
-                      gap: '$xxsm',
-                    },
+                  '@sm': {
+                    gridGap: '$xxsm',
                   },
                 }}
               >
@@ -114,14 +108,12 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
 
             <ControlStack
               css={{
-                when: {
-                  sm: {
-                    gap: '$xxsm',
-                    gridArea: ' 1 / 2 / span 2 / span 1',
-                  },
-                  lg: {
-                    gridArea: 'auto',
-                  },
+                '@sm': {
+                  gridGap: '$xxsm',
+                  gridArea: ' 1 / 2 / span 2 / span 1',
+                },
+                '@lg': {
+                  gridArea: 'auto',
                 },
               }}
             >

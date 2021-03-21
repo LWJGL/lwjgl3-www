@@ -30,11 +30,9 @@ const Heading = styled('h2', {
   mb: '$xsm',
   mt: -4,
 
-  when: {
-    'lg-down': {
-      fontSize: '1.5rem',
-      mt: -2,
-    },
+  '@lg-down': {
+    fontSize: '1.5rem',
+    mt: -2,
   },
 });
 
@@ -61,11 +59,10 @@ const FOOTER = (
       <Grid
         as="nav"
         css={{
-          gap: '$safe',
-          when: {
-            md: {
-              grid: 'auto-flow / 3fr 3fr 3fr 3fr 1fr',
-            },
+          gridGap: '$safe',
+          wrap: 'truncate',
+          '@md': {
+            grid: 'auto-flow / 3fr 3fr 3fr 3fr 1fr',
           },
         }}
       >

@@ -9,7 +9,7 @@ const BrowseRoute: React.FC<{ children?: never }> = () => {
 
   return (
     <PageView title={path.length > 0 ? `/${path}` : 'Browser'} description="Browse LWJGL files">
-      <Container padding={{ initial: false, md: true }}>
+      <Container padding={{ '@initial': false, '@md': true }}>
         <Browser path={path} />
       </Container>
     </PageView>

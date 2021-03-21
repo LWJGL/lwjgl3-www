@@ -20,10 +20,8 @@ const FileList = styled('input', {
   textOverflow: 'ellipsis',
   width: 170,
 
-  when: {
-    sm: {
-      width: 300,
-    },
+  '@sm': {
+    width: 300,
   },
 
   '&:active': {

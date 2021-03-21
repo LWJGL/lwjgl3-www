@@ -3,44 +3,36 @@ import { Breakpoint, boundaries } from '~/app/context/Breakpoint';
 
 export const Container = styled('div', {
   maxWidth: '100vw',
-  when: {
-    sm: {
-      maxWidth: boundaries[Breakpoint.sm],
-    },
-    md: {
-      maxWidth: boundaries[Breakpoint.md],
-    },
-    lg: {
-      maxWidth: boundaries[Breakpoint.lg],
-    },
-    xl: {
-      maxWidth: boundaries[Breakpoint.xl],
-    },
-    xxl: {
-      maxWidth: boundaries[Breakpoint.xxl],
-    },
+  '@sm': {
+    maxWidth: boundaries[Breakpoint.sm],
+  },
+  '@md': {
+    maxWidth: boundaries[Breakpoint.md],
+  },
+  '@lg': {
+    maxWidth: boundaries[Breakpoint.lg],
+  },
+  '@xl': {
+    maxWidth: boundaries[Breakpoint.xl],
+  },
+  '@xxl': {
+    maxWidth: boundaries[Breakpoint.xxl],
   },
   variants: {
     align: {
       center: {
-        when: {
-          sm: {
-            mx: 'auto',
-          },
+        '@sm': {
+          mx: 'auto',
         },
       },
       left: {
-        when: {
-          sm: {
-            mr: 'auto',
-          },
+        '@sm': {
+          mr: 'auto',
         },
       },
       right: {
-        when: {
-          sm: {
-            ml: 'auto',
-          },
+        '@sm': {
+          ml: 'auto',
         },
       },
     },

@@ -30,18 +30,16 @@ const MainMenuContainer = styled('nav', {
     '&.active': {
       color: 'yellow',
     },
-    when: {
-      lg: {
-        lineHeight: '2.25rem',
-        background:
-          'linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent) bottom / 0 3px no-repeat',
-        '&.active': {
-          backgroundSize: '100% 3px',
-        },
-        '&:not(.active):focus,&:not(.active):hover': {
-          // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
-          backgroundSize: '90% 3px',
-        },
+    '@lg': {
+      lineHeight: '2.25rem',
+      background:
+        'linear-gradient(to right, transparent, currentColor 20%, currentColor 80%, transparent) bottom / 0 3px no-repeat',
+      '&.active': {
+        backgroundSize: '100% 3px',
+      },
+      '&:not(.active):focus,&:not(.active):hover': {
+        // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
+        backgroundSize: '90% 3px',
       },
     },
   },
@@ -53,7 +51,7 @@ const MainMenuContainer = styled('nav', {
         flexWrap: 'wrap',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        // gap: '0 1.5rem',
+        // gridGap: '0 1.5rem',
         hgap: '$gutter',
       },
       vertical: {

@@ -10,25 +10,15 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
       <Title>Lightweight Java Game Library License</Title>
       <Grid
         css={{
-          gap: '$gutter',
-          when: {
-            md: {
-              grid: 'auto-flow / 1fr 1fr',
-            },
-            xxl: {
-              grid: 'auto-flow / max-content 1fr 1fr',
-            },
-          },
+          gridGap: '$gutter',
+          '@md': { grid: 'auto-flow / 1fr 1fr' },
+          '@xxl': { grid: 'auto-flow / max-content 1fr 1fr' },
         }}
       >
         <Prose
           css={{
             color: '$neutral700',
-            when: {
-              md: {
-                gridColumn: 1,
-              },
-            },
+            '@md': { gridColumn: 1 },
           }}
         >
           <p>
@@ -41,10 +31,8 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
         </Prose>
         <Prose
           css={{
-            when: {
-              md: { gridRow: 2 },
-              xxl: { gridRow: 'auto' },
-            },
+            '@md': { gridRow: 2 },
+            '@xxl': { gridRow: 'auto' },
           }}
         >
           <p>
@@ -69,10 +57,8 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
         </Prose>
         <Prose
           css={{
-            when: {
-              md: { gridRow: '1/3' },
-              xxl: { gridRow: 'auto' },
-            },
+            '@md': { gridRow: '1/3' },
+            '@xxl': { gridRow: 'auto' },
           }}
         >
           <p>
