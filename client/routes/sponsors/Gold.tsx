@@ -198,6 +198,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
             <span>CONNESSIONI VPN</span>
           </FlexStack>
         </a>
+        <a
+          href="https://casinomartini.com/nz/new-online-casinos/"
+          title="New Zealand New Online Casinos | Full List of New Casino Sites NZ"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={379 / 2} height={138 / 2} src="/img/sponsors/casino-martini.png" alt="Casino Martini" />
+        </a>
       </Grid>
       {children}
     </Section>
