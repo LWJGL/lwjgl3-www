@@ -115,6 +115,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
   const perc = useTransform(x, (value) => 1 - value / MENU_WIDTH);
   const rotateLine1 = useTransform(perc, (value) => value * -45);
   const scaleLine2 = useTransform(perc, (value) => 1 - value);
+  const opacityLine2 = useTransform(perc, (value) => 1 - value);
   const rotateLine3 = useTransform(perc, (value) => value * 45);
   const backdropColor = useTransform(x, [0, MENU_WIDTH], ['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']);
   const onDragEnd: DragHandlers['onDragEnd'] = useCallback(
@@ -161,7 +162,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
         aria-label={toggleButtonTitle}
       >
         <motion.span className={MenuToggleLine()} style={{ rotate: rotateLine1 }} />
-        <motion.span className={MenuToggleLine()} style={{ scale: scaleLine2 }} />
+        <motion.span className={MenuToggleLine()} style={{ scale: scaleLine2, opacity: opacityLine2 }} />
         <motion.span className={MenuToggleLine()} style={{ rotate: rotateLine3 }} />
       </MenuToggleButton>
 
