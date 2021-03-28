@@ -432,7 +432,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           <a href="http://www.puppygames.net/revenge-of-the-titans/" rel="noopener external">
             Revenge of the Titans
           </a>{' '}
-          by Puppygames. It is also used in popular game engines, like{' '}
+          by Puppygames. It was also used in popular game engines, like{' '}
           <a href="http://libgdx.badlogicgames.com/" rel="noopener external">
             libGDX
           </a>{' '}
@@ -441,12 +441,6 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
             jMonkeyEngine
           </a>
           .
-        </p>
-
-        <p>
-          <a href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration" rel="noopener external">
-            Migration Guide
-          </a>
         </p>
       </Prose>
       <Grid
@@ -469,8 +463,13 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
         >
           LWJGL 2 WEBSITE{' '}
         </AnchorButton>
-        <AnchorButton size="xl" variant="outline" href="http://wiki.lwjgl.org/" target="_blank" rel="noopener external">
-          LWJGL 2 WIKI
+        <AnchorButton
+          size="xl"
+          variant="outline"
+          href="https://github.com/LWJGL/lwjgl3-wiki/wiki/2.6.6-LWJGL3-migration"
+          rel="noopener external"
+        >
+          MIGRATION GUIDE
         </AnchorButton>
       </Grid>
     </Section>
