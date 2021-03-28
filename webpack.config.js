@@ -146,9 +146,11 @@ const buildConfiguration = () => {
         // hot: 'only',
         hot: true,
         static: false,
-        overlay: false,
         compress: false,
         firewall: false,
+        client: {
+          overlay: false,
+        },
         dev: {
           index: false,
         },
