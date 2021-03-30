@@ -83,13 +83,25 @@ export default function SponsorsRoute() {
       <Container as="section" padding>
         <TitleSection>Backers:</TitleSection>
         <Box css={{ textAlign: 'center', pt: '$sm', pb: '$gap' }}>
-          <ImgLazy alt="LWJGL backers list" src="https://opencollective.com/lwjgl/backers.svg?width=825" />
+          <ImgLazy
+            css={{
+              maxWidth: '100%',
+            }}
+            alt="LWJGL backers list"
+            src="https://opencollective.com/lwjgl/backers.svg?width=825"
+          />
         </Box>
 
         <TitleSection>Contributors:</TitleSection>
         <Box css={{ textAlign: 'center', pt: '$sm' }}>
           <a href="https://github.com/LWJGL/lwjgl3/graphs/contributors">
-            <ImgLazy alt="LWJGL contributors list" src="https://opencollective.com/lwjgl/contributors.svg?width=825" />
+            <ImgLazy
+              css={{
+                maxWidth: '100%',
+              }}
+              alt="LWJGL contributors list"
+              src="https://opencollective.com/lwjgl/contributors.svg?width=825"
+            />
           </a>
         </Box>
       </Container>
