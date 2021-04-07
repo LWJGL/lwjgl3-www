@@ -143,7 +143,6 @@ const buildConfiguration = () => {
       config.devServer = {
         host: '0.0.0.0',
         port: 8081,
-        // hot: 'only',
         hot: true,
         static: false,
         compress: false,

@@ -206,6 +206,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={379 / 2} height={138 / 2} src="/img/sponsors/casino-martini.png" alt="Casino Martini" />
         </a>
+        <a
+          href="https://goread.io/buy-instagram-followers"
+          title="Buy Instagram Followers with Instant Delivery"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={1133 * 0.25} height={218 * 0.25} src="/img/sponsors/goread-1133x218.png" alt="Goread.io" />
+        </a>
       </Grid>
       {children}
     </Section>
