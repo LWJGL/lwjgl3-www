@@ -214,6 +214,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={1133 * 0.25} height={218 * 0.25} src="/img/sponsors/goread-1133x218.png" alt="Goread.io" />
         </a>
+        <a
+          href="https://www.boekonomi.se/"
+          title="BoEkonomi.se | Vi hjälper dig ta hand om din ekonomi och ditt boende!"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={200 / 1.5} height={31 / 1.5} src="/img/sponsors/boekonomi-200x31.png" alt="BoEkonomi.se" />
+        </a>
       </Grid>
       {children}
     </Section>
