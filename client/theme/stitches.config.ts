@@ -339,11 +339,35 @@ const stitchesConfig = createCss({
     //     },
     //   };
     // },
-    // ! Polyfills
-    // gap: () => (value: SpaceValue) => ({
-    //   gridGap: value,
-    //   gap: value,
-    // }),
+    gap: (config) => (value: SpaceValue) => {
+      let val: string;
+
+      if (typeof value === 'number') {
+        val = `${value}px`;
+      } else {
+        val = value;
+        if (val.charAt(0) === '$') {
+          if (val.charAt(1) === '$') {
+            val = `var(--${config.prefix}--${val.slice(2)})`;
+          } else {
+            let [scale, token] = val.slice(1).split('$');
+            if (token === undefined) {
+              token = scale;
+              scale = 'space';
+            }
+            //@ts-ignore
+            if (config.theme[scale] !== undefined && token in config.theme[scale]) {
+              val = `var(--${config.prefix}-${scale}-${token})`;
+            }
+          }
+        }
+      }
+
+      return {
+        gridGap: val,
+        gap: val,
+      };
+    },
     wrap: () => (value: 'normal' | 'word' | 'all' | 'truncate') => {
       switch (value) {
         case 'normal':

@@ -32,7 +32,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           <b>JGL</b> 3
         </Title>
 
-        <Grid css={{ grid: 'auto-flow / 1fr', gridGap: '$paragraph', '@lg': { grid: 'auto-flow / repeat(3, 1fr)' } }}>
+        <Grid css={{ grid: 'auto-flow / 1fr', gap: '$paragraph', '@lg': { grid: 'auto-flow / repeat(3, 1fr)' } }}>
           <Text>All official are available for download from GitHub:</Text>
           <Box css={{ '@lg': { gridRow: 2 } }}>
             <AnchorButton
@@ -72,7 +72,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           </Text>
 
           <Text margin>Click below if you prefer to build from source:</Text>
-          <Grid css={{ gridGap: '$xsm', '@sm': { grid: 'auto-flow / repeat(2, max-content)' } }}>
+          <Grid css={{ gap: '$xsm', '@sm': { grid: 'auto-flow / repeat(2, max-content)' } }}>
             <LinkButton variant="outline" to="/source">
               Source
             </LinkButton>
@@ -98,7 +98,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:
         </Text>
 
-        <Grid css={{ gridGap: '$xsm', '@sm': { grid: 'auto-flow / repeat(2, max-content)' } }}>
+        <Grid css={{ gap: '$xsm', '@sm': { grid: 'auto-flow / repeat(2, max-content)' } }}>
           <AnchorButton variant="outline" href="http://legacy.lwjgl.org/" rel="noopener external">
             LWJGL 2 WEBSITE
           </AnchorButton>

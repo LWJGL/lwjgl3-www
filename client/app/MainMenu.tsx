@@ -51,7 +51,7 @@ const MainMenuContainer = styled('nav', {
         flexWrap: 'wrap',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        // gridGap: '0 1.5rem',
+        // gap: '0 1.5rem',
         hgap: '$gutter',
       },
       vertical: {

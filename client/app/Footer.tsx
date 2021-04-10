@@ -59,7 +59,7 @@ const FOOTER = (
       <Grid
         as="nav"
         css={{
-          gridGap: '$safe',
+          gap: '$safe',
           wrap: 'truncate',
           '@md': {
             grid: 'auto-flow / 3fr 3fr 3fr 3fr 1fr',

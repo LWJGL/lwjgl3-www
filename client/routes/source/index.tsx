@@ -55,7 +55,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
         <b>JGL</b> Source
       </Title>
 
-      <Grid as="section" css={{ gridGap: '$paragraph' }}>
+      <Grid as="section" css={{ gap: '$paragraph' }}>
         <a href="https://github.com/LWJGL/lwjgl3" rel="external">
           <img
             width={90 * 1.77}
@@ -67,7 +67,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
 
         <Text>LWJGL 3 is hosted on Github. Fork, star and contribute to our project!</Text>
 
-        <Grid css={{ gridGap: '$xsm', '@md': { grid: 'auto-flow / repeat(4,max-content)' } }}>
+        <Grid css={{ gap: '$xsm', '@md': { grid: 'auto-flow / repeat(4,max-content)' } }}>
           <AnchorButton href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
             <Icon name="fa/brands/github" /> Github Repository
           </AnchorButton>
@@ -90,7 +90,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
       <Grid
         as="section"
         css={{
-          gridGap: '$gap',
+          gap: '$gap',
           '@lg': { grid: 'auto-flow / repeat(3, 1fr)' },
         }}
       >

@@ -120,7 +120,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
         css={{
           mt: '$safe',
           justifyContent: 'center',
-          gridGap: '$xsm',
+          gap: '$xsm',
           grid: 'auto-flow / 1fr',
           '@sm': {
             grid: 'auto-flow / repeat(3, max-content)',
@@ -147,12 +147,12 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
 
         <Grid
           css={{
-            gridGap: '$lg',
+            gap: '$lg',
             '@md': {
               grid: 'auto-flow / repeat(2, 1fr)',
             },
             '@xl': {
-              gridGap: '$xl',
+              gap: '$xl',
               grid: 'auto-flow / repeat(3, 1fr)',
             },
           }}
@@ -447,7 +447,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
         css={{
           mt: '$gutter',
           justifyContent: 'center',
-          gridGap: '$xsm',
+          gap: '$xsm',
           grid: 'auto-flow / 1fr',
           '@sm': {
             grid: 'auto-flow / repeat(2, max-content)',

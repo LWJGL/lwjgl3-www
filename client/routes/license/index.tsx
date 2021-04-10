@@ -10,7 +10,7 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
       <Title>Lightweight Java Game Library License</Title>
       <Grid
         css={{
-          gridGap: '$gutter',
+          gap: '$gutter',
           '@md': { grid: 'auto-flow / 1fr 1fr' },
           '@xxl': { grid: 'auto-flow / max-content 1fr 1fr' },
         }}

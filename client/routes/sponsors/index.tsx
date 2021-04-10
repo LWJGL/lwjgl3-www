@@ -23,7 +23,7 @@ export default function SponsorsRoute() {
           <Grid
             css={{
               pt: '$sm',
-              gridGap: '$safe',
+              gap: '$safe',
               alignItems: 'center',
               '@sm': {
                 grid: 'auto-flow / repeat(2, 1fr)',

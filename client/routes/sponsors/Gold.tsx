@@ -12,7 +12,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
       <Grid
         css={{
           pt: '$gap',
-          gridGap: '$safe',
+          gap: '$safe',
           alignItems: 'center',
           width: '100%',
           img: {

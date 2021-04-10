@@ -23,7 +23,7 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
     <>
       <Grid
         css={{
-          gridGap: '$safe',
+          gap: '$safe',
           mb: '$gutter',
           px: '$safe',
           '@lg': {
@@ -41,7 +41,7 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
           <Grid
             css={{
               mt: '$sm',
-              gridGap: '$gutter',
+              gap: '$gutter',
               alignItems: 'start',
               gridTemplateRows: 'minmax(0, min-content)',
               '@sm': {
@@ -52,7 +52,7 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
               },
             }}
           >
-            <Grid css={{ gridGap: '$gutter' }}>
+            <Grid css={{ gap: '$gutter' }}>
               <ControlStack>
                 <h4>Mode</h4>
                 <ConnectedRadio {...fields.mode} />
@@ -80,7 +80,7 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
               </ControlledPanel>
             </Grid>
 
-            <Grid css={{ gridGap: '$gutter' }}>
+            <Grid css={{ gap: '$gutter' }}>
               <ControlStack>
                 <h4>Presets</h4>
                 <ConnectedRadio {...fields.preset} />
@@ -89,7 +89,7 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
               <ControlStack
                 css={{
                   '@sm': {
-                    gridGap: '$xxsm',
+                    gap: '$xxsm',
                   },
                 }}
               >
@@ -109,7 +109,7 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
             <ControlStack
               css={{
                 '@sm': {
-                  gridGap: '$xxsm',
+                  gap: '$xxsm',
                   gridArea: ' 1 / 2 / span 2 / span 1',
                 },
                 '@lg': {

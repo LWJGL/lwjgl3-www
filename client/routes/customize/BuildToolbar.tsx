@@ -21,7 +21,7 @@ const ToolbarContainer = styled(Dark, {
   bottom: 0,
   width: '100%',
   display: 'grid',
-  gridGap: '0.5rem',
+  gap: '0.5rem',
   justifyContent: 'center',
   alignItems: 'center',
   gridAutoFlow: 'column',
