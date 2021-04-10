@@ -230,7 +230,7 @@ const themeTokens = {
     // none: 'none',
   },
   // zIndices: {},
-  transitions: {},
+  // transitions: {},
 };
 
 type SpaceValue = `$${keyof typeof themeTokens.space}` | number | (string & {});
@@ -238,6 +238,7 @@ type SizeValue = `$${keyof typeof themeTokens.sizes}` | number | (string & {});
 // type ColorValue = `$${keyof typeof themeTokens.colors}` | (string & {});
 
 const stitchesConfig = createCss({
+  prefix: 'wh',
   insertionMethod: 'append',
   theme: themeTokens,
   media: {
