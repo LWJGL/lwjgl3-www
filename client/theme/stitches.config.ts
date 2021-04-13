@@ -248,17 +248,18 @@ const stitchesConfig = createCss({
     // Uses 0.02px rather than 0.01px to work around a current rounding bug in Safari.
     // See https://bugs.webkit.org/show_bug.cgi?id=178261
     'sm-down': `(max-width:${576 - 0.02}px)`,
-    sm: `(min-width:576px)`,
+    sm: '(min-width:576px)',
     'md-down': `(max-width:${768 - 0.02}px)`,
-    md: `(min-width:768px)`,
+    md: '(min-width:768px)',
     'lg-down': ` (max-width:${992 - 0.02}px)`,
-    lg: `(min-width:992px)`,
+    lg: '(min-width:992px)',
     'xl-down': `(max-width:${1200 - 0.02}px)`,
-    xl: `(min-width:1200px)`,
+    xl: '(min-width:1200px)',
     'xxl-down': `(max-width:${1400 - 0.02}px)`,
-    xxl: `(min-width:1400px)`,
+    xxl: '(min-width:1400px)',
     // prefersDark: `(prefers-color-scheme:dark)`,
     // prefersLight: `(prefers-color-scheme:light)`,
+    all: 'all',
   },
   utils: {
     mt: () => (value: SpaceValue) => ({
