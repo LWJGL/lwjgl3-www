@@ -304,6 +304,9 @@ const Ripple = styled('span', {
   position: 'absolute',
   square: '100%',
   overflow: 'hidden',
+  '@all': {
+    overflow: 'clip',
+  },
   borderRadius: '$md',
   top: 0,
   left: 0,

@@ -22,6 +22,9 @@ type Progress = Array<string>;
 
 const Pre = styled('pre', {
   overflow: 'hidden',
+  '@all': {
+    overflow: 'clip',
+  },
   overflowY: 'auto',
   fontSize: '$sm',
 });

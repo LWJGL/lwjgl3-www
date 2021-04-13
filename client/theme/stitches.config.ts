@@ -5,6 +5,7 @@ import * as dark from './palettes/default-dark';
 
 import type { Hsl } from './color';
 import type { StitchesCss } from '@stitches/react';
+// import type { OverflowProperty } from '@stitches/core/types/css-types';
 
 export type Tone = 'primary' | 'neutral' | 'critical' | 'caution' | 'positive' | 'info';
 export type Level = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
@@ -369,6 +370,18 @@ const stitchesConfig = createCss({
         gap: val,
       };
     },
+    // overflow: () => (overflow: OverflowProperty) => {
+    //   return overflow === 'clip'
+    //     ? {
+    //         overflow: 'hidden',
+    //         '@supports(overflow: clip)': {
+    //           overflow: 'clip',
+    //         },
+    //       }
+    //     : {
+    //         overflow,
+    //       };
+    // },
     wrap: () => (value: 'normal' | 'word' | 'all' | 'truncate') => {
       switch (value) {
         case 'normal':
@@ -387,6 +400,9 @@ const stitchesConfig = createCss({
         case 'truncate':
           return {
             overflow: 'hidden',
+            '@all': {
+              overflow: 'clip',
+            },
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
           };

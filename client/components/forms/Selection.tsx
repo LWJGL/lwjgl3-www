@@ -59,6 +59,9 @@ export const SelectionInput = styled('input', {
   position: 'absolute',
   clip: 'rect(1px,1px,1px,1px)',
   overflow: 'hidden',
+  '@all': {
+    overflow: 'clip',
+  },
   whiteSpace: 'nowrap',
 
   // Animate visual sibling only on programmatic value change
