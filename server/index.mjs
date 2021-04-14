@@ -206,7 +206,23 @@ app.register(fastifyStatic, {
       case 'favicon.ico':
         res.setHeader(
           'Cache-Control',
-          `public, max-age=${3600 * 24 * 7}, s-maxage=${3600 * 24 * 30}, stale-while-revalidate=3600`
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+        );
+        break;
+      case 'favicon.ico.gz':
+        res.setHeader('Content-Encoding', 'gzip');
+        res.setHeader('Content-Type', 'image/x-icon');
+        res.setHeader(
+          'Cache-Control',
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+        );
+        break;
+      case 'favicon.ico.br':
+        res.setHeader('Content-Encoding', 'br');
+        res.setHeader('Content-Type', 'image/x-icon');
+        res.setHeader(
+          'Cache-Control',
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
         );
         break;
       case 'manifest.webmanifest':
@@ -215,7 +231,7 @@ app.register(fastifyStatic, {
       case 'sample.html':
         res.setHeader(
           'Cache-Control',
-          `public, max-age=${3600 * 24}, s-maxage=${3600 * 24 * 30}, stale-while-revalidate=3600`
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
         );
         break;
       case 'sw.js': {
@@ -223,7 +239,7 @@ app.register(fastifyStatic, {
         break;
       }
       default: {
-        res.setHeader('Cache-Control', `public, max-age=${3600 * 24 * 365}, immutable`);
+        res.setHeader('Cache-Control', `public,max-age=${3600 * 24 * 365},immutable`);
       }
     }
   },
@@ -329,6 +345,13 @@ app.route({
       reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
     } else {
       template.entry = 'main.js';
+    }
+
+    template.favicon = 'favicon.ico';
+    if (request.encoding(['br'])) {
+      template.favicon += '.br';
+    } else if (request.encoding(['gzip'])) {
+      template.favicon += '.gz';
     }
 
     reply.header('Content-Language', 'en');
