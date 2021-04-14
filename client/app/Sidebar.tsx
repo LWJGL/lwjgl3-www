@@ -65,7 +65,7 @@ const MenuOverlay = css({
   width: MENU_WIDTH,
   // maxWidth: 320,
   // minWidth: 260,
-  overflowX: 'hidden',
+  overflowX: 'hidden;overflow-x:clip',
   overflowY: 'auto',
   '-webkit-overflow-scrolling': 'touch',
   'touch-action': 'pan-y',

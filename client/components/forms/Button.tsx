@@ -303,10 +303,7 @@ function generateRippleCompoundVariants(variant: Variant, level: Level): ButtonC
 const Ripple = styled('span', {
   position: 'absolute',
   square: '100%',
-  overflow: 'hidden',
-  '@all': {
-    overflow: 'clip',
-  },
+  overflow: 'clip',
   borderRadius: '$md',
   top: 0,
   left: 0,
