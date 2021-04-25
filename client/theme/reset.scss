@@ -53,7 +53,7 @@ html {
 
 // Consistent fonts (Tailwind sans-serif stack)
 body {
-  font-family: var(--wh-fonts-sans, sans-serif);
+  font-family: var(--fonts-sans, sans-serif);
 }
 
 // Render elements in IE with correct display.
@@ -157,7 +157,7 @@ hr {
   color: inherit;
   overflow: visible;
   border: none;
-  border-top: 1px solid var(--wh-colors-neutral300, #e4e4e7);
+  border-top: 1px solid var(--colors-neutral300, #e4e4e7);
 }
 
 iframe {

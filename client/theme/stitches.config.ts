@@ -239,7 +239,6 @@ type SizeValue = `$${keyof typeof themeTokens.sizes}` | number | (string & {});
 // type ColorValue = `$${keyof typeof themeTokens.colors}` | (string & {});
 
 const stitchesConfig = createCss({
-  prefix: 'wh',
   insertionMethod: 'append',
   theme: themeTokens,
   media: {
@@ -311,7 +310,8 @@ const stitchesConfig = createCss({
         val = value;
         if (val.charAt(0) === '$') {
           if (val.charAt(1) === '$') {
-            val = `var(--${config.prefix}--${val.slice(2)})`;
+            // val = `var(--${config.prefix}--${val.slice(2)})`;
+            val = `var(---${val.slice(2)})`;
           } else {
             let [scale, token] = val.slice(1).split('$');
             if (token === undefined) {
@@ -320,7 +320,8 @@ const stitchesConfig = createCss({
             }
             //@ts-ignore
             if (config.theme[scale] !== undefined && token in config.theme[scale]) {
-              val = `var(--${config.prefix}-${scale}-${token})`;
+              // val = `var(--${config.prefix}-${scale}-${token})`;
+              val = `var(--${scale}-${token})`;
             }
           }
         }

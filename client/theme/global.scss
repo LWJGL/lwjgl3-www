@@ -3,8 +3,8 @@
 @import 'reset.scss';
 
 body {
-  background-color: var(--wh-colors-body);
-  color: var(--wh-colors-text);
+  background-color: var(--colors-body);
+  color: var(--colors-text);
 
   // Disables pull-to-refresh and overscroll glow effect. Still keeps swipe navigations.
   // https://developers.google.com/web/updates/2017/11/overscroll-behavior
