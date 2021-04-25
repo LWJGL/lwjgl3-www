@@ -1,5 +1,5 @@
 import { Fragment, Suspense, useState, useEffect, unstable_useTransition as useTransition } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '~/components/router/client';
 import { File } from './File';
 import { Folder, SpinnerRow, FolderError } from './Folder';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
@@ -14,7 +14,7 @@ interface Props {
 
 export function Browser({ path: targetPath }: Props) {
   const [path, setPath] = useState(targetPath);
-  const [startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   useEffect(() => {
     if (targetPath !== path) {

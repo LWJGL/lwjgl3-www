@@ -6,7 +6,7 @@ import { ColorSchemeProvider } from './context/ColorScheme';
 import '~/services/screenFit';
 
 // Routing
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from '~/components/router/client';
 // import { NavProgress } from '~/components/ui/NavProgress';
 import { PageError } from '~/routes/PageError';
 import { PageBlank } from '~/routes/PageBlank';

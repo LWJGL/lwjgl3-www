@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '~/components/router/client';
 import { PageView } from '~/routes/PageView';
 import { readSample } from './loaders/sample';
 

@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from '~/components/router/client';
 import { styled } from '~/theme/stitches.config';
 import { Container } from '~/components/layout/Container';
 import { Grid } from '~/components/layout/Grid';

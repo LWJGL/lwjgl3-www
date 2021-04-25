@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '~/components/router/client';
 import { Icon } from '~/components/ui/Icon';
 import { LoadingPulse } from '~/components/ui/LoadingPulse';
 import '~/theme/icons/fa/solid/folder';

@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from '~/components/router/client';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
 import { usePrevious } from '~/hooks/usePrevious';

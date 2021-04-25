@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '~/components/router/client';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
 import { useMedia } from '~/hooks/useMedia';
 import { useViewport } from '~/hooks/useViewport';

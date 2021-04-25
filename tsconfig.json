@@ -20,7 +20,7 @@
     "paths": {
       "~/*": ["./client/*"]
     },
-    "types": ["node", "react/experimental", "react-dom/experimental"]
+    "types": ["node", "react-dom/experimental"]
   },
   "include": ["types", "client"],
   "exclude": ["public", "scripts", "server", "**/node_modules", "**/.*/"]

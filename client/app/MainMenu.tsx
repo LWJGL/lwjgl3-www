@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from '~/components/router/client';
 import { useColorScheme, useColorSchemeToggle } from '~/app/context/ColorScheme';
 import { styled } from '~/theme/stitches.config';
 import { Button } from '~/components/forms/Button';

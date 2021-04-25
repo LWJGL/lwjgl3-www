@@ -274,8 +274,6 @@ if (DEVELOPMENT) {
 // CAUTION: Internet connection is required!
 if (DEVELOPMENT || argv.s3proxy === true) {
   const httpProxy = require('fastify-http-proxy');
-
-  // Proxy photos from S3
   await app.register(httpProxy, { prefix: '/img', rewritePrefix: '/img', upstream: 'https://cdn.lwjgl.org' });
   await app.register(httpProxy, { prefix: '/svg', rewritePrefix: '/svg', upstream: 'https://cdn.lwjgl.org' });
 }

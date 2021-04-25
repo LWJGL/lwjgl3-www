@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link } from '~/components/router/client';
 import { Button } from '../forms/Button';
 import type { ButtonProps } from '../forms/Button';
-import type { LinkProps } from 'react-router-dom';
+import type { LinkProps } from '~/components/router/client';
 
 export type LinkButtonProps = ButtonProps & LinkProps;
 export type AnchorButtonProps = ButtonProps & React.AnchorHTMLAttributes<HTMLAnchorElement>;

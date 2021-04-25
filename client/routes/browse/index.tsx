@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams } from '~/components/router/client';
 import { PageView } from '~/routes/PageView';
 import { Browser } from './components/Browser';
 import { Container } from '~/components/layout/Container';

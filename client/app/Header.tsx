@@ -1,5 +1,5 @@
 import { memo, useEffect, useCallback, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from '~/components/router/client';
 import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
 import { styled } from '~/theme/stitches.config';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';

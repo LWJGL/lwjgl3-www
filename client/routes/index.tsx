@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route } from '~/components/router/client';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
 import { PageError } from './PageError';
 import { PageNotFound } from './PageNotFound';

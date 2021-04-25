@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Prompt } from 'react-router-dom';
+import { Prompt } from '~/components/router/client';
 
 interface Props {
   /** Set to true to enable the prompt */
