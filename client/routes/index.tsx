@@ -5,7 +5,7 @@ import { PageError } from './PageError';
 import { PageNotFound } from './PageNotFound';
 // import { delay } from '../services/delay';
 
-function $R(fn: () => Promise<any>) {
+function $R(fn: () => Promise<{ default: React.ComponentType<any> }>) {
   const RouteChunk = lazy(fn);
   return function AsyncRoute() {
     return (
@@ -38,16 +38,16 @@ const Frameworks = $R(() => import(/* webpackChunkName: "route-frameworks" */ '.
 export const RouterConfig: React.FC<{}> = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/guide" element={<Guide />} />
-      <Route path="/download" element={<Download />} />
-      <Route path="/customize" element={<Customize />} />
-      <Route path="/browse/*" element={<Browse />} />
-      <Route path="/source" element={<Source />} />
-      <Route path="/frameworks" element={<Frameworks />} />
-      <Route path="/sponsors" element={<Sponsors />} />
-      <Route path="/license" element={<License />} />
-      <Route path="*" element={<PageNotFound />} />
+      <Route path="/" element={Home} />
+      <Route path="/guide" element={Guide} />
+      <Route path="/download" element={Download} />
+      <Route path="/customize" element={Customize} />
+      <Route path="/browse/*" element={Browse} />
+      <Route path="/source" element={Source} />
+      <Route path="/frameworks" element={Frameworks} />
+      <Route path="/sponsors" element={Sponsors} />
+      <Route path="/license" element={License} />
+      <Route path="*" element={PageNotFound} />
     </Routes>
   );
 };

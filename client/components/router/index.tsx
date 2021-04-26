@@ -6,6 +6,7 @@ import {
   useCallback,
   useMemo,
   isValidElement,
+  createElement,
   Fragment,
   Children,
 } from 'react';
@@ -86,14 +87,14 @@ if (!FLAG_PRODUCTION) {
  *
  * @see https://reactrouter.com/api/Route
  */
-export function Route({ element = <Outlet /> }: RouteProps): React.ReactElement | null {
-  return element;
+export function Route({ element = Outlet }: RouteProps): React.ReactElement | null {
+  return element === null || isValidElement(element) ? element : createElement(element);
 }
 
 export interface RouteProps {
   caseSensitive?: boolean;
   children?: React.ReactNode;
-  element?: React.ReactElement | null;
+  element?: React.ReactElement | React.ComponentType<any> | null;
   path?: string;
   preload?: RoutePreloadFunction;
 }
