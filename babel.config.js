@@ -43,7 +43,7 @@ const config = {
     ],
     ['@babel/preset-react', { runtime: 'automatic', development: DEV }],
   ],
-  plugins: ['@babel/plugin-proposal-class-properties'],
+  plugins: [],
 };
 
 if (DEV) {
