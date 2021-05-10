@@ -1,0 +1,30 @@
+{
+  "version": "1.0",
+  "context": {
+    "eventType": "viewer-request"
+  },
+  "viewer": {
+    "ip": "127.0.0.1"
+  },
+  "request": {
+    "method": "GET",
+    "uri": "/list",
+    "querystring": {
+      "path": {
+        "value": "release/3.0.0/"
+      },
+      "escapeCache": {
+        "value": "1"
+      },
+      "utm_medium": {
+        "value": "social"
+      }
+    },
+    "headers": {
+      "host": {
+        "value": "www.lwjgl.org"
+      }
+    },
+    "cookies": {}
+  }
+}

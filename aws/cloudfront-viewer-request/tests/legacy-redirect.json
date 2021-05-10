@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "context": {
+    "eventType": "viewer-request"
+  },
+  "viewer": {
+    "ip": "127.0.0.1"
+  },
+  "request": {
+    "method": "GET",
+    "uri": "/credits.php",
+    "querystring": {},
+    "headers": {
+      "host": {
+        "value": "www.lwjgl.org"
+      }
+    },
+    "cookies": {}
+  }
+}
