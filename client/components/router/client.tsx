@@ -1,4 +1,4 @@
-import { useRef, unstable_useTransition, useReducer, useLayoutEffect, forwardRef } from 'react';
+import { useRef, useTransition, useReducer, useLayoutEffect, forwardRef } from 'react';
 import { Router, useHref, useLocation, useNavigate, useResolvedPath } from './';
 import { BrowserHistory, State, To, Update, createBrowserHistory, createPath } from 'history';
 
@@ -18,7 +18,7 @@ export function BrowserRouter({ children, window }: BrowserRouterProps) {
   }
 
   // @ts-ignore
-  let [isPending, startTransition] = unstable_useTransition();
+  let [isPending, startTransition] = useTransition();
 
   let history = historyRef.current;
   let [state, dispatch] = useReducer((_: Update, action: Update) => action, {

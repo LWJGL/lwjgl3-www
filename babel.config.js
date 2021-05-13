@@ -11,8 +11,7 @@ const config = {
     strictMode: true,
   },
   assumptions: {
-    noClassCalls: true,
-    arrayLikeIsIterable: true,
+    // arrayLikeIsIterable: true,
     constantReexports: true,
     constantSuper: true,
     enumerableModuleMeta: true,

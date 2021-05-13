@@ -1,4 +1,4 @@
-import { Fragment, Suspense, useState, useEffect, unstable_useTransition as useTransition } from 'react';
+import { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
 import { Link } from '~/components/router/client';
 import { File } from './File';
 import { Folder, SpinnerRow, FolderError } from './Folder';

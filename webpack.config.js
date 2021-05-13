@@ -150,7 +150,7 @@ const buildConfiguration = () => {
         client: {
           overlay: false,
         },
-        dev: {
+        devMiddleware: {
           index: false,
         },
       };

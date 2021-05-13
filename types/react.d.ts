@@ -26,25 +26,14 @@ declare module 'react' {
   }
 
   export type SuspenseListProps = DirectionalSuspenseListProps | NonDirectionalSuspenseListProps;
-  export const unstable_SuspenseList: ExoticComponent<SuspenseListProps>;
-
-  export interface SuspenseConfig {
-    busyDelayMs?: number;
-    busyMinDurationMs?: number;
-  }
-
-  // undocumented, considered for removal
-  export function unstable_withSuspenseConfig(
-    scope: () => VoidOrUndefinedOnly,
-    config: SuspenseConfig | null | undefined
-  ): void;
+  export const SuspenseList: ExoticComponent<SuspenseListProps>;
 
   export type TransitionFunction = () => VoidOrUndefinedOnly;
   export interface TransitionStartFunction {
     (callback: TransitionFunction): void;
   }
 
-  export function unstable_useDeferredValue<T>(value: T): T;
+  export function useDeferredValue<T>(value: T): T;
 
   const opaqueIdentifierBranding: unique symbol;
   type OpaqueIdentifier = string & {
@@ -53,10 +42,12 @@ declare module 'react' {
 
   export function unstable_useOpaqueIdentifier(): OpaqueIdentifier;
 
-  export function unstable_useTransition(config?: SuspenseConfig | null): [boolean, TransitionStartFunction];
-  export function unstable_startTransition(scope: TransitionFunction): void;
+  export function useTransition(config?: SuspenseConfig | null): [boolean, TransitionStartFunction];
+  export function startTransition(scope: TransitionFunction): void;
 
   export function unstable_getCacheForType<T>(resourceType: () => T): T;
   export function unstable_useCacheRefresh(): <T>(resourceType?: () => T, type?: T) => void;
   export const unstable_Cache: FunctionComponent;
+  export const unstable_DebugTracingMode: FunctionComponent;
+  export const unstable_LegacyHidden: FunctionComponent;
 }
