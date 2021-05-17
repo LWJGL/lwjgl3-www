@@ -200,13 +200,31 @@ app.register(fastifyStatic, {
   immutable: false,
   index: false,
   lastModified: true,
-  preCompressed: true,
   // maxAge: 3600 * 24 * 365,
   setHeaders: (res, filepath, stat) => {
     switch (path.basename(filepath)) {
       case 'favicon.ico':
+        res.setHeader(
+          'Cache-Control',
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+        );
+        break;
       case 'favicon.ico.gz':
+        res.setHeader('Content-Encoding', 'gzip');
+        res.setHeader('Content-Type', 'image/x-icon');
+        res.setHeader(
+          'Cache-Control',
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+        );
+        break;
       case 'favicon.ico.br':
+        res.setHeader('Content-Encoding', 'br');
+        res.setHeader('Content-Type', 'image/x-icon');
+        res.setHeader(
+          'Cache-Control',
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+        );
+        break;
       case 'manifest.webmanifest':
       case 'sitemap.xml':
       case 'robots.txt':
@@ -325,6 +343,13 @@ app.route({
       reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
     } else {
       template.entry = 'main.js';
+    }
+
+    template.favicon = 'favicon.ico';
+    if (request.encoding(['br'])) {
+      template.favicon += '.br';
+    } else if (request.encoding(['gzip'])) {
+      template.favicon += '.gz';
     }
 
     reply.header('Content-Language', 'en');
