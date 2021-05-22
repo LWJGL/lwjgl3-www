@@ -2,6 +2,7 @@
   CSS Reset
   https://codesandbox.io/s/html5-kitchen-sink-88445?file=/index.html
   https://codepen.io/chriscoyier/full/JpLzjd
+  https://github.com/csstools/sanitize.css
 */
 
 *,
@@ -9,7 +10,9 @@
 *::after {
   // * (opinionated) Default to border-box box model
   box-sizing: border-box;
-  // * (opinionated) Default to relative position
+  // * (opinionated) Backgrounds do not repeat by default
+  background-repeat: no-repeat;
+  // // * (opinionated) Default to relative position
   // position: relative;
   /*
     ! (opinionated/tailwind)
@@ -28,17 +31,26 @@
   // border: 0px solid #e4e4e7;
 }
 
-// * (opinionated) Use a more readable tab size
+::before,
+::after {
+  // * (opinionated) Add text decoration inheritance in all browsers
+  text-decoration: inherit;
+  // * (opinionated) Add vertical alignment inheritance in all browsers
+  vertical-align: inherit;
+}
+
 :root {
+  // * (opinionated) Use the default cursor in all browsers
+  cursor: default;
+  // * (opinionated) Use a more readable tab size
   tab-size: 4;
+  // * (opinionated) Breaks words to prevent overflow in all browsers
+  overflow-wrap: break-word;
   // * Disable, because we want to control smooth scrolling dynamically (see PageView)
   // // ! (opinionated/bootstrap)
   // @media (prefers-reduced-motion: no-preference) {
   //   scroll-behavior: smooth;
   // }
-}
-
-html {
   // Correct the line height in all browsers.
   // line-height: 1.15;
   // ! (opinionated/tailwind)
@@ -53,6 +65,10 @@ html {
 
 // Consistent fonts (Tailwind sans-serif stack)
 body {
+  // * (opinionated)  Fill the viewport block in all browsers
+  block-size: -moz-available;
+  block-size: -webkit-fill-available;
+  block-size: stretch;
   font-family: var(--fonts-sans, sans-serif);
 }
 
@@ -361,3 +377,32 @@ dialog:not([open]) {
   display: none;
 }
 */
+
+// Accessibility
+// ==========================================================================
+
+// Change the cursor on busy elements in all browsers (opinionated).
+[aria-busy='true' i] {
+  cursor: progress;
+}
+
+// Change the cursor on control elements in all browsers (opinionated).
+[aria-controls] {
+  cursor: pointer;
+}
+
+// Change the cursor on disabled, not-editable, or otherwise inoperable elements in all browsers (opinionated).
+[aria-disabled='true' i],
+[disabled] {
+  cursor: not-allowed;
+}
+
+// Change the display on visually hidden accessible elements in all browsers (opinionated).
+[aria-hidden='false' i][hidden] {
+  display: initial;
+}
+
+[aria-hidden='false' i][hidden]:not(:focus) {
+  clip: rect(0, 0, 0, 0);
+  position: absolute;
+}
