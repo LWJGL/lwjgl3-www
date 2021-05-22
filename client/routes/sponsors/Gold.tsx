@@ -222,6 +222,27 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={200 / 1.5} height={31 / 1.5} src="/img/sponsors/boekonomi-200x31.png" alt="BoEkonomi.se" />
         </a>
+        <a
+          href="https://poprey.com/instagram_views"
+          title="Buy Instagram Views"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={90} height={90} src="/img/sponsors/buy-instagram-views.png" alt="" />
+        </a>
+        <a
+          href="https://anbefaltcasino.com/"
+          title="Beste norske nettcasinoer finner du på AnbefaltCasino.com"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy
+            width={154.219 * 1.2}
+            height={14.594 * 1.2}
+            src="/img/sponsors/sanbefaltcasino.svg"
+            alt="AnbefaltCasino.com"
+          />
+        </a>
       </Grid>
       {children}
     </Section>
