@@ -157,14 +157,7 @@ const buildConfiguration = () => {
 
       // React Refresh
       const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-      config.plugins.push(
-        new ReactRefreshWebpackPlugin({
-          overlay: false,
-          // overlay: {
-          //   sockIntegration: 'whm',
-          // },
-        })
-      );
+      config.plugins.push(new ReactRefreshWebpackPlugin({ overlay: false }));
     }
   } else {
     // // Debug output
