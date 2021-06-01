@@ -5,7 +5,7 @@ import * as dark from './palettes/default-dark';
 
 import type { Hsl } from './color';
 import type { StitchesCss } from '@stitches/react';
-import type { OverflowProperty /*, OverflowXProperty, OverflowYProperty*/ } from '@stitches/core/types/css-types';
+import type { OverflowProperty /*, OverflowXProperty, OverflowYProperty*/ } from '@stitches/react/types/css-types';
 
 export type Tone = 'primary' | 'neutral' | 'critical' | 'caution' | 'positive' | 'info';
 export type Level = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
@@ -150,8 +150,7 @@ const themeTokens = {
     // "9xl": '8rem',
   },
   fonts: {
-    sans:
-      'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
+    sans: 'ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
     serif: 'ui-serif,Georgia,Cambria,"Times New Roman",Times,serif',
     mono: 'ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
   },
@@ -239,7 +238,6 @@ type SizeValue = `$${keyof typeof themeTokens.sizes}` | number | (string & {});
 // type ColorValue = `$${keyof typeof themeTokens.colors}` | (string & {});
 
 const stitchesConfig = createCss({
-  insertionMethod: 'append',
   theme: themeTokens,
   media: {
     // The maximum value is reduced by 0.02px to work around the limitations of

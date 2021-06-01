@@ -77,7 +77,7 @@ export function generateGradle({
       }
       if (windowsArches != 0) {
         script +=
-            windowsArches == 1
+          windowsArches == 1
             ? `
 \tcase OperatingSystem.WINDOWS:
 \t\tproject.ext.lwjglNatives = "natives-windows${platform.windows ? '' : platform['windows-arm64'] ? '-arm64' : '-x86'}"
