@@ -50,4 +50,9 @@ declare module 'react' {
   export const unstable_Cache: FunctionComponent;
   export const unstable_DebugTracingMode: FunctionComponent;
   export const unstable_LegacyHidden: FunctionComponent;
+
+  export interface OffscreenProps {
+    mode?: 'hidden' | 'unstable-defer-without-hiding' | 'visible';
+  }
+  export const unstable_Offscreen: FunctionComponent<OffscreenProps>;
 }
