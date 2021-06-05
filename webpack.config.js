@@ -29,7 +29,7 @@ const buildConfiguration = () => {
       level: 'warn',
     },
     optimization: {
-      // minimize: false,
+      minimize: PRODUCTION,
       minimizer: [
         new TerserPlugin({
           parallel: true,
@@ -175,6 +175,15 @@ const buildConfiguration = () => {
       config.resolve.alias['react-dom'] = 'react-dom/profiling';
       config.resolve.alias['scheduler/tracing'] = 'scheduler/tracing-profiling';
     }
+  }
+
+  if (DEV || SOURCEMAP) {
+    config.module.rules.unshift({
+      enforce: 'pre',
+      exclude: /@babel(?:\/|\\{1,2})runtime/,
+      test: /\.(js|mjs|jsx|ts|tsx|css)$/,
+      use: 'source-map-loader',
+    });
   }
 
   return config;

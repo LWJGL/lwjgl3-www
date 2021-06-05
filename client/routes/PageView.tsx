@@ -77,7 +77,7 @@ function arePropsEqual({ location: prevLocation }: PropsMemo, { location: nextLo
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
 }
 
-//@ts-ignore
+//@ts-expect-error
 const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, description, children }) => {
   const { /*pathname, search,*/ hash, key = 'root' } = location;
 
