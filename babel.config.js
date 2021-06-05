@@ -52,11 +52,17 @@ if (DEV) {
     '@babel/env',
     {
       bugfixes: true, // TODO: Remove in Babel@8+ (it will be the default)
-      shippedProposals: true,
     },
   ]);
 
-  config.plugins.push(['polyfill-corejs3', { method: 'usage-global' }]);
+  config.plugins.push([
+    'polyfill-corejs3',
+    {
+      method: 'usage-global',
+      version: 3.13,
+      proposals: true,
+    },
+  ]);
 }
 
 module.exports = config;
