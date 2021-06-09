@@ -103,8 +103,8 @@ pre {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  :focus {
-    transition: outline-offset 0.25s ease;
+  :focus:focus-visible {
+    transition: outline-offset 0.125s ease-out;
     outline-offset: 3px;
   }
 }
