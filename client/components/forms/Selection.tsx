@@ -68,7 +68,7 @@ export const SelectionInput = styled('input', {
 
   '&:focus + *': {
     borderColor: '$primary600',
-    boxShadow: '0 0 0 3px $outline_primary',
+    boxShadow: '0 0 0 3px $colors$outline_primary',
   },
 
   '&:not(:checked):focus + *': {

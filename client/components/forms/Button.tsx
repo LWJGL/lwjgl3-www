@@ -73,15 +73,9 @@ function generateButtonCompoundVariants(tone: Tone): ButtonCompoundVariant[] {
         color: `$${tone}50`,
         backgroundColor: `$${tone}600`,
         boxShadow: '$md',
-        '&:focus': {
-          boxShadow: `0 0 0 3px $outline_${tone}`,
+        '&:focus:focus-visible': {
+          boxShadow: `0 0 0 3px $colors$outline_${tone}`,
           borderColor: `$${tone}700`,
-        },
-        '&:focus:not(:focus-visible)': {
-          boxShadow: '$md',
-        },
-        '&:focus:not(:-moz-focusring)': {
-          boxShadow: '$md',
         },
         '&:hover,&:active': {
           backgroundColor: `$${tone}700`,
@@ -98,13 +92,9 @@ function generateButtonCompoundVariants(tone: Tone): ButtonCompoundVariant[] {
         backgroundColor: `$${tone}200`,
         '&:focus': {
           borderColor: `$${tone}400`,
-          boxShadow: `0 0 0 3px $outline_${tone}`,
+          boxShadow: `0 0 0 3px $colors$outline_${tone}`,
         },
         '&:focus:not(:focus-visible)': {
-          borderColor: `$${tone}300`,
-          boxShadow: 'none',
-        },
-        '&:focus:not(:-moz-focusring)': {
           borderColor: `$${tone}300`,
           boxShadow: 'none',
         },
@@ -125,13 +115,9 @@ function generateButtonCompoundVariants(tone: Tone): ButtonCompoundVariant[] {
         boxShadow: '$sm',
         '&:focus': {
           borderColor: `$${tone}500`,
-          boxShadow: `0 0 0 3px $outline_${tone}`,
+          boxShadow: `0 0 0 3px $colors$outline_${tone}`,
         },
         '&:focus:not(:focus-visible)': {
-          borderColor: `$${tone}600`,
-          boxShadow: '$sm',
-        },
-        '&:focus:not(:-moz-focusring)': {
           borderColor: `$${tone}600`,
           boxShadow: '$sm',
         },
@@ -150,12 +136,9 @@ function generateButtonCompoundVariants(tone: Tone): ButtonCompoundVariant[] {
       css: {
         color: `$${tone}600`,
         '&:focus': {
-          boxShadow: `0 0 0 3px $outline_${tone}`,
+          boxShadow: `0 0 0 3px $colors$outline_${tone}`,
         },
         '&:focus:not(:focus-visible)': {
-          boxShadow: 'none',
-        },
-        '&:focus:not(:-moz-focusring)': {
           boxShadow: 'none',
         },
         '&:hover,&:active': {
