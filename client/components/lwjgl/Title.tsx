@@ -11,7 +11,5 @@ export const Title = styled(Text, {
 
 Title.defaultProps = {
   as: 'h1',
-  size: {
-    xl: 'xl',
-  },
+  size: 'xl',
 };
