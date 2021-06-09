@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef, useMemo } from 'react';
+import { useEffect, useState, useRef, useMemo, forwardRef } from 'react';
 import { styled, keyframes } from '~/theme/stitches.config';
+import { useShareForwardedRef } from '~/hooks/useShareForwardedRef';
 // import type { StitchesVariants } from '@stitches/react';
 import type { Tone, Level, CSS } from '~/theme/stitches.config';
 
@@ -439,178 +440,184 @@ enum ButtonState {
   Released,
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  as,
-  type,
-  onKeyDown,
-  onKeyUp,
-  onPointerDown,
-  onPointerUp,
-  onClick,
-  children,
-  size = 'base',
-  variant = 'base',
-  tone = 'primary',
-  rounding = 'normal',
-  ...rest
-}) => {
-  const ref = useRef<HTMLButtonElement>(null);
-  const rippleRef = useRef<HTMLSpanElement>(null);
-  // Use timeout to allow for the ripple animation to complete even when we release the button
-  const animationTimeout = useRef(0);
-  // Keep a reference to the current state so we can read it in our timeout handler
-  const currentState = useRef(ButtonState.Idle);
-  // Simple state machine, we initially use the Idle state to avoid unecessary DOM mutations
-  const [state, setState] = useState<ButtonState>(ButtonState.Idle);
+export const Button: React.FC<ButtonProps> = forwardRef(
+  (
+    {
+      as,
+      type,
+      onKeyDown,
+      onKeyUp,
+      onPointerDown,
+      onPointerUp,
+      onClick,
+      children,
+      size = 'base',
+      variant = 'base',
+      tone = 'primary',
+      rounding = 'normal',
+      ...rest
+    },
+    forwardedRef
+  ) => {
+    // const ref = useRef<HTMLButtonElement>(null);
+    const ref = useShareForwardedRef<HTMLButtonElement>(forwardedRef);
+    const rippleRef = useRef<HTMLSpanElement>(null);
+    // Use timeout to allow for the ripple animation to complete even when we release the button
+    const animationTimeout = useRef(0);
+    // Keep a reference to the current state so we can read it in our timeout handler
+    const currentState = useRef(ButtonState.Idle);
+    // Simple state machine, we initially use the Idle state to avoid unecessary DOM mutations
+    const [state, setState] = useState<ButtonState>(ButtonState.Idle);
 
-  useEffect(() => {
-    function activate() {
-      if (rippleRef.current !== null) {
-        // Adding the class fires the ripple animation
-        rippleRef.current.classList.add('pressed');
-        animationTimeout.current = window.setTimeout(reset, RIPPLE_DURATION_MS);
-      }
-    }
-
-    function deactivate() {
-      if (rippleRef.current !== null) {
-        // Removing the class fires the fade-out animation
-        rippleRef.current.classList.remove('pressed');
-      }
-    }
-
-    function reset() {
-      clearTimeout(animationTimeout.current);
-      animationTimeout.current = 0;
-
-      // If we released the button during the animation
-      // we should now revert the pressed state on the DOM
-      // ! Warning: we do not always call deactivate because we may hold the pointerdown,
-      // in this case the .pressed class should be preserved on the button
-      if (currentState.current === ButtonState.Released) {
-        deactivate();
-      }
-    }
-
-    currentState.current = state;
-
-    switch (state) {
-      case ButtonState.Pressed: {
-        if (animationTimeout.current) {
-          reset();
-          deactivate();
-          requestAnimationFrame(activate);
-        } else {
-          activate();
+    useEffect(() => {
+      function activate() {
+        if (rippleRef.current !== null) {
+          // Adding the class fires the ripple animation
+          rippleRef.current.classList.add('pressed');
+          animationTimeout.current = window.setTimeout(reset, RIPPLE_DURATION_MS);
         }
-        break;
       }
-      case ButtonState.Released: {
-        if (animationTimeout.current === 0) {
+
+      function deactivate() {
+        if (rippleRef.current !== null) {
+          // Removing the class fires the fade-out animation
+          rippleRef.current.classList.remove('pressed');
+        }
+      }
+
+      function reset() {
+        clearTimeout(animationTimeout.current);
+        animationTimeout.current = 0;
+
+        // If we released the button during the animation
+        // we should now revert the pressed state on the DOM
+        // ! Warning: we do not always call deactivate because we may hold the pointerdown,
+        // in this case the .pressed class should be preserved on the button
+        if (currentState.current === ButtonState.Released) {
           deactivate();
         }
-        break;
       }
-    }
-  }, [state]);
 
-  const eventHandlers = useMemo(
-    () => ({
-      onPointerDown: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
-        if (ref.current === null) {
-          return;
-        }
-        if (onPointerDown) {
-          //@ts-ignore
-          onPointerDown.call(ref.current, e);
-        }
-        e.currentTarget.setPointerCapture(e.nativeEvent.pointerId);
-        initTransition(e, ref.current, rounding);
-        setState(ButtonState.Pressed);
-      },
-      onPointerUp: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
-        if (ref.current === null) {
-          return;
-        }
-        if (onPointerUp) {
-          //@ts-ignore
-          onPointerUp.call(ref.current, e);
-        }
-        e.currentTarget.releasePointerCapture(e.nativeEvent.pointerId);
-        setState(ButtonState.Released);
-      },
-      onClick: (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
-        // Because we've enabled pointer capturing, click is always fired
-        // Make sure pointer is released inside Button's bounding box, otherwise abort click
-        const { detail, clientX, clientY } = e.nativeEvent;
-        // Detail will be 0 if we pressed Enter key, use this to distinguish between pointer and simulated clicks (see onKeyUp)
-        if (detail > 0) {
-          const { x, y, width, height } = e.currentTarget.getBoundingClientRect();
+      currentState.current = state;
 
-          if (clientX < x || clientX > x + width || clientY < y || clientY > y + height) {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
+      switch (state) {
+        case ButtonState.Pressed: {
+          if (animationTimeout.current) {
+            reset();
+            deactivate();
+            requestAnimationFrame(activate);
+          } else {
+            activate();
           }
+          break;
         }
-
-        if (onClick && ref.current !== null) {
-          //@ts-ignore
-          onClick.call(ref.current, e);
-        }
-      },
-      onKeyDown: (e: React.SyntheticEvent<HTMLButtonElement, KeyboardEvent>) => {
-        if (ref.current === null) {
-          return;
-        }
-        if (onKeyDown) {
-          //@ts-ignore
-          onKeyDown.call(ref.current, e);
-        }
-        if (e.nativeEvent.key === 'Enter' || e.nativeEvent.key === ' ') {
-          e.preventDefault();
-          // Check if we are in a Pressed state already to avoid key repeat
-          // TODO: This behavior should be customizable
-          if (currentState.current !== ButtonState.Pressed) {
-            initTransition(e, ref.current, rounding);
-            setState(ButtonState.Pressed);
+        case ButtonState.Released: {
+          if (animationTimeout.current === 0) {
+            deactivate();
           }
+          break;
         }
-      },
-      onKeyUp: (e: React.SyntheticEvent<HTMLButtonElement, KeyboardEvent>) => {
-        if (ref.current === null) {
-          return;
-        }
-        if (onKeyUp) {
-          //@ts-ignore
-          onKeyUp.call(ref.current, e);
-        }
-        if (currentState.current !== ButtonState.Released) {
+      }
+    }, [state]);
+
+    const eventHandlers = useMemo(
+      () => ({
+        onPointerDown: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
+          if (ref.current === null) {
+            return;
+          }
+          if (onPointerDown) {
+            //@ts-ignore
+            onPointerDown.call(ref.current, e);
+          }
+          e.currentTarget.setPointerCapture(e.nativeEvent.pointerId);
+          initTransition(e, ref.current, rounding);
+          setState(ButtonState.Pressed);
+        },
+        onPointerUp: (e: React.SyntheticEvent<HTMLButtonElement, PointerEvent>) => {
+          if (ref.current === null) {
+            return;
+          }
+          if (onPointerUp) {
+            //@ts-ignore
+            onPointerUp.call(ref.current, e);
+          }
+          e.currentTarget.releasePointerCapture(e.nativeEvent.pointerId);
+          setState(ButtonState.Released);
+        },
+        onClick: (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => {
+          // Because we've enabled pointer capturing, click is always fired
+          // Make sure pointer is released inside Button's bounding box, otherwise abort click
+          const { detail, clientX, clientY } = e.nativeEvent;
+          // Detail will be 0 if we pressed Enter key, use this to distinguish between pointer and simulated clicks (see onKeyUp)
+          if (detail > 0) {
+            const { x, y, width, height } = e.currentTarget.getBoundingClientRect();
+
+            if (clientX < x || clientX > x + width || clientY < y || clientY > y + height) {
+              e.preventDefault();
+              e.stopPropagation();
+              return false;
+            }
+          }
+
+          if (onClick && ref.current !== null) {
+            //@ts-ignore
+            onClick.call(ref.current, e);
+          }
+        },
+        onKeyDown: (e: React.SyntheticEvent<HTMLButtonElement, KeyboardEvent>) => {
+          if (ref.current === null) {
+            return;
+          }
+          if (onKeyDown) {
+            //@ts-ignore
+            onKeyDown.call(ref.current, e);
+          }
           if (e.nativeEvent.key === 'Enter' || e.nativeEvent.key === ' ') {
-            setState(ButtonState.Released);
-            ref.current.click();
+            e.preventDefault();
+            // Check if we are in a Pressed state already to avoid key repeat
+            // TODO: This behavior should be customizable
+            if (currentState.current !== ButtonState.Pressed) {
+              initTransition(e, ref.current, rounding);
+              setState(ButtonState.Pressed);
+            }
           }
-        }
-      },
-    }),
-    [onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rounding]
-  );
+        },
+        onKeyUp: (e: React.SyntheticEvent<HTMLButtonElement, KeyboardEvent>) => {
+          if (ref.current === null) {
+            return;
+          }
+          if (onKeyUp) {
+            //@ts-ignore
+            onKeyUp.call(ref.current, e);
+          }
+          if (currentState.current !== ButtonState.Released) {
+            if (e.nativeEvent.key === 'Enter' || e.nativeEvent.key === ' ') {
+              setState(ButtonState.Released);
+              ref.current.click();
+            }
+          }
+        },
+      }),
+      [onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rounding]
+    );
 
-  return (
-    <StyledButton
-      //@ts-expect-error
-      as={as}
-      type={type === undefined && as === undefined ? 'button' : type}
-      ref={ref}
-      size={size}
-      variant={variant}
-      tone={tone}
-      rounding={rounding}
-      {...eventHandlers}
-      {...rest}
-    >
-      <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
-      <ButtonLabel>{children}</ButtonLabel>
-    </StyledButton>
-  );
-};
+    return (
+      <StyledButton
+        //@ts-expect-error
+        as={as}
+        type={type === undefined && as === undefined ? 'button' : type}
+        ref={ref}
+        size={size}
+        variant={variant}
+        tone={tone}
+        rounding={rounding}
+        {...eventHandlers}
+        {...rest}
+      >
+        <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
+        <ButtonLabel>{children}</ButtonLabel>
+      </StyledButton>
+    );
+  }
+);
