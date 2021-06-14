@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "node-fetch": "3.0.0-beta.9",
-    "puppeteer-core": "5.5.0",
-    "yargs": "16.2.0"
+    "puppeteer-core": "10.0.0",
+    "yargs": "17.0.1"
   },
   "scripts": {
     "ncu": "npx npm-check-updates -i",
