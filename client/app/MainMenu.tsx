@@ -6,6 +6,7 @@ import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/duotone/moon';
 import '~/theme/icons/fa/duotone/sun';
+import * as routes from '~/routes';
 
 interface Props {
   direction: 'vertical' | 'horizontal';
@@ -95,32 +96,32 @@ export const MainMenu: React.FC<Props> = ({ onClick, direction, focusableProps =
   return (
     <MainMenuContainer role="navigation" aria-label="Main Menu" direction={direction} {...rest}>
       <div>
-        <NavLink {...focusableProps} onClick={onClick} to="/" end>
+        <NavLink {...focusableProps} onClick={onClick} to="/" end onPointerDown={routes.Home.preload}>
           HOME
         </NavLink>
       </div>
       <div>
-        <NavLink {...focusableProps} onClick={onClick} to="/guide">
+        <NavLink {...focusableProps} onClick={onClick} to="/guide" onPointerDown={routes.Guide.preload}>
           GET STARTED
         </NavLink>
       </div>
       <div>
-        <NavLink {...focusableProps} onClick={onClick} to="/download">
+        <NavLink {...focusableProps} onClick={onClick} to="/download" onPointerDown={routes.Download.preload}>
           DOWNLOAD
         </NavLink>
       </div>
       <div>
-        <NavLink {...focusableProps} onClick={onClick} to="/customize">
+        <NavLink {...focusableProps} onClick={onClick} to="/customize" onPointerDown={routes.Customize.preload}>
           CUSTOMIZE
         </NavLink>
       </div>
       <div>
-        <NavLink {...focusableProps} onClick={onClick} to="/source">
+        <NavLink {...focusableProps} onClick={onClick} to="/source" onPointerDown={routes.Source.preload}>
           SOURCE
         </NavLink>
       </div>
       <div>
-        <NavLink {...focusableProps} onClick={onClick} to="/frameworks">
+        <NavLink {...focusableProps} onClick={onClick} to="/frameworks" onPointerDown={routes.Frameworks.preload}>
           FRAMEWORKS
         </NavLink>
       </div>

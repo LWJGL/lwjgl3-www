@@ -16,7 +16,7 @@ const env = {
   HOSTNAME_PRODUCTION: JSON.stringify('www.lwjgl.org'),
 };
 
-const buildConfiguration = () => {
+function buildConfiguration() {
   const config = {
     mode: PRODUCTION ? 'production' : 'development',
     target: PRODUCTION ? 'browserslist' : 'web',
@@ -187,6 +187,6 @@ const buildConfiguration = () => {
   }
 
   return config;
-};
+}
 
 module.exports = buildConfiguration();

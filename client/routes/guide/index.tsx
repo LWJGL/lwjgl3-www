@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Link } from '~/components/router/client';
+import { Download } from '~/routes';
 import { PageView } from '~/routes/PageView';
 import { readSample } from './loaders/sample';
 
@@ -33,8 +34,11 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
         <h3>Getting Started</h3>
 
         <p>
-          Please use the build configurator in our <Link to="/download">download page</Link> to configure and download
-          an LWJGL release. You will also need a{' '}
+          Please use the build configurator in our{' '}
+          <Link to="/download" onPointerDown={Download.preload}>
+            download page
+          </Link>{' '}
+          to configure and download an LWJGL release. You will also need a{' '}
           <a href="https://jdk.java.net/" rel="noopener external" target="_blank">
             Java SE Development Kit
           </a>{' '}

@@ -1,5 +1,5 @@
 import { PageView } from '~/routes/PageView';
-import { CustomizePreload, BrowsePreload } from '../';
+import { Customize, Browse } from '~/routes';
 import { Container } from '~/components/layout/Container';
 import { Grid } from '~/components/layout/Grid';
 import { Box } from '~/components/layout/Box';
@@ -48,16 +48,16 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           </Box>
 
           <Text>You can customize your LWJGL build or use the latest stable & nightly releases:</Text>
-          <Box css={{ '@lg': { gridRow: 2 } }} onMouseOver={CustomizePreload}>
-            <LinkButton fill="auto" size={buttonSizes} to="/customize">
+          <Box css={{ '@lg': { gridRow: 2 } }}>
+            <LinkButton fill="auto" size={buttonSizes} to="/customize" onPointerDown={Customize.preload}>
               <Icon name="fa/solid/check-square" css={{ mr: '$xsm' }} />
               Customize LWJGL 3
             </LinkButton>
           </Box>
 
           <Text>Or you can browse and download individual LWJGL artifacts:</Text>
-          <Box css={{ '@lg': { gridRow: 2 } }} onMouseOver={BrowsePreload}>
-            <LinkButton fill="auto" variant="outline" size={buttonSizes} to="/browse">
+          <Box css={{ '@lg': { gridRow: 2 } }}>
+            <LinkButton fill="auto" variant="outline" size={buttonSizes} to="/browse" onPointerDown={Browse.preload}>
               <Icon name="fa/solid/folder" css={{ mr: '$xsm' }} />
               Browse LWJGL files
             </LinkButton>

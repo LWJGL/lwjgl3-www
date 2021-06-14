@@ -1,5 +1,6 @@
 import { styled } from '~/theme/stitches.config';
 import { Link } from '~/components/router/client';
+import { Frameworks, License, Download, Guide, Source } from '~/routes';
 import { PageView } from '~/routes/PageView';
 import { HomeHero } from './Hero';
 import { GoldSponsors } from '~/routes/sponsors/Gold';
@@ -106,8 +107,15 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           LW
           <b>JGL</b> is an enabling technology and provides low-level access. It is not a framework and does not provide
           higher-level utilities than what the native libraries expose. As such, novice programmers are encouraged to
-          try one of the <Link to="/frameworks">frameworks</Link> or <Link to="/frameworks">game engines</Link> that
-          make use of LWJGL, before working directly with the library.
+          try one of the{' '}
+          <Link to="/frameworks" onPointerDown={Frameworks.preload}>
+            frameworks
+          </Link>{' '}
+          or{' '}
+          <Link to="/frameworks" onPointerDown={Frameworks.preload}>
+            game engines
+          </Link>{' '}
+          that make use of LWJGL, before working directly with the library.
         </p>
 
         <p>
@@ -127,13 +135,13 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           },
         }}
       >
-        <LinkButton size="xl" tone="positive" variant="outline" to="/download">
+        <LinkButton size="xl" tone="positive" variant="outline" to="/download" onPointerDown={Download.preload}>
           DOWNLOAD
         </LinkButton>
-        <LinkButton size="xl" variant="outline" to="/guide">
+        <LinkButton size="xl" variant="outline" to="/guide" onPointerDown={Guide.preload}>
           GET STARTED
         </LinkButton>
-        <LinkButton size="xl" variant="outline" to="/source">
+        <LinkButton size="xl" variant="outline" to="/source" onPointerDown={Source.preload}>
           SOURCE
         </LinkButton>
       </Grid>
@@ -174,7 +182,11 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
             </FeatureImage>
             <h3>Open Source</h3>
             <p>
-              LWJGL is available under a <Link to="/license">BSD license</Link>. Visit our{' '}
+              LWJGL is available under a{' '}
+              <Link to="/license" onPointerDown={License.preload}>
+                BSD license
+              </Link>
+              . Visit our{' '}
               <Anchor href="https://github.com/LWJGL/lwjgl3" rel="noopener external">
                 GitHub repository
               </Anchor>{' '}

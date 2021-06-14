@@ -7,6 +7,7 @@ import { Dark } from '~/components/lwjgl/Dark';
 import { BackToTop } from '~/components/ui/BackToTop';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/duotone/external-link';
+import * as routes from '~/routes';
 
 const FooterLink = styled('a', {
   lineHeight: '2rem',
@@ -70,32 +71,32 @@ const FOOTER = (
           <Heading>About</Heading>
           <ul>
             <li>
-              <FooterLink as={Link} to="/">
+              <FooterLink as={Link} to="/" onPointerDown={routes.Home.preload}>
                 Home
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/guide">
+              <FooterLink as={Link} to="/guide" onPointerDown={routes.Guide.preload}>
                 Get Started
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/download">
+              <FooterLink as={Link} to="/download" onPointerDown={routes.Download.preload}>
                 Download
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/customize">
+              <FooterLink as={Link} to="/customize" onPointerDown={routes.Customize.preload}>
                 Customize
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/source">
+              <FooterLink as={Link} to="/source" onPointerDown={routes.Source.preload}>
                 Source & Build Status
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/frameworks">
+              <FooterLink as={Link} to="/frameworks" onPointerDown={routes.Frameworks.preload}>
                 Frameworks
               </FooterLink>
             </li>
@@ -153,7 +154,7 @@ const FOOTER = (
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/license">
+              <FooterLink as={Link} to="/license" onPointerDown={routes.License.preload}>
                 License
               </FooterLink>
             </li>
@@ -183,7 +184,7 @@ const FOOTER = (
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/sponsors">
+              <FooterLink as={Link} to="/sponsors" onPointerDown={routes.Sponsors.preload}>
                 Sponsors & Contributors
               </FooterLink>
             </li>
@@ -209,7 +210,12 @@ const FOOTER = (
         </p>
         <p>
           Licensed under{' '}
-          <FooterLink as={Link} to="/license" css={{ display: 'inline', color: 'white' }}>
+          <FooterLink
+            as={Link}
+            to="/license"
+            css={{ display: 'inline', color: 'white' }}
+            onPointerDown={routes.License.preload}
+          >
             BSD
           </FooterLink>
         </p>

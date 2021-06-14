@@ -11,6 +11,7 @@ import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 // import { Icon } from '~/components/ui/Icon';
 // import '~/theme/icons/fa/duotone/cloud-download';
+import { Home } from '~/routes';
 
 const StyledHeader = styled('header', {
   '--safe-margin': 'env(safe-area-inset-left)',
@@ -240,7 +241,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
       alt={IS_IOS}
       style={{ top: pos }}
     >
-      <Link to="/">
+      <Link to="/" onPointerDown={Home.preload}>
         LW
         <b>JGL</b> 3
       </Link>
