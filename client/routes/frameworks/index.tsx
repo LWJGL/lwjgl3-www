@@ -35,8 +35,8 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
             height="50"
           />
           <p>
-            <a href="https://libgdx.badlogicgames.com/" rel="noopener external" target="_blank" title="libGDX">
-              https://libgdx.badlogicgames.com/
+            <a href="https://libgdx.com/" rel="noopener external" target="_blank" title="libGDX">
+              https://libgdx.com/
             </a>
           </p>
           <p>

@@ -445,7 +445,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
             Revenge of the Titans
           </a>{' '}
           by Puppygames. It was also used in popular game engines, like{' '}
-          <a href="http://libgdx.badlogicgames.com/" rel="noopener external">
+          <a href="https://libgdx.com/" rel="noopener external">
             libGDX
           </a>{' '}
           and{' '}
