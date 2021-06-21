@@ -12,7 +12,7 @@ declare module 'react-dom' {
     hydrate?: boolean;
     hydrationOptions?: HydrationOptions;
     unstable_strictMode?: boolean;
-    unstable_concurrentUpdatesByDefault?: boolean;
+    // unstable_concurrentUpdatesByDefault?: boolean;
   }
 
   interface Root {
