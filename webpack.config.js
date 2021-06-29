@@ -122,8 +122,12 @@ function buildConfiguration() {
 
   if (DEV) {
     config.output.crossOriginLoading = 'anonymous';
+    // config.output.chunkLoading = 'import';
+    // config.output.chunkFormat = 'module';
+    // config.externalsType = 'module';
 
     config.experiments = {
+      // outputModule: true,
       lazyCompilation: true,
     };
 
