@@ -7,13 +7,12 @@ declare global {
 }
 
 const MEASUREMENT_ID = ANALYTICS_TRACKING_ID;
-const DNT = navigator.doNotTrack === '1' || window.doNotTrack === '1';
 const ENABLE_TRACKING = FLAG_PRODUCTION && document.location.hostname === HOSTNAME_PRODUCTION;
 
 let firstCall = true;
 
 export function analytics(...args: Array<any>) {
-  if (!DNT && ENABLE_TRACKING) {
+  if (ENABLE_TRACKING) {
     if (firstCall) {
       loadJS(`https://www.googletagmanager.com/gtag/js?id=${MEASUREMENT_ID}`);
       firstCall = false;
