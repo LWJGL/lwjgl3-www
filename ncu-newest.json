@@ -1,0 +1,3 @@
+{
+  "reject": ["@typescript-eslint/*", "framer-motion", "typescript"]
+}
