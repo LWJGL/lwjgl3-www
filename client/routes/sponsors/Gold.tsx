@@ -38,7 +38,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={130 * 1.5} height={20 * 1.5} src="/img/sponsors/casinotop-129x20.svg" alt="CASINOTOP" />
         </a>
-        <a
+        {/* <a
           href="https://www.parhaatnettikasinot.com/"
           title="Kaikki luotettavat ja parhaat nettikasinot"
           rel="sponsored noopener external"
@@ -50,7 +50,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
             src="/img/sponsors/parhaat-nettikasinot.svg"
             alt="parhaat nettikasinot"
           />
-        </a>
+        </a> */}
         <a
           href="https://nettikasinot247.fi/"
           title="KÄRKITASON NETTIKASINOT"
@@ -214,14 +214,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={1133 * 0.25} height={218 * 0.25} src="/img/sponsors/goread-1133x218.png" alt="Goread.io" />
         </a>
-        <a
+        {/* <a
           href="https://www.boekonomi.se/"
           title="BoEkonomi.se | Vi hjälper dig ta hand om din ekonomi och ditt boende!"
           rel="sponsored noopener external"
           target="_blank"
         >
           <ImgLazy width={200 / 1.5} height={31 / 1.5} src="/img/sponsors/boekonomi-200x31.png" alt="BoEkonomi.se" />
-        </a>
+        </a> */}
         <a
           href="https://poprey.com/instagram_views"
           title="Buy Instagram Views"
@@ -242,6 +242,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
             src="/img/sponsors/sanbefaltcasino.svg"
             alt="AnbefaltCasino.com"
           />
+        </a>
+        <a
+          href="https://list.casino/"
+          title="List of All the Best Online Casinos - Ultimate Casino List!"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={447 / 2} height={119 / 2} src="/img/sponsors/list-casino.svg" alt="list.casino" />
         </a>
       </Grid>
       {children}
