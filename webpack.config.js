@@ -159,6 +159,15 @@ function buildConfiguration() {
         },
       };
 
+      if (process.env.WSL_DISTRO_NAME !== undefined) {
+        config.devServer.open = {
+          target: ['http://www.lwjgl.localhost/'],
+          app: {
+            name: 'explorer.exe',
+          },
+        };
+      }
+
       // React Refresh
       const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
       config.plugins.push(new ReactRefreshWebpackPlugin({ overlay: false }));
