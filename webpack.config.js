@@ -150,7 +150,7 @@ function buildConfiguration() {
         hot: true,
         static: false,
         compress: false,
-        firewall: false,
+        allowedHosts: 'all',
         client: {
           overlay: false,
         },
