@@ -251,6 +251,22 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={447 / 2} height={119 / 2} src="/img/sponsors/list-casino.svg" alt="list.casino" />
         </a>
+        <a
+          href="https://www.bonusfinder.co.uk/"
+          title="Best Online Gambling Sites UK"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={318 / 1.5} height={64 / 1.5} src="/img/sponsors/bonusfinder-uk.svg" alt="BonusFinder UK" />
+        </a>
+        <a
+          href="https://casinoenlineahex.com/"
+          title="Casino En Línea HEX"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={100} height={25} src="/img/sponsors/casinoenlineahex.png" alt="Casino En Línea" />
+        </a>
       </Grid>
       {children}
     </Section>
