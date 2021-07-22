@@ -265,7 +265,16 @@ export const GoldSponsors: React.FC = ({ children }) => (
           rel="sponsored noopener external"
           target="_blank"
         >
-          <ImgLazy width={100} height={25} src="/img/sponsors/casinoenlineahex.png" alt="Casino En Línea" />
+          <ImgLazy
+            width={2565}
+            height={734}
+            style={{ width: 2565 / 13, height: 734 / 13 }}
+            src="/img/sponsors/casinoenlineahex.svg"
+            alt="Casino En Línea"
+          />
+        </a>
+        <a href="https://nzcasinohex.com/" title="NZCasinoHex" rel="sponsored noopener external" target="_blank">
+          <ImgLazy width={200 / 2} height={51 / 2} src="/img/sponsors/nzcasinohex.png" alt="NZCasinoHex" />
         </a>
       </Grid>
       {children}
