@@ -261,7 +261,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
         </a>
         <a
           href="https://casinoenlineahex.com/"
-          title="Casino En Línea HEX"
+          title="CasinoEnLineaHEX"
           rel="sponsored noopener external"
           target="_blank"
         >
@@ -270,7 +270,7 @@ export const GoldSponsors: React.FC = ({ children }) => (
             height={734}
             style={{ width: 2565 / 13, height: 734 / 13 }}
             src="/img/sponsors/casinoenlineahex.svg"
-            alt="Casino En Línea"
+            alt="CasinoEnLineaHEX"
           />
         </a>
         <a href="https://nzcasinohex.com/" title="NZCasinoHex" rel="sponsored noopener external" target="_blank">
