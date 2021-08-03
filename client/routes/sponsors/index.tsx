@@ -63,7 +63,7 @@ export default function SponsorsRoute() {
                 <span>VPN CONEXIÓN</span>
               </FlexStack>
             </a>
-            <a
+            {/* <a
               href="https://writersperhour.com/"
               title="Writers Per Hour"
               rel="sponsored noopener external"
@@ -75,7 +75,7 @@ export default function SponsorsRoute() {
                 src="/img/sponsors/writers-per-hour.png"
                 alt="Writers Per Hour"
               />
-            </a>
+            </a> */}
           </Grid>
         </Section>
       </GoldSponsors>
