@@ -77,7 +77,7 @@ HOST="127.0.0.1" # default: 0.0.0.0
 
 ### Codebase Diagram
 
-[![Visualization of the codebase](./diagram.svg)](https://octo-repo-visualization.vercel.app/?repo=LWJGL%2Flwjgl3-www)
+[Visualization of the codebase](https://octo-repo-visualization.vercel.app/?repo=LWJGL%2Flwjgl3-www)
 
 ## Production
 
