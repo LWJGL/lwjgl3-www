@@ -30,13 +30,6 @@ Build status icons are loaded directly from [travis-ci.org](https://travis-ci.or
 
 [Three.js](https://threejs.org/) is loaded from [jsDelivr](https://www.jsdelivr.com/).
 
-## Other LWJGL subdomains:
-
-- The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www). A static copy of the old LWJGL website is now hosted directly from S3
-- The blog is powered by [Ghost](https://ghost.org/).
-- The forum is [SMF](https://simplemachines.org/).
-- The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/). A static copy of the old LWJGL wiki is now hosted directly from S3.
-
 ## Requirements
 
 - [Node.js v15+](https://nodejs.org/)
@@ -82,6 +75,10 @@ PORT="8080" # default: 80
 HOST="127.0.0.1" # default: 0.0.0.0
 ```
 
+### Codebase Diagram
+
+![Visualization of the codebase](./diagram.svg)
+
 ## Production
 
 To deploy LWJGL in production please read the separate guide: [DEPLOYMENT.md](./DEPLOYMENT.md).
@@ -109,3 +106,10 @@ The following debugging tips may come in handy:
 - Set `PROFILING=1` env variable to load React profiling builds
 - Output `named` module & chunk ids in [webpack.config.js](./webpack.config.js)
 - Analyze build output with `npx webpack-bundle-analyzer public/js/webpack.manifest.json -h 0.0.0.0` (for full breakdown, change to `all: true` when writing `webpack.manifest.json` in [build-production.js](./scripts/build-production.mjs))
+
+## Other LWJGL subdomains:
+
+- The website for LWJGL 2 can be found [here](https://github.com/LWJGL/lwjgl-www). A static copy of the old LWJGL website is now hosted directly from S3
+- The blog is powered by [Ghost](https://ghost.org/).
+- The forum is [SMF](https://simplemachines.org/).
+- The wiki for LWJGL 2 was [MediaWiki](https://www.mediawiki.org/). A static copy of the old LWJGL wiki is now hosted directly from S3.
