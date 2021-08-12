@@ -1,5 +1,6 @@
+import { styled } from '~/theme/stitches.config';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
-import { Container } from '~/components/layout/Container';
+import { Container } from '~/components/ui/Container';
 import { Text } from '~/components/ui/Text';
 import { Title } from '~/components/lwjgl/Title';
 
@@ -13,28 +14,27 @@ function readableStack(stack: string) {
   return stack.replace(regExp, '');
 }
 
+const TitleSection = styled('section', Container, { textAlign: 'center' });
+const ErrorStackPre = styled('pre', Container, {
+  color: '$critical600',
+  fontSize: '$sm',
+  whiteSpace: 'pre-wrap',
+  wordBreak: 'break-word',
+});
+
 export function PageError({ error }: ErrorProps) {
   useDocumentTitle('An error has occured');
 
   return (
     <>
-      <Container as="section" padding css={{ textAlign: 'center' }}>
+      <TitleSection padding>
         <Title>Something went wrong</Title>
         <Text>Oh no! It appears that the page has crashed or failed to load.</Text>
         <Text css={{ color: '$critical600' }}>{error.message}</Text>
-      </Container>
-      <Container
-        as="pre"
-        padding
-        css={{
-          color: '$critical600',
-          fontSize: '$sm',
-          whiteSpace: 'pre-wrap',
-          wordBreak: 'break-word',
-        }}
-      >
+      </TitleSection>
+      <ErrorStackPre padding>
         {FLAG_PRODUCTION || error.stack == null ? null : <code>{readableStack(error.stack)}</code>}
-      </Container>
+      </ErrorStackPre>
     </>
   );
 }

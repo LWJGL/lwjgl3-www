@@ -1,11 +1,11 @@
-import { createCss } from '@stitches/react';
+import { createStitches } from '@stitches/react';
 import { setLightness } from './color';
 import * as light from './palettes/default-light';
 import * as dark from './palettes/default-dark';
 
+import type { CSS, PropertyValue } from '@stitches/react';
+import type { Property } from '@stitches/react/types/css';
 import type { Hsl } from './color';
-import type { StitchesCss } from '@stitches/react';
-import type { OverflowProperty /*, OverflowXProperty, OverflowYProperty*/ } from '@stitches/react/types/css-types';
 
 export type Tone = 'primary' | 'neutral' | 'critical' | 'caution' | 'positive' | 'info';
 export type Level = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
@@ -233,11 +233,7 @@ const themeTokens = {
   // transitions: {},
 };
 
-type SpaceValue = `$${keyof typeof themeTokens.space}` | number | (string & {});
-type SizeValue = `$${keyof typeof themeTokens.sizes}` | number | (string & {});
-// type ColorValue = `$${keyof typeof themeTokens.colors}` | (string & {});
-
-const stitchesConfig = createCss({
+const stitchesConfig = createStitches({
   theme: themeTokens,
   media: {
     // The maximum value is reduced by 0.02px to work around the limitations of
@@ -260,23 +256,23 @@ const stitchesConfig = createCss({
     all: 'all',
   },
   utils: {
-    mt: () => (value: SpaceValue) => ({ marginTop: value }),
-    mr: () => (value: SpaceValue) => ({ marginRight: value }),
-    mb: () => (value: SpaceValue) => ({ marginBottom: value }),
-    ml: () => (value: SpaceValue) => ({ marginLeft: value }),
-    mx: () => (value: SpaceValue) => ({ marginLeft: value, marginRight: value }),
-    my: () => (value: SpaceValue) => ({ marginTop: value, marginBottom: value }),
-    pt: () => (value: SpaceValue) => ({ paddingTop: value }),
-    pr: () => (value: SpaceValue) => ({ paddingRight: value }),
-    pb: () => (value: SpaceValue) => ({ paddingBottom: value }),
-    pl: () => (value: SpaceValue) => ({ paddingLeft: value }),
-    px: () => (value: SpaceValue) => ({ paddingLeft: value, paddingRight: value }),
-    py: () => (value: SpaceValue) => ({ paddingTop: value, paddingBottom: value }),
-    square: () => (value: SizeValue) => ({ width: value, height: value }),
-    hgap: () => (value: SpaceValue) => ({ '& > * + *': { marginLeft: value } }),
-    vgap: () => (value: SpaceValue) => ({ '& > * + *': { marginTop: value } }),
+    mt: (value: PropertyValue<'marginTop'>) => ({ marginTop: value }),
+    mr: (value: PropertyValue<'marginRight'>) => ({ marginRight: value }),
+    mb: (value: PropertyValue<'marginBottom'>) => ({ marginBottom: value }),
+    ml: (value: PropertyValue<'marginLeft'>) => ({ marginLeft: value }),
+    mx: (value: PropertyValue<'margin'>) => ({ marginLeft: value, marginRight: value }),
+    my: (value: PropertyValue<'margin'>) => ({ marginTop: value, marginBottom: value }),
+    pt: (value: PropertyValue<'paddingTop'>) => ({ paddingTop: value }),
+    pr: (value: PropertyValue<'paddingRight'>) => ({ paddingRight: value }),
+    pb: (value: PropertyValue<'paddingBottom'>) => ({ paddingBottom: value }),
+    pl: (value: PropertyValue<'paddingLeft'>) => ({ paddingLeft: value }),
+    px: (value: PropertyValue<'padding'>) => ({ paddingLeft: value, paddingRight: value }),
+    py: (value: PropertyValue<'padding'>) => ({ paddingTop: value, paddingBottom: value }),
+    square: (value: PropertyValue<'width'>) => ({ width: value, height: value }),
+    hgap: (value: PropertyValue<'marginLeft'>) => ({ '& > * + *': { marginLeft: value } }),
+    vgap: (value: PropertyValue<'marginTop'>) => ({ '& > * + *': { marginTop: value } }),
     // // Use this inside another container
-    // flexGap: () => (value) => ({
+    // flexGap: (value: any) => ({
     //   '--gap': value,
     //   margin: 'calc(var(--gap) / -2)',
     //   '& > *': {
@@ -284,7 +280,7 @@ const stitchesConfig = createCss({
     //   },
     // }),
     // // Use this to make full height containers
-    // vh100: () => (value: any) => {
+    // vh100: (value: any) => {
     //   return {
     //     // height: '100%',
     //     // '@supports (height:100vh)': {
@@ -299,13 +295,9 @@ const stitchesConfig = createCss({
     //     },
     //   };
     // },
-    gap: (config) => (value: SpaceValue) => {
-      let val: string;
-
-      if (typeof value === 'number') {
-        val = `${value}px`;
-      } else {
-        val = value;
+    gap: (value: string | PropertyValue<'margin'>) => {
+      if (typeof value === 'string') {
+        let val = value;
         if (val.charAt(0) === '$') {
           if (val.charAt(1) === '$') {
             // val = `var(--${config.prefix}--${val.slice(2)})`;
@@ -316,27 +308,32 @@ const stitchesConfig = createCss({
               token = scale;
               scale = 'space';
             }
-            //@ts-ignore
+            //@ts-expect-error
             if (config.theme[scale] !== undefined && token in config.theme[scale]) {
               // val = `var(--${config.prefix}-${scale}-${token})`;
               val = `var(--${scale}-${token})`;
             }
           }
         }
-      }
 
-      return {
-        gridGap: val,
-        gap: val,
-      };
+        return {
+          gridGap: val,
+          gap: val,
+        };
+      } else {
+        return {
+          gridGap: value,
+          gap: value,
+        };
+      }
     },
-    overflow: () => (overflow: OverflowProperty) =>
+    overflow: (overflow: Property.Overflow) =>
       overflow === 'clip' ? { overflow: 'hidden;overflow:clip' } : { overflow },
     // overflowX: () => (overflowX: OverflowXProperty) =>
     //   overflowX === 'clip' ? { overflowX: 'hidden;overflow:clip' } : { overflowX },
     // overflowY: () => (overflowY: OverflowYProperty) =>
     //   overflowY === 'clip' ? { overflowY: 'hidden;overflow:clip' } : { overflowY },
-    wrap: () => (value: 'normal' | 'word' | 'all' | 'truncate') => {
+    wrap: (value: 'normal' | 'word' | 'all' | 'truncate') => {
       switch (value) {
         case 'normal':
           return { overflowWrap: 'normal', wordBreak: 'normal' };
@@ -348,9 +345,6 @@ const stitchesConfig = createCss({
           return { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
       }
     },
-    '@max': () => (value: any) => ({ '@supports(width:max(1px,2px))': value }),
-    '@min': () => (value: any) => ({ '@supports(width:min(1px,2px))': value }),
-    '@clamp': () => (value: any) => ({ '@supports(width:clamp(140px,16vw,220px))': value }),
   },
 });
 
@@ -366,7 +360,7 @@ function generateTheme(
     darkPalette?: any;
   }
 ) {
-  return theme(name, {
+  return createTheme(name, {
     colors: {
       body: palette.BG.css(),
       text: palette.TEXT.css(),
@@ -461,8 +455,10 @@ function generateTheme(
   });
 }
 
-export const { css, styled, global, theme, keyframes /*, getCssString*/ } = stitchesConfig;
-export type CSS = StitchesCss<typeof stitchesConfig>;
+export const { config, prefix, globalCss, keyframes, createTheme, theme, reset, getCssText, css, styled } =
+  stitchesConfig;
+
+export type MyCSS = CSS<typeof stitchesConfig>;
 
 export const themes = {
   light: theme,

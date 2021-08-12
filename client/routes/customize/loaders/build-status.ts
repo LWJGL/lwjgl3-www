@@ -1,3 +1,4 @@
+//@ts-expect-error
 import { unstable_getCacheForType as getCacheForType } from 'react';
 import { ResourceCache } from '~/services/Resource';
 import { StatusCode, getResponseError } from '~/services/http';
@@ -53,6 +54,6 @@ function createBuildStatusCache() {
   return new ResourceCache<BuildType, BuildStatus>(loadStatus);
 }
 
-export function readStatus(build: BuildType) {
+export function readStatus(build: BuildType): BuildStatus {
   return getCacheForType(createBuildStatusCache).read(build);
 }

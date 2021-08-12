@@ -1,8 +1,7 @@
 import { Link, useLocation } from '~/components/router/client';
 import { styled } from '~/theme/stitches.config';
-import { Container } from '~/components/layout/Container';
+import { SectionContainer } from '~/components/ui/Section';
 import { Grid } from '~/components/layout/Grid';
-import { Box } from '~/components/layout/Box';
 import { Dark } from '~/components/lwjgl/Dark';
 import { BackToTop } from '~/components/ui/BackToTop';
 import { Icon } from '~/components/ui/Icon';
@@ -19,6 +18,8 @@ const FooterLink = styled('a', {
     outline: 'none',
   },
 });
+
+const FooterNav = styled(Link, FooterLink);
 
 const Heading = styled('h2', {
   color: '$primary700',
@@ -48,17 +49,26 @@ const external = (
   />
 );
 
+const DarkFooter = styled('footer', Dark);
+const Nav = styled('nav', Grid);
+const LicenseArea = styled('div', {
+  textAlign: 'center',
+  color: '$primary500',
+  pt: '$safe',
+  '.dark &': {
+    color: '$primary800',
+  },
+});
+
 const FOOTER = (
-  <Dark
-    as="footer"
+  <DarkFooter
     css={{
       // This is needed for the full page grid
       mt: 'auto',
     }}
   >
-    <Container as="section" padding>
-      <Grid
-        as="nav"
+    <SectionContainer padding>
+      <Nav
         css={{
           gap: '$safe',
           wrap: 'truncate',
@@ -71,34 +81,34 @@ const FOOTER = (
           <Heading>About</Heading>
           <ul>
             <li>
-              <FooterLink as={Link} to="/" onPointerDown={routes.Home.preload}>
+              <FooterNav to="/" onPointerDown={routes.Home.preload}>
                 Home
-              </FooterLink>
+              </FooterNav>
             </li>
             <li>
-              <FooterLink as={Link} to="/guide" onPointerDown={routes.Guide.preload}>
+              <FooterNav to="/guide" onPointerDown={routes.Guide.preload}>
                 Get Started
-              </FooterLink>
+              </FooterNav>
             </li>
             <li>
-              <FooterLink as={Link} to="/download" onPointerDown={routes.Download.preload}>
+              <FooterNav to="/download" onPointerDown={routes.Download.preload}>
                 Download
-              </FooterLink>
+              </FooterNav>
             </li>
             <li>
-              <FooterLink as={Link} to="/customize" onPointerDown={routes.Customize.preload}>
+              <FooterNav to="/customize" onPointerDown={routes.Customize.preload}>
                 Customize
-              </FooterLink>
+              </FooterNav>
             </li>
             <li>
-              <FooterLink as={Link} to="/source" onPointerDown={routes.Source.preload}>
+              <FooterNav to="/source" onPointerDown={routes.Source.preload}>
                 Source & Build Status
-              </FooterLink>
+              </FooterNav>
             </li>
             <li>
-              <FooterLink as={Link} to="/frameworks" onPointerDown={routes.Frameworks.preload}>
+              <FooterNav to="/frameworks" onPointerDown={routes.Frameworks.preload}>
                 Frameworks
-              </FooterLink>
+              </FooterNav>
             </li>
           </ul>
         </div>
@@ -154,9 +164,9 @@ const FOOTER = (
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/license" onPointerDown={routes.License.preload}>
+              <FooterNav to="/license" onPointerDown={routes.License.preload}>
                 License
-              </FooterLink>
+              </FooterNav>
             </li>
           </ul>
         </div>
@@ -184,44 +194,29 @@ const FOOTER = (
               </FooterLink>
             </li>
             <li>
-              <FooterLink as={Link} to="/sponsors" onPointerDown={routes.Sponsors.preload}>
+              <FooterNav to="/sponsors" onPointerDown={routes.Sponsors.preload}>
                 Sponsors & Contributors
-              </FooterLink>
+              </FooterNav>
             </li>
           </ul>
         </div>
         <div style={{ margin: '-0.25rem 0 0 -0.75rem' }}>
           <BackToTop />
         </div>
-      </Grid>
-      <Box
-        as="section"
-        css={{
-          textAlign: 'center',
-          color: '$primary500',
-          pt: '$safe',
-          '.dark &': {
-            color: '$primary800',
-          },
-        }}
-      >
+      </Nav>
+      <LicenseArea>
         <p>
-          LW<b>JGL</b> 3
+          LW<b>JGL</b>
         </p>
         <p>
           Licensed under{' '}
-          <FooterLink
-            as={Link}
-            to="/license"
-            css={{ display: 'inline', color: 'white' }}
-            onPointerDown={routes.License.preload}
-          >
+          <FooterNav to="/license" css={{ display: 'inline', color: 'white' }} onPointerDown={routes.License.preload}>
             BSD
-          </FooterLink>
+          </FooterNav>
         </p>
-      </Box>
-    </Container>
-  </Dark>
+      </LicenseArea>
+    </SectionContainer>
+  </DarkFooter>
 );
 
 export const Footer: React.FC<{ children?: never }> = () => {

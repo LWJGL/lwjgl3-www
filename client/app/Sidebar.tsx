@@ -5,7 +5,7 @@ import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
 import { styled, css } from '~/theme/stitches.config';
 import { MainMenu } from './MainMenu';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { BackdropCss } from '~/components/layout/Backdrop';
+import { BackdropCss } from '~/components/ui/Backdrop';
 
 import type { DragHandlers } from 'framer-motion';
 
@@ -187,7 +187,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           dragConstraints={{ left: 0, right: MENU_INITIAL }}
           dragElastic={0}
           dragMomentum={false}
-          // @ts-ignore
+          // @ts-expect-error
           onDragEnd={onDragEnd}
           {...overlayProps}
         >

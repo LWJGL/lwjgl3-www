@@ -1,10 +1,11 @@
+import { styled } from '~/theme/stitches.config';
 import { PageView } from '~/routes/PageView';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/brands/github';
-import { Box } from '~/components/layout/Box';
-import { Container } from '~/components/layout/Container';
+import { Box } from '~/components/ui/Box';
+import { Container } from '~/components/ui/Container';
 import { Grid } from '~/components/layout/Grid';
-import { FlexStack } from '~/components/layout/FlexStack';
+import { HStack } from '~/components/layout/FlexStack';
 import { Text } from '~/components/ui/Text';
 import { Hr } from '~/components/ui/Hr';
 import { TextDivider } from '~/components/ui/TextDivider';
@@ -21,19 +22,20 @@ interface BuildBadgeProps {
   height?: number;
 }
 
+const TextDividerSpan = styled('span', TextDivider);
+const GridSection = styled('section', Grid);
+
 const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 88, height = 20 }) => (
-  <FlexStack width="full">
-    <TextDivider
+  <HStack width="full">
+    <TextDividerSpan
       align="start"
-      as="span"
-      size="base"
+      size="lg"
       css={{
         flexGrow: 1,
-        fontSize: '$lg',
       }}
     >
       {title}
-    </TextDivider>
+    </TextDividerSpan>
 
     <Anchor href={href} target="_blank" rel="noopener external" css={{ justifySelf: 'end' }}>
       <ImgLazy
@@ -44,7 +46,7 @@ const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 88, h
         alt={`${title} build status`}
       />
     </Anchor>
-  </FlexStack>
+  </HStack>
 );
 
 const SourceRoute: React.FC<{ children?: never }> = () => (
@@ -55,7 +57,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
         <b>JGL</b> Source
       </Title>
 
-      <Grid as="section" css={{ gap: '$paragraph' }}>
+      <GridSection css={{ gap: '$paragraph' }}>
         <a href="https://github.com/LWJGL/lwjgl3" rel="external">
           <img
             width={90 * 1.77}
@@ -81,14 +83,13 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
             Changelog
           </AnchorButton>
         </Grid>
-      </Grid>
+      </GridSection>
 
       <Hr margin="xl" />
 
       <Title>Build Status</Title>
 
-      <Grid
-        as="section"
+      <GridSection
         css={{
           gap: '$gap',
           '@lg': { grid: 'auto-flow / repeat(3, 1fr)' },
@@ -181,7 +182,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
             src="https://img.shields.io/github/workflow/status/LWJGL-CI/SPIRV-Cross/LWJGL%20Build"
           />
         </Box>
-      </Grid>
+      </GridSection>
     </Container>
   </PageView>
 );

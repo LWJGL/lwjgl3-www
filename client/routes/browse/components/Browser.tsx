@@ -3,7 +3,7 @@ import { Link } from '~/components/router/client';
 import { File } from './File';
 import { Folder, SpinnerRow, FolderError } from './Folder';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
-import { Box } from '~/components/layout/Box';
+import { Box } from '~/components/ui/Box';
 import { Row } from './Row';
 import { readPath } from '../loaders/path';
 

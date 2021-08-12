@@ -7,5 +7,5 @@
 
 // Can't find a reliable way to compute the viewport offsetTop in iOS because pageYOffset returns the pixels
 // from the top of the screen (the point under the browser's address bar!)
-//@ts-ignore
+//@ts-expect-error
 export const IS_IOS: boolean = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;

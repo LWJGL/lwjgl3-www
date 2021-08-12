@@ -3,24 +3,22 @@
     "module": "ESNext",
     "target": "ES5",
     "moduleResolution": "node",
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "downlevelIteration": true,
     "isolatedModules": true,
     "strict": true,
     "alwaysStrict": true,
     "useUnknownInCatchVariables": false,
+    "downlevelIteration": true,
     "noUnusedLocals": true,
     "noEmit": true,
-    "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "jsx": "preserve",
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./client/*"]
-    }
+    },
+    "types": ["@types/web", "react/next", "react-dom/next"]
   },
   "include": ["types", "client"],
   "exclude": ["public", "scripts", "server", "**/node_modules", "**/.*/"]

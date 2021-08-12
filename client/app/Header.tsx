@@ -14,7 +14,6 @@ import { Sidebar } from './Sidebar';
 import { Home } from '~/routes';
 
 const StyledHeader = styled('header', {
-  '--safe-margin': 'env(safe-area-inset-left)',
   position: 'absolute',
   zIndex: ZINDEX_MODAL_BACKDROP - 1,
   top: 0,
@@ -25,13 +24,13 @@ const StyledHeader = styled('header', {
   fontSize: '$lg',
   willChange: 'background-color, top',
   userSelect: 'none',
-  padding: '0 1rem',
   display: 'flex',
   hgap: '1rem',
   alignItems: 'center',
+  padding: '0 1rem',
 
-  '@min': {
-    padding: '0 max(var(--safe-margin), 1rem)',
+  '@supports(padding: 0 max(env(safe-area-inset-left), 1rem))': {
+    padding: '0 max(env(safe-area-inset-left), 1rem)',
   },
 
   variants: {
@@ -243,7 +242,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
     >
       <Link to="/" onPointerDown={Home.preload}>
         LW
-        <b>JGL</b> 3
+        <b>JGL</b>
       </Link>
       {/* <ServiceWorkerUpdate /> */}
       {currentBreakpoint > Breakpoint.md ? <MainMenu direction="horizontal" /> : <Sidebar />}

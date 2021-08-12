@@ -20,15 +20,15 @@ const indeterminateAnimation = keyframes({
 
 const indeterminateStrokeAnimation = keyframes({
   '0%': {
-    strokeDasharray: '1px, 200px',
+    strokeDasharray: '1px 200px',
     strokeDashoffset: 0,
   },
   '50%': {
-    strokeDasharray: '100px, 200px',
+    strokeDasharray: '100px 200px',
     strokeDashoffset: '-15px',
   },
   '100%': {
-    strokeDasharray: '100px, 200px',
+    strokeDasharray: '100px 200px',
     strokeDashoffset: '-120px',
   },
 });

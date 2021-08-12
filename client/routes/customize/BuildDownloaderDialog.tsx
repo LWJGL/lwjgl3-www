@@ -4,7 +4,7 @@ import { useDialog } from '@react-aria/dialog';
 import { FocusScope } from '@react-aria/focus';
 import { styled } from '~/theme/stitches.config';
 import { motion } from 'framer-motion';
-import { BackdropCss } from '~/components/layout/Backdrop';
+import { BackdropCss } from '~/components/ui/Backdrop';
 import { CircularProgress } from '~/components/ui/CircularProgress';
 
 import type { OverlayProps } from '@react-aria/overlays';
@@ -80,9 +80,6 @@ const ModalDialog: React.FC<ModalProps> = (props) => {
     >
       <FocusScope contain restoreFocus>
         <Modal ref={ref} {...overlayProps} {...dialogProps} {...modalProps}>
-          {/* <Text as="h3" {...titleProps} css={{ mt: -7 }}>
-            {title}
-          </Text> */}
           {children}
         </Modal>
       </FocusScope>

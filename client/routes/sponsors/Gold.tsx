@@ -3,11 +3,11 @@ import { Grid } from '~/components/layout/Grid';
 import { FlexStack } from '~/components/layout/FlexStack';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
-import { Section } from '~/components/ui/Section';
+import { SectionContainer } from '~/components/ui/Section';
 
 export const GoldSponsors: React.FC = ({ children }) => (
   <Dark>
-    <Section padding>
+    <SectionContainer padding>
       <TitleSection css={{ color: 'gold' }}>Our Gold Sponsors:</TitleSection>
       <Grid
         css={{
@@ -278,6 +278,6 @@ export const GoldSponsors: React.FC = ({ children }) => (
         </a>
       </Grid>
       {children}
-    </Section>
+    </SectionContainer>
   </Dark>
 );

@@ -1,15 +1,15 @@
 import { useEffect, useState, useRef, useMemo, forwardRef } from 'react';
 import { styled, keyframes } from '~/theme/stitches.config';
 import { useShareForwardedRef } from '~/hooks/useShareForwardedRef';
-// import type { StitchesVariants } from '@stitches/react';
-import type { Tone, Level, CSS } from '~/theme/stitches.config';
+import type { VariantProps } from '@stitches/react';
+import type { Tone, Level, MyCSS } from '~/theme/stitches.config';
 
 type Variant = 'base' | 'secondary' | 'outline' | 'text';
 
 interface ButtonCompoundVariant {
   variant: Variant;
   tone: Tone;
-  css: CSS;
+  css: MyCSS;
 }
 
 interface Coordinates {
@@ -29,6 +29,7 @@ interface Translation {
 const RIPPLE_DURATION_MS = 225; // Corresponds to ripple translate duration (i.e. activation animation duration)
 const DEACTIVATION_MS = 150; // Corresponds to ripple fade-out duration (i.e. deactivation animation duration)
 const INITIAL_ORIGIN_SCALE = 0.6;
+const tones: Array<Tone> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info'];
 
 const fgRadiusIn = keyframes({
   from: {
@@ -151,7 +152,7 @@ function generateButtonCompoundVariants(tone: Tone): ButtonCompoundVariant[] {
   ];
 }
 
-export const StyledButton = styled('button', {
+export const ButtonStyled = styled('button', {
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -265,12 +266,8 @@ export const StyledButton = styled('button', {
   ],
 });
 
-export type ButtonProps = React.ComponentProps<typeof StyledButton> & {
-  as?: keyof JSX.IntrinsicElements | React.ReactElement | React.ForwardRefExoticComponent<any>;
-};
-// export type ButtonVariants = StitchesVariants<typeof StyledButton>;
-
-const tones: Array<Tone> = ['primary', 'neutral', 'critical', 'caution', 'positive', 'info'];
+// type ButtonStyledProps = React.ComponentProps<typeof ButtonStyled>;
+type ButtonStyledVariants = VariantProps<typeof ButtonStyled>;
 
 function generateRippleCompoundVariants(variant: Variant, level: Level): ButtonCompoundVariant[] {
   return tones.map((tone) => ({
@@ -408,7 +405,7 @@ function getTranslationCoordinates(
 function initTransition(
   e: React.SyntheticEvent<HTMLButtonElement, PointerEvent | KeyboardEvent>,
   btn: HTMLButtonElement,
-  rounding?: ButtonProps['rounding']
+  rounding?: 'normal' | 'icon'
 ) {
   const isUnbounded = rounding === 'icon';
   const frame = btn.getBoundingClientRect();
@@ -440,21 +437,26 @@ enum ButtonState {
   Released,
 }
 
-export const Button: React.FC<ButtonProps> = forwardRef(
+type ButtonType = JSX.IntrinsicElements['button'];
+
+export interface ButtonProps extends ButtonStyledVariants, ButtonType {
+  as?: keyof JSX.IntrinsicElements | React.ReactElement | React.ForwardRefExoticComponent<any>;
+}
+
+export const Button: React.FC<ButtonProps> = forwardRef<HTMLButtonElement>(
   (
     {
       as,
-      type,
+      size = 'base',
+      variant = 'base',
+      tone = 'primary',
+      rounding = 'normal',
       onKeyDown,
       onKeyUp,
       onPointerDown,
       onPointerUp,
       onClick,
       children,
-      size = 'base',
-      variant = 'base',
-      tone = 'primary',
-      rounding = 'normal',
       ...rest
     },
     forwardedRef
@@ -527,7 +529,6 @@ export const Button: React.FC<ButtonProps> = forwardRef(
             return;
           }
           if (onPointerDown) {
-            //@ts-ignore
             onPointerDown.call(ref.current, e);
           }
           e.currentTarget.setPointerCapture(e.nativeEvent.pointerId);
@@ -539,7 +540,6 @@ export const Button: React.FC<ButtonProps> = forwardRef(
             return;
           }
           if (onPointerUp) {
-            //@ts-ignore
             onPointerUp.call(ref.current, e);
           }
           e.currentTarget.releasePointerCapture(e.nativeEvent.pointerId);
@@ -561,7 +561,6 @@ export const Button: React.FC<ButtonProps> = forwardRef(
           }
 
           if (onClick && ref.current !== null) {
-            //@ts-ignore
             onClick.call(ref.current, e);
           }
         },
@@ -570,7 +569,6 @@ export const Button: React.FC<ButtonProps> = forwardRef(
             return;
           }
           if (onKeyDown) {
-            //@ts-ignore
             onKeyDown.call(ref.current, e);
           }
           if (e.nativeEvent.key === 'Enter' || e.nativeEvent.key === ' ') {
@@ -588,7 +586,6 @@ export const Button: React.FC<ButtonProps> = forwardRef(
             return;
           }
           if (onKeyUp) {
-            //@ts-ignore
             onKeyUp.call(ref.current, e);
           }
           if (currentState.current !== ButtonState.Released) {
@@ -599,14 +596,16 @@ export const Button: React.FC<ButtonProps> = forwardRef(
           }
         },
       }),
-      [onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rounding]
+      [ref, onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rounding]
     );
 
+    if (rest.type === undefined && (as === undefined || as === 'button')) {
+      rest.type = 'button';
+    }
+
     return (
-      <StyledButton
-        //@ts-expect-error
+      <ButtonStyled
         as={as}
-        type={type === undefined && as === undefined ? 'button' : type}
         ref={ref}
         size={size}
         variant={variant}
@@ -617,7 +616,7 @@ export const Button: React.FC<ButtonProps> = forwardRef(
       >
         <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
         <ButtonLabel>{children}</ButtonLabel>
-      </StyledButton>
+      </ButtonStyled>
     );
   }
 );

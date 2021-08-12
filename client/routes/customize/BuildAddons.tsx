@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Box } from '~/components/layout/Box';
+import { Box } from '~/components/ui/Box';
 import { Checkbox } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { useSelector, useDispatch } from './Store';

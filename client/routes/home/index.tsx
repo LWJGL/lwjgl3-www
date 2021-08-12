@@ -14,7 +14,7 @@ import { Hr } from '~/components/ui/Hr';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
-import { Section } from '~/components/ui/Section';
+import { SectionContentVisibility } from '~/components/ui/Section';
 import { Icon } from '~/components/ui/Icon';
 
 import '~/theme/icons/fa/brands/apple';
@@ -34,7 +34,7 @@ const FeatureImage = styled('div', {
   mb: '$paragraph',
   height: 30,
   fontSize: '2rem',
-  img: {
+  '& img': {
     width: 'auto',
     height: 30,
   },
@@ -42,7 +42,7 @@ const FeatureImage = styled('div', {
     height: 45,
     fontSize: '3rem',
     justifyContent: 'center',
-    img: {
+    '& img': {
       height: 45,
     },
   },
@@ -74,10 +74,10 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
   <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
     <HomeHero />
 
-    <Section padding id="learn-more">
+    <SectionContentVisibility padding id="learn-more">
       <TitleSection>
         What is LW
-        <b>JGL</b> 3?
+        <b>JGL</b>?
       </TitleSection>
       <Prose width="safe" align="center">
         <p>
@@ -145,10 +145,10 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           SOURCE
         </LinkButton>
       </Grid>
-    </Section>
+    </SectionContentVisibility>
 
     <Dark>
-      <Section padding>
+      <SectionContentVisibility padding>
         <TitleSection>Main Features</TitleSection>
 
         <Hr margin="lg" />
@@ -424,13 +424,13 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
             VR, LLC.
           </small>
         </Text>
-      </Section>
+      </SectionContentVisibility>
     </Dark>
 
     <HowToSupport id="credits" />
     <GoldSponsors />
 
-    <Section padding>
+    <SectionContentVisibility padding>
       <TitleSection>Looking for LWJGL 2?</TitleSection>
       <Prose width="safe" align="center">
         <p>
@@ -484,7 +484,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           MIGRATION GUIDE
         </AnchorButton>
       </Grid>
-    </Section>
+    </SectionContentVisibility>
   </PageView>
 );
 

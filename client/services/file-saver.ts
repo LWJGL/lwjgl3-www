@@ -16,14 +16,14 @@ function autoBOM(blob: Blob): Blob {
 let saveAsWrapped;
 
 // IE 10+ (native saveAs)
-if (navigator.msSaveOrOpenBlob !== undefined) {
+if ('msSaveOrOpenBlob' in navigator) {
   saveAsWrapped = function (blob: Blob, name: string, no_auto_bom?: boolean) {
+    //@ts-expect-error
     return navigator.msSaveOrOpenBlob(no_auto_bom !== true ? blob : autoBOM(blob), name);
   };
 } else {
   // only get URL when necessary in case Blob.js hasn't overridden it yet
   const getURL = function () {
-    //@ts-ignore
     return window.URL || window.webkitURL || window;
   };
 

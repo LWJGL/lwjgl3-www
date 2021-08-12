@@ -4,9 +4,8 @@ import { GoldSponsors } from '../sponsors/Gold';
 import { HowToSupport } from '../sponsors/HowToSupport';
 import { Grid } from '~/components/layout/Grid';
 import { FlexStack } from '~/components/layout/FlexStack';
-import { Container } from '~/components/layout/Container';
-import { Box } from '~/components/layout/Box';
-import { Section } from '~/components/ui/Section';
+import { SectionContainer } from '~/components/ui/Section';
+import { Box } from '~/components/ui/Box';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 
 export default function SponsorsRoute() {
@@ -17,7 +16,7 @@ export default function SponsorsRoute() {
     >
       <HowToSupport />
       <GoldSponsors>
-        <Section css={{ pt: '$lg' }}>
+        <SectionContainer css={{ pt: '$lg' }}>
           <hr />
           <TitleSection css={{ pt: '$lg', color: 'silver' }}>Silver Sponsors:</TitleSection>
           <Grid
@@ -77,10 +76,10 @@ export default function SponsorsRoute() {
               />
             </a> */}
           </Grid>
-        </Section>
+        </SectionContainer>
       </GoldSponsors>
 
-      <Container as="section" padding>
+      <SectionContainer padding>
         <TitleSection>Backers:</TitleSection>
         <Box css={{ textAlign: 'center', pt: '$sm', pb: '$gap' }}>
           <ImgLazy
@@ -104,7 +103,7 @@ export default function SponsorsRoute() {
             />
           </a>
         </Box>
-      </Container>
+      </SectionContainer>
     </PageView>
   );
 }

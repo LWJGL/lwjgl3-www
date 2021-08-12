@@ -6,7 +6,7 @@ import { createActionBuiltTypeSelect, selectorBuild, selectorBuilds } from './re
 import { BuildStatus } from './BuildStatus';
 import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
-import { Text } from '~/components/ui/Text';
+import { Text, Heading } from '~/components/ui/Text';
 import { LoadingPulse } from '~/components/ui/LoadingPulse';
 import '~/theme/icons/fa/regular/times';
 
@@ -37,7 +37,7 @@ export const BuildPanel: React.FC<Props> = ({ build }) => {
       hidden={selectedBuild !== null && !isSelected && currentBreakpoint < Breakpoint.lg}
       onClick={onPanelClick}
     >
-      <Text as="h2">{spec.title}</Text>
+      <Heading level={2}>{spec.title}</Heading>
       <Text css={{ fontFamily: '$serif', fontStyle: 'italic' }}>{spec.description}</Text>
       <Suspense fallback={<LoadingPulse size="lg" />}>
         <BuildStatus name={build} />

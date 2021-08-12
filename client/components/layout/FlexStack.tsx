@@ -2,20 +2,17 @@ import { Fragment, Children } from 'react';
 import { Flex } from './Flex';
 import { styled } from '~/theme/stitches.config';
 
-// Types
-type FlexType = typeof Flex;
-export interface StackProps extends React.ComponentProps<FlexType> {
-  gap?: string | number;
-}
-type HVStackProps = Omit<StackProps, 'direction'>;
-
 const Gap = styled('div', {
   flexGrow: 0,
   flexShrink: 0,
 });
 
-export const FlexStack: React.FC<StackProps> = ({ gap, children, ...rest }) => (
-  <Flex {...rest}>
+export interface StackProps {
+  gap?: string | number;
+}
+
+const FlexStackDiv: React.FC<StackProps> = ({ gap, children, ...rest }) => (
+  <div {...rest}>
     {gap !== undefined
       ? Children.toArray(children).map((child, index, arr) => (
           <Fragment key={index}>
@@ -24,9 +21,19 @@ export const FlexStack: React.FC<StackProps> = ({ gap, children, ...rest }) => (
           </Fragment>
         ))
       : children}
-  </Flex>
+  </div>
 );
 
-export const HStack: React.FC<HVStackProps> = (props) => <FlexStack direction="horizontal" {...props} />;
+export const FlexStack = styled(FlexStackDiv, Flex);
 
-export const VStack: React.FC<HVStackProps> = (props) => <FlexStack direction="vertical" {...props} />;
+export const HStack = styled(FlexStack, {
+  defaultVariants: {
+    direction: 'horizontal',
+  },
+});
+
+export const VStack = styled(FlexStack, {
+  defaultVariants: {
+    direction: 'vertical',
+  },
+});

@@ -1,12 +1,15 @@
+import { styled } from '~/theme/stitches.config';
 import { PageView } from '~/routes/PageView';
 import { Grid } from '~/components/layout/Grid';
-import { Container } from '~/components/layout/Container';
+import { Container } from '~/components/ui/Container';
 import { Title } from '~/components/lwjgl/Title';
 import { Prose } from '~/components/ui/Prose';
 
+const ArticleContainer = styled('article', Container);
+
 const LicenseRoute: React.FC<{ children?: never }> = () => (
   <PageView title="License" description="LWJGL is licensed under BSD">
-    <Container as="article" padding>
+    <ArticleContainer padding>
       <Title>Lightweight Java Game Library License</Title>
       <Grid
         css={{
@@ -73,7 +76,7 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
           </p>
         </Prose>
       </Grid>
-    </Container>
+    </ArticleContainer>
   </PageView>
 );
 

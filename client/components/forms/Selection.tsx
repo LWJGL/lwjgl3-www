@@ -1,6 +1,6 @@
 import { styled } from '~/theme/stitches.config';
 import { register } from '~/theme/icons/sheet';
-import { Box } from '~/components/layout/Box';
+import { Box } from '~/components/ui/Box';
 
 const UICheckboxChecked = 'ui/checkbox/checked';
 const UICheckboxIndeterminate = 'ui/checkbox/indeterminate';
@@ -201,7 +201,7 @@ export const Checkbox: React.FC<CheckboxProps> = ({
       type="checkbox"
       disabled={disabled}
       checked={checked}
-      onChange={(e) => {
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(e, value);
       }}
     />
@@ -245,7 +245,7 @@ export const Radio: React.FC<RadioProps> = ({
       type="radio"
       disabled={disabled}
       checked={checked}
-      onChange={(e) => {
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
         onChange(e, value);
       }}
     />

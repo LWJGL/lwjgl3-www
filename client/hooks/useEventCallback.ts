@@ -15,7 +15,6 @@ export function useEventCallback(fn: Function, dependencies: Array<any>) {
 
   return useCallback(() => {
     const fn = ref.current;
-    //@ts-ignore
     return fn();
   }, [ref]);
 }

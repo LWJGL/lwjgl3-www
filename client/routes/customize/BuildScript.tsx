@@ -7,7 +7,7 @@ import { createSelectorDeepEqual } from '~/services/selector';
 import { BuildToolbar } from './BuildToolbar';
 import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
-import { Text } from '~/components/ui/Text';
+import { Heading } from '~/components/ui/Text';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/duotone/cloud-download';
 import '~/theme/icons/fa/duotone/copy';
@@ -48,7 +48,7 @@ interface Props {
   configLoad: (payload: BuildStoreSnapshot) => void;
 }
 
-const ALLOW_DOWNLOAD = window.btoa !== undefined;
+const ALLOW_DOWNLOAD = 'btoa' in window;
 
 const ScriptLogo = styled('img', {
   height: 60,
@@ -135,8 +135,8 @@ export function BuildScript({ configDownload, configLoad }: Props) {
 
   return (
     <>
-      <Text
-        as="h2"
+      <Heading
+        level={2}
         css={{
           mt: '$gutter',
           '@sm': {
@@ -145,7 +145,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
         }}
       >
         <ScriptLogo flipOnDark={mode.id === 'maven'} src={mode.logo} alt={mode.title} />
-      </Text>
+      </Heading>
       <Pre ref={preRef}>
         <code>{script}</code>
       </Pre>

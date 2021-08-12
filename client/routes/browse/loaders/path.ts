@@ -1,3 +1,4 @@
+//@ts-expect-error
 import { unstable_getCacheForType as getCacheForType } from 'react';
 import { ResourceCache } from '~/services/Resource';
 import { StatusCode, getResponseError } from '~/services/http';
@@ -52,6 +53,6 @@ function createPathCache() {
   return new ResourceCache<string, FolderData>(fetchPath);
 }
 
-export function readPath(path: string) {
+export function readPath(path: string): FolderData {
   return getCacheForType(createPathCache).read(path);
 }

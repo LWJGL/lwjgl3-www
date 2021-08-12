@@ -62,10 +62,10 @@ const LogoSvg = styled('svg', {
   animation: `${resetOpacityTransform} 1s ease forwards`,
   // mb: '$4',
   width: 140,
-  '@max': {
+  '@supports(width: max(140px, min(16vw, 220px)))': {
     width: 'max(140px, min(16vw, 220px))',
   },
-  '@clamp': {
+  '@supports(width: clamp(140px, 16vw, 220px))': {
     width: 'clamp(140px, 16vw, 220px)',
   },
   '@media (min-aspect-ratio: 8/2)': {
@@ -117,10 +117,10 @@ const HeroContent = styled('div', {
   fontWeight: 300,
   lineHeight: 1.2,
   fontSize: '2rem',
-  '@max': {
+  '@supports(width: max(1.2rem, min(3.5vw, 2.1rem)))': {
     fontSize: 'max(1.2rem, min(3.5vw, 2.1rem))',
   },
-  '@clamp': {
+  '@supports(width: clamp(1.2rem, 3.5vw, 2.1rem))': {
     fontSize: 'clamp(1.2rem, 3.5vw, 2.1rem)',
   },
   a: {
@@ -132,10 +132,10 @@ const HeroContent = styled('div', {
     b: {
       fontWeight: '$bold',
     },
-    '@max': {
+    '@supports(width: max(4rem, min(15vw, 10rem)))': {
       fontSize: 'max(4rem, min(15vw, 10rem))',
     },
-    '@clamp': {
+    '@supports(clamp(4rem, 15vw, 10rem))': {
       fontSize: 'clamp(4rem, 15vw, 10rem)',
     },
   },
@@ -169,7 +169,8 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
     }
 
     // Check device memory, skip for under 4GB
-    if (navigator.deviceMemory !== undefined && navigator.deviceMemory < 4) {
+    //@ts-expect-error
+    if ('deviceMemory' in navigator && navigator.deviceMemory < 4) {
       useWebGL = UseWebGL.Off;
       return;
     }
@@ -181,8 +182,9 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
     }
 
     // Check connection quality
-    if (navigator.connection !== undefined) {
+    if ('connection' in navigator) {
       // Skip for slow connections
+      //@ts-expect-error
       switch (navigator.connection.effectiveType) {
         case 'slow-2g':
         case '2g':
@@ -191,6 +193,7 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
       }
 
       // Skip if user opted-in into a reduced data usage mode
+      //@ts-expect-error
       if (navigator.connection.saveData === true) {
         return;
       }

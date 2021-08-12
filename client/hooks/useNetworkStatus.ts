@@ -5,7 +5,7 @@ export function useNetworkStatus() {
   const forceUpdate = useForceUpdate();
 
   useEffect(() => {
-    if (navigator.connection !== undefined) {
+    if ('connection' in navigator) {
       const connection = navigator.connection;
       connection.addEventListener('change', forceUpdate);
       return () => {

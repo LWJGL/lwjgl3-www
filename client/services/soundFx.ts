@@ -61,15 +61,15 @@ const soundFiles: SoundFxFiles = {
 
 if (typeof AudioContext !== 'undefined') {
   ctx = new AudioContext();
-  //@ts-ignore
+  //@ts-expect-error
 } else if (typeof webkitAudioContext !== 'undefined') {
-  //@ts-ignore
+  //@ts-expect-error
   ctx = new webkitAudioContext();
 
   // Polyfill decodeAudioData
-  //@ts-ignore
+  //@ts-expect-error
   const oldFunc = webkitAudioContext.prototype.decodeAudioData;
-  //@ts-ignore
+  //@ts-expect-error
   webkitAudioContext.prototype.decodeAudioData = function (arraybuffer) {
     return new Promise((resolve, reject) => {
       oldFunc.call(this, arraybuffer, resolve, reject);

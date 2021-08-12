@@ -1,9 +1,9 @@
 import { PageView } from '~/routes/PageView';
 import { Customize, Browse } from '~/routes';
-import { Container } from '~/components/layout/Container';
+import { Container } from '~/components/ui/Container';
 import { Grid } from '~/components/layout/Grid';
-import { Box } from '~/components/layout/Box';
-import { Text } from '~/components/ui/Text';
+import { Box } from '~/components/ui/Box';
+import { Text, Heading } from '~/components/ui/Text';
 import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Anchor } from '~/components/lwjgl/Anchor';
@@ -16,9 +16,7 @@ import '~/theme/icons/fa/brands/github';
 import '~/theme/icons/fa/solid/check-square';
 import '~/theme/icons/fa/solid/folder';
 
-import type { LinkButtonProps } from '~/components/ui/LinkButton';
-
-const buttonSizes: LinkButtonProps['size'] = {
+const buttonSizes: React.ComponentProps<typeof LinkButton>['size'] = {
   '@initial': 'lg',
   '@xl': 'xl',
 };
@@ -29,7 +27,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
       <Container padding>
         <Title>
           Download LW
-          <b>JGL</b> 3
+          <b>JGL</b>
         </Title>
 
         <Grid css={{ grid: 'auto-flow / 1fr', gap: '$paragraph', '@lg': { grid: 'auto-flow / repeat(3, 1fr)' } }}>
@@ -67,9 +65,9 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
 
       <Dark>
         <Container padding>
-          <Text as="h2" css={{ mt: -4 }}>
+          <Heading level={2} css={{ mt: -4 }}>
             Build from source?
-          </Text>
+          </Heading>
 
           <Text margin>Click below if you prefer to build from source:</Text>
           <Grid css={{ gap: '$xsm', '@sm': { grid: 'auto-flow / repeat(2, max-content)' } }}>
@@ -92,7 +90,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           .
         </Text>
 
-        <Text as="h2">Looking for LWJGL 2?</Text>
+        <Heading level={2}>Looking for LWJGL 2?</Heading>
 
         <Text margin>
           LWJGL 2 has moved but is still available. Please follow the links below to find what you're looking for:

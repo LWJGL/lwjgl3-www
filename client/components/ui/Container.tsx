@@ -49,6 +49,3 @@ export const Container = styled('div', {
     align: 'center',
   },
 });
-
-type ContainerType = typeof Container;
-export type ContainerProps = React.ComponentProps<ContainerType>;

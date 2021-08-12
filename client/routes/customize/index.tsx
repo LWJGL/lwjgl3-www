@@ -1,5 +1,5 @@
 import { PageView } from '~/routes/PageView';
-import { Container } from '~/components/layout/Container';
+import { Container } from '~/components/ui/Container';
 import { Provider } from './Store';
 import { BuildConfigurator } from './BuildConfigurator';
 

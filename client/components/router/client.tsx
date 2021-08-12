@@ -17,7 +17,6 @@ export function BrowserRouter({ children, window }: BrowserRouterProps) {
     historyRef.current = createBrowserHistory({ window });
   }
 
-  // @ts-ignore
   let [isPending, startTransition] = useTransition();
 
   let history = historyRef.current;

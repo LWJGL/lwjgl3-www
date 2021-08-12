@@ -1,4 +1,4 @@
-import React from 'react';
+import { Component } from 'react';
 
 // interface ReactErrorInfo {
 //   componentStack: string;
@@ -17,7 +17,7 @@ type State = {
   error: Error | null;
 };
 
-export class ErrorBoundary extends React.Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   state: State = {
     error: null,
   };

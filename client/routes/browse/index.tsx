@@ -1,7 +1,7 @@
 import { useParams } from '~/components/router/client';
 import { PageView } from '~/routes/PageView';
 import { Browser } from './components/Browser';
-import { Container } from '~/components/layout/Container';
+import { Container } from '~/components/ui/Container';
 
 const BrowseRoute: React.FC<{ children?: never }> = () => {
   const params = useParams();

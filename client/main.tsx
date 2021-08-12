@@ -8,6 +8,7 @@ const rootEl = document.getElementById('app-root');
 if (rootEl !== null) {
   rootEl.innerHTML = '';
   const root = createRoot(rootEl, {
+    //@ts-expect-error
     unstable_strictMode: true,
     // unstable_concurrentUpdatesByDefault: true,
   });

@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { Box } from '~/components/layout/Box';
+import { Box } from '~/components/ui/Box';
 import { Checkbox } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
@@ -56,7 +56,7 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
   const { allIds, byId } = useSelector(selectorArtifacts);
 
   const platformsSelectedArr = Object.keys(platformsSelected).filter(
-    //@ts-ignore
+    //@ts-expect-error
     (key) => platformsSelected[key] === true
   ) as Native[];
 

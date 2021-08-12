@@ -1,14 +1,17 @@
+import { styled } from '~/theme/stitches.config';
 import { Suspense } from 'react';
 import { Link } from '~/components/router/client';
 import { Download } from '~/routes';
 import { PageView } from '~/routes/PageView';
 import { readSample } from './loaders/sample';
 
-import { Container } from '~/components/layout/Container';
+import { Container } from '~/components/ui/Container';
 import { Prose } from '~/components/ui/Prose';
 import { LoadingSpinner } from '~/components/ui/LoadingSpinner';
 import { Title } from '~/components/lwjgl/Title';
 import { Dark } from '~/components/lwjgl/Dark';
+
+const ProseSection = styled('section', Prose);
 
 const Sample: React.FC<{ children?: never }> = () => {
   const sample = readSample();
@@ -25,10 +28,10 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
     <Container padding>
       <Title>
         LW
-        <b>JGL</b> 3 Guide
+        <b>JGL</b> Guide
       </Title>
 
-      <Prose as="section" width="safe">
+      <ProseSection width="safe">
         <p>This guide will help you get started with LWJGL.</p>
 
         <h3>Getting Started</h3>
@@ -58,7 +61,7 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
         <blockquote>
           MacOS users should start their application passing <em>"-XstartOnFirstThread"</em> as a VM option.
         </blockquote>
-      </Prose>
+      </ProseSection>
     </Container>
 
     <Dark>
@@ -76,7 +79,7 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
     </Dark>
 
     <Container padding>
-      <Prose as="section" width="safe">
+      <ProseSection width="safe">
         <p>
           LWJGL comes with rich documentation, you can browse the javadoc online{' '}
           <a href="http://javadoc.lwjgl.org/" rel="noopener external">
@@ -202,12 +205,12 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
           The LWJGL build process creates thousands of tiny files. If you wish to redirect output to another directory
           or storage device, you may set the LWJGL_BUILD_OUTPUT environment variable.
         </p>
-      </Prose>
+      </ProseSection>
     </Container>
 
     <Dark>
       <Container padding>
-        <Prose as="section">
+        <ProseSection>
           <h1>
             Is LW
             <b>JGL</b> for me?
@@ -216,12 +219,12 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
           <p>LWJGL is simple but powerful. It is not for everyone.</p>
           <p>If you're into OpenGL, you'll feel right at home.</p>
           <p>If you're just getting started, please familiarize yourself with each API first.</p>
-        </Prose>
+        </ProseSection>
       </Container>
     </Dark>
 
     <Container padding>
-      <Prose as="section" width="safe">
+      <ProseSection width="safe">
         <h2>GLFW</h2>
         <p>
           <a href="https://www.glfw.org/" rel="noopener external">
@@ -296,7 +299,7 @@ const GuideRoute: React.FC<{ children?: never }> = () => (
           </a>
           , an LGPL-licensed, cross-platform, software implementation of the OpenAL 3D audio API.
         </p>
-      </Prose>
+      </ProseSection>
     </Container>
   </PageView>
 );

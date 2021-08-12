@@ -16,6 +16,9 @@ const DefaultDivider = styled('div', {
       },
     },
   },
+  defaultVariants: {
+    direction: 'horizontal',
+  },
 });
 
 const StackGrid = styled(Grid, {
@@ -29,14 +32,17 @@ const StackGrid = styled(Grid, {
       },
     },
   },
+  defaultVariants: {
+    direction: 'horizontal',
+  },
 });
 
-type StackGridType = typeof StackGrid;
-
-export interface StackProps extends React.ComponentProps<StackGridType> {
+export interface StackProps {
+  direction?: 'horizontal' | 'vertical';
   divider?: true | React.ReactNode;
 }
 
+// TODO: implement custom divider
 export const Stack: React.FC<StackProps> = ({ children, divider, direction, ...props }) => (
   <StackGrid direction={direction} {...props}>
     {divider !== undefined

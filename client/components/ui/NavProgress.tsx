@@ -91,9 +91,9 @@ function pos(progress: number) {
 
 function start() {
   if (navProgress === undefined) {
-    //@ts-ignore
+    //@ts-expect-error
     navProgress = document.getElementById('nav-progress');
-    //@ts-ignore
+    //@ts-expect-error
     bar = document.getElementById('nav-progress-bar');
   }
 

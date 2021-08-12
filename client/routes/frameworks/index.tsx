@@ -1,15 +1,18 @@
+import { styled } from '~/theme/stitches.config';
 import { PageView } from '~/routes/PageView';
 import { Grid } from '~/components/layout/Grid';
-import { Container } from '~/components/layout/Container';
+import { SectionContainer } from '~/components/ui/Section';
 import { Prose } from '~/components/ui/Prose';
 import { ImgDark } from '~/components/ui/ImgDark';
 import { ImgLazy } from '~/components/ui/ImgLazy';
 import { Hr } from '~/components/ui/Hr';
 import { Title } from '~/components/lwjgl/Title';
 
+const ProseSection = styled('section', Prose);
+
 const FrameworksRoute: React.FC<{ children?: never }> = () => (
   <PageView title="Frameworks" description="Engines & frameworks that use LWJGL">
-    <Container as="section" padding>
+    <SectionContainer padding>
       <Title>
         Frameworks & Game Engines using LW
         <b>JGL</b>
@@ -25,7 +28,7 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
           },
         }}
       >
-        <Prose as="section">
+        <ProseSection>
           <ImgDark
             loading="lazy"
             src="/img/showcase/libGDX.png"
@@ -43,8 +46,8 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
             libGDX is a cross-platform Java game development framework based on OpenGL (ES) that works on Windows,
             Linux, Mac OS X, Android, your WebGL enabled browser and iOS.
           </p>
-        </Prose>
-        <Prose as="section">
+        </ProseSection>
+        <ProseSection>
           <ImgLazy src="/img/showcase/jmonkeyengine.png" alt="jMonkeyEngine" width="283" height="50" />
           <p>
             <a href="https://jmonkeyengine.org/" rel="noopener external" target="_blank" title="jMonkeyEngine">
@@ -56,9 +59,9 @@ const FrameworksRoute: React.FC<{ children?: never }> = () => (
             cutting-edge.
           </p>
           <p>The engine is used by several commercial game studios and computer-science courses.</p>
-        </Prose>
+        </ProseSection>
       </Grid>
-    </Container>
+    </SectionContainer>
   </PageView>
 );
 

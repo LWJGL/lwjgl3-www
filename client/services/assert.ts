@@ -1,7 +1,7 @@
 export class AssertionError extends Error {
-  //@ts-ignore
+  //@ts-expect-error
   constructor(message: string = 'Assertion error!', ...rest) {
-    //@ts-ignore
+    //@ts-expect-error
     super(message, ...rest);
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
