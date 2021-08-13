@@ -4,7 +4,7 @@
 chrome >= 61
 firefox >= 60
 safari >= 11
-edge >= 16
+# edge >= 16 # does not support case-insensitive selectors resulting to explosion of CSS selectors
 #supports es6-module
 
 [legacy]
