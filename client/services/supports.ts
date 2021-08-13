@@ -32,3 +32,8 @@ export const SUPPORTS_RESIZE_OBSERVER: boolean = 'ResizeObserver' in window;
 //   'background-image',
 //   '-webkit-image-set(url("a") 1x, url("b") 2x)'
 // );
+
+// https://twitter.com/mathias/status/1278208408857051136
+export function supportsMediaQuery(query: string): boolean {
+  return window.matchMedia(`(${query})`).media != 'not all';
+}
