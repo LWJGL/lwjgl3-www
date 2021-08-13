@@ -120,3 +120,8 @@ pre {
 //   white-space: nowrap;
 //   border: 0;
 // }
+
+:not(a[rel='external'], a[target='_blank']) {
+  -webkit-touch-callout: none; // https://mobile.twitter.com/argyleink/status/1407691912732086277
+  -webkit-tap-highlight-color: transparent; // https://mobile.twitter.com/argyleink/status/1407329524631494656
+}

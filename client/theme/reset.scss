@@ -59,8 +59,9 @@
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   // Change the default tap highlight to be completely transparent in iOS.
-  // ! (opinionated/bootstrap)
-  -webkit-tap-highlight-color: transparent;
+  // We set this at the a level
+  // // ! (opinionated/bootstrap)
+  // -webkit-tap-highlight-color: transparent;
 }
 
 // Consistent fonts (Tailwind sans-serif stack)
