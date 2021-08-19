@@ -4,7 +4,6 @@ import * as light from './palettes/default-light';
 import * as dark from './palettes/default-dark';
 
 import type { CSS, PropertyValue } from '@stitches/react';
-import type { Property } from '@stitches/react/types/css';
 import type { Hsl } from './color';
 
 export type Tone = 'primary' | 'neutral' | 'critical' | 'caution' | 'positive' | 'info';
@@ -269,7 +268,9 @@ const stitchesConfig = createStitches({
     px: (value: PropertyValue<'padding'>) => ({ paddingLeft: value, paddingRight: value }),
     py: (value: PropertyValue<'padding'>) => ({ paddingTop: value, paddingBottom: value }),
     square: (value: PropertyValue<'width'>) => ({ width: value, height: value }),
+    //@ts-expect-error
     hgap: (value: PropertyValue<'marginLeft'>) => ({ '& > * + *': { marginLeft: value } }),
+    //@ts-expect-error
     vgap: (value: PropertyValue<'marginTop'>) => ({ '& > * + *': { marginTop: value } }),
     // // Use this inside another container
     // flexGap: (value: any) => ({
@@ -327,12 +328,15 @@ const stitchesConfig = createStitches({
         };
       }
     },
-    overflow: (overflow: Property.Overflow) =>
-      overflow === 'clip' ? { overflow: 'hidden;overflow:clip' } : { overflow },
-    // overflowX: () => (overflowX: OverflowXProperty) =>
+    overflow: (overflow: PropertyValue<'overflow'>) => ({
+      //@ts-expect-error
+      overflow: overflow === 'clip' ? 'hidden;overflow:clip' : overflow,
+    }),
+    // overflowX: () => (overflowX: PropertyValue<'overflowX'>) =>
     //   overflowX === 'clip' ? { overflowX: 'hidden;overflow:clip' } : { overflowX },
-    // overflowY: () => (overflowY: OverflowYProperty) =>
+    // overflowY: () => (overflowY: PropertyValue<'overflowY'>) =>
     //   overflowY === 'clip' ? { overflowY: 'hidden;overflow:clip' } : { overflowY },
+    //@ts-expect-error
     wrap: (value: 'normal' | 'word' | 'all' | 'truncate') => {
       switch (value) {
         case 'normal':
@@ -343,6 +347,8 @@ const stitchesConfig = createStitches({
           return { wordBreak: 'break-all' };
         case 'truncate':
           return { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' };
+        // default:
+        //   throw new Error(`${value} not supported`);
       }
     },
   },
