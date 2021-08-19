@@ -1,8 +1,8 @@
 import { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from '~/components/router/client';
 import { File } from './File';
 import { Folder, SpinnerRow, FolderError } from './Folder';
-import { ErrorBoundary } from '~/components/system/ErrorBoundary';
 import { Box } from '~/components/ui/Box';
 import { Row } from './Row';
 import { readPath } from '../loaders/path';
@@ -45,7 +45,7 @@ export function Browser({ path: targetPath }: Props) {
           <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
         </Row>
       )}
-      <ErrorBoundary fallback={FolderError}>
+      <ErrorBoundary FallbackComponent={FolderError}>
         <Suspense fallback={<SpinnerRow />}>
           <FolderContents path={path} targetPath={targetPath} />
         </Suspense>

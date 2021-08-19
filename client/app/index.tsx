@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { ErrorBoundary } from '~/components/system/ErrorBoundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import { OverlayProvider } from '@react-aria/overlays';
 import { BreakpointProvider } from './context/Breakpoint';
 import { ColorSchemeProvider } from './context/ColorScheme';
@@ -41,7 +41,7 @@ export const App: React.FC<{ children?: never }> = () => (
           <Header />
           <Layout>
             <Main>
-              <ErrorBoundary fallback={PageError}>
+              <ErrorBoundary FallbackComponent={PageError}>
                 <Suspense fallback={<PageBlank />}>
                   <RouterConfig />
                 </Suspense>

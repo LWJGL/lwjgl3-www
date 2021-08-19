@@ -1,6 +1,6 @@
 import { Component, lazy } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Routes, Route } from '~/components/router/client';
-import { ErrorBoundary } from '~/components/system/ErrorBoundary';
 import { PageError } from './PageError';
 import { PageNotFound } from './PageNotFound';
 // import { delay } from '../services/delay';
@@ -9,7 +9,7 @@ import { PageNotFound } from './PageNotFound';
 //   const RouteChunk = lazy(fn);
 //   return function AsyncRoute() {
 //     return (
-//       <ErrorBoundary fallback={PageError}>
+//       <ErrorBoundary FallbackComponent={PageError}>
 //         <RouteChunk />
 //       </ErrorBoundary>
 //     );
@@ -24,7 +24,7 @@ function $R(fn: () => Promise<{ default: React.ComponentType<any> }>) {
   return class AsyncRoute extends Component {
     render() {
       return (
-        <ErrorBoundary fallback={PageError}>
+        <ErrorBoundary FallbackComponent={PageError}>
           <RouteChunk />
         </ErrorBoundary>
       );

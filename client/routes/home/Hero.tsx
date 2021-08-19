@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
-import { Link } from '~/components/router/client';
 import { ErrorBoundary } from '~/components/system/ErrorBoundary';
+import { Link } from '~/components/router/client';
 import { useMedia } from '~/hooks/useMedia';
 import { useViewport } from '~/hooks/useViewport';
 import { styled } from '~/theme/stitches.config';
