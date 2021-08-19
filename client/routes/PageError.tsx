@@ -4,7 +4,7 @@ import { Container } from '~/components/ui/Container';
 import { Text } from '~/components/ui/Text';
 import { Title } from '~/components/lwjgl/Title';
 
-import type { ErrorProps } from '~/components/system/ErrorBoundary';
+import type { FallbackProps } from 'react-error-boundary';
 
 function readableStack(stack: string) {
   const href = new URL(document.location.href);
@@ -22,7 +22,7 @@ const ErrorStackPre = styled('pre', Container, {
   wordBreak: 'break-word',
 });
 
-export function PageError({ error }: ErrorProps) {
+export function PageError({ error }: FallbackProps) {
   useDocumentTitle('An error has occured');
 
   return (
