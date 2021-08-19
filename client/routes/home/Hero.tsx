@@ -1,5 +1,5 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
-import { ErrorBoundary } from '~/components/system/ErrorBoundary';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from '~/components/router/client';
 import { useMedia } from '~/hooks/useMedia';
 import { useViewport } from '~/hooks/useViewport';
@@ -213,7 +213,7 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
   }, [prefersReducedMotion]);
 
   return renderWebGL ? (
-    <ErrorBoundary>
+    <ErrorBoundary fallback={null}>
       <Suspense fallback={null}>
         <Canvas width={width} height={height} />
       </Suspense>
