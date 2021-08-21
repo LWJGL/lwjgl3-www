@@ -10,8 +10,8 @@ import {
   Fragment,
   Children,
 } from 'react';
-
-import { Action, Blocker, History, Location, PartialLocation, Path, State, To, Transition, parsePath } from 'history';
+import { Action, parsePath } from 'history';
+import type { Blocker, History, Location, PartialLocation, Path, State, To, Transition } from 'history';
 
 ///////////////////////////////////////////////////////////////////////////////
 // CONTEXT
@@ -28,6 +28,8 @@ import { Action, Blocker, History, Location, PartialLocation, Path, State, To, T
  */
 export type Navigator = Omit<History, 'action' | 'location' | 'back' | 'forward' | 'listen'>;
 
+const NavigatorContext = createContext<Navigator>(null!);
+
 const LocationContext = createContext<LocationContextObject>({
   pending: false,
   static: false,
@@ -36,7 +38,6 @@ const LocationContext = createContext<LocationContextObject>({
 interface LocationContextObject {
   action?: Action;
   location?: Location;
-  navigator?: Navigator;
   pending: boolean;
   static: boolean;
 }
@@ -49,6 +50,7 @@ const RouteContext = createContext<RouteContextObject>({
   outlet: null,
   params: {},
   pathname: '',
+  basename: '',
   route: null,
 });
 
@@ -56,6 +58,7 @@ interface RouteContextObject {
   outlet: React.ReactElement | null;
   params: Params;
   pathname: string;
+  basename: string;
   route: RouteObject | null;
 }
 
@@ -67,19 +70,27 @@ if (!FLAG_PRODUCTION) {
 // COMPONENTS
 ///////////////////////////////////////////////////////////////////////////////
 
+export interface OutletProps {}
+
 /**
  * Renders the child route's element, if there is one.
  *
  * @see https://reactrouter.com/api/Outlet
  */
-export function Outlet(): React.ReactElement | null {
+export function Outlet(_props: OutletProps): React.ReactElement | null {
   return useOutlet();
 }
 
-export interface OutletProps {}
-
 if (!FLAG_PRODUCTION) {
   Outlet.displayName = 'Outlet';
+}
+
+export interface RouteProps {
+  caseSensitive?: boolean;
+  children?: React.ReactNode;
+  element?: React.ReactElement | React.ComponentType<any> | null;
+  path?: string;
+  preload?: RoutePreloadFunction;
 }
 
 /**
@@ -91,16 +102,17 @@ export function Route({ element = Outlet }: RouteProps): React.ReactElement | nu
   return element === null || isValidElement(element) ? element : createElement(element);
 }
 
-export interface RouteProps {
-  caseSensitive?: boolean;
-  children?: React.ReactNode;
-  element?: React.ReactElement | React.ComponentType<any> | null;
-  path?: string;
-  preload?: RoutePreloadFunction;
-}
-
 if (!FLAG_PRODUCTION) {
   Route.displayName = 'Route';
+}
+
+export interface RouterProps {
+  action?: Action;
+  children?: React.ReactNode;
+  location: Location;
+  navigator: Navigator;
+  pending?: boolean;
+  static?: boolean;
 }
 
 /**
@@ -121,24 +133,19 @@ export function Router({
   static: staticProp = false,
 }: RouterProps): React.ReactElement {
   return (
-    <LocationContext.Provider
-      children={children}
-      value={{ action, location, navigator, pending, static: staticProp }}
-    />
+    <NavigatorContext.Provider value={navigator}>
+      <LocationContext.Provider children={children} value={{ action, location, pending, static: staticProp }} />
+    </NavigatorContext.Provider>
   );
-}
-
-export interface RouterProps {
-  action?: Action;
-  children?: React.ReactNode;
-  location: Location;
-  navigator: Navigator;
-  pending?: boolean;
-  static?: boolean;
 }
 
 if (!FLAG_PRODUCTION) {
   Router.displayName = 'Router';
+}
+
+export interface RoutesProps {
+  basename?: string;
+  children?: React.ReactNode;
 }
 
 /**
@@ -149,12 +156,8 @@ if (!FLAG_PRODUCTION) {
  */
 export function Routes({ basename = '', children }: RoutesProps): React.ReactElement | null {
   let routes = createRoutesFromChildren(children);
-  return useRoutes_(routes, basename);
-}
-
-export interface RoutesProps {
-  basename?: string;
-  children?: React.ReactNode;
+  let location = useLocation();
+  return useRoutes_(routes, location, basename);
 }
 
 if (!FLAG_PRODUCTION) {
@@ -172,7 +175,7 @@ if (!FLAG_PRODUCTION) {
  * @see https://reactrouter.com/api/useBlocker
  */
 export function useBlocker(blocker: Blocker, when = true): void {
-  let navigator = useContext(LocationContext).navigator as Navigator;
+  let navigator = useContext(NavigatorContext);
 
   useEffect(() => {
     if (!when) {
@@ -205,11 +208,20 @@ export function useBlocker(blocker: Blocker, when = true): void {
  * @see https://reactrouter.com/api/useHref
  */
 export function useHref(to: To): string {
-  let navigator = useContext(LocationContext).navigator as Navigator;
+  let navigator = useContext(NavigatorContext);
   let path = useResolvedPath(to);
 
   return navigator.createHref(path);
 }
+
+// /**
+//  * Returns true if this component is a descendant of a <Router>.
+//  *
+//  * @see https://reactrouter.com/api/useInRouterContext
+//  */
+//  export function useInRouterContext(): boolean {
+//   return useContext(LocationContext).location != null;
+// }
 
 /**
  * Returns the current location object, which represents the current URL in web
@@ -252,8 +264,13 @@ type PathPattern = string | { path: string; caseSensitive?: boolean; end?: boole
  * The interface for the navigate() function returned from useNavigate().
  */
 export interface NavigateFunction {
-  (to: To, options?: { replace?: boolean; state?: State }): void;
+  (to: To, options?: NavigateOptions): void;
   (delta: number): void;
+}
+
+export interface NavigateOptions {
+  replace?: boolean;
+  state?: State;
 }
 
 /**
@@ -263,10 +280,9 @@ export interface NavigateFunction {
  * @see https://reactrouter.com/api/useNavigate
  */
 export function useNavigate(): NavigateFunction {
-  let locationContext = useContext(LocationContext);
-  let navigator = locationContext.navigator as Navigator;
-  let pending = locationContext.pending;
-  let { pathname } = useContext(RouteContext);
+  let navigator = useContext(NavigatorContext);
+  let { pending } = useContext(LocationContext);
+  let { pathname, basename } = useContext(RouteContext);
 
   let activeRef = useRef(false);
   useEffect(() => {
@@ -279,7 +295,7 @@ export function useNavigate(): NavigateFunction {
         if (typeof to === 'number') {
           navigator.go(to);
         } else {
-          let path = resolvePath(to, pathname);
+          let path = resolvePath(to, pathname, basename);
           // If we are pending transition, use REPLACE instead of PUSH. This
           // will prevent URLs that we started navigating to but never fully
           // loaded from appearing in the history stack.
@@ -287,7 +303,7 @@ export function useNavigate(): NavigateFunction {
         }
       }
     },
-    [navigator, pathname, pending]
+    [basename, navigator, pathname, pending]
   );
 
   return navigate;
@@ -319,8 +335,8 @@ export function useParams(): Params {
  * @see https://reactrouter.com/api/useResolvedPath
  */
 export function useResolvedPath(to: To): Path {
-  let { pathname } = useContext(RouteContext);
-  return useMemo(() => resolvePath(to, pathname), [to, pathname]);
+  let { pathname, basename } = useContext(RouteContext);
+  return useMemo(() => resolvePath(to, pathname, basename), [to, pathname, basename]);
 }
 
 /**
@@ -332,20 +348,25 @@ export function useResolvedPath(to: To): Path {
  * @see https://reactrouter.com/api/useRoutes
  */
 export function useRoutes(partialRoutes: PartialRouteObject[], basename = ''): React.ReactElement | null {
+  let location = useLocation();
   let routes = useMemo(() => createRoutesFromArray(partialRoutes), [partialRoutes]);
 
-  return useRoutes_(routes, basename);
+  return useRoutes_(routes, location, basename);
 }
 
-function useRoutes_(routes: RouteObject[], basename = ''): React.ReactElement | null {
+function useRoutes_(routes: RouteObject[], location: Location, basename = ''): React.ReactElement | null {
   let { pathname: parentPathname, params: parentParams } = useContext(RouteContext);
-  basename = basename ? joinPaths([parentPathname, basename]) : parentPathname;
 
-  let locationPreloadRef = useRef<Location>();
-  let location = useLocation() as Location;
-  let matches = useMemo(() => matchRoutes(routes, location, basename), [location, routes, basename]);
+  let basenameForMatching = basename ? joinPaths([parentPathname, basename]) : parentPathname;
+
+  let locationPreloadRef = useRef<Location>(null!);
+  let matches = useMemo(
+    () => matchRoutes(routes, location, basenameForMatching),
+    [location, routes, basenameForMatching]
+  );
 
   if (!matches) {
+    // TODO: Warn about nothing matching, suggest using a catch-all route.
     return null;
   }
 
@@ -357,14 +378,17 @@ function useRoutes_(routes: RouteObject[], basename = ''): React.ReactElement | 
   }
 
   // Otherwise render an element.
+  let allParams: Params = {};
   let element = matches.reduceRight((outlet, { params, pathname, route }) => {
+    allParams = { ...allParams, ...params };
     return (
       <RouteContext.Provider
         children={route.element}
         value={{
           outlet,
-          params: { ...parentParams, ...params },
-          pathname: joinPaths([basename, pathname]),
+          params: { ...parentParams, ...allParams },
+          pathname: joinPaths([basenameForMatching, pathname]),
+          basename,
           route,
         }}
       />
@@ -502,7 +526,7 @@ export function generatePath(path: string, params: Params = {}): string {
  * @see https://reactrouter.com/api/matchRoutes
  */
 export function matchRoutes(
-  routes: RouteObject[],
+  routes: PartialRouteObject[],
   location: string | PartialLocation,
   basename = ''
 ): RouteMatch[] | null {
@@ -540,13 +564,20 @@ export interface RouteMatch {
 }
 
 function flattenRoutes(
-  routes: RouteObject[],
+  routes: PartialRouteObject[],
   branches: RouteBranch[] = [],
   parentPath = '',
   parentRoutes: RouteObject[] = [],
   parentIndexes: number[] = []
 ): RouteBranch[] {
-  routes.forEach((route, index) => {
+  (routes as RouteObject[]).forEach((route, index) => {
+    route = {
+      ...route,
+      path: route.path || '/',
+      caseSensitive: !!route.caseSensitive,
+      element: route.element,
+    };
+
     let path = joinPaths([parentPath, route.path]);
     let routes = parentRoutes.concat(route);
     let indexes = parentIndexes.concat(index);
@@ -689,7 +720,7 @@ export function matchPath(pattern: PathPattern, pathname: string): PathMatch | n
   let matchedPathname = match[1];
   let values = match.slice(2);
   let params = paramNames.reduce((memo, paramName, index) => {
-    memo[paramName] = safelyDecodeURIComponent(values[index]);
+    memo[paramName] = safelyDecodeURIComponent(values[index] || '', paramName);
     return memo;
   }, {} as Params);
 
@@ -718,10 +749,11 @@ function compilePath(path: string, caseSensitive: boolean, end: boolean): [RegEx
 
   if (path.endsWith('*')) {
     if (path.endsWith('/*')) {
-      source += '\\/?'; // Don't include the / in params['*']
+      source += '(?:\\/(.+)|\\/?)'; // Don't include the / in params['*']
+    } else {
+      source += '(.*)';
     }
     keys.push('*');
-    source += '(.*)';
   } else if (end) {
     source += '\\/?';
   }
@@ -736,9 +768,9 @@ function compilePath(path: string, caseSensitive: boolean, end: boolean): [RegEx
   return [matcher, keys];
 }
 
-function safelyDecodeURIComponent(value: string) {
+function safelyDecodeURIComponent(value: string, paramName: string) {
   try {
-    return decodeURIComponent(value.replace(/\+/g, ' '));
+    return decodeURIComponent(value);
   } catch (error) {
     return value;
   }
@@ -749,20 +781,30 @@ function safelyDecodeURIComponent(value: string) {
  *
  * @see https://reactrouter.com/api/resolvePath
  */
-export function resolvePath(to: To, fromPathname = '/'): Path {
+export function resolvePath(to: To, fromPathname = '/', basename = ''): Path {
   let { pathname: toPathname, search = '', hash = '' } = typeof to === 'string' ? parsePath(to) : to;
 
   let pathname = toPathname
-    ? resolvePathname(toPathname, toPathname.startsWith('/') ? '/' : fromPathname)
+    ? resolvePathname(
+        toPathname,
+        toPathname.startsWith('/') ? (basename ? normalizeSlashes(`/${basename}`) : '/') : fromPathname
+      )
     : fromPathname;
 
-  return { pathname, search, hash };
+  return {
+    pathname,
+    search: normalizeSearch(search),
+    hash: normalizeHash(hash),
+  };
 }
 
 const trimTrailingSlashes = (path: string) => path.replace(/\/+$/, '');
 const normalizeSlashes = (path: string) => path.replace(/\/\/+/g, '/');
 const joinPaths = (paths: string[]) => normalizeSlashes(paths.join('/'));
 const splitPath = (path: string) => normalizeSlashes(path).split('/');
+const normalizeSearch = (search: string) =>
+  !search || search === '?' ? '' : search.startsWith('?') ? search : '?' + search;
+const normalizeHash = (hash: string) => (!hash || hash === '#' ? '' : hash.startsWith('#') ? hash : '#' + hash);
 
 function resolvePathname(toPathname: string, fromPathname: string): string {
   let segments = splitPath(trimTrailingSlashes(fromPathname));

@@ -1,6 +1,7 @@
-import { useRef, useTransition, useReducer, useLayoutEffect, forwardRef } from 'react';
+import { useRef, useTransition, useState, useLayoutEffect, forwardRef } from 'react';
+import { createBrowserHistory, createPath } from 'history';
 import { Router, useHref, useLocation, useNavigate, useResolvedPath } from './';
-import { BrowserHistory, State, To, Update, createBrowserHistory, createPath } from 'history';
+import type { BrowserHistory, State, To, Update } from 'history';
 
 export * from './';
 
@@ -8,19 +9,23 @@ export * from './';
 // COMPONENTS
 ////////////////////////////////////////////////////////////////////////////////
 
+export interface BrowserRouterProps {
+  children?: React.ReactNode;
+  window?: Window;
+}
 /**
  * A <Router> for use in web browsers. Provides the cleanest URLs.
  */
 export function BrowserRouter({ children, window }: BrowserRouterProps) {
+  let [isPending, startTransition] = useTransition();
+
   let historyRef = useRef<BrowserHistory>();
   if (historyRef.current == null) {
     historyRef.current = createBrowserHistory({ window });
   }
 
-  let [isPending, startTransition] = useTransition();
-
   let history = historyRef.current;
-  let [state, dispatch] = useReducer((_: Update, action: Update) => action, {
+  let [state, setState] = useState<Update>({
     action: history.action,
     location: history.location,
   });
@@ -29,7 +34,7 @@ export function BrowserRouter({ children, window }: BrowserRouterProps) {
     () =>
       history.listen((update) => {
         startTransition(() => {
-          dispatch(update);
+          setState(update);
         });
       }),
     [history, startTransition]
@@ -46,11 +51,6 @@ export function BrowserRouter({ children, window }: BrowserRouterProps) {
   );
 }
 
-export interface BrowserRouterProps {
-  children?: React.ReactNode;
-  window?: Window;
-}
-
 if (!FLAG_PRODUCTION) {
   BrowserRouter.displayName = 'BrowserRouter';
 }
@@ -59,6 +59,11 @@ function isModifiedEvent(event: React.MouseEvent) {
   return !!(event.metaKey || event.altKey || event.ctrlKey || event.shiftKey);
 }
 
+export interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+  replace?: boolean;
+  state?: State;
+  to: To;
+}
 /**
  * The public API for rendering a history-aware <a>.
  */
@@ -94,14 +99,15 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function LinkWithRe
   return <a {...rest} href={href} onClick={handleClick} ref={ref} target={target} />;
 });
 
-export interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
-  replace?: boolean;
-  state?: State;
-  to: To;
-}
-
 if (!FLAG_PRODUCTION) {
   Link.displayName = 'Link';
+}
+
+export interface NavLinkProps extends LinkProps {
+  activeClassName?: string;
+  activeStyle?: object;
+  caseSensitive?: boolean;
+  end?: boolean;
 }
 
 /**
@@ -140,16 +146,14 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavL
   return <Link {...rest} aria-current={ariaCurrent} className={className} ref={ref} style={style} to={to} />;
 });
 
-export interface NavLinkProps extends LinkProps {
-  activeClassName?: string;
-  activeStyle?: object;
-  caseSensitive?: boolean;
-  end?: boolean;
-}
-
 if (!FLAG_PRODUCTION) {
   NavLink.displayName = 'NavLink';
 }
+
+// export interface PromptProps {
+//   message: string;
+//   when?: boolean;
+// }
 
 // /**
 //  * A declarative interface for showing a window.confirm dialog with the given
@@ -161,11 +165,6 @@ if (!FLAG_PRODUCTION) {
 // export function Prompt({ message, when }: PromptProps) {
 //   usePrompt(message, when);
 //   return null;
-// }
-
-// export interface PromptProps {
-//   message: string;
-//   when?: boolean;
 // }
 
 // if (!FLAG_PRODUCTION) {
@@ -224,6 +223,10 @@ if (!FLAG_PRODUCTION) {
 //   return [searchParams, setSearchParams] as const;
 // }
 
+// export type ParamKeyValuePair = [string, string];
+
+// export type URLSearchParamsInit = string | ParamKeyValuePair[] | Record<string, string | string[]> | URLSearchParams;
+
 // /**
 //  * Creates a URLSearchParams object using the given initializer.
 //  *
@@ -255,6 +258,3 @@ if (!FLAG_PRODUCTION) {
 //         }, [] as ParamKeyValuePair[])
 //   );
 // }
-
-// export type ParamKeyValuePair = [string, string];
-// export type URLSearchParamsInit = string | ParamKeyValuePair[] | Record<string, string | string[]> | URLSearchParams;
