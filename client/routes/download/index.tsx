@@ -9,6 +9,7 @@ import { Dark } from '~/components/lwjgl/Dark';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Title } from '~/components/lwjgl/Title';
 // import { ScreenLock } from '~/components/layout/ScreenLock';
+// import { ButtonVariations } from '~/components/forms/test/Button';
 
 // Icons
 import { Icon } from '~/components/ui/Icon';
@@ -29,6 +30,8 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           Download LW
           <b>JGL</b>
         </Title>
+
+        {/* <ButtonVariations /> */}
 
         <Grid css={{ grid: 'auto-flow / 1fr', gap: '$paragraph', '@lg': { grid: 'auto-flow / repeat(3, 1fr)' } }}>
           <Text>All official are available for download from GitHub:</Text>
