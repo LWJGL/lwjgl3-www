@@ -62,6 +62,7 @@ const LicenseArea = styled('div', {
 
 const FOOTER = (
   <DarkFooter
+    className="dark"
     css={{
       // This is needed for the full page grid
       mt: 'auto',
