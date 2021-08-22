@@ -22,7 +22,7 @@ interface BuildBadgeProps {
   height?: number;
 }
 
-const TextDividerSpan = styled('span', TextDivider);
+const TextDividerSpan = styled('span', Text, TextDivider);
 const GridSection = styled('section', Grid);
 
 const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 88, height = 20 }) => (

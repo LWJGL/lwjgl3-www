@@ -1,7 +1,6 @@
 import { styled } from '~/theme/stitches.config';
-import { Text } from '~/components/ui/Text';
 
-export const TextDivider = styled(Text, {
+export const TextDivider = styled('p', {
   display: 'flex',
   alignItems: 'center',
   textAlign: 'center',
