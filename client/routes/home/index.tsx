@@ -7,7 +7,7 @@ import { GoldSponsors } from '~/routes/sponsors/Gold';
 import { HowToSupport } from '~/routes/sponsors/HowToSupport';
 import { Grid } from '~/components/layout/Grid';
 import { Prose } from '~/components/ui/Prose';
-import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
+import { LinkButton, AnchorButton } from '~/components/forms/Button';
 import { ImgLazy } from '~/components/ui/ImgLazy';
 import { Text } from '~/components/ui/Text';
 import { Hr } from '~/components/ui/Hr';

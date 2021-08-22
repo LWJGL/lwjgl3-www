@@ -10,7 +10,7 @@ import { Text } from '~/components/ui/Text';
 import { Hr } from '~/components/ui/Hr';
 import { TextDivider } from '~/components/ui/TextDivider';
 import { Title } from '~/components/lwjgl/Title';
-import { AnchorButton } from '~/components/ui/LinkButton';
+import { AnchorButton } from '~/components/forms/Button';
 import { ImgLazy } from '~/components/ui/ImgLazy';
 import { Anchor } from '~/components/lwjgl/Anchor';
 

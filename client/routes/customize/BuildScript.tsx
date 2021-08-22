@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { styled } from '~/theme/stitches.config';
-import { Button } from '~/components/forms/Button';
-import { AnchorButton } from '~/components/ui/LinkButton';
+import { Button, AnchorButton } from '~/components/forms/Button';
 import { useSelector } from './Store';
 import { createSelectorDeepEqual } from '~/services/selector';
 import { BuildToolbar } from './BuildToolbar';

@@ -4,7 +4,7 @@ import { Container } from '~/components/ui/Container';
 import { Grid } from '~/components/layout/Grid';
 import { Box } from '~/components/ui/Box';
 import { Text, Heading } from '~/components/ui/Text';
-import { LinkButton, AnchorButton } from '~/components/ui/LinkButton';
+import { LinkButton, AnchorButton } from '~/components/forms/Button';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Title } from '~/components/lwjgl/Title';
