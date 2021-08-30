@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "node-fetch": "3.0.0-beta.9",
-    "puppeteer-core": "10.0.0",
-    "yargs": "17.0.1"
+    "puppeteer-core": "10.2.0",
+    "undici": "4.5.1",
+    "yargs": "17.1.1"
   },
   "scripts": {
     "ncu": "npx npm-check-updates -i",

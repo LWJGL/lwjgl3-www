@@ -1,10 +1,10 @@
-import path from 'path';
-import { promises as fs } from 'fs';
+import path from 'node:path';
+import fs from 'node:fs/promises';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
 import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
-import fetch from 'node-fetch';
+import { fetch } from 'undici';
 
 const filePath = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filePath);
