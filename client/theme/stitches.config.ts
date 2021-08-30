@@ -1,122 +1,46 @@
+/*
+Spec: https://system-ui.com/theme/
+Tokens from: https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
+Colors from: @radix-ui/colors
+Color Step Cheatsheet:
+
+1. App background
+2. Subtle background
+3. UI element background
+4. Hovered UI element background.
+5. Active / Selected UI element background.
+6. Subtle borders and separators.
+7. UI element border and focus rings
+8. Hovered UI element border
+9. Solid backgrounds.
+10. Hovered solid backgrounds.
+11. Low-contrast text.
+12. High-contrast text.
+*/
+
 import { createStitches } from '@stitches/react';
-import { setLightness } from './color';
-import * as light from './palettes/default-light';
-import * as dark from './palettes/default-dark';
-
-import type { CSS, PropertyValue } from '@stitches/react';
-import type { Hsl } from './color';
-
-export type Tone = 'primary' | 'neutral' | 'critical' | 'caution' | 'positive' | 'info';
-export type Level = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
-
-function outlineColor(color: Hsl, opacity = 0.45) {
-  return `hsla(${color.hue},${color.saturation}%,${color.lightness}%,${opacity})`;
-}
-
-// Spec:
-// https://system-ui.com/theme/
-// Tokens from:
-// https://github.com/tailwindlabs/tailwindcss/blob/master/stubs/defaultConfig.stub.js
+import type * as Stitches from '@stitches/react';
+import * as palette from './palette';
 
 const themeTokens = {
   colors: {
     // Basic
-    black: '#000',
-    white: '#fff',
-    // link: 'hsl(200, 98%, 39%)',
-    // link: '#197ab4',
-    link: '#0e7490',
-    body: light.BG.css(),
-    text: light.TEXT.css(),
+    body: '$accent2',
+    text: '$accent12',
 
     // LWJGL
-    dark: dark.BG.css(),
-    darker: setLightness(dark.BG, 4).css(),
+    // dark: '$accent11',
+    // darker: '$accent12',
+    dark: palette.accentDark.accent3,
+    darker: palette.accentDark.accent1,
 
     // Palette
-    primary50: light.PRIMARY[0].css(),
-    primary100: light.PRIMARY[1].css(),
-    primary200: light.PRIMARY[2].css(),
-    primary300: light.PRIMARY[3].css(),
-    primary400: light.PRIMARY[4].css(),
-    primary500: light.PRIMARY[5].css(),
-    primary600: light.PRIMARY[6].css(),
-    primary700: light.PRIMARY[7].css(),
-    primary800: light.PRIMARY[8].css(),
-    primary900: light.PRIMARY[9].css(),
-
-    // accent50: light.ACCENT[0].css(),
-    // accent100: light.ACCENT[1].css(),
-    // accent200: light.ACCENT[2].css(),
-    // accent300: light.ACCENT[3].css(),
-    // accent400: light.ACCENT[4].css(),
-    // accent500: light.ACCENT[5].css(),
-    // accent600: light.ACCENT[6].css(),
-    // accent700: light.ACCENT[7].css(),
-    // accent800: light.ACCENT[8].css(),
-    // accent900: light.ACCENT[9].css(),
-
-    neutral50: light.NEUTRAL[0].css(),
-    neutral100: light.NEUTRAL[1].css(),
-    neutral200: light.NEUTRAL[2].css(),
-    neutral300: light.NEUTRAL[3].css(),
-    neutral400: light.NEUTRAL[4].css(),
-    neutral500: light.NEUTRAL[5].css(),
-    neutral600: light.NEUTRAL[6].css(),
-    neutral700: light.NEUTRAL[7].css(),
-    neutral800: light.NEUTRAL[8].css(),
-    neutral900: light.NEUTRAL[9].css(),
-
-    critical50: light.CRITICAL[0].css(),
-    critical100: light.CRITICAL[1].css(),
-    critical200: light.CRITICAL[2].css(),
-    critical300: light.CRITICAL[3].css(),
-    critical400: light.CRITICAL[4].css(),
-    critical500: light.CRITICAL[5].css(),
-    critical600: light.CRITICAL[6].css(),
-    critical700: light.CRITICAL[7].css(),
-    critical800: light.CRITICAL[8].css(),
-    critical900: light.CRITICAL[9].css(),
-
-    caution50: light.CAUTION[0].css(),
-    caution100: light.CAUTION[1].css(),
-    caution200: light.CAUTION[2].css(),
-    caution300: light.CAUTION[3].css(),
-    caution400: light.CAUTION[4].css(),
-    caution500: light.CAUTION[5].css(),
-    caution600: light.CAUTION[6].css(),
-    caution700: light.CAUTION[7].css(),
-    caution800: light.CAUTION[8].css(),
-    caution900: light.CAUTION[9].css(),
-
-    positive50: light.POSITIVE[0].css(),
-    positive100: light.POSITIVE[1].css(),
-    positive200: light.POSITIVE[2].css(),
-    positive300: light.POSITIVE[3].css(),
-    positive400: light.POSITIVE[4].css(),
-    positive500: light.POSITIVE[5].css(),
-    positive600: light.POSITIVE[6].css(),
-    positive700: light.POSITIVE[7].css(),
-    positive800: light.POSITIVE[8].css(),
-    positive900: light.POSITIVE[9].css(),
-
-    info50: light.INFO[0].css(),
-    info100: light.INFO[1].css(),
-    info200: light.INFO[2].css(),
-    info300: light.INFO[3].css(),
-    info400: light.INFO[4].css(),
-    info500: light.INFO[5].css(),
-    info600: light.INFO[6].css(),
-    info700: light.INFO[7].css(),
-    info800: light.INFO[8].css(),
-    info900: light.INFO[9].css(),
-
-    outline_primary: outlineColor(light.PRIMARY[5]),
-    outline_neutral: outlineColor(light.NEUTRAL[5]),
-    outline_critical: outlineColor(light.CRITICAL[5]),
-    outline_caution: outlineColor(light.CAUTION[5]),
-    outline_positive: outlineColor(light.POSITIVE[5]),
-    outline_info: outlineColor(light.INFO[5]),
+    ...palette.accent,
+    ...palette.neutral,
+    ...palette.positive,
+    ...palette.info,
+    ...palette.caution,
+    ...palette.critical,
   },
   space: {
     // ...spacing(),
@@ -215,8 +139,8 @@ const themeTokens = {
   },
   shadows: {
     // 'distant': '0 15px 35px -5px rgba(0,0,0,.25)',
-    xs: '0 0 0 1px rgba(0, 0, 0, 0.05)',
-    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+    xs: '0 0 0 1px rgba(0, 0, 0, 0.1)',
+    sm: '0 1px 2px 0 rgba(0, 0, 0, 0.15)',
     shadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
     md: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
     lg: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
@@ -255,23 +179,21 @@ const stitchesConfig = createStitches({
     all: 'all',
   },
   utils: {
-    mt: (value: PropertyValue<'marginTop'>) => ({ marginTop: value }),
-    mr: (value: PropertyValue<'marginRight'>) => ({ marginRight: value }),
-    mb: (value: PropertyValue<'marginBottom'>) => ({ marginBottom: value }),
-    ml: (value: PropertyValue<'marginLeft'>) => ({ marginLeft: value }),
-    mx: (value: PropertyValue<'margin'>) => ({ marginLeft: value, marginRight: value }),
-    my: (value: PropertyValue<'margin'>) => ({ marginTop: value, marginBottom: value }),
-    pt: (value: PropertyValue<'paddingTop'>) => ({ paddingTop: value }),
-    pr: (value: PropertyValue<'paddingRight'>) => ({ paddingRight: value }),
-    pb: (value: PropertyValue<'paddingBottom'>) => ({ paddingBottom: value }),
-    pl: (value: PropertyValue<'paddingLeft'>) => ({ paddingLeft: value }),
-    px: (value: PropertyValue<'padding'>) => ({ paddingLeft: value, paddingRight: value }),
-    py: (value: PropertyValue<'padding'>) => ({ paddingTop: value, paddingBottom: value }),
-    square: (value: PropertyValue<'width'>) => ({ width: value, height: value }),
-    //@ts-expect-error
-    hgap: (value: PropertyValue<'marginLeft'>) => ({ '& > * + *': { marginLeft: value } }),
-    //@ts-expect-error
-    vgap: (value: PropertyValue<'marginTop'>) => ({ '& > * + *': { marginTop: value } }),
+    mt: (value: Stitches.PropertyValue<'marginTop'>) => ({ marginTop: value }),
+    mr: (value: Stitches.PropertyValue<'marginRight'>) => ({ marginRight: value }),
+    mb: (value: Stitches.PropertyValue<'marginBottom'>) => ({ marginBottom: value }),
+    ml: (value: Stitches.PropertyValue<'marginLeft'>) => ({ marginLeft: value }),
+    mx: (value: Stitches.PropertyValue<'margin'>) => ({ marginLeft: value, marginRight: value }),
+    my: (value: Stitches.PropertyValue<'margin'>) => ({ marginTop: value, marginBottom: value }),
+    pt: (value: Stitches.PropertyValue<'paddingTop'>) => ({ paddingTop: value }),
+    pr: (value: Stitches.PropertyValue<'paddingRight'>) => ({ paddingRight: value }),
+    pb: (value: Stitches.PropertyValue<'paddingBottom'>) => ({ paddingBottom: value }),
+    pl: (value: Stitches.PropertyValue<'paddingLeft'>) => ({ paddingLeft: value }),
+    px: (value: Stitches.PropertyValue<'padding'>) => ({ paddingLeft: value, paddingRight: value }),
+    py: (value: Stitches.PropertyValue<'padding'>) => ({ paddingTop: value, paddingBottom: value }),
+    square: (value: Stitches.PropertyValue<'width'>) => ({ width: value, height: value }),
+    hgap: (value: Stitches.PropertyValue<'marginLeft'>) => ({ '& > * + *': { marginLeft: value } }),
+    vgap: (value: Stitches.PropertyValue<'marginTop'>) => ({ '& > * + *': { marginTop: value } }),
     // // Use this inside another container
     // flexGap: (value: any) => ({
     //   '--gap': value,
@@ -296,12 +218,11 @@ const stitchesConfig = createStitches({
     //     },
     //   };
     // },
-    gap: (value: string | PropertyValue<'margin'>) => {
+    gap: (value: string | Stitches.PropertyValue<'margin'>) => {
       if (typeof value === 'string') {
-        let val = value;
+        let val: string = value;
         if (val.charAt(0) === '$') {
           if (val.charAt(1) === '$') {
-            // val = `var(--${config.prefix}--${val.slice(2)})`;
             val = `var(---${val.slice(2)})`;
           } else {
             let [scale, token] = val.slice(1).split('$');
@@ -309,9 +230,9 @@ const stitchesConfig = createStitches({
               token = scale;
               scale = 'space';
             }
+
             //@ts-expect-error
-            if (config.theme[scale] !== undefined && token in config.theme[scale]) {
-              // val = `var(--${config.prefix}-${scale}-${token})`;
+            if (scale in config.theme && token in config.theme[scale]) {
               val = `var(--${scale}-${token})`;
             }
           }
@@ -328,15 +249,13 @@ const stitchesConfig = createStitches({
         };
       }
     },
-    overflow: (overflow: PropertyValue<'overflow'>) => ({
-      //@ts-expect-error
+    overflow: (overflow: Stitches.PropertyValue<'overflow'> | 'clip') => ({
       overflow: overflow === 'clip' ? 'hidden;overflow:clip' : overflow,
     }),
     // overflowX: () => (overflowX: PropertyValue<'overflowX'>) =>
     //   overflowX === 'clip' ? { overflowX: 'hidden;overflow:clip' } : { overflowX },
     // overflowY: () => (overflowY: PropertyValue<'overflowY'>) =>
     //   overflowY === 'clip' ? { overflowY: 'hidden;overflow:clip' } : { overflowY },
-    //@ts-expect-error
     wrap: (value: 'normal' | 'word' | 'all' | 'truncate') => {
       switch (value) {
         case 'normal':
@@ -354,121 +273,31 @@ const stitchesConfig = createStitches({
   },
 });
 
-function generateTheme(
-  name: string,
-  {
-    palette,
-    outlineStop = 5,
-    darkPalette,
-  }: {
-    palette: any;
-    outlineStop?: number;
-    darkPalette?: any;
-  }
-) {
-  return createTheme(name, {
-    colors: {
-      body: palette.BG.css(),
-      text: palette.TEXT.css(),
-      dark: darkPalette ? darkPalette.BG.css() : palette.BG.css(),
-      darker: setLightness(darkPalette ? darkPalette.BG : palette.BG, 8).css(),
-
-      // Palette
-      primary50: palette.PRIMARY[0].css(),
-      primary100: palette.PRIMARY[1].css(),
-      primary200: palette.PRIMARY[2].css(),
-      primary300: palette.PRIMARY[3].css(),
-      primary400: palette.PRIMARY[4].css(),
-      primary500: palette.PRIMARY[5].css(),
-      primary600: palette.PRIMARY[6].css(),
-      primary700: palette.PRIMARY[7].css(),
-      primary800: palette.PRIMARY[8].css(),
-      primary900: palette.PRIMARY[9].css(),
-
-      // $accent50: palette.ACCENT[0].css(),
-      // $accent100: palette.ACCENT[1].css(),
-      // $accent200: palette.ACCENT[2].css(),
-      // $accent300: palette.ACCENT[3].css(),
-      // $accent400: palette.ACCENT[4].css(),
-      // $accent500: palette.ACCENT[5].css(),
-      // $accent600: palette.ACCENT[6].css(),
-      // $accent700: palette.ACCENT[7].css(),
-      // $accent800: palette.ACCENT[8].css(),
-      // $accent900: palette.ACCENT[9].css(),
-
-      neutral50: palette.NEUTRAL[0].css(),
-      neutral100: palette.NEUTRAL[1].css(),
-      neutral200: palette.NEUTRAL[2].css(),
-      neutral300: palette.NEUTRAL[3].css(),
-      neutral400: palette.NEUTRAL[4].css(),
-      neutral500: palette.NEUTRAL[5].css(),
-      neutral600: palette.NEUTRAL[6].css(),
-      neutral700: palette.NEUTRAL[7].css(),
-      neutral800: palette.NEUTRAL[8].css(),
-      neutral900: palette.NEUTRAL[9].css(),
-
-      critical50: palette.CRITICAL[0].css(),
-      critical100: palette.CRITICAL[1].css(),
-      critical200: palette.CRITICAL[2].css(),
-      critical300: palette.CRITICAL[3].css(),
-      critical400: palette.CRITICAL[4].css(),
-      critical500: palette.CRITICAL[5].css(),
-      critical600: palette.CRITICAL[6].css(),
-      critical700: palette.CRITICAL[7].css(),
-      critical800: palette.CRITICAL[8].css(),
-      critical900: palette.CRITICAL[9].css(),
-
-      caution50: palette.CAUTION[0].css(),
-      caution100: palette.CAUTION[1].css(),
-      caution200: palette.CAUTION[2].css(),
-      caution300: palette.CAUTION[3].css(),
-      caution400: palette.CAUTION[4].css(),
-      caution500: palette.CAUTION[5].css(),
-      caution600: palette.CAUTION[6].css(),
-      caution700: palette.CAUTION[7].css(),
-      caution800: palette.CAUTION[8].css(),
-      caution900: palette.CAUTION[9].css(),
-
-      positive50: palette.POSITIVE[0].css(),
-      positive100: palette.POSITIVE[1].css(),
-      positive200: palette.POSITIVE[2].css(),
-      positive300: palette.POSITIVE[3].css(),
-      positive400: palette.POSITIVE[4].css(),
-      positive500: palette.POSITIVE[5].css(),
-      positive600: palette.POSITIVE[6].css(),
-      positive700: palette.POSITIVE[7].css(),
-      positive800: palette.POSITIVE[8].css(),
-      positive900: palette.POSITIVE[9].css(),
-
-      info50: palette.INFO[0].css(),
-      info100: palette.INFO[1].css(),
-      info200: palette.INFO[2].css(),
-      info300: palette.INFO[3].css(),
-      info400: palette.INFO[4].css(),
-      info500: palette.INFO[5].css(),
-      info600: palette.INFO[6].css(),
-      info700: palette.INFO[7].css(),
-      info800: palette.INFO[8].css(),
-      info900: palette.INFO[9].css(),
-
-      outline_primary: outlineColor(palette.PRIMARY[outlineStop]),
-      outline_neutral: outlineColor(palette.NEUTRAL[outlineStop]),
-      outline_critical: outlineColor(palette.CRITICAL[outlineStop]),
-      outline_caution: outlineColor(palette.CAUTION[outlineStop]),
-      outline_positive: outlineColor(palette.POSITIVE[outlineStop]),
-      outline_info: outlineColor(palette.INFO[outlineStop]),
-    },
-  });
-}
-
 export const { config, prefix, globalCss, keyframes, createTheme, theme, reset, getCssText, css, styled } =
   stitchesConfig;
 
-export type MyCSS = CSS<typeof stitchesConfig>;
+export type CSS = Stitches.CSS<typeof stitchesConfig>;
 
 export const themes = {
   light: theme,
-  dark: generateTheme('dark', { palette: dark, outlineStop: 6 }),
+  dark: createTheme('dark', {
+    colors: {
+      body: '$accent2',
+      text: '$accent12',
+
+      // LWJGL
+      // dark: palette.accentDark.accent3,
+      // darker: palette.accentDark.accent1,
+
+      // Palette
+      ...palette.accentDark,
+      ...palette.neutralDark,
+      ...palette.positiveDark,
+      ...palette.infoDark,
+      ...palette.cautionDark,
+      ...palette.criticalDark,
+    },
+  }),
 };
 
 // Access themes so styles are generated & injected immediatelly

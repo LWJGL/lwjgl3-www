@@ -90,6 +90,15 @@ pre {
   -moz-osx-font-smoothing: grayscale;
 }
 
+// Used for disabling all transitions inside an element
+// Can be applied to body (avoids akward transitions when switching themes)
+.no-motion,
+.no-motion * {
+  animation-delay: 0s !important;
+  animation-duration: 0s !important;
+  transition-duration: 0s !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     // Instead of disabling animations, reduce durations to 0

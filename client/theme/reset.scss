@@ -174,7 +174,11 @@ hr {
   color: inherit;
   overflow: visible;
   border: none;
-  border-top: 1px solid var(--colors-neutral300, #e4e4e7);
+  border-top: 1px solid var(--colors-neutralA6, #e4e4e7);
+}
+
+.dark hr {
+  border-top-color: var(--colors-neutralA9);
 }
 
 iframe {
