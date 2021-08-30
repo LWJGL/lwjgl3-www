@@ -3,7 +3,7 @@ import { Grid } from './Grid';
 import { styled } from '~/theme/stitches.config';
 
 const DefaultDivider = styled('div', {
-  backgroundColor: '$neutral100',
+  backgroundColor: '$neutral3',
   variants: {
     direction: {
       horizontal: {

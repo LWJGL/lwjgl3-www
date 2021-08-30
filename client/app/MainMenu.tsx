@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { NavLink } from '~/components/router/client';
 import { useColorScheme, useColorSchemeToggle } from '~/app/context/ColorScheme';
 import { styled } from '~/theme/stitches.config';
@@ -29,7 +29,7 @@ const MainMenuContainer = styled('nav', {
       outline: 'none',
     },
     '&.active': {
-      color: 'yellow',
+      color: '$caution9',
     },
     '@lg': {
       lineHeight: '2.25rem',
@@ -41,6 +41,11 @@ const MainMenuContainer = styled('nav', {
       '&:not(.active):focus,&:not(.active):hover': {
         // backgroundImage: 'linear-gradient(to right, transparent, white 5%, white 95%, transparent)',
         backgroundSize: '90% 3px',
+      },
+    },
+    '@md-down': {
+      '&.active:focus,&:focus,&:hover': {
+        color: 'yellow',
       },
     },
   },
@@ -75,7 +80,7 @@ const MainMenuContainer = styled('nav', {
             transform: 'translateY(1px)',
           },
           '&:hover,&.active': {
-            color: 'yellow',
+            color: '$caution9',
           },
         },
       },
@@ -86,10 +91,22 @@ const MainMenuContainer = styled('nav', {
 export const MainMenu: React.FC<Props> = ({ onClick, direction, focusableProps = {}, ...rest }) => {
   const colorScheme = useColorScheme();
   const setScheme = useColorSchemeToggle();
+  const hasToggled = useRef(true); // use to skip reading/mutating document.body unnecessarily
 
   const toggleScheme = useCallback(() => {
+    // disable transitions/animations while switching theme
+    document.body.classList.add('no-motion');
     setScheme(colorScheme === 'light' ? 'dark' : 'light');
+    hasToggled.current = true;
   }, [colorScheme, setScheme]);
+
+  useEffect(() => {
+    if (hasToggled.current) {
+      requestAnimationFrame(() => {
+        document.body.classList.remove('no-motion');
+      });
+    }
+  }, [colorScheme]);
 
   const schemeSwitchButtonTitle = `Switch to ${colorScheme === 'dark' ? 'light' : 'dark'} theme`;
 
@@ -125,10 +142,11 @@ export const MainMenu: React.FC<Props> = ({ onClick, direction, focusableProps =
           FRAMEWORKS
         </NavLink>
       </div>
-      <div>
+      <div className="dark">
         <Button
           size="sm"
           rounding="icon"
+          tone="caution"
           variant="text"
           onClick={toggleScheme}
           title={schemeSwitchButtonTitle}

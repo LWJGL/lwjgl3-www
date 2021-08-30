@@ -52,7 +52,7 @@ export const BuildPanel: React.FC<Props> = ({ build }) => {
 };
 
 const PanelBox = styled('div', {
-  backgroundColor: '$primary100',
+  backgroundColor: '$accent3',
   borderRadius: '$md',
   padding: '1rem',
   textAlign: 'center',
@@ -60,9 +60,9 @@ const PanelBox = styled('div', {
   willChange: 'transform, background-color',
   userSelect: 'none',
   zIndex: 1,
-  border: `2px solid $dark`,
+  border: `2px solid $accent12`,
   '.dark &': {
-    borderColor: '$darker',
+    borderColor: '$accent1',
   },
 
   '@lg': {
@@ -76,12 +76,12 @@ const PanelBox = styled('div', {
     build: {
       release: {
         h2: {
-          color: '$positive700',
+          color: '$accent11',
         },
       },
       nightly: {
         h2: {
-          color: '$caution700',
+          color: '$caution11',
         },
       },
     },

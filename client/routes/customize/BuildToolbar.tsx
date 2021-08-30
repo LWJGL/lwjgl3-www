@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
 import { Button } from '~/components/forms/Button';
 import { FilePicker } from '~/components/forms/FilePicker';
-import { Dark } from '~/components/lwjgl/Dark';
+// import { Dark } from '~/components/lwjgl/Dark';
 
 import type { BuildStoreSnapshot } from './types';
 
@@ -12,8 +12,8 @@ import '~/theme/icons/fa/duotone/folder-upload';
 
 import { styled } from '~/theme/stitches.config';
 
-const ToolbarContainer = styled(Dark, {
-  backgroundColor: '$primary200',
+const ToolbarContainer = styled('div', {
+  backgroundColor: '$accent5',
   padding: '1rem 0',
   textAlign: 'center',
   position: 'fixed',
@@ -64,9 +64,7 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     return (
       <ToolbarContainer key="picker">
         <FilePicker accept=".json" placeholder="Select build config…" onChange={handleFile} />
-        <Button variant="outline" onClick={toggleFileUI}>
-          Cancel
-        </Button>
+        <Button onClick={toggleFileUI}>Cancel</Button>
       </ToolbarContainer>
     );
   }

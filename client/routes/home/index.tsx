@@ -58,7 +58,7 @@ FeatureImage.defaultProps = {
 const Feature = styled('div', {
   // fontSize: 'calc(1rem * var(--scale-sm, 1))',
   h3: {
-    color: '$neutral700',
+    color: '$neutral11',
     // fontSize: '1.5rem',
     // fontSize: 'calc(1.25rem * var(--scale-sm, 1))',
     fontSize: '$2xl',
@@ -79,7 +79,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
         What is LW
         <b>JGL</b>?
       </TitleSection>
-      <Prose width="safe" align="center">
+      <Prose align="center">
         <p>
           LW
           <b>JGL</b> is a Java library that enables cross-platform access to popular native APIs useful in the
@@ -135,13 +135,13 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
           },
         }}
       >
-        <LinkButton size="xl" tone="positive" variant="outline" to="/download" onPointerDown={Download.preload}>
+        <LinkButton size="xl" tone="accent" to="/download" onPointerDown={Download.preload}>
           DOWNLOAD
         </LinkButton>
-        <LinkButton size="xl" variant="outline" to="/guide" onPointerDown={Guide.preload}>
+        <LinkButton size="xl" tone="accent" variant="outline" to="/guide" onPointerDown={Guide.preload}>
           GET STARTED
         </LinkButton>
-        <LinkButton size="xl" variant="outline" to="/source" onPointerDown={Source.preload}>
+        <LinkButton size="xl" tone="accent" variant="outline" to="/source" onPointerDown={Source.preload}>
           SOURCE
         </LinkButton>
       </Grid>
@@ -149,9 +149,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
 
     <Dark>
       <SectionContentVisibility padding>
-        <TitleSection>Main Features</TitleSection>
-
-        <Hr margin="lg" />
+        <TitleSection css={{ mb: '$safe' }}>Main Features</TitleSection>
 
         <Grid
           css={{
@@ -407,7 +405,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
 
         <Hr margin="lg" />
 
-        <Text css={{ color: '$primary400', '@sm': { textAlign: 'center' } }}>
+        <Text css={{ color: '$neutralA10', '@sm': { textAlign: 'center' } }}>
           <small>
             OpenGL® and the oval logo are trademarks or registered trademarks of Silicon Graphics, Inc. in the United
             States and/or other countries worldwide.

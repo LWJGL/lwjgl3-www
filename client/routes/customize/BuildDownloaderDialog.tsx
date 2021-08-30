@@ -50,7 +50,7 @@ const Modal = styled('div', {
   overscrollBehavior: 'contain',
 
   '@sm': {
-    background: '$neutral50',
+    background: '$neutral1',
     height: 'auto',
     width: 'auto',
     boxShadow: '$2xl',

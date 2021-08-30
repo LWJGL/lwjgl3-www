@@ -8,7 +8,9 @@ import { SectionContainer } from '~/components/ui/Section';
 export const GoldSponsors: React.FC = ({ children }) => (
   <Dark>
     <SectionContainer padding>
-      <TitleSection css={{ color: 'gold' }}>Our Gold Sponsors:</TitleSection>
+      <TitleSection>
+        Our <span style={{ color: 'gold' }}>Gold</span> Sponsors:
+      </TitleSection>
       <Grid
         css={{
           pt: '$gap',

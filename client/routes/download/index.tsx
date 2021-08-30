@@ -8,8 +8,6 @@ import { LinkButton, AnchorButton } from '~/components/forms/Button';
 import { Dark } from '~/components/lwjgl/Dark';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Title } from '~/components/lwjgl/Title';
-// import { ScreenLock } from '~/components/layout/ScreenLock';
-// import { ButtonVariations } from '~/components/forms/test/Button';
 
 // Icons
 import { Icon } from '~/components/ui/Icon';
@@ -31,13 +29,12 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
           <b>JGL</b>
         </Title>
 
-        {/* <ButtonVariations /> */}
-
         <Grid css={{ grid: 'auto-flow / 1fr', gap: '$paragraph', '@lg': { grid: 'auto-flow / repeat(3, 1fr)' } }}>
           <Text>All official are available for download from GitHub:</Text>
           <Box css={{ '@lg': { gridRow: 2 } }}>
             <AnchorButton
               fill="auto"
+              tone="accent"
               size={buttonSizes}
               href="https://github.com/LWJGL/lwjgl3/releases"
               rel="noopener external"
@@ -50,7 +47,7 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
 
           <Text>You can customize your LWJGL build or use the latest stable & nightly releases:</Text>
           <Box css={{ '@lg': { gridRow: 2 } }}>
-            <LinkButton fill="auto" size={buttonSizes} to="/customize" onPointerDown={Customize.preload}>
+            <LinkButton tone="accent" fill="auto" size={buttonSizes} to="/customize" onPointerDown={Customize.preload}>
               <Icon name="fa/solid/check-square" css={{ mr: '$xsm' }} />
               Customize LWJGL 3
             </LinkButton>
@@ -58,7 +55,14 @@ const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
 
           <Text>Or you can browse and download individual LWJGL artifacts:</Text>
           <Box css={{ '@lg': { gridRow: 2 } }}>
-            <LinkButton fill="auto" variant="outline" size={buttonSizes} to="/browse" onPointerDown={Browse.preload}>
+            <LinkButton
+              tone="accent"
+              fill="auto"
+              variant="outline"
+              size={buttonSizes}
+              to="/browse"
+              onPointerDown={Browse.preload}
+            >
               <Icon name="fa/solid/folder" css={{ mr: '$xsm' }} />
               Browse LWJGL files
             </LinkButton>

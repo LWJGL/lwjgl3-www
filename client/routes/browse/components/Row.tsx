@@ -11,11 +11,11 @@ export const Row = styled('div', {
     type: {
       breadcrump: {
         padding: '$xsm $sm',
-        backgroundColor: '$primary700',
-        color: '$primary100',
+        backgroundColor: '$accent11',
+        color: '$accent1',
         '.dark &': {
-          backgroundColor: '$dark',
-          color: '$info700',
+          backgroundColor: '$body',
+          color: '$accent12',
         },
         a: {
           '&:hover': {
@@ -24,15 +24,15 @@ export const Row = styled('div', {
         },
       },
       folder: {
-        color: '$primary900',
-        backgroundColor: '$neutral200',
-        borderBottom: '1px solid $neutral300',
+        color: '$accent11',
+        backgroundColor: '$neutral3',
+        borderBottom: '1px solid $neutral6',
         a: {
           transition: 'filter 0.15s ease-in-out',
           padding: '$xsm $sm',
           display: 'block',
           '&:hover': {
-            backgroundColor: '$primary300',
+            backgroundColor: '$accent4',
           },
           '&:active': {
             filter: 'brightness(.9)',
@@ -41,11 +41,11 @@ export const Row = styled('div', {
       },
       default: {
         padding: '$xsm $sm',
-        color: '$neutral900',
-        backgroundColor: '$neutral200',
-        borderBottom: '1px solid $neutral300',
+        color: '$neutral12',
+        backgroundColor: '$neutral4',
+        borderBottom: '1px solid $neutral6',
         a: {
-          color: '$info800',
+          color: '$info11',
           textDecoration: 'underline',
         },
       },

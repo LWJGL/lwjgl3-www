@@ -11,14 +11,11 @@ export const Prose = styled('div', {
     mb: '$paragraph',
   },
   a: {
-    color: '$primary800',
+    color: '$info10',
     textDecoration: 'underline',
     textDecorationThickness: '1.5px',
     textUnderlineOffset: '1px',
     fontWeight: '$medium',
-    '.dark &': {
-      color: '$primary600',
-    },
   },
   strong: {
     fontWeight: '$semibold',
@@ -32,12 +29,12 @@ export const Prose = styled('div', {
   'ol > li::before': {
     content: 'counter(list-counter) "."',
     fontWeight: '$normal',
-    color: '$neutral500',
+    color: '$neutral9',
     left: 0,
   },
   'ul > li::before': {
     content: '""',
-    backgroundColor: '$neutral300',
+    backgroundColor: '$neutral7',
     borderRadius: '50%',
     square: em(6, 16),
     top: `calc(${em(28 / 2, 16)} - ${em(3, 16)})`,
@@ -57,8 +54,8 @@ export const Prose = styled('div', {
   blockquote: {
     fontWeight: '$medium',
     fontStyle: 'italic',
-    color: '$caution700',
-    borderLeft: '0.25rem solid $caution200',
+    color: '$neutral11',
+    borderLeft: '0.25rem solid $caution7',
     quotes: `"“" "”" "‘" "’"`,
     pl: em(20, 20),
   },
@@ -91,8 +88,8 @@ export const Prose = styled('div', {
     lineHeight: round(24 / 16),
   },
   pre: {
-    color: '$neutral200',
-    backgroundColor: '$neutral800',
+    color: '$neutral3',
+    backgroundColor: '$neutral11',
     overflowX: 'auto',
   },
   '> :last-child': {

@@ -8,18 +8,17 @@ export const BuildConfigArea = styled('div', {
   h4: {
     fontSize: '$xl',
     fontWeight: '$medium',
-    color: '$primary700',
   },
   '@md': {
     ml: '$gutter',
     mr: '$gutter',
   },
   '@lg': {
-    backgroundColor: '$primary100',
-    border: '2px solid $dark',
-    py: '$gutter',
+    backgroundColor: '$accent3',
+    border: '2px solid $accent12',
     '.dark &': {
-      borderColor: '$darker',
+      borderColor: '$accent1',
     },
+    py: '$gutter',
   },
 });

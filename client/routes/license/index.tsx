@@ -20,7 +20,7 @@ const LicenseRoute: React.FC<{ children?: never }> = () => (
       >
         <Prose
           css={{
-            color: '$neutral700',
+            color: '$neutral11',
             '@md': { gridColumn: 1 },
           }}
         >

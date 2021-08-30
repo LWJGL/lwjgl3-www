@@ -7,7 +7,6 @@ import { Container } from '~/components/ui/Container';
 import { Grid } from '~/components/layout/Grid';
 import { HStack } from '~/components/layout/FlexStack';
 import { Text } from '~/components/ui/Text';
-import { Hr } from '~/components/ui/Hr';
 import { TextDivider } from '~/components/ui/TextDivider';
 import { Title } from '~/components/lwjgl/Title';
 import { AnchorButton } from '~/components/forms/Button';
@@ -57,7 +56,7 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
         <b>JGL</b> Source
       </Title>
 
-      <GridSection css={{ gap: '$paragraph' }}>
+      <GridSection css={{ gap: '$paragraph', mb: '$xl' }}>
         <a href="https://github.com/LWJGL/lwjgl3" rel="external">
           <img
             width={90 * 1.77}
@@ -84,8 +83,6 @@ const SourceRoute: React.FC<{ children?: never }> = () => (
           </AnchorButton>
         </Grid>
       </GridSection>
-
-      <Hr margin="xl" />
 
       <Title>Build Status</Title>
 

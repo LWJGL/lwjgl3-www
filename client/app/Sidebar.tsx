@@ -29,7 +29,7 @@ const MenuToggleButton = styled('button', {
   },
   '&:focus-visible': {
     span: {
-      backgroundColor: 'yellow',
+      backgroundColor: '$caution9',
     },
   },
   '> :nth-child(1)': {
@@ -43,7 +43,7 @@ const MenuToggleButton = styled('button', {
 const MenuToggleLine = css({
   width: '100%',
   height: 4,
-  backgroundColor: '$white',
+  backgroundColor: 'white',
   willChange: 'transform',
   pointerEvents: 'none',
 });

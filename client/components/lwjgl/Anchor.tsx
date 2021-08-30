@@ -4,9 +4,6 @@ export const Anchor = styled('a', {
   textDecoration: 'underline',
   textDecorationThickness: '1.5px',
   textUnderlineOffset: '1px',
-  color: '$primary800',
+  color: '$info10',
   fontWeight: '$medium',
-  '.dark &': {
-    color: '$primary600',
-  },
 });

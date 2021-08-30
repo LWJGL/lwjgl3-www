@@ -5,7 +5,7 @@ export const TextDivider = styled('p', {
   alignItems: 'center',
   textAlign: 'center',
   // '--text-divider-gap': '$space$xsm',
-  '--text-divider-color': '$colors$neutral300',
+  '--text-divider-color': '$colors$neutral6',
 
   '&::after,&::before': {
     content: `''`,

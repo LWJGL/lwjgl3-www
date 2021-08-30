@@ -33,7 +33,7 @@ export function useSelector<T>(selector: (store: BuildStore) => T): T {
 
 export let latestStore: BuildStore;
 let prevConfig: BuildStoreSnapshot | null;
-function saveSnapshot(state: BuildStore) {
+function saveSnapshot(state: BuildStore): void {
   if (state === config) {
     // Skip default state
     return;

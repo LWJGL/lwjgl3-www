@@ -27,7 +27,7 @@ export const BuildStatus = ({ name }: Props) => {
   const status = readStatus(name);
 
   return (
-    <Text size="sm" css={{ fontFamily: '$mono', color: 'error' in status ? '$critical700' : 'inherit' }}>
+    <Text size="sm" css={{ fontFamily: '$mono', color: 'error' in status ? '$critical9' : 'inherit' }}>
       {'error' in status ? status.error : renderVersion(status.version, name)}
       <br />
       {'lastModified' in status ? fmt.format(new Date(status.lastModified)) : <br />}

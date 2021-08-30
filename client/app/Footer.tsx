@@ -11,10 +11,10 @@ import * as routes from '~/routes';
 const FooterLink = styled('a', {
   lineHeight: '2rem',
   '&:hover': {
-    color: 'yellow',
+    color: '$caution9',
   },
   '&:focus-visible': {
-    color: 'yellow',
+    color: '$caution9',
     outline: 'none',
   },
 });
@@ -22,18 +22,16 @@ const FooterLink = styled('a', {
 const FooterNav = styled(Link, FooterLink);
 
 const Heading = styled('h2', {
-  color: '$primary700',
-  '.dark &': {
-    color: '$primary800',
-  },
+  color: '$neutralA11',
   fontWeight: '$light',
-  fontSize: '2rem',
+  fontSize: '1.6rem',
   lineHeight: 1,
   mb: '$xsm',
   mt: -4,
 
   '@lg-down': {
-    fontSize: '1.5rem',
+    fontSize: '1.4rem',
+    fontWeight: '$normal',
     mt: -2,
   },
 });
@@ -43,21 +41,20 @@ const external = (
     name="fa/duotone/external-link"
     css={{
       fontSize: '$sm',
-      color: '$neutral500',
+      color: '$caution6',
       ml: '$xxsm',
     }}
   />
 );
 
 const DarkFooter = styled('footer', Dark);
+
 const Nav = styled('nav', Grid);
+
 const LicenseArea = styled('div', {
   textAlign: 'center',
-  color: '$primary500',
+  color: '$neutralA11',
   pt: '$safe',
-  '.dark &': {
-    color: '$primary800',
-  },
 });
 
 const FOOTER = (
@@ -73,8 +70,22 @@ const FOOTER = (
         css={{
           gap: '$safe',
           wrap: 'truncate',
+          '@sm': {
+            grid: 'auto-flow / 3fr 3fr',
+          },
           '@md': {
+            grid: 'auto-flow / 3fr 3fr 1fr',
+            '> :nth-child(1)': { order: 1 },
+            '> :nth-child(2)': { order: 2 },
+            '> :nth-child(3)': { order: 4 },
+            '> :nth-child(4)': { order: 5 },
+            '> :nth-child(5)': { order: 3 },
+          },
+          '@lg': {
             grid: 'auto-flow / 3fr 3fr 3fr 3fr 1fr',
+            '> :nth-child(3)': { order: 3 },
+            '> :nth-child(4)': { order: 4 },
+            '> :nth-child(5)': { order: 5 },
           },
         }}
       >
@@ -201,7 +212,7 @@ const FOOTER = (
             </li>
           </ul>
         </div>
-        <div style={{ margin: '-0.25rem 0 0 -0.75rem' }}>
+        <div>
           <BackToTop />
         </div>
       </Nav>

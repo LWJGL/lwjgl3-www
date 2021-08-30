@@ -47,6 +47,7 @@ export const Source = $R(() => import(/* webpackChunkName: "route-source" */ './
 export const License = $R(() => import(/* webpackChunkName: "route-license" */ './license'));
 export const Sponsors = $R(() => import(/* webpackChunkName: "route-sponsors" */ './sponsors'));
 export const Frameworks = $R(() => import(/* webpackChunkName: "route-frameworks" */ './frameworks'));
+// export const Dev = $R(() => import(/* webpackChunkName: "route-dev" */ './dev'));
 
 export const RouterConfig: React.FC<{}> = () => {
   return (
@@ -60,6 +61,7 @@ export const RouterConfig: React.FC<{}> = () => {
       <Route path="/frameworks" element={Frameworks} />
       <Route path="/sponsors" element={Sponsors} />
       <Route path="/license" element={License} />
+      {/* <Route path="/dev" element={Dev} /> */}
       <Route path="*" element={PageNotFound} />
     </Routes>
   );

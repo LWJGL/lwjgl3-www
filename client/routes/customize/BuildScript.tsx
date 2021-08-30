@@ -151,6 +151,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
       <BuildToolbar configDownload={configDownload} configLoad={configLoad}>
         {ALLOW_DOWNLOAD && (
           <AnchorButton
+            tone="accent"
             download={mode.file}
             href={`data:${mime(mode)};base64,${btoa(script)}`}
             title={`Download ${mode.id} code snippet`}
@@ -158,7 +159,12 @@ export function BuildScript({ configDownload, configLoad }: Props) {
             <Icon name="fa/duotone/cloud-download" /> {labels.download}
           </AnchorButton>
         )}
-        <Button onClick={() => copyToClipboard(preRef)} disabled={!document.execCommand} title="Copy to clipboard">
+        <Button
+          tone="accent"
+          onClick={() => copyToClipboard(preRef)}
+          disabled={!document.execCommand}
+          title="Copy to clipboard"
+        >
           <Icon name="fa/duotone/copy" />
           {labels.copy}
         </Button>

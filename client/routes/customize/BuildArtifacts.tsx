@@ -30,14 +30,14 @@ const getSupportedPlatforms = (
 
   if (missing.length >= platforms.length) {
     return (
-      <Text css={{ color: disabled ? '$caution600' : '$caution500' }}>
+      <Text css={{ color: disabled ? '$caution6' : '$caution5' }}>
         <em>* Supported platforms: </em>
         {platforms.map((platform) => natives[platform].title).join(', ')}
       </Text>
     );
   } else {
     return (
-      <Text css={{ color: disabled ? '$critical600' : '$critical500' }}>
+      <Text css={{ color: disabled ? '$critical6' : '$critical5' }}>
         <em>* Not available on: </em>
         {missing.map((platform) => natives[platform].title).join(', ')}
       </Text>

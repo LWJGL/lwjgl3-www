@@ -8,8 +8,8 @@ import '~/theme/icons/fa/duotone/folder-open';
 // Based on: https://evergreen.segment.com/components/filepicker/
 
 const FileList = styled('input', {
-  background: '$neutral50',
-  border: '1px solid $neutral400',
+  background: 'white',
+  border: '1px solid $neutral12',
   borderRight: 'none',
   px: '$sm',
   lineHeight: '2.5rem',
@@ -28,10 +28,8 @@ const FileList = styled('input', {
     filter: 'brightness(.9)',
   },
   '&::placeholder': {
-    color: '$neutral400',
-  },
-  '&:hover': {
-    backgroundColor: '$primary100',
+    color: '$neutral9',
+    fontStyle: 'italic',
   },
   '&:focus': {
     outline: 'none',

@@ -9,7 +9,7 @@ function scrollToTop(e: React.MouseEvent<HTMLButtonElement>) {
 }
 
 export const BackToTop: React.FC<{ children?: never }> = () => (
-  <Button variant="text" tone="neutral" onClick={scrollToTop}>
+  <Button variant="outline" tone="neutral" onClick={scrollToTop}>
     Top <Icon name="fa/regular/arrow-to-top" />
   </Button>
 );

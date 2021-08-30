@@ -57,9 +57,6 @@ const StyledHeader = styled('header', {
     opaque: {
       true: {
         backgroundColor: '$dark',
-        // lg: {
-        //   backgroundColor: '$primary900',
-        // },
         '.dark &': {
           backgroundColor: '$darker',
         },
@@ -89,7 +86,7 @@ function ServiceWorkerUpdate() {
     <Button
       size="sm"
       rounding="icon"
-      tone="positive"
+      tone="accent"
       onClick={update as any}
       title={buttonTitle}
       aria-label={buttonTitle}

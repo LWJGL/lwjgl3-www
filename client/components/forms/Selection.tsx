@@ -60,19 +60,24 @@ export const SelectionInput = styled('input', {
   clip: 'rect(1px,1px,1px,1px)',
   overflow: 'clip',
   whiteSpace: 'nowrap',
+  transitionDuration: '0.15s',
+  transitionTimingFunction: 'ease-in-out',
+  // color: '$accent9',
 
   // Animate visual sibling only on programmatic value change
   '&:not(:focus) + *': {
-    transition: 'background-color .15s ease-in-out, border-color .15s ease-in-out',
+    transitionDuration: '0.15s',
+    transitionTimingFunction: 'ease-in-out',
+    transitionProperty: 'background-color, border-color',
   },
 
   '&:focus + *': {
-    borderColor: '$primary600',
-    boxShadow: '0 0 0 3px $colors$outline_primary',
+    boxShadow: '0 0 0 3px $colors$accent7',
   },
 
   '&:not(:checked):focus + *': {
-    color: '$primary400',
+    color: '$accent10',
+    borderColor: '$accent10',
   },
 });
 
@@ -93,18 +98,19 @@ function getVisualMark(id: string): React.ReactNode {
 const Visual = styled('div', {
   width: 'var(--control-width, 1em)',
   height: 'var(--control-height, 1em)',
-  border: '1px solid $neutral500',
+  border: '1px solid $neutral9',
+  // backgroundColor: '$neutralA3',
   backgroundColor: '$body',
+  color: '$accent9',
   flex: '0 0 var(--control-width, 1em)',
   mt: 'calc((var(--line-height-base) - var(--control-height)) / 2)',
-  color: '$primary50',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
 
-  '&:active': {
-    filter: 'brightness(.9)',
-  },
+  // '&:active': {
+  //   filter: 'brightness(.9)',
+  // },
 
   variants: {
     variant: {
@@ -114,11 +120,13 @@ const Visual = styled('div', {
       switch: {
         '--control-width': '1.75em',
         borderRadius: '2.25em',
-        color: '$neutral400',
-        backgroundColor: '$body',
-        // borderColor: '$neutral400',
+        // color: '$neutral6',
+        // backgroundColor: '$body',
+        // borderColor: '$neutral6',
         // border: 'none',
-        transition: 'background-color .15s ease-in-out, border-color .15s ease-in-out',
+        transitionDuration: '0.15s',
+        transitionTimingFunction: 'ease-in-out',
+        transitionProperty: 'background-color',
         [`${Mark}`]: {
           width: '1em',
           height: '1em',
@@ -131,38 +139,42 @@ const Visual = styled('div', {
     },
     checked: {
       true: {
-        backgroundColor: '$primary600',
-        borderColor: '$primary600',
+        backgroundColor: '$accent9',
+        color: '$body',
+        borderColor: '$accent10',
       },
     },
     disabled: {
       true: {
-        borderColor: '$neutral600',
-        backgroundColor: '$neutral200',
+        opacity: 0.75,
+        // borderColor: '$neutral8',
+        // backgroundColor: 'transparent',
+        // backgroundColor: '$neutralA2',
       },
     },
   },
   compoundVariants: [
+    // {
+    //   checked: true,
+    //   disabled: true,
+    //   css: {
+    //     backgroundColor: '$neutral7',
+    //   },
+    // },
     {
-      checked: true,
-      disabled: true,
+      checked: false,
+      variant: 'switch',
       css: {
-        backgroundColor: '$neutral600',
+        color: '$neutral9',
       },
     },
     {
       checked: true,
       variant: 'switch',
       css: {
-        color: '$primary50',
-      },
-    },
-    {
-      variant: 'switch',
-      checked: true,
-      css: {
-        backgroundColor: '$primary600',
-        borderColor: '$primary600',
+        color: '$accent1',
+        backgroundColor: '$accent9',
+        // borderColor: '$accent7',
         [`${Mark}`]: {
           transform: 'translateX(.38em)',
         },
@@ -173,7 +185,6 @@ const Visual = styled('div', {
 
 export const SelectionLabelDescription = styled('div', {
   fontSize: '$sm',
-  color: '$neutral600',
 });
 
 export interface CheckboxProps {
