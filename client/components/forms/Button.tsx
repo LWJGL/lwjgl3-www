@@ -19,7 +19,7 @@ interface Translation {
 
 const RIPPLE_DURATION_MS = 225; // Corresponds to ripple translate duration (i.e. activation animation duration)
 const DEACTIVATION_MS = 150; // Corresponds to ripple fade-out duration (i.e. deactivation animation duration)
-const INITIAL_ORIGIN_SCALE = 0.6;
+const INITIAL_ORIGIN_SCALE = 0.2;
 
 enum ButtonState {
   Idle,
@@ -65,8 +65,8 @@ const ButtonCss = css({
   userSelect: 'none',
   touchAction: 'none',
   border: '1px solid transparent',
-  willChange: 'transform,opacity,border,box-shadow',
-  transition: 'box-shadow, border-color 150ms cubic-bezier(0.4, 0, 0.2, 1)', // Transition only box-shadow instead of all like Tailwind does, feels faster
+  willChange: 'transform,background-color,border-color,opacity,box-shadow',
+  // transition: 'border-color 150ms cubic-bezier(0.4, 0, 0.2, 1)', // Transition only box-shadow instead of all like Tailwind does, feels faster
   position: 'relative', // for Ripple
   '-webkit-font-smoothing': 'antialiased',
   '-webkit-user-drag': 'none',
@@ -81,15 +81,35 @@ const ButtonCss = css({
     outline: 'none',
   },
 
-  '&:active': {
+  '&:active,&.pressed': {
     transform: 'translateY(1px)',
   },
 
   '&[disabled]': {
     pointerEvents: 'none',
-    filter: 'grayscale(100%)',
+    filter: 'grayscale(50%)',
     boxShadow: 'none',
     opacity: 0.45,
+  },
+
+  // Tones
+  $$buttonShadow: 'none',
+  $$buttonFocusVisible: 'transparent',
+  boxShadow: '$$buttonShadow',
+
+  // Don't do this since it's not supported in recent browsers
+  // Use the double fallback trick, see below:
+  // '&:focus-visible': {
+  //   boxShadow: `0 0 0 3px $$buttonFocusVisible`,
+  // },
+  '&:focus': {
+    boxShadow: '0 0 0 3px $$buttonFocusVisible',
+  },
+  '&:focus:not(:focus-visible)': {
+    boxShadow: '$$buttonShadow',
+  },
+  '&:focus-visible': {
+    boxShadow: '0 0 0 3px $$buttonFocusVisible',
   },
 
   variants: {
@@ -111,22 +131,42 @@ const ButtonCss = css({
       },
     },
     variant: {
-      base: {},
-      secondary: {},
+      contained: {
+        $$buttonShadow: '$shadows$sm',
+        // '.light &:not([disabled])': {
+        //   textShadow: '1px 1px 1px rgba(0,0,0,.2)',
+        // },
+        // '.dark &:not([disabled])': {
+        //   textShadow: '1px 1px 1px rgba(0,0,0,.1)',
+        // },
+      },
       outline: {
         backgroundColor: 'transparent',
+        $$buttonShadow: '$shadows$sm',
       },
       text: {
         backgroundColor: 'transparent',
       },
     },
     tone: {
-      primary: {},
-      neutral: {},
-      critical: {},
-      caution: {},
-      positive: {},
-      info: {},
+      accent: {
+        $$buttonFocusVisible: '$colors$accent7',
+      },
+      neutral: {
+        $$buttonFocusVisible: '$colors$neutral7',
+      },
+      // positive: {
+      //   $$buttonFocusVisible: '$colors$positive7',
+      // },
+      // info: {
+      //   $$buttonFocusVisible: '$colors$info7',
+      // },
+      caution: {
+        $$buttonFocusVisible: '$colors$caution6',
+      },
+      critical: {
+        $$buttonFocusVisible: '$colors$critical7',
+      },
     },
     rounding: {
       normal: {
@@ -161,194 +201,194 @@ const ButtonCss = css({
     { rounding: 'icon', size: 'lg', css: { square: '2.5rem' } },
     { rounding: 'icon', size: 'xl', css: { square: '3rem' } },
 
-    // Primary
+    // Accent
     {
-      variant: 'base',
-      tone: 'primary',
+      variant: 'contained',
+      tone: 'accent',
       css: {
-        color: '$primary50',
-        backgroundColor: '$primary600',
-        boxShadow: '$md',
-        '&:focus:focus-visible': {
-          boxShadow: '0 0 0 3px $colors$outline_primary',
-          borderColor: '$primary700',
+        color: '$accent1',
+        backgroundColor: '$accent9',
+        '&:focus,&:hover,&:active': { backgroundColor: '$accent10' },
+        '.light &': {
+          borderColor: '$accent10',
+          // '&:focus,&:hover,&:active': { borderColor: '$accent12' },
         },
-        '&:hover,&:active': {
-          backgroundColor: '$primary700',
-        },
-      },
-    },
-    {
-      variant: 'secondary',
-      tone: 'primary',
-      css: {
-        color: '$primary700',
-        backgroundColor: '$primary200',
-        '&:focus': {
-          borderColor: '$primary400',
-          boxShadow: '0 0 0 3px $colors$outline_primary',
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$primary300',
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$primary800',
-          backgroundColor: '$primary300',
+        '.dark &': {
+          // color: '$accent12',
+          borderColor: '$accent9',
         },
       },
     },
     {
       variant: 'outline',
-      tone: 'primary',
+      tone: 'accent',
       css: {
-        color: '$primary600',
-        borderColor: '$primary400',
-        boxShadow: '$sm',
-        '&:focus': {
-          borderColor: '$primary500',
-          boxShadow: `0 0 0 3px $colors$outline_primary`,
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$primary600',
-          boxShadow: '$sm',
-        },
-        '&:hover,&:active': {
-          color: '$primary700',
-          borderColor: '$primary600',
-          backgroundColor: '$primary50',
-        },
+        color: '$accent11',
+        borderColor: '$accent7',
+        '&:focus,&:hover,&:active': { backgroundColor: '$accent4', borderColor: '$accent8' },
       },
     },
     {
       variant: 'text',
-      tone: 'primary',
+      tone: 'accent',
       css: {
-        color: '$primary600',
-        '&:focus': {
-          boxShadow: `0 0 0 3px $colors$outline_primary`,
-        },
-        '&:focus:not(:focus-visible)': {
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$primary700',
-          backgroundColor: '$primary50',
-        },
+        color: '$accent11',
+        '&:focus,&:hover,&:active': { backgroundColor: '$accent4' },
       },
     },
 
     // Neutral
     {
-      variant: 'base',
+      variant: 'contained',
       tone: 'neutral',
       css: {
-        color: '$neutral50',
-        backgroundColor: '$neutral600',
-        boxShadow: '$md',
-        '&:focus:focus-visible': {
-          boxShadow: '0 0 0 3px $colors$outline_neutral',
-          borderColor: '$neutral700',
-        },
-        '&:hover,&:active': {
-          backgroundColor: '$neutral700',
-        },
-      },
-    },
-    {
-      variant: 'secondary',
-      tone: 'neutral',
-      css: {
-        color: '$neutral700',
-        backgroundColor: '$neutral200',
-        '&:focus': {
-          borderColor: '$neutral400',
-          boxShadow: '0 0 0 3px $colors$outline_neutral',
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$neutral300',
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$neutral800',
-          backgroundColor: '$neutral300',
-        },
+        color: '$neutral2',
+        backgroundColor: '$neutral12',
+        borderColor: '$neutral12',
+        // '&:focus,&:hover,&:active': { backgroundColor: '$neutral11' },
       },
     },
     {
       variant: 'outline',
       tone: 'neutral',
       css: {
-        color: '$neutral600',
-        borderColor: '$neutral400',
-        boxShadow: '$sm',
-        '&:focus': {
-          borderColor: '$neutral500',
-          boxShadow: `0 0 0 3px $colors$outline_neutral`,
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$neutral600',
-          boxShadow: '$sm',
-        },
-        '&:hover,&:active': {
-          color: '$neutral700',
-          borderColor: '$neutral600',
-          backgroundColor: '$neutral50',
-        },
+        color: '$neutral12',
+        borderColor: '$neutral9',
+        '&:focus,&:hover,&:active': { backgroundColor: '$neutral3', borderColor: '$neutral10' },
       },
     },
     {
       variant: 'text',
       tone: 'neutral',
       css: {
-        color: '$neutral600',
-        '&:focus': {
-          boxShadow: `0 0 0 3px $colors$outline_neutral`,
+        color: '$neutral12',
+        '&:focus,&:hover,&:active': { backgroundColor: '$neutral3' },
+      },
+    },
+
+    // // Positive
+    // {
+    //   variant: 'contained',
+    //   tone: 'positive',
+    //   css: {
+    //     color: '$positive2',
+    //     backgroundColor: '$positive9',
+    //     '.light &': {
+    //       borderColor: '$positive10',
+    //       '&:focus,&:hover,&:active': { borderColor: '$positive11' },
+    //     },
+    //     '.dark &': {
+    //       color: '$positive12',
+    //       borderColor: '$positive9',
+    //     },
+    //   },
+    // },
+    // {
+    //   variant: 'outline',
+    //   tone: 'positive',
+    //   css: {
+    //     color: '$positive11',
+    //     borderColor: '$positive8',
+    //     '&:focus,&:hover,&:active': { backgroundColor: '$positive3', borderColor: '$positive9' },
+    //   },
+    // },
+    // {
+    //   variant: 'text',
+    //   tone: 'positive',
+    //   css: {
+    //     color: '$positive11',
+    //     '&:focus,&:hover,&:active': { backgroundColor: '$positive3' },
+    //   },
+    // },
+
+    // // Info
+    // {
+    //   variant: 'contained',
+    //   tone: 'info',
+    //   css: {
+    //     color: '$info1',
+    //     backgroundColor: '$info9',
+    //     '.light &': {
+    //       borderColor: '$info10',
+    //       '&:focus,&:hover,&:active': { borderColor: '$info11' },
+    //     },
+    //     '.dark &': {
+    //       color: '$info12',
+    //       borderColor: '$info9',
+    //     },
+    //   },
+    // },
+    // {
+    //   variant: 'outline',
+    //   tone: 'info',
+    //   css: {
+    //     color: '$info11',
+    //     borderColor: '$info7',
+    //     '&:focus,&:hover,&:active': { backgroundColor: '$info3', borderColor: '$info8' },
+    //   },
+    // },
+    // {
+    //   variant: 'text',
+    //   tone: 'info',
+    //   css: {
+    //     color: '$info11',
+    //     '&:focus,&:hover,&:active': { backgroundColor: '$info3' },
+    //   },
+    // },
+
+    // Caution
+    {
+      variant: 'contained',
+      tone: 'caution',
+      css: {
+        color: '$caution12',
+        backgroundColor: '$caution7',
+        '&:focus,&:hover,&:active': { backgroundColor: '$caution8' },
+
+        '.light &': {
+          // '&:not([disabled])': {
+          //   textShadow: 'none',
+          // },
+          borderColor: '$caution8',
         },
-        '&:focus:not(:focus-visible)': {
-          boxShadow: 'none',
+        '.dark &': {
+          color: '$caution12',
+          borderColor: '$caution8',
         },
-        '&:hover,&:active': {
-          color: '$neutral700',
-          backgroundColor: '$neutral50',
-        },
+      },
+    },
+    {
+      variant: 'outline',
+      tone: 'caution',
+      css: {
+        color: '$caution11',
+        borderColor: '$caution7',
+        '&:focus,&:hover,&:active': { backgroundColor: '$caution3', borderColor: '$caution8' },
+      },
+    },
+    {
+      variant: 'text',
+      tone: 'caution',
+      css: {
+        color: '$caution11',
+        '&:focus,&:hover,&:active': { backgroundColor: '$caution3' },
       },
     },
 
     // Critical
     {
-      variant: 'base',
+      variant: 'contained',
       tone: 'critical',
       css: {
-        color: '$critical50',
-        backgroundColor: '$critical600',
-        boxShadow: '$md',
-        '&:focus:focus-visible': {
-          boxShadow: '0 0 0 3px $colors$outline_critical',
-          borderColor: '$critical700',
+        color: '$critical2',
+        backgroundColor: '$critical9',
+        '&:focus,&:hover,&:active': { backgroundColor: '$critical10' },
+        '.light &': {
+          borderColor: '$critical10',
         },
-        '&:hover,&:active': {
-          backgroundColor: '$critical700',
-        },
-      },
-    },
-    {
-      variant: 'secondary',
-      tone: 'critical',
-      css: {
-        color: '$critical700',
-        backgroundColor: '$critical200',
-        '&:focus': {
-          borderColor: '$critical400',
-          boxShadow: '0 0 0 3px $colors$outline_critical',
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$critical300',
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$critical800',
-          backgroundColor: '$critical300',
+        '.dark &': {
+          color: '$accent1',
+          borderColor: '$critical9',
         },
       },
     },
@@ -356,270 +396,17 @@ const ButtonCss = css({
       variant: 'outline',
       tone: 'critical',
       css: {
-        color: '$critical600',
-        borderColor: '$critical400',
-        boxShadow: '$sm',
-        '&:focus': {
-          borderColor: '$critical500',
-          boxShadow: `0 0 0 3px $colors$outline_critical`,
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$critical600',
-          boxShadow: '$sm',
-        },
-        '&:hover,&:active': {
-          color: '$critical700',
-          borderColor: '$critical600',
-          backgroundColor: '$critical50',
-        },
+        color: '$critical11',
+        borderColor: '$critical7',
+        '&:focus,&:hover,&:active': { backgroundColor: '$critical3', borderColor: '$critical8' },
       },
     },
     {
       variant: 'text',
       tone: 'critical',
       css: {
-        color: '$critical600',
-        '&:focus': {
-          boxShadow: `0 0 0 3px $colors$outline_critical`,
-        },
-        '&:focus:not(:focus-visible)': {
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$critical700',
-          backgroundColor: '$critical50',
-        },
-      },
-    },
-
-    // Caution
-    {
-      variant: 'base',
-      tone: 'caution',
-      css: {
-        color: '$caution50',
-        backgroundColor: '$caution600',
-        boxShadow: '$md',
-        '&:focus:focus-visible': {
-          boxShadow: '0 0 0 3px $colors$outline_caution',
-          borderColor: '$caution700',
-        },
-        '&:hover,&:active': {
-          backgroundColor: '$caution700',
-        },
-      },
-    },
-    {
-      variant: 'secondary',
-      tone: 'caution',
-      css: {
-        color: '$caution700',
-        backgroundColor: '$caution200',
-        '&:focus': {
-          borderColor: '$caution400',
-          boxShadow: '0 0 0 3px $colors$outline_caution',
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$caution300',
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$caution800',
-          backgroundColor: '$caution300',
-        },
-      },
-    },
-    {
-      variant: 'outline',
-      tone: 'caution',
-      css: {
-        color: '$caution600',
-        borderColor: '$caution400',
-        boxShadow: '$sm',
-        '&:focus': {
-          borderColor: '$caution500',
-          boxShadow: `0 0 0 3px $colors$outline_caution`,
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$caution600',
-          boxShadow: '$sm',
-        },
-        '&:hover,&:active': {
-          color: '$caution700',
-          borderColor: '$caution600',
-          backgroundColor: '$caution50',
-        },
-      },
-    },
-    {
-      variant: 'text',
-      tone: 'caution',
-      css: {
-        color: '$caution600',
-        '&:focus': {
-          boxShadow: `0 0 0 3px $colors$outline_caution`,
-        },
-        '&:focus:not(:focus-visible)': {
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$caution700',
-          backgroundColor: '$caution50',
-        },
-      },
-    },
-
-    // Positive
-    {
-      variant: 'base',
-      tone: 'positive',
-      css: {
-        color: '$positive50',
-        backgroundColor: '$positive600',
-        boxShadow: '$md',
-        '&:focus:focus-visible': {
-          boxShadow: '0 0 0 3px $colors$outline_positive',
-          borderColor: '$positive700',
-        },
-        '&:hover,&:active': {
-          backgroundColor: '$positive700',
-        },
-      },
-    },
-    {
-      variant: 'secondary',
-      tone: 'positive',
-      css: {
-        color: '$positive700',
-        backgroundColor: '$positive200',
-        '&:focus': {
-          borderColor: '$positive400',
-          boxShadow: '0 0 0 3px $colors$outline_positive',
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$positive300',
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$positive800',
-          backgroundColor: '$positive300',
-        },
-      },
-    },
-    {
-      variant: 'outline',
-      tone: 'positive',
-      css: {
-        color: '$positive600',
-        borderColor: '$positive400',
-        boxShadow: '$sm',
-        '&:focus': {
-          borderColor: '$positive500',
-          boxShadow: `0 0 0 3px $colors$outline_positive`,
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$positive600',
-          boxShadow: '$sm',
-        },
-        '&:hover,&:active': {
-          color: '$positive700',
-          borderColor: '$positive600',
-          backgroundColor: '$positive50',
-        },
-      },
-    },
-    {
-      variant: 'text',
-      tone: 'positive',
-      css: {
-        color: '$positive600',
-        '&:focus': {
-          boxShadow: `0 0 0 3px $colors$outline_positive`,
-        },
-        '&:focus:not(:focus-visible)': {
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$positive700',
-          backgroundColor: '$positive50',
-        },
-      },
-    },
-
-    // Info
-    {
-      variant: 'base',
-      tone: 'info',
-      css: {
-        color: '$info50',
-        backgroundColor: '$info600',
-        boxShadow: '$md',
-        '&:focus:focus-visible': {
-          boxShadow: '0 0 0 3px $colors$outline_info',
-          borderColor: '$info700',
-        },
-        '&:hover,&:active': {
-          backgroundColor: '$info700',
-        },
-      },
-    },
-    {
-      variant: 'secondary',
-      tone: 'info',
-      css: {
-        color: '$info700',
-        backgroundColor: '$info200',
-        '&:focus': {
-          borderColor: '$info400',
-          boxShadow: '0 0 0 3px $colors$outline_info',
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$info300',
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$info800',
-          backgroundColor: '$info300',
-        },
-      },
-    },
-    {
-      variant: 'outline',
-      tone: 'info',
-      css: {
-        color: '$info600',
-        borderColor: '$info400',
-        boxShadow: '$sm',
-        '&:focus': {
-          borderColor: '$info500',
-          boxShadow: `0 0 0 3px $colors$outline_info`,
-        },
-        '&:focus:not(:focus-visible)': {
-          borderColor: '$info600',
-          boxShadow: '$sm',
-        },
-        '&:hover,&:active': {
-          color: '$info700',
-          borderColor: '$info600',
-          backgroundColor: '$info50',
-        },
-      },
-    },
-    {
-      variant: 'text',
-      tone: 'info',
-      css: {
-        color: '$info600',
-        '&:focus': {
-          boxShadow: `0 0 0 3px $colors$outline_info`,
-        },
-        '&:focus:not(:focus-visible)': {
-          boxShadow: 'none',
-        },
-        '&:hover,&:active': {
-          color: '$info700',
-          backgroundColor: '$info50',
-        },
+        color: '$critical11',
+        '&:focus,&:hover,&:active': { backgroundColor: '$critical3' },
       },
     },
   ],
@@ -635,12 +422,16 @@ const Ripple = styled('span', {
   boxSizing: 'content-box',
   pointerEvents: 'none',
   zIndex: 0,
+
+  $$bgColor: 'rgba(0,0,0,.2)',
+  $$bgColorDark: 'rgba(255,255,255,.2)',
+
   '&::after': {
     content: `""`,
     position: 'absolute',
     borderRadius: '50%',
     opacity: 0,
-    backgroundColor: '$black',
+    backgroundColor: '$$bgColor',
     top: 0,
     left: 0,
     transformOrigin: 'center center',
@@ -654,6 +445,7 @@ const Ripple = styled('span', {
   '&.pressed::after': {
     animation: `${fgRadiusIn} ${RIPPLE_DURATION_MS}ms forwards,${fgOpacityIn} 75ms forwards`,
   },
+
   variants: {
     size: {
       xs: {},
@@ -663,23 +455,16 @@ const Ripple = styled('span', {
       xl: {},
     },
     tone: {
-      primary: {},
+      accent: {},
       neutral: {},
-      critical: {},
+      // positive: {},
+      // info: {},
       caution: {},
-      positive: {},
-      info: {},
+      critical: {},
     },
     variant: {
-      base: {
-        '&::after': {
-          backgroundColor: '$white',
-        },
-      },
-      secondary: {},
-      outline: {
-        borderColor: 'transparent',
-      },
+      contained: {},
+      outline: {},
       text: {},
     },
     rounding: {
@@ -692,35 +477,25 @@ const Ripple = styled('span', {
   compoundVariants: [
     { rounding: 'normal', size: 'xs', css: { borderRadius: '$rounded' } },
     // Primary
-    { variant: 'base', tone: 'primary', css: { '&::after': { backgroundColor: '$primary800' } } },
-    { variant: 'secondary', tone: 'primary', css: { '&::after': { backgroundColor: '$primary400' } } },
-    { variant: 'outline', tone: 'primary', css: { '&::after': { backgroundColor: '$primary100' } } },
-    { variant: 'text', tone: 'primary', css: { '&::after': { backgroundColor: '$primary100' } } },
+    { variant: 'outline', tone: 'accent', css: { $$bgColor: '$colors$accent5' } },
+    { variant: 'text', tone: 'accent', css: { $$bgColor: '$colors$accent5' } },
     // Neutral
-    { variant: 'base', tone: 'neutral', css: { '&::after': { backgroundColor: '$neutral800' } } },
-    { variant: 'secondary', tone: 'neutral', css: { '&::after': { backgroundColor: '$neutral400' } } },
-    { variant: 'outline', tone: 'neutral', css: { '&::after': { backgroundColor: '$neutral100' } } },
-    { variant: 'text', tone: 'neutral', css: { '&::after': { backgroundColor: '$neutral100' } } },
-    // Critical
-    { variant: 'base', tone: 'critical', css: { '&::after': { backgroundColor: '$critical800' } } },
-    { variant: 'secondary', tone: 'critical', css: { '&::after': { backgroundColor: '$critical400' } } },
-    { variant: 'outline', tone: 'critical', css: { '&::after': { backgroundColor: '$critical100' } } },
-    { variant: 'text', tone: 'critical', css: { '&::after': { backgroundColor: '$critical100' } } },
+    { variant: 'contained', tone: 'neutral', css: { '.light &': { $$bgColor: '$$bgColorDark' } } },
+    { variant: 'outline', tone: 'neutral', css: { $$bgColor: '$colors$neutral5' } },
+    { variant: 'text', tone: 'neutral', css: { $$bgColor: '$colors$neutral5' } },
+    // // Positive
+    // { variant: 'outline', tone: 'positive', css: { $$bgColor: '$colors$positive4' } },
+    // { variant: 'text', tone: 'positive', css: { $$bgColor: '$colors$positive4' } },
+    // // Info
+    // { variant: 'outline', tone: 'info', css: { $$bgColor: '$colors$info4' } },
+    // { variant: 'text', tone: 'info', css: { $$bgColor: '$colors$info4' } },
     // Caution
-    { variant: 'base', tone: 'caution', css: { '&::after': { backgroundColor: '$caution800' } } },
-    { variant: 'secondary', tone: 'caution', css: { '&::after': { backgroundColor: '$caution400' } } },
-    { variant: 'outline', tone: 'caution', css: { '&::after': { backgroundColor: '$caution100' } } },
-    { variant: 'text', tone: 'caution', css: { '&::after': { backgroundColor: '$caution100' } } },
-    // Positive
-    { variant: 'base', tone: 'positive', css: { '&::after': { backgroundColor: '$positive800' } } },
-    { variant: 'secondary', tone: 'positive', css: { '&::after': { backgroundColor: '$positive400' } } },
-    { variant: 'outline', tone: 'positive', css: { '&::after': { backgroundColor: '$positive100' } } },
-    { variant: 'text', tone: 'positive', css: { '&::after': { backgroundColor: '$positive100' } } },
-    // Info
-    { variant: 'base', tone: 'info', css: { '&::after': { backgroundColor: '$info800' } } },
-    { variant: 'secondary', tone: 'info', css: { '&::after': { backgroundColor: '$info400' } } },
-    { variant: 'outline', tone: 'info', css: { '&::after': { backgroundColor: '$info100' } } },
-    { variant: 'text', tone: 'info', css: { '&::after': { backgroundColor: '$info100' } } },
+    // { variant: 'contained', tone: 'caution', css: { '.light &': { $$bgColor: '$$bgColorDark' } } },
+    { variant: 'outline', tone: 'caution', css: { $$bgColor: '$colors$caution5' } },
+    { variant: 'text', tone: 'caution', css: { $$bgColor: '$colors$caution5' } },
+    // Critical
+    { variant: 'outline', tone: 'critical', css: { $$bgColor: '$colors$critical5' } },
+    { variant: 'text', tone: 'critical', css: { $$bgColor: '$colors$critical5' } },
   ],
 });
 
@@ -878,7 +653,7 @@ function useMaterialButton(
         break;
       }
     }
-  }, [state, rippleRef]);
+  }, [state, ref, rippleRef]);
 
   const eventHandlers = useMemo(
     () => ({
@@ -936,6 +711,7 @@ function useMaterialButton(
           // TODO: This behavior should be customizable
           if (currentState.current !== ButtonState.Pressed) {
             initTransition(e, ref.current, rounding);
+            ref.current.classList.add('pressed');
             setState(ButtonState.Pressed);
           }
         }
@@ -949,6 +725,7 @@ function useMaterialButton(
         }
         if (currentState.current !== ButtonState.Released) {
           if (e.nativeEvent.key === 'Enter' || e.nativeEvent.key === ' ') {
+            ref.current.classList.remove('pressed');
             setState(ButtonState.Released);
             ref.current.click();
           }
@@ -962,7 +739,10 @@ function useMaterialButton(
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonStyledProps>(
-  ({ size = 'base', variant = 'base', tone = 'primary', rounding = 'normal', children, ...rest }, forwardedRef) => {
+  (
+    { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
+    forwardedRef
+  ) => {
     const ref = useShareForwardedRef<HTMLButtonElement>(forwardedRef);
     const rippleRef = useRef<HTMLSpanElement>(null);
     const [eventHandlers, otherProps] = useMaterialButton(ref, rippleRef, rounding, rest);
@@ -986,7 +766,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonStyledProps>(
 );
 
 export const AnchorButton = forwardRef<HTMLAnchorElement, AnchorStyledProps>(
-  ({ size = 'base', variant = 'base', tone = 'primary', rounding = 'normal', children, ...rest }, forwardedRef) => {
+  (
+    { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
+    forwardedRef
+  ) => {
     const ref = useShareForwardedRef<HTMLAnchorElement>(forwardedRef);
     const rippleRef = useRef<HTMLSpanElement>(null);
     const [eventHandlers, otherProps] = useMaterialButton(ref, rippleRef, rounding, rest);
@@ -1007,7 +790,10 @@ export const AnchorButton = forwardRef<HTMLAnchorElement, AnchorStyledProps>(
 );
 
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkStyledProps>(
-  ({ size = 'base', variant = 'base', tone = 'primary', rounding = 'normal', children, ...rest }, forwardedRef) => {
+  (
+    { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
+    forwardedRef
+  ) => {
     const ref = useShareForwardedRef<HTMLAnchorElement>(forwardedRef);
     const rippleRef = useRef<HTMLSpanElement>(null);
     const [eventHandlers, otherProps] = useMaterialButton(ref, rippleRef, rounding, rest);
