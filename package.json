@@ -67,7 +67,7 @@
     "framer-motion": "4.1.17",
     "gzip-size": "6.0.0",
     "history": "5.0.1",
-    "immer": "9.0.5",
+    "immer": "9.0.6",
     "jszip": "3.7.1",
     "lodash-es": "4.17.21",
     "postcss": "8.3.6",
