@@ -284,7 +284,7 @@ if (DEVELOPMENT || argv.s3proxy === true) {
 
 // Retrieval of artifacts dir/file structure
 async function routeBinHandler(request, reply) {
-  reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
+  reply.header('Cache-Control', `public, max-age=60, s-maxage=${60 * 60 * 24}`);
   return await routeBin(request.params);
 }
 
@@ -293,7 +293,7 @@ app.get('/bin/:build/:version', routeBinHandler);
 
 // S3 bucket listing
 app.get('/list', async (request, reply) => {
-  reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
+  reply.header('Cache-Control', `public, max-age=60, s-maxage=${60 * 60 * 24}`);
   return await routeBrowse(request.query);
 });
 
