@@ -1,9 +1,9 @@
-FROM node:slim@sha256:610ade6f0702b7355a045d7df4e53f78fded0060c5e765f2d5267b1a613465e8 AS build
+FROM node:slim@sha256:af6f241029c4d63107c6ccbbd030c44d331786d724bd9c2e615edf46deab58e2 AS build
 WORKDIR /srv
 COPY package.json package-lock.json .npmrc ./
 RUN npm ci --prod --no-audit --no-fund
 
-FROM node:slim@sha256:610ade6f0702b7355a045d7df4e53f78fded0060c5e765f2d5267b1a613465e8
+FROM node:slim@sha256:af6f241029c4d63107c6ccbbd030c44d331786d724bd9c2e615edf46deab58e2
 ENV NODE_ENV production
 WORKDIR /srv
 COPY --from=build /srv/node_modules ./node_modules
