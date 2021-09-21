@@ -265,7 +265,7 @@ if (DEVELOPMENT) {
 
   // Proxy webpack-dev-server generated files
   const httpProxy = require('fastify-http-proxy');
-  await app.register(httpProxy, { prefix: '/js', rewritePrefix: '/js', upstream: 'http://localhost:8081' });
+  await app.register(httpProxy, { prefix: '/js', rewritePrefix: '/js', upstream: 'http://localhost:8089' });
 }
 
 // Proxy

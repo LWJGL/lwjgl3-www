@@ -146,7 +146,7 @@ function buildConfiguration() {
     if (WDS) {
       config.devServer = {
         host: '0.0.0.0',
-        port: 8081,
+        port: 8089,
         hot: true,
         static: false,
         compress: false,
