@@ -142,7 +142,7 @@ const ButtonCss = css({
       },
       outline: {
         backgroundColor: 'transparent',
-        $$buttonShadow: '$shadows$sm',
+        // $$buttonShadow: '$shadows$sm',
       },
       text: {
         backgroundColor: 'transparent',
@@ -206,15 +206,14 @@ const ButtonCss = css({
       variant: 'contained',
       tone: 'accent',
       css: {
-        color: '$accent1',
+        color: '$accent2',
         backgroundColor: '$accent9',
-        '&:focus,&:hover,&:active': { backgroundColor: '$accent10' },
+        // '&:focus,&:hover,&:active': { backgroundColor: '$accent10' },
         '.light &': {
           borderColor: '$accent10',
-          // '&:focus,&:hover,&:active': { borderColor: '$accent12' },
         },
         '.dark &': {
-          // color: '$accent12',
+          backgroundColor: '$accent10',
           borderColor: '$accent9',
         },
       },
@@ -224,8 +223,8 @@ const ButtonCss = css({
       tone: 'accent',
       css: {
         color: '$accent11',
-        borderColor: '$accent7',
-        '&:focus,&:hover,&:active': { backgroundColor: '$accent4', borderColor: '$accent8' },
+        borderColor: '$accent8',
+        // '&:focus,&:hover,&:active': { backgroundColor: '$accent4', borderColor: '$accent8' },
       },
     },
     {
@@ -233,7 +232,7 @@ const ButtonCss = css({
       tone: 'accent',
       css: {
         color: '$accent11',
-        '&:focus,&:hover,&:active': { backgroundColor: '$accent4' },
+        '&:focus,&:hover,&:active': { backgroundColor: '$accent3' },
       },
     },
 
@@ -245,115 +244,35 @@ const ButtonCss = css({
         color: '$neutral2',
         backgroundColor: '$neutral12',
         borderColor: '$neutral12',
-        // '&:focus,&:hover,&:active': { backgroundColor: '$neutral11' },
       },
     },
     {
       variant: 'outline',
       tone: 'neutral',
       css: {
-        color: '$neutral12',
-        borderColor: '$neutral9',
-        '&:focus,&:hover,&:active': { backgroundColor: '$neutral3', borderColor: '$neutral10' },
+        color: '$neutral11',
+        borderColor: '$neutral8',
       },
     },
     {
       variant: 'text',
       tone: 'neutral',
       css: {
-        color: '$neutral12',
-        '&:focus,&:hover,&:active': { backgroundColor: '$neutral3' },
+        color: '$neutral11',
+        '&:focus,&:hover,&:active': { backgroundColor: '$neutral4' },
       },
     },
-
-    // // Positive
-    // {
-    //   variant: 'contained',
-    //   tone: 'positive',
-    //   css: {
-    //     color: '$positive2',
-    //     backgroundColor: '$positive9',
-    //     '.light &': {
-    //       borderColor: '$positive10',
-    //       '&:focus,&:hover,&:active': { borderColor: '$positive11' },
-    //     },
-    //     '.dark &': {
-    //       color: '$positive12',
-    //       borderColor: '$positive9',
-    //     },
-    //   },
-    // },
-    // {
-    //   variant: 'outline',
-    //   tone: 'positive',
-    //   css: {
-    //     color: '$positive11',
-    //     borderColor: '$positive8',
-    //     '&:focus,&:hover,&:active': { backgroundColor: '$positive3', borderColor: '$positive9' },
-    //   },
-    // },
-    // {
-    //   variant: 'text',
-    //   tone: 'positive',
-    //   css: {
-    //     color: '$positive11',
-    //     '&:focus,&:hover,&:active': { backgroundColor: '$positive3' },
-    //   },
-    // },
-
-    // // Info
-    // {
-    //   variant: 'contained',
-    //   tone: 'info',
-    //   css: {
-    //     color: '$info1',
-    //     backgroundColor: '$info9',
-    //     '.light &': {
-    //       borderColor: '$info10',
-    //       '&:focus,&:hover,&:active': { borderColor: '$info11' },
-    //     },
-    //     '.dark &': {
-    //       color: '$info12',
-    //       borderColor: '$info9',
-    //     },
-    //   },
-    // },
-    // {
-    //   variant: 'outline',
-    //   tone: 'info',
-    //   css: {
-    //     color: '$info11',
-    //     borderColor: '$info7',
-    //     '&:focus,&:hover,&:active': { backgroundColor: '$info3', borderColor: '$info8' },
-    //   },
-    // },
-    // {
-    //   variant: 'text',
-    //   tone: 'info',
-    //   css: {
-    //     color: '$info11',
-    //     '&:focus,&:hover,&:active': { backgroundColor: '$info3' },
-    //   },
-    // },
 
     // Caution
     {
       variant: 'contained',
       tone: 'caution',
       css: {
-        color: '$caution12',
-        backgroundColor: '$caution7',
-        '&:focus,&:hover,&:active': { backgroundColor: '$caution8' },
-
-        '.light &': {
-          // '&:not([disabled])': {
-          //   textShadow: 'none',
-          // },
-          borderColor: '$caution8',
-        },
+        color: '$caution11',
+        backgroundColor: '$caution9',
+        borderColor: '$caution10',
         '.dark &': {
-          color: '$caution12',
-          borderColor: '$caution8',
+          color: '$caution2',
         },
       },
     },
@@ -362,8 +281,7 @@ const ButtonCss = css({
       tone: 'caution',
       css: {
         color: '$caution11',
-        borderColor: '$caution7',
-        '&:focus,&:hover,&:active': { backgroundColor: '$caution3', borderColor: '$caution8' },
+        borderColor: '$caution8',
       },
     },
     {
@@ -382,12 +300,8 @@ const ButtonCss = css({
       css: {
         color: '$critical2',
         backgroundColor: '$critical9',
-        '&:focus,&:hover,&:active': { backgroundColor: '$critical10' },
-        '.light &': {
-          borderColor: '$critical10',
-        },
+        borderColor: '$critical10',
         '.dark &': {
-          color: '$accent1',
           borderColor: '$critical9',
         },
       },
@@ -397,8 +311,7 @@ const ButtonCss = css({
       tone: 'critical',
       css: {
         color: '$critical11',
-        borderColor: '$critical7',
-        '&:focus,&:hover,&:active': { backgroundColor: '$critical3', borderColor: '$critical8' },
+        borderColor: '$critical9',
       },
     },
     {

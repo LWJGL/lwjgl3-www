@@ -9,7 +9,7 @@ import '~/theme/icons/fa/duotone/folder-open';
 
 const FileList = styled('input', {
   background: 'white',
-  border: '1px solid $neutral12',
+  border: '1px solid $accent9',
   borderRight: 'none',
   px: '$sm',
   lineHeight: '2.5rem',
@@ -100,6 +100,7 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
       />
 
       <Button
+        tone="accent"
         disabled={disabled}
         onClick={handleButtonClick}
         // onBlur={handleBlur}

@@ -146,7 +146,7 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
           ))}
       </Pre>
       <Flex css={{ justifyContent: 'space-between', alignItems: 'center' }}>
-        <Button autoFocus onClick={() => setIsDownloading(false)}>
+        <Button variant="outline" autoFocus onClick={() => setIsDownloading(false)}>
           Cancel
         </Button>
         <CircularProgress size={36} />

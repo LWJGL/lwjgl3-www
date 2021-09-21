@@ -64,7 +64,9 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
     return (
       <ToolbarContainer key="picker">
         <FilePicker accept=".json" placeholder="Select build config…" onChange={handleFile} />
-        <Button onClick={toggleFileUI}>Cancel</Button>
+        <Button tone="accent" variant="text" onClick={toggleFileUI}>
+          Cancel
+        </Button>
       </ToolbarContainer>
     );
   }
@@ -76,11 +78,17 @@ export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, chil
   return (
     <ToolbarContainer key="default">
       {children}
-      <Button variant="outline" title={loadButtonTitle} aria-label={loadButtonTitle} onClick={toggleFileUI}>
+      <Button tone="accent" variant="text" title={loadButtonTitle} aria-label={loadButtonTitle} onClick={toggleFileUI}>
         <Icon name="fa/duotone/folder-upload" />
         {showLabels ? ` Load config` : null}
       </Button>
-      <Button variant="outline" title={saveButtonTitle} aria-label={saveButtonTitle} onClick={configDownload}>
+      <Button
+        tone="accent"
+        variant="text"
+        title={saveButtonTitle}
+        aria-label={saveButtonTitle}
+        onClick={configDownload}
+      >
         <Icon name="fa/duotone/folder-download" />
         {showLabels ? ` Save config` : null}
       </Button>

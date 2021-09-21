@@ -45,7 +45,7 @@ export function BuildFooter({ setIsDownloading }: Props) {
 
   return mode === Mode.Zip ? (
     <BuildToolbar configDownload={configDownload} configLoad={dispatchConfigLoad}>
-      <Button onClick={startDownload}>
+      <Button tone="accent" onClick={startDownload}>
         <Icon name="fa/duotone/cloud-download" /> DOWNLOAD ZIP
       </Button>
     </BuildToolbar>
