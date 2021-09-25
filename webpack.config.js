@@ -60,6 +60,7 @@ function buildConfiguration() {
       publicPath: '/js/',
       chunkLoadTimeout: 30 * 1000, // 30sec instead of 2min
       crossOriginLoading: false, // false | 'anonymous' | 'use-credentials'
+      hashFunction: 'xxhash64',
       // environment: {
       //   arrowFunction: DEV,
       //   bigIntLiteral: DEV,
