@@ -63,7 +63,7 @@ const ButtonCss = css({
   justifyContent: 'center',
   fontWeight: '$medium',
   userSelect: 'none',
-  touchAction: 'none',
+  touchAction: 'pan-y',
   border: '1px solid transparent',
   willChange: 'transform,background-color,border-color,opacity,box-shadow',
   // transition: 'border-color 150ms cubic-bezier(0.4, 0, 0.2, 1)', // Transition only box-shadow instead of all like Tailwind does, feels faster
