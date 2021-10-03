@@ -4,7 +4,7 @@ import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 export const getBackdropOpacity = (perc: number) => (perc > 0 ? `rgba(0,0,0,${perc * 0.75})` : 'rgba(0,0,0,0)');
 
 export const BackdropCss = css({
-  willChange: 'background-color',
+  // willChange: 'background-color',
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',

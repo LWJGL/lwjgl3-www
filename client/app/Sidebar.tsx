@@ -44,7 +44,7 @@ const MenuToggleLine = css({
   width: '100%',
   height: 4,
   backgroundColor: 'white',
-  willChange: 'transform',
+  // willChange: 'transform',
   pointerEvents: 'none',
 });
 
@@ -68,7 +68,7 @@ const MenuOverlay = css({
   '-webkit-overflow-scrolling': 'touch',
   'touch-action': 'pan-y',
   overscrollBehavior: 'contain',
-  willChange: 'transform',
+  // willChange: 'transform',
   transform: `translate3d(${MENU_INITIAL}px, 0, 0)`,
   pointerEvents: 'none',
   overflowY: 'auto',

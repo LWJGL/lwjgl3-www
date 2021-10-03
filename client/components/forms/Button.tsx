@@ -65,7 +65,7 @@ const ButtonCss = css({
   userSelect: 'none',
   touchAction: 'pan-y',
   border: '1px solid transparent',
-  willChange: 'transform,background-color,border-color,opacity,box-shadow',
+  // willChange: 'transform,background-color,border-color,opacity,box-shadow',
   // transition: 'border-color 150ms cubic-bezier(0.4, 0, 0.2, 1)', // Transition only box-shadow instead of all like Tailwind does, feels faster
   position: 'relative', // for Ripple
   '-webkit-font-smoothing': 'antialiased',
@@ -350,7 +350,7 @@ const Ripple = styled('span', {
     transformOrigin: 'center center',
     square: 'var(--ripple-size, 100%)',
     transition: 'opacity 75ms linear',
-    willChange: 'transform,opacity',
+    // willChange: 'transform,opacity',
     // transform: 'scale(1)',
     animation: `${fgOpacityOut} ${DEACTIVATION_MS}ms`,
     transform: 'translate(var(--ripple-translate-end, 0)) scale(var(--ripple-scale, 1))',

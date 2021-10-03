@@ -22,7 +22,7 @@ const StyledHeader = styled('header', {
   color: 'white',
   lineHeight: '3rem',
   fontSize: '$lg',
-  willChange: 'background-color, top',
+  // willChange: 'background-color, top',
   userSelect: 'none',
   display: 'flex',
   hgap: '1rem',
@@ -45,7 +45,7 @@ const StyledHeader = styled('header', {
     alt: {
       true: {
         position: 'fixed',
-        willChange: 'top, background-color, opacity',
+        // willChange: 'top, background-color, opacity',
         transition: 'top 0.3s cubic-bezier(0, 0, 0.3, 1), opacity 0.5s ease-out',
       },
     },

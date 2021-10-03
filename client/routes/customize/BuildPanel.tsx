@@ -57,7 +57,7 @@ const PanelBox = styled('div', {
   padding: '1rem',
   textAlign: 'center',
   cursor: 'pointer',
-  willChange: 'transform, background-color',
+  // willChange: 'transform, background-color',
   userSelect: 'none',
   zIndex: 1,
   border: `2px solid $accent12`,
