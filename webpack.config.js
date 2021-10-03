@@ -119,6 +119,10 @@ function buildConfiguration() {
       ],
     },
     plugins: [new webpack.DefinePlugin(env)],
+    experiments: {
+      // futureDefaults: true,
+      cacheUnaffected: true,
+    },
   };
 
   if (DEV) {
@@ -127,10 +131,11 @@ function buildConfiguration() {
     // config.output.chunkFormat = 'module';
     // config.externalsType = 'module';
 
-    config.experiments = {
-      // outputModule: true,
-      lazyCompilation: true,
+    config.experiments.lazyCompilation = {
+      entries: false,
+      imports: true,
     };
+    config.experiments.outputModule = true;
 
     // // Load pre-built dependencies
     // config.plugins.push(
