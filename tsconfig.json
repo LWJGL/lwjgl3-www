@@ -13,12 +13,12 @@
     "noEmit": true,
     "skipLibCheck": true,
     "jsx": "preserve",
-    "lib": ["ESNext"],
+    "lib": ["DOM", "ESNext"],
     "baseUrl": ".",
     "paths": {
       "~/*": ["./client/*"]
     },
-    "types": ["@types/web", "react/next", "react-dom/next"]
+    "types": ["react/next", "react-dom/next"]
   },
   "include": ["types", "client"],
   "exclude": ["public", "scripts", "server", "**/node_modules", "**/.*/"]

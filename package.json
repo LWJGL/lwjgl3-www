@@ -52,6 +52,7 @@
     "@types/react-is": "17.0.2",
     "@types/scheduler": "0.16.2",
     "@types/web": "0.0.39",
+    "@typescript/lib-dom": "npm:@types/web",
     "@typescript-eslint/eslint-plugin": "4.32.0",
     "@typescript-eslint/parser": "4.32.0",
     "autoprefixer": "10.3.6",
