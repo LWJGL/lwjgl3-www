@@ -7,7 +7,7 @@ import '~/services/screenFit';
 
 // Routing
 import { BrowserRouter } from '~/components/router/client';
-// import { NavProgress } from '~/components/ui/NavProgress';
+import { NavProgress } from '~/components/ui/NavProgress';
 import { PageError } from '~/routes/PageError';
 import { PageBlank } from '~/routes/PageBlank';
 import { RouterConfig } from '~/routes';
@@ -52,6 +52,6 @@ export const App: React.FC<{ children?: never }> = () => (
         </ColorSchemeProvider>
       </BreakpointProvider>
     </OverlayProvider>
-    {/* <NavProgress /> */}
+    <NavProgress />
   </BrowserRouter>
 );
