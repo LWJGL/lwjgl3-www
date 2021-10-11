@@ -121,9 +121,9 @@ export function generateGradle({
               }"`
             : `\n\tOperatingSystem.WINDOWS -> System.getProperty("os.arch").let {
 \t\tif (it.contains("64"))
-\t\t\t"natives-linux\${if (it.startsWith("aarch64")) "-arm64" else ""}"
+\t\t\t"natives-windows\${if (it.startsWith("aarch64")) "-arm64" else ""}"
 \t\telse
-\t\t\t"natives-linux-x86"
+\t\t\t"natives-windows-x86"
 \t}`;
       }
       script += `
