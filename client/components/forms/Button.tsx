@@ -566,7 +566,7 @@ function useMaterialButton(
         break;
       }
     }
-  }, [state, ref, rippleRef]);
+  }, [state, rippleRef]);
 
   const eventHandlers = useMemo(
     () => ({
