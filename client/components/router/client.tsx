@@ -1,6 +1,6 @@
 import { useRef, useTransition, useState, useLayoutEffect, forwardRef, useCallback, useMemo } from 'react';
 import { createBrowserHistory, createPath } from 'history';
-import { Router, useHref, useLocation, useNavigate, useResolvedPath, useBlocker } from './';
+import { Router, useHref, useLocation, useNavigate, useResolvedPath } from './';
 import type { BrowserHistory, State, To } from 'history';
 
 export * from './';
@@ -119,7 +119,9 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavL
     toPathname = toPathname.toLowerCase();
   }
 
-  let isActive = end ? locationPathname === toPathname : locationPathname.startsWith(toPathname);
+  let isActive =
+    locationPathname === toPathname ||
+    (!end && locationPathname.startsWith(toPathname) && locationPathname.charAt(toPathname.length) === '/');
 
   let ariaCurrent = isActive ? ariaCurrentProp : undefined;
 
@@ -130,8 +132,8 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavL
     // If the className prop is not a function, we use a default `active`
     // class for <NavLink />s that are active. In v5 `active` was the default
     // value for `activeClassName`, but we are removing that API and can still
-    // use the old default behavior for a cleraner upgrade path and keep the
-    // simple styling rules working as the currently do.
+    // use the old default behavior for a cleaner upgrade path and keep the
+    // simple styling rules working as they currently do.
     className = [classNameProp, isActive ? 'active' : null].filter(Boolean).join(' ');
   }
 
@@ -187,21 +189,6 @@ export function useLinkClickHandler<E extends Element = HTMLAnchorElement, S ext
     },
     [location, navigate, path, replaceProp, state, target, to]
   );
-}
-
-/**
- * Prevents navigation away from the current page using a window.confirm prompt
- * with the given message.
- */
-export function usePrompt(message: string, when = true) {
-  let blocker = useCallback(
-    (tx) => {
-      if (window.confirm(message)) tx.retry();
-    },
-    [message]
-  );
-
-  useBlocker(blocker, when);
 }
 
 /**
