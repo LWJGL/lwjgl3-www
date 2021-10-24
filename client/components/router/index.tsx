@@ -210,16 +210,16 @@ export function Routes({ children, location }: RoutesProps): React.ReactElement 
  */
 export function useHref(to: To): string {
   let { basename, navigator } = useContext(NavigationContext);
-  let path = useResolvedPath(to);
+  let { hash, pathname, search } = useResolvedPath(to);
 
+  let joinedPathname = pathname;
   if (basename !== '/') {
     let toPathname = getToPathname(to);
     let endsWithSlash = toPathname != null && toPathname.endsWith('/');
-    path.pathname =
-      path.pathname === '/' ? basename + (endsWithSlash ? '/' : '') : joinPaths([basename, path.pathname]);
+    joinedPathname = pathname === '/' ? basename + (endsWithSlash ? '/' : '') : joinPaths([basename, pathname]);
   }
 
-  return navigator.createHref(path);
+  return navigator.createHref({ pathname: joinedPathname, search, hash });
 }
 
 /**
@@ -570,7 +570,7 @@ function flattenRoutes(
       return;
     }
 
-    branches.push({ path, score: computeScore(path), routesMeta });
+    branches.push({ path, score: computeScore(path, route.index), routesMeta });
   });
 
   return branches;
@@ -588,17 +588,22 @@ function rankRouteBranches(branches: RouteBranch[]): void {
 }
 
 const paramRe = /^:\w+$/;
-const dynamicSegmentValue = 2;
+const dynamicSegmentValue = 3;
+const indexRouteValue = 2;
 const emptySegmentValue = 1;
 const staticSegmentValue = 10;
 const splatPenalty = -2;
 const isSplat = (s: string) => s === '*';
 
-function computeScore(path: string): number {
+function computeScore(path: string, index: boolean | undefined): number {
   let segments = path.split('/');
   let initialScore = segments.length;
   if (segments.some(isSplat)) {
     initialScore += splatPenalty;
+  }
+
+  if (index) {
+    initialScore += indexRouteValue;
   }
 
   return segments
