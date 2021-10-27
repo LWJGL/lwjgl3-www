@@ -15,7 +15,7 @@ import { Home } from '~/routes';
 
 const StyledHeader = styled('header', {
   position: 'absolute',
-  zIndex: ZINDEX_MODAL_BACKDROP - 2,
+  zIndex: ZINDEX_MODAL_BACKDROP - 1,
   top: 0,
   left: 0,
   width: '100%',
