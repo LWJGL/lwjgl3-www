@@ -278,6 +278,10 @@ export const GoldSponsors: React.FC = ({ children }) => (
         <a href="https://nzcasinohex.com/" title="NZCasinoHex" rel="sponsored noopener external" target="_blank">
           <ImgLazy width={200 / 2} height={51 / 2} src="/img/sponsors/nzcasinohex.png" alt="NZCasinoHex" />
         </a>
+
+        <a href="https://arabcasinohex.com/" title="ArabCasinoHEX" rel="sponsored noopener external" target="_blank">
+          <ImgLazy width={166} height={46} src="/img/sponsors/arab-casino-hex-dark.png" alt="ArabCasinoHEX" />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
