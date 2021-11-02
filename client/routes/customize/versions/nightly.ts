@@ -13,21 +13,6 @@ export default (prev: BuildBindings): BuildBindings => ({
       ...(prev.byId[Binding.BGFX] as BindingDefinition),
       natives: [...NATIVE_LTE_322, Native.LinuxARM32, Native.LinuxARM64, Native.MacOSARM64, Native.WindowsX86],
     },
-    /*[Binding.BULLET]: {
-      id: Binding.BULLET,
-      title: 'Bullet Physics',
-      description:
-        'Real-time collision detection and multi-physics simulation for VR, games, visual effects, robotics, machine learning etc.',
-      natives: NATIVE_ALL,
-      website: 'https://pybullet.org/',
-    },*/
-    [Binding.DRIFTFX]: {
-      id: Binding.DRIFTFX,
-      title: 'DriftFX',
-      description: 'A library that allows you to render any OpenGL content directly into JavaFX nodes.',
-      natives: NATIVE_ALL,
-      website: 'https://github.com/eclipse-efx/efxclipse-drift',
-    },
     [Binding.GLFW]: { ...(prev.byId[Binding.GLFW] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.JEMALLOC]: { ...(prev.byId[Binding.JEMALLOC] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LIBDIVIDE]: { ...(prev.byId[Binding.LIBDIVIDE] as BindingDefinition), natives: NATIVE_ALL },

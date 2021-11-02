@@ -21,9 +21,7 @@ export enum Binding {
   // Bindings
   ASSIMP = 'lwjgl-assimp',
   BGFX = 'lwjgl-bgfx',
-  BULLET = 'lwjgl-bullet',
   CUDA = 'lwjgl-cuda',
-  DRIFTFX = 'lwjgl-driftfx',
   EGL = 'lwjgl-egl',
   GLFW = 'lwjgl-glfw',
   JAWT = 'lwjgl-jawt',
