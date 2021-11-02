@@ -92,18 +92,18 @@ export interface RouteProps {
 export interface PathRouteProps {
   caseSensitive?: boolean;
   children?: React.ReactNode;
-  element?: React.ReactElement | null;
+  element?: React.ReactElement | React.ComponentType | null;
   index?: false;
   path: string;
 }
 
 export interface LayoutRouteProps {
   children?: React.ReactNode;
-  element?: React.ReactElement | null;
+  element?: React.ReactElement | React.ComponentType | null;
 }
 
 export interface IndexRouteProps {
-  element?: React.ReactElement | null;
+  element?: React.ReactElement | React.ComponentType | null;
   index: true;
 }
 
