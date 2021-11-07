@@ -10,8 +10,8 @@ import {
   Fragment,
   Children,
 } from 'react';
-import { Action, parsePath } from 'history';
-import type { History, Location, Path, State, To } from 'history';
+import { Action as NavigationType, parsePath } from 'history';
+import type { History, Location, Path, To } from 'history';
 
 ///////////////////////////////////////////////////////////////////////////////
 // CONTEXT
@@ -42,8 +42,8 @@ if (!FLAG_PRODUCTION) {
 }
 
 interface LocationContextObject {
-  action: Action;
   location: Location;
+  navigationType: NavigationType;
 }
 
 const LocationContext = createContext<LocationContextObject>(null!);
@@ -75,7 +75,7 @@ export interface OutletProps {}
 /**
  * Renders the child route's element, if there is one.
  *
- * @see https://reactrouter.com/api/Outlet
+ * @see https://reactrouter.com/docs/en/v6/api#outlet
  */
 export function Outlet(_props: OutletProps): React.ReactElement | null {
   return useOutlet();
@@ -110,20 +110,20 @@ export interface IndexRouteProps {
 /**
  * Declares an element that should be rendered at a certain URL path.
  *
- * @see https://reactrouter.com/api/Route
+ * @see https://reactrouter.com/docs/en/v6/api#route
  */
 export function Route(_props: PathRouteProps | LayoutRouteProps | IndexRouteProps): React.ReactElement | null {
   return null;
 }
 
 export interface RouterProps {
-  action?: Action;
   basename?: string;
   children?: React.ReactNode;
   location: Partial<Location> | string;
+  navigationType?: NavigationType;
   navigator: Navigator;
-  pending?: boolean;
   static?: boolean;
+  pending?: boolean;
 }
 
 /**
@@ -133,21 +133,21 @@ export interface RouterProps {
  * router that is more specific to your environment such as a <BrowserRouter>
  * in web browsers or a <StaticRouter> for server rendering.
  *
- * @see https://reactrouter.com/api/Router
+ * @see https://reactrouter.com/docs/en/v6/api#router
  */
 export function Router({
-  action = Action.Pop,
   basename: basenameProp = '/',
   children = null,
   location: locationProp,
+  navigationType = NavigationType.Pop,
   navigator,
-  pending = false,
   static: staticProp = false,
+  pending = false,
 }: RouterProps): React.ReactElement | null {
   let basename = normalizePathname(basenameProp);
   let navigationContext = useMemo(
-    () => ({ basename, navigator, pending, static: staticProp }),
-    [basename, navigator, pending, staticProp]
+    () => ({ basename, navigator, static: staticProp, pending }),
+    [basename, navigator, staticProp, pending]
   );
 
   if (typeof locationProp === 'string') {
@@ -178,7 +178,7 @@ export function Router({
 
   return (
     <NavigationContext.Provider value={navigationContext}>
-      <LocationContext.Provider children={children} value={{ action, location }} />
+      <LocationContext.Provider children={children} value={{ location, navigationType }} />
     </NavigationContext.Provider>
   );
 }
@@ -192,7 +192,7 @@ export interface RoutesProps {
  * A container for a nested tree of <Route> elements that renders the branch
  * that best matches the current location.
  *
- * @see https://reactrouter.com/api/Routes
+ * @see https://reactrouter.com/docs/en/v6/api#routes
  */
 export function Routes({ children, location }: RoutesProps): React.ReactElement | null {
   return useRoutes(createRoutesFromChildren(children), location);
@@ -206,7 +206,7 @@ export function Routes({ children, location }: RoutesProps): React.ReactElement 
  * Returns the full href for the given "to" value. This is useful for building
  * custom links that are also accessible and preserve right-click behavior.
  *
- * @see https://reactrouter.com/api/useHref
+ * @see https://reactrouter.com/docs/en/v6/api#usehref
  */
 export function useHref(to: To): string {
   let { basename, navigator } = useContext(NavigationContext);
@@ -225,7 +225,7 @@ export function useHref(to: To): string {
 /**
  * Returns true if this component is a descendant of a <Router>.
  *
- * @see https://reactrouter.com/api/useInRouterContext
+ * @see https://reactrouter.com/docs/en/v6/api#useinroutercontext
  */
 export function useInRouterContext(): boolean {
   return useContext(LocationContext) != null;
@@ -239,10 +239,20 @@ export function useInRouterContext(): boolean {
  * "routing" in your app, and we'd like to know what your use case is. We may
  * be able to provide something higher-level to better suit your needs.
  *
- * @see https://reactrouter.com/api/useLocation
+ * @see https://reactrouter.com/docs/en/v6/api#uselocation
  */
 export function useLocation(): Location {
   return useContext(LocationContext).location;
+}
+
+/**
+ * Returns the current navigation action which describes how the router came to
+ * the current location, either by a pop, push, or replace on the history stack.
+ *
+ * @see https://reactrouter.com/docs/en/v6/api#usenavigationtype
+ */
+export function useNavigationType(): NavigationType {
+  return useContext(LocationContext).navigationType;
 }
 
 /**
@@ -257,7 +267,7 @@ export function useLocationPending(): boolean {
  * This is useful for components that need to know "active" state, e.g.
  * <NavLink>.
  *
- * @see https://reactrouter.com/api/useMatch
+ * @see https://reactrouter.com/docs/en/v6/api#usematch
  */
 export function useMatch<ParamKey extends string = string>(pattern: PathPattern | string): PathMatch<ParamKey> | null {
   return matchPath(pattern, useLocation().pathname);
@@ -273,14 +283,14 @@ export interface NavigateFunction {
 
 export interface NavigateOptions {
   replace?: boolean;
-  state?: State;
+  state?: any;
 }
 
 /**
  * Returns an imperative method for changing the location. Used by <Link>s, but
  * may also be used by other elements to change the location.
  *
- * @see https://reactrouter.com/api/useNavigate
+ * @see https://reactrouter.com/docs/en/v6/api#usenavigate
  */
 export function useNavigate(): NavigateFunction {
   let { basename, navigator } = useContext(NavigationContext);
@@ -295,7 +305,7 @@ export function useNavigate(): NavigateFunction {
   });
 
   let navigate: NavigateFunction = useCallback(
-    (to: To | number, options: { replace?: boolean; state?: State } = {}) => {
+    (to: To | number, options: { replace?: boolean; state?: any } = {}) => {
       if (!activeRef.current) return;
 
       if (typeof to === 'number') {
@@ -321,7 +331,7 @@ export function useNavigate(): NavigateFunction {
  * Returns the element for the child route at this level of the route
  * hierarchy. Used internally by <Outlet> to render child routes.
  *
- * @see https://reactrouter.com/api/useOutlet
+ * @see https://reactrouter.com/docs/en/v6/api#useoutlet
  */
 export function useOutlet(): React.ReactElement | null {
   return useContext(RouteContext).outlet;
@@ -331,7 +341,7 @@ export function useOutlet(): React.ReactElement | null {
  * Returns an object of key/value pairs of the dynamic params from the current
  * URL that were matched by the route path.
  *
- * @see https://reactrouter.com/api/useParams
+ * @see https://reactrouter.com/docs/en/v6/api#useparams
  */
 export function useParams<Key extends string = string>(): Readonly<Params<Key>> {
   let { matches } = useContext(RouteContext);
@@ -342,7 +352,7 @@ export function useParams<Key extends string = string>(): Readonly<Params<Key>> 
 /**
  * Resolves the pathname of the given `to` value against the current location.
  *
- * @see https://reactrouter.com/api/useResolvedPath
+ * @see https://reactrouter.com/docs/en/v6/api#useresolvedpath
  */
 export function useResolvedPath(to: To): Path {
   let { matches } = useContext(RouteContext);
@@ -362,7 +372,7 @@ export function useResolvedPath(to: To): Path {
  * elements in the tree must render an <Outlet> to render their child route's
  * element.
  *
- * @see https://reactrouter.com/api/useRoutes
+ * @see https://reactrouter.com/docs/en/v6/api#useroutes
  */
 export function useRoutes(routes: RouteObject[], locationArg?: Partial<Location> | string): React.ReactElement | null {
   let { matches: parentMatches } = useContext(RouteContext);
@@ -393,7 +403,8 @@ export function useRoutes(routes: RouteObject[], locationArg?: Partial<Location>
         Object.assign({}, match, {
           params: Object.assign({}, parentParams, match.params),
           pathname: joinPaths([parentPathnameBase, match.pathname]),
-          pathnameBase: joinPaths([parentPathnameBase, match.pathnameBase]),
+          pathnameBase:
+            match.pathnameBase === '/' ? parentPathnameBase : joinPaths([parentPathnameBase, match.pathnameBase]),
         })
       ),
     parentMatches
@@ -409,7 +420,7 @@ export function useRoutes(routes: RouteObject[], locationArg?: Partial<Location>
  * either a `<Route>` element or an array of them. Used internally by
  * `<Routes>` to create a route config from its children.
  *
- * @see https://reactrouter.com/api/createRoutesFromChildren
+ * @see https://reactrouter.com/docs/en/v6/api#createroutesfromchildren
  */
 export function createRoutesFromChildren(children: React.ReactNode): RouteObject[] {
   let routes: RouteObject[] = [];
@@ -466,7 +477,7 @@ export interface RouteObject {
 /**
  * Returns a path with params interpolated.
  *
- * @see https://reactrouter.com/api/generatePath
+ * @see https://reactrouter.com/docs/en/v6/api#generatepath
  */
 export function generatePath(path: string, params: Params = {}): string {
   return path
@@ -499,7 +510,7 @@ export interface RouteMatch<ParamKey extends string = string> {
 /**
  * Matches the given routes to a location and returns the match data.
  *
- * @see https://reactrouter.com/api/matchRoutes
+ * @see https://reactrouter.com/docs/en/v6/api#matchroutes
  */
 export function matchRoutes(
   routes: RouteObject[],
@@ -755,7 +766,7 @@ type Mutable<T> = {
  * Performs pattern matching on a URL pathname and returns information about
  * the match.
  *
- * @see https://reactrouter.com/api/matchPath
+ * @see https://reactrouter.com/docs/en/v6/api#matchpath
  */
 export function matchPath<ParamKey extends string = string>(
   pattern: PathPattern | string,
@@ -837,7 +848,7 @@ function safelyDecodeURIComponent(value: string, paramName: string) {
 /**
  * Returns a resolved path object relative to the given pathname.
  *
- * @see https://reactrouter.com/api/resolvePath
+ * @see https://reactrouter.com/docs/en/v6/api#resolvepath
  */
 export function resolvePath(to: To, fromPathname = '/'): Path {
   let { pathname: toPathname, search = '', hash = '' } = typeof to === 'string' ? parsePath(to) : to;

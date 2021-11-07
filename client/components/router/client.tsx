@@ -1,7 +1,7 @@
 import { useRef, useTransition, useState, useLayoutEffect, forwardRef, useCallback, useMemo } from 'react';
 import { createBrowserHistory, createPath } from 'history';
-import { Router, useHref, useLocation, useNavigate, useResolvedPath } from './';
-import type { BrowserHistory, State, To } from 'history';
+import { Router, useHref, useLocation, useNavigate, useResolvedPath } from './index';
+import type { BrowserHistory, To } from 'history';
 
 export * from './';
 
@@ -46,8 +46,8 @@ export function BrowserRouter({ basename, children, window }: BrowserRouterProps
     <Router
       basename={basename}
       children={children}
-      action={state.action}
       location={state.location}
+      navigationType={state.action}
       navigator={history}
       pending={isPending}
     />
@@ -60,7 +60,7 @@ function isModifiedEvent(event: React.MouseEvent) {
 
 export interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   replace?: boolean;
-  state?: State;
+  state?: any;
   to: To;
 }
 
@@ -155,7 +155,7 @@ if (!FLAG_PRODUCTION) {
  * you need to create custom `<Link>` compoments with the same click behavior we
  * use in our exported `<Link>`.
  */
-export function useLinkClickHandler<E extends Element = HTMLAnchorElement, S extends State = State>(
+export function useLinkClickHandler<E extends Element = HTMLAnchorElement>(
   to: To,
   {
     target,
@@ -164,7 +164,7 @@ export function useLinkClickHandler<E extends Element = HTMLAnchorElement, S ext
   }: {
     target?: React.HTMLAttributeAnchorTarget;
     replace?: boolean;
-    state?: S;
+    state?: any;
   } = {}
 ): (event: React.MouseEvent<E, MouseEvent>) => void {
   let navigate = useNavigate();
@@ -215,7 +215,7 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit) {
 
   let navigate = useNavigate();
   let setSearchParams = useCallback(
-    (nextInit: URLSearchParamsInit, navigateOptions?: { replace?: boolean; state?: State }) => {
+    (nextInit: URLSearchParamsInit, navigateOptions?: { replace?: boolean; state?: any }) => {
       navigate('?' + createSearchParams(nextInit), navigateOptions);
     },
     [navigate]
