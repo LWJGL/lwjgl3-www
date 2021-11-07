@@ -142,7 +142,7 @@ const initialState: State = {
 
 export function NavProgress() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const isPending: boolean = useLocationPending();
+  const isPending = useLocationPending();
   const delayTimeoutId = useRef<number | null>(null);
   const trickleTimeoutId = useRef<number | null>(null);
   const fadeoutTimeoutId = useRef<number | null>(null);

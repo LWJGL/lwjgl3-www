@@ -1,10 +1,11 @@
-import { memo, useEffect } from 'react';
+import { memo, useEffect, StrictMode } from 'react';
 import { useLocation } from '~/components/router/client';
 import { useDocumentTitle } from '~/hooks/useDocumentTitle';
 import { useMetaDescription } from '~/hooks/useMetaDescription';
 import { usePrevious } from '~/hooks/usePrevious';
 import { scrollSmooth } from '~/services/scrollSmooth';
 // import { trackView } from '~/services/ga';
+import type { Location } from 'history';
 
 // Store scroll position when leaving a route, restore if we return back to it
 interface ScrollPosition {
@@ -18,7 +19,7 @@ interface Props {
 }
 
 interface PropsMemo {
-  location: any;
+  location: Location;
   title?: string;
   description?: string;
 }
@@ -77,9 +78,8 @@ function arePropsEqual({ location: prevLocation }: PropsMemo, { location: nextLo
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
 }
 
-//@ts-expect-error
 const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, description, children }) => {
-  const { /*pathname, search,*/ hash, key = 'root' } = location;
+  const { /*pathname, search,*/ hash, key = 'default' } = location;
 
   // Update document title
   useDocumentTitle(title);
@@ -118,7 +118,7 @@ const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, descriptio
   //   trackView({ page_path: `${pathname}${search}` });
   // }, [pathname, search]);
 
-  return children !== undefined ? children : null;
+  return children !== undefined ? <StrictMode>{children}</StrictMode> : null;
 };
 
 const PageViewMemo = memo(PageViewWithLocation, arePropsEqual);
@@ -139,7 +139,8 @@ export const PageView: React.FC<Props> = (props) => {
 
   // Hash scrolling
   const { hash } = location;
-  const prevHash = usePrevious(hash);
+  const prevHash = usePrevious(hash, '');
+
   useEffect(() => {
     const targetEl = hash.length > 1 ? document.getElementById(hash.slice(1)) : null;
 

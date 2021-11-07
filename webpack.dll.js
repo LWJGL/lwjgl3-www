@@ -29,7 +29,6 @@ module.exports = {
         'react-fast-compare',
         'react-is',
         'react-refresh/runtime',
-        'react-router-dom',
         'reselect',
         'scroll-into-view-if-needed',
         'use-context-selector',

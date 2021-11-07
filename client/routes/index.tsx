@@ -1,8 +1,6 @@
 import { Component, lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { Routes, Route } from '~/components/router/client';
 import { PageError } from './PageError';
-import { PageNotFound } from './PageNotFound';
 // import { delay } from '../services/delay';
 
 // function $R(fn: () => Promise<{ default: React.ComponentType<any> }>) {
@@ -48,21 +46,3 @@ export const License = $R(() => import(/* webpackChunkName: "route-license" */ '
 export const Sponsors = $R(() => import(/* webpackChunkName: "route-sponsors" */ './sponsors'));
 export const Frameworks = $R(() => import(/* webpackChunkName: "route-frameworks" */ './frameworks'));
 // export const Dev = $R(() => import(/* webpackChunkName: "route-dev" */ './dev'));
-
-export const RouterConfig: React.FC<{}> = () => {
-  return (
-    <Routes>
-      <Route path="/" element={Home} />
-      <Route path="/guide" element={Guide} />
-      <Route path="/download" element={Download} />
-      <Route path="/customize" element={Customize} />
-      <Route path="/browse/*" element={Browse} />
-      <Route path="/source" element={Source} />
-      <Route path="/frameworks" element={Frameworks} />
-      <Route path="/sponsors" element={Sponsors} />
-      <Route path="/license" element={License} />
-      {/* <Route path="/dev" element={Dev} /> */}
-      <Route path="*" element={PageNotFound} />
-    </Routes>
-  );
-};

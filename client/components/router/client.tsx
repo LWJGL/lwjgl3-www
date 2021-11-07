@@ -32,6 +32,7 @@ export function BrowserRouter({ basename, children, window }: BrowserRouterProps
     location: history.location,
   });
 
+  // useLayoutEffect(() => history.listen(setState), [history]);
   useLayoutEffect(
     () =>
       history.listen((update) => {

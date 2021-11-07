@@ -6,7 +6,7 @@ import {
   useCallback,
   useMemo,
   isValidElement,
-  createElement,
+  // createElement,
   Fragment,
   Children,
 } from 'react';
@@ -84,7 +84,7 @@ export function Outlet(_props: OutletProps): React.ReactElement | null {
 export interface RouteProps {
   caseSensitive?: boolean;
   children?: React.ReactNode;
-  element?: React.ReactElement | React.ComponentType | null;
+  element?: React.ReactElement | null;
   index?: boolean;
   path?: string;
 }
@@ -92,18 +92,18 @@ export interface RouteProps {
 export interface PathRouteProps {
   caseSensitive?: boolean;
   children?: React.ReactNode;
-  element?: React.ReactElement | React.ComponentType | null;
+  element?: React.ReactElement | null;
   index?: false;
   path: string;
 }
 
 export interface LayoutRouteProps {
   children?: React.ReactNode;
-  element?: React.ReactElement | React.ComponentType | null;
+  element?: React.ReactElement | null;
 }
 
 export interface IndexRouteProps {
-  element?: React.ReactElement | React.ComponentType | null;
+  element?: React.ReactElement | null;
   index: true;
 }
 
@@ -469,7 +469,7 @@ export type Params<Key extends string = string> = {
 export interface RouteObject {
   caseSensitive?: boolean;
   children?: RouteObject[];
-  element?: React.ReactNode | React.ComponentType<any>;
+  element?: React.ReactNode;
   index?: boolean;
   path?: string;
 }
@@ -692,20 +692,20 @@ function _renderMatches(matches: RouteMatch[] | null, parentMatches: RouteMatch[
   if (matches == null) return null;
 
   return matches.reduceRight((outlet, match, index) => {
-    const children = match.route.element ? (
-      isValidElement(match.route.element) ? (
-        match.route.element
-      ) : (
-        //@ts-expect-error
-        createElement(match.route.element)
-      )
-    ) : (
-      <Outlet />
-    );
+    // const children = match.route.element ? (
+    //   isValidElement(match.route.element) ? (
+    //     match.route.element
+    //   ) : (
+    //     //@ts-expect-error
+    //     createElement(match.route.element)
+    //   )
+    // ) : (
+    //   <Outlet />
+    // );
 
     return (
       <RouteContext.Provider
-        children={children}
+        children={match.route.element !== undefined ? match.route.element : <Outlet />}
         value={{
           outlet,
           matches: parentMatches.concat(matches.slice(0, index + 1)),
