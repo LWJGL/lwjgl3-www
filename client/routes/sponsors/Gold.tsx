@@ -282,6 +282,34 @@ export const GoldSponsors: React.FC = ({ children }) => (
         <a href="https://arabcasinohex.com/" title="ArabCasinoHEX" rel="sponsored noopener external" target="_blank">
           <ImgLazy width={166} height={46} src="/img/sponsors/arab-casino-hex-dark.png" alt="ArabCasinoHEX" />
         </a>
+
+        <a
+          href="https://www.targetedwebtraffic.com/"
+          title="Targeted Web Traffic"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy
+            width={270 / 3}
+            height={243 / 3}
+            src="/img/sponsors/targetedwebtraffic-270x243.png"
+            alt="Targeted Web Traffic"
+          />
+        </a>
+
+        <a
+          href="https://www.instafollowers.co/"
+          title="Buy Instagram Followers"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy
+            width={320 / 1.5}
+            height={100 / 1.5}
+            src="/img/sponsors/instafollowers320x100.svg"
+            alt="instafollowers.co"
+          />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
