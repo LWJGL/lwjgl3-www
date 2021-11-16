@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "puppeteer-core": "10.4.0",
-    "undici": "4.7.0",
+    "puppeteer-core": "11.0.0",
+    "undici": "4.10.0",
     "yargs": "17.2.1"
   },
   "scripts": {
