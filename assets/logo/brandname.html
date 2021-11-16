@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap');
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        background: transparent;
+      }
+      :root {
+        background-color: #221e1f;
+        color: white;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      h1 {
+        font-weight: 700;
+      }
+      h1 span {
+        font-weight: 300;
+      }
+      .capsizedText {
+        font-family: 'Roboto', sans-serif;
+        font-size: 140.6593px;
+        line-height: 150px;
+      }
+      .capsizedText::before {
+        content: '';
+        margin-bottom: -0.1641em;
+        display: table;
+      }
+      .capsizedText::after {
+        content: '';
+        margin-top: -0.1914em;
+        display: table;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="capsizedText"><span>LW</span>JGL</h1>
+  </body>
+</html>

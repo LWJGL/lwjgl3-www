@@ -46,8 +46,7 @@ node render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512 --bg="#424242" -
 # apple-touch-icon
 node render.mjs logo.svg dist/apple-touch-icon-192x192.png -w 192 -h 192 --bg="#424242" --safe
 
-# Web App Manifest Icons
-
+# # Web App Manifest Icons
 # # Places icon in  a safe zone with a radius of 2/5 (40%) of the icon size
 # # https://www.w3.org/TR/appmanifest/#dfn-safe-zone
 # # TODO: enable this after Chrome starts respecting "purpose": "maskable"
@@ -56,6 +55,12 @@ node render.mjs logo.svg dist/apple-touch-icon-192x192.png -w 192 -h 192 --bg="#
 
 # Social icon
 node render.mjs logo.svg dist/social-512x512.png -w 512 -h 512 --bg="#424242" --padding 72
+
+# Brand name
+node render-html.mjs brandname.html dist/brand-2048x2048.png -w 512 -h 512 -s 4
+
+# GitHub preview
+node render-html.mjs brandname.html dist/github-1280x640.png -w 640 -h 320 -s 2
 
 # Optimize with OptiPNG
 docker run -v $(pwd):/source --rm -it buffcode/docker-optipng -o 7 ./dist/*.png
