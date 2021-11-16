@@ -3,17 +3,27 @@
 # https://github.com/GoogleChrome/chrome-launcher/blob/master/docs/chrome-flags-for-tools.md
 google-chrome-unstable \
   --headless \
-	--no-sandbox \
+  --hide-scrollbars \
+  --no-sandbox \
+  --no-first-run \
+  --no-default-browser-check \
+  --use-fake-device-for-media-stream \
   --enable-automation \
   --in-process-gpu \
   --single-process \
+  --mute-audio \
+  --enable-logging=stderr \
+  --log-level=0 \
+  --password-store=basic \
+  --metrics-recording-only \
+  --allow-running-insecure-content \
+  --autoplay-policy=user-gesture-required \
+  --disable-background-networking \
   --disable-dev-shm-usage \
   --disable-client-side-phishing-detection \
-	--disable-default-apps \
-	--disable-extensions \
+  --disable-default-apps \
+  --disable-extensions \
   --disable-component-extensions-with-background-pages \
-	--mute-audio \
-	--no-first-run \
   --disable-background-timer-throttling \
   --disable-backgrounding-occluded-windows \
   --disable-features=ScriptStreaming \
@@ -23,37 +33,20 @@ google-chrome-unstable \
   --disable-prompt-on-repost \
   --disable-renderer-backgrounding \
   --disable-device-discovery-notifications \
-  --enable-logging=stderr \
-  --log-level=0 \
-  --password-store=basic \
   --silent-debugger-extension-api \
-	--disable-background-networking \
-	--disable-breakpad \
-	--disable-component-update \
-	--disable-domain-reliability \
-	--disable-sync \
-	--disable-translate \
-	--metrics-recording-only \
+  --disable-breakpad \
+  --disable-component-update \
+  --disable-domain-reliability \
+  --disable-sync \
+  --disable-translate \
   --disable-features=PaintHolding \
   --disable-partial-raster \
   --disable-skia-runtime-opts \
   --disable-features=site-per-process \
-	--hide-scrollbars \
-	--safebrowsing-disable-auto-update \
-	--ignore-certificate-errors \
-	--ignore-ssl-errors \
-	--ignore-certificate-errors-spki-list \
-	--user-data-dir=/tmp \
-	--remote-debugging-port=9222 \
-	--remote-debugging-address=0.0.0.0
-
-# --disable-gpu \
-# --deterministic-mode \
-# --remote-debugging-pipe \
-# --allow-running-insecure-content \
-# --autoplay-policy=user-gesture-required \
-# --disable-popup-blocking \
-# --js-flags=--random-seed=1157259157
-# --block-new-web-contents \
-# --force-color-profile=srgb \
-# --force-device-scale-factor=1 \
+  --safebrowsing-disable-auto-update \
+  --ignore-certificate-errors \
+  --ignore-ssl-errors \
+  --ignore-certificate-errors-spki-list \
+  --user-data-dir=/tmp \
+  --remote-debugging-port=9222 \
+  --remote-debugging-address=0.0.0.0
