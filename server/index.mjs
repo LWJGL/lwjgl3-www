@@ -307,19 +307,19 @@ app.route({
       return reply.view('404.pug');
     }
 
-    template.favicon = 'favicon.ico';
+    const preload = [`\<https://fonts.gstatic.com\>; rel=preconnect; crossorigin`];
+
+    const template = {
+      development: DEVELOPMENT,
+      favicon: 'favicon.ico',
+      // ga: globals.google_analytics_id,
+    };
+
     if (request.encoding(['br'])) {
       template.favicon += '.br';
     } else if (request.encoding(['gzip'])) {
       template.favicon += '.gz';
     }
-
-    const preload = [`\<https://fonts.gstatic.com\>; rel=preconnect; crossorigin`];
-
-    const template = {
-      development: DEVELOPMENT,
-      // ga: globals.google_analytics_id,
-    };
 
     if (PRODUCTION) {
       template.css = globalCss;
