@@ -22,6 +22,7 @@ const StyledHeader = styled('header', {
   color: 'white',
   lineHeight: '3rem',
   fontSize: '$lg',
+  fontFamily: '$logo',
   // willChange: 'background-color, top',
   userSelect: 'none',
   display: 'flex',

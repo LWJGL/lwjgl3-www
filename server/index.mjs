@@ -307,6 +307,15 @@ app.route({
       return reply.view('404.pug');
     }
 
+    template.favicon = 'favicon.ico';
+    if (request.encoding(['br'])) {
+      template.favicon += '.br';
+    } else if (request.encoding(['gzip'])) {
+      template.favicon += '.gz';
+    }
+
+    const preload = [`\<https://fonts.gstatic.com\>; rel=preconnect; crossorigin`];
+
     const template = {
       development: DEVELOPMENT,
       // ga: globals.google_analytics_id,
@@ -320,7 +329,7 @@ app.route({
       // To disable PUSH, append "; nopush"
       // More details: https://blog.cloudflare.com/announcing-support-for-http-2-server-push-2/
       // Push entries, we need to start loading as soon as possible
-      const preload = [`\</js/${template.entry}\>; rel=preload; as=script`];
+      preload.push(`\</js/${template.entry}\>; rel=preload; as=script`);
       // Append chunk of important routes to the preload list
       // Logic can be customized as needed. Can get complicated for recursive routes
       // or routes deep in site's hierarchy, so not always worth it
@@ -339,19 +348,14 @@ app.route({
           preload.push(`\<https://travis-ci.org\>; rel=preconnect`);
           break;
       }
-      reply.header('Link', preload);
       reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
     } else {
       template.entry = 'main.js';
     }
 
-    template.favicon = 'favicon.ico';
-    if (request.encoding(['br'])) {
-      template.favicon += '.br';
-    } else if (request.encoding(['gzip'])) {
-      template.favicon += '.gz';
+    if (preload.length) {
+      reply.header('Link', preload);
     }
-
     reply.header('Content-Language', 'en');
     // reply.header('Cross-Origin-Embedder-Policy', 'require-corp');
     // reply.header('Cross-Origin-Opener-Policy', 'same-origin');

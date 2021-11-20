@@ -127,6 +127,7 @@ const HeroContent = styled('div', {
     color: 'white',
   },
   h1: {
+    fontFamily: '$logo',
     fontSize: '4rem',
     // fontWeight: '$thin',
     b: {

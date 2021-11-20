@@ -2,6 +2,24 @@
 
 @import 'reset.scss';
 
+// https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap&text=LWJGL
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmSU5vBgU5bYu-wg&skey=11ce8ad5f54705ca&v=v29)
+    format('woff2');
+}
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/l/font?kit=KFOlCnqEu92Fr1MmWUlvBgU5bYu-wg&skey=c06e7213f788649e&v=v29)
+    format('woff2');
+}
+
 body {
   background-color: var(--colors-body);
   color: var(--colors-text);
