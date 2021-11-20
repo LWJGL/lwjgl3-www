@@ -122,6 +122,7 @@ function buildConfiguration() {
     experiments: {
       // futureDefaults: true,
       cacheUnaffected: true,
+      backCompat: false,
     },
   };
 
