@@ -307,8 +307,6 @@ app.route({
       return reply.view('404.pug');
     }
 
-    const preload = [`\<https://fonts.gstatic.com\>; rel=preconnect; crossorigin`];
-
     const template = {
       development: DEVELOPMENT,
       favicon: 'favicon.ico',
@@ -319,6 +317,18 @@ app.route({
       template.favicon += '.br';
     } else if (request.encoding(['gzip'])) {
       template.favicon += '.gz';
+    }
+
+    const preload = [`\<https://fonts.gstatic.com\>; rel=preconnect; crossorigin`];
+    const requestURL = new URL(request.protocol + '://' + request.host + request.url);
+
+    switch (requestURL.pathname) {
+      case '/':
+        preload.push(`\<https://cdn.jsdelivr.net\>; rel=preconnect`);
+        break;
+      case '/source':
+        preload.push(`\<https://img.shields.io\>; rel=preconnect`);
+        break;
     }
 
     if (PRODUCTION) {
@@ -336,17 +346,6 @@ app.route({
       const routes = chunkMap(manifest.routes, request.url);
       if (routes !== null) {
         preload.push(...routes.map(id => `\</js/${manifest.assets[id]}\>; rel=preload; as=script`));
-      }
-      switch (request.path) {
-        // case '/':
-        case '/guide':
-          preload.push(`\<https://cdn.jsdelivr.net\>; rel=preconnect`);
-          break;
-        case '/source':
-          preload.push(`\<https://api.travis-ci.org\>; rel=preconnect`);
-          preload.push(`\<https://ci.appveyor.com\>; rel=preconnect`);
-          preload.push(`\<https://travis-ci.org\>; rel=preconnect`);
-          break;
       }
       reply.header('Cache-Control', `public, max-age=60, s-maxage=${3600 * 24}`);
     } else {
