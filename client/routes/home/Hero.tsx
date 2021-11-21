@@ -12,7 +12,7 @@ import '~/theme/icons/fa/regular/chevron-down';
 
 const Canvas = lazy(() => {
   return Promise.all([
-    loadJS('https://cdn.jsdelivr.net/npm/three@0.124.0/build/three.min.js'),
+    loadJS('https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js'),
     import(/* webpackChunkName: "route-home$canvas" */ './Canvas'),
   ]).then((values) => values[1]);
 });
