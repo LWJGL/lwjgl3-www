@@ -7,10 +7,10 @@ block content
 
     h4(style="color: gray; font-size: 1.5em") Error Details
     if error.message !== undefined && error.message.length > 0
-      pre= error.message
+      pre!= error.message
     else if typeof error === 'string'
-      pre= error
+      pre!= error
     else if development
-      pre= JSON.stringify(error, null, ' ')
+      pre!= JSON.stringify(error, null, ' ')
     if error.stack && development
-      pre= error.stack
+      pre!= error.stack
