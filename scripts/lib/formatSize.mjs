@@ -27,11 +27,11 @@ export default function formatSize(size, isGzip, isRoot, isCss) {
   }
 
   if (size >= limits[2] * kB) {
-    return chalk`{red ${prettyBytes(size)}}`;
+    return chalk.red(prettyBytes(size));
   } else if (size >= limits[1] * kB) {
-    return chalk`{yellow ${prettyBytes(size)}}`;
+    return chalk.yellow(prettyBytes(size));
   } else if (size <= limits[0] * kB) {
-    return chalk`{green ${prettyBytes(size)}}`;
+    return chalk.green(prettyBytes(size));
   }
 
   return prettyBytes(size);

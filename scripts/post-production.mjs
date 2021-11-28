@@ -7,7 +7,7 @@ import { copyFile, writeFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 // import { minify } from 'terser';
 import chalk from 'chalk';
-import gzipSize from 'gzip-size';
+import { gzipSizeSync } from 'gzip-size';
 import CliTable from 'cli-table';
 
 // Utils
@@ -84,7 +84,7 @@ manifest.assets
       cdn: record.name,
       route: name.match(/^route[-]/) !== null && name.indexOf('$') === -1,
       size: record.size,
-      gzipSize: gzipSize.sync(src),
+      gzipSize: gzipSizeSync(src),
     };
 
     // Add to asset map
@@ -143,11 +143,11 @@ for (let asset of assetMap.values()) {
   const isEntry = productionManifest.entry === asset.id;
 
   if (isEntry) {
-    row.push(chalk`{cyan ${asset.name}}`);
+    row.push(chalk.cyan(asset.name));
   } else if (asset.route) {
-    row.push(chalk`{yellow ${asset.name}}`);
+    row.push(chalk.yellow(asset.name));
   } else {
-    row.push(`${ellipsis(asset.name)}`);
+    row.push(ellipsis(asset.name));
   }
 
   row.push(formatSize(asset.size, false, isEntry, false), formatSize(asset.gzipSize, true, isEntry, false));
@@ -155,7 +155,7 @@ for (let asset of assetMap.values()) {
 }
 
 // Push totals
-tbl.push([chalk`{cyan TOTAL}`, prettyBytes(sum), prettyBytes(sumGzip)]);
+tbl.push([chalk.cyan('TOTAL'), prettyBytes(sum), prettyBytes(sumGzip)]);
 
 // Print report
 console.log(tbl.toString());
