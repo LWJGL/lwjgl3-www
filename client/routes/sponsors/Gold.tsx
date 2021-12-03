@@ -179,6 +179,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
             alt="instafollowers.co"
           />
         </a>
+        <a
+          href="https://casino.guide/ethereum/"
+          title="Best ETH Casino 2021"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={240 / 2} height={279 / 2} src="/img/sponsors/casino-guide-240x279.png" alt="Casino.guide" />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
