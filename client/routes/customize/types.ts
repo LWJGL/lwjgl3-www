@@ -42,6 +42,7 @@ export enum Binding {
   OPENGL = 'lwjgl-opengl',
   OPENGLES = 'lwjgl-opengles',
   OPENVR = 'lwjgl-openvr',
+  OPENXR = 'lwjgl-openxr',
   OPUS = 'lwjgl-opus',
   OVR = 'lwjgl-ovr',
   PAR = 'lwjgl-par',
