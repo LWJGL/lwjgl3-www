@@ -10,7 +10,7 @@ import { Heading } from '~/components/ui/Text';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/duotone/cloud-download';
 import '~/theme/icons/fa/duotone/copy';
-import { BuildType } from './types';
+import { BuildType, Mode, Language } from './types';
 
 import type {
   BuildStore,
@@ -21,7 +21,6 @@ import type {
   BuildStoreSnapshot,
   ModeDefinition,
   Version,
-  Language,
   PlatformSelection,
   Native,
 } from './types';
@@ -117,9 +116,14 @@ export function BuildScript({ configDownload, configLoad }: Props) {
 
   const slice = useSelector(selector);
   const { mode } = slice;
+  let fileName = mode.file;
+
+  if (slice.mode.id === Mode.Gradle && slice.language === Language.Kotlin) {
+    fileName = 'build.gradle.kts';
+  }
 
   const labels = {
-    download: `DOWNLOAD ${typeof mode.file === 'string' ? mode.file.toUpperCase() : 'FILE'}`,
+    download: `DOWNLOAD ${fileName !== undefined ? fileName.toUpperCase() : 'FILE'}`,
     copy: ' COPY TO CLIPBOARD',
   };
 
@@ -152,7 +156,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
         {ALLOW_DOWNLOAD && (
           <AnchorButton
             tone="accent"
-            download={mode.file}
+            download={fileName}
             href={`data:${mime(mode)};base64,${btoa(script)}`}
             title={`Download ${mode.id} code snippet`}
           >
