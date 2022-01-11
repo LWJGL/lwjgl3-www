@@ -1,9 +1,10 @@
-FROM node:slim@sha256:af6f241029c4d63107c6ccbbd030c44d331786d724bd9c2e615edf46deab58e2 AS build
+# docker images --no-trunc -q node:slim
+FROM node:slim@sha256:a6a0d486ccb24e735ec3f03d2e338a064ad2bf4946e9cbac1e3f0a73e4a59dae AS build
 WORKDIR /srv
 COPY package.json package-lock.json .npmrc ./
 RUN npm ci --prod --no-audit --no-fund
 
-FROM node:slim@sha256:af6f241029c4d63107c6ccbbd030c44d331786d724bd9c2e615edf46deab58e2
+FROM node:slim@sha256:a6a0d486ccb24e735ec3f03d2e338a064ad2bf4946e9cbac1e3f0a73e4a59dae
 ENV NODE_ENV production
 WORKDIR /srv
 COPY --from=build /srv/node_modules ./node_modules
