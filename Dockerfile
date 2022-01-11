@@ -1,10 +1,10 @@
-# docker images --no-trunc -q node:slim
-FROM node:slim@sha256:a6a0d486ccb24e735ec3f03d2e338a064ad2bf4946e9cbac1e3f0a73e4a59dae AS build
+# https://hub.docker.com/_/node?tab=tags
+FROM node:17.3.1-slim AS build
 WORKDIR /srv
 COPY package.json package-lock.json .npmrc ./
 RUN npm ci --prod --no-audit --no-fund
 
-FROM node:slim@sha256:a6a0d486ccb24e735ec3f03d2e338a064ad2bf4946e9cbac1e3f0a73e4a59dae
+FROM node:17.3.1-slim
 ENV NODE_ENV production
 WORKDIR /srv
 COPY --from=build /srv/node_modules ./node_modules
