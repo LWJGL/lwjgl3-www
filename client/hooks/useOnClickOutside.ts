@@ -9,13 +9,30 @@ export function useOnClickOutside(ref: React.RefObject<HTMLElement>, handler: Re
       }
     };
 
-    // TODO: test this, we might need to use capture
-    document.addEventListener('mousedown', listener);
-    document.addEventListener('touchstart', listener);
+    let ownerDocument: Document | null = null;
+
+    // See: Attaching manual event listeners in a passive effect
+    // https://gist.github.com/bvaughn/fc1c3f27f1aab91c7378f2264f7c3aa1
+    let timeoutID = window.setTimeout(() => {
+      timeoutID = 0;
+      ownerDocument = ref.current !== null ? ref.current.ownerDocument : window.document;
+
+      // TODO: test this, we might need to use capture
+      ownerDocument.addEventListener('mousedown', listener);
+      ownerDocument.addEventListener('touchstart', listener);
+    }, 0);
 
     return () => {
-      document.removeEventListener('mousedown', listener);
-      document.removeEventListener('touchstart', listener);
+      if (timeoutID > 0) {
+        // Don't attach handlers if we're unmounted before the timeout has run.
+        // This is important! Without it, we might leak!
+        clearTimeout(timeoutID);
+      }
+
+      if (ownerDocument !== null) {
+        ownerDocument.removeEventListener('mousedown', listener);
+        ownerDocument.removeEventListener('touchstart', listener);
+      }
     };
   }, [ref, handler]);
 }
