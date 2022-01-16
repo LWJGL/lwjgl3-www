@@ -72,8 +72,9 @@ if (PRODUCTION) {
 // ------------------------------------------------------------------------------
 
 export const app = fastify({
-  connectionTimeout: 0,
-  keepAliveTimeout: 5000,
+  // connectionTimeout: 1000, // default 0 (no timeout)
+  keepAliveTimeout: 75000, // default 5000 (5s). Match NGINX configuration (above ALB's 60s)
+  // maxRequestsPerSocket: 50,  // default 0 (unlimited)
   maxParamLength: 100,
   // bodyLimit: 1024 * 1024 * 1, // 1MB
   bodyLimit: 256 * 1024 * 1, // 256KB
@@ -112,8 +113,8 @@ app.addContentTypeParser('*', function (request, payload, done) {
 // Graceful shutdown
 // ------------------------------------------------------------------------------
 
+/*
 let terminating = false;
-let terminationTimeout;
 function gracefulShutdown() {
   if (terminating) {
     return;
@@ -125,17 +126,22 @@ function gracefulShutdown() {
     process.exit(1);
   }
 
-  terminationTimeout = setTimeout(forceShutdown, PRODUCTION ? 5000 : 1000);
+  let terminationTimeout = setTimeout(forceShutdown, PRODUCTION ? 5000 : 1000);
   app.log.info('Shutting down...');
   app.close().then(() => {
     clearTimeout(terminationTimeout);
     process.exit(0);
   });
 }
+*/
+
+function shutdown() {
+  process.exit(0);
+}
 
 // Comment-out events below when using `node --cpu-prof`
-process.on('SIGINT', gracefulShutdown);
-process.on('SIGTERM', gracefulShutdown);
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
 
 // ------------------------------------------------------------------------------
 // PLUGINS
