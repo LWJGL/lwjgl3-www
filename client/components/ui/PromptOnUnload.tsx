@@ -1,4 +1,3 @@
-export {};
 // import { useEffect } from 'react';
 // import { Prompt } from '~/components/router/client';
 
