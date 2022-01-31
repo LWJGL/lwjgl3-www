@@ -70,7 +70,7 @@ export function generateGradle({
 \tcase OperatingSystem.MAC_OS:
 \t\tproject.ext.lwjglNatives = ${
           macosArches == 1
-            ? `natives-macos${platform.macos ? '' : '-arm64'}`
+            ? `"natives-macos${platform.macos ? '' : '-arm64'}"`
             : `System.getProperty("os.arch").startsWith("aarch64") ? "natives-macos-arm64" : "natives-macos"`
         }
 \t\tbreak`;
