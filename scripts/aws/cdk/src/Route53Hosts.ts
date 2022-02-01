@@ -87,18 +87,6 @@ export class Route53Hosts extends Stack {
         ttl: Duration.minutes(5),
         target: lbTrg,
       });
-      // new route53.ARecord(this, 'lwjgl-org-blog-a', {
-      //   zone: route53Zones.lwjglOrg,
-      //   recordName: 'blog',
-      //   ttl: Duration.minutes(5),
-      //   target: route53.RecordTarget.fromAlias(aliasTarget),
-      // });
-      // new route53.AaaaRecord(this, 'lwjgl-org-blog-aaaa', {
-      //   zone: route53Zones.lwjglOrg,
-      //   recordName: 'blog',
-      //   ttl: Duration.minutes(5),
-      //   target: route53.RecordTarget.fromAlias(),
-      // });
       // new route53.ARecord(this, 'lwjgl-org-www-a', {
       //   zone: route53Zones.lwjglOrg,
       //   recordName: 'www',

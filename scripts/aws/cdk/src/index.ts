@@ -3,6 +3,7 @@ import 'source-map-support/register';
 import { App, type Environment } from 'aws-cdk-lib';
 import { S3 } from './S3';
 import { Route53Zones } from './Route53Zones';
+import { ECS } from './ECS';
 import { Website } from './Website';
 import { LoadBalancer } from './LoadBalancer';
 import { Cloudfront } from './Cloudfront';
@@ -17,7 +18,8 @@ const env: Environment = {
 
 const s3 = new S3(app, 'S3', { env });
 const route53Zones = new Route53Zones(app, 'DNS', { env });
-const website = new Website(app, 'Website', { env });
-const lb = new LoadBalancer(app, 'LoadBalancer', { env, route53Zones, website });
+const ecs = new ECS(app, 'ECS', { env });
+const lb = new LoadBalancer(app, 'LoadBalancer', { env, route53Zones });
+const website = new Website(app, 'Website', { env, ecs, lb });
 const cloudfront = new Cloudfront(app, 'Cloudfront', { env, s3, route53Zones, lb });
 const route53Hosts = new Route53Hosts(app, 'Route53Hosts', { env, route53Zones, lb, cloudfront });

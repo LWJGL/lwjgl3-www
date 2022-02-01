@@ -1,24 +1,24 @@
 import { type Construct } from 'constructs';
 import { Stack, type StackProps, Duration } from 'aws-cdk-lib';
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
-import * as ecs from 'aws-cdk-lib/aws-ecs';
-import * as elb from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+import * as elbv2 from 'aws-cdk-lib/aws-elasticloadbalancingv2';
 import * as targets from 'aws-cdk-lib/aws-elasticloadbalancingv2-targets';
+import { priority } from './priority';
 
 import { type Route53Zones } from './Route53Zones';
-import { type Website } from './Website';
 
 interface Props extends StackProps {
   route53Zones: Route53Zones;
-  website: Website;
 }
 
 export class LoadBalancer extends Stack {
-  public readonly elb: elb.ApplicationLoadBalancer;
+  public readonly elb: elbv2.ApplicationLoadBalancer;
+  public readonly listener80: elbv2.ApplicationListener;
+  public readonly listener443: elbv2.ApplicationListener;
 
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id, props);
-    const { route53Zones, website } = props;
+    const { route53Zones } = props;
 
     const vpc = ec2.Vpc.fromLookup(this, 'vpc', {
       vpcName: 'lwjgl-vpc',
@@ -36,12 +36,12 @@ export class LoadBalancer extends Stack {
     securityGroup.addIngressRule(ec2.Peer.ipv6('::/0'), ec2.Port.tcp(443), 'Allow IPv6 HTTPS');
 
     // https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_elasticloadbalancingv2.ApplicationLoadBalancer.html
-    const lb = new elb.ApplicationLoadBalancer(this, 'elb', {
+    const lb = new elbv2.ApplicationLoadBalancer(this, 'elb', {
       vpc,
       securityGroup,
       loadBalancerName: 'lwjgl-public',
       idleTimeout: Duration.seconds(60),
-      ipAddressType: elb.IpAddressType.DUAL_STACK,
+      ipAddressType: elbv2.IpAddressType.DUAL_STACK,
       // deletionProtection: true,
       internetFacing: true,
       http2Enabled: true,
@@ -58,20 +58,17 @@ export class LoadBalancer extends Stack {
     // https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_elasticloadbalancingv2.BaseApplicationListenerProps.html
     const listener = lb.addListener('elb-80', {
       port: 80,
-      protocol: elb.ApplicationProtocol.HTTP,
-      defaultAction: elb.ListenerAction.fixedResponse(404, { contentType: 'text/plain' }),
+      protocol: elbv2.ApplicationProtocol.HTTP,
+      defaultAction: elbv2.ListenerAction.fixedResponse(404, { contentType: 'text/plain' }),
     });
 
-    let priority = 0;
-
-    priority += 1;
-    new elb.ApplicationListenerRule(this, 'lwjgl-com-redirect', {
+    new elbv2.ApplicationListenerRule(this, 'lwjgl-com-redirect', {
       listener,
-      priority,
-      conditions: [elb.ListenerCondition.hostHeaders(['lwjgl.com', 'www.lwjgl.com'])],
-      action: elb.ListenerAction.redirect({
+      priority: priority('elb-80'),
+      conditions: [elbv2.ListenerCondition.hostHeaders(['lwjgl.com', 'www.lwjgl.com'])],
+      action: elbv2.ListenerAction.redirect({
         host: 'www.lwjgl.org',
-        protocol: elb.ApplicationProtocol.HTTPS,
+        protocol: elbv2.ApplicationProtocol.HTTPS,
         port: '443',
         path: '/#{path}',
         query: '#{query}',
@@ -79,14 +76,13 @@ export class LoadBalancer extends Stack {
       }),
     });
 
-    priority += 1;
-    new elb.ApplicationListenerRule(this, 'lwjgl-org-blog-redirect', {
+    new elbv2.ApplicationListenerRule(this, 'lwjgl-org-blog-redirect', {
       listener,
-      priority,
-      conditions: [elb.ListenerCondition.hostHeaders(['blog.lwjgl.org'])],
-      action: elb.ListenerAction.redirect({
+      priority: priority('elb-80'),
+      conditions: [elbv2.ListenerCondition.hostHeaders(['blog.lwjgl.org'])],
+      action: elbv2.ListenerAction.redirect({
         host: 'blog.lwjgl.org',
-        protocol: elb.ApplicationProtocol.HTTPS,
+        protocol: elbv2.ApplicationProtocol.HTTPS,
         port: '443',
         path: '/#{path}',
         query: '#{query}',
@@ -98,24 +94,21 @@ export class LoadBalancer extends Stack {
 
     const listener443 = lb.addListener('elb-443', {
       port: 443,
-      protocol: elb.ApplicationProtocol.HTTPS,
+      protocol: elbv2.ApplicationProtocol.HTTPS,
       certificates: [route53Zones.lwjglOrgCert, route53Zones.lwjglComCert],
-      sslPolicy: elb.SslPolicy.FORWARD_SECRECY_TLS12_RES,
-      defaultAction: elb.ListenerAction.fixedResponse(404, { contentType: 'text/plain' }),
+      sslPolicy: elbv2.SslPolicy.FORWARD_SECRECY_TLS12_RES,
+      defaultAction: elbv2.ListenerAction.fixedResponse(404, { contentType: 'text/plain' }),
     });
 
-    // reset priority
-    priority = 0;
-
     // lwjgl.com redirects
-    priority += 1;
-    new elb.ApplicationListenerRule(this, 'lwjgl-com-redirect-443', {
+
+    new elbv2.ApplicationListenerRule(this, 'lwjgl-com-redirect-443', {
       listener: listener443,
-      priority,
-      conditions: [elb.ListenerCondition.hostHeaders(['lwjgl.com', 'www.lwjgl.com'])],
-      action: elb.ListenerAction.redirect({
+      priority: priority('elb-443'),
+      conditions: [elbv2.ListenerCondition.hostHeaders(['lwjgl.com', 'www.lwjgl.com'])],
+      action: elbv2.ListenerAction.redirect({
         host: 'www.lwjgl.org',
-        protocol: elb.ApplicationProtocol.HTTPS,
+        protocol: elbv2.ApplicationProtocol.HTTPS,
         port: '443',
         path: '/#{path}',
         query: '#{query}',
@@ -124,16 +117,15 @@ export class LoadBalancer extends Stack {
     });
 
     // blog.lwjgl.org
-    priority += 1;
     const blogTrg = new targets.IpTarget('10.0.38.144', 80);
-    const blogTrgGroup = new elb.ApplicationTargetGroup(this, 'blog-tg', {
+    const blogTrgGroup = new elbv2.ApplicationTargetGroup(this, 'blog-tg', {
       vpc,
       targetGroupName: 'blog-tg',
-      targetType: elb.TargetType.IP,
+      targetType: elbv2.TargetType.IP,
       targets: [blogTrg],
       port: 80,
       deregistrationDelay: Duration.seconds(5),
-      loadBalancingAlgorithmType: elb.TargetGroupLoadBalancingAlgorithmType.ROUND_ROBIN,
+      loadBalancingAlgorithmType: elbv2.TargetGroupLoadBalancingAlgorithmType.ROUND_ROBIN,
       healthCheck: {
         healthyThresholdCount: 2,
         unhealthyThresholdCount: 4,
@@ -142,50 +134,15 @@ export class LoadBalancer extends Stack {
         path: '/health',
       },
     });
-    new elb.ApplicationListenerRule(this, 'lwjgl-org-blog-443', {
+    new elbv2.ApplicationListenerRule(this, 'lwjgl-org-blog-443', {
       listener: listener443,
-      priority,
-      conditions: [elb.ListenerCondition.hostHeaders(['blog.lwjgl.org'])],
+      priority: priority('elb-443'),
+      conditions: [elbv2.ListenerCondition.hostHeaders(['blog.lwjgl.org'])],
       targetGroups: [blogTrgGroup],
     });
 
-    // // www.lwjgl.org
-    // const targetGroup = new elb.ApplicationTargetGroup(this, 'alb-target-group', {
-    //   vpc,
-    //   targetGroupName: 'ecs-lwjgl',
-    //   targets: [service],
-    //   port: 80,
-    //   deregistrationDelay: Duration.seconds(10),
-    //   healthCheck: {
-    //     enabled: true,
-    //     path: '/health',
-    //     timeout: Duration.seconds(2),
-    //     healthyThresholdCount: 2,
-    //     unhealthyThresholdCount: 2,
-    //   },
-    // });
-
-    // const listenerRule = new elb.ApplicationListenerRule(this, 'alb-listener-rule', {
-    //   listener,
-    //   priority: 7,
-    //   conditions: [elb.ListenerCondition.hostHeaders(['www.lwjgl.org'])],
-    //   action: elb.ListenerAction.forward([targetGroup]),
-    // });
-
-    // const listenerRuleRedirect = new elb.ApplicationListenerRule(this, 'alb-listener-rule-redirect', {
-    //   listener,
-    //   priority: 8,
-    //   conditions: [elb.ListenerCondition.hostHeaders(['lwjgl.org'])],
-    //   action: elb.ListenerAction.redirect({
-    //     protocol: 'HTTPS',
-    //     port: '443',
-    //     host: 'www.lwjgl.org',
-    //     path: '/#{path}',
-    //     query: '#{query}',
-    //     permanent: true,
-    //   }),
-    // });
-
     this.elb = lb;
+    this.listener80 = listener;
+    this.listener443 = listener443;
   }
 }

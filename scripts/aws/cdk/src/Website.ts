@@ -4,6 +4,17 @@ import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as logs from 'aws-cdk-lib/aws-logs';
+import * as elb from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+
+import { priority } from './priority';
+
+import { type ECS } from './ECS';
+import { type LoadBalancer } from './LoadBalancer';
+
+interface Props extends StackProps {
+  ecs: ECS;
+  lb: LoadBalancer;
+}
 
 function createTaskPolicy(): iam.PolicyDocument {
   const policyDocument = new iam.PolicyDocument();
@@ -21,30 +32,13 @@ function createTaskPolicy(): iam.PolicyDocument {
 export class Website extends Stack {
   public readonly service: ecs.Ec2Service;
 
-  constructor(scope: Construct, id: string, props: StackProps) {
+  constructor(scope: Construct, id: string, props: Props) {
     super(scope, id, props);
+
+    const serviceName = 'lwjgl-www';
 
     const vpc = ec2.Vpc.fromLookup(this, 'vpc', {
       vpcName: 'lwjgl-vpc',
-    });
-
-    const cluster = new ecs.Cluster(this, 'cluster', {
-      vpc,
-      containerInsights: true,
-      // clusterName: 'lwjgl-cluster',
-      capacity: {
-        instanceType: new ec2.InstanceType('t3.micro'),
-        machineImage: ecs.EcsOptimizedImage.amazonLinux2(ecs.AmiHardwareType.STANDARD, {
-          cachedInContext: false,
-        }),
-        minCapacity: 1,
-        desiredCapacity: 1,
-        maxCapacity: 2,
-        allowAllOutbound: true,
-        associatePublicIpAddress: false,
-        autoScalingGroupName: 'lwjgl-cluster-autoscaling',
-        canContainersAccessInstanceRole: false,
-      },
     });
 
     const taskRole = new iam.Role(this, `${id}-role`, {
@@ -56,21 +50,21 @@ export class Website extends Stack {
       },
     });
 
-    const taskDefinition = new ecs.Ec2TaskDefinition(this, 'website-task-def', {
+    const taskDefinition = new ecs.Ec2TaskDefinition(this, `${id}-task-def`, {
       // executionRole,
       taskRole,
-      family: 'lwjgl-www',
+      family: serviceName,
     });
 
     const image = new ecs.RepositoryImage('ghcr.io/lwjgl/lwjgl3-www/lwjgl-website:latest');
 
-    const logGroup = new logs.LogGroup(this, 'website-log-group', {
+    const logGroup = new logs.LogGroup(this, `${id}-log-group`, {
       logGroupName: '/ecs/website',
       retention: logs.RetentionDays.ONE_MONTH,
       removalPolicy: RemovalPolicy.DESTROY,
     });
 
-    const containerDef = new ecs.ContainerDefinition(this, 'website-container-def', {
+    const containerDef = new ecs.ContainerDefinition(this, `${id}-container-def`, {
       taskDefinition,
       image,
       memoryLimitMiB: 512,
@@ -80,16 +74,15 @@ export class Website extends Stack {
         streamPrefix: 'ecs',
       }),
     });
-
     containerDef.addPortMappings({
       containerPort: 80,
       hostPort: 0,
       protocol: ecs.Protocol.TCP,
     });
 
-    const service = new ecs.Ec2Service(this, 'lwjgl-www', {
-      serviceName: 'lwjgl-www',
-      cluster,
+    const service = new ecs.Ec2Service(this, serviceName, {
+      serviceName,
+      cluster: props.ecs.cluster,
       taskDefinition,
       daemon: false,
       enableECSManagedTags: true,
@@ -100,6 +93,28 @@ export class Website extends Stack {
       placementStrategies: [
         ecs.PlacementStrategy.spreadAcross(ecs.BuiltInAttributes.AVAILABILITY_ZONE, ecs.BuiltInAttributes.INSTANCE_ID),
       ],
+    });
+
+    const wwwTrg = new elb.ApplicationTargetGroup(this, 'lwjgl-org-tg', {
+      vpc,
+      targetGroupName: 'ecs-lwjgl',
+      targets: [service],
+      port: 80,
+      deregistrationDelay: Duration.seconds(5),
+      healthCheck: {
+        enabled: true,
+        path: '/health',
+        timeout: Duration.seconds(2),
+        healthyThresholdCount: 2,
+        unhealthyThresholdCount: 2,
+      },
+    });
+
+    new elb.ApplicationListenerRule(this, 'alb-listener-rule', {
+      listener: props.lb.listener443,
+      priority: priority('elb-443'),
+      conditions: [elb.ListenerCondition.hostHeaders(['www.lwjgl.org'])],
+      action: elb.ListenerAction.forward([wwwTrg]),
     });
 
     this.service = service;
