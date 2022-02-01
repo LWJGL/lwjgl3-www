@@ -15,6 +15,11 @@ cdk --profile lwjgl deploy DNS
 cdk --profile lwjgl deploy S3
 ```
 
+## Prerequisites
+
+- Node.js
+- aws-cdk (`npm -g i aws-cdk`)
+
 ## Initial Setup
 
 1. Create `~/.aws/config` and `~/.aws/credentials` files with a profile named `lwjgl`.
