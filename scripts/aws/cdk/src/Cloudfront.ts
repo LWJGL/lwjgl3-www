@@ -97,6 +97,15 @@ export class Cloudfront extends Stack {
           override: true,
         },
       },
+      corsBehavior: {
+        accessControlAllowOrigins: ['https://www.lwjgl.org'],
+        accessControlAllowCredentials: false,
+        accessControlAllowHeaders: ['*'],
+        accessControlAllowMethods: ['GET', 'HEAD', 'OPTIONS'],
+        // accessControlExposeHeaders: ['*'],
+        accessControlMaxAge: Duration.seconds(600),
+        originOverride: true,
+      },
     });
 
     const cachePolicyDownloads = new cloudfront.CachePolicy(this, 'cache-policy-build', {

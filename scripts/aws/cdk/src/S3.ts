@@ -22,27 +22,27 @@ export class S3 extends Stack {
       bucketName: 'lwjgl-build',
       objectOwnership: s3.ObjectOwnership.BUCKET_OWNER_ENFORCED,
       // websiteIndexDocument: 'index.html',
-      cors: [
-        {
-          allowedHeaders: ['*'],
-          allowedMethods: [s3.HttpMethods.GET],
-          allowedOrigins: ['https://www.lwjgl.org'],
-          exposedHeaders: [],
-        },
-        {
-          allowedHeaders: ['*'],
-          allowedMethods: [s3.HttpMethods.GET],
-          allowedOrigins: ['http://www.lwjgl.localhost'],
-          exposedHeaders: [],
-        },
-        {
-          allowedHeaders: ['Authorization'],
-          allowedMethods: [s3.HttpMethods.GET],
-          allowedOrigins: ['*'],
-          exposedHeaders: [],
-          maxAge: 3000,
-        },
-      ],
+      // cors: [
+      //   {
+      //     allowedHeaders: ['*'],
+      //     allowedMethods: [s3.HttpMethods.GET],
+      //     allowedOrigins: ['https://www.lwjgl.org'],
+      //     exposedHeaders: [],
+      //   },
+      //   {
+      //     allowedHeaders: ['*'],
+      //     allowedMethods: [s3.HttpMethods.GET],
+      //     allowedOrigins: ['http://www.lwjgl.localhost'],
+      //     exposedHeaders: [],
+      //   },
+      //   {
+      //     allowedHeaders: ['Authorization'],
+      //     allowedMethods: [s3.HttpMethods.GET],
+      //     allowedOrigins: ['*'],
+      //     exposedHeaders: [],
+      //     maxAge: 3000,
+      //   },
+      // ],
     });
 
     this.cdn = new s3.Bucket(this, 'cdn', {
