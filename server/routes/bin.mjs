@@ -25,7 +25,7 @@ export default async params => {
   }
 
   let data = await s3.listObjectsV2({
-    Bucket: 'build.lwjgl.org',
+    Bucket: 'lwjgl-build',
     FetchOwner: false,
     MaxKeys: 500,
     Prefix: params.build === 'release' ? `${params.build}/${params.version}/bin/` : `${params.build}/bin/`,

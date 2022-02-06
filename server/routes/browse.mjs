@@ -5,7 +5,7 @@ export default async query => {
   let replacer = null;
 
   const params = {
-    Bucket: 'build.lwjgl.org',
+    Bucket: 'lwjgl-build',
     Delimiter: '/',
     FetchOwner: false,
     MaxKeys: 100,

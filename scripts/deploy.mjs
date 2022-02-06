@@ -107,7 +107,7 @@ await asyncPool(4, files, async file => {
 
   try {
     await s3.putObject({
-      Bucket: 'cdn.lwjgl.org',
+      Bucket: 'lwjgl-cdn',
       // Upload CSS to /css, all other files to /js
       Key: `${extension === '.css' ? 'css' : 'js'}/${basename}`,
       Body: createReadStream(file),
