@@ -111,7 +111,7 @@ await asyncPool(4, files, async file => {
       // Upload CSS to /css, all other files to /js
       Key: `${extension === '.css' ? 'css' : 'js'}/${basename}`,
       Body: createReadStream(file),
-      ACL: 'public-read',
+      // ACL: 'public-read',
       ContentMD5: Buffer.from(digest, 'hex').toString('base64'),
       ...headers,
     });
