@@ -16,23 +16,7 @@ export class Cloudfront extends Stack {
   public readonly build: cloudfront.Distribution;
   public readonly javadoc: cloudfront.Distribution;
   public readonly legacy: cloudfront.Distribution;
-  // public readonly blog: cloudfront.Distribution;
   // public readonly www: cloudfront.Distribution;
-
-  /*
-  legacy.lwjgl.org ?
-  blog.lwjgl.org webhotelier-cloudfront-1235708253.us-east-1.elb.amazonaws.com  E2128JB5XYS0E	LWJGL	d3nky9zd86imt4.cloudfront.net
-  www.lwjgl.org
-
-    // const origin = new origins.HttpOrigin('origin.webhotelier.net', {
-    //   protocolPolicy: cloudfront.OriginProtocolPolicy.HTTP_ONLY,
-    //   httpPort: 80,
-    //   connectionAttempts: 3,
-    //   readTimeout: Duration.seconds(30),
-    //   keepaliveTimeout: Duration.seconds(5),
-    // });
-
-*/
 
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id, props);
