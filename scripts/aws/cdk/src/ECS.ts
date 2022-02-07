@@ -22,12 +22,15 @@ export class ECS extends Stack {
       securityGroupName: 'ecs-asg-sg',
     });
 
-    securityGroup.addIngressRule(ec2.Peer.ipv4(vpc.vpcCidrBlock), ec2.Port.allTcp(), 'Allow internal IPv4 Traffic');
+    securityGroup.addIngressRule(ec2.Peer.ipv4(vpc.vpcCidrBlock), ec2.Port.allTraffic(), 'Allow internal IPv4 Traffic');
     securityGroup.addIngressRule(
       ec2.Peer.ipv6('2600:1f18:14f5:1500::/56'),
-      ec2.Port.allTcp(),
+      ec2.Port.allTraffic(),
       'Allow internal IPv6 Traffic'
     );
+
+    securityGroup.addEgressRule(ec2.Peer.ipv4('0.0.0.0/0'), ec2.Port.allTraffic());
+    securityGroup.addEgressRule(ec2.Peer.ipv6('::/0'), ec2.Port.allTraffic());
 
     const asgRole = new iam.Role(this, `asg-role`, {
       roleName: `ecs-asg-role`,
@@ -51,7 +54,7 @@ export class ECS extends Stack {
       desiredCapacity: 1,
       maxCapacity: 2,
       allowAllOutbound: true,
-      associatePublicIpAddress: false,
+      associatePublicIpAddress: true,
     });
     const capacityProvider = new ecs.AsgCapacityProvider(this, 'capacityProvider', {
       autoScalingGroup: asg,
