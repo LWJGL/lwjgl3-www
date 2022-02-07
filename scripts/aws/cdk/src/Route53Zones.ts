@@ -89,14 +89,6 @@ export class Route53Zones extends Stack {
         target: route53.RecordTarget.fromIpAddresses('52.6.78.255'),
         ttl: Duration.minutes(5),
       });
-
-      // Temporary
-      new route53.CnameRecord(this, 'lwjgl-org-www-cname', {
-        zone: this.lwjglOrg,
-        recordName: 'www',
-        ttl: Duration.minutes(5),
-        domainName: 'd1xboo50enyu3i.cloudfront.net',
-      });
     }
 
     // lwjgl.com
