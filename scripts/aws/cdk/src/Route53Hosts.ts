@@ -92,17 +92,28 @@ export class Route53Hosts extends Stack {
         distributionId: cloudfront.www.distributionId,
         domainName: cloudfront.www.domainName,
       });
-      new route53.ARecord(this, 'lwjgl-org-www-a', {
+      const wwwCdnTarget = route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(wwwCdn));
+      new route53.ARecord(this, 'lwjgl-org-website-a', {
         zone: route53Zones.lwjglOrg,
         recordName: 'www',
         ttl: Duration.minutes(5),
-        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(wwwCdn)),
+        target: wwwCdnTarget,
       });
-      new route53.AaaaRecord(this, 'lwjgl-org-www-aaaa', {
+      new route53.AaaaRecord(this, 'lwjgl-org-website-aaaa', {
         zone: route53Zones.lwjglOrg,
         recordName: 'www',
         ttl: Duration.minutes(5),
-        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(wwwCdn)),
+        target: wwwCdnTarget,
+      });
+      new route53.ARecord(this, 'lwjgl-org-a', {
+        zone: route53Zones.lwjglOrg,
+        ttl: Duration.minutes(5),
+        target: wwwCdnTarget,
+      });
+      new route53.AaaaRecord(this, 'lwjgl-org-aaaa', {
+        zone: route53Zones.lwjglOrg,
+        ttl: Duration.minutes(5),
+        target: wwwCdnTarget,
       });
     }
 
