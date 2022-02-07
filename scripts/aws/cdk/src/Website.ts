@@ -5,6 +5,7 @@ import * as ecs from 'aws-cdk-lib/aws-ecs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as logs from 'aws-cdk-lib/aws-logs';
 import * as elb from 'aws-cdk-lib/aws-elasticloadbalancingv2';
+import * as sm from 'aws-cdk-lib/aws-secretsmanager';
 
 import { priority } from './priority';
 
@@ -110,10 +111,17 @@ export class Website extends Stack {
       },
     });
 
-    new elb.ApplicationListenerRule(this, 'alb-listener-rule', {
-      listener: props.lb.listener443,
-      priority: priority('elb-443'),
-      conditions: [elb.ListenerCondition.hostHeaders(['www.lwjgl.org'])],
+    const originProtectionSecret = sm.Secret.fromSecretAttributes(this, 'origin-secret', {
+      secretCompleteArn: 'arn:aws:secretsmanager:us-east-1:770058214810:secret:lwjgl/cloudfront/origin-verify-rXJORe',
+    });
+
+    new elb.ApplicationListenerRule(this, 'alb-listener-rule-80', {
+      listener: props.lb.listener80,
+      priority: priority('elb-80'),
+      conditions: [
+        elb.ListenerCondition.hostHeaders(['www.lwjgl.org']),
+        elb.ListenerCondition.httpHeader('X-Origin-Verify', [originProtectionSecret.secretValue.toString()]),
+      ],
       action: elb.ListenerAction.forward([wwwTrg]),
     });
 

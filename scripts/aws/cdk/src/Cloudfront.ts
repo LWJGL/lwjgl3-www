@@ -2,6 +2,7 @@ import { type Construct } from 'constructs';
 import { Stack, type StackProps, Duration } from 'aws-cdk-lib';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as sm from 'aws-cdk-lib/aws-secretsmanager';
 import { type S3 } from './S3';
 import { type Route53Zones } from './Route53Zones';
 import { type LoadBalancer } from './LoadBalancer';
@@ -219,8 +220,12 @@ export class Cloudfront extends Stack {
       },
     });
 
+    const originProtectionSecret = sm.Secret.fromSecretAttributes(this, 'origin-secret', {
+      secretCompleteArn: 'arn:aws:secretsmanager:us-east-1:770058214810:secret:lwjgl/cloudfront/origin-verify-rXJORe',
+    });
+
     this.www = new cloudfront.Distribution(this, 'DistributionWww', {
-      domainNames: ['www.lwjgl.org'],
+      domainNames: ['www.lwjgl.org', 'lwjgl.org'],
       certificate: route53Zones.lwjglOrgCert,
       httpVersion: cloudfront.HttpVersion.HTTP2,
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
@@ -232,9 +237,13 @@ export class Cloudfront extends Stack {
       // defaultRootObject: 'index.html',
       defaultBehavior: {
         origin: new origins.LoadBalancerV2Origin(lb.elb, {
-          originShieldRegion: 'us-east-1',
+          protocolPolicy: cloudfront.OriginProtocolPolicy.HTTP_ONLY,
           keepaliveTimeout: Duration.seconds(30),
           readTimeout: Duration.seconds(30),
+          originShieldRegion: 'us-east-1',
+          customHeaders: {
+            'X-Origin-Verify': originProtectionSecret.secretValue.toString(),
+          },
         }),
         compress: true,
         smoothStreaming: false,
