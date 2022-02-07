@@ -20,6 +20,7 @@ export class ECS extends Stack {
       vpc,
       description: 'ECS Cluster ASG Security Group',
       securityGroupName: 'ecs-asg-sg',
+      // allowAllOutbound: false,
     });
 
     securityGroup.addIngressRule(ec2.Peer.ipv4(vpc.vpcCidrBlock), ec2.Port.allTraffic(), 'Allow internal IPv4 Traffic');
@@ -29,8 +30,9 @@ export class ECS extends Stack {
       'Allow internal IPv6 Traffic'
     );
 
-    securityGroup.addEgressRule(ec2.Peer.ipv4('0.0.0.0/0'), ec2.Port.allTraffic());
-    securityGroup.addEgressRule(ec2.Peer.ipv6('::/0'), ec2.Port.allTraffic());
+    // ! Not needed since allowAllOutbound defaults to true
+    // securityGroup.addEgressRule(ec2.Peer.ipv4('0.0.0.0/0'), ec2.Port.allTraffic());
+    // securityGroup.addEgressRule(ec2.Peer.ipv6('::/0'), ec2.Port.allTraffic());
 
     const asgRole = new iam.Role(this, `asg-role`, {
       roleName: `ecs-asg-role`,
