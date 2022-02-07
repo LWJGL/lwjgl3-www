@@ -16,7 +16,7 @@ export class Cloudfront extends Stack {
   public readonly build: cloudfront.Distribution;
   public readonly javadoc: cloudfront.Distribution;
   public readonly legacy: cloudfront.Distribution;
-  // public readonly www: cloudfront.Distribution;
+  public readonly www: cloudfront.Distribution;
 
   constructor(scope: Construct, id: string, props: Props) {
     super(scope, id, props);
@@ -90,6 +90,44 @@ export class Cloudfront extends Stack {
         accessControlMaxAge: Duration.seconds(600),
         originOverride: true,
       },
+    });
+
+    const responseHeadersPolicyDynamic = new cloudfront.ResponseHeadersPolicy(this, 'response-headers-policy-dynamic', {
+      responseHeadersPolicyName: 'Dynamic',
+      comment: 'Used in LWJGL website',
+      securityHeadersBehavior: {
+        // contentSecurityPolicy: { contentSecurityPolicy: 'default-src https:;', override: true },
+        contentTypeOptions: { override: true },
+        // frameOptions: { frameOption: cloudfront.HeadersFrameOption.DENY, override: true },
+        referrerPolicy: {
+          referrerPolicy: cloudfront.HeadersReferrerPolicy.NO_REFERRER_WHEN_DOWNGRADE,
+          override: false,
+        },
+        strictTransportSecurity: {
+          accessControlMaxAge: Duration.seconds(3600),
+          includeSubdomains: true,
+          override: true,
+        },
+        xssProtection: {
+          protection: true,
+          modeBlock: true,
+          // reportUri: 'https://example.com/csp-report',
+          override: true,
+        },
+      },
+    });
+
+    const cachePolicyDynamic = new cloudfront.CachePolicy(this, 'cache-policy-dynamic', {
+      cachePolicyName: 'OriginControlledCacheNoCookies',
+      comment: 'Allows for origin-controlled caching. Cache based on Host,Accept + Query. Cookies ignored',
+      minTtl: Duration.seconds(0),
+      maxTtl: Duration.seconds(31536000),
+      defaultTtl: Duration.hours(24),
+      cookieBehavior: cloudfront.CacheCookieBehavior.none(),
+      headerBehavior: cloudfront.CacheHeaderBehavior.allowList('Accept', 'Host'),
+      queryStringBehavior: cloudfront.CacheQueryStringBehavior.all(),
+      enableAcceptEncodingBrotli: true,
+      enableAcceptEncodingGzip: true,
     });
 
     const cachePolicyDownloads = new cloudfront.CachePolicy(this, 'cache-policy-build', {
@@ -180,5 +218,51 @@ export class Cloudfront extends Stack {
         responseHeadersPolicy: responseHeadersPolicyStaticImmutable,
       },
     });
+
+    this.www = new cloudfront.Distribution(this, 'DistributionWww', {
+      domainNames: ['www.lwjgl.org'],
+      certificate: route53Zones.lwjglOrgCert,
+      httpVersion: cloudfront.HttpVersion.HTTP2,
+      minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
+      priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
+      comment: 'LWJGL3 Website',
+      enabled: true,
+      enableIpv6: true,
+      enableLogging: false,
+      // defaultRootObject: 'index.html',
+      defaultBehavior: {
+        origin: new origins.LoadBalancerV2Origin(lb.elb, {
+          originShieldRegion: 'us-east-1',
+          keepaliveTimeout: Duration.seconds(30),
+          readTimeout: Duration.seconds(30),
+        }),
+        compress: true,
+        smoothStreaming: false,
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
+        cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
+        cachePolicy: cachePolicyDynamic,
+        originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER,
+        responseHeadersPolicy: responseHeadersPolicyDynamic,
+      },
+    });
+
+    const originCdn = new origins.S3Origin(s3.cdn, {
+      originShieldRegion: 'us-east-1',
+    });
+
+    const originCdnBehavior: cloudfront.AddBehaviorOptions = {
+      compress: true,
+      smoothStreaming: false,
+      viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.HTTPS_ONLY,
+      allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD,
+      cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
+      originRequestPolicy: originRequestPolicyStatic,
+      responseHeadersPolicy: responseHeadersPolicyStaticImmutable,
+    };
+
+    this.www.addBehavior('js/*', originCdn, originCdnBehavior);
+    this.www.addBehavior('img/*', originCdn, originCdnBehavior);
+    this.www.addBehavior('svg/*', originCdn, originCdnBehavior);
   }
 }

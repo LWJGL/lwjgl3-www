@@ -67,7 +67,7 @@ export class Website extends Stack {
     const containerDef = new ecs.ContainerDefinition(this, `${id}-container-def`, {
       taskDefinition,
       image,
-      memoryLimitMiB: 512,
+      memoryLimitMiB: 384,
       essential: true,
       logging: new ecs.AwsLogDriver({
         logGroup,
@@ -87,8 +87,8 @@ export class Website extends Stack {
       daemon: false,
       enableECSManagedTags: true,
       desiredCount: 2,
-      minHealthyPercent: 100,
-      maxHealthyPercent: 300,
+      minHealthyPercent: 50,
+      maxHealthyPercent: 100,
       healthCheckGracePeriod: Duration.seconds(10),
       placementStrategies: [
         ecs.PlacementStrategy.spreadAcross(ecs.BuiltInAttributes.AVAILABILITY_ZONE, ecs.BuiltInAttributes.INSTANCE_ID),

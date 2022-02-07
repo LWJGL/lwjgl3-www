@@ -8,7 +8,6 @@ import fastifyHealthcheck from 'fastify-healthcheck';
 import fastifyStatic from 'fastify-static';
 import fastifyEtag from 'fastify-etag';
 import fastifyPointOfView from 'point-of-view';
-import helmet from 'fastify-helmet';
 // import { mime } from 'send';
 import pug from 'pug';
 
@@ -149,33 +148,6 @@ process.on('SIGTERM', shutdown);
 
 app.register(fastifyEtag);
 app.register(fastifyAccepts);
-
-// Helmet config
-// Defaults are commented out
-app.register(helmet, {
-  contentSecurityPolicy: false,
-  dnsPrefetchControl: false,
-  expectCt: false,
-  // frameguard: {
-  //   action: 'sameorigin',
-  // },
-  hidePoweredBy: false,
-  hsts:
-    PRODUCTION && !argv.test
-      ? {
-          maxAge: 365 * 24 * 60 * 60,
-          includeSubDomains: false, // * no because we have non-ssl subdomains (e.g. legacy.lwjgl.org)
-          preload: false, // ! includeSubDomains must be true for preloading to be approved
-        }
-      : false,
-  ieNoOpen: false,
-  // noSniff
-  permittedCrossDomainPolicies: false,
-  referrerPolicy: {
-    policy: 'no-referrer-when-downgrade',
-  },
-  // xssFilter:
-});
 
 // Template
 app.register(fastifyPointOfView, {

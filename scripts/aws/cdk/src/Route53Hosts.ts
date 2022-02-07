@@ -87,18 +87,23 @@ export class Route53Hosts extends Stack {
         ttl: Duration.minutes(5),
         target: lbTrg,
       });
-      // new route53.ARecord(this, 'lwjgl-org-www-a', {
-      //   zone: route53Zones.lwjglOrg,
-      //   recordName: 'www',
-      //   ttl: Duration.minutes(5),
-      //   target: route53.RecordTarget.fromAlias(),
-      // });
-      // new route53.AaaaRecord(this, 'lwjgl-org-www-aaaa', {
-      //   zone: route53Zones.lwjglOrg,
-      //   recordName: 'www',
-      //   ttl: Duration.minutes(5),
-      //   target: route53.RecordTarget.fromAlias(),
-      // });
+
+      const wwwCdn = aws_cloudfront.Distribution.fromDistributionAttributes(this, 'www-cdn', {
+        distributionId: cloudfront.www.distributionId,
+        domainName: cloudfront.www.domainName,
+      });
+      new route53.ARecord(this, 'lwjgl-org-www-a', {
+        zone: route53Zones.lwjglOrg,
+        recordName: 'www',
+        ttl: Duration.minutes(5),
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(wwwCdn)),
+      });
+      new route53.AaaaRecord(this, 'lwjgl-org-www-aaaa', {
+        zone: route53Zones.lwjglOrg,
+        recordName: 'www',
+        ttl: Duration.minutes(5),
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(wwwCdn)),
+      });
     }
 
     // lwjgl.com
@@ -119,7 +124,7 @@ export class Route53Hosts extends Stack {
         ttl: Duration.minutes(5),
         target: lbTrg,
       });
-      new route53.AaaaRecord(this, 'lwjgl-org-www-aaaa', {
+      new route53.AaaaRecord(this, 'lwjgl-com-www-aaaa', {
         zone: route53Zones.lwjglCom,
         recordName: 'www',
         ttl: Duration.minutes(5),
