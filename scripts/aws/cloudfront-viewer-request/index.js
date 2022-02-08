@@ -122,6 +122,8 @@ function normalizeQueryString(qs) {
   return normalizedQS;
 }
 
+var Proto = 'cloudFront-forwarded-proto';
+
 /**
  *
  * @param {CloudfrontEvent} event
@@ -132,6 +134,10 @@ function handler(event) {
   var headers = request.headers;
 
   if (headers.host.value !== 'www.lwjgl.org') {
+    return redirect(308, `https://www.lwjgl.org${request.uri}${formatQueryString(request.querystring)}`);
+  }
+
+  if (Proto in headers && headers[Proto].value === 'http') {
     return redirect(308, `https://www.lwjgl.org${request.uri}${formatQueryString(request.querystring)}`);
   }
 

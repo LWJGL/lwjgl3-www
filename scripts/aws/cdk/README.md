@@ -9,10 +9,13 @@ cdk --profile lwjgl deploy <name>
 ## Stacks
 
 ```bash
-cdk --profile lwjgl deploy Cloudfront
-cdk --profile lwjgl deploy LoadBalancer
-cdk --profile lwjgl deploy DNS
 cdk --profile lwjgl deploy S3
+cdk --profile lwjgl deploy DNS
+cdk --profile lwjgl deploy ECS
+cdk --profile lwjgl deploy LoadBalancer
+cdk --profile lwjgl deploy Website
+cdk --profile lwjgl deploy Cloudfront
+cdk --profile lwjgl deploy Route53Hosts
 ```
 
 ## Prerequisites

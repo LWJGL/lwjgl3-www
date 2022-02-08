@@ -232,6 +232,18 @@ export class Cloudfront extends Stack {
       }),
     });
 
+    const originRequestPolicyWww = new cloudfront.OriginRequestPolicy(this, 'origin-policy-www', {
+      originRequestPolicyName: 'Website',
+      cookieBehavior: cloudfront.OriginRequestCookieBehavior.none(),
+      // https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-cloudfront-headers.html
+      headerBehavior: cloudfront.OriginRequestHeaderBehavior.all(
+        // 'CloudFront-Viewer-Address',
+        // 'CloudFront-Viewer-Country',
+        'CloudFront-Forwarded-Proto'
+      ),
+      queryStringBehavior: cloudfront.OriginRequestQueryStringBehavior.allowList('path'),
+    });
+
     this.www = new cloudfront.Distribution(this, 'DistributionWww', {
       domainNames: ['www.lwjgl.org', 'lwjgl.org'],
       certificate: route53Zones.lwjglOrgCert,
@@ -255,11 +267,11 @@ export class Cloudfront extends Stack {
         }),
         compress: true,
         smoothStreaming: false,
-        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.ALLOW_ALL,
         allowedMethods: cloudfront.AllowedMethods.ALLOW_ALL,
         cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
         cachePolicy: cachePolicyDynamic,
-        originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER,
+        originRequestPolicy: originRequestPolicyWww,
         responseHeadersPolicy: responseHeadersPolicyDynamic,
         functionAssociations: [
           {
