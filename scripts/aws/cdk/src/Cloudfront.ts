@@ -1,3 +1,4 @@
+import * as path from 'node:path';
 import { type Construct } from 'constructs';
 import { Stack, type StackProps, Duration } from 'aws-cdk-lib';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
@@ -224,6 +225,13 @@ export class Cloudfront extends Stack {
       secretCompleteArn: 'arn:aws:secretsmanager:us-east-1:770058214810:secret:lwjgl/cloudfront/origin-verify-rXJORe',
     });
 
+    const wwwViewerRequest = new cloudfront.Function(this, 'www-function', {
+      functionName: 'www-viewer-request',
+      code: cloudfront.FunctionCode.fromFile({
+        filePath: path.join(__dirname, '../../cloudfront-viewer-request/index.js'),
+      }),
+    });
+
     this.www = new cloudfront.Distribution(this, 'DistributionWww', {
       domainNames: ['www.lwjgl.org', 'lwjgl.org'],
       certificate: route53Zones.lwjglOrgCert,
@@ -253,6 +261,12 @@ export class Cloudfront extends Stack {
         cachePolicy: cachePolicyDynamic,
         originRequestPolicy: cloudfront.OriginRequestPolicy.ALL_VIEWER,
         responseHeadersPolicy: responseHeadersPolicyDynamic,
+        functionAssociations: [
+          {
+            function: wwwViewerRequest,
+            eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+          },
+        ],
       },
     });
 

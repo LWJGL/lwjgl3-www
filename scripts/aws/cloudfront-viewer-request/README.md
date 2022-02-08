@@ -3,7 +3,7 @@
 This function performs the following functions:
 
 - Redirects `lwjgl.org` to `www.lwjgl.org`
-- Redirects legacy `lwjgl.org` URLs (e.g. `/license.php` to `/license` )
+- Redirects legacy `lwjgl.org` URLs (e.g. `/license.php` to `/license`)
 - Normalizes and optimizes headers that are used as cache keys by the CDN (Cloudfront)
 
 Event structure: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/functions-event-structure.html
@@ -11,9 +11,11 @@ Runtime features: https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperG
 
 ## Quotas:
 
-- Mem: <=2MB
-- Code Size: <=10KB
-- Exec Time: <=1ms
+```
+Mem: <=2MB
+Code Size: <=10KB
+Exec Time: <=1ms
+```
 
 ## Create function
 

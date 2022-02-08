@@ -1,5 +1,3 @@
-var QUERY_ALLOW_LIST = ['path'];
-
 function getStatus(statusCode) {
   switch (statusCode) {
     case 301:
@@ -22,7 +20,7 @@ function getStatus(statusCode) {
 
 function redirect(statusCode, location) {
   return {
-    statusCode: statusCode,
+    statusCode,
     statusDescription: getStatus(statusCode),
     headers: {
       location: {
@@ -47,6 +45,8 @@ function formatQueryString(qs) {
   return result.join('&');
 }
 
+var QUERY_ALLOW_LIST = ['path'];
+
 function normalizeQueryString(qs) {
   // Normalize Query string
   // ----------------------
@@ -63,16 +63,19 @@ function normalizeQueryString(qs) {
   }
 
   var normalizedQS = {};
+
   keys.sort();
   keys.forEach(key => {
     var normalized = key.toLowerCase();
+    // Do not allow keys not in our allow list
     if (!QUERY_ALLOW_LIST.includes(normalized)) {
-      // Do not allow keys not in our allow list
       return;
     }
+    // Do not allow duplicate keys
     if (qs[key].multiValue !== undefined) {
-      // Do not allow duplicate keys
-      delete qs[key].multiValue;
+      qs[key] = {
+        value: qs[key].value,
+      };
     }
 
     normalizedQS[normalized] = qs[key];
@@ -116,7 +119,10 @@ function handler(event) {
   // Normalize Accept header to improve the cache hit ratio
   if (headers.accept !== undefined) {
     if (headers.accept.multiValue) {
-      delete headers.accept.multiValue;
+      // replace with only the first value
+      headers.accept = {
+        value: headers.accept.value,
+      };
     }
 
     if (headers.accept.value.includes('*/*') || headers.accept.value.includes('text/html')) {
