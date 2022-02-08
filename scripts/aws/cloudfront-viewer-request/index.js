@@ -1,3 +1,24 @@
+//@ts-check
+
+/** @typedef {{value: string}} CloudfrontValue */
+/** @typedef {{value: string, multiValue?: CloudfrontValue[]}} CloudfrontValueStructure */
+
+/** @typedef {{[queryparam: string]: CloudfrontValueStructure}} CloudfrontQueryString */
+/** @typedef {{[header: string]: CloudfrontValueStructure}} CloudfrontHeaders */
+/** @typedef {{[cookie: string]: CloudfrontValueStructure}} CloudfrontCookies */
+
+/** @typedef {{distributionDomainName: string, distributionId: string, eventType: 'viewer-request' | 'viewer-response', requestId: string}} CloudfrontContext */
+/** @typedef {{ip: string}} CloudfrontViewer */
+/** @typedef {{readonly method: string, uri: string, querystring: CloudfrontQueryString, headers: CloudfrontHeaders, cookies: CloudfrontCookies }} CloudfrontRequest */
+/** @typedef {{statusCode: number, statusDescription: string, headers?: CloudfrontHeaders}} CloudfrontResponse */
+
+/** @typedef {{version:string, context: CloudfrontContext, viewer: CloudfrontViewer, request: CloudfrontRequest, response?: CloudfrontResponse}} CloudfrontEvent */
+
+/**
+ *
+ * @param {number} statusCode
+ * @returns {string}
+ */
 function getStatus(statusCode) {
   switch (statusCode) {
     case 301:
@@ -18,6 +39,12 @@ function getStatus(statusCode) {
   }
 }
 
+/**
+ *
+ * @param {number} statusCode
+ * @param {string} location
+ * @returns {CloudfrontResponse}
+ */
 function redirect(statusCode, location) {
   return {
     statusCode,
@@ -30,6 +57,11 @@ function redirect(statusCode, location) {
   };
 }
 
+/**
+ *
+ * @param {CloudfrontQueryString} qs
+ * @returns {string}
+ */
 function formatQueryString(qs) {
   var result = [];
   for (var key in qs) {
@@ -47,6 +79,11 @@ function formatQueryString(qs) {
 
 var QUERY_ALLOW_LIST = ['path'];
 
+/**
+ *
+ * @param {CloudfrontQueryString} qs
+ * @returns {CloudfrontQueryString}
+ */
 function normalizeQueryString(qs) {
   // Normalize Query string
   // ----------------------
@@ -62,6 +99,7 @@ function normalizeQueryString(qs) {
     return qs;
   }
 
+  /** @type {CloudfrontQueryString} */
   var normalizedQS = {};
 
   keys.sort();
@@ -84,6 +122,11 @@ function normalizeQueryString(qs) {
   return normalizedQS;
 }
 
+/**
+ *
+ * @param {CloudfrontEvent} event
+ * @returns CloudfrontResponse | CloudfrontRequest
+ */
 function handler(event) {
   var request = event.request;
   var headers = request.headers;
