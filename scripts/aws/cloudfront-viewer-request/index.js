@@ -153,10 +153,13 @@ function handler(event) {
   if (request.uri.startsWith('/forum/')) {
     return redirect(
       308,
-      `http://forum.lwjgl.org${uri.replace(/^\/forum/, '')}${formatQueryString(request.querystring)}`
+      `http://forum.lwjgl.org${request.uri.replace(/^\/forum/, '')}${formatQueryString(request.querystring)}`
     );
   } else if (request.uri.startsWith('/wiki/')) {
-    return redirect(308, `http://wiki.lwjgl.org${uri.replace(/^\/wiki/, '')}${formatQueryString(request.querystring)}`);
+    return redirect(
+      308,
+      `http://wiki.lwjgl.org${request.uri.replace(/^\/wiki/, '')}${formatQueryString(request.querystring)}`
+    );
   }
 
   // Normalize Accept header to improve the cache hit ratio
