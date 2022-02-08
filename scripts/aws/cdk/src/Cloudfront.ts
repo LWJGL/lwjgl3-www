@@ -27,9 +27,9 @@ export class Cloudfront extends Stack {
     // Common
     const originRequestPolicyStatic = new cloudfront.OriginRequestPolicy(this, 'origin-policy-static-add-none', {
       originRequestPolicyName: 'StaticAddNone',
-      cookieBehavior: cloudfront.CacheCookieBehavior.none(),
-      headerBehavior: cloudfront.CacheHeaderBehavior.none(),
-      queryStringBehavior: cloudfront.CacheQueryStringBehavior.none(),
+      cookieBehavior: cloudfront.OriginRequestCookieBehavior.none(),
+      headerBehavior: cloudfront.OriginRequestHeaderBehavior.none(),
+      queryStringBehavior: cloudfront.OriginRequestQueryStringBehavior.none(),
     });
 
     const responseHeadersPolicyStaticImmutable = new cloudfront.ResponseHeadersPolicy(
