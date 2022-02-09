@@ -252,8 +252,8 @@ if (DEVELOPMENT) {
 // CAUTION: Internet connection is required!
 if (DEVELOPMENT || argv.s3proxy === true) {
   const httpProxy = require('fastify-http-proxy');
-  await app.register(httpProxy, { prefix: '/img', rewritePrefix: '/img', upstream: 'https://cdn.lwjgl.org' });
-  await app.register(httpProxy, { prefix: '/svg', rewritePrefix: '/svg', upstream: 'https://cdn.lwjgl.org' });
+  await app.register(httpProxy, { prefix: '/img', rewritePrefix: '/img', upstream: 'https://www.lwjgl.org' });
+  await app.register(httpProxy, { prefix: '/svg', rewritePrefix: '/svg', upstream: 'https://www.lwjgl.org' });
 }
 
 // ------------------------------------------------------------------------------
@@ -262,7 +262,7 @@ if (DEVELOPMENT || argv.s3proxy === true) {
 
 // Retrieval of artifacts dir/file structure
 async function routeBinHandler(request, reply) {
-  reply.header('Cache-Control', `public, max-age=60, s-maxage=${60 * 60 * 24}`);
+  reply.header('Cache-Control', `public,max-age=${60 * 5},s-maxage=${60 * 60 * 24}`);
   return await routeBin(request.params);
 }
 
@@ -271,7 +271,7 @@ app.get('/bin/:build/:version', routeBinHandler);
 
 // S3 bucket listing
 app.get('/list', async (request, reply) => {
-  reply.header('Cache-Control', `public, max-age=60, s-maxage=${60 * 60 * 24}`);
+  reply.header('Cache-Control', `public,max-age=${60 * 5},s-maxage=${60 * 60 * 24}`);
   return await routeBrowse(request.query);
 });
 
@@ -280,7 +280,7 @@ app.route({
   url: '/*',
   handler: async (request, reply) => {
     if (!request.accepts('text/html')) {
-      reply.header('Cache-Control', 'public, max-age=30, s-maxage=0');
+      reply.header('Cache-Control', 'public,max-age=30,s-maxage=0');
       reply.code(404);
       return reply.view('404.pug');
     }

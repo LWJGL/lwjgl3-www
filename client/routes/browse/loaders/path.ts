@@ -50,7 +50,7 @@ async function fetchPath(path: string): Promise<FolderData> {
 }
 
 function createPathCache() {
-  return new ResourceCache<string, FolderData>(fetchPath);
+  return new ResourceCache<string, FolderData>(fetchPath, 1);
 }
 
 export function readPath(path: string): FolderData {
