@@ -38,10 +38,17 @@ export class Resource<K, T> {
 
 export class ResourceCache<K, T> {
   cache = new Map<K, Resource<K, T>>();
+  maxItems: number;
   resolver: Resolver<K, T>;
 
-  constructor(resolver: Resolver<K, T>) {
+  /**
+   *
+   * @param resolver - Async function that resolves K key to T value
+   * @param maxItems - The maximum number of items to cache. 0 means Infinite.
+   */
+  constructor(resolver: Resolver<K, T>, maxItems: number = 0) {
     this.resolver = resolver;
+    this.maxItems = maxItems > 0 ? maxItems : 0;
   }
 
   get(key: K) {
@@ -50,6 +57,10 @@ export class ResourceCache<K, T> {
     if (resource === undefined) {
       resource = new Resource(key, this.resolver);
       this.cache.set(key, resource);
+
+      if (this.maxItems > 0 && this.cache.size > this.maxItems) {
+        this.cache.delete(this.cache.keys().next().value);
+      }
     }
 
     return resource;
