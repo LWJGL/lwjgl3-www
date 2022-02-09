@@ -84,7 +84,7 @@ export class Cloudfront extends Stack {
         },
       },
       corsBehavior: {
-        accessControlAllowOrigins: ['https://www.lwjgl.org'],
+        accessControlAllowOrigins: ['https://www.lwjgl.org', 'http://www.lwjgl.localhost'],
         accessControlAllowCredentials: false,
         accessControlAllowHeaders: ['*'],
         accessControlAllowMethods: ['GET', 'HEAD', 'OPTIONS'],
