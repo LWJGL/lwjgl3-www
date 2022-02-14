@@ -134,6 +134,13 @@ function handler(event) {
   var headers = request.headers;
 
   if (headers.host.value !== 'www.lwjgl.org') {
+    if (headers.host.value === 'slack.lwjgl.org') {
+      return redirect(
+        301,
+        'https://join.slack.com/t/lwjgl/shared_invite/enQtODI1MTY2MzE4MDk4LWE5ZjU5OTA0N2VmOWMxNDA1YjRlMTI3NzA0ZWMyYjFkYzI0NGIxMDI4ZTA0ODcxYWQ1MzI4YWRiYTFjNTMyODE'
+      );
+    }
+
     return redirect(308, `https://www.lwjgl.org${request.uri}${formatQueryString(request.querystring)}`);
   }
 

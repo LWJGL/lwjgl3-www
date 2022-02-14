@@ -245,7 +245,7 @@ export class Cloudfront extends Stack {
     });
 
     this.www = new cloudfront.Distribution(this, 'DistributionWww', {
-      domainNames: ['www.lwjgl.org', 'lwjgl.org'],
+      domainNames: ['www.lwjgl.org', 'slack.lwjgl.org', 'lwjgl.org'],
       certificate: route53Zones.lwjglOrgCert,
       httpVersion: cloudfront.HttpVersion.HTTP2,
       minimumProtocolVersion: cloudfront.SecurityPolicyProtocol.TLS_V1_2_2019,
