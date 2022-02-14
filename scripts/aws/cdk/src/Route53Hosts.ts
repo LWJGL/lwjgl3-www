@@ -88,6 +88,19 @@ export class Route53Hosts extends Stack {
         target: lbTrg,
       });
 
+      new route53.ARecord(this, 'lwjgl-org-slack-a', {
+        zone: route53Zones.lwjglOrg,
+        recordName: 'slack',
+        ttl: Duration.minutes(5),
+        target: lbTrg,
+      });
+      new route53.AaaaRecord(this, 'lwjgl-org-slack-aaaa', {
+        zone: route53Zones.lwjglOrg,
+        recordName: 'slack',
+        ttl: Duration.minutes(5),
+        target: lbTrg,
+      });
+
       const wwwCdn = aws_cloudfront.Distribution.fromDistributionAttributes(this, 'www-cdn', {
         distributionId: cloudfront.www.distributionId,
         domainName: cloudfront.www.domainName,

@@ -219,7 +219,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
                 forum
               </Anchor>{' '}
               is a great place to seek a solution. Up for a chat? Join our{' '}
-              <a href="http://slack.lwjgl.org/" rel="noopener external">
+              <a href="https://slack.lwjgl.org/" rel="noopener external">
                 Slack team
               </a>
             </p>

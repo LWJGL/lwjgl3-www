@@ -90,6 +90,21 @@ export class LoadBalancer extends Stack {
       }),
     });
 
+    const redirectToSlack = elbv2.ListenerAction.redirect({
+      host: 'join.slack.com',
+      protocol: elbv2.ApplicationProtocol.HTTPS,
+      port: '443',
+      path: '/t/lwjgl/shared_invite/enQtODI1MTY2MzE4MDk4LWE5ZjU5OTA0N2VmOWMxNDA1YjRlMTI3NzA0ZWMyYjFkYzI0NGIxMDI4ZTA0ODcxYWQ1MzI4YWRiYTFjNTMyODE',
+      query: '#{query}',
+      permanent: true,
+    });
+    new elbv2.ApplicationListenerRule(this, 'lwjgl-org-slack-redirect', {
+      listener,
+      priority: priority('elb-80'),
+      conditions: [elbv2.ListenerCondition.hostHeaders(['slack.lwjgl.org'])],
+      action: redirectToSlack,
+    });
+
     // HTTPS Listener
 
     const listener443 = lb.addListener('elb-443', {
@@ -139,6 +154,13 @@ export class LoadBalancer extends Stack {
       priority: priority('elb-443'),
       conditions: [elbv2.ListenerCondition.hostHeaders(['blog.lwjgl.org'])],
       targetGroups: [blogTrgGroup],
+    });
+
+    new elbv2.ApplicationListenerRule(this, 'lwjgl-org-slack-redirect-443', {
+      listener,
+      priority: priority('elb-443'),
+      conditions: [elbv2.ListenerCondition.hostHeaders(['slack.lwjgl.org'])],
+      action: redirectToSlack,
     });
 
     this.elb = lb;

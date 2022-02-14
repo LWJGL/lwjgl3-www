@@ -83,12 +83,6 @@ export class Route53Zones extends Stack {
         target: route53.RecordTarget.fromIpAddresses('52.6.78.255'),
         ttl: Duration.minutes(5),
       });
-      new route53.ARecord(this, 'slack-lwjgl-org', {
-        zone: this.lwjglOrg,
-        recordName: 'slack',
-        target: route53.RecordTarget.fromIpAddresses('52.6.78.255'),
-        ttl: Duration.minutes(5),
-      });
     }
 
     // lwjgl.com
