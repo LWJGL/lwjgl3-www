@@ -5,7 +5,7 @@ services:
     image: lwjgl/website:latest
     ports:
       - 80:80
-    command: node server/index.mjs --s3proxy --test
+    command: node --max_old_space_size=384 --no-warnings server/index.mjs --s3proxy --test
     volumes:
       - type: bind
         source: ./public/js

@@ -17,10 +17,13 @@
 
 ## Prerequisites
 
+- Node.js 17.5.0+
+- npm
+
 ```bash
 # Generating assets requires the following software:
 # 1. Puppeteer for pixel perfect rendering and conversion of .SVGs to .PNGs
-yarn
+npm i
 # 2. OptiPNG for optimizing .PNGs
 docker pull jess/imagemagick
 # 3. ImageMagick for combining multiple .PNGs to .ICO
@@ -37,14 +40,14 @@ docker build --rm -t headless-chrome .
 
 ```bash
 # Favicon
-node render.mjs logo.svg dist/favicon-16x16.png --width 16 --height 16
-node render.mjs logo.svg dist/favicon-32x32.png --width 32 --height 32
-node render.mjs logo.svg dist/favicon-48x48.png --width 48 --height 48
-node render.mjs logo.svg dist/favicon-192x192.png -w 192 -h 192 --bg="#424242" --avatar -r 96
-node render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512 --bg="#424242" --avatar -r 256
+node --experimental-fetch --no-warnings render.mjs logo.svg dist/favicon-16x16.png --width 16 --height 16
+node --experimental-fetch --no-warnings render.mjs logo.svg dist/favicon-32x32.png --width 32 --height 32
+node --experimental-fetch --no-warnings render.mjs logo.svg dist/favicon-48x48.png --width 48 --height 48
+node --experimental-fetch --no-warnings render.mjs logo.svg dist/favicon-192x192.png -w 192 -h 192 --bg="#424242" --avatar -r 96
+node --experimental-fetch --no-warnings render.mjs logo.svg dist/favicon-512x512.png -w 512 -h 512 --bg="#424242" --avatar -r 256
 
 # apple-touch-icon
-node render.mjs logo.svg dist/apple-touch-icon-192x192.png -w 192 -h 192 --bg="#424242" --safe
+node --experimental-fetch --no-warnings render.mjs logo.svg dist/apple-touch-icon-192x192.png -w 192 -h 192 --bg="#424242" --safe
 
 # # Web App Manifest Icons
 # # Places icon in  a safe zone with a radius of 2/5 (40%) of the icon size
@@ -54,13 +57,13 @@ node render.mjs logo.svg dist/apple-touch-icon-192x192.png -w 192 -h 192 --bg="#
 # node render.mjs logo.svg dist/favicon-maskable-512x512.png -w 512 -h 512 --bg="#424242" --safe
 
 # Social icon
-node render.mjs logo.svg dist/social-512x512.png -w 512 -h 512 --bg="#424242" --padding 72
+node --experimental-fetch --no-warnings render.mjs logo.svg dist/social-512x512.png -w 512 -h 512 --bg="#424242" --padding 72
 
 # Brand name
-node render-html.mjs brandname.html dist/brand-2048x2048.png -w 512 -h 512 -s 4
+node --experimental-fetch --no-warnings render-html.mjs brandname.html dist/brand-2048x2048.png -w 512 -h 512 -s 4
 
 # GitHub preview
-node render-html.mjs brandname.html dist/github-1280x640.png -w 640 -h 320 -s 2
+node --experimental-fetch --no-warnings render-html.mjs brandname.html dist/github-1280x640.png -w 640 -h 320 -s 2
 
 # Optimize with OptiPNG
 docker run -v $(pwd):/source --rm -it buffcode/docker-optipng -o 7 ./dist/*.png

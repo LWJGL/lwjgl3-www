@@ -12,4 +12,4 @@ COPY server ./server
 COPY public ./public
 
 EXPOSE 80
-CMD ["node", "--max_old_space_size=512", "server/index.mjs"]
+CMD ["node", "--max_old_space_size=384", "--no-warnings", "server/index.mjs"]
