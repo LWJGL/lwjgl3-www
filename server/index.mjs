@@ -55,6 +55,7 @@ process.argv.slice(2).forEach(arg => {
 // ------------------------------------------------------------------------------
 
 if (PRODUCTION) {
+  // global.manifest = (await import('../public/manifest.json', { assert: { type: 'json' } })).default;
   global.manifest = JSON.parse(
     await readFile(path.resolve(__dirname, '../public/manifest.json'), {
       encoding: 'utf-8',
