@@ -80,7 +80,7 @@ export function generateMaven({
       script += generateProfile(Native.Linux, 'unix', 'arm32', 'natives-linux-arm32');
     }
     if (platform.macos) {
-      script += generateProfile(Native.MacOS, 'mac', 'amd64', 'natives-macos');
+      script += generateProfile(Native.MacOS, 'mac', 'x86_64', 'natives-macos');
     }
     if (platform['macos-arm64']) {
       script += generateProfile(Native.MacOS, 'mac', 'aarch64', 'natives-macos-arm64');
