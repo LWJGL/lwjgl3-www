@@ -1,6 +1,6 @@
-import path from 'path';
-import { readFile, writeFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { readFile, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import shiki from 'shiki';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -11,8 +11,8 @@ const source = await readFile(sourcePath, { encoding: 'utf8' });
 
 const highlighter = await shiki.getHighlighter({ theme: 'github-dark' });
 
-let html = highlighter.codeToHtml(source, 'java');
-html = html.replace('<pre class="shiki" style="background-color: #24292e"><code>', '');
+let html = highlighter.codeToHtml(source, { lang: 'java' });
+html = html.replace('<pre class="shiki" style="background-color: #0d1117"><code>', '');
 html = html.replace('</code></pre>', '');
 html = html.replace(/^<span class="line">/gm, '');
 html = html.replace(/<\/span>$/gm, '');

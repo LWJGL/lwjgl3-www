@@ -1,115 +1,115 @@
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> org.lwjgl.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> org.lwjgl.glfw.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> org.lwjgl.opengl.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> org.lwjgl.system.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> org.lwjgl.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> org.lwjgl.glfw.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> org.lwjgl.opengl.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> org.lwjgl.system.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
 
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> java.nio.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> java.nio.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
 
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">static</span><span style="color: #E1E4E8"> org.lwjgl.glfw.Callbacks.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">static</span><span style="color: #E1E4E8"> org.lwjgl.glfw.GLFW.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">static</span><span style="color: #E1E4E8"> org.lwjgl.opengl.GL11.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">static</span><span style="color: #E1E4E8"> org.lwjgl.system.MemoryStack.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
-<span style="color: #F97583">import</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">static</span><span style="color: #E1E4E8"> org.lwjgl.system.MemoryUtil.</span><span style="color: #79B8FF">*</span><span style="color: #E1E4E8">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">static</span><span style="color: #C9D1D9"> org.lwjgl.glfw.Callbacks.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">static</span><span style="color: #C9D1D9"> org.lwjgl.glfw.GLFW.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">static</span><span style="color: #C9D1D9"> org.lwjgl.opengl.GL11.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">static</span><span style="color: #C9D1D9"> org.lwjgl.system.MemoryStack.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
+<span style="color: #FF7B72">import</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">static</span><span style="color: #C9D1D9"> org.lwjgl.system.MemoryUtil.</span><span style="color: #79C0FF">*</span><span style="color: #C9D1D9">;</span>
 
-<span style="color: #F97583">public</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">class</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">HelloWorld</span><span style="color: #E1E4E8"> {</span>
+<span style="color: #FF7B72">public</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">class</span><span style="color: #C9D1D9"> </span><span style="color: #FFA657">HelloWorld</span><span style="color: #C9D1D9"> {</span>
 
-<span style="color: #E1E4E8">	</span><span style="color: #6A737D">// The window handle</span>
-<span style="color: #E1E4E8">	</span><span style="color: #F97583">private</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">long</span><span style="color: #E1E4E8"> window;</span>
+<span style="color: #C9D1D9">	</span><span style="color: #8B949E">// The window handle</span>
+<span style="color: #C9D1D9">	</span><span style="color: #FF7B72">private</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">long</span><span style="color: #FFA657"> </span><span style="color: #C9D1D9">window;</span>
 
-<span style="color: #E1E4E8">	</span><span style="color: #F97583">public</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">void</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">run</span><span style="color: #E1E4E8">() {</span>
-<span style="color: #E1E4E8">		System.out.</span><span style="color: #B392F0">println</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">&quot;Hello LWJGL &quot;</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">+</span><span style="color: #E1E4E8"> Version.</span><span style="color: #B392F0">getVersion</span><span style="color: #E1E4E8">() </span><span style="color: #F97583">+</span><span style="color: #E1E4E8"> </span><span style="color: #9ECBFF">&quot;!&quot;</span><span style="color: #E1E4E8">);</span>
+<span style="color: #C9D1D9">	</span><span style="color: #FF7B72">public</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">void</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">run</span><span style="color: #C9D1D9">() {</span>
+<span style="color: #C9D1D9">		System.out.</span><span style="color: #D2A8FF">println</span><span style="color: #C9D1D9">(</span><span style="color: #A5D6FF">&quot;Hello LWJGL &quot;</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">+</span><span style="color: #C9D1D9"> Version.</span><span style="color: #D2A8FF">getVersion</span><span style="color: #C9D1D9">() </span><span style="color: #FF7B72">+</span><span style="color: #C9D1D9"> </span><span style="color: #A5D6FF">&quot;!&quot;</span><span style="color: #C9D1D9">);</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">init</span><span style="color: #E1E4E8">();</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">loop</span><span style="color: #E1E4E8">();</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">init</span><span style="color: #C9D1D9">();</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">loop</span><span style="color: #C9D1D9">();</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Free the window callbacks and destroy the window</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwFreeCallbacks</span><span style="color: #E1E4E8">(window);</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwDestroyWindow</span><span style="color: #E1E4E8">(window);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Free the window callbacks and destroy the window</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwFreeCallbacks</span><span style="color: #C9D1D9">(window);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwDestroyWindow</span><span style="color: #C9D1D9">(window);</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Terminate GLFW and free the error callback</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwTerminate</span><span style="color: #E1E4E8">();</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwSetErrorCallback</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">null</span><span style="color: #E1E4E8">).</span><span style="color: #B392F0">free</span><span style="color: #E1E4E8">();</span>
-<span style="color: #E1E4E8">	}</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Terminate GLFW and free the error callback</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwTerminate</span><span style="color: #C9D1D9">();</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwSetErrorCallback</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">null</span><span style="color: #C9D1D9">).</span><span style="color: #D2A8FF">free</span><span style="color: #C9D1D9">();</span>
+<span style="color: #C9D1D9">	}</span>
 
-<span style="color: #E1E4E8">	</span><span style="color: #F97583">private</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">void</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">init</span><span style="color: #E1E4E8">() {</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Setup an error callback. The default implementation</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// will print the error message in System.err.</span>
-<span style="color: #E1E4E8">		GLFWErrorCallback.</span><span style="color: #B392F0">createPrint</span><span style="color: #E1E4E8">(System.err).</span><span style="color: #B392F0">set</span><span style="color: #E1E4E8">();</span>
+<span style="color: #C9D1D9">	</span><span style="color: #FF7B72">private</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">void</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">init</span><span style="color: #C9D1D9">() {</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Setup an error callback. The default implementation</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// will print the error message in System.err.</span>
+<span style="color: #C9D1D9">		GLFWErrorCallback.</span><span style="color: #D2A8FF">createPrint</span><span style="color: #C9D1D9">(System.err).</span><span style="color: #D2A8FF">set</span><span style="color: #C9D1D9">();</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Initialize GLFW. Most GLFW functions will not work before doing this.</span>
-<span style="color: #E1E4E8">		</span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> ( </span><span style="color: #F97583">!</span><span style="color: #B392F0">glfwInit</span><span style="color: #E1E4E8">() )</span>
-<span style="color: #E1E4E8">			</span><span style="color: #F97583">throw</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">IllegalStateException</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">&quot;Unable to initialize GLFW&quot;</span><span style="color: #E1E4E8">);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Initialize GLFW. Most GLFW functions will not work before doing this.</span>
+<span style="color: #C9D1D9">		</span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9"> ( </span><span style="color: #FF7B72">!</span><span style="color: #D2A8FF">glfwInit</span><span style="color: #C9D1D9">() )</span>
+<span style="color: #C9D1D9">			</span><span style="color: #FF7B72">throw</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">new</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">IllegalStateException</span><span style="color: #C9D1D9">(</span><span style="color: #A5D6FF">&quot;Unable to initialize GLFW&quot;</span><span style="color: #C9D1D9">);</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Configure GLFW</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwDefaultWindowHints</span><span style="color: #E1E4E8">(); </span><span style="color: #6A737D">// optional, the current window hints are already the default</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwWindowHint</span><span style="color: #E1E4E8">(GLFW_VISIBLE, GLFW_FALSE); </span><span style="color: #6A737D">// the window will stay hidden after creation</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwWindowHint</span><span style="color: #E1E4E8">(GLFW_RESIZABLE, GLFW_TRUE); </span><span style="color: #6A737D">// the window will be resizable</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Configure GLFW</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwDefaultWindowHints</span><span style="color: #C9D1D9">(); </span><span style="color: #8B949E">// optional, the current window hints are already the default</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwWindowHint</span><span style="color: #C9D1D9">(GLFW_VISIBLE, GLFW_FALSE); </span><span style="color: #8B949E">// the window will stay hidden after creation</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwWindowHint</span><span style="color: #C9D1D9">(GLFW_RESIZABLE, GLFW_TRUE); </span><span style="color: #8B949E">// the window will be resizable</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Create the window</span>
-<span style="color: #E1E4E8">		window </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">glfwCreateWindow</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">300</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">300</span><span style="color: #E1E4E8">, </span><span style="color: #9ECBFF">&quot;Hello World!&quot;</span><span style="color: #E1E4E8">, NULL, NULL);</span>
-<span style="color: #E1E4E8">		</span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> ( window </span><span style="color: #F97583">==</span><span style="color: #E1E4E8"> NULL )</span>
-<span style="color: #E1E4E8">			</span><span style="color: #F97583">throw</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">RuntimeException</span><span style="color: #E1E4E8">(</span><span style="color: #9ECBFF">&quot;Failed to create the GLFW window&quot;</span><span style="color: #E1E4E8">);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Create the window</span>
+<span style="color: #C9D1D9">		window </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">glfwCreateWindow</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">300</span><span style="color: #C9D1D9">, </span><span style="color: #79C0FF">300</span><span style="color: #C9D1D9">, </span><span style="color: #A5D6FF">&quot;Hello World!&quot;</span><span style="color: #C9D1D9">, NULL, NULL);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9"> ( window </span><span style="color: #FF7B72">==</span><span style="color: #C9D1D9"> NULL )</span>
+<span style="color: #C9D1D9">			</span><span style="color: #FF7B72">throw</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">new</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">RuntimeException</span><span style="color: #C9D1D9">(</span><span style="color: #A5D6FF">&quot;Failed to create the GLFW window&quot;</span><span style="color: #C9D1D9">);</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Setup a key callback. It will be called every time a key is pressed, repeated or released.</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwSetKeyCallback</span><span style="color: #E1E4E8">(window, (window, key, scancode, action, mods) </span><span style="color: #F97583">-&gt;</span><span style="color: #E1E4E8"> {</span>
-<span style="color: #E1E4E8">			</span><span style="color: #F97583">if</span><span style="color: #E1E4E8"> ( key </span><span style="color: #F97583">==</span><span style="color: #E1E4E8"> GLFW_KEY_ESCAPE </span><span style="color: #F97583">&amp;&amp;</span><span style="color: #E1E4E8"> action </span><span style="color: #F97583">==</span><span style="color: #E1E4E8"> GLFW_RELEASE )</span>
-<span style="color: #E1E4E8">				</span><span style="color: #B392F0">glfwSetWindowShouldClose</span><span style="color: #E1E4E8">(window, </span><span style="color: #79B8FF">true</span><span style="color: #E1E4E8">); </span><span style="color: #6A737D">// We will detect this in the rendering loop</span>
-<span style="color: #E1E4E8">		});</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Setup a key callback. It will be called every time a key is pressed, repeated or released.</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwSetKeyCallback</span><span style="color: #C9D1D9">(window, (window, key, scancode, action, mods) </span><span style="color: #FF7B72">-&gt;</span><span style="color: #C9D1D9"> {</span>
+<span style="color: #C9D1D9">			</span><span style="color: #FF7B72">if</span><span style="color: #C9D1D9"> ( key </span><span style="color: #FF7B72">==</span><span style="color: #C9D1D9"> GLFW_KEY_ESCAPE </span><span style="color: #FF7B72">&amp;&amp;</span><span style="color: #C9D1D9"> action </span><span style="color: #FF7B72">==</span><span style="color: #C9D1D9"> GLFW_RELEASE )</span>
+<span style="color: #C9D1D9">				</span><span style="color: #D2A8FF">glfwSetWindowShouldClose</span><span style="color: #C9D1D9">(window, </span><span style="color: #79C0FF">true</span><span style="color: #C9D1D9">); </span><span style="color: #8B949E">// We will detect this in the rendering loop</span>
+<span style="color: #C9D1D9">		});</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Get the thread stack and push a new frame</span>
-<span style="color: #E1E4E8">		</span><span style="color: #F97583">try</span><span style="color: #E1E4E8"> ( MemoryStack stack </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">stackPush</span><span style="color: #E1E4E8">() ) {</span>
-<span style="color: #E1E4E8">			IntBuffer pWidth </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> stack.</span><span style="color: #B392F0">mallocInt</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8">); </span><span style="color: #6A737D">// int*</span>
-<span style="color: #E1E4E8">			IntBuffer pHeight </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> stack.</span><span style="color: #B392F0">mallocInt</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8">); </span><span style="color: #6A737D">// int*</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Get the thread stack and push a new frame</span>
+<span style="color: #C9D1D9">		</span><span style="color: #FF7B72">try</span><span style="color: #C9D1D9"> ( MemoryStack</span><span style="color: #FFA657"> </span><span style="color: #C9D1D9">stack</span><span style="color: #FFA657"> </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">stackPush</span><span style="color: #C9D1D9">() ) {</span>
+<span style="color: #C9D1D9">			IntBuffer</span><span style="color: #FFA657"> </span><span style="color: #C9D1D9">pWidth</span><span style="color: #FFA657"> </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> stack.</span><span style="color: #D2A8FF">mallocInt</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">1</span><span style="color: #C9D1D9">); </span><span style="color: #8B949E">// int*</span>
+<span style="color: #C9D1D9">			IntBuffer</span><span style="color: #FFA657"> </span><span style="color: #C9D1D9">pHeight</span><span style="color: #FFA657"> </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> stack.</span><span style="color: #D2A8FF">mallocInt</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">1</span><span style="color: #C9D1D9">); </span><span style="color: #8B949E">// int*</span>
 
-<span style="color: #E1E4E8">			</span><span style="color: #6A737D">// Get the window size passed to glfwCreateWindow</span>
-<span style="color: #E1E4E8">			</span><span style="color: #B392F0">glfwGetWindowSize</span><span style="color: #E1E4E8">(window, pWidth, pHeight);</span>
+<span style="color: #C9D1D9">			</span><span style="color: #8B949E">// Get the window size passed to glfwCreateWindow</span>
+<span style="color: #C9D1D9">			</span><span style="color: #D2A8FF">glfwGetWindowSize</span><span style="color: #C9D1D9">(window, pWidth, pHeight);</span>
 
-<span style="color: #E1E4E8">			</span><span style="color: #6A737D">// Get the resolution of the primary monitor</span>
-<span style="color: #E1E4E8">			GLFWVidMode vidmode </span><span style="color: #F97583">=</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">glfwGetVideoMode</span><span style="color: #E1E4E8">(</span><span style="color: #B392F0">glfwGetPrimaryMonitor</span><span style="color: #E1E4E8">());</span>
+<span style="color: #C9D1D9">			</span><span style="color: #8B949E">// Get the resolution of the primary monitor</span>
+<span style="color: #C9D1D9">			GLFWVidMode</span><span style="color: #FFA657"> </span><span style="color: #C9D1D9">vidmode</span><span style="color: #FFA657"> </span><span style="color: #FF7B72">=</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">glfwGetVideoMode</span><span style="color: #C9D1D9">(</span><span style="color: #D2A8FF">glfwGetPrimaryMonitor</span><span style="color: #C9D1D9">());</span>
 
-<span style="color: #E1E4E8">			</span><span style="color: #6A737D">// Center the window</span>
-<span style="color: #E1E4E8">			</span><span style="color: #B392F0">glfwSetWindowPos</span><span style="color: #E1E4E8">(</span>
-<span style="color: #E1E4E8">				window,</span>
-<span style="color: #E1E4E8">				(vidmode.</span><span style="color: #B392F0">width</span><span style="color: #E1E4E8">() </span><span style="color: #F97583">-</span><span style="color: #E1E4E8"> pWidth.</span><span style="color: #B392F0">get</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">)) </span><span style="color: #F97583">/</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">2</span><span style="color: #E1E4E8">,</span>
-<span style="color: #E1E4E8">				(vidmode.</span><span style="color: #B392F0">height</span><span style="color: #E1E4E8">() </span><span style="color: #F97583">-</span><span style="color: #E1E4E8"> pHeight.</span><span style="color: #B392F0">get</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">0</span><span style="color: #E1E4E8">)) </span><span style="color: #F97583">/</span><span style="color: #E1E4E8"> </span><span style="color: #79B8FF">2</span>
-<span style="color: #E1E4E8">			);</span>
-<span style="color: #E1E4E8">		} </span><span style="color: #6A737D">// the stack frame is popped automatically</span>
+<span style="color: #C9D1D9">			</span><span style="color: #8B949E">// Center the window</span>
+<span style="color: #C9D1D9">			</span><span style="color: #D2A8FF">glfwSetWindowPos</span><span style="color: #C9D1D9">(</span>
+<span style="color: #C9D1D9">				window,</span>
+<span style="color: #C9D1D9">				(vidmode.</span><span style="color: #D2A8FF">width</span><span style="color: #C9D1D9">() </span><span style="color: #FF7B72">-</span><span style="color: #C9D1D9"> pWidth.</span><span style="color: #D2A8FF">get</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">0</span><span style="color: #C9D1D9">)) </span><span style="color: #FF7B72">/</span><span style="color: #C9D1D9"> </span><span style="color: #79C0FF">2</span><span style="color: #C9D1D9">,</span>
+<span style="color: #C9D1D9">				(vidmode.</span><span style="color: #D2A8FF">height</span><span style="color: #C9D1D9">() </span><span style="color: #FF7B72">-</span><span style="color: #C9D1D9"> pHeight.</span><span style="color: #D2A8FF">get</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">0</span><span style="color: #C9D1D9">)) </span><span style="color: #FF7B72">/</span><span style="color: #C9D1D9"> </span><span style="color: #79C0FF">2</span>
+<span style="color: #C9D1D9">			);</span>
+<span style="color: #C9D1D9">		} </span><span style="color: #8B949E">// the stack frame is popped automatically</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Make the OpenGL context current</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwMakeContextCurrent</span><span style="color: #E1E4E8">(window);</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Enable v-sync</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwSwapInterval</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">1</span><span style="color: #E1E4E8">);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Make the OpenGL context current</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwMakeContextCurrent</span><span style="color: #C9D1D9">(window);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Enable v-sync</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwSwapInterval</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">1</span><span style="color: #C9D1D9">);</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Make the window visible</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glfwShowWindow</span><span style="color: #E1E4E8">(window);</span>
-<span style="color: #E1E4E8">	}</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Make the window visible</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glfwShowWindow</span><span style="color: #C9D1D9">(window);</span>
+<span style="color: #C9D1D9">	}</span>
 
-<span style="color: #E1E4E8">	</span><span style="color: #F97583">private</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">void</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">loop</span><span style="color: #E1E4E8">() {</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// This line is critical for LWJGL&#39;s interoperation with GLFW&#39;s</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// OpenGL context, or any context that is managed externally.</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// LWJGL detects the context that is current in the current thread,</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// creates the GLCapabilities instance and makes the OpenGL</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// bindings available for use.</span>
-<span style="color: #E1E4E8">		GL.</span><span style="color: #B392F0">createCapabilities</span><span style="color: #E1E4E8">();</span>
+<span style="color: #C9D1D9">	</span><span style="color: #FF7B72">private</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">void</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">loop</span><span style="color: #C9D1D9">() {</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// This line is critical for LWJGL&#39;s interoperation with GLFW&#39;s</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// OpenGL context, or any context that is managed externally.</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// LWJGL detects the context that is current in the current thread,</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// creates the GLCapabilities instance and makes the OpenGL</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// bindings available for use.</span>
+<span style="color: #C9D1D9">		GL.</span><span style="color: #D2A8FF">createCapabilities</span><span style="color: #C9D1D9">();</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Set the clear color</span>
-<span style="color: #E1E4E8">		</span><span style="color: #B392F0">glClearColor</span><span style="color: #E1E4E8">(</span><span style="color: #79B8FF">1.0f</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">0.0f</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">0.0f</span><span style="color: #E1E4E8">, </span><span style="color: #79B8FF">0.0f</span><span style="color: #E1E4E8">);</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Set the clear color</span>
+<span style="color: #C9D1D9">		</span><span style="color: #D2A8FF">glClearColor</span><span style="color: #C9D1D9">(</span><span style="color: #79C0FF">1.0f</span><span style="color: #C9D1D9">, </span><span style="color: #79C0FF">0.0f</span><span style="color: #C9D1D9">, </span><span style="color: #79C0FF">0.0f</span><span style="color: #C9D1D9">, </span><span style="color: #79C0FF">0.0f</span><span style="color: #C9D1D9">);</span>
 
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// Run the rendering loop until the user has attempted to close</span>
-<span style="color: #E1E4E8">		</span><span style="color: #6A737D">// the window or has pressed the ESCAPE key.</span>
-<span style="color: #E1E4E8">		</span><span style="color: #F97583">while</span><span style="color: #E1E4E8"> ( </span><span style="color: #F97583">!</span><span style="color: #B392F0">glfwWindowShouldClose</span><span style="color: #E1E4E8">(window) ) {</span>
-<span style="color: #E1E4E8">			</span><span style="color: #B392F0">glClear</span><span style="color: #E1E4E8">(GL_COLOR_BUFFER_BIT </span><span style="color: #F97583">|</span><span style="color: #E1E4E8"> GL_DEPTH_BUFFER_BIT); </span><span style="color: #6A737D">// clear the framebuffer</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// Run the rendering loop until the user has attempted to close</span>
+<span style="color: #C9D1D9">		</span><span style="color: #8B949E">// the window or has pressed the ESCAPE key.</span>
+<span style="color: #C9D1D9">		</span><span style="color: #FF7B72">while</span><span style="color: #C9D1D9"> ( </span><span style="color: #FF7B72">!</span><span style="color: #D2A8FF">glfwWindowShouldClose</span><span style="color: #C9D1D9">(window) ) {</span>
+<span style="color: #C9D1D9">			</span><span style="color: #D2A8FF">glClear</span><span style="color: #C9D1D9">(GL_COLOR_BUFFER_BIT </span><span style="color: #FF7B72">|</span><span style="color: #C9D1D9"> GL_DEPTH_BUFFER_BIT); </span><span style="color: #8B949E">// clear the framebuffer</span>
 
-<span style="color: #E1E4E8">			</span><span style="color: #B392F0">glfwSwapBuffers</span><span style="color: #E1E4E8">(window); </span><span style="color: #6A737D">// swap the color buffers</span>
+<span style="color: #C9D1D9">			</span><span style="color: #D2A8FF">glfwSwapBuffers</span><span style="color: #C9D1D9">(window); </span><span style="color: #8B949E">// swap the color buffers</span>
 
-<span style="color: #E1E4E8">			</span><span style="color: #6A737D">// Poll for window events. The key callback above will only be</span>
-<span style="color: #E1E4E8">			</span><span style="color: #6A737D">// invoked during this call.</span>
-<span style="color: #E1E4E8">			</span><span style="color: #B392F0">glfwPollEvents</span><span style="color: #E1E4E8">();</span>
-<span style="color: #E1E4E8">		}</span>
-<span style="color: #E1E4E8">	}</span>
+<span style="color: #C9D1D9">			</span><span style="color: #8B949E">// Poll for window events. The key callback above will only be</span>
+<span style="color: #C9D1D9">			</span><span style="color: #8B949E">// invoked during this call.</span>
+<span style="color: #C9D1D9">			</span><span style="color: #D2A8FF">glfwPollEvents</span><span style="color: #C9D1D9">();</span>
+<span style="color: #C9D1D9">		}</span>
+<span style="color: #C9D1D9">	}</span>
 
-<span style="color: #E1E4E8">	</span><span style="color: #F97583">public</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">static</span><span style="color: #E1E4E8"> </span><span style="color: #F97583">void</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">main</span><span style="color: #E1E4E8">(</span><span style="color: #F97583">String</span><span style="color: #E1E4E8">[] </span><span style="color: #FFAB70">args</span><span style="color: #E1E4E8">) {</span>
-<span style="color: #E1E4E8">		</span><span style="color: #F97583">new</span><span style="color: #E1E4E8"> </span><span style="color: #B392F0">HelloWorld</span><span style="color: #E1E4E8">().</span><span style="color: #B392F0">run</span><span style="color: #E1E4E8">();</span>
-<span style="color: #E1E4E8">	}</span>
+<span style="color: #C9D1D9">	</span><span style="color: #FF7B72">public</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">static</span><span style="color: #C9D1D9"> </span><span style="color: #FF7B72">void</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">main</span><span style="color: #C9D1D9">(</span><span style="color: #FF7B72">String</span><span style="color: #C9D1D9">[] </span><span style="color: #FFA657">args</span><span style="color: #C9D1D9">) {</span>
+<span style="color: #C9D1D9">		</span><span style="color: #FF7B72">new</span><span style="color: #C9D1D9"> </span><span style="color: #D2A8FF">HelloWorld</span><span style="color: #C9D1D9">().</span><span style="color: #D2A8FF">run</span><span style="color: #C9D1D9">();</span>
+<span style="color: #C9D1D9">	}</span>
 
-<span style="color: #E1E4E8">}</span>
+<span style="color: #C9D1D9">}</span>
