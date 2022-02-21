@@ -11,6 +11,7 @@ import lwjgl_321 from './versions/3.2.1';
 import lwjgl_322 from './versions/3.2.2';
 import lwjgl_323 from './versions/3.2.3';
 import lwjgl_330 from './versions/3.3.0';
+import lwjgl_331 from './versions/3.3.1';
 import lwjgl_nightly from './versions/nightly';
 import { Native, BuildType, Mode, Version, Language, Preset, NATIVE_ALL, Addon } from './types';
 
@@ -280,6 +281,7 @@ function getInitialConfig(): BuildStore {
     lwjgl_322,
     lwjgl_323,
     lwjgl_330,
+    lwjgl_331,
     lwjgl_nightly,
   ].reduce((previousBuild: BuildBindings, nextBuildConfig: BuildBindingsReducer) => {
     const build = nextBuildConfig(previousBuild);
