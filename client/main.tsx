@@ -1,4 +1,4 @@
-import { createRoot } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { App } from './app';
 // import './services/ga';
 // Force polyfill injection for older versions of Safari and other browsers
