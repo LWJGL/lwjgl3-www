@@ -1,18 +1,12 @@
-import path from 'path';
-import { existsSync, createReadStream } from 'fs';
-import { readFile, writeFile } from 'fs/promises';
-import crypto from 'crypto';
-import asyncPool from 'tiny-async-pool';
-import { S3 } from '@aws-sdk/client-s3';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { existsSync, createReadStream } from 'node:fs';
+import { readFile, writeFile } from 'node:fs/promises';
+import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { concurrentRun } from './lib/concurrent.mjs';
+import { computeMD5 } from './lib/computeMD5.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-async function computeMD5(file) {
-  const hash = crypto.createHash('MD5');
-  hash.update(await readFile(file, { encoding: 'utf-8' }));
-  return hash.digest('hex');
-}
 
 // ------------------------------------------------------------------------------
 // CLI ARGS
@@ -59,17 +53,18 @@ const files = Object.keys(buildManifest.assets).map(id => {
 // UPLOAD FILES
 // ------------------------------------------------------------------------------
 
-const s3 = new S3({ region: 'us-east-1' });
+const s3 = new S3Client({ region: 'us-east-1' });
+
 let deployed = 0;
 
-await asyncPool(4, files, async file => {
+async function uploadFile(file) {
   const basename = path.basename(file);
   const extension = path.extname(basename);
 
   let digest;
 
   // Skip already deployed files
-  if (useCache && deployManifest[basename]) {
+  if (useCache && basename in deployManifest) {
     if (generated.has(file)) {
       // Skip pre-hashed files if in deploy manifest already
       return;
@@ -106,15 +101,17 @@ await asyncPool(4, files, async file => {
   console.log(`Uploading ${basename}`);
 
   try {
-    await s3.putObject({
-      Bucket: 'lwjgl-cdn',
-      // Upload CSS to /css, all other files to /js
-      Key: `${extension === '.css' ? 'css' : 'js'}/${basename}`,
-      Body: createReadStream(file),
-      // ACL: 'public-read',
-      ContentMD5: Buffer.from(digest, 'hex').toString('base64'),
-      ...headers,
-    });
+    await s3.send(
+      new PutObjectCommand({
+        Bucket: 'lwjgl-cdn',
+        // Upload CSS to /css, all other files to /js
+        Key: `${extension === '.css' ? 'css' : 'js'}/${basename}`,
+        Body: createReadStream(file),
+        // ACL: 'public-read',
+        ContentMD5: Buffer.from(digest, 'hex').toString('base64'),
+        ...headers,
+      })
+    );
   } catch (err) {
     console.error(`${basename}: ${err.message}`);
     if (failOnError) {
@@ -127,7 +124,9 @@ await asyncPool(4, files, async file => {
   // Save file & content hash so we know that we have already uploaded it
   deployManifest[basename] = digest;
   deployed += 1;
-});
+}
+
+await concurrentRun(4, files, uploadFile);
 
 if (deployed > 0) {
   if (useCache) {

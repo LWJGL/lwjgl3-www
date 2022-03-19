@@ -226,9 +226,9 @@ export function abortDownload() {
 }
 
 export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: string) => void): Promise<Array<void>> {
-  const FILES_TOTAL = files.length;
-  const PARALLEL_DOWNLOADS = Math.min(6, FILES_TOTAL);
-  const queue: Iterable<string> = files[Symbol.iterator]();
+  const FILES_TOTAL: number = files.length;
+  const PARALLEL_DOWNLOADS: number = Math.min(6, FILES_TOTAL);
+  const queue: IterableIterator<string> = files.values();
   const channels: Array<Promise<void>> = [];
   let f = 0;
   abortSignal = false;
