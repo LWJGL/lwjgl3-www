@@ -8,7 +8,9 @@ export function useMousePosition() {
   useEffect(() => {
     const handler = ({ clientX, clientY }: MouseEvent) => setState([clientX, clientY]);
     window.addEventListener('mousemove', handler);
-    return () => window.removeEventListener('mousemove', handler);
+    return () => {
+      window.removeEventListener('mousemove', handler);
+    };
   }, []);
 
   return state;

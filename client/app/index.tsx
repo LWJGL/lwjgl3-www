@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, StrictMode } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { OverlayProvider } from '@react-aria/overlays';
 import { BreakpointProvider } from './context/Breakpoint';
@@ -35,29 +35,31 @@ const Main = styled('main', {
 });
 
 export const App: React.FC<{ children?: never }> = () => (
-  <OverlayProvider>
-    <BreakpointProvider>
-      <ColorSchemeProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Page.Home />} />
-              <Route path="/guide" element={<Page.Guide />} />
-              <Route path="/download" element={<Page.Download />} />
-              <Route path="/customize" element={<Page.Customize />} />
-              <Route path="/browse/*" element={<Page.Browse />} />
-              <Route path="/source" element={<Page.Source />} />
-              <Route path="/frameworks" element={<Page.Frameworks />} />
-              <Route path="/sponsors" element={<Page.Sponsors />} />
-              <Route path="/license" element={<Page.License />} />
-              {/* <Route path="/dev" element={<Page.Dev/>} /> */}
-              <Route path="*" element={<PageNotFound />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ColorSchemeProvider>
-    </BreakpointProvider>
-  </OverlayProvider>
+  <StrictMode>
+    <OverlayProvider>
+      <BreakpointProvider>
+        <ColorSchemeProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Page.Home />} />
+                <Route path="/guide" element={<Page.Guide />} />
+                <Route path="/download" element={<Page.Download />} />
+                <Route path="/customize" element={<Page.Customize />} />
+                <Route path="/browse/*" element={<Page.Browse />} />
+                <Route path="/source" element={<Page.Source />} />
+                <Route path="/frameworks" element={<Page.Frameworks />} />
+                <Route path="/sponsors" element={<Page.Sponsors />} />
+                <Route path="/license" element={<Page.License />} />
+                {/* <Route path="/dev" element={<Page.Dev/>} /> */}
+                <Route path="*" element={<PageNotFound />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </ColorSchemeProvider>
+      </BreakpointProvider>
+    </OverlayProvider>
+  </StrictMode>
 );
 
 const Layout: React.FC<{ children?: never }> = () => (

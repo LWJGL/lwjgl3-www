@@ -47,12 +47,19 @@ export const BreakpointProvider: React.FC = ({ children }) => {
       }
     }
 
-    //@ts-expect-error
-    if (matchers[0].addEventListener) {
+    if ('addEventListener' in matchers[0]) {
       matchers.forEach((matcher, i) => matcher.addEventListener('change', mediaQueryListener.bind(null, i)));
     } else {
       matchers.forEach((matcher, i) => matcher.addListener(mediaQueryListener.bind(null, i)));
     }
+
+    return () => {
+      if ('removeEventListener' in matchers[0]) {
+        matchers.forEach((matcher, i) => matcher.removeEventListener('change', mediaQueryListener.bind(null, i)));
+      } else {
+        matchers.forEach((matcher, i) => matcher.removeListener(mediaQueryListener.bind(null, i)));
+      }
+    };
   }, []);
 
   return <BreakpointContext.Provider value={current}>{children}</BreakpointContext.Provider>;

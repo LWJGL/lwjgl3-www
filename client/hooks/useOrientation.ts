@@ -29,7 +29,9 @@ export function useOrientation() {
     }
     const handler = () => setOrientation(getOrientation());
     window.addEventListener('orientationchange', handler);
-    return () => window.removeEventListener('orientationchange', handler);
+    return () => {
+      window.removeEventListener('orientationchange', handler);
+    };
   }, []);
 
   return orientation;

@@ -52,11 +52,19 @@ export const ColorSchemeProvider: React.FC = ({ children }) => {
         }
       };
 
-      if (prefersColorSchemeDark.addEventListener) {
+      if ('addEventListener' in prefersColorSchemeDark) {
         prefersColorSchemeDark.addEventListener('change', callback);
       } else {
         prefersColorSchemeDark.addListener(callback);
       }
+
+      return () => {
+        if ('removeEventListener' in prefersColorSchemeDark) {
+          prefersColorSchemeDark.removeEventListener('change', callback);
+        } else {
+          prefersColorSchemeDark.removeListener(callback);
+        }
+      };
     }
   }, []);
 

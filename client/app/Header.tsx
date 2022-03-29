@@ -122,10 +122,8 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
   }, []);
 
   useEffect(() => {
-    enum Direction {
-      Up,
-      Down,
-    }
+    const Up = 0;
+    const Down = 1;
 
     // Re-create useState variables to prevent scope conflicts
     let pos = 0;
@@ -137,7 +135,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
     let mounted = true;
     let prev = 0;
     let current = 0;
-    let direction = Direction.Down;
+    let direction = Down;
     let ticking = false;
 
     function _setPos(value: number) {
@@ -171,9 +169,9 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
           if (!hidden) {
             _setHidden(true);
           }
-        } else if (direction === Direction.Up) {
+        } else if (direction === Up) {
           // We just started scroll down
-          direction = Direction.Down;
+          direction = Down;
           if (fixed) {
             // Release menu from the top of the viewport
             _setFixed(false);
@@ -191,9 +189,9 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
             _setHidden(false);
           }
         } else {
-          if (direction === Direction.Down) {
+          if (direction === Down) {
             // We just started scrolling up
-            direction = Direction.Up;
+            direction = Up;
             if (prev - current > offsetHeight) {
               _setFixed(true);
               _setPos(0);
