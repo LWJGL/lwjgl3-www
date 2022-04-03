@@ -30,29 +30,24 @@ Build status icons are loaded directly from [travis-ci.org](https://travis-ci.or
 
 [Three.js](https://threejs.org/) is loaded from [jsDelivr](https://www.jsdelivr.com/).
 
-## Requirements
+## Prerequisites
 
 - [Node.js v15+](https://nodejs.org/)
 - [NPM v7+](https://npmjs.com/)
 
 ## Development
 
-1.  To install all required npm packages:
+Install all required npm packages and build styles:
 
 ```shell
 npm i
+npm run build:styles
 ```
 
-2. To build styles:
+Start the server in dev mode:
 
 ```shell
-npm run styles:dev
-```
-
-3.  To start the server in dev mode:
-
-```shell
-npm start
+npm -s start
 ```
 
 ### CLI flags
@@ -94,7 +89,7 @@ npm run release
 You can run the production build locally:
 
 ```shell
-npm run server:test
+npm run dev:test-production
 ```
 
 ### Debugging production output

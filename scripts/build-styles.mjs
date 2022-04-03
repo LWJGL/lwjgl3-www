@@ -1,12 +1,12 @@
-import path from 'path';
-import { readFile, writeFile } from 'fs/promises';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { readFile, writeFile } from 'node:fs/promises';
 import postcss from 'postcss';
 import scss from 'postcss-scss';
 import cssimport from 'postcss-import';
 import presetenv from 'postcss-preset-env';
 import autoprefixer from 'autoprefixer';
 import cssnano from 'cssnano';
-import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,6 +31,8 @@ if (PRODUCTION) {
     })
   );
 }
+
+// console.log(`Building CSS in ${PRODUCTION ? 'production' : 'development'} mode...`);
 
 const result = await postcss(plugins).process(source, {
   parser: scss,

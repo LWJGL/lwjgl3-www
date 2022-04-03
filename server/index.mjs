@@ -396,6 +396,19 @@ app.setErrorHandler((error, request, reply) => {
 
 try {
   await app.listen(PORT, HOST);
+
+  if (DEVELOPMENT) {
+    const devUrl = `http://${HOST !== '0.0.0.0' ? HOST : 'www.lwjgl.localhost'}${PORT !== 80 ? `:${PORT}` : ''}`;
+    const hr = '='.repeat(Math.max(devUrl.length, 18));
+    console.log(
+      `
+${hr}
+Started server on:
+${devUrl}
+${hr}
+`
+    );
+  }
 } catch (err) {
   app.log.error(err);
   process.exit(1);

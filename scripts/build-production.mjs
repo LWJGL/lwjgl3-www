@@ -1,17 +1,29 @@
-import path from 'path';
-import fs from 'fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { opendir, unlink, writeFile } from 'node:fs/promises';
 import webpack from 'webpack';
 import config from '../webpack.config.js';
 
-import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const buildPath = path.resolve(__dirname, '../public/js');
 
+// Cleanup build directory
+const buildDir = await opendir(buildPath);
+for await (const entry of buildDir) {
+  const ext = path.extname(entry.name);
+  // Remove all JS files and webpack manifest. Keep everything else, including deploy.json
+  if (ext === '.js' || (ext === '.json' && entry.name === 'webpack.manifest.json')) {
+    await unlink(path.resolve(buildPath, entry.name));
+  }
+}
+
+// console.log(`Compiling JS in ${process.env.NODE_ENV === 'production' ? 'production' : 'development'} mode...`);
+
+// Build with webpack
 config.plugins.push(new webpack.ProgressPlugin());
-
 const compiler = webpack(config);
-
 compiler.run((err, stats) => {
-  compiler.close(() => {
+  compiler.close(async () => {
     if (err) {
       console.error(err.stack || err);
       if (err.details) {
@@ -45,7 +57,7 @@ compiler.run((err, stats) => {
       );
     }
 
-    fs.writeFileSync(
+    await writeFile(
       path.resolve(__dirname, '../public/js/webpack.manifest.json'),
       JSON.stringify(
         stats.toJson({
@@ -58,7 +70,8 @@ compiler.run((err, stats) => {
         }),
         null,
         2
-      )
+      ),
+      { encoding: 'utf8' }
     );
   });
 });

@@ -1,11 +1,7 @@
-// Imports
-import path from 'path';
-// import crypto from 'crypto';
-import { readFileSync } from 'fs';
-// import { readFile, writeFile } from 'fs/promises';
-import { copyFile, writeFile } from 'fs/promises';
+import path from 'node:path';
 import { fileURLToPath } from 'url';
-// import { minify } from 'terser';
+import { readFileSync } from 'node:fs';
+import { copyFile, writeFile } from 'node:fs/promises';
 import chalk from 'chalk';
 import { gzipSizeSync } from 'gzip-size';
 import CliTable from 'cli-table';
@@ -14,6 +10,8 @@ import CliTable from 'cli-table';
 import prettyBytes from './lib/prettyBytes.mjs';
 import formatSize from './lib/formatSize.mjs';
 import ellipsis from './lib/ellipsis.mjs';
+
+import manifest from '../public/js/webpack.manifest.json' assert { type: 'json' };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -33,9 +31,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
     * Store chunk dependencies for each route
   * Display report
 */
-
-// Read webpack's manifest & chunks into memory
-const manifest = JSON.parse(readFileSync(path.join(__dirname, '../public/js/webpack.manifest.json')));
 
 // We'll use this to store final production manifest
 const productionManifest = {
