@@ -37,7 +37,7 @@
     "@babel/preset-env": "7.16.11",
     "@babel/preset-react": "7.16.7",
     "@babel/preset-typescript": "7.16.7",
-    "@pmmmwh/react-refresh-webpack-plugin": "0.5.4",
+    "@pmmmwh/react-refresh-webpack-plugin": "github:pmmmwh/react-refresh-webpack-plugin",
     "@prettier/plugin-pug": "1.20.0",
     "@react-aria/button": "3.4.3",
     "@react-aria/dialog": "3.1.8",
@@ -60,7 +60,6 @@
     "chalk": "5.0.1",
     "cli-table": "0.3.11",
     "core-js": "3.21.1",
-    "css-loader": "6.7.1",
     "cssnano": "5.1.7",
     "eslint": "8.12.0",
     "eslint-plugin-react-hooks": "0.0.0-experimental-ebd7ff65b-20220401",
@@ -81,12 +80,11 @@
     "react-error-boundary": "3.1.4",
     "react-fast-compare": "3.2.0",
     "react-is": "0.0.0-experimental-ebd7ff65b-20220401",
-    "react-refresh": "0.0.0-experimental-fe905f152-20220107",
+    "react-refresh": "0.0.0-experimental-ebd7ff65b-20220401",
     "reselect": "4.1.5",
     "scroll-into-view-if-needed": "2.2.29",
     "shiki": "0.10.1",
     "source-map-loader": "3.0.1",
-    "style-loader": "3.3.1",
     "typescript": "4.6.3",
     "use-context-selector": "1.3.9",
     "webpack": "5.71.0",
@@ -95,26 +93,20 @@
   },
   "scripts": {
     "start": "run-p dev:js dev:server",
-
     "build:styles": "NODE_ENV=development node ./scripts/build-styles.mjs",
-
     "dev:js": "WDS=1 webpack serve",
     "dev:server": "NODE_ENV=development AWS_PROFILE=lwjgl node server/index.mjs",
     "dev:debug": "NODE_ENV=development AWS_PROFILE=lwjgl node --inspect --preserve-symlinks server/index.mjs",
     "dev:watch": "NODE_ENV=development AWS_PROFILE=lwjgl npx nodemon server/index.mjs",
     "dev:test-production": "NODE_ENV=production AWS_PROFILE=lwjgl node --max_old_space_size=384 server/index.mjs --test --s3proxy --nocache --pretty",
-
     "production": "run-p production:*",
     "production:styles": "NODE_ENV=production node ./scripts/build-styles.mjs",
     "production:js": "NODE_ENV=production node ./scripts/build-production.mjs",
-
     "release": "run-s production release:post",
     "release:post": "node --no-warnings ./scripts/post-production.mjs",
-
     "flush": "rm -r ./node_modules/.cache",
     "lint": "eslint --ext .ts,.js,.tsx client/",
     "prettier": "prettier --write \"{client,server,scripts}/**/*.{ts,tsx,js,mjs,md,css,pug}\"",
-
     "ncu": "npx npm-check-updates -i --configFileName ncu.json",
     "ncut": "npx npm-check-updates -t greatest --configFileName ncu.json",
     "ncun": "npx npm-check-updates -i -t newest --configFileName ncu-newest.json"
