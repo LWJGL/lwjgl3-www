@@ -187,6 +187,14 @@ export const GoldSponsors: React.FC = ({ children }) => (
         >
           <ImgLazy width={240 / 2} height={279 / 2} src="/img/sponsors/casino-guide-240x279.png" alt="Casino.guide" />
         </a>
+        <a
+          href="https://1394ta.org/"
+          title="1394TA: Buy Instagram Followers and Likes"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={110} height={47} src="/img/sponsors/1394ta.svg" alt="1394TA" />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
