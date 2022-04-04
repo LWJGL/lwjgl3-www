@@ -75,20 +75,13 @@ function buildConfiguration() {
       extensions: ['.tsx', '.jsx', '.ts', '.wasm', '.js', '.mjs', '.json'],
       alias: {
         '~': path.resolve(__dirname, './client'),
-        // Use prebundled jszip that has smaller stream polyfill
-        jszip: path.resolve(__dirname, `./node_modules/jszip/dist/jszip.min.js`),
-        // // alternatively, use stream-browserify polyfill (~17KB larger)
-        // stream: 'stream-browserify'
       },
     },
     module: {
       rules: [
         {
           test: /\.(mjs|js|ts|tsx)$/,
-          include: [
-            path.resolve(__dirname, 'client'),
-            //path.resolve(__dirname, 'node_modules/@stitches')
-          ],
+          include: [path.resolve(__dirname, 'client')],
           use: [
             {
               loader: 'babel-loader',
