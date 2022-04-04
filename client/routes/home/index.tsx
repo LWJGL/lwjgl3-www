@@ -405,7 +405,7 @@ const HomeRoute: React.FC<{ children?: never }> = () => (
 
         <Hr margin="lg" />
 
-        <Text css={{ color: '$neutralA10', '@sm': { textAlign: 'center' } }}>
+        <Text css={{ '@sm': { textAlign: 'center' } }}>
           <small>
             OpenGL® and the oval logo are trademarks or registered trademarks of Silicon Graphics, Inc. in the United
             States and/or other countries worldwide.

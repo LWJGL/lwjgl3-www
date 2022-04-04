@@ -22,7 +22,6 @@ const FooterLink = styled('a', {
 const FooterNav = styled(Link, FooterLink);
 
 const Heading = styled('h2', {
-  color: '$neutralA11',
   fontWeight: '$light',
   fontSize: '1.6rem',
   lineHeight: 1,
@@ -53,7 +52,6 @@ const Nav = styled('nav', Grid);
 
 const LicenseArea = styled('div', {
   textAlign: 'center',
-  color: '$neutralA11',
   pt: '$safe',
 });
 
