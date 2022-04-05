@@ -29,6 +29,7 @@ const Pre = styled('pre', {
 export default function BuildDownloader({ setIsDownloading }: Props) {
   const store = useStore();
   const isMounted = useMountedRef();
+  const downloadedStartedRef = useRef(false);
   const usingNetwork = useRef(false);
 
   const [progress, setProgress] = useState<Progress>(['Downloading file manifest']);
@@ -114,7 +115,11 @@ export default function BuildDownloader({ setIsDownloading }: Props) {
       downloadComplete();
     }
 
-    beginDownload();
+    if (!downloadedStartedRef.current) {
+      beginDownload();
+      // We never reset this to avoid double downloading in StrictMode
+      downloadedStartedRef.current = true;
+    }
 
     return () => {
       if (usingNetwork.current) {
