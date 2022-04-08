@@ -48,7 +48,7 @@ const BuildBadge: React.FC<BuildBadgeProps> = ({ title, href, src, width = 88, h
   </HStack>
 );
 
-const SourceRoute: React.FC<{ children?: never }> = () => (
+const SourceRoute: React.FC = () => (
   <PageView title="Source & Build Status" description="Links to LWJGL Github repository and build status matrix">
     <Container padding>
       <Title>

@@ -20,7 +20,7 @@ const buttonSizes: React.ComponentProps<typeof LinkButton>['size'] = {
   '@xl': 'xl',
 };
 
-const DownloadRoute: React.FC<{ children?: never }> = (): JSX.Element => {
+const DownloadRoute: React.FC = (): JSX.Element => {
   return (
     <PageView title="Download" description="Download LWJGL 3">
       <Container padding>

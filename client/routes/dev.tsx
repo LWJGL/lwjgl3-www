@@ -3,7 +3,7 @@ import { Container } from '~/components/ui/Container';
 import { ButtonVariations } from '~/components/forms/test/Button';
 // import { Colors } from '~/theme/test/Colors';
 
-const DevRoute: React.FC<{ children?: never }> = (): JSX.Element => {
+const DevRoute: React.FC = () => {
   return (
     <PageView title="Dev" description="Developer page">
       <Container css={{ padding: '$safe' }}>

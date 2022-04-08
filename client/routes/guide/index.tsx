@@ -23,7 +23,7 @@ const Sample: React.FC<{ children?: never }> = () => {
   );
 };
 
-const GuideRoute: React.FC<{ children?: never }> = () => (
+const GuideRoute: React.FC = () => (
   <PageView title="Get started with LWJGL 3" description="This guide will help you get started with LWJGL 3">
     <Container padding>
       <Title>

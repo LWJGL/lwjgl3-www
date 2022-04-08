@@ -11,7 +11,7 @@ export interface StackProps {
   gap?: string | number;
 }
 
-const FlexStackDiv: React.FC<StackProps> = ({ gap, children, ...rest }) => (
+const FlexStackDiv: FCC<StackProps> = ({ gap, children, ...rest }) => (
   <div {...rest}>
     {gap !== undefined
       ? Children.toArray(children).map((child, index, arr) => (

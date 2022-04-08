@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
 
-export const Head: React.FC<{}> = (props) => {
-  return createPortal(props.children, document.head);
+export const Head: FCC = ({ children }) => {
+  return createPortal(children, document.head);
 };

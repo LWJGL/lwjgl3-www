@@ -10,7 +10,7 @@ import { Title } from '~/components/lwjgl/Title';
 
 const ProseSection = styled('section', Prose);
 
-const FrameworksRoute: React.FC<{ children?: never }> = () => (
+const FrameworksRoute: React.FC = () => (
   <PageView title="Frameworks" description="Engines & frameworks that use LWJGL">
     <SectionContainer padding>
       <Title>

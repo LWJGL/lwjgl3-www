@@ -58,7 +58,7 @@ export const H3 = styled('h3', {
   fontWeight: '$bold',
 });
 
-const HeadingSwitch: React.FC<HeadingProps> = ({ level, children, ...rest }) => {
+const HeadingSwitch: FCC<HeadingProps> = ({ level, children, ...rest }) => {
   switch (level) {
     case 1:
       return <H1 {...rest}>{children}</H1>;

@@ -32,7 +32,7 @@ interface Props {
   configLoad: (payload: BuildStoreSnapshot) => void;
 }
 
-export const BuildToolbar: React.FC<Props> = ({ configDownload, configLoad, children }) => {
+export const BuildToolbar: FCC<Props> = ({ configDownload, configLoad, children }) => {
   const [fileUI, setFileUI] = useState(false);
   const toggleFileUI = () => setFileUI(!fileUI);
   const currentBreakpoint = useBreakpoint();

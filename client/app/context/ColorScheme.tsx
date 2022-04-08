@@ -29,7 +29,7 @@ if (!FLAG_PRODUCTION) {
   ColorSchemeToggleContext.displayName = 'ColorSchemeToggleContext';
 }
 
-export const ColorSchemeProvider: React.FC = ({ children }) => {
+export const ColorSchemeProvider: FCC = ({ children }) => {
   const [current, setCurrent] = useState<Scheme>(schemeDefault);
 
   const toggle = useCallback((scheme: Scheme) => {

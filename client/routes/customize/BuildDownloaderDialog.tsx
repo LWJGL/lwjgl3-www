@@ -57,7 +57,7 @@ const Modal = styled('div', {
   },
 });
 
-const ModalDialog: React.FC<ModalProps> = (props) => {
+const ModalDialog: FCC<ModalProps> = (props) => {
   let { /*title,*/ children } = props;
   // Handle interacting outside the dialog and pressing
   // the Escape key to close the modal.

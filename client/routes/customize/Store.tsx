@@ -58,7 +58,7 @@ function saveSnapshot(state: BuildStore): void {
 const saveSnapshotDebounced = debounce(saveSnapshot, 1000);
 
 // Store Provider
-export const Provider: React.FC = (props) => {
+export const Provider: FCC = (props) => {
   const [state, dispatch] = useReducer<React.Reducer<BuildStore, ActionMessage>>(reducer, config);
   // const update = useContextUpdate(StoreContext);
   // const safeDispatch = update(() => {});
@@ -85,7 +85,9 @@ export const Provider: React.FC = (props) => {
   });
 
   return (
+    //@ts-expect-error
     <DispatchContext.Provider value={dispatch}>
+      {/* @ts-expect-error */}
       <StoreContext.Provider value={state}>{props.children}</StoreContext.Provider>
     </DispatchContext.Provider>
   );

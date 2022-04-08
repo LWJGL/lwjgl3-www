@@ -105,7 +105,7 @@ export const Header: React.FC<{ children?: never }> = () => {
   return <HeaderNav isHome={location.pathname === '/'} />;
 };
 
-export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo(({ isHome }) => {
+export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
   const [pos, setPos] = useState(0);
   const [top, setTop] = useState(true);
   const [fixed, setFixed] = useState(false);
@@ -114,7 +114,7 @@ export const HeaderNav: React.FC<{ isHome: boolean; children?: never }> = memo((
 
   // Save one render cycle by avoiding useLayoutEffect
   // https://twitter.com/giuseppegurgone/status/1339327319090094080
-  const menuRef = useCallback((node) => {
+  const menuRef = useCallback((node: HTMLElement) => {
     if (node) {
       // Measure menu height, should be ~ 48 pixels
       offsetHeight = node.offsetHeight;

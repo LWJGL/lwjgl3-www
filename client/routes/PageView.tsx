@@ -78,7 +78,7 @@ function arePropsEqual({ location: prevLocation }: PropsMemo, { location: nextLo
   return prevLocation.pathname === nextLocation.pathname && prevLocation.search === nextLocation.search;
 }
 
-const PageViewWithLocation: React.FC<PropsMemo> = ({ location, title, description, children }) => {
+const PageViewWithLocation: FCC<PropsMemo> = ({ location, title, description, children }) => {
   const { /*pathname, search,*/ hash, key = 'default' } = location;
 
   // Update document title
@@ -134,7 +134,7 @@ function scrollToTarget(el: HTMLElement) {
   window.setTimeout(scrollEnd, 0);
 }
 
-export const PageView: React.FC<Props> = (props) => {
+export const PageView: FCC<Props> = (props) => {
   const location = useLocation();
 
   // Hash scrolling

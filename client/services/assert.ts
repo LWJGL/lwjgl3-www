@@ -1,8 +1,6 @@
 export class AssertionError extends Error {
-  //@ts-expect-error
-  constructor(message: string = 'Assertion error!', ...rest) {
-    //@ts-expect-error
-    super(message, ...rest);
+  constructor(message: string = 'Assertion error!', options?: ErrorOptions) {
+    super(message, options);
 
     // Maintains proper stack trace for where our error was thrown (only available on V8)
     if (Error.captureStackTrace) {

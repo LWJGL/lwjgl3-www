@@ -37,7 +37,7 @@ if (!FLAG_PRODUCTION) {
   BreakpointContext.displayName = 'BreakpointContext';
 }
 
-export const BreakpointProvider: React.FC = ({ children }) => {
+export const BreakpointProvider: FCC = ({ children }) => {
   const [current, setCurrent] = useState(defaultBreakpoint);
 
   useEffect(() => {

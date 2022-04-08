@@ -20,7 +20,7 @@
     ]
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.58.0",
+    "@aws-sdk/client-s3": "3.66.0",
     "fastify": "3.28.0",
     "fastify-accepts": "2.2.0",
     "fastify-etag": "2.1.0",
@@ -48,7 +48,7 @@
     "@react-aria/utils": "3.11.3",
     "@stitches/react": "1.2.7",
     "@types/lodash-es": "4.17.6",
-    "@types/react-dom": "17.0.14",
+    "@types/react-dom": "18.0.0",
     "@types/react-is": "17.0.3",
     "@types/scheduler": "0.16.2",
     "@types/web": "0.0.61",

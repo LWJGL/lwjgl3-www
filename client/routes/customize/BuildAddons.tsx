@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Box } from '~/components/ui/Box';
-import { Checkbox } from '~/components/forms/Selection';
+import { Checkbox, type CheckboxProps } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { useSelector, useDispatch } from './Store';
 import {
@@ -19,7 +19,10 @@ export const BuildAddons: React.FC<{ children?: never }> = () => {
   const { allIds, byId } = useSelector(selectorAddons);
   const selectedAddons = useSelector(selectorAddonsSelected);
   const descriptions = useSelector(selectorDescriptions);
-  const onChange = useCallback((e, addon: Addon) => dispatch(createActionAddonToggle(addon)), [dispatch]);
+  const onChange: CheckboxProps['onChange'] = useCallback(
+    (e, addon: Addon) => dispatch(createActionAddonToggle(addon)),
+    [dispatch]
+  );
 
   return (
     <>
@@ -47,7 +50,7 @@ interface Props {
   disabled: boolean;
   selected: boolean;
   showDescriptions: boolean;
-  onChange: any;
+  onChange: CheckboxProps['onChange'];
 }
 
 const BuildAddon = ({ addon, disabled, selected, showDescriptions, onChange }: Props) => {

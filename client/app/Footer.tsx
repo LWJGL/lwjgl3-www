@@ -229,7 +229,7 @@ const FOOTER = (
   </DarkFooter>
 );
 
-export const Footer: React.FC<{ children?: never }> = () => {
+export const Footer: React.FC = () => {
   const location = useLocation();
   return location !== undefined && location.pathname !== '/customize' && !location.pathname.startsWith('/browse')
     ? FOOTER

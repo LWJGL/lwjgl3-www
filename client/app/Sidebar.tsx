@@ -1,13 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { OverlayContainer, useOverlay, usePreventScroll, useModal } from '@react-aria/overlays';
 import { FocusScope } from '@react-aria/focus';
-import { motion, useMotionValue, useTransform, animate } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate, type PanInfo } from 'framer-motion';
 import { styled, css } from '~/theme/stitches.config';
 import { MainMenu } from './MainMenu';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import { BackdropCss } from '~/components/ui/Backdrop';
-
-import type { DragHandlers } from 'framer-motion';
 
 const MenuArea = styled('div', {
   flex: '1 0 auto',
@@ -121,8 +119,8 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
   const opacityLine2 = useTransform(perc, (value) => 1 - value);
   const rotateLine3 = useTransform(perc, (value) => value * 45);
   const backdropColor = useTransform(x, [0, MENU_WIDTH], ['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']);
-  const onDragEnd: DragHandlers['onDragEnd'] = useCallback(
-    (event, info): void => {
+  const onDragEnd = useCallback(
+    (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void => {
       if (info.velocity.x > 200 && info.offset.x > MENU_WIDTH * 0.33) {
         toggleOpen();
       } else {
@@ -190,7 +188,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           dragConstraints={{ left: 0, right: MENU_INITIAL }}
           dragElastic={0}
           dragMomentum={false}
-          // @ts-expect-error
+          //@ts-expect-error
           onDragEnd={onDragEnd}
           {...overlayProps}
         >

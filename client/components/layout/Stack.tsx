@@ -43,7 +43,7 @@ export interface StackProps {
 }
 
 // TODO: implement custom divider
-export const Stack: React.FC<StackProps> = ({ children, divider, direction, ...props }) => (
+export const Stack: FCC<StackProps> = ({ children, divider, direction, ...props }) => (
   <StackGrid direction={direction} {...props}>
     {divider !== undefined
       ? Children.toArray(children).map((child, index, arr) => (

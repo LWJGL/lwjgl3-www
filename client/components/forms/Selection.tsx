@@ -195,7 +195,7 @@ export interface CheckboxProps {
   variant?: 'checkbox' | 'switch';
 }
 
-export const Checkbox: React.FC<CheckboxProps> = ({
+export const Checkbox: FCC<CheckboxProps> = ({
   value,
   onChange,
   checked = false,
@@ -241,7 +241,7 @@ export interface RadioProps {
   description?: React.ReactNode;
 }
 
-export const Radio: React.FC<RadioProps> = ({
+export const Radio: React.FC<React.PropsWithChildren<RadioProps>> = ({
   value,
   onChange,
   checked = false,

@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Box } from '~/components/ui/Box';
-import { Checkbox } from '~/components/forms/Selection';
+import { Checkbox, type CheckboxProps } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
 import { useSelector, useDispatch } from './Store';
@@ -47,7 +47,10 @@ const getSupportedPlatforms = (
 
 export const BuildArtifacts: React.FC<{ children?: never }> = () => {
   const dispatch = useDispatch();
-  const onChange = useCallback((e, artifact: Binding) => dispatch(createActionArtifactToggle(artifact)), [dispatch]);
+  const onChange: CheckboxProps['onChange'] = useCallback(
+    (e, artifact: Binding) => dispatch(createActionArtifactToggle(artifact)),
+    [dispatch]
+  );
   const contents = useSelector(selectorContents);
   const availability = useSelector(selectorAvailability);
   const descriptions = useSelector(selectorDescriptions);
@@ -90,7 +93,7 @@ interface Props {
   disabled: boolean;
   selected: boolean;
   showDescriptions: boolean;
-  onChange: any;
+  onChange: CheckboxProps['onChange'];
 }
 
 const BuildArtifact: React.FC<Props> = ({

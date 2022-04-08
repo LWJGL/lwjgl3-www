@@ -4,7 +4,7 @@ import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
 import { SectionContainer } from '~/components/ui/Section';
 
-export const GoldSponsors: React.FC = ({ children }) => (
+export const GoldSponsors: FCC = ({ children }) => (
   <Dark>
     <SectionContainer padding>
       <TitleSection>

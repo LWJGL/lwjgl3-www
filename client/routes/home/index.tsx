@@ -70,7 +70,7 @@ const Feature = styled('div', {
   },
 });
 
-const HomeRoute: React.FC<{ children?: never }> = () => (
+const HomeRoute: React.FC = () => (
   <PageView description="LWJGL is a Java library that enables cross-platform access to popular native APIs such as OpenGL, OpenAL, and OpenCL.">
     <HomeHero />
 

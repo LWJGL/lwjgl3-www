@@ -5,6 +5,10 @@ declare interface CSSModule {
   unuse: () => void;
 }
 
+// React Helpers
+
+declare type FCC<Props = unknown> = React.FunctionComponent<React.PropsWithChildren<Props>>;
+
 // Type definitions for LWJGL
 
 declare const FLAG_PRODUCTION: boolean;

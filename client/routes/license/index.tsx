@@ -7,7 +7,7 @@ import { Prose } from '~/components/ui/Prose';
 
 const ArticleContainer = styled('article', Container);
 
-const LicenseRoute: React.FC<{ children?: never }> = () => (
+const LicenseRoute: React.FC = () => (
   <PageView title="License" description="LWJGL is licensed under BSD">
     <ArticleContainer padding>
       <Title>Lightweight Java Game Library License</Title>

@@ -1,9 +1,8 @@
 import { useCallback, useMemo } from 'react';
 import { useSelector, useDispatch } from './Store';
 import { createSelectorDeepEqual } from '~/services/selector';
-import { Radio } from '~/components/forms/Selection';
+import { Radio, type RadioProps } from '~/components/forms/Selection';
 
-import type { RadioProps } from '~/components/forms/Selection';
 import type { BuildStore } from './types';
 
 interface RadioOption {
@@ -26,7 +25,7 @@ export const ConnectedRadio: React.FC<ConnectedRadioProps> = ({ name, value, opt
   const radioSelector = useMemo(() => createSelectorDeepEqual(options, (d) => d), [options]);
   const radios = useSelector(radioSelector);
   const dispatch = useDispatch();
-  const onChange = useCallback(
+  const onChange: RadioProps['onChange'] = useCallback(
     (e, val: any) => {
       dispatch(action(val));
     },
