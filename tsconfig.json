@@ -16,8 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./client/*"]
-    },
-    "types": ["react/next", "react-dom/next"]
+    }
   },
   "include": ["types", "client"],
   "exclude": ["public", "scripts", "server", "**/node_modules", "**/.*/"]
