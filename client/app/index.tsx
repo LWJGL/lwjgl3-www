@@ -3,6 +3,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { OverlayProvider } from '@react-aria/overlays';
 import { BreakpointProvider } from './context/Breakpoint';
 import { ColorSchemeProvider } from './context/ColorScheme';
+// import { ClickToComponent } from 'click-to-react-component';
 import '~/services/screenFit';
 
 // Routing
@@ -36,6 +37,7 @@ const Main = styled('main', {
 
 export const App: React.FC<{ children?: never }> = () => (
   <StrictMode>
+    {/* <ClickToComponent /> */}
     <OverlayProvider>
       <BreakpointProvider>
         <ColorSchemeProvider>

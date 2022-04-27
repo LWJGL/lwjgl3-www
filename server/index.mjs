@@ -3,10 +3,9 @@ import { readFile } from 'fs/promises';
 import { fileURLToPath } from 'url';
 import { createRequire } from 'module';
 import fastify from 'fastify';
-import fastifyAccepts from 'fastify-accepts';
-import fastifyHealthcheck from 'fastify-healthcheck';
-import fastifyStatic from 'fastify-static';
-import fastifyEtag from 'fastify-etag';
+import fastifyAccepts from '@fastify/accepts';
+import fastifyStatic from '@fastify/static';
+import fastifyEtag from '@fastify/etag';
 import fastifyPointOfView from 'point-of-view';
 // import { mime } from 'send';
 import pug from 'pug';
@@ -159,13 +158,6 @@ app.register(fastifyPointOfView, {
   },
 });
 
-if (PRODUCTION) {
-  // Health checks
-  app.register(fastifyHealthcheck, {
-    healthcheckUrl: '/health',
-  });
-}
-
 // Static files
 app.register(fastifyStatic, {
   root: path.resolve(__dirname, '../public'),
@@ -242,7 +234,7 @@ if (DEVELOPMENT) {
   });
 
   // Proxy webpack-dev-server generated files
-  const httpProxy = require('fastify-http-proxy');
+  const httpProxy = require('@fastify/http-proxy');
   await app.register(httpProxy, { prefix: '/js', rewritePrefix: '/js', upstream: 'http://localhost:8089' });
 }
 
@@ -251,7 +243,7 @@ if (DEVELOPMENT) {
 // In development these paths will hit Node, therefore we need to handle them.
 // CAUTION: Internet connection is required!
 if (DEVELOPMENT || argv.s3proxy === true) {
-  const httpProxy = require('fastify-http-proxy');
+  const httpProxy = require('@fastify/http-proxy');
   await app.register(httpProxy, { prefix: '/img', rewritePrefix: '/img', upstream: 'https://www.lwjgl.org' });
   await app.register(httpProxy, { prefix: '/svg', rewritePrefix: '/svg', upstream: 'https://www.lwjgl.org' });
 }
@@ -259,6 +251,10 @@ if (DEVELOPMENT || argv.s3proxy === true) {
 // ------------------------------------------------------------------------------
 // ROUTES
 // ------------------------------------------------------------------------------
+
+app.get('/health', async (request, reply) => {
+  reply.type('text/plain').send('OK');
+});
 
 // Retrieval of artifacts dir/file structure
 async function routeBinHandler(request, reply) {
