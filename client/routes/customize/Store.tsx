@@ -85,9 +85,7 @@ export const Provider: FCC = (props) => {
   });
 
   return (
-    //@ts-expect-error
     <DispatchContext.Provider value={dispatch}>
-      {/* @ts-expect-error */}
       <StoreContext.Provider value={state}>{props.children}</StoreContext.Provider>
     </DispatchContext.Provider>
   );
