@@ -1,13 +1,13 @@
-import path from 'path';
-import { readFile } from 'fs/promises';
-import { fileURLToPath } from 'url';
-import { createRequire } from 'module';
+import path from 'node:path';
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { createRequire } from 'node:module';
 import fastify from 'fastify';
 import fastifyAccepts from '@fastify/accepts';
 import fastifyStatic from '@fastify/static';
 import fastifyEtag from '@fastify/etag';
 import fastifyPointOfView from 'point-of-view';
-// import { mime } from 'send';
+import { mime } from 'send';
 import pug from 'pug';
 
 import chunkMap from './routes/chunkMap.mjs';
@@ -97,15 +97,14 @@ app.addContentTypeParser('*', function (request, payload, done) {
   done();
 });
 
-// ! `send` package still depends on older `mime`
-// mime.define(
-//   {
-//     'text/javascript; charset=utf-8': ['js'],
-//     'application/json; charset=utf-8': ['json'],
-//     'application/manifest+json; charset=utf-8': ['webmanifest'],
-//   },
-//   true
-// );
+mime.define(
+  {
+    'text/javascript; charset=utf-8': ['js', 'mjs'],
+    'application/json; charset=utf-8': ['json'],
+    'application/manifest+json; charset=utf-8': ['webmanifest'],
+  },
+  true
+);
 
 // ------------------------------------------------------------------------------
 // Graceful shutdown
@@ -133,7 +132,9 @@ function gracefulShutdown() {
 }
 */
 
+// const shutdownController = new AbortController();
 function shutdown() {
+  // shutdownController.abort();
   process.exit(0);
 }
 
@@ -391,9 +392,13 @@ app.setErrorHandler((error, request, reply) => {
 // ------------------------------------------------------------------------------
 
 try {
-  await app.listen(PORT, HOST);
+  await app.listen({
+    port: PORT,
+    host: HOST,
+    // signal: shutdownController.signal,
+  });
 
-  if (DEVELOPMENT) {
+  if (DEVELOPMENT || argv.test) {
     const devUrl = `http://${HOST !== '0.0.0.0' ? HOST : 'www.lwjgl.localhost'}${PORT !== 80 ? `:${PORT}` : ''}`;
     const hr = '='.repeat(Math.max(devUrl.length, 18));
     console.log(
