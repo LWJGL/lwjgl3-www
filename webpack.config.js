@@ -29,6 +29,7 @@ function buildConfiguration() {
       level: 'warn',
     },
     optimization: {
+      chunkIds: PRODUCTION ? 'deterministic' : 'named',
       minimize: PRODUCTION,
       minimizer: [
         new TerserPlugin({
@@ -130,6 +131,9 @@ function buildConfiguration() {
       imports: true,
     };
     config.experiments.outputModule = true;
+
+    // Disable chunks
+    config.optimization.splitChunks = false;
 
     // // Load pre-built dependencies
     // config.plugins.push(
