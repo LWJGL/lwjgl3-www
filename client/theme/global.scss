@@ -20,6 +20,17 @@
     format('woff2');
 }
 
+// html {
+//   overflow-y: scroll;
+// }
+
+// @supports (scrollbar-gutter: stable) {
+//   html {
+//     overflow-y: auto;
+//     scrollbar-gutter: stable;
+//   }
+// }
+
 body {
   background-color: var(--colors-body);
   color: var(--colors-text);
