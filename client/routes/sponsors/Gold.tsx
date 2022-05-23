@@ -195,6 +195,14 @@ export const GoldSponsors: FCC = ({ children }) => (
         >
           <ImgLazy width={110} height={47} src="/img/sponsors/1394ta.svg" alt="1394TA" />
         </a>
+        <a
+          href="https://funrize.com/"
+          title="Funrize Social Gaming Platform: Play for Free"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={156 / 2} height={96 / 2} src="/img/sponsors/funrize.png" alt="Funrize" />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
