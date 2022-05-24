@@ -41,7 +41,7 @@ const DownloadRoute: React.FC = (): JSX.Element => {
               target="_blank"
             >
               <Icon name="fa/brands/github" css={{ mr: '$xsm' }} />
-              Download from Git
+              Download from GitHub
             </AnchorButton>
           </Box>
 
