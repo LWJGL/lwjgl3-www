@@ -74,7 +74,9 @@ const MainMenuContainer = styled('nav', {
           fontWeight: 300,
           '&:focus': {
             outline: 'none',
-            // textDecoration: 'underline',
+            textDecoration: 'underline dotted',
+            textDecorationColor: '$caution9',
+            textUnderlineOffset: '0.1em',
           },
           '&:active': {
             transform: 'translateY(1px)',
