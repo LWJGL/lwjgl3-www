@@ -11,6 +11,6 @@ block content
     else if typeof error === 'string'
       pre!= error
     else if development
-      pre!= JSON.stringify(error, null, ' ')
+      pre!= JSON.stringify(error, null, " ")
     if error.stack && development
       pre!= error.stack

@@ -39,7 +39,7 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.PAR]: { ...(prev.byId[Binding.PAR] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.REMOTERY]: {
       ...(prev.byId[Binding.REMOTERY] as BindingDefinition),
-      natives: [...NATIVE_LTE_322, Native.LinuxARM32, Native.LinuxARM64, Native.MacOSARM64, Native.WindowsX86]
+      natives: [...NATIVE_LTE_322, Native.LinuxARM32, Native.LinuxARM64, Native.MacOSARM64, Native.WindowsX86],
     },
     [Binding.RPMALLOC]: { ...(prev.byId[Binding.RPMALLOC] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.SHADERC]: { ...(prev.byId[Binding.SHADERC] as BindingDefinition), natives: NATIVE_ALL },
