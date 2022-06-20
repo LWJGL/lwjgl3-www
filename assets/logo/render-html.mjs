@@ -2,8 +2,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
-import yargs from 'yargs';
-import { hideBin } from 'yargs/helpers';
+import { parseArgs } from './parseArgs.mjs';
 
 const filePath = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(filePath);
@@ -18,62 +17,62 @@ async function getDebuggerUrl() {
   return data.webSocketDebuggerUrl;
 }
 
-const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 <source.html> <target.png> [options]')
-  .demandCommand(2, 2)
-  .option('width', {
-    alias: 'w',
-    type: 'number',
-    required: true,
-    describe: 'target image width',
-  })
-  .option('height', {
-    alias: 'h',
-    type: 'number',
-    required: true,
-    describe: 'target image height',
-  })
-  .option('scale', {
-    alias: 's',
-    type: 'number',
-    default: 1,
-    describe: 'device scale factor',
-  })
-  .option('background', {
-    alias: 'bg',
-    type: 'boolean',
-    describe: 'render background color',
-  }).argv;
-
-async function main() {
-  // Read source file
-  let sourceHtml = await fs.readFile(path.resolve(__dirname, argv._[0]), { encoding: 'utf-8' });
-  const screenshotOptions = {
-    type: 'png',
-    omitBackground: argv.background === undefined,
-  };
-
-  // Launch browser
-  const debuggerUrl = await getDebuggerUrl();
-  const browser = await puppeteer.connect({
-    browserWSEndpoint: debuggerUrl,
-    defaultViewport: {
-      width: argv.w,
-      height: argv.h,
-      deviceScaleFactor: argv.scale,
+const { argv, positionals } = parseArgs({
+  demand: [2, 2],
+  usage: `Usage:\n  node ./render.mjs <source.html> <target.png> [options]`,
+  options: {
+    width: {
+      short: 'w',
+      type: 'string',
+      description: 'target image width',
+      cast: 'integer',
     },
-  });
+    height: {
+      short: 'h',
+      type: 'string',
+      description: 'target image height',
+      cast: 'integer',
+    },
+    scale: {
+      short: 's',
+      type: 'string',
+      description: 'device scale factor',
+      cast: 'float',
+    },
+    background: {
+      type: 'boolean',
+      description: 'render background color',
+    },
+  },
+  strict: true,
+  allowPositionals: true,
+});
 
-  // Begin rendering
-  const page = await browser.newPage();
-  await page.setContent(sourceHtml, { waitUntil: ['domcontentloaded', 'networkidle0'] });
-  const data = await page.screenshot(screenshotOptions);
-  await fs.writeFile(path.resolve(__dirname, argv._[1]), data);
+// Read source file
+let sourceHtml = await fs.readFile(path.resolve(__dirname, positionals[0]), { encoding: 'utf-8' });
+const screenshotOptions = {
+  type: 'png',
+  omitBackground: argv.background === undefined,
+};
 
-  // Cleanup
-  await page.close();
-  await browser.disconnect();
-  // await browser.close();
-}
+// Launch browser
+const debuggerUrl = await getDebuggerUrl();
+const browser = await puppeteer.connect({
+  browserWSEndpoint: debuggerUrl,
+  defaultViewport: {
+    width: argv.w,
+    height: argv.h,
+    deviceScaleFactor: argv.scale,
+  },
+});
 
-main();
+// Begin rendering
+const page = await browser.newPage();
+await page.setContent(sourceHtml, { waitUntil: ['domcontentloaded', 'networkidle0'] });
+const data = await page.screenshot(screenshotOptions);
+await fs.writeFile(path.resolve(__dirname, positionals[1]), data);
+
+// Cleanup
+await page.close();
+await browser.disconnect();
+// await browser.close();
