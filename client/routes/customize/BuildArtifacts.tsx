@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { Box } from '~/components/ui/Box';
+import { LazyOffscreen } from '~/components/ui/LazyOffscreen';
 import { Checkbox, type CheckboxProps } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
@@ -86,15 +87,36 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
   );
 };
 
-interface Props {
+interface PropsDesc {
   natives: NativeMap;
   platformsSelected: Native[];
   artifact: BindingDefinition;
   disabled: boolean;
+}
+
+interface Props extends PropsDesc {
   selected: boolean;
   showDescriptions: boolean;
   onChange: CheckboxProps['onChange'];
 }
+
+const BuildArtifactDescription: React.FC<PropsDesc> = ({ natives, platformsSelected, artifact, disabled }) => {
+  return (
+    <Box css={{ mb: '$sm' }}>
+      {artifact.natives &&
+        artifact.nativesOptional !== true &&
+        getSupportedPlatforms(natives, platformsSelected, artifact.natives, disabled)}
+      <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
+      {artifact.website !== undefined && (
+        <p>
+          <Anchor href={artifact.website} rel="noopener external" target="_blank" css={{ wordBreak: 'break-all' }}>
+            {artifact.website}
+          </Anchor>
+        </p>
+      )}
+    </Box>
+  );
+};
 
 const BuildArtifact: React.FC<Props> = ({
   natives,
@@ -105,33 +127,24 @@ const BuildArtifact: React.FC<Props> = ({
   showDescriptions,
   onChange,
 }) => {
-  if (showDescriptions) {
-    const desc = (
-      <Box css={{ mb: '$sm' }}>
-        {artifact.natives &&
-          artifact.nativesOptional !== true &&
-          getSupportedPlatforms(natives, platformsSelected, artifact.natives, disabled)}
-        <p dangerouslySetInnerHTML={{ __html: artifact.description }} />
-        {artifact.website !== undefined && (
-          <p>
-            <Anchor href={artifact.website} rel="noopener external" target="_blank" css={{ wordBreak: 'break-all' }}>
-              {artifact.website}
-            </Anchor>
-          </p>
-        )}
-      </Box>
-    );
-
-    return (
-      <Checkbox description={desc} value={artifact.id} disabled={disabled} checked={selected} onChange={onChange}>
-        {artifact.title}
-      </Checkbox>
-    );
-  } else {
-    return (
-      <Checkbox value={artifact.id} disabled={disabled} checked={selected} onChange={onChange}>
-        {artifact.title}
-      </Checkbox>
-    );
-  }
+  return (
+    <Checkbox
+      description={
+        <LazyOffscreen mode={showDescriptions ? 'visible' : 'hidden'}>
+          <BuildArtifactDescription
+            natives={natives}
+            platformsSelected={platformsSelected}
+            artifact={artifact}
+            disabled={disabled}
+          />
+        </LazyOffscreen>
+      }
+      value={artifact.id}
+      disabled={disabled}
+      checked={selected}
+      onChange={onChange}
+    >
+      {artifact.title}
+    </Checkbox>
+  );
 };
