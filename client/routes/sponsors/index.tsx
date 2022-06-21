@@ -1,6 +1,7 @@
 import { PageView } from '~/routes/PageView';
 import { ImgLazy } from '~/components/ui/ImgLazy';
 import { GoldSponsors } from '../sponsors/Gold';
+import { SilverSponsors } from '../sponsors/Silver';
 import { HowToSupport } from '../sponsors/HowToSupport';
 import { SectionContainer } from '~/components/ui/Section';
 import { Box } from '~/components/ui/Box';
@@ -14,6 +15,7 @@ export default function SponsorsRoute() {
     >
       <HowToSupport />
       <GoldSponsors />
+      <SilverSponsors />
 
       <SectionContainer padding>
         <TitleSection>Backers:</TitleSection>
