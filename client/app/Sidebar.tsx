@@ -125,6 +125,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
         toggleOpen();
       } else {
         animate(x, 0, {
+          type: 'spring',
           velocity: info.velocity.x,
         });
       }

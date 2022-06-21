@@ -1,4 +1,4 @@
-import {} from 'react/experimental';
+/// <reference types="react/experimental" />
 import { createRoot } from 'react-dom/client';
 import { App } from './app';
 // import './services/ga';

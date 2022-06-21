@@ -1,7 +1,7 @@
 FROM node:slim AS build
 WORKDIR /srv
 COPY package.json package-lock.json .npmrc ./
-RUN npm ci --prod
+RUN npm ci --omit=dev
 
 FROM node:slim
 ENV NODE_ENV production
