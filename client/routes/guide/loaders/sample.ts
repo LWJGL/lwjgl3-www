@@ -1,4 +1,3 @@
-//@ts-expect-error
 import { unstable_getCacheForType as getCacheForType } from 'react';
 import { ResourceCache } from '~/services/Resource';
 import { StatusCode, getResponseError } from '~/services/http';
