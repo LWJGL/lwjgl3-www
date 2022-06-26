@@ -1,6 +1,6 @@
 import { memo, useEffect, useCallback, useState } from 'react';
 import { Link, useLocation } from '~/components/router/client';
-import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
+import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
 import { styled } from '~/theme/stitches.config';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';

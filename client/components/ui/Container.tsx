@@ -1,5 +1,5 @@
 import { styled } from '~/theme/stitches.config';
-import { Breakpoint, boundaries } from '~/app/context/Breakpoint';
+import { Breakpoint, boundaries } from '~/hooks/useBreakpoint';
 
 export const Container = styled('div', {
   maxWidth: '100vw',

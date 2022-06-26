@@ -4,7 +4,7 @@ import { Button, AnchorButton } from '~/components/forms/Button';
 import { useSelector } from './Store';
 import { createSelectorDeepEqual } from '~/services/selector';
 import { BuildToolbar } from './BuildToolbar';
-import { useBreakpoint, Breakpoint } from '~/app/context/Breakpoint';
+import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
 import { copyToClipboard, generateScript, getSelectedPlatforms, mime } from './lib/script';
 import { Heading } from '~/components/ui/Text';
 import { Icon } from '~/components/ui/Icon';
