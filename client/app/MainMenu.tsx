@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import { NavLink } from '~/components/router/client';
-import { useColorScheme, useColorSchemeToggle } from '~/app/context/ColorScheme';
+import { useColorScheme } from '~/hooks/useColorScheme';
 import { styled } from '~/theme/stitches.config';
 import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
@@ -91,24 +91,16 @@ const MainMenuContainer = styled('nav', {
 });
 
 export const MainMenu: React.FC<Props> = ({ onClick, direction, focusableProps = {}, ...rest }) => {
-  const colorScheme = useColorScheme();
-  const setScheme = useColorSchemeToggle();
-  const hasToggled = useRef(true); // use to skip reading/mutating document.body unnecessarily
+  const [colorScheme, setScheme] = useColorScheme();
 
   const toggleScheme = useCallback(() => {
     // disable transitions/animations while switching theme
     document.body.classList.add('no-motion');
     setScheme(colorScheme === 'light' ? 'dark' : 'light');
-    hasToggled.current = true;
+    requestAnimationFrame(() => {
+      document.body.classList.remove('no-motion');
+    });
   }, [colorScheme, setScheme]);
-
-  useEffect(() => {
-    if (hasToggled.current) {
-      requestAnimationFrame(() => {
-        document.body.classList.remove('no-motion');
-      });
-    }
-  }, [colorScheme]);
 
   const schemeSwitchButtonTitle = `Switch to ${colorScheme === 'dark' ? 'light' : 'dark'} theme`;
 
