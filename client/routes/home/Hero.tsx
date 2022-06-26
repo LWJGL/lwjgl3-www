@@ -1,8 +1,9 @@
-import { lazy, Suspense, useState, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from '~/components/router/client';
-import { useMedia } from '~/hooks/useMedia';
+import { useMediaQuery } from '~/hooks/useMediaQuery';
 import { useViewport } from '~/hooks/useViewport';
+import { useNavigatorConnection } from '~/hooks/useNavigatorConnection';
 import { styled } from '~/theme/stitches.config';
 import { resetOpacityTransform } from '~/theme/animations';
 import { contextOptions } from './contextOptions';
@@ -142,62 +143,50 @@ const HeroContent = styled('div', {
   },
 });
 
-enum UseWebGL {
+enum SupportsWebGL {
   Unknown,
-  Off,
+  ForceNotSupported,
   NotSupported,
-  On,
+  Yes,
 }
 
-// let useWebGL = UseWebGL.Off;
-let useWebGL = UseWebGL.Unknown;
+let useWebGL = SupportsWebGL.Unknown;
 
 const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, height }) => {
-  const [renderWebGL, toggleGL] = useState(useWebGL === UseWebGL.On);
-  const prefersReducedMotion = useMedia('(prefers-reduced-motion: reduce)');
+  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion)', false);
+  const connection = useNavigatorConnection();
 
-  useEffect(() => {
-    // If we detected WebGL before, the checks below already passed
-    if (useWebGL !== UseWebGL.Unknown) {
-      return;
+  // Skip if user prefers-reduced-motion
+  // ! Bah! Disables animation under Windows if user has disabled OS window animations (Chrome)
+  if (prefersReducedMotion) {
+    return null;
+  }
+
+  // If we detected WebGL before, the checks below already passed
+  if (useWebGL === SupportsWebGL.Unknown) {
+    // Check connection quality, skip for slow connections
+    switch (connection.effectiveType) {
+      case 'slow-2g':
+      case '2g':
+        // ! Connection status may change, do not change useWebGL flag
+        return null;
     }
 
-    // Skip if user prefers-reduced-motion
-    // ! Bah! Disables animation under Windows if user has disabled OS window animations (Chrome)
-    if (prefersReducedMotion) {
-      useWebGL = UseWebGL.Off;
-      return;
+    // Skip if user opted-in into a reduced data usage mode
+    if (connection.saveData === true) {
+      // ! saveData status may change, do not change useWebGL flag
+      return null;
     }
 
-    // Check device memory, skip for under 4GB
+    // Check device memory, permanently skip for under 4GB
     //@ts-expect-error
     if ('deviceMemory' in navigator && navigator.deviceMemory < 4) {
-      useWebGL = UseWebGL.Off;
-      return;
+      useWebGL = SupportsWebGL.ForceNotSupported;
     }
 
-    // Check thread count, skip if probably old/less-capable CPU
-    if (navigator.hardwareConcurrency !== undefined && navigator.hardwareConcurrency < 4) {
-      useWebGL = UseWebGL.Off;
-      return;
-    }
-
-    // Check connection quality
-    if ('connection' in navigator) {
-      // Skip for slow connections
-      //@ts-expect-error
-      switch (navigator.connection.effectiveType) {
-        case 'slow-2g':
-        case '2g':
-          // ! Connection status may change, do not change supportsWebGL flag
-          return;
-      }
-
-      // Skip if user opted-in into a reduced data usage mode
-      //@ts-expect-error
-      if (navigator.connection.saveData === true) {
-        return;
-      }
+    // Check thread count, permanently skip if probably old/less-capable CPU
+    if ('hardwareConcurrency' in navigator && navigator.hardwareConcurrency < 4) {
+      useWebGL = SupportsWebGL.ForceNotSupported;
     }
 
     // detect WebGL support
@@ -206,14 +195,13 @@ const CanvasContainer: React.FC<{ width: number; height: number }> = ({ width, h
       cnv.getContext('webgl', contextOptions) !== null ||
       (cnv.getContext('experimental-webgl', contextOptions) as WebGLRenderingContext | null) !== null
     ) {
-      useWebGL = UseWebGL.On;
-      toggleGL(true);
+      useWebGL = SupportsWebGL.Yes;
     } else {
-      useWebGL = UseWebGL.NotSupported;
+      useWebGL = SupportsWebGL.NotSupported;
     }
-  }, [prefersReducedMotion]);
+  }
 
-  return renderWebGL ? (
+  return useWebGL === SupportsWebGL.Yes ? (
     <ErrorBoundary fallback={null}>
       <Suspense fallback={null}>
         <Canvas width={width} height={height} />
