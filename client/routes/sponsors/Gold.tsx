@@ -40,28 +40,12 @@ export const GoldSponsors: FCC = ({ children }) => (
           <ImgLazy width={218} height={50} src="/img/sponsors/vpsserver.com.svg" alt="VPSSERVER.com" />
         </a>
         <a
-          href="https://www.casinotop.com/"
-          title="Online Casino Guide in Canada - Best Gaming Experience!"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy width={130 * 1.5} height={20 * 1.5} src="/img/sponsors/casinotop-129x20.svg" alt="CASINOTOP" />
-        </a>
-        <a
           href="https://nettikasinolista.com/"
           title="Se paras nettikasino-lista: arvostelut, bonukset ja kokemuksia"
           rel="sponsored noopener external"
           target="_blank"
         >
           <ImgLazy width={225} height={60} src="/img/sponsors/nettikasinolista.svg" alt="Nettikasino-lista" />
-        </a>
-        <a
-          href="https://casinomartini.com/nz/new-online-casinos/"
-          title="New Zealand New Online Casinos | Full List of New Casino Sites NZ"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy width={379 / 2} height={138 / 2} src="/img/sponsors/casino-martini.png" alt="Casino Martini" />
         </a>
         <a
           href="https://www.bonusfinder.com/"
@@ -111,7 +95,6 @@ export const GoldSponsors: FCC = ({ children }) => (
         >
           <ImgLazy width={620 / 3} height={152 / 3} src="/img/sponsors/pelisivut-620x152.png" alt="PELISIVUT" />
         </a>
-
         <a
           href="https://goread.io/buy-instagram-followers"
           title="Buy Instagram Followers with Instant Delivery"
@@ -128,30 +111,8 @@ export const GoldSponsors: FCC = ({ children }) => (
         >
           <ImgLazy width={447 / 2} height={119 / 2} src="/img/sponsors/list-casino.svg" alt="list.casino" />
         </a>
-        <a
-          href="https://casinoenlineahex.com/"
-          title="CasinoEnLineaHEX"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy
-            width={2565}
-            height={734}
-            style={{ width: 2565 / 20, height: 734 / 20 }}
-            src="/img/sponsors/casinoenlineahex.svg"
-            alt="CasinoEnLineaHEX"
-          />
-        </a>
         <a href="https://nzcasinohex.com/" title="NZCasinoHex" rel="sponsored noopener external" target="_blank">
           <ImgLazy width={200 / 2} height={51 / 2} src="/img/sponsors/nzcasinohex.png" alt="NZCasinoHex" />
-        </a>
-        <a href="https://arabcasinohex.com/" title="ArabCasinoHEX" rel="sponsored noopener external" target="_blank">
-          <ImgLazy
-            width={166 / 1.5}
-            height={46 / 1.5}
-            src="/img/sponsors/arab-casino-hex-dark.png"
-            alt="ArabCasinoHEX"
-          />
         </a>
         <a
           href="https://www.targetedwebtraffic.com/"
@@ -164,19 +125,6 @@ export const GoldSponsors: FCC = ({ children }) => (
             height={243 / 4}
             src="/img/sponsors/targetedwebtraffic-270x243.png"
             alt="Targeted Web Traffic"
-          />
-        </a>
-        <a
-          href="https://www.instafollowers.co/"
-          title="Buy Instagram Followers"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy
-            width={320 / 1.75}
-            height={100 / 1.75}
-            src="/img/sponsors/instafollowers320x100.svg"
-            alt="instafollowers.co"
           />
         </a>
         <a
@@ -202,6 +150,30 @@ export const GoldSponsors: FCC = ({ children }) => (
           target="_blank"
         >
           <ImgLazy width={156 / 2} height={96 / 2} src="/img/sponsors/funrize.png" alt="Funrize" />
+        </a>
+        <a
+          href="https://www.kasinot.fi/"
+          title="Kasinot netissä: #1 opas nettikasinoiden maailmaan"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={384 / 3} height={128 / 3} src="/img/sponsors/kasinot-384x128.png" alt="Kasinot.fi" />
+        </a>
+        <a
+            href="https://smålånutensikkerhet.com/"
+            title="Smålån uten sikkerhet"
+            rel="sponsored noopener external"
+            target="_blank"
+        >
+          <ImgLazy width={129} height={34.5} src="/img/sponsors/smalan.png" alt="Smålån"/>
+        </a>
+        <a
+            href="https://kingcasinobonus.co.uk"
+            title="KingCasinoBonus"
+            rel="sponsored noopener external"
+            target="_blank"
+        >
+          <ImgLazy width={100} height={100} src="/img/sponsors/kingcasinobonus-100x100.png" alt="KingCasinoBonus" />
         </a>
       </Grid>
       {children}
