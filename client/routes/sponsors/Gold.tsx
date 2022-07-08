@@ -175,6 +175,14 @@ export const GoldSponsors: FCC = ({ children }) => (
         >
           <ImgLazy width={100} height={100} src="/img/sponsors/kingcasinobonus-100x100.png" alt="KingCasinoBonus" />
         </a>
+        <a
+            href="https://casinobonusca.com/"
+            title="CasinoBonusCa"
+            rel="sponsored noopener external"
+            target="_blank"
+        >
+          <ImgLazy width={100} height={100} src="/img/sponsors/casinobonusca-100x100.png" alt="CasinoBonusCa" />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
