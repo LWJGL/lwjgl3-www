@@ -41,8 +41,10 @@ function checkRequired(args, options) {
   for (const [name, config] of Object.entries(options)) {
     if (config.required && args[name] === undefined) {
       console.error(`Error:\n  Missing option --${name}\n`);
+      return false;
     }
   }
+  return true;
 }
 
 function cast(args, options) {
