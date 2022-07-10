@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { createStore } from '~/services/createStore';
 
 interface NetworkInformationData {
   type: ConnectionType;
@@ -8,7 +9,7 @@ interface NetworkInformationData {
   saveData: boolean;
 }
 
-function populateNetworkInformation(): NetworkInformationData {
+export function getNetworkInformation(): NetworkInformationData {
   if ('connection' in navigator) {
     const { type, effectiveType, downlink, downlinkMax, saveData } = navigator.connection;
 
@@ -30,29 +31,19 @@ function populateNetworkInformation(): NetworkInformationData {
   }
 }
 
-let networkInformation: NetworkInformationData = populateNetworkInformation();
-
-function subscribe(callback: EventListener) {
-  if ('connection' in navigator) {
-    const onChange = (e: Event) => {
-      networkInformation = populateNetworkInformation();
-      callback(e);
-    };
-
-    const connection = navigator.connection;
-    connection.addEventListener('change', onChange);
-    return () => {
-      connection.removeEventListener('change', onChange);
-    };
-  } else {
-    return () => {};
+const store = createStore<NetworkInformationData>(getNetworkInformation(), (setState) => {
+  function onChange() {
+    setState((prev) => getNetworkInformation());
   }
-}
 
-function getState() {
-  return networkInformation;
-}
+  if ('connection' in navigator) {
+    navigator.connection.addEventListener('change', onChange);
+    return () => {
+      navigator.connection.removeEventListener('change', onChange);
+    };
+  }
+});
 
 export function useNavigatorConnection() {
-  return useSyncExternalStore<NetworkInformationData>(subscribe, getState, getState);
+  return useSyncExternalStore<NetworkInformationData>(store.subscribe, store.getState, store.getState);
 }

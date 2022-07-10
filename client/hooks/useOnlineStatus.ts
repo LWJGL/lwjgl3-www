@@ -1,22 +1,28 @@
 import { useSyncExternalStore } from 'react';
+import { createStore } from '~/services/createStore';
 
-function subscribe(callback: EventListener) {
+export function getOnlineStatus(): boolean {
+  return navigator.onLine ?? true;
+}
+
+const store = createStore<boolean>(getOnlineStatus(), (setState) => {
+  function callback() {
+    setState((prev) => getOnlineStatus());
+  }
+
   window.addEventListener('online', callback);
   window.addEventListener('offline', callback);
+
   return () => {
     window.removeEventListener('online', callback);
     window.removeEventListener('offline', callback);
   };
-}
+});
 
-function getStateClient() {
-  return navigator.onLine;
-}
-
-function getStateServer() {
+function getServerSnapshot() {
   return true;
 }
 
 export function useOnlineStatus() {
-  return useSyncExternalStore<boolean>(subscribe, getStateClient, getStateServer);
+  return useSyncExternalStore<boolean>(store.subscribe, store.getState, getServerSnapshot);
 }

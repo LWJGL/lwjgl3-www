@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { createStore } from '~/services/createStore';
 
 export enum Breakpoint {
   xs,
@@ -11,11 +12,8 @@ export enum Breakpoint {
 
 export const boundaries: Array<number> = [0, 576, 768, 992, 1200, 1400];
 const mediaQueryMap = new Map<string, Breakpoint>();
-
 const matchers: Array<MediaQueryList> = [];
-
-const defaultBreakpoint: Breakpoint = Breakpoint.lg;
-let currentBreakpoint: Breakpoint = defaultBreakpoint;
+let defaultBreakpoint: Breakpoint = Breakpoint.lg;
 
 if ('matchMedia' in globalThis) {
   // Create matchMedia event listeners for each breakpoint
@@ -37,16 +35,15 @@ if ('matchMedia' in globalThis) {
     matchers.push(mqr);
 
     if (mqr.matches) {
-      currentBreakpoint = i;
+      defaultBreakpoint = i;
     }
   });
 }
 
-function subscribe(callback: EventListener) {
+const store = createStore<Breakpoint>(defaultBreakpoint, (setState) => {
   function mediaQueryListener(event: MediaQueryListEvent) {
     if (event.matches) {
-      currentBreakpoint = mediaQueryMap.get(event.media)!;
-      callback(event);
+      setState((prev) => mediaQueryMap.get(event.media)!);
     }
   }
 
@@ -63,16 +60,8 @@ function subscribe(callback: EventListener) {
       matchers.forEach((matcher, i) => matcher.removeListener(mediaQueryListener));
     }
   };
-}
+});
 
-function getStateClient(): Breakpoint {
-  return currentBreakpoint;
-}
-
-function getStateServer(): Breakpoint {
-  return defaultBreakpoint;
-}
-
-export function useBreakpoint() {
-  return useSyncExternalStore<Breakpoint>(subscribe, getStateClient, getStateServer);
+export function useBreakpoint(): Breakpoint {
+  return useSyncExternalStore<Breakpoint>(store.subscribe, store.getState, store.getState);
 }

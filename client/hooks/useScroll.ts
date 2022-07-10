@@ -6,9 +6,13 @@ type ScrollPosition = [number, number];
 
 let registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
 
-let store = createStore<ScrollPosition>([0, 0], (setState) => {
+function getScrollPosition(): ScrollPosition {
+  return [window.pageXOffset, Math.max(0, window.pageYOffset)];
+}
+
+const store = createStore<ScrollPosition>('pageXOffset' in globalThis ? getScrollPosition() : [0, 0], (setState) => {
   function updateScrollPosition(ev: Event) {
-    setState((prev) => [window.pageXOffset, Math.max(0, window.pageYOffset)]);
+    setState((prev) => getScrollPosition());
   }
 
   window.addEventListener('scroll', updateScrollPosition, registerOptions);
