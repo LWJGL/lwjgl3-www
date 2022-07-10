@@ -1,9 +1,9 @@
-import { memo, useEffect, useCallback, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { Link, useLocation } from '~/components/router/client';
 import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
+import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { styled } from '~/theme/stitches.config';
 import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { IS_IOS } from '~/services/ua';
 // import { useServiceWorker } from '~/hooks/useServiceWorker';
 import { MainMenu } from './MainMenu';
@@ -98,12 +98,25 @@ function ServiceWorkerUpdate() {
 }
 */
 
-let offsetHeight = 48;
-
 export const Header: React.FC<{ children?: never }> = () => {
   const location = useLocation();
   return <HeaderNav isHome={location.pathname === '/'} />;
 };
+
+let offsetHeight = 48;
+
+// This function is passed as a ref={} prop to the header
+// The height is not expected to change therefore we store it once in a global variable
+function setOffsetHeightRef(node: HTMLElement) {
+  if (node) {
+    // Measure menu height, should be ~ 48 pixels
+    offsetHeight = node.offsetHeight;
+  }
+}
+
+type Direction = 0 | 1;
+const Up: Direction = 0;
+const Down: Direction = 1;
 
 export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
   const [pos, setPos] = useState(0);
@@ -112,19 +125,7 @@ export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
   const [hidden, setHidden] = useState(false);
   const currentBreakpoint = useBreakpoint();
 
-  // Save one render cycle by avoiding useLayoutEffect
-  // https://twitter.com/giuseppegurgone/status/1339327319090094080
-  const menuRef = useCallback((node: HTMLElement) => {
-    if (node) {
-      // Measure menu height, should be ~ 48 pixels
-      offsetHeight = node.offsetHeight;
-    }
-  }, []);
-
   useEffect(() => {
-    const Up = 0;
-    const Down = 1;
-
     // Re-create useState variables to prevent scope conflicts
     let pos = 0;
     let top = true;
@@ -135,7 +136,7 @@ export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
     let mounted = true;
     let prev = 0;
     let current = 0;
-    let direction = Down;
+    let direction: Direction = Down;
     let ticking = false;
 
     function _setPos(value: number) {
@@ -227,7 +228,7 @@ export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
 
   return (
     <StyledHeader
-      ref={menuRef}
+      ref={setOffsetHeightRef}
       role="navigation"
       home={isHome}
       opaque={!isHome || !top}
