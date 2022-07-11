@@ -183,6 +183,22 @@ export const GoldSponsors: FCC = ({ children }) => (
         >
           <ImgLazy width={100} height={100} src="/img/sponsors/casinobonusca-100x100.png" alt="CasinoBonusCa" />
         </a>
+        <a
+            href="https://casinoalpha.co.nz/"
+            title="CasinoAlpha New Zealand"
+            rel="sponsored noopener external"
+            target="_blank"
+        >
+          <ImgLazy width={100} height={100} src="/img/sponsors/casinoalphanz-100x100.png" alt="CasinoAlpha New Zealand" />
+        </a>
+        <a
+            href="https://arabcasinohex.com/"
+            title="ArabCasinoHEX"
+            rel="sponsored noopener external"
+            target="_blank"
+        >
+          <ImgLazy width={166 / 1.5} height={46 / 1.5} src="/img/sponsors/arab-casino-hex-dark.png" alt="ArabCasinoHEX"/>
+        </a>
       </Grid>
       {children}
     </SectionContainer>
