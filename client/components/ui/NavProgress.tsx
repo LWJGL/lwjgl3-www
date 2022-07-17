@@ -216,7 +216,7 @@ export function NavProgress() {
       className={state.status === States.Stopped ? 'fade-out' : ''}
       hidden={state.status < States.Started}
       role="none"
-      aria-hidden="true"
+      aria-hidden={true}
     >
       <ProgressBar style={{ transform: `scaleX(${state.progress / 100})` }} />
       {/* <ProgressPulse /> */}

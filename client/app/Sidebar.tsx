@@ -183,7 +183,7 @@ export const Sidebar: React.FC<{ children?: never }> = () => {
           style={{ x }}
           className={MenuOverlay({ open: isOpen })}
           role="menu"
-          aria-hidden={!isOpen}
+          aria-hidden={isOpen ? undefined : true}
           aria-expanded={isOpen}
           drag="x"
           dragConstraints={{ left: 0, right: MENU_INITIAL }}

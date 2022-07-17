@@ -9,13 +9,13 @@ export const getPlatformIcon = (platform: Native) => {
     case Native.Linux:
     case Native.LinuxARM64:
     case Native.LinuxARM32:
-      return <Icon aria-hidden={false} aria-label="Linux" name="fa/brands/linux" key={`fa-${platform}`} />;
+      return <Icon aria-label="Linux" name="fa/brands/linux" key={`fa-${platform}`} />;
     case Native.MacOS:
     case Native.MacOSARM64:
-      return <Icon aria-hidden={false} aria-label="Apple" name="fa/brands/apple" key={`fa-${platform}`} />;
+      return <Icon aria-label="Apple" name="fa/brands/apple" key={`fa-${platform}`} />;
     case Native.Windows:
     case Native.WindowsX86:
     case Native.WindowsARM64:
-      return <Icon aria-hidden={false} aria-label="Windows" name="fa/brands/windows" key={`fa-${platform}`} />;
+      return <Icon aria-label="Windows" name="fa/brands/windows" key={`fa-${platform}`} />;
   }
 };
