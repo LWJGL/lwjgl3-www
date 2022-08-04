@@ -12,6 +12,9 @@
     "ciecam02": "0.4.6",
     "hsluv": "0.1.0"
   },
+  "overrides": {
+    "mout": "1.2.3"
+  },
   "scripts": {
     "ncu": "npx npm-check-updates -i --configFileName ncu.json",
     "ncut": "npx npm-check-updates -t greatest --configFileName ncu.json",
