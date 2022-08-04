@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "puppeteer-core": "14.4.1"
+    "puppeteer-core": "16.0.0"
   },
   "scripts": {
     "ncu": "npx npm-check-updates -i",
