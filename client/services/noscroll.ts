@@ -5,7 +5,7 @@ let stackCnt = 0;
 //   if (scrollbarSize === -1) {
 //     let dummyScroller = document.createElement('div');
 //     dummyScroller.setAttribute('style', 'width:99px;height:99px;position:absolute;top:-9999px;overflow:scroll');
-//     document.body.appendChild(dummyScroller);
+//     document.body.append(dummyScroller);
 //     scrollbarSize = dummyScroller.offsetWidth - dummyScroller.clientWidth;
 //     document.body.removeChild(dummyScroller);
 //   }

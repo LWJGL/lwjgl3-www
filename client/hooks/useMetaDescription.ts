@@ -6,13 +6,11 @@ export function useMetaDescription(description?: string) {
   useEffect(() => {
     if (description != null && description.length > 0) {
       if (meta.current === null) {
-        let metatag: HTMLMetaElement | null = (document.head as HTMLHeadElement).querySelector(
-          'meta[name=description]'
-        );
+        let metatag: HTMLMetaElement | null = document.head.querySelector('meta[name=description]');
         if (metatag === null) {
           metatag = document.createElement('meta');
           metatag.setAttribute('name', 'description');
-          (document.head as HTMLHeadElement).appendChild(metatag);
+          document.head.append(metatag);
         }
         meta.current = metatag;
       }

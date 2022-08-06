@@ -22,9 +22,8 @@ path.s {
   fill: var(--icon-secondary, currentColor);
 }`;
 
-  svg.appendChild(style);
-  svg.appendChild(defs);
-  document.body.appendChild(svg);
+  svg.append(style, defs);
+  document.body.append(svg);
 
   return defs;
 }

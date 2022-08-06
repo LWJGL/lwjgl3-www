@@ -3,7 +3,7 @@ export const loadJS = (src: string, cb?: Function): Promise<void> => {
     const script = document.createElement('script');
     script.src = src;
     script.async = true;
-    document.head.appendChild(script);
+    document.head.append(script);
 
     script.onload = () => {
       if (cb && typeof cb === 'function') {
