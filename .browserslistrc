@@ -1,11 +1,10 @@
 [production]
 # Run `npx autoprefixer --info` to view CSS properties that need polyfill
-# From: https://github.com/adobe/react-spectrum/blob/main/package.json#L10-L15
-chrome >= 61
-firefox >= 60
-safari >= 11
-# edge >= 16 # does not support case-insensitive selectors resulting to explosion of CSS selectors
-#supports es6-module
+# From: https://github.com/adobe/react-spectrum/blob/main/.browserslistrc
+chrome >= 79
+firefox >= 85
+safari >= 13
+#edge >= 88
 
 [legacy]
 # https://github.com/browserslist/browserslist
