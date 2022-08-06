@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
-import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 import { createStore } from '~/services/createStore';
+import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 
 export type WindowSize = {
   innerHeight: number;
