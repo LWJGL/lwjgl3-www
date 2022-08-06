@@ -1,19 +1,24 @@
-import { useEffect } from 'react';
+import { useInsertionEffect } from 'react';
 
 export function useCSS(href: string) {
-  useEffect(() => {
+  useInsertionEffect(() => {
     const css = document.createElement('link');
     css.rel = 'stylesheet';
     css.href = href;
     css.media = 'only x';
-    document.head.appendChild(css);
 
-    css.addEventListener('load', () => {
-      css.media = 'screen';
-    });
+    css.addEventListener(
+      'load',
+      () => {
+        css.media = 'screen';
+      },
+      { once: true }
+    );
+
+    document.head.append(css);
 
     return () => {
-      document.head.removeChild(css);
+      css.remove();
     };
   }, [href]);
 }
