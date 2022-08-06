@@ -1,8 +1,8 @@
 import { useRef, useEffect } from 'react';
 import { styled, keyframes } from '~/theme/stitches.config';
-import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 import { contextOptions } from './contextOptions';
-// import { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } from 'three';
+import { useIntersectionObserver } from '~/hooks/useIntersectionObserver';
+
 declare const THREE: any;
 
 const fadeInCanvas = keyframes({
@@ -24,46 +24,12 @@ const HomeCanvas: React.FC<{ width: number; height: number }> = ({ width, height
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cameraRef = useRef<any>(null);
   const rendererRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (cameraRef.current !== null && rendererRef.current !== null) {
-      cameraRef.current.aspect = width / height;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(width, height, false);
-    }
-  }, [width, height]);
+  const sceneRef = useRef<any>(null);
+  const groupRef = useRef<any>(null);
+  const onScreen = useIntersectionObserver(canvasRef, true);
 
   useEffect(() => {
     const { WebGLRenderer, Scene, PerspectiveCamera, BoxGeometry, MeshNormalMaterial, Group, Mesh } = THREE;
-
-    function animate() {
-      rafId = requestAnimationFrame(animate);
-
-      let time = Date.now() * 0.000015;
-      let rx = time;
-      let ry = time;
-
-      group.rotation.x = rx;
-      group.rotation.y = ry;
-      rendererRef.current.render(scene, cameraRef.current);
-    }
-
-    function stop() {
-      if (rafId !== null) {
-        cancelAnimationFrame(rafId);
-        rafId = null;
-      }
-    }
-
-    function ioCheck(entries: Array<IntersectionObserverEntry>) {
-      if (entries[0].intersectionRatio > 0) {
-        if (rafId === null) {
-          animate();
-        }
-      } else if (rafId !== null) {
-        stop();
-      }
-    }
 
     const canvas = canvasRef.current;
     if (canvas === null) {
@@ -78,16 +44,13 @@ const HomeCanvas: React.FC<{ width: number; height: number }> = ({ width, height
       return;
     }
 
-    let io: IntersectionObserver | null = null;
-    let rafId: number | null = null;
-
     cameraRef.current = new PerspectiveCamera(60, width / height, 100, 10000);
     cameraRef.current.position.z = 1500;
 
     let geometry = new BoxGeometry(60, 60, 60);
     let material = new MeshNormalMaterial();
 
-    let group = new Group();
+    groupRef.current = new Group();
     for (let i = 0; i < 300; i += 1) {
       let mesh = new Mesh(geometry, material);
       mesh.position.x = Math.random() * 2000 - 1000;
@@ -97,11 +60,11 @@ const HomeCanvas: React.FC<{ width: number; height: number }> = ({ width, height
       mesh.rotation.y = Math.random() * 2 * Math.PI;
       mesh.matrixAutoUpdate = false;
       mesh.updateMatrix();
-      group.add(mesh);
+      groupRef.current.add(mesh);
     }
 
-    let scene = new Scene();
-    scene.add(group);
+    sceneRef.current = new Scene();
+    sceneRef.current.add(groupRef.current);
 
     rendererRef.current = new WebGLRenderer({ canvas, context });
     if (window.devicePixelRatio !== undefined) {
@@ -109,28 +72,60 @@ const HomeCanvas: React.FC<{ width: number; height: number }> = ({ width, height
     }
     rendererRef.current.setSize(width, height, false);
     rendererRef.current.sortObjects = false;
-    animate();
-
-    if (SUPPORTS_INTERSECTION_OBSERVER) {
-      io = new IntersectionObserver(ioCheck);
-      io.observe(canvas);
-    }
 
     return () => {
-      stop();
-
-      if (io !== null) {
-        io.disconnect();
-        io = null;
-      }
-
-      if (scene !== undefined) {
-        scene.remove(group);
+      if (sceneRef.current !== undefined) {
+        sceneRef.current.remove(groupRef.current);
         geometry.dispose();
         material.dispose();
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (cameraRef.current !== null && rendererRef.current !== null) {
+      cameraRef.current.aspect = width / height;
+      cameraRef.current.updateProjectionMatrix();
+      rendererRef.current.setSize(width, height, false);
+    }
+  }, [width, height]);
+
+  useEffect(() => {
+    let rafId: number | null = null;
+
+    function animate() {
+      rafId = requestAnimationFrame(animate);
+
+      let time = Date.now() * 0.000015;
+      let rx = time;
+      let ry = time;
+
+      if (groupRef.current) {
+        groupRef.current.rotation.x = rx;
+        groupRef.current.rotation.y = ry;
+      }
+
+      if (rendererRef.current && sceneRef.current && cameraRef.current) {
+        rendererRef.current.render(sceneRef.current, cameraRef.current);
+      }
+    }
+
+    function stop() {
+      if (rafId !== null) {
+        cancelAnimationFrame(rafId);
+        rafId = null;
+      }
+    }
+
+    if (onScreen) {
+      if (rafId === null) {
+        animate();
+        return stop;
+      }
+    } else if (rafId !== null) {
+      stop();
+    }
+  }, [onScreen]);
 
   return <Canvas ref={canvasRef} />;
 };
