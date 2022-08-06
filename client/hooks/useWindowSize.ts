@@ -1,11 +1,19 @@
-import { useState, useEffect } from 'react';
-import throttle from 'lodash-es/throttle';
+import { useSyncExternalStore } from 'react';
+import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
+import { createStore } from '~/services/createStore';
 
 export type WindowSize = {
   innerHeight: number;
   innerWidth: number;
   outerHeight: number;
   outerWidth: number;
+  screenTop: number;
+  screenLeft: number;
+  screenX: number;
+  screenY: number;
+  screenWidth: number;
+  screenHeight: number;
+  isFullScreen: boolean;
 };
 
 function getSize(): WindowSize {
@@ -14,20 +22,40 @@ function getSize(): WindowSize {
     innerWidth: window.innerWidth,
     outerHeight: window.outerHeight,
     outerWidth: window.outerWidth,
+    screenTop: window.screenTop,
+    screenLeft: window.screenLeft,
+    screenX: window.screenX,
+    screenY: window.screenY,
+    screenWidth: window.screen.width,
+    screenHeight: window.screen.height,
+    isFullScreen:
+      (window.screen.width === window.innerWidth && window.screen.height === window.innerHeight) ||
+      (!window.screenTop && !window.screenY),
   };
 }
 
-export function useWindowSize(throttleMs: number = 0) {
-  const [windowSize, setWindowSize] = useState(getSize);
+const registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
 
-  useEffect(() => {
-    const handleResize = throttle(() => setWindowSize(getSize), throttleMs);
+const store = createStore<WindowSize>(getSize(), (setState) => {
+  function handleResize(ev: Event) {
+    setState((prev) => getSize());
+  }
 
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, [throttleMs]);
+  window.addEventListener('resize', handleResize, registerOptions);
 
-  return windowSize;
+  return () => {
+    /*
+      We're passing the same registerOptions object even if the spec says it's fine to just pass `false`.
+      Based on recommendation from:
+      https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener#syntax
+      "It's worth noting that some browser releases have been inconsistent on this, and unless you have specific reasons otherwise,
+      it's probably wise to use the same values used for the call to addEventListener() when calling removeEventListener()."
+    */
+    //@ts-expect-error
+    window.removeEventListener('resize', handleResize, registerOptions);
+  };
+});
+
+export function useWindowSize(): WindowSize {
+  return useSyncExternalStore<WindowSize>(store.subscribe, store.getState, store.getState);
 }

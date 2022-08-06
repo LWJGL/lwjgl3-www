@@ -4,7 +4,7 @@ import { createStore } from '~/services/createStore';
 
 type ScrollPosition = [number, number];
 
-let registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
+const registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
 
 function getScrollPosition(): ScrollPosition {
   return [window.pageXOffset, Math.max(0, window.pageYOffset)];
