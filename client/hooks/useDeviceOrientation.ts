@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+import { createStore } from '~/services/createStore';
 
 interface Orientation {
   absolute: boolean;
@@ -7,25 +8,27 @@ interface Orientation {
   gamma: number | null;
 }
 
-const getInitialOrientation = () =>
-  ({
+function getOrientation(): Orientation {
+  return {
     alpha: null,
     beta: null,
     gamma: null,
     absolute: false,
-  } as Orientation);
+  };
+}
 
-export function useDeviceOrientation() {
-  const [orientation, setOrientation] = useState(getInitialOrientation);
+const store = createStore<Orientation>(getOrientation(), (setState) => {
+  function handler(ev: DeviceOrientationEvent) {
+    setState((prev) => ev);
+  }
 
-  useEffect(() => {
-    const handle = (e: DeviceOrientationEvent) => setOrientation(e);
+  window.addEventListener('deviceorientation', handler);
 
-    window.addEventListener('deviceorientation', handle);
-    return () => {
-      window.removeEventListener('deviceorientation', handle);
-    };
-  }, []);
+  return () => {
+    window.removeEventListener('deviceorientation', handler);
+  };
+});
 
-  return orientation;
+export function useDeviceOrientation(): Orientation {
+  return useSyncExternalStore<Orientation>(store.subscribe, store.getState, store.getState);
 }

@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+import { createStore } from '~/services/createStore';
 
-const getBlankEvent = () =>
-  ({
+function getServerSnapshot(): DeviceMotionEvent {
+  return {
     acceleration: {
       x: null,
       y: null,
@@ -18,17 +19,21 @@ const getBlankEvent = () =>
       gamma: null,
     },
     interval: 0,
-  } as DeviceMotionEvent);
+  } as DeviceMotionEvent;
+}
 
-export function useDeviceMotion() {
-  const [motion, setMotion] = useState(getBlankEvent);
+const store = createStore<DeviceMotionEvent>(getServerSnapshot(), (setState) => {
+  function handler(ev: DeviceMotionEvent) {
+    setState((prev) => ev);
+  }
 
-  useEffect(() => {
-    window.addEventListener('devicemotion', setMotion, true);
-    return () => {
-      window.removeEventListener('devicemotion', setMotion);
-    };
-  }, []);
+  window.addEventListener('devicemotion', handler);
 
-  return motion;
+  return () => {
+    window.removeEventListener('devicemotion', handler);
+  };
+});
+
+export function useDeviceMotion(): DeviceMotionEvent {
+  return useSyncExternalStore<DeviceMotionEvent>(store.subscribe, store.getState, getServerSnapshot);
 }

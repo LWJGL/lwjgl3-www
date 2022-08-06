@@ -1,25 +1,33 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore, useRef, useMemo } from 'react';
+import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
 export function useIntersectionObserver(
   ref: React.RefObject<HTMLElement>,
-  options: IntersectionObserverInit = { rootMargin: '0px' }
+  options: IntersectionObserverInit = { rootMargin: '0px' },
+  serverFallback: boolean = false
 ) {
-  const [isIntersecting, setIntersecting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIntersecting(entry.isIntersecting);
-    }, options);
-    let trg = ref.current;
-    if (trg) {
-      observer.observe(trg);
-      return () => {
-        if (trg) {
-          observer.unobserve(trg);
+  const intersectingRef = useRef<boolean>(serverFallback);
+  const [subscribe, getSnapshot, getServerSnapshot] = useMemo(() => {
+    return [
+      (notify: () => void) => {
+        let observer: IntersectionObserver;
+        if (SUPPORTS_INTERSECTION_OBSERVER && ref.current) {
+          observer = new IntersectionObserver(([entry]) => {
+            intersectingRef.current = entry.isIntersecting;
+            notify();
+          }, options);
+          observer.observe(ref.current);
         }
-      };
-    }
-  }, [ref, options]);
+        return () => {
+          if (observer && ref.current) {
+            observer.unobserve(ref.current);
+          }
+        };
+      },
+      () => intersectingRef.current,
+      () => serverFallback,
+    ];
+  }, [ref, options, serverFallback]);
 
-  return isIntersecting;
+  return useSyncExternalStore<boolean>(subscribe, getSnapshot, getServerSnapshot);
 }

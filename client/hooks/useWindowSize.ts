@@ -3,10 +3,10 @@ import { createStore } from '~/services/createStore';
 import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
 
 export type WindowSize = {
-  innerHeight: number;
   innerWidth: number;
-  outerHeight: number;
+  innerHeight: number;
   outerWidth: number;
+  outerHeight: number;
   screenTop: number;
   screenLeft: number;
   screenX: number;
@@ -18,10 +18,10 @@ export type WindowSize = {
 
 function getSize(): WindowSize {
   return {
-    innerHeight: window.innerHeight,
     innerWidth: window.innerWidth,
-    outerHeight: window.outerHeight,
+    innerHeight: window.innerHeight,
     outerWidth: window.outerWidth,
+    outerHeight: window.outerHeight,
     screenTop: window.screenTop,
     screenLeft: window.screenLeft,
     screenX: window.screenX,
@@ -56,6 +56,22 @@ const store = createStore<WindowSize>(getSize(), (setState) => {
   };
 });
 
+function getServerSnapshot(): WindowSize {
+  return {
+    innerWidth: 1024,
+    innerHeight: 768,
+    outerWidth: 1024,
+    outerHeight: 768,
+    screenTop: 0,
+    screenLeft: 0,
+    screenX: 0,
+    screenY: 0,
+    screenWidth: 1024,
+    screenHeight: 768,
+    isFullScreen: true,
+  };
+}
+
 export function useWindowSize(): WindowSize {
-  return useSyncExternalStore<WindowSize>(store.subscribe, store.getState, store.getState);
+  return useSyncExternalStore<WindowSize>(store.subscribe, store.getState, getServerSnapshot);
 }

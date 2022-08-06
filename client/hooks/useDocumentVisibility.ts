@@ -1,17 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+import { createStore } from '~/services/createStore';
 
-export function useDocumentVisibility() {
-  const [documentVisibility, setDocumentVisibility] = useState(document?.visibilityState ?? 'visible');
+interface Visibility {
+  hidden: boolean;
+  visibilityState: DocumentVisibilityState;
+}
 
-  useEffect(() => {
-    const handler = () => {
-      setDocumentVisibility(document.visibilityState);
-    };
-    document.addEventListener('visibilitychange', handler);
-    return () => {
-      document.removeEventListener('visibilitychange', handler);
-    };
-  }, []);
+function getVisibility(): Visibility {
+  return {
+    hidden: document?.hidden ?? false,
+    visibilityState: document?.visibilityState ?? 'visible',
+  };
+}
 
-  return documentVisibility;
+const store = createStore<Visibility>(getVisibility(), (setState) => {
+  function handler() {
+    setState((prev) => getVisibility());
+  }
+
+  document.addEventListener('visibilitychange', handler);
+
+  return () => {
+    document.removeEventListener('visibilitychange', handler);
+  };
+});
+
+function getServerSnapshot(): Visibility {
+  return {
+    hidden: false,
+    visibilityState: 'visible',
+  };
+}
+
+export function useDocumentHidden(): Visibility {
+  return useSyncExternalStore<Visibility>(store.subscribe, store.getState, getServerSnapshot);
 }

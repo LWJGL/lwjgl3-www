@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
+import { createStore } from '~/services/createStore';
 
 type XY = [number, number];
 
-export function useMousePosition() {
-  const [state, setState] = useState<XY>([0, 0]);
+const store = createStore<XY>([0, 0], (setState) => {
+  function handler({ clientX, clientY }: MouseEvent) {
+    setState((prev) => [clientX, clientY]);
+  }
 
-  useEffect(() => {
-    const handler = ({ clientX, clientY }: MouseEvent) => setState([clientX, clientY]);
-    window.addEventListener('mousemove', handler);
-    return () => {
-      window.removeEventListener('mousemove', handler);
-    };
-  }, []);
+  window.addEventListener('mousemove', handler);
 
-  return state;
+  return () => {
+    window.removeEventListener('mousemove', handler);
+  };
+});
+
+export function useMousePosition(): XY {
+  return useSyncExternalStore<XY>(store.subscribe, store.getState, store.getState);
 }

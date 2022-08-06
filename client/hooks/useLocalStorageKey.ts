@@ -1,22 +1,34 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore, useMemo, useCallback } from 'react';
 
-// Monitors localStorage key for changes and updates local state
-// NOTE: Value is not deserialized
-export function useLocalStorageKey(key: string) {
-  const [localState, updateLocalState] = useState(() => window.localStorage.getItem(key));
+/*
+  Monitors localStorage key for changes and updates local state
 
-  useEffect(() => {
-    const syncLocalStorage = (event: StorageEvent) => {
-      if (event.key === key) {
-        updateLocalState(event.newValue);
-      }
-    };
+  * Note: Value is not deserialized
 
-    window.addEventListener('storage', syncLocalStorage);
-    return () => {
-      window.removeEventListener('storage', syncLocalStorage);
-    };
-  }, [key]);
+  ! Note: This won't work on the same page that is making the changes — it is
+  really a way for other pages on the domain using the storage to sync any
+  changes that are made. Pages on other domains can't access the same storage
+  objects.
+*/
+export function useLocalStorageKey(key: string, serverFallback: string | null = null) {
+  const [getSnapshot, subscribe, getServerSnapshot] = useMemo(() => {
+    return [
+      () => window.localStorage.getItem(key),
+      (notify: () => void) => {
+        function check(ev: StorageEvent) {
+          if (ev.key === key) {
+            notify();
+          }
+        }
 
-  return localState;
+        window.addEventListener('storage', check);
+        return () => {
+          window.removeEventListener('storage', check);
+        };
+      },
+      () => serverFallback,
+    ];
+  }, [key, serverFallback]);
+
+  return useSyncExternalStore<string | null>(subscribe, getSnapshot, getServerSnapshot);
 }

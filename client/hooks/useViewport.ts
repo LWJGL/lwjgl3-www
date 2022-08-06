@@ -33,6 +33,13 @@ const store = createStore<ViewportSize>(getViewportSize(), (setState) => {
   };
 });
 
+function getServerSnapshot(): ViewportSize {
+  return {
+    width: 1024,
+    height: 768,
+  };
+}
+
 export function useViewport(): ViewportSize {
-  return useSyncExternalStore<ViewportSize>(store.subscribe, store.getState, store.getState);
+  return useSyncExternalStore<ViewportSize>(store.subscribe, store.getState, getServerSnapshot);
 }

@@ -1,4 +1,5 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useSyncExternalStore, useCallback } from 'react';
+import { createStore } from '~/services/createStore';
 
 export function isFullScreen() {
   return document.fullscreenElement !== null;
@@ -15,8 +16,20 @@ export function closeFullScreen() {
   }
 }
 
+const store = createStore<boolean>('document' in globalThis && isFullScreen(), (setState) => {
+  function handler(ev: Event) {
+    setState((prev) => isFullScreen());
+  }
+
+  document.addEventListener('fullscreenchange', handler);
+
+  return () => {
+    document.removeEventListener('fullscreenchange', handler);
+  };
+});
+
 export function useFullScreen(ref?: React.RefObject<HTMLElement>) {
-  const [fullScreen, setFullScreen] = useState(isFullScreen());
+  const fullScreen = useSyncExternalStore<boolean>(store.subscribe, store.getState, store.getState);
 
   const openFullScreen = useCallback(() => {
     const el = (ref && ref.current) || document.documentElement;
@@ -25,26 +38,6 @@ export function useFullScreen(ref?: React.RefObject<HTMLElement>) {
       return el.requestFullscreen();
     }
   }, [ref]);
-
-  useEffect(() => {
-    const handleChange = () => {
-      setFullScreen(isFullScreen());
-    };
-
-    // document.addEventListener('webkitfullscreenchange', handleChange, false);
-    // document.addEventListener('mozfullscreenchange', handleChange, false);
-    // document.addEventListener('msfullscreenchange', handleChange, false);
-    // document.addEventListener('MSFullscreenChange', handleChange, false); // IE11
-    document.addEventListener('fullscreenchange', handleChange, true);
-
-    return () => {
-      // document.removeEventListener('webkitfullscreenchange', handleChange);
-      // document.removeEventListener('mozfullscreenchange', handleChange);
-      // document.removeEventListener('msfullscreenchange', handleChange);
-      // document.removeEventListener('MSFullscreenChange', handleChange);
-      document.removeEventListener('fullscreenchange', handleChange);
-    };
-  }, []);
 
   return {
     fullScreen,

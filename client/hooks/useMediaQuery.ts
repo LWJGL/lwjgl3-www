@@ -1,9 +1,7 @@
 import { useSyncExternalStore, useMemo } from 'react';
 
-export function useMediaQuery(query: string, serverFallback?: boolean): boolean {
-  const getServerSnapshot = serverFallback !== undefined ? () => serverFallback : undefined;
-
-  const [getSnapshot, subscribe] = useMemo(() => {
+export function useMediaQuery(query: string, serverFallback: boolean = false): boolean {
+  const [getSnapshot, subscribe, getServerSnapshot] = useMemo(() => {
     const mediaQueryList = window.matchMedia(query);
 
     return [
@@ -22,8 +20,9 @@ export function useMediaQuery(query: string, serverFallback?: boolean): boolean 
           }
         };
       },
+      () => serverFallback,
     ];
-  }, [query]);
+  }, [query, serverFallback]);
 
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore<boolean>(subscribe, getSnapshot, getServerSnapshot);
 }
