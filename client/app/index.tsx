@@ -15,11 +15,12 @@ import { PageNotFound } from '../routes/PageNotFound';
 // Layout
 import { Header } from './Header';
 import { Footer } from './Footer';
-import { styled } from '~/theme/stitches.config';
+// import { styled } from '~/theme/stitches.config';
 
 // Pull common modules on main bundle
 import '~/routes/PageView';
 
+/*
 const LayoutContainer = styled('div', {
   display: 'flex',
   flexDirection: 'column',
@@ -28,6 +29,7 @@ const LayoutContainer = styled('div', {
     flexShrink: 0,
   },
 });
+*/
 
 export const App: React.FC<{ children?: never }> = () => (
   <StrictMode>
@@ -57,16 +59,16 @@ export const App: React.FC<{ children?: never }> = () => (
 const Layout: React.FC<{ children?: never }> = () => (
   <>
     <Header />
-    <LayoutContainer>
-      <main>
-        <ErrorBoundary FallbackComponent={PageError}>
-          <Suspense fallback={<PageBlank />}>
-            <Outlet />
-          </Suspense>
-        </ErrorBoundary>
-      </main>
-      <Footer />
-    </LayoutContainer>
+    {/* <LayoutContainer> */}
+    <main>
+      <ErrorBoundary FallbackComponent={PageError}>
+        <Suspense fallback={<PageBlank />}>
+          <Outlet />
+        </Suspense>
+      </ErrorBoundary>
+    </main>
+    <Footer />
+    {/* </LayoutContainer> */}
     <NavProgress />
   </>
 );
