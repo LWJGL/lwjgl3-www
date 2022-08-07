@@ -13,7 +13,7 @@ export function useOnClickOutside(ref: React.RefObject<HTMLElement>, handler: Re
 
     // See: Attaching manual event listeners in a passive effect
     // https://gist.github.com/bvaughn/fc1c3f27f1aab91c7378f2264f7c3aa1
-    let timeoutID = window.setTimeout(() => {
+    let timeoutID = setTimeout(() => {
       timeoutID = 0;
       ownerDocument = ref.current !== null ? ref.current.ownerDocument : window.document;
 

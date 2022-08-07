@@ -21,7 +21,7 @@ export function useAnimationTimer(duration = 1000, delay = 0) {
 
     function onStart() {
       // Set a timeout to stop things when duration time elapses
-      timerStop = window.setTimeout(() => {
+      timerStop = setTimeout(() => {
         cancelAnimationFrame(animationFrame);
         setTime(Date.now() - start);
       }, duration);
@@ -32,7 +32,7 @@ export function useAnimationTimer(duration = 1000, delay = 0) {
     }
 
     // Start after specified delay (defaults to 0)
-    const timerDelay = window.setTimeout(onStart, delay);
+    const timerDelay = setTimeout(onStart, delay);
 
     // Clean things up
     return () => {

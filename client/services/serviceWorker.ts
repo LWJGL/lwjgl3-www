@@ -49,7 +49,7 @@ if (SW_SUPPORTED) {
   // Prevent web app install banner from being displayed automatically
   // https://developers.google.com/web/fundamentals/app-install-banners/
   // let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
+  addEventListener('beforeinstallprompt', (e) => {
     // Prevent Chrome 67 and earlier from automatically showing the prompt
     e.preventDefault();
     // Stash the event so it can be triggered later.
@@ -58,7 +58,7 @@ if (SW_SUPPORTED) {
 
   if (navigator.serviceWorker !== undefined) {
     // Register service worker
-    window.addEventListener('load', () => {
+    addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js').then((registration: ServiceWorkerRegistration) => {
         // Registration was successful
         // console.log('ServiceWorker registration successful with scope: ', reg.scope);

@@ -7,17 +7,17 @@
     "strict": true,
     "alwaysStrict": true,
     "useUnknownInCatchVariables": false,
-    "downlevelIteration": true,
     "noUnusedLocals": true,
     "noEmit": true,
     "skipLibCheck": true,
     "jsx": "preserve",
     "lib": ["DOM", "ESNext"],
-    "baseUrl": ".",
     "paths": {
-      "~/*": ["./client/*"]
-    }
+      "~/*": ["./*"]
+    },
+    "types": ["react", "react-dom", "react-is", "lodash-es"]
   },
-  "include": ["types", "client"],
-  "exclude": ["public", "scripts", "server", "**/node_modules", "**/.*/"]
+  "typeAcquisition": {
+    "enable": false
+  }
 }

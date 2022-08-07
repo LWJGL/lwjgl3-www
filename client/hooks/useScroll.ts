@@ -15,7 +15,7 @@ const store = createStore<ScrollPosition>('pageXOffset' in globalThis ? getScrol
     setState((prev) => getScrollPosition());
   }
 
-  window.addEventListener('scroll', updateScrollPosition, registerOptions);
+  addEventListener('scroll', updateScrollPosition, registerOptions);
 
   return () => {
     /*
@@ -26,7 +26,7 @@ const store = createStore<ScrollPosition>('pageXOffset' in globalThis ? getScrol
       it's probably wise to use the same values used for the call to addEventListener() when calling removeEventListener()."
     */
     //@ts-expect-error
-    window.removeEventListener('scroll', updateScrollPosition, registerOptions);
+    removeEventListener('scroll', updateScrollPosition, registerOptions);
   };
 });
 

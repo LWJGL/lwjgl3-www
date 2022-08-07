@@ -8,10 +8,10 @@ const store = createStore<XY>([0, 0], (setState) => {
     setState((prev) => [clientX, clientY]);
   }
 
-  window.addEventListener('mousemove', handler);
+  addEventListener('mousemove', handler);
 
   return () => {
-    window.removeEventListener('mousemove', handler);
+    removeEventListener('mousemove', handler);
   };
 });
 

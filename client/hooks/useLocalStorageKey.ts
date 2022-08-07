@@ -13,7 +13,7 @@ import { useSyncExternalStore, useMemo, useCallback } from 'react';
 export function useLocalStorageKey(key: string, serverFallback: string | null = null) {
   const [getSnapshot, subscribe, getServerSnapshot] = useMemo(() => {
     return [
-      () => window.localStorage.getItem(key),
+      () => localStorage.getItem(key),
       (notify: () => void) => {
         function check(ev: StorageEvent) {
           if (ev.key === key) {
@@ -21,9 +21,9 @@ export function useLocalStorageKey(key: string, serverFallback: string | null = 
           }
         }
 
-        window.addEventListener('storage', check);
+        addEventListener('storage', check);
         return () => {
-          window.removeEventListener('storage', check);
+          removeEventListener('storage', check);
         };
       },
       () => serverFallback,

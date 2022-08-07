@@ -22,10 +22,10 @@ const store = createStore<Orientation>(getOrientation(), (setState) => {
     setState((prev) => ev);
   }
 
-  window.addEventListener('deviceorientation', handler);
+  addEventListener('deviceorientation', handler);
 
   return () => {
-    window.removeEventListener('deviceorientation', handler);
+    removeEventListener('deviceorientation', handler);
   };
 });
 

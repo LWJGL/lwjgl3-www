@@ -27,10 +27,10 @@ const store = createStore<DeviceMotionEvent>(getServerSnapshot(), (setState) => 
     setState((prev) => ev);
   }
 
-  window.addEventListener('devicemotion', handler);
+  addEventListener('devicemotion', handler);
 
   return () => {
-    window.removeEventListener('devicemotion', handler);
+    removeEventListener('devicemotion', handler);
   };
 });
 

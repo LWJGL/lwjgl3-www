@@ -70,7 +70,7 @@ function setScheme(scheme: Scheme): void {
   }
 
   try {
-    window.localStorage.setItem(SCHEME_STORAGE_KEY, scheme);
+    localStorage.setItem(SCHEME_STORAGE_KEY, scheme);
   } catch {}
 }
 

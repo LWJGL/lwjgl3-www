@@ -31,7 +31,7 @@ if ('matchMedia' in globalThis) {
 
     mediaQueryMap.set(mediaQuery, i as Breakpoint);
 
-    const mqr = window.matchMedia(mediaQuery);
+    const mqr = matchMedia(mediaQuery);
     matchers.push(mqr);
 
     if (mqr.matches) {

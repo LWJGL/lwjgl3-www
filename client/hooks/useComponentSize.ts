@@ -40,10 +40,10 @@ export function useComponentSize(ref: React.RefObject<HTMLElement>) {
         resizeObserver.disconnect();
       };
     } else {
-      window.addEventListener('resize', handleResize);
+      addEventListener('resize', handleResize);
 
       return () => {
-        window.removeEventListener('resize', handleResize);
+        removeEventListener('resize', handleResize);
       };
     }
   }, [handleResize, ref]);

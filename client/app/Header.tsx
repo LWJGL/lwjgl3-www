@@ -219,9 +219,9 @@ export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
       }
     }
 
-    window.addEventListener('scroll', onScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
+    addEventListener('scroll', onScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
     return () => {
-      window.removeEventListener('scroll', onScroll, false);
+      removeEventListener('scroll', onScroll, false);
       mounted = false;
     };
   }, []);

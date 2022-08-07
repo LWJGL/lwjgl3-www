@@ -13,9 +13,9 @@ type Subscriber<Args extends any[]> = (...args: Args) => void;
       emit('arg1', 'arg2');
     }
 
-    window.addEventListener('click', onClick);
+    addEventListener('click', onClick);
     return () => {
-      window.removeEventListener('click', onClick);
+      removeEventListener('click', onClick);
       console.log('stopped');
     };
   });

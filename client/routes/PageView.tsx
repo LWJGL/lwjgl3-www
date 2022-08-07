@@ -28,7 +28,7 @@ interface PropsMemo {
 // Default value is 50 to match Firefox's default value (about:config -> browser.sessionhistory.max_entries)
 const MAX_SCROLL_ENTRIES = 50;
 const SCROLL_ENTRIES_SESSION_KEY = 'scrollEntries';
-const SCROLL_RESTORATION = 'scrollRestoration' in window.history;
+const SCROLL_RESTORATION = globalThis.history && 'scrollRestoration' in globalThis.history;
 const TERMINATION_EVENT = 'onpagehide' in self ? 'pagehide' : 'unload';
 let scrollEntries: Map<string, ScrollPosition> = new Map();
 
@@ -103,10 +103,10 @@ const PageViewWithLocation: FCC<PropsMemo> = ({ location, title, description, ch
         scrollToTop();
       }
 
-      window.addEventListener(TERMINATION_EVENT, storeScrollEntriesInSession);
+      addEventListener(TERMINATION_EVENT, storeScrollEntriesInSession);
       return () => {
         storeScroll(key);
-        window.removeEventListener(TERMINATION_EVENT, storeScrollEntriesInSession);
+        removeEventListener(TERMINATION_EVENT, storeScrollEntriesInSession);
       };
     } else if (hash.length === 0) {
       scrollToTop();
@@ -131,7 +131,7 @@ function scrollEnd() {
 function scrollToTarget(el: HTMLElement) {
   var rect = el.getBoundingClientRect();
   scrollSmooth(0, rect.top + window.pageYOffset);
-  window.setTimeout(scrollEnd, 0);
+  setTimeout(scrollEnd, 0);
 }
 
 export const PageView: FCC<Props> = (props) => {

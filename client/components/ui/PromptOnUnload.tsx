@@ -19,9 +19,9 @@
 //         event.preventDefault();
 //         event.returnValue = ''; // Chrome requires setting this.
 //       };
-//       window.addEventListener('beforeunload', handleBeforeUnload);
+//       addEventListener('beforeunload', handleBeforeUnload);
 //       return () => {
-//         window.removeEventListener('beforeunload', handleBeforeUnload);
+//         removeEventListener('beforeunload', handleBeforeUnload);
 //       };
 //     }
 //   }, [enabled]);

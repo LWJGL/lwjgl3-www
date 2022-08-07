@@ -5,6 +5,15 @@ declare interface CSSModule {
   unuse: () => void;
 }
 
+// Fix TS Global Polution
+// e.g. deps referencing @types/node, pollutes global environment
+// explainer here: https://gist.github.com/RyanCavanaugh/702ebd1ca2fc060e58e634b4e30c1c1c
+
+declare namespace NodeJS {
+  type Timeout = number;
+  type Timer = number;
+}
+
 // React Helpers
 
 declare type FCC<Props = unknown> = React.FunctionComponent<React.PropsWithChildren<Props>>;

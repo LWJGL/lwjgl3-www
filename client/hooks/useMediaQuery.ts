@@ -2,7 +2,7 @@ import { useSyncExternalStore, useMemo } from 'react';
 
 export function useMediaQuery(query: string, serverFallback: boolean = false): boolean {
   const [getSnapshot, subscribe, getServerSnapshot] = useMemo(() => {
-    const mediaQueryList = window.matchMedia(query);
+    const mediaQueryList = matchMedia(query);
 
     return [
       () => mediaQueryList.matches,

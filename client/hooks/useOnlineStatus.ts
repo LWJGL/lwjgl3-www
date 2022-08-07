@@ -10,12 +10,12 @@ const store = createStore<boolean>(getOnlineStatus(), (setState) => {
     setState((prev) => getOnlineStatus());
   }
 
-  window.addEventListener('online', callback);
-  window.addEventListener('offline', callback);
+  addEventListener('online', callback);
+  addEventListener('offline', callback);
 
   return () => {
-    window.removeEventListener('online', callback);
-    window.removeEventListener('offline', callback);
+    removeEventListener('online', callback);
+    removeEventListener('offline', callback);
   };
 });
 

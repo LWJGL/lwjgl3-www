@@ -41,7 +41,7 @@ const store = createStore<WindowSize>(getSize(), (setState) => {
     setState((prev) => getSize());
   }
 
-  window.addEventListener('resize', handleResize, registerOptions);
+  addEventListener('resize', handleResize, registerOptions);
 
   return () => {
     /*
@@ -52,7 +52,7 @@ const store = createStore<WindowSize>(getSize(), (setState) => {
       it's probably wise to use the same values used for the call to addEventListener() when calling removeEventListener()."
     */
     //@ts-expect-error
-    window.removeEventListener('resize', handleResize, registerOptions);
+    removeEventListener('resize', handleResize, registerOptions);
   };
 });
 

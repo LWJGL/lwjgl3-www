@@ -8,8 +8,8 @@ try {
     },
   });
   let emptyFn = () => {};
-  window.addEventListener('test', emptyFn, opts);
-  window.removeEventListener('test', emptyFn, opts);
+  addEventListener('test', emptyFn, opts);
+  removeEventListener('test', emptyFn, opts);
 } catch (ignore) {}
 
 export const SUPPORTS_PASSIVE_EVENTS = supportsPassive;
@@ -35,5 +35,5 @@ export const SUPPORTS_RESIZE_OBSERVER: boolean = 'ResizeObserver' in window;
 
 // https://twitter.com/mathias/status/1278208408857051136
 export function supportsMediaQuery(query: string): boolean {
-  return window.matchMedia(`(${query})`).media != 'not all';
+  return matchMedia(`(${query})`).media != 'not all';
 }

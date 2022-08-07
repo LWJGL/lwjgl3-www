@@ -1,5 +1,5 @@
 export function mediaQueryListener(query: string, callback: (list: MediaQueryList) => void) {
-  const mediaQueryList = window.matchMedia(query);
+  const mediaQueryList = matchMedia(query);
 
   const listener = (e: MediaQueryListEvent) => {
     callback(mediaQueryList);
