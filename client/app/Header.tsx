@@ -1,248 +1,136 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useRef, useEffect } from 'react';
 import { Link, useLocation } from '~/components/router/client';
-import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
-import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
-import { styled } from '~/theme/stitches.config';
-import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { IS_IOS } from '~/services/ua';
-// import { useServiceWorker } from '~/hooks/useServiceWorker';
-import { MainMenu } from './MainMenu';
-// import { Button } from '~/components/forms/Button';
-import { Sidebar } from './Sidebar';
-// import { Icon } from '~/components/ui/Icon';
-// import '~/theme/icons/fa/duotone/cloud-download';
 import { Home } from '~/routes';
+import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
+import { styled } from '~/theme/stitches.config';
+import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
+import { ZINDEX_MODAL_BACKDROP } from '~/theme';
+import { MainMenu } from './MainMenu';
+import { Sidebar } from './Sidebar';
 
 const StyledHeader = styled('header', {
-  position: 'absolute',
+  // Implements immediate-reveal header using the following technique:
+  // original: https://codepen.io/jaffathecake/pen/OJvbpRZ
+  // w/offset: https://codepen.io/jaffathecake/pen/OJvbdjK
+  position: 'relative',
+  top: 'calc(var(--computed-height) * -1 - 1px)',
+  bottom: 'calc(100% - var(--computed-height))',
+
+  // decorative properties
   zIndex: ZINDEX_MODAL_BACKDROP - 1,
-  top: 0,
-  left: 0,
-  width: '100%',
   color: 'white',
   lineHeight: '3rem',
   fontSize: '$lg',
   fontFamily: '$logo',
-  // willChange: 'background-color, top',
   userSelect: 'none',
   display: 'flex',
   hgap: '1rem',
   alignItems: 'center',
   padding: '0 1rem',
+  transition: 'background-color 0.75s ease-out',
 
   '@supports(padding: 0 max(env(safe-area-inset-left), 1rem))': {
     padding: '0 max(env(safe-area-inset-left), 1rem)',
   },
 
-  variants: {
-    fixed: {
-      true: {
-        position: 'fixed',
-      },
-    },
-    hidden: {
-      true: {},
-    },
-    alt: {
-      true: {
-        position: 'fixed',
-        // willChange: 'top, background-color, opacity',
-        transition: 'top 0.3s cubic-bezier(0, 0, 0.3, 1), opacity 0.5s ease-out',
-      },
-    },
-    home: {
-      true: {
-        transition: 'background-color 0.75s ease-out',
-      },
-    },
-    opaque: {
-      true: {
-        backgroundColor: '$dark',
-        '.dark &': {
-          backgroundColor: '$darker',
-        },
-      },
+  '&.opaque': {
+    backgroundColor: '$dark',
+    '.dark &': {
+      backgroundColor: '$darker',
     },
   },
-
-  compoundVariants: [
-    {
-      alt: true,
-      hidden: true,
-      css: {
-        opacity: 0,
-        top: '-3rem',
-        pointerEvents: 'none',
-      },
-    },
-  ],
 });
 
-/*
-function ServiceWorkerUpdate() {
-  const [pending, update] = useServiceWorker();
-  const buttonTitle = 'Update website to latest version';
+const registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
+let headerHeight = -1;
 
-  return pending ? (
-    <Button
-      size="sm"
-      rounding="icon"
-      tone="accent"
-      onClick={update as any}
-      title={buttonTitle}
-      aria-label={buttonTitle}
-    >
-      <Icon name="fa/duotone/cloud-download" />
-    </Button>
-  ) : null;
-}
-*/
+const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
+  const currentBreakpoint = useBreakpoint();
+  const shifterRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    function fixHeaderoffset() {
+      if (!headerRef.current || !shifterRef.current) {
+        return;
+      }
+
+      const header = headerRef.current;
+
+      if (headerHeight === -1) {
+        headerHeight = header.getBoundingClientRect().height;
+        header.style.position = 'sticky';
+        header.style.setProperty('--computed-height', headerHeight + 'px');
+      }
+
+      const y = Math.min(header.offsetTop, document.documentElement.scrollHeight - innerHeight - headerHeight);
+      shifterRef.current.style.height = y + 'px';
+      header.style.marginBottom = -y + 'px';
+    }
+
+    addEventListener('scroll', fixHeaderoffset, registerOptions);
+    addEventListener('resize', fixHeaderoffset);
+    fixHeaderoffset();
+
+    return () => {
+      //@ts-expect-error
+      removeEventListener('scroll', fixHeaderoffset, registerOptions);
+      removeEventListener('resize', fixHeaderoffset);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!headerRef.current) {
+      return;
+    }
+    if (!isHome) {
+      headerRef.current.classList.add('opaque');
+      return;
+    }
+
+    let classNameSet = false;
+
+    function handleScroll() {
+      if (!headerRef.current) {
+        return;
+      }
+      if (scrollY > 0) {
+        if (!classNameSet) {
+          headerRef.current.classList.add('opaque');
+          classNameSet = true;
+        }
+      } else {
+        headerRef.current.classList.remove('opaque');
+        classNameSet = false;
+      }
+    }
+
+    addEventListener('scroll', handleScroll, registerOptions);
+    addEventListener('resize', handleScroll);
+    handleScroll();
+
+    return () => {
+      //@ts-expect-error
+      removeEventListener('scroll', handleScroll, registerOptions);
+      removeEventListener('resize', handleScroll);
+    };
+  }, [isHome]);
+
+  return (
+    <>
+      <div ref={shifterRef}></div>
+      <StyledHeader ref={headerRef} role="navigation">
+        <Link to="/" onPointerDown={Home.preload}>
+          LW
+          <b>JGL</b>
+        </Link>
+        {currentBreakpoint > Breakpoint.md ? <MainMenu direction="horizontal" /> : <Sidebar />}
+      </StyledHeader>
+    </>
+  );
+});
 
 export const Header: React.FC<{ children?: never }> = () => {
   const location = useLocation();
   return <HeaderNav isHome={location.pathname === '/'} />;
 };
-
-let offsetHeight = 48;
-
-// This function is passed as a ref={} prop to the header
-// The height is not expected to change therefore we store it once in a global variable
-function setOffsetHeightRef(node: HTMLElement) {
-  if (node) {
-    // Measure menu height, should be ~ 48 pixels
-    offsetHeight = node.offsetHeight;
-  }
-}
-
-type Direction = 0 | 1;
-const Up: Direction = 0;
-const Down: Direction = 1;
-
-export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
-  const [pos, setPos] = useState(0);
-  const [top, setTop] = useState(true);
-  const [fixed, setFixed] = useState(false);
-  const [hidden, setHidden] = useState(false);
-  const currentBreakpoint = useBreakpoint();
-
-  useEffect(() => {
-    // Re-create useState variables to prevent scope conflicts
-    let pos = 0;
-    let top = true;
-    let fixed = false;
-    let hidden = false;
-
-    // Internal tracking
-    let mounted = true;
-    let prev = 0;
-    let current = 0;
-    let direction: Direction = Down;
-    let ticking = false;
-
-    function _setPos(value: number) {
-      pos = value;
-      setPos(value);
-    }
-    function _setTop(value: boolean) {
-      top = value;
-      setTop(value);
-    }
-    function _setFixed(value: boolean) {
-      fixed = value;
-      setFixed(value);
-    }
-    function _setHidden(value: boolean) {
-      hidden = value;
-      setHidden(value);
-    }
-
-    function update() {
-      ticking = false;
-      if (!mounted) {
-        return;
-      }
-      prev = current;
-      current = Math.max(0, window.pageYOffset);
-
-      if (prev - current < 0) {
-        // We are scrolling down
-        if (IS_IOS) {
-          if (!hidden) {
-            _setHidden(true);
-          }
-        } else if (direction === Up) {
-          // We just started scroll down
-          direction = Down;
-          if (fixed) {
-            // Release menu from the top of the viewport
-            _setFixed(false);
-            _setPos(prev);
-          }
-        }
-
-        if (current > offsetHeight && top) {
-          _setTop(false);
-        }
-      } else {
-        // We are scrolling up
-        if (IS_IOS) {
-          if (hidden) {
-            _setHidden(false);
-          }
-        } else {
-          if (direction === Down) {
-            // We just started scrolling up
-            direction = Up;
-            if (prev - current > offsetHeight) {
-              _setFixed(true);
-              _setPos(0);
-            } else if (pos + offsetHeight < prev) {
-              _setPos(Math.max(0, prev - offsetHeight));
-            }
-          } else if (!fixed && current < pos) {
-            // The entire menu has been revealed, fix it to the viewport
-            _setFixed(true);
-            _setPos(0);
-          }
-        }
-
-        if (current <= offsetHeight && !top) {
-          _setTop(true);
-        }
-      }
-    }
-
-    function onScroll() {
-      if (!ticking && mounted) {
-        requestAnimationFrame(update);
-        ticking = true;
-      }
-    }
-
-    addEventListener('scroll', onScroll, SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false);
-    return () => {
-      removeEventListener('scroll', onScroll, false);
-      mounted = false;
-    };
-  }, []);
-
-  return (
-    <StyledHeader
-      ref={setOffsetHeightRef}
-      role="navigation"
-      home={isHome}
-      opaque={!isHome || !top}
-      fixed={fixed}
-      hidden={hidden}
-      alt={IS_IOS}
-      style={{ top: pos }}
-    >
-      <Link to="/" onPointerDown={Home.preload}>
-        LW
-        <b>JGL</b>
-      </Link>
-      {/* <ServiceWorkerUpdate /> */}
-      {currentBreakpoint > Breakpoint.md ? <MainMenu direction="horizontal" /> : <Sidebar />}
-    </StyledHeader>
-  );
-});

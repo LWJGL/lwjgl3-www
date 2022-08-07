@@ -16,6 +16,7 @@ const store = createStore<ScrollPosition>('pageXOffset' in globalThis ? getScrol
   }
 
   addEventListener('scroll', updateScrollPosition, registerOptions);
+  addEventListener('resize', updateScrollPosition);
 
   return () => {
     /*
@@ -27,6 +28,7 @@ const store = createStore<ScrollPosition>('pageXOffset' in globalThis ? getScrol
     */
     //@ts-expect-error
     removeEventListener('scroll', updateScrollPosition, registerOptions);
+    removeEventListener('resize', updateScrollPosition);
   };
 });
 

@@ -29,10 +29,6 @@ const LayoutContainer = styled('div', {
   },
 });
 
-const Main = styled('main', {
-  pt: '3rem',
-});
-
 export const App: React.FC<{ children?: never }> = () => (
   <StrictMode>
     {/* <ClickToComponent /> */}
@@ -62,13 +58,13 @@ const Layout: React.FC<{ children?: never }> = () => (
   <>
     <Header />
     <LayoutContainer>
-      <Main>
+      <main>
         <ErrorBoundary FallbackComponent={PageError}>
           <Suspense fallback={<PageBlank />}>
             <Outlet />
           </Suspense>
         </ErrorBoundary>
-      </Main>
+      </main>
       <Footer />
     </LayoutContainer>
     <NavProgress />
