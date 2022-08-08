@@ -9,19 +9,14 @@ import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
 
 const StyledHeader = styled('header', {
-  // Implements immediate-reveal header using the following technique:
-  // original: https://codepen.io/jaffathecake/pen/OJvbpRZ
-  // w/offset: https://codepen.io/jaffathecake/pen/OJvbdjK
-  position: 'relative',
-  top: 'calc(var(--computed-height) * -1 - 1px)',
-  bottom: 'calc(100% - var(--computed-height))',
-
-  // decorative properties
+  position: 'sticky',
+  top: -48,
   zIndex: ZINDEX_MODAL_BACKDROP - 1,
   color: 'white',
   lineHeight: '3rem',
   fontSize: '$lg',
   fontFamily: '$logo',
+  willChange: 'top, background-color',
   userSelect: 'none',
   display: 'flex',
   hgap: '1rem',
@@ -41,92 +36,120 @@ const StyledHeader = styled('header', {
   },
 });
 
-const registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
-let headerHeight = -1;
+type Direction = -1 | 0 | 1 | 2;
+const Up: Direction = 0;
+const Down: Direction = 1;
+const Indeterminate: Direction = -1;
+const Reveal: Direction = 2;
 
-const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
+let offsetHeight: number = 48;
+
+// We wrap HeaderNav in a memo to avoid re-renders between navigation of pages with isHome=false -> isHome=false
+export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
   const currentBreakpoint = useBreakpoint();
-  const shifterRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
+  const prevRef = useRef<number>(0);
+  const directionRef = useRef<Direction>(Indeterminate);
 
   useEffect(() => {
-    function fixHeaderoffset() {
-      if (!headerRef.current || !shifterRef.current) {
+    let header = headerRef.current;
+    if (header !== null) {
+      offsetHeight = header.getBoundingClientRect().height;
+      header.style.top = `-${offsetHeight}px`;
+      if (isHome) {
+        header.classList.remove('opaque');
+      } else {
+        header.classList.add('opaque');
+      }
+    }
+
+    function update(e: Event) {
+      if (headerRef.current === null) {
         return;
       }
 
-      const header = headerRef.current;
-
-      if (headerHeight === -1) {
-        headerHeight = header.getBoundingClientRect().height;
-        header.style.position = 'sticky';
-        header.style.setProperty('--computed-height', headerHeight + 'px');
+      if (e.type === 'resize') {
+        offsetHeight = headerRef.current.getBoundingClientRect().height;
       }
 
-      const y = Math.min(header.offsetTop, document.documentElement.scrollHeight - innerHeight - headerHeight);
-      shifterRef.current.style.height = y + 'px';
-      header.style.marginBottom = -y + 'px';
-    }
+      let y = window.pageYOffset;
+      let prev = prevRef.current;
 
-    addEventListener('scroll', fixHeaderoffset, registerOptions);
-    addEventListener('resize', fixHeaderoffset);
-    fixHeaderoffset();
-
-    return () => {
-      //@ts-expect-error
-      removeEventListener('scroll', fixHeaderoffset, registerOptions);
-      removeEventListener('resize', fixHeaderoffset);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!headerRef.current) {
-      return;
-    }
-    if (!isHome) {
-      headerRef.current.classList.add('opaque');
-      return;
-    }
-
-    let classNameSet = false;
-
-    function handleScroll() {
-      if (!headerRef.current) {
+      if (y === prev || y < 0) {
+        // skip if no change or out of bounds (iOS safari bounce effect)
         return;
       }
-      if (scrollY > 0) {
-        if (!classNameSet) {
+
+      if (isHome) {
+        if (y >= offsetHeight && prev < offsetHeight) {
           headerRef.current.classList.add('opaque');
-          classNameSet = true;
+        } else if (y < offsetHeight && prev >= offsetHeight) {
+          headerRef.current.classList.remove('opaque');
+        }
+      }
+
+      let direction = directionRef.current;
+
+      if (prev - y < 0) {
+        // We are scrolling down
+        if (direction !== Down) {
+          if (direction !== Reveal) {
+            // We just started scrolling down
+            directionRef.current = Reveal;
+          }
+
+          let bounds = headerRef.current.getBoundingClientRect();
+          let delta = y - prev;
+          let newOffset = Math.max(bounds.top - delta, -offsetHeight);
+
+          headerRef.current.style.top = `${newOffset}px`;
+
+          if (newOffset <= -offsetHeight) {
+            directionRef.current = Down;
+          }
         }
       } else {
-        headerRef.current.classList.remove('opaque');
-        classNameSet = false;
+        // We are scrolling up
+        if (direction !== Up) {
+          if (direction !== Reveal) {
+            // We just started scrolling up
+            directionRef.current = Reveal;
+          }
+
+          let bounds = headerRef.current.getBoundingClientRect();
+          let delta = prev - y;
+          let newOffset = Math.min(bounds.top + delta, -1);
+
+          headerRef.current.style.top = `${newOffset}px`;
+
+          if (newOffset >= -1) {
+            directionRef.current = Up;
+          }
+        }
       }
+
+      prevRef.current = y;
     }
 
-    addEventListener('scroll', handleScroll, registerOptions);
-    addEventListener('resize', handleScroll);
-    handleScroll();
+    let listenerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
+    addEventListener('scroll', update, listenerOptions);
+    addEventListener('resize', update);
 
     return () => {
       //@ts-expect-error
-      removeEventListener('scroll', handleScroll, registerOptions);
-      removeEventListener('resize', handleScroll);
+      removeEventListener('scroll', update, listenerOptions);
+      removeEventListener('resize', update);
     };
   }, [isHome]);
 
   return (
-    <>
-      <div ref={shifterRef}></div>
-      <StyledHeader ref={headerRef} role="navigation">
-        <Link to="/" onPointerDown={Home.preload}>
-          LW
-          <b>JGL</b>
-        </Link>
-        {currentBreakpoint > Breakpoint.md ? <MainMenu direction="horizontal" /> : <Sidebar />}
-      </StyledHeader>
-    </>
+    <StyledHeader ref={headerRef} role="navigation">
+      <Link to="/" onPointerDown={Home.preload}>
+        LW
+        <b>JGL</b>
+      </Link>
+      {currentBreakpoint > Breakpoint.md ? <MainMenu direction="horizontal" /> : <Sidebar />}
+    </StyledHeader>
   );
 });
 
