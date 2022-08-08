@@ -93,24 +93,29 @@ export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
       if (prev - y < 0) {
         // We are scrolling down
         if (direction !== Down) {
-          if (direction !== Reveal) {
-            // We just started scrolling down
-            directionRef.current = Reveal;
-          }
-
-          let bounds = headerRef.current.getBoundingClientRect();
-          let delta = y - prev;
-          let newOffset = Math.max(bounds.top - delta, -offsetHeight);
-
-          headerRef.current.style.top = `${newOffset}px`;
-
-          if (newOffset <= -offsetHeight) {
+          if (prev === 0) {
+            // if we were already at the top, skip Reveal
             directionRef.current = Down;
+          } else {
+            if (direction !== Reveal) {
+              // We just started scrolling down
+              directionRef.current = Reveal;
+            }
+            let bounds = headerRef.current.getBoundingClientRect();
+            let delta = y - prev;
+            let newOffset = Math.max(bounds.top - delta, -offsetHeight);
+            headerRef.current.style.top = `${newOffset}px`;
+            if (newOffset <= -offsetHeight) {
+              directionRef.current = Down;
+            }
           }
         }
       } else {
         // We are scrolling up
-        if (direction !== Up) {
+        if (y === 0) {
+          // snap if we are at the top
+          headerRef.current.style.top = `${-offsetHeight}px`;
+        } else if (direction !== Up) {
           if (direction !== Reveal) {
             // We just started scrolling up
             directionRef.current = Reveal;
@@ -118,11 +123,11 @@ export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
 
           let bounds = headerRef.current.getBoundingClientRect();
           let delta = prev - y;
-          let newOffset = Math.min(bounds.top + delta, -1);
+          let newOffset = Math.min(bounds.top + delta, 0);
 
           headerRef.current.style.top = `${newOffset}px`;
 
-          if (newOffset >= -1) {
+          if (newOffset >= 0) {
             directionRef.current = Up;
           }
         }
