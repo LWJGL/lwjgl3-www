@@ -22,11 +22,11 @@
   "dependencies": {
     "@aws-sdk/client-s3": "3.142.0",
     "@fastify/accepts": "4.0.0",
-    "@fastify/etag": "4.0.0",
+    "@fastify/etag": "4.1.0",
     "@fastify/helmet": "9.1.0",
     "@fastify/http-proxy": "8.2.1",
     "@fastify/static": "6.5.0",
-    "fastify": "4.3.0",
+    "fastify": "4.4.0",
     "point-of-view": "6.3.0",
     "pug": "3.0.2"
   },
