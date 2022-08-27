@@ -1,4 +1,4 @@
-// type ConnectionType = 'bluetooth' | 'cellular' | 'ethernet' | 'mixed' | 'none' | 'other' | 'unknown' | 'wifi' | 'wimax';
+type ConnectionType = 'bluetooth' | 'cellular' | 'ethernet' | 'mixed' | 'none' | 'other' | 'unknown' | 'wifi';
 type EffectiveConnectionType = '2g' | '3g' | '4g' | 'slow-2g';
 
 declare interface NetworkInformation extends EventTarget {
