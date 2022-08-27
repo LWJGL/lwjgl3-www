@@ -37,3 +37,11 @@ export const SUPPORTS_RESIZE_OBSERVER: boolean = 'ResizeObserver' in window;
 export function supportsMediaQuery(query: string): boolean {
   return matchMedia(`(${query})`).media != 'not all';
 }
+
+export function supportsScriptType(type: 'module' | 'classic' | 'importmap' | 'speculationrules'): -1 | 0 | 1 {
+  if (typeof HTMLScriptElement.supports === 'undefined') {
+    return -1;
+  }
+
+  return HTMLScriptElement.supports(type) ? 1 : 0;
+}
