@@ -1,5 +1,3 @@
-import { unstable_getCacheForType as getCacheForType } from 'react';
-import { ResourceCache } from '~/services/Resource';
 import { StatusCode, getResponseError } from '~/services/http';
 import { config } from '../config';
 import type { BuildType } from '../types';
@@ -15,44 +13,46 @@ interface BuildStatusError {
 
 type BuildStatus = BuildStatusSuccess | BuildStatusError;
 
-async function loadStatus(name: BuildType): Promise<BuildStatus> {
-  let url = `https://build.lwjgl.org/${name}`;
-  if (name === 'release') {
-    url += `/${config.versions[0]}`;
-  }
-  url += `/bin/build.txt`;
+let cache = new Map<BuildType, Promise<BuildStatus>>();
 
-  try {
-    return await fetchStatus(url);
-  } catch (err) {
-    return { error: err.message };
+export function getBuildStatus(name: BuildType): Promise<BuildStatus> {
+  if (!cache.has(name)) {
+    let url = `https://build.lwjgl.org/${name}`;
+    if (name === 'release') {
+      url += `/${config.versions[0]}`;
+    }
+    url += `/bin/build.txt`;
+    cache.set(name, fetchStatus(url));
   }
+  return cache.get(name)!;
 }
 
-async function fetchStatus(url: string): Promise<BuildStatusSuccess> {
-  const response = await fetch(url, {
-    method: 'GET',
-    mode: 'cors',
-    credentials: 'omit',
-    headers: {
-      Accept: 'text/plain',
-    },
-  });
+async function fetchStatus(url: string): Promise<BuildStatus> {
+  let response: Response;
+
+  try {
+    response = await fetch(url, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'omit',
+      headers: {
+        Accept: 'text/plain',
+      },
+    });
+  } catch (err) {
+    return {
+      error: err.message,
+    };
+  }
 
   if (response.status !== StatusCode.OK) {
-    throw new Error(await getResponseError(response));
+    return {
+      error: await getResponseError(response),
+    };
   }
 
   return {
     lastModified: response.headers.get('Last-Modified') ?? 'N/A',
     version: await response.text(),
   };
-}
-
-function createBuildStatusCache() {
-  return new ResourceCache<BuildType, BuildStatus>(loadStatus);
-}
-
-export function readStatus(build: BuildType): BuildStatus {
-  return getCacheForType(createBuildStatusCache).read(build);
 }

@@ -1,12 +1,4 @@
-import { unstable_getCacheForType as getCacheForType } from 'react';
-import { ResourceCache } from '~/services/Resource';
 import { StatusCode, getResponseError } from '~/services/http';
-
-interface FolderData {
-  path: string;
-  files: Array<string>;
-  folders: Array<string>;
-}
 
 interface FolderData {
   path: string;
@@ -16,15 +8,25 @@ interface FolderData {
 
 type FolderDataAPI = Partial<FolderData>;
 
-async function fetchPath(path: string): Promise<FolderData> {
-  if (path === '') {
-    return {
+let cache = new Map<string, Promise<FolderData>>([
+  [
+    '',
+    Promise.resolve({
       path: '',
       files: [],
       folders: ['addons', 'release', 'stable', 'nightly'],
-    };
-  }
+    }),
+  ],
+]);
 
+export function getFolderData(path: string): Promise<FolderData> {
+  if (!cache.has(path)) {
+    cache.set(path, fetchPath(path));
+  }
+  return cache.get(path)!;
+}
+
+async function fetchPath(path: string): Promise<FolderData> {
   const response = await fetch(`/list?path=${path}/`, {
     method: 'GET',
     mode: 'same-origin',
@@ -46,12 +48,4 @@ async function fetchPath(path: string): Promise<FolderData> {
     contents.folders === undefined ? [] : contents.folders.map((name) => name.substring(0, name.length - 1));
 
   return contents as FolderData;
-}
-
-function createPathCache() {
-  return new ResourceCache<string, FolderData>(fetchPath, 1);
-}
-
-export function readPath(path: string): FolderData {
-  return getCacheForType(createPathCache).read(path);
 }

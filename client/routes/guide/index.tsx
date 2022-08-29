@@ -1,9 +1,9 @@
+import { Suspense, experimental_use as use } from 'react';
 import { styled } from '~/theme/stitches.config';
-import { Suspense } from 'react';
 import { Link } from '~/components/router/client';
 import { Download } from '~/routes';
 import { PageView } from '~/routes/PageView';
-import { readSample } from './loaders/sample';
+import { getSample } from './loaders/sample';
 
 import { Container } from '~/components/ui/Container';
 import { Prose } from '~/components/ui/Prose';
@@ -14,7 +14,7 @@ import { Dark } from '~/components/lwjgl/Dark';
 const ProseSection = styled('section', Prose);
 
 const Sample: React.FC<{ children?: never }> = () => {
-  const sample = readSample();
+  const sample = use(getSample());
 
   return (
     <pre>

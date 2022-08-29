@@ -1,11 +1,11 @@
-import { Fragment, Suspense, useState, useEffect, useTransition } from 'react';
+import { Fragment, Suspense, useState, useTransition, experimental_use as use } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from '~/components/router/client';
 import { File } from './File';
 import { Folder, SpinnerRow, FolderError } from './Folder';
 import { Box } from '~/components/ui/Box';
 import { Row } from './Row';
-import { readPath } from '../loaders/path';
+import { getFolderData } from '../loaders/path';
 
 // Browser
 interface Props {
@@ -16,13 +16,11 @@ export function Browser({ path: targetPath }: Props) {
   const [path, setPath] = useState(targetPath);
   const [, startTransition] = useTransition();
 
-  useEffect(() => {
-    if (targetPath !== path) {
-      startTransition(() => {
-        setPath(targetPath);
-      });
-    }
-  }, [startTransition, targetPath, path]);
+  if (targetPath !== path) {
+    startTransition(() => {
+      setPath(targetPath);
+    });
+  }
 
   return (
     <Box css={{ '.light &': { boxShadow: '$sm' } }}>
@@ -61,7 +59,7 @@ interface ContentProps {
 }
 
 function FolderContents({ path, targetPath }: ContentProps) {
-  const { folders, files } = readPath(path);
+  const { folders, files } = use(getFolderData(path));
   const basePath = path.length ? path + '/' : '';
   return (
     <>

@@ -1,6 +1,8 @@
-import type { BuildType } from './types';
+import { experimental_use as use } from 'react';
 import { Text } from '~/components/ui/Text';
-import { readStatus } from './loaders/build-status';
+import { getBuildStatus } from './loaders/build-status';
+
+import type { BuildType } from './types';
 
 interface Props {
   name: BuildType;
@@ -24,7 +26,7 @@ function renderVersion(version: string, name: BuildType) {
 }
 
 export const BuildStatus = ({ name }: Props) => {
-  const status = readStatus(name);
+  const status = use(getBuildStatus(name));
 
   return (
     <Text size="sm" css={{ fontFamily: '$mono', color: 'error' in status ? '$critical9' : 'inherit' }}>
