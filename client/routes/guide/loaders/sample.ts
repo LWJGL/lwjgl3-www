@@ -1,6 +1,13 @@
-import { unstable_getCacheForType as getCacheForType } from 'react';
-import { ResourceCache } from '~/services/Resource';
 import { StatusCode, getResponseError } from '~/services/http';
+
+let cache: Promise<string>;
+
+export function getSample(): Promise<string> {
+  if (cache === undefined) {
+    cache = fetchSample();
+  }
+  return cache;
+}
 
 async function fetchSample() {
   const response = await fetch('/sample.html', {
@@ -16,12 +23,4 @@ async function fetchSample() {
   }
 
   return await response.text();
-}
-
-function createSampleCache() {
-  return new ResourceCache<void, string>(fetchSample);
-}
-
-export function readSample(): string {
-  return getCacheForType(createSampleCache).read();
 }
