@@ -40,9 +40,9 @@ export function Browser({ path: targetPath }: Props) {
           : null}
         /
       </Row>
-      {path !== '' && (
+      {path.length > 0 && (
         <Row type="folder">
-          <Link to={path.substr(0, path.lastIndexOf('/')) || '/browse'}>&hellip;</Link>
+          <Link to={path.lastIndexOf('/') !== -1 ? path.slice(0, path.lastIndexOf('/')) : ''}>&hellip;</Link>
         </Row>
       )}
       <ErrorBoundary FallbackComponent={FolderError}>

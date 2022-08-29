@@ -92,7 +92,7 @@ for (let chunkName of Object.keys(manifest.namedChunkGroups)) {
   const groupData = manifest.namedChunkGroups[chunkName];
   const asset = assetMap.get(groupData.chunks.slice(-1)[0]); // chunk id is always the last
   if (asset !== undefined && asset.route === true) {
-    productionManifest.routes[asset.name.substr('route-'.length)] = groupData.chunks.reverse();
+    productionManifest.routes[asset.name.slice('route-'.length)] = groupData.chunks.reverse();
   }
 }
 

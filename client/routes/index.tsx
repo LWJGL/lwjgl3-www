@@ -1,7 +1,7 @@
 import { Component, lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { PageError } from './PageError';
-// import { delay } from '../services/delay';
+// import { sleep } from '../services/sleep';
 
 // function $R(fn: () => Promise<{ default: React.ComponentType<any> }>) {
 //   const RouteChunk = lazy(fn);
