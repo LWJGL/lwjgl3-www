@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 import { createStore } from '~/services/createStore';
-import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
+import { getPassiveOptions } from '~/services/passiveEvents';
 
 export type WindowSize = {
   innerWidth: number;
@@ -34,14 +34,12 @@ function getSize(): WindowSize {
   };
 }
 
-const registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
-
 const store = createStore<WindowSize>(getSize(), (setState) => {
   function handleResize(ev: Event) {
     setState((prev) => getSize());
   }
 
-  addEventListener('resize', handleResize, registerOptions);
+  addEventListener('resize', handleResize, getPassiveOptions());
 
   return () => {
     /*
@@ -51,8 +49,7 @@ const store = createStore<WindowSize>(getSize(), (setState) => {
       "It's worth noting that some browser releases have been inconsistent on this, and unless you have specific reasons otherwise,
       it's probably wise to use the same values used for the call to addEventListener() when calling removeEventListener()."
     */
-    //@ts-expect-error
-    removeEventListener('resize', handleResize, registerOptions);
+    removeEventListener('resize', handleResize, getPassiveOptions());
   };
 });
 

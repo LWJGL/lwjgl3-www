@@ -1,10 +1,8 @@
 import { useSyncExternalStore } from 'react';
-import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
+import { getPassiveOptions } from '~/services/passiveEvents';
 import { createStore } from '~/services/createStore';
 
 type ScrollPosition = [number, number];
-
-const registerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
 
 function getScrollPosition(): ScrollPosition {
   return [window.pageXOffset, Math.max(0, window.pageYOffset)];
@@ -15,7 +13,7 @@ const store = createStore<ScrollPosition>('pageXOffset' in globalThis ? getScrol
     setState((prev) => getScrollPosition());
   }
 
-  addEventListener('scroll', updateScrollPosition, registerOptions);
+  addEventListener('scroll', updateScrollPosition, getPassiveOptions());
   addEventListener('resize', updateScrollPosition);
 
   return () => {
@@ -26,8 +24,7 @@ const store = createStore<ScrollPosition>('pageXOffset' in globalThis ? getScrol
       "It's worth noting that some browser releases have been inconsistent on this, and unless you have specific reasons otherwise,
       it's probably wise to use the same values used for the call to addEventListener() when calling removeEventListener()."
     */
-    //@ts-expect-error
-    removeEventListener('scroll', updateScrollPosition, registerOptions);
+    removeEventListener('scroll', updateScrollPosition, getPassiveOptions());
     removeEventListener('resize', updateScrollPosition);
   };
 });
