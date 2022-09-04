@@ -1,19 +1,3 @@
-// Passive Event Listeners
-let supportsPassive: boolean = false;
-
-try {
-  let opts = Object.defineProperty({}, 'passive', {
-    get: function () {
-      supportsPassive = true;
-    },
-  });
-  let emptyFn = () => {};
-  addEventListener('test', emptyFn, opts);
-  removeEventListener('test', emptyFn, opts);
-} catch (ignore) {}
-
-export const SUPPORTS_PASSIVE_EVENTS = supportsPassive;
-
 // Loading Property in images
 export const SUPPORTS_IMG_LOADING: boolean = 'loading' in HTMLImageElement.prototype;
 

@@ -1,203 +1,241 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { OverlayContainer, useOverlay, usePreventScroll, useModal } from '@react-aria/overlays';
-import { FocusScope } from '@react-aria/focus';
-import { motion, useMotionValue, useTransform, animate, type PanInfo } from 'framer-motion';
-import { styled, css } from '~/theme/stitches.config';
-import { MainMenu } from './MainMenu';
-import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { BackdropCss } from '~/components/ui/Backdrop';
-
-const MenuArea = styled('div', {
-  flex: '1 0 auto',
-});
-
-const MenuToggleButton = styled('button', {
-  ml: 'auto',
-  height: 24,
-  width: 30,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-between',
-  alignItems: 'stretch',
-  padding: 0,
-  border: 0,
-  background: 'transparent',
-  '&:focus': {
-    outline: 'none',
-  },
-  '&:focus-visible': {
-    span: {
-      backgroundColor: '$caution9',
-    },
-  },
-  '> :nth-child(1)': {
-    transformOrigin: 'top right',
-  },
-  '> :nth-child(3)': {
-    transformOrigin: 'bottom right',
-  },
-});
-
-const MenuToggleLine = css({
-  width: '100%',
-  height: 4,
-  backgroundColor: 'white',
-  // willChange: 'transform',
-  pointerEvents: 'none',
-});
+import { useState, useRef, useCallback, useEffect } from 'react';
+import { useLocation } from '~/components/router/client';
+import { usePreventScroll } from '@react-aria/overlays';
+import { motion, useMotionValue, useMotionTemplate, useTransform, animate, type PanInfo } from 'framer-motion';
+import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
+import { supportsDialog } from '~/services/dialog';
 
 const MENU_WIDTH = 260;
 const MENU_INITIAL = MENU_WIDTH + 1;
+const DRAG_OFFSET = MENU_WIDTH * 0.5;
+const DRAG_CLOSE_ZONE = 30;
 
-const MenuOverlay = css({
-  padding: '4rem 1rem 0 1rem',
-  backgroundColor: '$dark',
-  '.dark &': {
-    backgroundColor: '$darker',
-  },
-  zIndex: ZINDEX_MODAL_BACKDROP - 2,
-  position: 'fixed',
-  top: 0,
-  right: 0,
-  bottom: 0,
-  width: MENU_WIDTH,
-  // maxWidth: 320,
-  // minWidth: 260,
-  '-webkit-overflow-scrolling': 'touch',
-  'touch-action': 'pan-y',
-  overscrollBehavior: 'contain',
-  // willChange: 'transform',
-  transform: `translate3d(${MENU_INITIAL}px, 0, 0)`,
-  pointerEvents: 'none',
-  overflowY: 'auto',
-  overflowX: 'hidden',
-  '@supports(overflow-x: clip)': {
-    overflowX: 'clip',
-  },
+function autoFocus(btn: HTMLButtonElement) {
+  // move focus back to toggle button
+  requestAnimationFrame(() => {
+    btn.focus({
+      //@ts-expect-error
+      focusVisible: true,
+      preventScroll: true,
+    });
+  });
+}
 
-  variants: {
-    open: {
-      true: {
-        pointerEvents: 'auto',
-      },
-    },
-  },
-});
-
-const toggle = (state: boolean) => !state;
-
-export const Sidebar: React.FC<{ children?: never }> = () => {
+export const Sidebar: FCC = ({ children }) => {
   const [isOpen, setOpen] = useState(false);
+  const breakpoint = useBreakpoint();
+  const isDesktop = breakpoint >= Breakpoint.lg;
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
-  const overlayRef = useRef<HTMLDivElement>(null);
+  const sidebarRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
-  const toggleOpen = useCallback(() => {
-    setOpen(toggle);
-  }, []);
+  const toggleOpenWithFocus = useCallback(() => {
+    setOpen(!isOpen);
+    if (isOpen && buttonRef.current) {
+      autoFocus(buttonRef.current);
+    }
+  }, [isOpen]);
 
-  // @react-aria
   usePreventScroll({ isDisabled: !isOpen });
-  const { modalProps } = useModal();
-  const { overlayProps } = useOverlay(
-    {
-      isOpen: isOpen,
-      onClose: toggleOpen,
-      isDismissable: true,
-      shouldCloseOnInteractOutside: (el) => {
-        return el !== buttonRef.current && el !== backdropRef.current;
-      },
-    },
-    overlayRef
-  );
+
+  useEffect(() => {
+    // Auto-close if we resize to desktop viewport
+    if (isDesktop && isOpen) {
+      setOpen(false);
+    }
+
+    // Accessibility
+    if (buttonRef.current) {
+      if (isDesktop) {
+        buttonRef.current.setAttribute('aria-hidden', '');
+      } else {
+        buttonRef.current.removeAttribute('aria-hidden');
+      }
+    }
+    if (sidebarRef.current) {
+      if (isDesktop || isOpen) {
+        sidebarRef.current.removeAttribute('aria-hidden');
+      } else {
+        sidebarRef.current.setAttribute('aria-hidden', '');
+      }
+    }
+  }, [isDesktop, isOpen]);
+
+  // Auto-close on redirect
+  useEffect(() => {
+    setOpen(false);
+  }, [location.pathname]);
 
   // Animation
-  const x = useMotionValue(MENU_INITIAL);
-  const perc = useTransform(x, (value) => 1 - value / MENU_WIDTH);
-  const rotateLine1 = useTransform(perc, (value) => value * -45);
-  const scaleLine2 = useTransform(perc, (value) => 1 - value);
-  const opacityLine2 = useTransform(perc, (value) => 1 - value);
-  const rotateLine3 = useTransform(perc, (value) => value * 45);
-  const backdropColor = useTransform(x, [0, MENU_WIDTH], ['rgba(0,0,0,0.75)', 'rgba(0,0,0,0)']);
+  const x = useMotionValue(0);
+  const keyframes2 = [MENU_WIDTH, 0];
+  const keyframes3 = [MENU_WIDTH, MENU_WIDTH / 2, 0];
+  // .btn-hamburger spans
+  const spans = [
+    {
+      rotate: useTransform(x, keyframes3, [0, 0, 45]),
+      translateY: useTransform(x, keyframes3, [0, 10, 10]),
+    },
+    {
+      opacity: useTransform(x, keyframes3, [1, 1, 0], {
+        // 100% opacity until halfway through the animation, then 0% opacity
+        ease: (v) => (v < 1 ? 0 : 1),
+      }),
+      // scale: useTransform(x, keyframes2, [1, 0]),
+    },
+    {
+      rotate: useTransform(x, keyframes3, [0, 0, -45]),
+      translateY: useTransform(x, keyframes3, [0, -10, -10]),
+    },
+  ];
+  // dialog.backdrop
+  const backdropColorOpacity = useTransform(x, keyframes2, [0, 0.45]);
+  const backdropColor = useMotionTemplate`rgba(0,0,0,${backdropColorOpacity})`;
+
+  // .sidebar
   const onDragEnd = useCallback(
     (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo): void => {
-      if (info.velocity.x > 200 && info.offset.x > MENU_WIDTH * 0.33) {
-        toggleOpen();
-      } else {
-        animate(x, 0, {
+      // Close if we drag far enough to the right (50% of the menu width)
+      // Close if we drag fast enough (velocity > 200)
+      // Close if we x is near the viewport edge (within DRAG_CLOSE_ZONE pixels)
+      if (info.velocity.x > 200 || info.offset.x > DRAG_OFFSET || info.point.x >= innerWidth - DRAG_CLOSE_ZONE) {
+        let animation = animate(x, MENU_INITIAL, {
           type: 'spring',
+          // velocity: Math.max(info.velocity.x, 200),
           velocity: info.velocity.x,
+          onUpdate: (latest) => {
+            // Kill animation immediately if we're past the target point
+            if (latest >= MENU_INITIAL) {
+              animation.stop();
+              setOpen(false);
+            }
+          },
+          onComplete: () => {
+            setOpen(false);
+          },
         });
+      } else {
+        animate(x, 0);
       }
     },
-    [x, toggleOpen]
+    [x]
   );
+  // Initial render should reset x
+  // If we did that on declaration (useMotionValue) would result in SSR/noscript conflict
+  // (we don't want x-axis translation if noscript is active)
+  useEffect(() => {
+    x.set(MENU_INITIAL);
+  }, [x]);
 
   useEffect(() => {
     if (isOpen) {
+      let dialog = dialogRef.current;
+      if (dialog) {
+        // Do not rely on dialog[open] because it transitions instantly
+        // Instead set a className and remove it when transition onComplete fires
+        dialog.classList.add('open');
+        if (supportsDialog()) {
+          if (!dialog.open) {
+            dialog.showModal();
+          }
+          // Listen for cancel event and automatically close dialog (e.g. if ESC is pressed)
+          dialog.addEventListener('cancel', toggleOpenWithFocus);
+        }
+      }
+
       animate(x, 0);
 
       // Auto-focus current active link
-      if (overlayRef.current !== null) {
-        const activeLink = overlayRef.current.querySelector('.active') as HTMLAnchorElement | null;
-        if (activeLink !== null) {
-          activeLink.focus();
-        } else {
-          (overlayRef.current.querySelector('a') as HTMLAnchorElement).focus();
+      if (sidebarRef.current !== null) {
+        let currentLink: HTMLAnchorElement | HTMLButtonElement | null = sidebarRef.current.querySelector(
+          `a[href="${document.location.pathname}"]`
+        );
+        if (!currentLink) {
+          currentLink = buttonRef.current;
+        }
+        if (currentLink) {
+          currentLink.focus({
+            //@ts-expect-error
+            focusVisible: true,
+            preventScroll: true,
+          });
         }
       }
+
+      // Auto-close on click outside
+      let clickOutsideListener = (e: MouseEvent) => {
+        if (
+          sidebarRef.current !== null &&
+          e.target !== null &&
+          !sidebarRef.current.contains(e.target as Node) &&
+          e.target !== buttonRef.current
+        ) {
+          setOpen(false);
+        }
+        return true;
+      };
+      window.addEventListener('pointerdown', clickOutsideListener);
+
+      // Cleanup
+      return () => {
+        if (dialog !== null && supportsDialog()) {
+          dialog.removeEventListener('cancel', toggleOpenWithFocus);
+        }
+        window.removeEventListener('pointerdown', clickOutsideListener);
+      };
     } else {
-      animate(x, MENU_INITIAL);
+      animate(x, MENU_INITIAL, {
+        onComplete: () => {
+          let dialog = dialogRef.current;
+          if (dialog !== null) {
+            dialog.classList.remove('open');
+            if (supportsDialog()) {
+              dialog.close();
+            }
+          }
+        },
+      });
     }
-  }, [isOpen, x]);
+  }, [isOpen, x, toggleOpenWithFocus]);
 
   const toggleButtonTitle = `${isOpen ? 'Close' : 'Open'} navigation menu`;
-  const focusableProps = isOpen ? {} : { tabIndex: -1 };
 
   return (
-    <MenuArea>
-      <MenuToggleButton
+    <dialog ref={dialogRef}>
+      <button
+        className="btn-hamburger"
         type="button"
         ref={buttonRef}
-        onClick={toggleOpen}
+        onClick={toggleOpenWithFocus}
         title={toggleButtonTitle}
         aria-label={toggleButtonTitle}
       >
-        <motion.span className={MenuToggleLine()} style={{ rotate: rotateLine1 }} />
-        <motion.span className={MenuToggleLine()} style={{ scale: scaleLine2, opacity: opacityLine2 }} />
-        <motion.span className={MenuToggleLine()} style={{ rotate: rotateLine3 }} />
-      </MenuToggleButton>
-
-      <OverlayContainer>
-        <motion.div
-          ref={backdropRef}
-          style={{
-            zIndex: ZINDEX_MODAL_BACKDROP - 2,
-            backgroundColor: backdropColor,
-          }}
-          className={BackdropCss({ open: isOpen })}
-          onClick={toggleOpen}
-        />
-        <motion.div
-          ref={overlayRef}
-          style={{ x }}
-          className={MenuOverlay({ open: isOpen })}
-          role="menu"
-          aria-hidden={isOpen ? undefined : true}
-          aria-expanded={isOpen}
-          drag="x"
-          dragConstraints={{ left: 0, right: MENU_INITIAL }}
-          dragElastic={0}
-          dragMomentum={false}
-          //@ts-expect-error
-          onDragEnd={onDragEnd}
-          {...overlayProps}
-        >
-          <FocusScope contain={isOpen} restoreFocus>
-            <MainMenu direction="vertical" onClick={toggleOpen} focusableProps={focusableProps} {...modalProps} />
-          </FocusScope>
-        </motion.div>
-      </OverlayContainer>
-    </MenuArea>
+        <motion.span style={spans[0]} />
+        <motion.span style={spans[1]} />
+        <motion.span style={spans[2]} />
+      </button>
+      <motion.div
+        ref={backdropRef}
+        className={'backdrop'}
+        style={{
+          backgroundColor: backdropColor,
+        }}
+      />
+      <motion.div
+        className="sidebar"
+        ref={sidebarRef}
+        style={{ x }}
+        role="menu"
+        drag="x"
+        dragConstraints={{ left: 0, right: MENU_INITIAL + 14 }}
+        dragElastic={0}
+        dragMomentum={false}
+        onDragEnd={onDragEnd}
+      >
+        {children}
+      </motion.div>
+    </dialog>
   );
 };
