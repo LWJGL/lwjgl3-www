@@ -13,8 +13,8 @@ export function useShareForwardedRef<T>(forwardedRef: React.Ref<T>) {
       forwardedRef(innerRef.current);
       return;
     } else {
-      // @ts-expect-error
       // by default forwardedRef.current is readonly. Let's ignore it
+      // @ts-expect-error
       forwardedRef.current = innerRef.current;
     }
   });

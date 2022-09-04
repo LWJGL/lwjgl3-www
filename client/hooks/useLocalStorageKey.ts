@@ -1,4 +1,4 @@
-import { useSyncExternalStore, useMemo, useCallback } from 'react';
+import { useSyncExternalStore, useMemo } from 'react';
 
 /*
   Monitors localStorage key for changes and updates local state

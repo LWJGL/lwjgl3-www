@@ -37,8 +37,10 @@ const store = createStore<NetworkInformationData>(getNetworkInformation(), (setS
   }
 
   if ('connection' in navigator) {
+    //@ts-expect-error
     navigator.connection.addEventListener('change', onChange);
     return () => {
+      //@ts-expect-error
       navigator.connection.removeEventListener('change', onChange);
     };
   }
