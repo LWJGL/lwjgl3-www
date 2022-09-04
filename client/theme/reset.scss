@@ -261,11 +261,6 @@ button:focus {
     outline: 5px auto -webkit-focus-ring-color;
   }
 }
-// ! (opinionated/tailwind)
-button:hover,
-[role='button']:hover {
-  cursor: pointer;
-}
 // Show the overflow in Edge/IE
 button,
 input {
@@ -382,6 +377,20 @@ dialog:not([open]) {
   display: none;
 }
 */
+
+/* https://github.com/argyleink/open-props/blob/main/src/extra/normalize.css */
+a[href],
+area,
+button,
+input,
+label[for],
+select,
+summary,
+textarea {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 
 // Accessibility
 // ==========================================================================
