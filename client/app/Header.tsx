@@ -1,40 +1,11 @@
 import { memo, useRef, useEffect } from 'react';
 import { Link, useLocation } from '~/components/router/client';
+import { NavLink } from '~/components/router/client';
 import { Home } from '~/routes';
-import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
-import { styled } from '~/theme/stitches.config';
-import { SUPPORTS_PASSIVE_EVENTS } from '~/services/supports';
-import { ZINDEX_MODAL_BACKDROP } from '~/theme';
-import { MainMenu } from './MainMenu';
 import { Sidebar } from './Sidebar';
-
-const StyledHeader = styled('header', {
-  position: 'sticky',
-  top: -48,
-  zIndex: ZINDEX_MODAL_BACKDROP - 1,
-  color: 'white',
-  lineHeight: '3rem',
-  fontSize: '$lg',
-  fontFamily: '$logo',
-  willChange: 'top, background-color',
-  userSelect: 'none',
-  display: 'flex',
-  hgap: '1rem',
-  alignItems: 'center',
-  padding: '0 1rem',
-  transition: 'background-color 0.75s ease-out',
-
-  '@supports(padding: 0 max(env(safe-area-inset-left), 1rem))': {
-    padding: '0 max(env(safe-area-inset-left), 1rem)',
-  },
-
-  '&.opaque': {
-    backgroundColor: '$dark',
-    '.dark &': {
-      backgroundColor: '$darker',
-    },
-  },
-});
+import { getPassiveOptions } from '~/services/passiveEvents';
+import { ThemeToggle } from '~/components/ui/ThemeToggle';
+import * as routes from '~/routes';
 
 type Direction = -1 | 0 | 1 | 2;
 const Up: Direction = 0;
@@ -46,7 +17,6 @@ let offsetHeight: number = 48;
 
 // We wrap HeaderNav in a memo to avoid re-renders between navigation of pages with isHome=false -> isHome=false
 export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
-  const currentBreakpoint = useBreakpoint();
   const headerRef = useRef<HTMLElement>(null);
   const prevRef = useRef<number>(0);
   const directionRef = useRef<Direction>(Indeterminate);
@@ -136,25 +106,63 @@ export const HeaderNav: React.FC<{ isHome: boolean }> = memo(({ isHome }) => {
       prevRef.current = y;
     }
 
-    let listenerOptions = SUPPORTS_PASSIVE_EVENTS ? { passive: true } : false;
-    addEventListener('scroll', update, listenerOptions);
+    addEventListener('scroll', update, getPassiveOptions());
     addEventListener('resize', update);
 
     return () => {
-      //@ts-expect-error
-      removeEventListener('scroll', update, listenerOptions);
+      removeEventListener('scroll', update, getPassiveOptions());
       removeEventListener('resize', update);
     };
   }, [isHome]);
 
   return (
-    <StyledHeader ref={headerRef} role="navigation">
-      <Link to="/" onPointerDown={Home.preload}>
-        LW
-        <b>JGL</b>
-      </Link>
-      {currentBreakpoint > Breakpoint.md ? <MainMenu direction="horizontal" /> : <Sidebar />}
-    </StyledHeader>
+    <header ref={headerRef}>
+      <section>
+        <div className="logo">
+          <Link to="/" onPointerDown={Home.preload}>
+            LW
+            <b>JGL</b>
+          </Link>
+        </div>
+        <Sidebar>
+          <nav role="navigation" aria-label="Main Menu">
+            <div>
+              <NavLink to="/" end onPointerDown={routes.Home.preload}>
+                HOME
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/guide" onPointerDown={routes.Guide.preload}>
+                GET STARTED
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/download" onPointerDown={routes.Download.preload}>
+                DOWNLOAD
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/customize" onPointerDown={routes.Customize.preload}>
+                CUSTOMIZE
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/source" onPointerDown={routes.Source.preload}>
+                SOURCE
+              </NavLink>
+            </div>
+            <div>
+              <NavLink to="/frameworks" onPointerDown={routes.Frameworks.preload}>
+                FRAMEWORKS
+              </NavLink>
+            </div>
+            <div className="btn-color-scheme">
+              <ThemeToggle />
+            </div>
+          </nav>
+        </Sidebar>
+      </section>
+    </header>
   );
 });
 

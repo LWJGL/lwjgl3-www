@@ -16,6 +16,7 @@ declare namespace NodeJS {
 
 // React Helpers
 
+declare type FC<Props = unknown> = React.FunctionComponent<Props>;
 declare type FCC<Props = unknown> = React.FunctionComponent<React.PropsWithChildren<Props>>;
 
 // Type definitions for LWJGL
