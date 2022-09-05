@@ -1,24 +1,94 @@
-import { useEffect, useRef, useState } from 'react';
-import { saveAs } from '~/services/file-saver';
-import { configJSONfilename, getConfigSnapshot } from './config';
-import { abortDownload, downloadFiles, fetchManifest, getAddons, getBuild, getFiles } from './lib/bundler';
-import { useStore } from './Store';
-import { BuildType } from './types';
-import JSZip from 'jszip';
-import { useMountedRef } from '~/hooks/useMountedRef';
-
-// Layout
+import { useCallback, useRef, forwardRef, useState, useImperativeHandle, useEffect } from 'react';
+import { usePreventScroll } from '@react-aria/overlays';
 import { styled } from '~/theme/stitches.config';
+import { motion } from 'framer-motion';
+import { BackdropCss } from '~/components/ui/Backdrop';
+import { CircularProgress } from '~/components/ui/CircularProgress';
 import { Grid } from '~/components/layout/Grid';
 import { Flex } from '~/components/layout/Flex';
-import { CircularProgress } from '~/components/ui/CircularProgress';
 import { Button } from '~/components/forms/Button';
+import { supportsDialog } from '~/services/dialog';
+import { useEvent } from '~/hooks/useEvent';
 
-interface Props {
-  setIsDownloading: (state: boolean) => void;
-}
+import { useStore } from './store';
+import { beginDownload, abortDownload } from './lib/bundler';
+import type { DownloadHandle } from './types';
 
 type Progress = Array<string>;
+
+const Modal = styled('dialog', {
+  background: '$body',
+  padding: '$gutter',
+  borderRadius: '$rounded',
+
+  '&:focus': {
+    outline: 'none',
+  },
+  maxHeight: '100vh',
+  overflow: 'auto',
+  '-webkit-overflow-scrolling': 'touch',
+  overscrollBehavior: 'contain',
+
+  '@sm': {
+    background: '$neutral1',
+    boxShadow: '$2xl',
+  },
+});
+
+interface ModalProps {
+  onClose: () => void;
+}
+
+const ModalDialog: FCC<ModalProps> = ({ children, onClose }) => {
+  let dialogRef = useRef<HTMLDialogElement>(null);
+
+  usePreventScroll();
+
+  const toggleOpen = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
+  useEffect(() => {
+    let dialog = dialogRef.current;
+    if (dialog) {
+      if (supportsDialog()) {
+        if (!dialog.open) {
+          dialog.showModal();
+        }
+
+        // Listen for cancel event and automatically close dialog (e.g. if ESC is pressed)
+        dialog.addEventListener('cancel', toggleOpen);
+      }
+
+      // // Auto-close on click outside
+      // let clickOutsideListener = (e: PointerEvent) => {
+      //   if (e.target !== null && (e.target as Element).tagName === 'DIALOG') {
+      //     toggleOpen();
+      //   }
+      //   return true;
+      // };
+      // window.addEventListener('pointerdown', clickOutsideListener);
+
+      // Cleanup
+      return () => {
+        if (dialog !== null && supportsDialog()) {
+          dialog.removeEventListener('cancel', toggleOpen);
+        }
+        // window.removeEventListener('pointerdown', clickOutsideListener);
+      };
+    }
+  }, [toggleOpen]);
+
+  return (
+    <motion.div
+      className={`dialog-backdrop ${BackdropCss({ open: true })}`}
+      style={{ backgroundColor: 'rgba(0,0,0,.01)' }}
+      animate={{ backgroundColor: 'rgba(0,0,0,.75)' }}
+    >
+      <Modal ref={dialogRef}>{children}</Modal>
+    </motion.div>
+  );
+};
 
 const Pre = styled('pre', {
   overflow: 'clip',
@@ -26,136 +96,92 @@ const Pre = styled('pre', {
   fontSize: '$sm',
 });
 
-export default function BuildDownloader({ setIsDownloading }: Props) {
+export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
   const store = useStore();
-  const isMounted = useMountedRef();
-  const downloadedStartedRef = useRef(false);
-  const usingNetwork = useRef(false);
+  const [isDownloading, setIsDownloading] = useState(false);
+  const mountedRef = useRef(false);
+  const usingNetworkRef = useRef(false);
+  const [progress, setProgress] = useState<Progress>([]);
 
-  const [progress, setProgress] = useState<Progress>(['Downloading file manifest']);
-
-  useEffect(() => {
-    function downloadCancel(msg?: string) {
-      if (msg !== undefined) {
-        alert(msg);
-      }
-      downloadComplete();
+  function downloadLog(msg: string) {
+    if (mountedRef.current) {
+      setProgress((progress) => [...progress, msg]);
     }
+  }
 
-    function downloadLog(msg: string) {
-      if (isMounted.current) {
-        setProgress((progress) => [...progress, msg]);
-      }
-    }
-
-    function downloadComplete() {
+  const downloadComplete = useEvent(() => {
+    if (mountedRef.current) {
       setIsDownloading(false);
     }
-
-    async function beginDownload() {
-      // Fetch all data that we will need from the store
-      const { build, path, selected, platforms, source, javadoc, includeJSON, version, addons } = getBuild(store);
-
-      // Download latest manifest
-      let manifest: Array<string>;
-      try {
-        manifest = await fetchManifest(path);
-      } catch (err) {
-        downloadCancel(err.message);
-        return;
-      }
-
-      if (!isMounted.current) {
-        return;
-      }
-
-      let files = getFiles(path, manifest, selected, platforms, source, javadoc);
-
-      if (addons.length) {
-        files = files.concat(getAddons(addons, source, javadoc));
-      }
-
-      const jszip = new JSZip();
-
-      downloadLog(`Downloading ${files.length} files`);
-      try {
-        usingNetwork.current = true;
-        await downloadFiles(files, jszip, downloadLog);
-        usingNetwork.current = false;
-      } catch (err) {
-        downloadCancel(err.name !== 'AbortError' ? err.message : undefined);
-        return;
-      }
-
-      // Include JSON Config
-      if (includeJSON) {
-        const save = getConfigSnapshot(store);
-        if (save !== null) {
-          const blob = new Blob([JSON.stringify(save, null, 2)], {
-            type: 'application/json',
-            endings: 'native',
-          });
-          jszip.file(configJSONfilename(save), blob, { binary: true });
-        }
-      }
-
-      // Generate ZIP files
-      downloadLog('Compressing files');
-      const blob = await jszip.generateAsync({
-        type: 'blob',
-        // compression: 'DEFLATE',
-        // compressionOptions: {level:6},
-      });
-
-      saveAs(
-        blob,
-        `lwjgl-${build}-${build === BuildType.Release ? version : new Date().toISOString().slice(0, 10)}-custom.zip`
-      );
-
-      downloadComplete();
+    if (progress.length) {
+      setProgress([]);
     }
+  });
 
-    if (!downloadedStartedRef.current) {
-      beginDownload();
-      // We never reset this to avoid double downloading in StrictMode
-      downloadedStartedRef.current = true;
-    }
+  const start = () => {
+    beginDownload(mountedRef, usingNetworkRef, store, stop, downloadLog, downloadComplete);
+    setIsDownloading(true);
+  };
 
-    return () => {
-      if (usingNetwork.current) {
-        // This will cause an AbortController signal to fire.
-        // Firing the signal will reject the fetch promise which will then be caught
-        // and downloadCancel(err.message) will fire
+  const stop = useCallback(
+    (msg?: string) => {
+      if (msg) {
+        alert(msg);
+      }
+      if (usingNetworkRef.current === true) {
         abortDownload();
       }
+      downloadComplete();
+    },
+    [downloadComplete]
+  );
+
+  const stopCallback = useCallback(() => {
+    stop();
+  }, [stop]);
+
+  useImperativeHandle(ref, () => ({ start, stop }));
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      stop();
     };
-  }, [setIsDownloading, store, isMounted]);
+  }, [stop]);
+
+  if (!isDownloading) {
+    return null;
+  }
 
   return (
-    <Grid
-      css={{
-        height: '100%',
-        gap: '$gap',
-        grid: 'auto min-content / minmax(auto, 600px)',
-        '@sm': {
-          height: 'min(500px, 80vh)',
-        },
-      }}
-    >
-      <Pre>
-        {progress
-          .slice(0)
-          .reverse()
-          .map((line, i) => (
-            <div key={`log${i}`}>{line}</div>
-          ))}
-      </Pre>
-      <Flex css={{ justifyContent: 'space-between', alignItems: 'center' }}>
-        <Button variant="outline" autoFocus onClick={() => setIsDownloading(false)}>
-          Cancel
-        </Button>
-        <CircularProgress size={36} />
-      </Flex>
-    </Grid>
+    <ModalDialog onClose={stopCallback}>
+      <Grid
+        className="dialog-content"
+        css={{
+          height: '100%',
+          gap: '$gap',
+          grid: 'auto min-content / minmax(auto, 600px)',
+          '@sm': {
+            height: 'min(500px, 80vh)',
+          },
+        }}
+      >
+        <Pre>
+          {progress
+            .slice(0)
+            .reverse()
+            .map((line, i) => (
+              <div key={`log${i}`}>{line}</div>
+            ))}
+        </Pre>
+        <Flex css={{ justifyContent: 'space-between', alignItems: 'center' }}>
+          <Button variant="outline" autoFocus onClick={stopCallback}>
+            Cancel
+          </Button>
+          <CircularProgress size={36} />
+        </Flex>
+      </Grid>
+    </ModalDialog>
   );
-}
+});

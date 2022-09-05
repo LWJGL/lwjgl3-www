@@ -4,7 +4,7 @@ import { LazyOffscreen } from '~/components/ui/LazyOffscreen';
 import { Checkbox, type CheckboxProps } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
-import { useSelector, useDispatch } from './Store';
+import { useStore, useDispatch } from './store';
 import {
   createActionArtifactToggle,
   selectorContents,
@@ -52,12 +52,12 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
     (e, artifact: Binding) => dispatch(createActionArtifactToggle(artifact)),
     [dispatch]
   );
-  const contents = useSelector(selectorContents);
-  const availability = useSelector(selectorAvailability);
-  const descriptions = useSelector(selectorDescriptions);
-  const platformsSelected = useSelector(selectorPlatformsSelected);
-  const { byId: natives } = useSelector(selectorNatives);
-  const { allIds, byId } = useSelector(selectorArtifacts);
+  const contents = useStore(selectorContents);
+  const availability = useStore(selectorAvailability);
+  const descriptions = useStore(selectorDescriptions);
+  const platformsSelected = useStore(selectorPlatformsSelected);
+  const { byId: natives } = useStore(selectorNatives);
+  const { allIds, byId } = useStore(selectorArtifacts);
 
   const platformsSelectedArr = Object.keys(platformsSelected).filter(
     //@ts-expect-error

@@ -1,6 +1,9 @@
 import JSZip from 'jszip';
 import { StatusCode, getResponseError } from '~/services/http';
 import { Native, BuildType } from '../types';
+import { saveAs } from '~/services/file-saver';
+import { configJSONfilename, getConfigSnapshot } from '../config';
+
 import type { Binding, BindingDefinition, BindingMapSelection, BuildStore, PlatformSelection } from '../types';
 
 type AddonSelection = Array<{ id: string; version: string }>;
@@ -265,4 +268,76 @@ export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: str
   }
 
   return Promise.all(channels);
+}
+
+export async function beginDownload(
+  mountedRef: React.MutableRefObject<boolean>,
+  usingNetworkRef: React.MutableRefObject<boolean>,
+  store: BuildStore,
+  downloadCancel: (msg?: string) => void,
+  downloadLog: (msg: string) => void,
+  downloadComplete: () => void
+) {
+  // Fetch all data that we will need from the store
+  const { build, path, selected, platforms, source, javadoc, includeJSON, version, addons } = getBuild(store);
+
+  downloadLog('Downloading file manifest');
+
+  // Download latest manifest
+  let manifest: Array<string>;
+  try {
+    manifest = await fetchManifest(path);
+  } catch (err) {
+    downloadCancel(err.message);
+    return;
+  }
+
+  if (!mountedRef.current) {
+    return;
+  }
+
+  let files = getFiles(path, manifest, selected, platforms, source, javadoc);
+
+  if (addons.length) {
+    files = files.concat(getAddons(addons, source, javadoc));
+  }
+
+  const jszip = new JSZip();
+
+  downloadLog(`Downloading ${files.length} files`);
+  try {
+    usingNetworkRef.current = true;
+    await downloadFiles(files, jszip, downloadLog);
+    usingNetworkRef.current = false;
+  } catch (err) {
+    downloadCancel(err.name !== 'AbortError' ? err.message : undefined);
+    return;
+  }
+
+  // Include JSON Config
+  if (includeJSON) {
+    const save = getConfigSnapshot(store);
+    if (save !== null) {
+      const blob = new Blob([JSON.stringify(save, null, 2)], {
+        type: 'application/json',
+        endings: 'native',
+      });
+      jszip.file(configJSONfilename(save), blob, { binary: true });
+    }
+  }
+
+  // Generate ZIP files
+  downloadLog('Compressing files');
+  const blob = await jszip.generateAsync({
+    type: 'blob',
+    // compression: 'DEFLATE',
+    // compressionOptions: {level:6},
+  });
+
+  saveAs(
+    blob,
+    `lwjgl-${build}-${build === BuildType.Release ? version : new Date().toISOString().slice(0, 10)}-custom.zip`
+  );
+
+  downloadComplete();
 }

@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { Box } from '~/components/ui/Box';
 import { Checkbox, type CheckboxProps } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
-import { useSelector, useDispatch } from './Store';
+import { useStore, useDispatch } from './store';
 import {
   createActionAddonToggle,
   selectorMode,
@@ -15,10 +15,10 @@ import type { Addon, AddonDefinition } from './types';
 
 export const BuildAddons: React.FC<{ children?: never }> = () => {
   const dispatch = useDispatch();
-  const mode = useSelector(selectorMode);
-  const { allIds, byId } = useSelector(selectorAddons);
-  const selectedAddons = useSelector(selectorAddonsSelected);
-  const descriptions = useSelector(selectorDescriptions);
+  const mode = useStore(selectorMode);
+  const { allIds, byId } = useStore(selectorAddons);
+  const selectedAddons = useStore(selectorAddonsSelected);
+  const descriptions = useStore(selectorDescriptions);
   const onChange: CheckboxProps['onChange'] = useCallback(
     (e, addon: Addon) => dispatch(createActionAddonToggle(addon)),
     [dispatch]

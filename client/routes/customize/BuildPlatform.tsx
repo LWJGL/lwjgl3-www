@@ -1,5 +1,5 @@
 import { Checkbox } from '~/components/forms/Selection';
-import { useSelector, useDispatch } from './Store';
+import { useStore, useDispatch } from './store';
 import {
   versionNum,
   createActionPlatformToggle,
@@ -12,9 +12,9 @@ import { getPlatformIcon } from './lib/getPlatformIcon';
 
 export const BuildPlatform: React.FC<{ children?: never }> = () => {
   const dispatch = useDispatch();
-  const { allIds: platforms, byId: natives } = useSelector(selectorNatives);
-  const version = useSelector(selectorArtifactsVersion);
-  const selected = useSelector(selectorPlatformsSelected);
+  const { allIds: platforms, byId: natives } = useStore(selectorNatives);
+  const version = useStore(selectorArtifactsVersion);
+  const selected = useStore(selectorPlatformsSelected);
   const vnum = versionNum(version);
 
   return (

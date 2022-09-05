@@ -1,11 +1,11 @@
-import { useSelector } from './Store';
+import { useStore } from './store';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import type { BuildStore } from './types';
 
 const selector = (state: BuildStore) => state.version;
 
 export const BuildReleaseNotes: React.FC<{ children?: never }> = () => {
-  const version = useSelector(selector);
+  const version = useStore(selector);
 
   return (
     <p>

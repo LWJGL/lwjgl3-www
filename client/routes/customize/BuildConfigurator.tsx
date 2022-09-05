@@ -1,23 +1,47 @@
-import { useState } from 'react';
+import { useRef } from 'react';
+import { BuildType, type DownloadHandle } from './types';
 import { Grid } from '~/components/layout/Grid';
+import { BuildPanel } from './BuildPanel';
+import { ControlStack } from '~/components/forms/ControlStack';
+import { ControlledPanel } from './ControlledPanel';
 import { ConnectedCheckbox } from './ConnectedCheckbox';
 import { ConnectedRadio } from './ConnectedRadio';
 import { fields, selectorHasLanguageOption, selectorIsBuildRelease, selectorIsBuildSelected } from './reducer';
-import { BuildType } from './types';
 
-import { ControlStack } from '~/components/forms/ControlStack';
-import { BuildAddons } from './BuildAddons';
-import { BuildArtifacts } from './BuildArtifacts';
-import { BuildConfigArea } from './BuildConfigArea';
-import { BuildDownloaderDialog } from './BuildDownloaderDialog';
-import { BuildFooter } from './BuildFooter';
-import { BuildPanel } from './BuildPanel';
 import { BuildPlatform } from './BuildPlatform';
+import { BuildAddons } from './BuildAddons';
 import { BuildReleaseNotes } from './BuildReleaseNotes';
-import { ControlledPanel } from './ControlledPanel';
+import { BuildArtifacts } from './BuildArtifacts';
+import { BuildDownloader } from './BuildDownloader';
+import { BuildFooter } from './BuildFooter';
+
+import { styled } from '~/theme/stitches.config';
+
+export const BuildConfigArea = styled('div', {
+  zIndex: 0,
+  mb: 100,
+  pl: '$gutter',
+  pr: '$gutter',
+  h4: {
+    fontSize: '$xl',
+    fontWeight: '$medium',
+  },
+  '@md': {
+    ml: '$gutter',
+    mr: '$gutter',
+  },
+  '@lg': {
+    backgroundColor: '$accent3',
+    border: '2px solid $accent12',
+    '.dark &': {
+      borderColor: '$accent1',
+    },
+    py: '$gutter',
+  },
+});
 
 export const BuildConfigurator: React.FC<{ children?: never }> = () => {
-  const [isDownloading, setIsDownloading] = useState(false);
+  const downloadRef = useRef<DownloadHandle>(null);
 
   return (
     <>
@@ -79,13 +103,11 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
                 </ControlStack>
               </ControlledPanel>
             </Grid>
-
             <Grid css={{ gap: '$gutter' }}>
               <ControlStack>
                 <h4>Presets</h4>
                 <ConnectedRadio {...fields.preset} />
               </ControlStack>
-
               <ControlStack
                 css={{
                   '@sm': {
@@ -121,10 +143,10 @@ export const BuildConfigurator: React.FC<{ children?: never }> = () => {
               <BuildArtifacts />
             </ControlStack>
           </Grid>
-          <BuildFooter setIsDownloading={setIsDownloading} />
+          <BuildFooter downloadRef={downloadRef} />
         </BuildConfigArea>
       </ControlledPanel>
-      {isDownloading && <BuildDownloaderDialog setIsDownloading={setIsDownloading} />}
+      <BuildDownloader ref={downloadRef} />
     </>
   );
 };

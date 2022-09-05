@@ -1,4 +1,4 @@
-import { useSelector } from './Store';
+import { useStore } from './store';
 import { BuildStore } from './types';
 
 interface Props {
@@ -6,6 +6,6 @@ interface Props {
 }
 
 export const ControlledPanel: FCC<Props> = ({ children, predicate }) => {
-  const visible = useSelector(predicate);
+  const visible = useStore(predicate);
   return visible ? (children as JSX.Element) : null;
 };
