@@ -561,7 +561,7 @@ const doToggleAddon = (state: BuildStore, addon: Addon) => {
   }
 };
 
-const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
+export const loadConfig = (state: BuildStore, config: BuildStoreSnapshot) => {
   if (config.build === null) {
     return;
   }

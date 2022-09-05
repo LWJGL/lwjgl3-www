@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { styled } from '~/theme/stitches.config';
 import { Button, AnchorButton } from '~/components/forms/Button';
-import { useSelector } from './Store';
+import { useStore } from './store';
 import { createSelectorDeepEqual } from '~/services/selector';
 import { BuildToolbar } from './BuildToolbar';
 import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
@@ -114,7 +114,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
   const preRef = useRef<HTMLPreElement>(null);
   const currentBreakpoint = useBreakpoint();
 
-  const slice = useSelector(selector);
+  const slice = useStore(selector);
   const { mode } = slice;
   let fileName = mode.file;
 
