@@ -282,3 +282,8 @@ export interface BuildStoreSnapshot {
   version?: Version;
   versionLatest?: Version;
 }
+
+export interface DownloadHandle {
+  start: () => void;
+  stop: () => void;
+}

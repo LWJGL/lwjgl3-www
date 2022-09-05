@@ -183,12 +183,10 @@ export const createActionAddonToggle = (addon: Addon): ActionAddonToggle => ({ t
 
 // Selectors
 
-// export const selectorStore = (state: BuildStore): BuildStore => state;
+export const selectorIsBuildSelected = (state: BuildStore): boolean => state.build !== null;
+
 export const selectorDescriptions = (state: BuildStore): boolean => state.descriptions;
 export const selectorHasLanguageOption = (state: BuildStore): boolean => state.mode === Mode.Gradle;
-export const selectorBuild = (state: BuildStore) => state.build;
-export const selectorBuilds = (state: BuildStore) => state.builds;
-export const selectorIsBuildSelected = (state: BuildStore): boolean => state.build !== null;
 export const selectorIsBuildRelease = (state: BuildStore): boolean => state.build === BuildType.Release;
 export const selectorMode = (state: BuildStore) => state.mode;
 export const selectorModes = (state: BuildStore) => state.modes;
@@ -218,8 +216,8 @@ export const selectorAddonsSelected = (store: BuildStore) => store.selectedAddon
 export const selectorContents = (store: BuildStore) => store.contents;
 export const selectorAvailability = (store: BuildStore) => store.availability;
 export const selectorArtifacts = (store: BuildStore) => store.artifacts;
-// Fields
 
+// Fields
 export const fields = {
   mode: {
     name: 'mode',

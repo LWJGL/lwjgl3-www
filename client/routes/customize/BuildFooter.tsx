@@ -4,21 +4,21 @@ import { createActionConfigLoad, selectorMode } from './reducer';
 import { BuildScript } from './BuildScript';
 import { BuildToolbar } from './BuildToolbar';
 import { configJSONfilename, getConfigSnapshot } from './config';
-import { useSelector, useDispatch, latestStore } from './Store';
+import { useStore, useDispatch } from './store';
 import { Mode } from './types';
 import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/duotone/cloud-download';
 
-import type { BuildStoreSnapshot } from './types';
+import type { BuildStoreSnapshot, DownloadHandle } from './types';
 
 interface Props {
-  setIsDownloading: (state: boolean) => void;
+  downloadRef: React.RefObject<DownloadHandle>;
 }
 
-export function BuildFooter({ setIsDownloading }: Props) {
+export function BuildFooter({ downloadRef }: Props) {
   const dispatch = useDispatch();
-  const mode = useSelector(selectorMode);
+  const mode = useStore(selectorMode);
 
   const configDownload = useCallback(() => {
     const save = getConfigSnapshot(latestStore);
@@ -39,13 +39,13 @@ export function BuildFooter({ setIsDownloading }: Props) {
     [dispatch]
   );
 
-  const startDownload = useCallback(() => {
-    setIsDownloading(true);
-  }, [setIsDownloading]);
+  const download = useCallback(() => {
+    downloadRef.current?.start();
+  }, [downloadRef]);
 
   return mode === Mode.Zip ? (
     <BuildToolbar configDownload={configDownload} configLoad={dispatchConfigLoad}>
-      <Button tone="accent" onClick={startDownload}>
+      <Button tone="accent" onClick={download}>
         <Icon name="fa/duotone/cloud-download" /> DOWNLOAD ZIP
       </Button>
     </BuildToolbar>

@@ -1,8 +1,8 @@
 import { Suspense, useCallback } from 'react';
 import { styled } from '~/theme/stitches.config';
 import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
-import { useSelector, useDispatch } from './Store';
-import { createActionBuiltTypeSelect, selectorBuild, selectorBuilds } from './reducer';
+import { useStore } from './store';
+import { createActionBuiltTypeSelect } from './reducer';
 import { BuildStatus } from './BuildStatus';
 import { Button } from '~/components/forms/Button';
 import { Icon } from '~/components/ui/Icon';
@@ -18,14 +18,15 @@ interface Props {
 
 export const BuildPanel: React.FC<Props> = ({ build }) => {
   const currentBreakpoint = useBreakpoint();
-  const dispatch = useDispatch();
+  const { dispatch, selectedBuild, byId } = useStore((state) => ({
+    dispatch: state.dispatch,
+    selectedBuild: state.build,
+    byId: state.builds.byId,
+  }));
 
   const onPanelClick = useCallback(() => {
     dispatch(createActionBuiltTypeSelect(build));
   }, [dispatch, build]);
-
-  const selectedBuild = useSelector(selectorBuild);
-  const { byId } = useSelector(selectorBuilds);
 
   const isSelected = selectedBuild === build;
   const spec = byId[build];

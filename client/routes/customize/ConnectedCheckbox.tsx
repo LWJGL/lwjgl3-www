@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useSelector, useDispatch } from './Store';
+import { useStore, useDispatch } from './store';
 import { Checkbox } from '~/components/forms/Selection';
 
 import type { CheckboxProps } from '~/components/forms/Selection';
@@ -17,8 +17,8 @@ export const ConnectedCheckbox: React.FC<ConnectedCheckboxProps> = ({
   action,
   ...rest
 }) => {
-  const isChecked = useSelector(checked);
-  const isHidden = useSelector(hidden);
+  const isChecked = useStore(checked);
+  const isHidden = useStore(hidden);
   const dispatch = useDispatch();
   const onChange = useCallback(() => {
     dispatch(action(!isChecked));
