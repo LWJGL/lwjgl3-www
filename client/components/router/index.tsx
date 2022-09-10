@@ -1,6 +1,6 @@
 import {
   createContext,
-  useContext,
+  experimental_use as use,
   useRef,
   useEffect,
   useCallback,
@@ -209,7 +209,7 @@ export function Routes({ children, location }: RoutesProps): React.ReactElement 
  * @see https://reactrouter.com/docs/en/v6/api#usehref
  */
 export function useHref(to: To): string {
-  let { basename, navigator } = useContext(NavigationContext);
+  let { basename, navigator } = use(NavigationContext);
   let { hash, pathname, search } = useResolvedPath(to);
 
   let joinedPathname = pathname;
@@ -228,7 +228,7 @@ export function useHref(to: To): string {
  * @see https://reactrouter.com/docs/en/v6/api#useinroutercontext
  */
 export function useInRouterContext(): boolean {
-  return useContext(LocationContext) != null;
+  return use(LocationContext) != null;
 }
 
 /**
@@ -242,7 +242,7 @@ export function useInRouterContext(): boolean {
  * @see https://reactrouter.com/docs/en/v6/api#uselocation
  */
 export function useLocation(): Location {
-  return useContext(LocationContext).location;
+  return use(LocationContext).location;
 }
 
 /**
@@ -252,14 +252,14 @@ export function useLocation(): Location {
  * @see https://reactrouter.com/docs/en/v6/api#usenavigationtype
  */
 export function useNavigationType(): NavigationType {
-  return useContext(LocationContext).navigationType;
+  return use(LocationContext).navigationType;
 }
 
 /**
  * Returns true if the router is pending a location update.
  */
 export function useLocationPending(): boolean {
-  return useContext(NavigationContext).pending;
+  return use(NavigationContext).pending;
 }
 
 /**
@@ -293,8 +293,8 @@ export interface NavigateOptions {
  * @see https://reactrouter.com/docs/en/v6/api#usenavigate
  */
 export function useNavigate(): NavigateFunction {
-  let { basename, navigator } = useContext(NavigationContext);
-  let { matches } = useContext(RouteContext);
+  let { basename, navigator } = use(NavigationContext);
+  let { matches } = use(RouteContext);
   let { pathname: locationPathname } = useLocation();
 
   let routePathnamesJson = JSON.stringify(matches.map((match) => match.pathnameBase));
@@ -334,7 +334,7 @@ export function useNavigate(): NavigateFunction {
  * @see https://reactrouter.com/docs/en/v6/api#useoutlet
  */
 export function useOutlet(): React.ReactElement | null {
-  return useContext(RouteContext).outlet;
+  return use(RouteContext).outlet;
 }
 
 /**
@@ -344,7 +344,7 @@ export function useOutlet(): React.ReactElement | null {
  * @see https://reactrouter.com/docs/en/v6/api#useparams
  */
 export function useParams<Key extends string = string>(): Readonly<Params<Key>> {
-  let { matches } = useContext(RouteContext);
+  let { matches } = use(RouteContext);
   let routeMatch = matches[matches.length - 1];
   return routeMatch ? (routeMatch.params as any) : {};
 }
@@ -355,7 +355,7 @@ export function useParams<Key extends string = string>(): Readonly<Params<Key>> 
  * @see https://reactrouter.com/docs/en/v6/api#useresolvedpath
  */
 export function useResolvedPath(to: To): Path {
-  let { matches } = useContext(RouteContext);
+  let { matches } = use(RouteContext);
   let { pathname: locationPathname } = useLocation();
 
   let routePathnamesJson = JSON.stringify(matches.map((match) => match.pathnameBase));
@@ -375,7 +375,7 @@ export function useResolvedPath(to: To): Path {
  * @see https://reactrouter.com/docs/en/v6/api#useroutes
  */
 export function useRoutes(routes: RouteObject[], locationArg?: Partial<Location> | string): React.ReactElement | null {
-  let { matches: parentMatches } = useContext(RouteContext);
+  let { matches: parentMatches } = use(RouteContext);
   let routeMatch = parentMatches[parentMatches.length - 1];
   let parentParams = routeMatch ? routeMatch.params : {};
   // let parentPathname = routeMatch ? routeMatch.pathname : '/';

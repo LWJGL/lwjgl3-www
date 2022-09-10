@@ -28,7 +28,7 @@ declare module 'react' {
     reason: mixed;
   }
   export type Thenable<T> = UntrackedThenable<T> | PendingThenable<T> | FulfilledThenable<T> | RejectedThenable<T>;
-  type Usable<T> = Thenable<T>;
+  type Usable<T> = Thenable<T> | ReactContext<T>;
   export function experimental_use<T>(usable: Usable<T>): T;
 
   // Unstable Suspense cache API
