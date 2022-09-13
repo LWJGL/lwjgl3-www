@@ -102,7 +102,7 @@ interface Props extends PropsDesc {
 
 const BuildArtifactDescription: React.FC<PropsDesc> = ({ natives, platformsSelected, artifact, disabled }) => {
   return (
-    <Box css={{ mb: '$sm' }}>
+    <Box css={{ mb: '$sm', maxWidth: '80vw', wrap: 'word' }}>
       {artifact.natives &&
         artifact.nativesOptional !== true &&
         getSupportedPlatforms(natives, platformsSelected, artifact.natives, disabled)}
