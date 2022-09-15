@@ -1,4 +1,12 @@
-import { useCallback, useRef, forwardRef, useState, useImperativeHandle, useEffect } from 'react';
+import {
+  useCallback,
+  useRef,
+  forwardRef,
+  useState,
+  useImperativeHandle,
+  useEffect,
+  experimental_useEvent as useEvent,
+} from 'react';
 import { usePreventScroll } from '@react-aria/overlays';
 import { styled } from '~/theme/stitches.config';
 import { motion } from 'framer-motion';
@@ -8,7 +16,6 @@ import { Grid } from '~/components/layout/Grid';
 import { Flex } from '~/components/layout/Flex';
 import { Button } from '~/components/forms/Button';
 import { supportsDialog } from '~/services/dialog';
-import { useEvent } from '~/hooks/useEvent';
 
 import { useStore } from './store';
 import { beginDownload, abortDownload } from './lib/bundler';
@@ -99,56 +106,41 @@ const Pre = styled('pre', {
 export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
   const store = useStore();
   const [isDownloading, setIsDownloading] = useState(false);
-  const mountedRef = useRef(false);
   const usingNetworkRef = useRef(false);
   const [progress, setProgress] = useState<Progress>([]);
 
-  function downloadLog(msg: string) {
-    if (mountedRef.current) {
-      setProgress((progress) => [...progress, msg]);
-    }
-  }
-
-  const downloadComplete = useEvent(() => {
-    if (mountedRef.current) {
-      setIsDownloading(false);
-    }
-    if (progress.length) {
-      setProgress([]);
-    }
+  const downloadLog = useEvent((msg: string) => {
+    setProgress((progress) => [...progress, msg]);
   });
 
-  const start = () => {
-    beginDownload(mountedRef, usingNetworkRef, store, stop, downloadLog, downloadComplete);
+  const downloadComplete = useEvent(() => {
+    setIsDownloading(false);
+    // reset progress if required
+    setProgress((progress) => (progress.length ? [] : progress));
+  });
+
+  const start = useEvent(() => {
+    beginDownload(usingNetworkRef, store, stop, downloadLog, downloadComplete);
     setIsDownloading(true);
-  };
+  });
 
-  const stop = useCallback(
-    (msg?: string) => {
-      if (msg) {
-        alert(msg);
-      }
-      if (usingNetworkRef.current === true) {
-        abortDownload();
-      }
-      downloadComplete();
-    },
-    [downloadComplete]
-  );
+  const stop = useEvent((msg?: string) => {
+    if (msg) {
+      alert(msg);
+    }
+    if (usingNetworkRef.current === true) {
+      abortDownload();
+    }
+    downloadComplete();
+  });
 
-  const stopCallback = useCallback(() => {
+  const stopCallback = useEvent(() => {
     stop();
-  }, [stop]);
+  });
 
   useImperativeHandle(ref, () => ({ start, stop }));
 
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-      stop();
-    };
-  }, [stop]);
+  useEffect(() => stopCallback, []);
 
   if (!isDownloading) {
     return null;

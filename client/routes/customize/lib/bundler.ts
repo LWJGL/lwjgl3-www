@@ -271,7 +271,6 @@ export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: str
 }
 
 export async function beginDownload(
-  mountedRef: React.MutableRefObject<boolean>,
   usingNetworkRef: React.MutableRefObject<boolean>,
   store: BuildStore,
   downloadCancel: (msg?: string) => void,
@@ -289,10 +288,6 @@ export async function beginDownload(
     manifest = await fetchManifest(path);
   } catch (err) {
     downloadCancel(err.message);
-    return;
-  }
-
-  if (!mountedRef.current) {
     return;
   }
 

@@ -1,7 +1,8 @@
 import 'react';
 
 declare module 'react' {
-  // use() hook
+  // use hook
+
   // The subset of a Thenable required by things thrown by Suspense.
   // This doesn't require a value to be passed to either handler.
   export interface Wakeable {
@@ -30,6 +31,9 @@ declare module 'react' {
   export type Thenable<T> = UntrackedThenable<T> | PendingThenable<T> | FulfilledThenable<T> | RejectedThenable<T>;
   type Usable<T> = Thenable<T> | ReactContext<T>;
   export function experimental_use<T>(usable: Usable<T>): T;
+
+  // useEvent hook
+  export function experimental_useEvent<T, A>(callback: (...args: A) => T): (...args: A) => T;
 
   // Unstable Suspense cache API
   export function unstable_getCacheForType<T>(resourceType: () => T): T;
