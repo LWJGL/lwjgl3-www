@@ -119,12 +119,7 @@ export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
     setProgress((progress) => (progress.length ? [] : progress));
   });
 
-  const start = useEvent(() => {
-    beginDownload(usingNetworkRef, store, stop, downloadLog, downloadComplete);
-    setIsDownloading(true);
-  });
-
-  const stop = useEvent((msg?: string) => {
+  const stop = useCallback((msg?: string) => {
     if (msg) {
       alert(msg);
     }
@@ -132,22 +127,30 @@ export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
       abortDownload();
     }
     downloadComplete();
-  });
+  }, []);
 
-  const stopCallback = useEvent(() => {
-    stop();
-  });
+  const stopHnd = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      stop();
+    },
+    [stop]
+  );
+
+  const start = useCallback(() => {
+    beginDownload(usingNetworkRef, store, stop, downloadLog, downloadComplete);
+    setIsDownloading(true);
+  }, [stop, store]);
 
   useImperativeHandle(ref, () => ({ start, stop }));
 
-  useEffect(() => stopCallback, []);
+  useEffect(() => stop, [stop]);
 
   if (!isDownloading) {
     return null;
   }
 
   return (
-    <ModalDialog onClose={stopCallback}>
+    <ModalDialog onClose={stop}>
       <Grid
         className="dialog-content"
         css={{
@@ -168,7 +171,7 @@ export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
             ))}
         </Pre>
         <Flex css={{ justifyContent: 'space-between', alignItems: 'center' }}>
-          <Button variant="outline" autoFocus onClick={stopCallback}>
+          <Button variant="outline" autoFocus onClick={stopHnd}>
             Cancel
           </Button>
           <CircularProgress size={36} />
