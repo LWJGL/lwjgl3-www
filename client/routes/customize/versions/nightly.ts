@@ -12,6 +12,13 @@ export default (prev: BuildBindings): BuildBindings => ({
       description: 'An end-to-end solution for adding sound and music to any game.',
       website: 'https://www.fmod.com',
     },
+    [Binding.HARFBUZZ]: {
+      id: Binding.HARFBUZZ,
+      title: 'HarfBuzz',
+      description: 'A text shaping library that allows programs to convert a sequence of Unicode input into properly formatted and positioned glyph output — for any writing system and language.',
+      website: 'https://harfbuzz.github.io/',
+      natives: NATIVE_ALL,
+    },
     [Binding.KTX]: {
       id: Binding.KTX,
       title: 'KTX (Khronos Texture)',
