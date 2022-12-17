@@ -56,7 +56,7 @@ export default (): BuildBindings => ({
     [Binding.NFD]: {
       id: Binding.NFD,
       title: 'Native File Dialog',
-      description: 'A tiny, neat C library that portably invokes native file open and save dialogs.',
+      description: 'A small C library that portably invokes native file open, folder select and file save dialogs.',
       natives: NATIVE_LTE_322,
       website: 'https://github.com/mlabbe/nativefiledialog',
     },

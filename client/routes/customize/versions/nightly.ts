@@ -12,6 +12,13 @@ export default (prev: BuildBindings): BuildBindings => ({
       description: 'An end-to-end solution for adding sound and music to any game.',
       website: 'https://www.fmod.com',
     },
+    [Binding.FREETYPE]: {
+      id: Binding.FREETYPE,
+      title: 'FreeType',
+      description: 'A freely available software library to render fonts.',
+      website: 'https://freetype.org/',
+      natives: NATIVE_ALL,
+    },
     [Binding.HARFBUZZ]: {
       id: Binding.HARFBUZZ,
       title: 'HarfBuzz',

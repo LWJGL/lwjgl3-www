@@ -26,6 +26,7 @@ export enum Binding {
   CUDA = 'lwjgl-cuda',
   EGL = 'lwjgl-egl',
   FMOD = 'lwjgl-fmod',
+  FREETYPE = 'lwjgl-freetype',
   GLFW = 'lwjgl-glfw',
   HARFBUZZ = 'lwjgl-harfbuzz',
   JAWT = 'lwjgl-jawt',
