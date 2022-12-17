@@ -32,8 +32,8 @@ Build status icons are loaded directly from [travis-ci.org](https://travis-ci.or
 
 ## Prerequisites
 
-- [Node.js v15+](https://nodejs.org/)
-- [NPM v7+](https://npmjs.com/)
+- [Node.js v19+](https://nodejs.org/)
+- [NPM v9+](https://npmjs.com/)
 
 ## Development
 
