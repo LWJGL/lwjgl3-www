@@ -1,6 +1,6 @@
 import {
   createContext,
-  experimental_use as use,
+  use,
   useRef,
   useEffect,
   useCallback,

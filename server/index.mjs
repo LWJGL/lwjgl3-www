@@ -6,7 +6,7 @@ import fastify from 'fastify';
 import fastifyAccepts from '@fastify/accepts';
 import fastifyStatic from '@fastify/static';
 import fastifyEtag from '@fastify/etag';
-import fastifyPointOfView from 'point-of-view';
+import fastifyView from '@fastify/view';
 import { mime } from 'send';
 import pug from 'pug';
 
@@ -150,7 +150,7 @@ app.register(fastifyEtag);
 app.register(fastifyAccepts);
 
 // Template
-app.register(fastifyPointOfView, {
+app.register(fastifyView, {
   engine: { pug },
   root: path.join(__dirname, 'views'),
   options: {

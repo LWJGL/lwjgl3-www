@@ -1,4 +1,4 @@
-import { Suspense, experimental_use as use } from 'react';
+import { Suspense, use } from 'react';
 import { styled } from '~/theme/stitches.config';
 import { Link } from '~/components/router/client';
 import { Download } from '~/routes';
@@ -18,7 +18,7 @@ const Sample: React.FC<{ children?: never }> = () => {
 
   return (
     <pre>
-      <code dangerouslySetInnerHTML={{ __html: sample }}></code>
+      <code dangerouslySetInnerHTML={{ __html: sample }} />
     </pre>
   );
 };

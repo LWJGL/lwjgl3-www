@@ -1,4 +1,4 @@
-import { Fragment, Suspense, useState, useTransition, experimental_use as use } from 'react';
+import { Fragment, Suspense, useState, useTransition, use } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from '~/components/router/client';
 import { File } from './File';

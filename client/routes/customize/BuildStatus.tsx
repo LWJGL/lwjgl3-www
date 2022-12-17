@@ -1,4 +1,4 @@
-import { experimental_use as use } from 'react';
+import { use } from 'react';
 import { Text } from '~/components/ui/Text';
 import { getBuildStatus } from './loaders/build-status';
 
@@ -29,7 +29,13 @@ export const BuildStatus = ({ name }: Props) => {
   const status = use(getBuildStatus(name));
 
   return (
-    <Text size="sm" css={{ fontFamily: '$mono', color: 'error' in status ? '$critical9' : 'inherit' }}>
+    <Text
+      size="sm"
+      css={{
+        fontFamily: '$mono',
+        color: 'error' in status ? '$critical9' : 'inherit',
+      }}
+    >
       {'error' in status ? status.error : renderVersion(status.version, name)}
       <br />
       {'lastModified' in status ? fmt.format(new Date(status.lastModified)) : <br />}

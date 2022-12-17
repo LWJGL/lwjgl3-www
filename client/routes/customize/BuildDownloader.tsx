@@ -5,7 +5,7 @@ import {
   useState,
   useImperativeHandle,
   useEffect,
-  experimental_useEvent as useEvent,
+  experimental_useEffectEvent as useEffectEvent,
 } from 'react';
 import { usePreventScroll } from '@react-aria/overlays';
 import { styled } from '~/theme/stitches.config';
@@ -109,11 +109,11 @@ export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
   const usingNetworkRef = useRef(false);
   const [progress, setProgress] = useState<Progress>([]);
 
-  const downloadLog = useEvent((msg: string) => {
+  const downloadLog = useEffectEvent((msg: string) => {
     setProgress((progress) => [...progress, msg]);
   });
 
-  const downloadComplete = useEvent(() => {
+  const downloadComplete = useEffectEvent(() => {
     setIsDownloading(false);
     // reset progress if required
     setProgress((progress) => (progress.length ? [] : progress));
