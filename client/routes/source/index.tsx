@@ -96,7 +96,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="LWJGL"
             href="https://github.com/LWJGL-CI/lwjgl3/actions/workflows/CI.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/lwjgl3/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/lwjgl3/CI.yml?branch=master"
           />
         </Box>
 
@@ -104,7 +104,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="Assimp"
             href="https://github.com/LWJGL-CI/assimp/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/assimp/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/assimp/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -112,7 +112,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="bgfx"
             href="https://github.com/LWJGL-CI/bgfx/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/bgfx/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/bgfx/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -120,7 +120,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="libffi"
             href="https://github.com/LWJGL-CI/libffi/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/libffi/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/libffi/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -128,7 +128,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="GLFW"
             href="https://github.com/LWJGL-CI/glfw/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/glfw/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/glfw/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -136,7 +136,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="jemalloc"
             href="https://github.com/LWJGL-CI/jemalloc/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/jemalloc/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/jemalloc/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -144,7 +144,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="MoltenVK"
             href="https://github.com/LWJGL-CI/MoltenVK/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/MoltenVK/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/MoltenVK/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -152,7 +152,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="OpenAL Soft"
             href="https://github.com/LWJGL-CI/openal-soft/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/openal-soft/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/openal-soft/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -160,7 +160,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="Opus"
             href="https://github.com/LWJGL-CI/opus/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/opus/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/opus/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -168,7 +168,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="Shaderc"
             href="https://github.com/LWJGL-CI/shaderc/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/shaderc/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/shaderc/lwjgl.yml?branch=main"
           />
         </Box>
 
@@ -176,7 +176,7 @@ const SourceRoute: React.FC = () => (
           <BuildBadge
             title="SPIRV-Cross"
             href="https://github.com/LWJGL-CI/SPIRV-Cross/actions/workflows/lwjgl.yml"
-            src="https://img.shields.io/github/workflow/status/LWJGL-CI/SPIRV-Cross/LWJGL%20Build"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/SPIRV-Cross/lwjgl.yml?branch=master"
           />
         </Box>
       </GridSection>
