@@ -19,14 +19,14 @@ export const SilverSponsors: FCC = ({ children }) => (
           img: {
             maxWidth: '100%',
           },
-          '@sm': {
-            textAlign: 'center',
-            grid: 'auto-flow / repeat(1, 1fr)',
-          },
           // '@sm': {
           //   textAlign: 'center',
-          //   grid: 'auto-flow / repeat(2, 1fr)',
+          //   grid: 'auto-flow / repeat(1, 1fr)',
           // },
+          '@sm': {
+            textAlign: 'center',
+            grid: 'auto-flow / repeat(2, 1fr)',
+          },
           // '@md': {
           //   grid: 'auto-flow / repeat(3, 1fr)',
           // },
@@ -42,6 +42,14 @@ export const SilverSponsors: FCC = ({ children }) => (
           target="_blank"
         >
           <ImgLazy width={109} height={36} src="/img/sponsors/ukraine-online-casino.png" alt="onlinecasino.kyiv.ua" />
+        </a>
+        <a
+          href="https://twicsy.com/"
+          title="Boost Your Instagram Presence in Minutes!"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={135} height={28} src="/img/sponsors/twicsy-135x28.svg" alt="Twicsy" />
         </a>
       </Grid>
       {children}

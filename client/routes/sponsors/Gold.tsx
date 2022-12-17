@@ -236,6 +236,20 @@ export const GoldSponsors: FCC = ({ children }) => (
         >
           <ImgLazy width={134.769} height={46.307} src="/img/sponsors/social-boosting.svg" alt="SocialBoosting" />
         </a>
+        <a
+          href="https://www.broadband.deals/"
+          title="Broadband.Deals - Best Broadband Plans in December 2022"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy
+            width={800 / 4}
+            height={227 / 4}
+            src="/img/sponsors/broadband-deals.png"
+            alt="Broadband Deals"
+            style={{ filter: 'invert(100%)' }}
+          />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
