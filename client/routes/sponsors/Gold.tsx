@@ -32,14 +32,6 @@ export const GoldSponsors: FCC = ({ children }) => (
         }}
       >
         <a
-          href="https://www.vpsserver.com/"
-          title="VPS HOSTING - GET YOUR FREE VPS TRIAL NOW!"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy width={218} height={50} src="/img/sponsors/vpsserver.com.svg" alt="VPSSERVER.com" />
-        </a>
-        <a
           href="https://nettikasinolista.com/"
           title="Se paras nettikasino-lista: arvostelut, bonukset ja kokemuksia"
           rel="sponsored noopener external"
