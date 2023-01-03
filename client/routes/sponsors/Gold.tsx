@@ -64,27 +64,6 @@ export const GoldSponsors: FCC = ({ children }) => (
           <ImgLazy width={179.71} height={38} src="/img/sponsors/bonusfindernz.svg" alt="BonusFinder New Zealand" />
         </a>
         <a
-          href="http://nettikasinot.org/"
-          rel="sponsored noopener external"
-          target="_blank"
-          title="Universumin parhaat nettikasinot"
-        >
-          <ImgLazy
-            width={585 * 0.3}
-            height={116 * 0.3}
-            src="/img/sponsors/nettikasinot-585x116.png"
-            alt="Nettikasinot"
-          />
-        </a>
-        <a
-          href="https://www.nettikasinot.media/"
-          title="Nettikasinot: Mitkä ovat parhaat nettikasinot"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy width={48} height={48} src="/img/sponsors/nettikasinot.media.svg" alt="nettikasinot.media" />
-        </a>
-        <a
           href="https://www.pelisivut.com/"
           title="Rahapelit netissä laadukkaasti ja luotettavasti"
           rel="sponsored noopener external"
@@ -112,19 +91,6 @@ export const GoldSponsors: FCC = ({ children }) => (
           <ImgLazy width={200 * 0.5} height={51 * 0.5} src="/img/sponsors/nzcasinohex.png" alt="NZCasinoHex" />
         </a>
         <a
-          href="https://www.targetedwebtraffic.com/"
-          title="Targeted Web Traffic"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy
-            width={270 * 0.25}
-            height={243 * 0.25}
-            src="/img/sponsors/targetedwebtraffic-270x243.png"
-            alt="Targeted Web Traffic"
-          />
-        </a>
-        <a
           href="https://casino.guide/ethereum/"
           title="Best ETH Casino 2021"
           rel="sponsored noopener external"
@@ -136,14 +102,6 @@ export const GoldSponsors: FCC = ({ children }) => (
             src="/img/sponsors/casino-guide-240x279.png"
             alt="Casino.guide"
           />
-        </a>
-        <a
-          href="https://1394ta.org/"
-          title="1394TA: Buy Instagram Followers and Likes"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy width={110} height={47} src="/img/sponsors/1394ta.svg" alt="1394TA" />
         </a>
         <a
           href="https://funrize.com/"
