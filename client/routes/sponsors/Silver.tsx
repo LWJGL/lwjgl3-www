@@ -44,7 +44,7 @@ export const SilverSponsors: FCC = ({ children }) => (
           <ImgLazy width={109} height={36} src="/img/sponsors/ukraine-online-casino.png" alt="onlinecasino.kyiv.ua" />
         </a>
         <a
-          href="https://twicsy.com/"
+          href="https://twicsy.com/buy-instagram-likes"
           title="Boost Your Instagram Presence in Minutes!"
           rel="sponsored noopener external"
           target="_blank"
