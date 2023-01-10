@@ -1,5 +1,4 @@
-import create from 'zustand/vanilla';
-import createHook from 'zustand';
+import { create } from 'zustand';
 import { redux } from 'zustand/middleware';
 import { config, getConfigSnapshot } from './config';
 import { reducer, loadConfig } from './reducer';
@@ -8,15 +7,9 @@ import isEqual from 'react-fast-compare';
 
 import type { BuildStore, BuildStoreSnapshot } from './types';
 
+// Persistence
 const STORAGE_KEY = 'lwjgl-build-config';
 
-export const store = create(redux(reducer, getInitialState()));
-export const useStore = createHook(store);
-export function useDispatch() {
-  return useStore((state) => state.dispatch);
-}
-
-// Persistence
 function getInitialState(): BuildStore {
   const restore = localStorage.getItem(STORAGE_KEY);
   if (restore !== null) {
@@ -56,6 +49,15 @@ function saveSnapshot(state: BuildStore): void {
 
 const saveSnapshotDebounced = debounce(saveSnapshot, 1000);
 
-store.subscribe((state) => {
+// Create Store
+export const useStore = create(redux(reducer, getInitialState()));
+
+export function useDispatch() {
+  return useStore((state) => state.dispatch);
+}
+
+// Subscribe to state changes
+
+useStore.subscribe((state) => {
   saveSnapshotDebounced(state);
 });
