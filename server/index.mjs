@@ -110,32 +110,28 @@ mime.define(
 // Graceful shutdown
 // ------------------------------------------------------------------------------
 
-/*
-let terminating = false;
-function gracefulShutdown() {
-  if (terminating) {
-    return;
-  }
-  terminating = true;
+const shutdownController = new AbortController();
 
-  function forceShutdown() {
-    app.log.error('Termination timeout. Forcing shutdown...');
-    process.exit(1);
-  }
+// Force shutdown if gracefull does not complete in 5s
+shutdownController.signal.addEventListener('abort', () => {
+  const timeout = setTimeout(
+    () => {
+      console.error('Server termination timeout. Forcing shutdown...');
+      process.exit(1);
+    },
+    PRODUCTION ? 5000 : 1000
+  );
+  // Don't require the Node.js event loop to remain active.
+  // If there is no other activity keeping the event loop running,
+  // the process will exit before the Timeout object's callback is invoked
+  timeout.unref();
+});
 
-  let terminationTimeout = setTimeout(forceShutdown, PRODUCTION ? 5000 : 1000);
-  app.log.info('Shutting down...');
-  app.close().then(() => {
-    clearTimeout(terminationTimeout);
-    process.exit(0);
-  });
-}
-*/
-
-// const shutdownController = new AbortController();
-function shutdown() {
-  // shutdownController.abort();
-  process.exit(0);
+async function shutdown() {
+  console.info('Shutting down...');
+  shutdownController.abort();
+  // await app.close();
+  // process.exit(0);
 }
 
 // Comment-out events below when using `node --cpu-prof`
@@ -391,26 +387,21 @@ app.setErrorHandler((error, request, reply) => {
 // LAUNCH
 // ------------------------------------------------------------------------------
 
-try {
-  await app.listen({
-    port: PORT,
-    host: HOST,
-    // signal: shutdownController.signal,
-  });
+await app.listen({
+  port: PORT,
+  host: HOST,
+  signal: shutdownController.signal,
+});
 
-  if (DEVELOPMENT || argv.test) {
-    const devUrl = `http://${HOST !== '0.0.0.0' ? HOST : 'www.lwjgl.localhost'}${PORT !== 80 ? `:${PORT}` : ''}`;
-    const hr = '='.repeat(Math.max(devUrl.length, 18));
-    console.log(
-      `
+if (DEVELOPMENT || argv.test) {
+  const devUrl = `http://${HOST !== '0.0.0.0' ? HOST : 'www.lwjgl.localhost'}${PORT !== 80 ? `:${PORT}` : ''}`;
+  const hr = '='.repeat(Math.max(devUrl.length, 18));
+  console.log(
+    `
 ${hr}
 Started server on:
 ${devUrl}
 ${hr}
 `
-    );
-  }
-} catch (err) {
-  app.log.error(err);
-  process.exit(1);
+  );
 }
