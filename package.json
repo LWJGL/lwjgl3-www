@@ -19,7 +19,7 @@
     "@fastify/etag": "4.2.0",
     "@fastify/helmet": "10.1.0",
     "@fastify/http-proxy": "8.4.0",
-    "@fastify/static": "6.6.0",
+    "@fastify/static": "6.6.1",
     "@fastify/view": "7.3.0",
     "fastify": "4.11.0",
     "pug": "3.0.2"
@@ -49,7 +49,7 @@
     "cssnano": "5.1.14",
     "eslint": "8.31.0",
     "eslint-plugin-react-hooks": "0.0.0-experimental-de7d1c907-20221223",
-    "framer-motion": "8.4.0",
+    "framer-motion": "8.4.2",
     "gzip-size": "7.0.0",
     "history": "5.3.0",
     "immer": "9.0.17",
