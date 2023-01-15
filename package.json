@@ -20,7 +20,7 @@
     "@fastify/helmet": "10.1.0",
     "@fastify/http-proxy": "8.4.0",
     "@fastify/static": "6.6.1",
-    "@fastify/view": "7.3.0",
+    "@fastify/view": "7.4.0",
     "fastify": "4.11.0",
     "pug": "3.0.2"
   },
@@ -47,12 +47,12 @@
     "click-to-react-component": "1.0.8",
     "core-js": "3.27.1",
     "cssnano": "5.1.14",
-    "eslint": "8.31.0",
+    "eslint": "8.32.0",
     "eslint-plugin-react-hooks": "0.0.0-experimental-de7d1c907-20221223",
-    "framer-motion": "8.4.2",
+    "framer-motion": "8.4.3",
     "gzip-size": "7.0.0",
     "history": "5.3.0",
-    "immer": "9.0.17",
+    "immer": "9.0.18",
     "jszip": "3.10.1",
     "lodash-es": "4.17.21",
     "npm-run-all": "4.1.5",
@@ -60,7 +60,7 @@
     "postcss-import": "15.1.0",
     "postcss-preset-env": "7.8.3",
     "postcss-scss": "4.0.6",
-    "prettier": "2.8.2",
+    "prettier": "2.8.3",
     "react": "0.0.0-experimental-de7d1c907-20221223",
     "react-dom": "0.0.0-experimental-de7d1c907-20221223",
     "react-error-boundary": "3.1.4",
@@ -76,7 +76,7 @@
     "webpack": "5.75.0",
     "webpack-cli": "5.0.1",
     "webpack-dev-server": "4.11.1",
-    "zustand": "4.3.1"
+    "zustand": "4.3.2"
   },
   "overrides": {
     "react": "0.0.0-experimental-de7d1c907-20221223",
