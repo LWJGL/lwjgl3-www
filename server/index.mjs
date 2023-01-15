@@ -107,38 +107,6 @@ mime.define(
 );
 
 // ------------------------------------------------------------------------------
-// Graceful shutdown
-// ------------------------------------------------------------------------------
-
-const shutdownController = new AbortController();
-
-// Force shutdown if gracefull does not complete in 5s
-shutdownController.signal.addEventListener('abort', () => {
-  const timeout = setTimeout(
-    () => {
-      console.error('Server termination timeout. Forcing shutdown...');
-      process.exit(1);
-    },
-    PRODUCTION ? 5000 : 1000
-  );
-  // Don't require the Node.js event loop to remain active.
-  // If there is no other activity keeping the event loop running,
-  // the process will exit before the Timeout object's callback is invoked
-  timeout.unref();
-});
-
-async function shutdown() {
-  console.info('Shutting down...');
-  shutdownController.abort();
-  // await app.close();
-  // process.exit(0);
-}
-
-// Comment-out events below when using `node --cpu-prof`
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
-
-// ------------------------------------------------------------------------------
 // PLUGINS
 // ------------------------------------------------------------------------------
 
@@ -382,6 +350,38 @@ app.setErrorHandler((error, request, reply) => {
       reply.type('text/plain').send(error.message);
   }
 });
+
+// ------------------------------------------------------------------------------
+// Graceful shutdown
+// ------------------------------------------------------------------------------
+
+const shutdownController = new AbortController();
+
+// Force shutdown if gracefull does not complete in 5s
+shutdownController.signal.addEventListener('abort', () => {
+  const timeout = setTimeout(
+    () => {
+      console.error('Server termination timeout. Forcing shutdown...');
+      process.exit(1);
+    },
+    PRODUCTION ? 5000 : 1000
+  );
+  // Don't require the Node.js event loop to remain active.
+  // If there is no other activity keeping the event loop running,
+  // the process will exit before the Timeout object's callback is invoked
+  timeout.unref();
+});
+
+async function shutdown(signal) {
+  console.info('Shutting down...');
+  shutdownController.abort();
+  // await app.close();
+  // process.exit(0);
+}
+
+// Comment-out events below when using `node --cpu-prof`
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);
 
 // ------------------------------------------------------------------------------
 // LAUNCH
