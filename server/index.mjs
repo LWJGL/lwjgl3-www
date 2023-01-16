@@ -356,10 +356,14 @@ app.setErrorHandler((error, request, reply) => {
 // ------------------------------------------------------------------------------
 
 const shutdownController = new AbortController();
+let shutdownTimeout = null;
 
 // Force shutdown if gracefull does not complete in 5s
 shutdownController.signal.addEventListener('abort', () => {
-  const timeout = setTimeout(
+  if (shutdownTimeout !== null) {
+    return;
+  }
+  shutdownTimeout = setTimeout(
     () => {
       console.error('Server termination timeout. Forcing shutdown...');
       process.exit(1);
@@ -369,7 +373,7 @@ shutdownController.signal.addEventListener('abort', () => {
   // Don't require the Node.js event loop to remain active.
   // If there is no other activity keeping the event loop running,
   // the process will exit before the Timeout object's callback is invoked
-  timeout.unref();
+  shutdownTimeout.unref();
 });
 
 async function shutdown(signal) {
@@ -380,8 +384,9 @@ async function shutdown(signal) {
 }
 
 // Comment-out events below when using `node --cpu-prof`
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
+process.once('SIGINT', shutdown);
+process.once('SIGTERM', shutdown);
+process.once('SIGQUIT', shutdown);
 
 // ------------------------------------------------------------------------------
 // LAUNCH
