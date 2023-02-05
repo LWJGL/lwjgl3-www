@@ -8,7 +8,7 @@ import fastifyAccepts from '@fastify/accepts';
 import fastifyStatic from '@fastify/static';
 import fastifyEtag from '@fastify/etag';
 import fastifyView from '@fastify/view';
-import { mime } from 'send';
+import mime from 'mime';
 import pug from 'pug';
 
 import chunkMap from './routes/chunkMap.mjs';
