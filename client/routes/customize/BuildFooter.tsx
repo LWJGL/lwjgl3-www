@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { saveAs } from '~/services/file-saver';
-import { store } from './store';
 import { createActionConfigLoad, selectorMode } from './reducer';
 import { BuildScript } from './BuildScript';
 import { BuildToolbar } from './BuildToolbar';
@@ -22,7 +21,7 @@ export function BuildFooter({ downloadRef }: Props) {
   const mode = useStore(selectorMode);
 
   const configDownload = useCallback(() => {
-    const save = getConfigSnapshot(store.getState());
+    const save = getConfigSnapshot(useStore.getState());
     if (save === null) {
       return;
     }

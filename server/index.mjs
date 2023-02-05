@@ -1,4 +1,5 @@
 import path from 'node:path';
+import process from 'node:process';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -22,6 +23,21 @@ const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEVELOPMENT = !PRODUCTION;
 const PORT = parseInt(process.env.PORT, 10) || 80;
 const HOST = process.env.HOST || '0.0.0.0';
+
+// ------------------------------------------------------------------------------
+// DOWNGRADE PRIVILEGES
+// ------------------------------------------------------------------------------
+
+// if (DEVELOPMENT && process.getuid && process.setuid) {
+//   if (process.getuid() === 0) {
+//     try {
+//       process.setuid(501);
+//       console.log(`New uid: ${process.getuid()}`);
+//     } catch (err) {
+//       console.error(`Failed to set uid: ${err}`);
+//     }
+//   }
+// }
 
 // ------------------------------------------------------------------------------
 // CLI ARGS
@@ -200,7 +216,11 @@ if (DEVELOPMENT) {
 
   // Proxy webpack-dev-server generated files
   const httpProxy = require('@fastify/http-proxy');
-  await app.register(httpProxy, { prefix: '/js', rewritePrefix: '/js', upstream: 'http://localhost:8089' });
+  await app.register(httpProxy, {
+    prefix: '/js',
+    rewritePrefix: '/js',
+    upstream: 'http://127.0.0.1:8089',
+  });
 }
 
 // Proxy
