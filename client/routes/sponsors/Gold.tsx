@@ -200,6 +200,14 @@ export const GoldSponsors: FCC = ({ children }) => (
             style={{ filter: 'invert(100%)' }}
           />
         </a>
+        <a
+          href="https://automatenspielex.com/online-casinos"
+          title="Beste Online Casinos"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={157} height={113} src="/img/sponsors/automatenspiele.svg" alt="Automatenspiele" />
+        </a>
       </Grid>
       {children}
     </SectionContainer>
