@@ -10,14 +10,9 @@
     "chroma-js": "2.4.2",
     "ciebase": "0.1.1",
     "ciecam02": "0.4.6",
-    "hsluv": "0.1.0"
+    "hsluv": "1.0.0"
   },
   "overrides": {
-    "mout": "1.2.3"
-  },
-  "scripts": {
-    "ncu": "npx npm-check-updates -i --configFileName ncu.json",
-    "ncut": "npx npm-check-updates -t greatest --configFileName ncu.json",
-    "ncun": "npx npm-check-updates -i -t newest --configFileName ncu-newest.json"
+    "mout": "1.2.4"
   }
 }

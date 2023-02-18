@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "puppeteer-core": "16.0.0"
-  },
-  "scripts": {
-    "ncu": "npx npm-check-updates -i",
-    "ncut": "npx npm-check-updates -t greatest",
-    "ncun": "npx npm-check-updates -t newest"
+    "puppeteer-core": "19.7.1"
   }
 }

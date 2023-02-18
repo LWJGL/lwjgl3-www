@@ -8,12 +8,12 @@
     "cdk": "bin/index.js"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.12.0",
-    "constructs": "10.0.62",
+    "aws-cdk-lib": "2.65.0",
+    "constructs": "10.1.254",
     "source-map-support": "0.5.21"
   },
   "devDependencies": {
-    "@types/node": "17.0.17"
+    "@types/node": "18.14.0"
   },
   "scripts": {
     "build": "tsc",
@@ -21,7 +21,6 @@
     "synth": "cdk synth",
     "diff": "cdk diff",
     "list": "cdk list",
-    "deploy": "cdk deploy",
-    "ncu": "npx npm-check-updates -i"
+    "deploy": "cdk deploy"
   }
 }
