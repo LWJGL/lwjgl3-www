@@ -27,6 +27,14 @@ export default (prev: BuildBindings): BuildBindings => ({
       website: 'https://harfbuzz.github.io/',
       natives: NATIVE_ALL,
     },
+    [Binding.HWLOC]: {
+      id: Binding.HWLOC,
+      title: 'hwloc',
+      description:
+        'A portable abstraction of the hierarchical topology of modern architectures, including NUMA memory nodes, sockets, shared caches, cores and simultaneous multithreading.',
+      website: 'https://www.open-mpi.org/projects/hwloc/',
+      natives: NATIVE_ALL,
+    },
     [Binding.KTX]: {
       id: Binding.KTX,
       title: 'KTX (Khronos Texture)',

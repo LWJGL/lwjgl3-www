@@ -29,6 +29,7 @@ export enum Binding {
   FREETYPE = 'lwjgl-freetype',
   GLFW = 'lwjgl-glfw',
   HARFBUZZ = 'lwjgl-harfbuzz',
+  HWLOC = 'lwjgl-hwloc',
   JAWT = 'lwjgl-jawt',
   JEMALLOC = 'lwjgl-jemalloc',
   KTX = 'lwjgl-ktx',
