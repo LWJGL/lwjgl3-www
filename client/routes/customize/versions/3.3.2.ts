@@ -3,7 +3,7 @@ import type { BuildBindings } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
   ...prev,
-  version: Version.LWJGL331,
+  version: Version.LWJGL332,
   byId: {
     ...prev.byId,
     [Binding.FMOD]: {
