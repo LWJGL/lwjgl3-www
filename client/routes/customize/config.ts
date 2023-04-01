@@ -65,7 +65,7 @@ function getInitialConfig(): BuildStore {
         },
         [Mode.Gradle]: {
           id: Mode.Gradle,
-          title: 'Gradle',
+          title: 'Gradle (or use <a href="https://github.com/LWJGL/lwjgl3-gradle">the plugin</a>)',
           logo: '/svg/gradle.svg',
           file: 'build.gradle',
         },
