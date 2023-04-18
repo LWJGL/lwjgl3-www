@@ -14,9 +14,11 @@
 
 /** @typedef {{version:string, context: CloudfrontContext, viewer: CloudfrontViewer, request: CloudfrontRequest, response?: CloudfrontResponse}} CloudfrontEvent */
 
+/** @typedef {301|302|303|307|308} StatusCode */
+
 /**
  *
- * @param {number} statusCode
+ * @param {StatusCode} statusCode
  * @returns {string}
  */
 function getStatus(statusCode) {
@@ -41,7 +43,7 @@ function getStatus(statusCode) {
 
 /**
  *
- * @param {number} statusCode
+ * @param {StatusCode} statusCode
  * @param {string} location
  * @returns {CloudfrontResponse}
  */
@@ -65,10 +67,11 @@ function redirect(statusCode, location) {
 function formatQueryString(qs) {
   var result = [];
   for (var key in qs) {
-    if (qs[key].multiValue !== undefined) {
-      result.push(qs[key].multiValue.map(item => `${key}=${item.value}`).join('&'));
-    } else if (qs[key].value.length) {
-      result.push(`${key}=${qs[key].value}`);
+    var item = qs[key];
+    if (item.multiValue !== undefined) {
+      result.push(item.multiValue.map(item => `${key}=${item.value}`).join('&'));
+    } else if (item.value.length) {
+      result.push(`${key}=${item.value}`);
     } else {
       result.push(key);
     }
