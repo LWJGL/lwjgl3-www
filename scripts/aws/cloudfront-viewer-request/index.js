@@ -122,7 +122,7 @@ function normalizeQueryString(qs) {
   return normalizedQS;
 }
 
-var Proto = 'cloudFront-forwarded-proto';
+var Proto = 'cloudfront-forwarded-proto';
 
 /**
  *
