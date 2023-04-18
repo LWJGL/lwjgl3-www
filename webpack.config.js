@@ -135,15 +135,6 @@ function buildConfiguration() {
     // Disable chunks
     config.optimization.splitChunks = false;
 
-    // // Load pre-built dependencies
-    // config.plugins.push(
-    //   new webpack.DllReferencePlugin({
-    //     // context: __dirname,
-    //     name: 'vendor',
-    //     manifest: require('./public/js/vendor.manifest.json'),
-    //   })
-    // );
-
     // Enable source maps
     config.devtool = SOURCEMAP ? 'inline-source-map' : 'cheap-module-source-map';
 

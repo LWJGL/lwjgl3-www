@@ -25,4 +25,3 @@ babel.config.js
 *.md
 tsconfig.json
 webpack.config.js
-webpack.dll.js

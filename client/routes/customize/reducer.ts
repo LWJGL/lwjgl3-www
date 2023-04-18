@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import { config, getDefaultPlatform, OSGiVersionMax } from './config';
 import { Addon, BuildType, Mode, NATIVE_ALL, Preset } from './types';
 
