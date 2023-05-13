@@ -1,4 +1,4 @@
-import { Fragment, Suspense, useState, useTransition, use } from 'react';
+import { Fragment, Suspense, useState, useEffect, useTransition, use } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Link } from '~/components/router/client';
 import { File } from './File';
@@ -16,11 +16,13 @@ export function Browser({ path: targetPath }: Props) {
   const [path, setPath] = useState(targetPath);
   const [, startTransition] = useTransition();
 
-  if (targetPath !== path) {
-    startTransition(() => {
-      setPath(targetPath);
-    });
-  }
+  useEffect(() => {
+    if (targetPath !== path) {
+      startTransition(() => {
+        setPath(targetPath);
+      });
+    }
+  }, [targetPath]);
 
   return (
     <Box css={{ '.light &': { boxShadow: '$sm' } }}>
