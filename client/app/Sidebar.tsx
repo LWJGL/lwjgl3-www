@@ -32,11 +32,13 @@ export const Sidebar: FCC = ({ children }) => {
   const location = useLocation();
 
   const toggleOpenWithFocus = useCallback(() => {
-    setOpen(!isOpen);
-    if (isOpen && buttonRef.current) {
-      autoFocus(buttonRef.current);
-    }
-  }, [isOpen]);
+    setOpen((isOpen) => {
+      if (!isOpen && buttonRef.current) {
+        autoFocus(buttonRef.current);
+      }
+      return !isOpen;
+    });
+  }, []);
 
   usePreventScroll({ isDisabled: !isOpen });
 
@@ -69,7 +71,7 @@ export const Sidebar: FCC = ({ children }) => {
   }, [location.pathname]);
 
   // Animation
-  const x = useMotionValue(0);
+  const x = useMotionValue(MENU_INITIAL);
   const keyframes2 = [MENU_WIDTH, 0];
   const keyframes3 = [MENU_WIDTH, MENU_WIDTH / 2, 0];
   // .btn-hamburger spans
@@ -122,12 +124,6 @@ export const Sidebar: FCC = ({ children }) => {
     },
     [x]
   );
-  // Initial render should reset x
-  // If we did that on declaration (useMotionValue) would result in SSR/noscript conflict
-  // (we don't want x-axis translation if noscript is active)
-  useEffect(() => {
-    x.set(MENU_INITIAL);
-  }, [x]);
 
   useEffect(() => {
     if (isOpen) {
@@ -145,7 +141,9 @@ export const Sidebar: FCC = ({ children }) => {
         }
       }
 
-      animate(x, 0);
+      queueMicrotask(() => {
+        animate(x, 0);
+      });
 
       // Auto-focus current active link
       if (sidebarRef.current !== null) {
@@ -186,16 +184,18 @@ export const Sidebar: FCC = ({ children }) => {
         window.removeEventListener('pointerdown', clickOutsideListener);
       };
     } else {
-      animate(x, MENU_INITIAL, {
-        onComplete: () => {
-          let dialog = dialogRef.current;
-          if (dialog !== null) {
-            dialog.classList.remove('open');
-            if (supportsDialog()) {
-              dialog.close();
+      queueMicrotask(() => {
+        animate(x, MENU_INITIAL, {
+          onComplete: () => {
+            let dialog = dialogRef.current;
+            if (dialog !== null) {
+              dialog.classList.remove('open');
+              if (supportsDialog()) {
+                dialog.close();
+              }
             }
-          }
-        },
+          },
+        });
       });
     }
   }, [isOpen, x, toggleOpenWithFocus]);
