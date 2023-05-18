@@ -21,7 +21,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       description:
         'A compact, fast, powerful, and robust database that implements a simplified variant of the BerkeleyDB (BDB) API.',
       natives: NATIVE_LTE_322,
-      website: 'https://symas.com/products/lightning-memory-mapped-database/',
+      website: 'https://www.symas.com/lmdb',
     },
     [Binding.NUKLEAR]: {
       id: Binding.NUKLEAR,
