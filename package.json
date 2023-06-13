@@ -24,7 +24,7 @@
     }
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.341.0",
+    "@aws-sdk/client-s3": "3.350.0",
     "@fastify/accepts": "4.1.0",
     "@fastify/etag": "4.2.0",
     "@fastify/helmet": "10.1.1",
@@ -35,7 +35,7 @@
     "pug": "3.0.2"
   },
   "devDependencies": {
-    "@aws-sdk/client-cloudfront": "3.341.0",
+    "@aws-sdk/client-cloudfront": "3.350.0",
     "@babel/core": "7.22.1",
     "@babel/preset-env": "7.22.4",
     "@babel/preset-react": "7.22.3",
