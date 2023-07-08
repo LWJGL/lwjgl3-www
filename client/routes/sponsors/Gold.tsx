@@ -208,6 +208,38 @@ export const GoldSponsors: FCC = ({ children }) => (
         >
           <ImgLazy width={157} height={113} src="/img/sponsors/automatenspiele.svg" alt="Automatenspiele" />
         </a>
+        <a
+          href="https://twicsy.com/buy-instagram-likes"
+          title="Buy Instagram Likes with Instant Delivery"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={157} height={113} src="/img/sponsors/twicsy-150x29.svg" alt="Twicsy" />
+        </a>
+        <a
+          href="https://www.nettcasino.com/"
+          title="Norway's biggest and most reliable online casino portal"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={739.28/3} height={114.4/3} src="/img/sponsors/nett-casino.svg" alt="Nettcasino" />
+        </a>
+        <a
+          href="https://www.nyecasino.me/"
+          title="NyeCasino.me is a website that lists the newest and best online casinos in Norway"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={531/3} height={80/3} src="/img/sponsors/nye-casino-logo.svg" alt="NyeCasino.me" />
+        </a>
+        <a
+          href="https://twicsy.com/buy-instagram-followers"
+          title="Buy real Instagram followers from Twicsy starting at only $2.97"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={157} height={113} src="/img/sponsors/twicsy-150x29.svg" alt="Twicsy" />
+        </a>
       </Grid>
       {children}
     </SectionContainer>

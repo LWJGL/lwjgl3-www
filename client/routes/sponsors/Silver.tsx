@@ -27,9 +27,9 @@ export const SilverSponsors: FCC = ({ children }) => (
             textAlign: 'center',
             grid: 'auto-flow / repeat(2, 1fr)',
           },
-          // '@md': {
-          //   grid: 'auto-flow / repeat(3, 1fr)',
-          // },
+          '@md': {
+            grid: 'auto-flow / repeat(3, 1fr)',
+          },
           // '@lg': {
           //   grid: 'auto-flow / repeat(4, 1fr)',
           // },
@@ -50,6 +50,14 @@ export const SilverSponsors: FCC = ({ children }) => (
           target="_blank"
         >
           <ImgLazy width={135} height={28} src="/img/sponsors/twicsy-135x28.svg" alt="Twicsy" />
+        </a>
+        <a
+          href="https://slotoking.ua"
+          title="Gives a fun for our users"
+          rel="sponsored noopener external"
+          target="_blank"
+        >
+          <ImgLazy width={135} height={28} src="/img/sponsors/slotoking-324x56.svg" alt="Игровые автоматы" />
         </a>
       </Grid>
       {children}
