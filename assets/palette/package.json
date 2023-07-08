@@ -6,7 +6,7 @@
   "description": "Palette generator using Leonardo Color by Adobe",
   "author": "Apostolos Tsakpinis <apostolos.tsakpinis@gmail.com>",
   "dependencies": {
-    "@radix-ui/colors": "0.1.8",
+    "@radix-ui/colors": "1.0.0",
     "chroma-js": "2.4.2",
     "ciebase": "0.1.1",
     "ciecam02": "0.4.6",

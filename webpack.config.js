@@ -1,5 +1,5 @@
 'use strict';
-const path = require('path');
+const path = require('node:path');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const terserOptions = require('./scripts/terser-config.json');
