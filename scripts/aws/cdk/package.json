@@ -8,12 +8,12 @@
     "cdk": "bin/index.js"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.95.1",
+    "aws-cdk-lib": "2.96.2",
     "constructs": "10.2.70",
     "source-map-support": "0.5.21"
   },
   "devDependencies": {
-    "@types/node": "20.6.0"
+    "@types/node": "20.6.1"
   },
   "scripts": {
     "build": "tsc",
