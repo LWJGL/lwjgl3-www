@@ -43,7 +43,7 @@ header {
   color: var(--color-text-1);
   padding-inline: var(--safe-area);
   font-size: var(--fontSizes-lg);
-  transition: background-color 0.75s ease-out;
+  // transition: background-color 0.75s ease-out;
 
   &.opaque {
     background-color: var(--colors-darker);
