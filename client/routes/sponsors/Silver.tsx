@@ -15,6 +15,7 @@ export const SilverSponsors: FCC = ({ children }) => (
           pt: '$gap',
           gap: '$safe',
           alignItems: 'center',
+          textAlign: 'center',
           width: '100%',
           img: {
             maxWidth: '100%',
@@ -23,13 +24,13 @@ export const SilverSponsors: FCC = ({ children }) => (
           //   textAlign: 'center',
           //   grid: 'auto-flow / repeat(1, 1fr)',
           // },
-          '@sm': {
-            textAlign: 'center',
-            grid: 'auto-flow / repeat(2, 1fr)',
-          },
-          '@md': {
-            grid: 'auto-flow / repeat(3, 1fr)',
-          },
+          // '@sm': {
+          //   textAlign: 'center',
+          //   grid: 'auto-flow / repeat(2, 1fr)',
+          // },
+          // '@md': {
+          //   grid: 'auto-flow / repeat(3, 1fr)',
+          // },
           // '@lg': {
           //   grid: 'auto-flow / repeat(4, 1fr)',
           // },
@@ -42,22 +43,6 @@ export const SilverSponsors: FCC = ({ children }) => (
           target="_blank"
         >
           <ImgLazy width={109} height={36} src="/img/sponsors/ukraine-online-casino.png" alt="onlinecasino.kyiv.ua" />
-        </a>
-        <a
-          href="https://twicsy.com/buy-instagram-likes"
-          title="Boost Your Instagram Presence in Minutes!"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy width={135} height={28} src="/img/sponsors/twicsy-135x28.svg" alt="Twicsy" />
-        </a>
-        <a
-          href="https://slotoking.ua"
-          title="Gives a fun for our users"
-          rel="sponsored noopener external"
-          target="_blank"
-        >
-          <ImgLazy width={135} height={28} src="/img/sponsors/slotoking-324x56.svg" alt="Игровые автоматы" />
         </a>
       </Grid>
       {children}
