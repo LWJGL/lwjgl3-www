@@ -1,4 +1,4 @@
-import {Binding, NATIVE_ALL, Version} from '../types';
+import { Binding, Native, NATIVE_ALL, NATIVE_LTE_322, Version } from '../types';
 import type { BuildBindings } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
@@ -23,7 +23,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       id: Binding.HARFBUZZ,
       title: 'HarfBuzz',
       description:
-          'A text shaping library that allows programs to convert a sequence of Unicode input into properly formatted and positioned glyph output — for any writing system and language.',
+        'A text shaping library that allows programs to convert a sequence of Unicode input into properly formatted and positioned glyph output — for any writing system and language.',
       website: 'https://harfbuzz.github.io/',
       natives: NATIVE_ALL,
     },
@@ -31,7 +31,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       id: Binding.HWLOC,
       title: 'hwloc',
       description:
-          'A portable abstraction of the hierarchical topology of modern architectures, including NUMA memory nodes, sockets, shared caches, cores and simultaneous multithreading.',
+        'A portable abstraction of the hierarchical topology of modern architectures, including NUMA memory nodes, sockets, shared caches, cores and simultaneous multithreading.',
       website: 'https://www.open-mpi.org/projects/hwloc/',
       natives: NATIVE_ALL,
     },
@@ -40,7 +40,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'KTX (Khronos Texture)',
       description: 'A lightweight container for textures for OpenGL®, Vulkan® and other GPU APIs.',
       website: 'https://www.khronos.org/ktx/',
-      natives: NATIVE_ALL,
+      natives: [...NATIVE_LTE_322, Native.LinuxARM64, Native.LinuxARM32, Native.MacOSARM64, Native.WindowsARM64],
     },
   },
 });
