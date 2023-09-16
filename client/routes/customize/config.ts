@@ -285,6 +285,7 @@ function getInitialConfig(): BuildStore {
     lwjgl_330,
     lwjgl_331,
     lwjgl_332,
+    lwjgl_333,
     lwjgl_nightly,
   ].reduce((previousBuild: BuildBindings, nextBuildConfig: BuildBindingsReducer) => {
     const build = nextBuildConfig(previousBuild);
