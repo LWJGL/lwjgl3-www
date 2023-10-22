@@ -4,11 +4,11 @@ import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
 import { SectionContainer } from '~/components/ui/Section';
 
-export const SilverSponsors: FCC = ({ children }) => (
+export const GoldSponsors: FCC = ({ children }) => (
   <Dark>
     <SectionContainer padding>
       <TitleSection>
-        Our <span style={{ color: 'silver' }}>Silver</span> Sponsors:
+        Our <span style={{ color: 'gold' }}>Gold</span> Sponsors:
       </TitleSection>
       <Grid
         css={{
@@ -22,10 +22,6 @@ export const SilverSponsors: FCC = ({ children }) => (
           },
           // '@sm': {
           //   textAlign: 'center',
-          //   grid: 'auto-flow / repeat(1, 1fr)',
-          // },
-          // '@sm': {
-          //   textAlign: 'center',
           //   grid: 'auto-flow / repeat(2, 1fr)',
           // },
           // '@md': {
@@ -37,12 +33,12 @@ export const SilverSponsors: FCC = ({ children }) => (
         }}
       >
         <a
-          href="https://uk.onlinecasino.kyiv.ua/"
-          title="Онлайн казино України топ рейтинг казино на гроші 2022"
+          href="https://automatenspielex.com/online-casinos"
+          title="Beste Online Casinos"
           rel="sponsored noopener external"
           target="_blank"
         >
-          <ImgLazy width={109} height={36} src="/img/sponsors/ukraine-online-casino.png" alt="onlinecasino.kyiv.ua" />
+          <ImgLazy width={157} height={113} src="/img/sponsors/automatenspiele.svg" alt="Automatenspiele" />
         </a>
       </Grid>
       {children}

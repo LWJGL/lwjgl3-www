@@ -43,6 +43,6 @@ export const Customize = $R(() => import(/* webpackChunkName: "route-customize" 
 export const Browse = $R(() => import(/* webpackChunkName: "route-browse" */ './browse'));
 export const Source = $R(() => import(/* webpackChunkName: "route-source" */ './source'));
 export const License = $R(() => import(/* webpackChunkName: "route-license" */ './license'));
-export const Sponsors = $R(() => import(/* webpackChunkName: "route-sponsors" */ './sponsors'));
+export const Contributors = $R(() => import(/* webpackChunkName: "route-contributors" */ './contributors'));
 export const Frameworks = $R(() => import(/* webpackChunkName: "route-frameworks" */ './frameworks'));
 // export const Dev = $R(() => import(/* webpackChunkName: "route-dev" */ './dev'));

@@ -204,8 +204,8 @@ const FOOTER = (
               </FooterLink>
             </li>
             <li>
-              <FooterNav to="/sponsors" onPointerDown={routes.Sponsors.preload}>
-                Sponsors & Contributors
+              <FooterNav to="/contributors" onPointerDown={routes.Contributors.preload}>
+                Contributors
               </FooterNav>
             </li>
           </ul>

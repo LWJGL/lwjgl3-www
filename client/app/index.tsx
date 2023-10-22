@@ -42,7 +42,7 @@ export const App: React.FC<{ children?: never }> = () => (
           <Route path="/browse/*" element={<Page.Browse />} />
           <Route path="/source" element={<Page.Source />} />
           <Route path="/frameworks" element={<Page.Frameworks />} />
-          <Route path="/sponsors" element={<Page.Sponsors />} />
+          <Route path="/contributors" element={<Page.Contributors />} />
           <Route path="/license" element={<Page.License />} />
           {/* <Route path="/dev" element={<Page.Dev/>} /> */}
           <Route path="*" element={<PageNotFound />} />

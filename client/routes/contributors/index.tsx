@@ -1,8 +1,7 @@
 import { PageView } from '~/routes/PageView';
 import { ImgLazy } from '~/components/ui/ImgLazy';
-import { GoldSponsors } from '../sponsors/Gold';
-import { SilverSponsors } from '../sponsors/Silver';
-import { HowToSupport } from '../sponsors/HowToSupport';
+import { GoldSponsors } from './Gold';
+import { HowToSupport } from './HowToSupport';
 import { SectionContainer } from '~/components/ui/Section';
 import { Box } from '~/components/ui/Box';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
@@ -15,20 +14,8 @@ export default function SponsorsRoute() {
     >
       <HowToSupport />
       <GoldSponsors />
-      <SilverSponsors />
 
       <SectionContainer padding>
-        <TitleSection>Backers:</TitleSection>
-        <Box css={{ textAlign: 'center', pt: '$sm', pb: '$gap' }}>
-          <ImgLazy
-            css={{
-              maxWidth: '100%',
-            }}
-            alt="LWJGL backers list"
-            src="https://opencollective.com/lwjgl/backers.svg?width=825"
-          />
-        </Box>
-
         <TitleSection>Contributors:</TitleSection>
         <Box css={{ textAlign: 'center', pt: '$sm' }}>
           <a href="https://github.com/LWJGL/lwjgl3/graphs/contributors">
