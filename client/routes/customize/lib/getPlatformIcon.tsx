@@ -9,6 +9,8 @@ export const getPlatformIcon = (platform: Native) => {
     case Native.Linux:
     case Native.LinuxARM64:
     case Native.LinuxARM32:
+    case Native.LinuxPPC64LE:
+    case Native.LinuxRISCV64:
       return <Icon aria-label="Linux" name="fa/brands/linux" key={`fa-${platform}`} />;
     case Native.MacOS:
     case Native.MacOSARM64:

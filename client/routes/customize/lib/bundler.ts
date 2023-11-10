@@ -162,6 +162,10 @@ function pathToNative(folder: string): Native | null {
       return Native.LinuxARM64;
     case 'linux-arm32':
       return Native.LinuxARM32;
+    case 'linux-ppc64le':
+      return Native.LinuxPPC64LE;
+    case 'linux-riscv64':
+      return Native.LinuxRISCV64;
     case 'macos':
       return Native.MacOS;
     case 'macos-arm64':

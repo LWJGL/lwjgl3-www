@@ -79,6 +79,12 @@ export function generateMaven({
       script += generateProfile(Native.Linux, 'unix', 'arm', 'natives-linux-arm32');
       script += generateProfile(Native.Linux, 'unix', 'arm32', 'natives-linux-arm32');
     }
+    if (platform['linux-ppc64le']) {
+      script += generateProfile(Native.Linux, 'unix', 'ppc64le', 'natives-linux-ppc64le');
+    }
+    if (platform['linux-riscv64']) {
+      script += generateProfile(Native.Linux, 'unix', 'riscv64', 'natives-linux-riscv64');
+    }
     if (platform.macos) {
       script += generateProfile(Native.MacOS, 'mac', 'x86_64', 'natives-macos');
     }

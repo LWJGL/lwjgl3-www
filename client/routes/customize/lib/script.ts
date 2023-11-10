@@ -71,6 +71,25 @@ export function getSelectedPlatforms(natives: Array<Native>, platform: PlatformS
   return result;
 }
 
+export function getLinuxSuffix(platform: PlatformSelection): string {
+  if (platform.linux) {
+    return '';
+  }
+  if (platform['linux-arm64']) {
+    return '-arm64';
+  }
+  if (platform['linux-arm32']) {
+    return '-arm64';
+  }
+  if (platform['linux-ppc64le']) {
+    return '-ppc64le';
+  }
+  if (platform['linux-riscv64']) {
+    return '-riscv64';
+  }
+  throw 'no linux platform selected';
+}
+
 export function generateScript(mode: Mode, state: ScriptState): string {
   switch (mode) {
     case Mode.Maven:

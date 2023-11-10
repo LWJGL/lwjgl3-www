@@ -1,7 +1,7 @@
 import { ScriptState } from '../BuildScript';
 import { Language, BuildType } from '../types';
 import type { Addon, BindingDefinition, PlatformSelection } from '../types';
-import { generateDependencies, getVersion, isNativeApplicableToAllPlatforms } from './script';
+import {generateDependencies, getLinuxSuffix, getVersion, isNativeApplicableToAllPlatforms} from './script';
 import { versionNum } from '../reducer';
 
 export function generateGradle({
@@ -45,7 +45,12 @@ export function generateGradle({
     script += '\n\n';
   }
   if (platformSingle === null) {
-    const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
+    const linuxArches =
+      +platform.linux +
+      +platform['linux-arm64'] +
+      +platform['linux-arm32'] +
+      +platform['linux-ppc64le'] +
+      +platform['linux-riscv64'];
     const macosArches = +platform.macos + +platform['macos-arm64'];
     const windowsArches = +platform.windows + +platform['windows-x86'] + +platform['windows-arm64'];
     if (language === Language.Groovy) {
@@ -55,14 +60,19 @@ export function generateGradle({
           linuxArches == 1
             ? `
 \tcase OperatingSystem.LINUX:
-\t\tproject.ext.lwjglNatives = "natives-linux${platform.linux ? '' : platform['linux-arm64'] ? '-arm64' : '-arm32'}"
+\t\tproject.ext.lwjglNatives = "natives-linux${getLinuxSuffix(platform)}"
 \t\tbreak`
             : `
 \tcase OperatingSystem.LINUX:
+\t\tproject.ext.lwjglNatives = "natives-linux"
 \t\tdef osArch = System.getProperty("os.arch")
-\t\tproject.ext.lwjglNatives = osArch.startsWith("arm") || osArch.startsWith("aarch64")
-\t\t\t? "natives-linux-\${osArch.contains("64") || osArch.startsWith("armv8") ? "arm64" : "arm32"}"
-\t\t\t: "natives-linux"
+\t\tif (osArch.startsWith("arm") || osArch.startsWith("aarch64")) {
+\t\t\tproject.ext.lwjglNatives += osArch.contains("64") || osArch.startsWith("armv8") ? "-arm64" : "-arm32"
+\t\t} else if  (osArch.startsWith("ppc")) {
+\t\t\tproject.ext.lwjglNatives += "-ppc64le"
+\t\t} else if  (osArch.startsWith("riscv")) {
+\t\t\tproject.ext.lwjglNatives += "-riscv64"
+\t\t}
 \t\tbreak`;
       }
       if (macosArches != 0) {
@@ -102,10 +112,14 @@ export function generateGradle({
         script +=
           linuxArches == 1
             ? `\n\t\tarrayOf("Linux", "FreeBSD", "SunOS", "Unit").any { name.startsWith(it) } ->
-\t\t\t"natives-linux${platform.linux ? '' : platform['linux-arm64'] ? '-arm64' : '-arm32'}"`
+\t\t\t"natives-linux${getLinuxSuffix(platform)}"`
             : `\n\t\tarrayOf("Linux", "FreeBSD", "SunOS", "Unit").any { name.startsWith(it) } ->
 \t\t\tif (arrayOf("arm", "aarch64").any { arch.startsWith(it) })
 \t\t\t\t"natives-linux\${if (arch.contains("64") || arch.startsWith("armv8")) "-arm64" else "-arm32"}"
+\t\t\telse if (arch.startsWith("ppc"))
+\t\t\t\t"natives-linux-ppc64le"
+\t\t\telse if (arch.startsWith("riscv"))
+\t\t\t\t"natives-linux-riscv64"
 \t\t\telse
 \t\t\t\t"natives-linux"`;
       }

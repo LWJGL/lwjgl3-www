@@ -1,7 +1,7 @@
 import { ScriptState } from '../BuildScript';
-import { BuildType } from '../types';
+import {BuildType} from '../types';
 import type { Addon } from '../types';
-import { generateDependencies, getArtifactName, getVersion, isNativeApplicableToAllPlatforms } from './script';
+import {generateDependencies, getArtifactName, getLinuxSuffix, getVersion, isNativeApplicableToAllPlatforms} from './script';
 
 export function generateIvy({
   build,
@@ -51,20 +51,23 @@ export function generateIvy({
 
   if (platformSingle === null) {
     script += `<!-- Add to build.xml -->`;
-    const linuxArches = +platform.linux + +platform['linux-arm64'] + +platform['linux-arm32'];
+    const linuxArches =
+      +platform.linux +
+      +platform['linux-arm64'] +
+      +platform['linux-arm32'] +
+      +platform['linux-ppc64le'] +
+      +platform['linux-riscv64'];
     if (linuxArches !== 0) {
       if (linuxArches === 1) {
         script += `
-<condition property="lwjgl.natives" value="natives-linux${
-          platform.linux ? '' : platform['linux-arm64'] ? '-arm64' : '-arm32'
-        }">${nl2}<os name="Linux"/>${nl1}</condition>`;
+<condition property="lwjgl.natives" value="natives-linux${getLinuxSuffix(platform)}">${nl2}<os name="Linux"/>${nl1}</condition>`;
       } else {
         if (platform.linux) {
           script += `
 <condition property="lwjgl.natives" value="natives-linux">
 \t<and>
 \t\t<os name="Linux"/>
-\t\t<not><matches string="\${os.arch}" pattern="^(arm|aarch64)"/></not>
+\t\t<not><matches string="\${os.arch}" pattern="^(arm|aarch64|ppc|riscv)"/></not>
 \t</and>
 </condition>`;
         }
@@ -85,6 +88,24 @@ export function generateIvy({
 \t\t<os name="Linux"/>
 \t\t<matches string="\${os.arch}" pattern="^arm"/>
 \t\t<not><matches string="\${os.arch}" pattern="64|^armv8"/></not>
+\t</and>
+</condition>`;
+        }
+        if (platform['linux-ppc64le']) {
+          script += `
+<condition property="lwjgl.natives" value="natives-linux-ppc64le">
+\t<and>
+\t\t<os name="Linux"/>
+\t\t<matches string="\${os.arch}" pattern="^ppc"/>
+\t</and>
+</condition>`;
+        }
+        if (platform['linux-riscv64']) {
+          script += `
+<condition property="lwjgl.natives" value="natives-linux-riscv64">
+\t<and>
+\t\t<os name="Linux"/>
+\t\t<matches string="\${os.arch}" pattern="^riscv"/>
 \t</and>
 </condition>`;
         }

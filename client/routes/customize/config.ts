@@ -97,6 +97,16 @@ function getInitialConfig(): BuildStore {
           title: 'Linux arm32',
           since: Version.LWJGL323,
         },
+        [Native.LinuxPPC64LE]: {
+          id: Native.LinuxPPC64LE,
+          title: 'Linux ppc64le',
+          since: Version.LWJGL334,
+        },
+        [Native.LinuxRISCV64]: {
+          id: Native.LinuxRISCV64,
+          title: 'Linux riscv64',
+          since: Version.LWJGL334,
+        },
         [Native.MacOS]: {
           id: Native.MacOS,
           title: 'macOS x64',
