@@ -15,6 +15,7 @@ export enum Version {
   LWJGL331 = '3.3.1',
   LWJGL332 = '3.3.2',
   LWJGL333 = '3.3.3',
+  LWJGL334 = '3.3.4',
   Nightly = 'nightly',
 }
 
@@ -86,6 +87,8 @@ export enum Native {
   Linux = 'linux',
   LinuxARM64 = 'linux-arm64',
   LinuxARM32 = 'linux-arm32',
+  LinuxPPC64LE = 'linux-ppc64le',
+  LinuxRISCV64 = 'linux-riscv64',
   MacOS = 'macos',
   MacOSARM64 = 'macos-arm64',
   Windows = 'windows',
@@ -94,10 +97,13 @@ export enum Native {
 }
 
 export const NATIVE_LTE_322 = [Native.Linux, Native.MacOS, Native.Windows];
+export const NATIVE_LTE_333 = [...NATIVE_LTE_322, Native.LinuxARM64, Native.LinuxARM32, Native.MacOSARM64, Native.WindowsX86, Native.WindowsARM64];
 export const NATIVE_ALL = [
   Native.Linux,
   Native.LinuxARM64,
   Native.LinuxARM32,
+  Native.LinuxPPC64LE,
+  Native.LinuxRISCV64,
   Native.MacOS,
   Native.MacOSARM64,
   Native.Windows,

@@ -1,4 +1,4 @@
-import { Binding, Native, NATIVE_ALL, NATIVE_LTE_322, Version } from '../types';
+import { Binding, Native, NATIVE_LTE_322, NATIVE_LTE_333, Version } from '../types';
 import type { BuildBindings } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
@@ -17,7 +17,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'FreeType',
       description: 'A freely available software library to render fonts.',
       website: 'https://freetype.org/',
-      natives: NATIVE_ALL,
+      natives: NATIVE_LTE_333,
     },
     [Binding.HARFBUZZ]: {
       id: Binding.HARFBUZZ,
@@ -25,7 +25,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       description:
         'A text shaping library that allows programs to convert a sequence of Unicode input into properly formatted and positioned glyph output — for any writing system and language.',
       website: 'https://harfbuzz.github.io/',
-      natives: NATIVE_ALL,
+      natives: NATIVE_LTE_333,
     },
     [Binding.HWLOC]: {
       id: Binding.HWLOC,
@@ -33,7 +33,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       description:
         'A portable abstraction of the hierarchical topology of modern architectures, including NUMA memory nodes, sockets, shared caches, cores and simultaneous multithreading.',
       website: 'https://www.open-mpi.org/projects/hwloc/',
-      natives: NATIVE_ALL,
+      natives: NATIVE_LTE_333,
     },
     [Binding.KTX]: {
       id: Binding.KTX,
