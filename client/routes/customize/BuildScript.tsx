@@ -64,7 +64,9 @@ const ScriptLogo = styled('img', {
 const Pre = styled('pre', {
   maxWidth: 'calc(100vw - 3.6rem)',
   overflow: 'auto',
-  padding: '$gutter',
+  // padding: '$gutter',
+  paddingTop: '1rem',
+  paddingBottom: '5.5rem',
   backgroundColor: '$caution50',
   border: '1px solid $gray700',
   fontSize: '$sm',
@@ -107,7 +109,7 @@ const selector = createSelectorDeepEqual(
       selectedAddons,
     } as ScriptState;
   },
-  (data) => data
+  (data) => data,
 );
 
 export function BuildScript({ configDownload, configLoad }: Props) {
