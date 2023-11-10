@@ -16,16 +16,46 @@ import lwjgl_332 from './versions/3.3.2';
 import lwjgl_333 from './versions/3.3.3';
 import lwjgl_nightly from './versions/nightly';
 import { Native, BuildType, Mode, Version, Language, Preset, NATIVE_ALL, Addon } from './types';
+import { getUserAgentData } from '~/services/userAgentData';
 
 // Types
 import type { BuildStore, BuildStoreSnapshot, BuildBindings, Binding } from './types';
 type BuildBindingsReducer = (opt: BuildBindings) => BuildBindings;
 
 export function getDefaultPlatform(): Native {
-  if (navigator.platform.indexOf('Mac') > -1 || navigator.platform.indexOf('iP') > -1) {
-    return Native.MacOS;
-  } else if (navigator.platform.indexOf('Linux') > -1) {
-    return Native.Linux;
+  let uaData = getUserAgentData();
+  let platform: string | null = '';
+  let arch: string | null = null;
+
+  if (uaData != null) {
+    platform = uaData.platform;
+    arch = uaData.architecture;
+  } else if (navigator.platform) {
+    platform = navigator.platform;
+  }
+
+  if (platform !== null) {
+    if (platform.toLowerCase().startsWith('mac') || platform.toLowerCase().startsWith('ip')) {
+      if (arch !== null && arch.indexOf('arm') > -1) {
+        return Native.MacOSARM64;
+      }
+      return Native.MacOS;
+    } else if (platform.toLowerCase().includes('linux')) {
+      if (arch !== null) {
+        if (arch.indexOf('arm') > -1) {
+          return Native.LinuxARM64;
+        } else if (arch.indexOf('ppc') > -1) {
+          return Native.LinuxPPC64LE;
+        } else if (arch.indexOf('risc') > -1) {
+          return Native.LinuxRISCV64;
+        }
+      }
+      return Native.Linux;
+    }
+  }
+
+  if (arch !== null && arch.indexOf('arm') > -1) {
+    return Native.WindowsARM64;
   }
 
   return Native.Windows;

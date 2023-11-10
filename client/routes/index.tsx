@@ -1,6 +1,7 @@
 import { Component, lazy } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { PageError } from './PageError';
+import { setUserAgentData } from '~/services/userAgentData';
 // import { sleep } from '../services/sleep';
 
 // function $R(fn: () => Promise<{ default: React.ComponentType<any> }>) {
@@ -39,7 +40,9 @@ function $R(fn: () => Promise<{ default: React.ComponentType<any> }>) {
 export const Home = $R(() => import(/* webpackChunkName: "route-home" */ './home'));
 export const Guide = $R(() => import(/* webpackChunkName: "route-guide" */ './guide'));
 export const Download = $R(() => import(/* webpackChunkName: "route-download" */ './download'));
-export const Customize = $R(() => import(/* webpackChunkName: "route-customize" */ './customize'));
+export const Customize = $R(() =>
+  setUserAgentData().then(() => import(/* webpackChunkName: "route-customize" */ './customize')),
+);
 export const Browse = $R(() => import(/* webpackChunkName: "route-browse" */ './browse'));
 export const Source = $R(() => import(/* webpackChunkName: "route-source" */ './source'));
 export const License = $R(() => import(/* webpackChunkName: "route-license" */ './license'));
