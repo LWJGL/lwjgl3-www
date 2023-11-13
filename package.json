@@ -23,7 +23,7 @@
     }
   },
   "dependencies": {
-    "@aws-sdk/client-s3": "3.445.0",
+    "@aws-sdk/client-s3": "3.449.0",
     "@fastify/accepts": "4.2.0",
     "@fastify/etag": "4.2.0",
     "@fastify/helmet": "11.1.1",
@@ -35,7 +35,7 @@
     "pug": "3.0.2"
   },
   "devDependencies": {
-    "@aws-sdk/client-cloudfront": "3.445.0",
+    "@aws-sdk/client-cloudfront": "3.449.0",
     "@babel/core": "7.23.3",
     "@babel/preset-env": "7.23.3",
     "@babel/preset-react": "7.23.3",
@@ -58,7 +58,7 @@
     "core-js": "3.33.2",
     "cssnano": "6.0.1",
     "eslint": "8.53.0",
-    "eslint-plugin-react-hooks": "0.0.0-experimental-0e352ea01-20231109",
+    "eslint-plugin-react-hooks": "0.0.0-experimental-6b3834a45-20231110",
     "framer-motion": "10.16.4",
     "gzip-size": "7.0.0",
     "history": "5.3.0",
@@ -71,12 +71,12 @@
     "postcss-preset-env": "9.3.0",
     "postcss-scss": "4.0.9",
     "prettier": "3.0.3",
-    "react": "0.0.0-experimental-0e352ea01-20231109",
-    "react-dom": "0.0.0-experimental-0e352ea01-20231109",
+    "react": "0.0.0-experimental-6b3834a45-20231110",
+    "react-dom": "0.0.0-experimental-6b3834a45-20231110",
     "react-error-boundary": "4.0.11",
     "react-fast-compare": "3.2.2",
-    "react-is": "0.0.0-experimental-0e352ea01-20231109",
-    "react-refresh": "0.15.0-canary-0e352ea01-20231109",
+    "react-is": "0.0.0-experimental-6b3834a45-20231110",
+    "react-refresh": "0.15.0-canary-6b3834a45-20231110",
     "reselect": "4.1.8",
     "scroll-into-view-if-needed": "3.1.0",
     "shiki": "0.14.5",
@@ -89,10 +89,10 @@
     "zustand": "4.4.6"
   },
   "overrides": {
-    "react": "0.0.0-experimental-0e352ea01-20231109",
-    "react-dom": "0.0.0-experimental-0e352ea01-20231109",
-    "react-is": "0.0.0-experimental-0e352ea01-20231109",
-    "react-refresh": "0.15.0-canary-0e352ea01-20231109"
+    "react": "0.0.0-experimental-6b3834a45-20231110",
+    "react-dom": "0.0.0-experimental-6b3834a45-20231110",
+    "react-is": "0.0.0-experimental-6b3834a45-20231110",
+    "react-refresh": "0.15.0-canary-6b3834a45-20231110"
   },
   "scripts": {
     "start": "run-p dev:js dev:server",

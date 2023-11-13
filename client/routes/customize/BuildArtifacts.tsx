@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Box } from '~/components/ui/Box';
-import { LazyOffscreen } from '~/components/ui/LazyOffscreen';
+import { LazyActivity } from '~/components/ui/LazyActivity';
 import { Checkbox, type CheckboxProps } from '~/components/forms/Selection';
 import { Anchor } from '~/components/lwjgl/Anchor';
 import { Text } from '~/components/ui/Text';
@@ -21,7 +21,7 @@ const getSupportedPlatforms = (
   natives: NativeMap,
   platformsSelected: Native[],
   platforms: Array<Native>,
-  disabled: boolean
+  disabled: boolean,
 ) => {
   let missing = platformsSelected.filter((key) => !platforms.includes(key as Native)) as Native[];
 
@@ -50,7 +50,7 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
   const dispatch = useDispatch();
   const onChange: CheckboxProps['onChange'] = useCallback(
     (e, artifact: Binding) => dispatch(createActionArtifactToggle(artifact)),
-    [dispatch]
+    [dispatch],
   );
   const contents = useStore(selectorContents);
   const availability = useStore(selectorAvailability);
@@ -61,7 +61,7 @@ export const BuildArtifacts: React.FC<{ children?: never }> = () => {
 
   const platformsSelectedArr = Object.keys(platformsSelected).filter(
     //@ts-expect-error
-    (key) => platformsSelected[key] === true
+    (key) => platformsSelected[key] === true,
   ) as Native[];
 
   return (
@@ -130,14 +130,14 @@ const BuildArtifact: React.FC<Props> = ({
   return (
     <Checkbox
       description={
-        <LazyOffscreen mode={showDescriptions ? 'visible' : 'hidden'}>
+        <LazyActivity mode={showDescriptions ? 'visible' : 'hidden'}>
           <BuildArtifactDescription
             natives={natives}
             platformsSelected={platformsSelected}
             artifact={artifact}
             disabled={disabled}
           />
-        </LazyOffscreen>
+        </LazyActivity>
       }
       value={artifact.id}
       disabled={disabled}

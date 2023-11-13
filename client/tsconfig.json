@@ -14,8 +14,7 @@
     "lib": ["DOM", "ESNext"],
     "paths": {
       "~/*": ["./*"]
-    },
-    "types": ["react", "react-dom", "react-is", "lodash-es"]
+    }
   },
   "typeAcquisition": {
     "enable": false

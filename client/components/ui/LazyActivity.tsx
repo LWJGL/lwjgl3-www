@@ -1,6 +1,6 @@
-import { unstable_Offscreen as Offscreen, useEffect, useRef } from 'react';
+import { unstable_Activity as Activity, useEffect, useRef } from 'react';
 
-// Wrapper around the Offscreen API that defers rendering the Offscreen tree initially,
+// Wrapper around the Activity API that defers rendering the Activity tree initially,
 // until it's been explicitly marked as "visible".
 //
 // This allows UIs that make heavy use of Suspense (such as the Object Inspector)
@@ -10,7 +10,7 @@ interface Props {
   mode: 'hidden' | 'visible';
 }
 
-export const LazyOffscreen: FCC<Props> = ({ children, mode }) => {
+export const LazyActivity: FCC<Props> = ({ children, mode }) => {
   const hasBeenVisibleRef = useRef(false);
   const hasBeenVisible = hasBeenVisibleRef.current;
 
@@ -24,5 +24,5 @@ export const LazyOffscreen: FCC<Props> = ({ children, mode }) => {
     return null;
   }
 
-  return <Offscreen children={children} mode={mode} />;
+  return <Activity children={children} mode={mode} />;
 };
