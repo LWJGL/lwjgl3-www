@@ -51,14 +51,14 @@ export const FilePicker: React.FC<Props> = ({ disabled, placeholder = 'Select a 
       setFiles(
         e.target.files && e.target.files.length
           ? [...Array.from(e.target.files)] // Firefox returns the same array instance each time for some reason
-          : null
+          : null,
       );
 
       if (onChange != null) {
         onChange(e);
       }
     },
-    [onChange]
+    [onChange],
   );
 
   const handleButtonClick = useCallback(() => {

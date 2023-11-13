@@ -27,7 +27,7 @@ export async function concurrentRun(concurrency, iterable, iteratorFn) {
           await iteratorFn(item);
         }
         resolve();
-      })
+      }),
     );
   }
 

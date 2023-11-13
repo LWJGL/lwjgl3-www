@@ -36,7 +36,7 @@ export function BuildFooter({ downloadRef }: Props) {
       }
       dispatch(createActionConfigLoad(payload));
     },
-    [dispatch]
+    [dispatch],
   );
 
   const download = useCallback(() => {

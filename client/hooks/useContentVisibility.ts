@@ -39,7 +39,7 @@ function init() {
         }
       });
     },
-    { rootMargin: '50px 0px 100px 0px' }
+    { rootMargin: '50px 0px 100px 0px' },
   );
 
   resizeObservers = new ResizeObserver((entries: ResizeObserverEntry[]) => {

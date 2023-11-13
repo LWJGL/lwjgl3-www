@@ -112,9 +112,9 @@ export function generateDependencies(
     artifact: BindingDefinition,
     groupId: string,
     artifactId: string,
-    hasEnabledNativePlatform: boolean
+    hasEnabledNativePlatform: boolean,
   ) => string,
-  generateNative?: (artifact: BindingDefinition, groupId: string, artifactId: string) => string
+  generateNative?: (artifact: BindingDefinition, groupId: string, artifactId: string) => string,
 ): string {
   let script = '';
   let nativesBundle = '';

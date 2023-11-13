@@ -146,7 +146,7 @@ export function mix(color: Hsl, mix: Hsl, weight: number = 0.5) {
   const mixChannels = toRGB(mix);
   return setAlpha(
     fromRGB(toRGB(color).map((channelA, i) => Math.round(mixChannels[i] + (channelA - mixChannels[i]) * weight))),
-    mix.alpha + (mix.alpha - color.alpha) * weight
+    mix.alpha + (mix.alpha - color.alpha) * weight,
   );
 }
 

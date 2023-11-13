@@ -29,7 +29,7 @@ export const ConnectedRadio: React.FC<ConnectedRadioProps> = ({ name, value, opt
     (e, val: any) => {
       dispatch(action(val));
     },
-    [dispatch, action]
+    [dispatch, action],
   );
 
   return (

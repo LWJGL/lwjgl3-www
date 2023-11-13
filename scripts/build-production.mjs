@@ -41,7 +41,7 @@ compiler.run((err, stats) => {
           errors: true,
           errorDetails: true,
           warnings: false,
-        })
+        }),
       );
       process.exit(1);
     }
@@ -53,7 +53,7 @@ compiler.run((err, stats) => {
           all: false,
           maxModules: 0,
           warnings: true,
-        })
+        }),
       );
     }
 
@@ -69,9 +69,9 @@ compiler.run((err, stats) => {
           chunkGroups: true,
         }),
         null,
-        2
+        2,
       ),
-      { encoding: 'utf8' }
+      { encoding: 'utf8' },
     );
   });
 });

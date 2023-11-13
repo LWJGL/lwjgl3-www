@@ -57,7 +57,7 @@ export class Cloudfront extends Stack {
             override: true,
           },
         },
-      }
+      },
     );
 
     const responseHeadersPolicyStatic = new cloudfront.ResponseHeadersPolicy(this, 'response-headers-policy-static', {
@@ -239,7 +239,7 @@ export class Cloudfront extends Stack {
       headerBehavior: cloudfront.OriginRequestHeaderBehavior.all(
         // 'CloudFront-Viewer-Address',
         // 'CloudFront-Viewer-Country',
-        'CloudFront-Forwarded-Proto'
+        'CloudFront-Forwarded-Proto',
       ),
       queryStringBehavior: cloudfront.OriginRequestQueryStringBehavior.allowList('path'),
     });

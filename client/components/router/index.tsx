@@ -147,7 +147,7 @@ export function Router({
   let basename = normalizePathname(basenameProp);
   let navigationContext = useMemo(
     () => ({ basename, navigator, static: staticProp, pending }),
-    [basename, navigator, staticProp, pending]
+    [basename, navigator, staticProp, pending],
   );
 
   if (typeof locationProp === 'string') {
@@ -321,7 +321,7 @@ export function useNavigate(): NavigateFunction {
 
       (!!options.replace ? navigator.replace : navigator.push)(path, options.state);
     },
-    [basename, navigator, routePathnamesJson, locationPathname]
+    [basename, navigator, routePathnamesJson, locationPathname],
   );
 
   return navigate;
@@ -362,7 +362,7 @@ export function useResolvedPath(to: To): Path {
 
   return useMemo(
     () => resolveTo(to, JSON.parse(routePathnamesJson), locationPathname),
-    [to, routePathnamesJson, locationPathname]
+    [to, routePathnamesJson, locationPathname],
   );
 }
 
@@ -405,9 +405,9 @@ export function useRoutes(routes: RouteObject[], locationArg?: Partial<Location>
           pathname: joinPaths([parentPathnameBase, match.pathname]),
           pathnameBase:
             match.pathnameBase === '/' ? parentPathnameBase : joinPaths([parentPathnameBase, match.pathnameBase]),
-        })
+        }),
       ),
-    parentMatches
+    parentMatches,
   );
 }
 
@@ -515,7 +515,7 @@ export interface RouteMatch<ParamKey extends string = string> {
 export function matchRoutes(
   routes: RouteObject[],
   locationArg: Partial<Location> | string,
-  basename = '/'
+  basename = '/',
 ): RouteMatch[] | null {
   let location = typeof locationArg === 'string' ? parsePath(locationArg) : locationArg;
 
@@ -552,7 +552,7 @@ function flattenRoutes(
   routes: RouteObject[],
   branches: RouteBranch[] = [],
   parentsMeta: RouteMeta[] = [],
-  parentPath = ''
+  parentPath = '',
 ): RouteBranch[] {
   routes.forEach((route, index) => {
     let meta: RouteMeta = {
@@ -593,8 +593,8 @@ function rankRouteBranches(branches: RouteBranch[]): void {
       ? b.score - a.score // Higher score first
       : compareIndexes(
           a.routesMeta.map((meta) => meta.childrenIndex),
-          b.routesMeta.map((meta) => meta.childrenIndex)
-        )
+          b.routesMeta.map((meta) => meta.childrenIndex),
+        ),
   );
 }
 
@@ -622,7 +622,7 @@ function computeScore(path: string, index: boolean | undefined): number {
     .reduce(
       (score, segment) =>
         score + (paramRe.test(segment) ? dynamicSegmentValue : segment === '' ? emptySegmentValue : staticSegmentValue),
-      initialScore
+      initialScore,
     );
 }
 
@@ -644,7 +644,7 @@ function matchRouteBranch<ParamKey extends string = string>(
   branch: RouteBranch,
   // TODO: attach original route object inside routesMeta so we don't need this arg
   routesArg: RouteObject[],
-  pathname: string
+  pathname: string,
 ): RouteMatch<ParamKey>[] | null {
   let routes = routesArg;
   let { routesMeta } = branch;
@@ -691,28 +691,31 @@ export function renderMatches(matches: RouteMatch[] | null): React.ReactElement 
 function _renderMatches(matches: RouteMatch[] | null, parentMatches: RouteMatch[] = []): React.ReactElement | null {
   if (matches == null) return null;
 
-  return matches.reduceRight((outlet, match, index) => {
-    // const children = match.route.element ? (
-    //   isValidElement(match.route.element) ? (
-    //     match.route.element
-    //   ) : (
-    //     //@ts-expect-error
-    //     createElement(match.route.element)
-    //   )
-    // ) : (
-    //   <Outlet />
-    // );
+  return matches.reduceRight(
+    (outlet, match, index) => {
+      // const children = match.route.element ? (
+      //   isValidElement(match.route.element) ? (
+      //     match.route.element
+      //   ) : (
+      //     //@ts-expect-error
+      //     createElement(match.route.element)
+      //   )
+      // ) : (
+      //   <Outlet />
+      // );
 
-    return (
-      <RouteContext.Provider
-        children={match.route.element !== undefined ? match.route.element : <Outlet />}
-        value={{
-          outlet,
-          matches: parentMatches.concat(matches.slice(0, index + 1)),
-        }}
-      />
-    );
-  }, null as React.ReactElement | null);
+      return (
+        <RouteContext.Provider
+          children={match.route.element !== undefined ? match.route.element : <Outlet />}
+          value={{
+            outlet,
+            matches: parentMatches.concat(matches.slice(0, index + 1)),
+          }}
+        />
+      );
+    },
+    null as React.ReactElement | null,
+  );
 }
 
 /**
@@ -770,7 +773,7 @@ type Mutable<T> = {
  */
 export function matchPath<ParamKey extends string = string>(
   pattern: PathPattern | string,
-  pathname: string
+  pathname: string,
 ): PathMatch<ParamKey> | null {
   if (typeof pattern === 'string') {
     pattern = { path: pattern, caseSensitive: false, end: true };

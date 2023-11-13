@@ -189,9 +189,12 @@ export function NavProgress() {
         step = 0.5;
       }
 
-      trickleTimeoutId.current = setTimeout(() => {
-        dispatch({ type: 'progress', payload: progress >= PERC_MAX ? PERC_MAX : progress + step });
-      }, 200 + Math.floor(400 * Math.random()));
+      trickleTimeoutId.current = setTimeout(
+        () => {
+          dispatch({ type: 'progress', payload: progress >= PERC_MAX ? PERC_MAX : progress + step });
+        },
+        200 + Math.floor(400 * Math.random()),
+      );
     }
   }, [state.progress]);
 

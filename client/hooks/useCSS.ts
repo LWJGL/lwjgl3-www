@@ -12,7 +12,7 @@ export function useCSS(href: string) {
       () => {
         css.media = 'screen';
       },
-      { once: true }
+      { once: true },
     );
 
     document.head.append(css);

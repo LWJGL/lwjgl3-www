@@ -21,7 +21,7 @@ function resize() {
   dispatchEvent(
     new CustomEvent('screenfit', {
       detail: viewport,
-    })
+    }),
   );
 }
 

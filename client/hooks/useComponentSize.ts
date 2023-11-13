@@ -24,7 +24,7 @@ export function useComponentSize(ref: React.RefObject<HTMLElement>) {
         setComponentSize(getSize(ref.current));
       }
     },
-    [ref]
+    [ref],
   );
 
   useLayoutEffect(() => {

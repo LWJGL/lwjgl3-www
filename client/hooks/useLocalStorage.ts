@@ -24,7 +24,7 @@ export function useLocalStorage<T>(key: string, initialValue: T): HookSignature<
       }
       setKeyValue(value);
     },
-    [key, setKeyValue]
+    [key, setKeyValue],
   );
 
   return [keyValue, setValue];

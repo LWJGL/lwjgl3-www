@@ -12,7 +12,7 @@ export function flattenChildren(children: ReactNode, keys: (string | number)[] =
         acc.push(
           cloneElement(node, {
             key: keys.concat(String(node.key)).join('.'),
-          })
+          }),
         );
       } else if (typeof node === 'string' || typeof node === 'number') {
         acc.push(node);

@@ -96,7 +96,7 @@ const main = async () => {
       parser: 'babel',
       printWidth: 120,
       singleQuote: true,
-    })
+    }),
   );
 };
 

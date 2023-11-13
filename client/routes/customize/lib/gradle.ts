@@ -1,7 +1,7 @@
 import { ScriptState } from '../BuildScript';
 import { Language, BuildType } from '../types';
 import type { Addon, BindingDefinition, PlatformSelection } from '../types';
-import {generateDependencies, getLinuxSuffix, getVersion, isNativeApplicableToAllPlatforms} from './script';
+import { generateDependencies, getLinuxSuffix, getVersion, isNativeApplicableToAllPlatforms } from './script';
 import { versionNum } from '../reducer';
 
 export function generateGradle({
@@ -182,7 +182,7 @@ dependencies {`;
       (artifact, groupId, artifactId) =>
         `\n\t${guardNative(artifact, platform)}runtimeOnly "${groupId}:${artifactId}:${
           hasBoM ? '' : `${v}`
-        }:${classifier}"`
+        }:${classifier}"`,
     );
 
     selectedAddons.forEach((id: Addon) => {
@@ -209,8 +209,8 @@ dependencies {`;
       (artifact, groupId, artifactId) =>
         `\n\t${guardNative(
           artifact,
-          platform
-        )}runtimeOnly("${groupId}", "${artifactId}"${v}, classifier = ${classifier})`
+          platform,
+        )}runtimeOnly("${groupId}", "${artifactId}"${v}, classifier = ${classifier})`,
     );
 
     selectedAddons.forEach((id: Addon) => {

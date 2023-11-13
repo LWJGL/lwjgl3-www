@@ -1,5 +1,5 @@
 const nativeExceptions = [EvalError, RangeError, ReferenceError, SyntaxError, TypeError, URIError].filter(
-  (except) => typeof except === 'function'
+  (except) => typeof except === 'function',
 );
 
 /* Throw native errors. ref: https://bit.ly/2VsoCGE */

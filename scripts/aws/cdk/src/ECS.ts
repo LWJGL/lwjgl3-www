@@ -27,7 +27,7 @@ export class ECS extends Stack {
     securityGroup.addIngressRule(
       ec2.Peer.ipv6('2600:1f18:14f5:1500::/56'),
       ec2.Port.allTraffic(),
-      'Allow internal IPv6 Traffic'
+      'Allow internal IPv6 Traffic',
     );
 
     // ! Not needed since allowAllOutbound defaults to true

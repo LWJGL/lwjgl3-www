@@ -431,7 +431,7 @@ function getNormalizedEventCoords(e: React.PointerEvent, frame: DOMRect): Coordi
 function getTranslationCoordinates(
   e: React.PointerEvent | React.KeyboardEvent,
   frame: DOMRect,
-  initialSize: number
+  initialSize: number,
 ): Translation {
   const halfSize = initialSize / 2;
   const start: Coordinates =
@@ -477,7 +477,7 @@ type LinkStyledProps = React.ComponentProps<typeof LinkStyled>;
 function initTransition(
   e: React.PointerEvent | React.KeyboardEvent,
   element: HTMLElement,
-  rounding?: ButtonStyledProps['rounding']
+  rounding?: ButtonStyledProps['rounding'],
 ) {
   const isUnbounded = rounding === 'icon';
   const frame = element.getBoundingClientRect();
@@ -507,7 +507,7 @@ function useMaterialButton(
   ref: React.RefObject<HTMLButtonElement | HTMLAnchorElement>,
   rippleRef: React.RefObject<HTMLSpanElement>,
   rounding: ButtonStyledProps['rounding'],
-  props: any
+  props: any,
 ) {
   // Use timeout to allow for the ripple animation to complete even when we release the button
   const animationTimeout = useRef(0);
@@ -645,7 +645,7 @@ function useMaterialButton(
         }
       },
     }),
-    [ref, onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rounding]
+    [ref, onPointerDown, onPointerUp, onKeyDown, onKeyUp, onClick, rounding],
   );
 
   return [eventHandlers, otherProps];
@@ -654,7 +654,7 @@ function useMaterialButton(
 export const Button = forwardRef<HTMLButtonElement, ButtonStyledProps>(
   (
     { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const ref = useShareForwardedRef<HTMLButtonElement>(forwardedRef);
     const rippleRef = useRef<HTMLSpanElement>(null);
@@ -675,13 +675,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonStyledProps>(
         <ButtonLabel>{children}</ButtonLabel>
       </ButtonStyled>
     );
-  }
+  },
 );
 
 export const AnchorButton = forwardRef<HTMLAnchorElement, AnchorStyledProps>(
   (
     { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const ref = useShareForwardedRef<HTMLAnchorElement>(forwardedRef);
     const rippleRef = useRef<HTMLSpanElement>(null);
@@ -699,13 +699,13 @@ export const AnchorButton = forwardRef<HTMLAnchorElement, AnchorStyledProps>(
         <ButtonLabel>{children}</ButtonLabel>
       </AnchorStyled>
     );
-  }
+  },
 );
 
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkStyledProps>(
   (
     { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
-    forwardedRef
+    forwardedRef,
   ) => {
     const ref = useShareForwardedRef<HTMLAnchorElement>(forwardedRef);
     const rippleRef = useRef<HTMLSpanElement>(null);
@@ -723,5 +723,5 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkStyledProps>(
         <ButtonLabel>{children}</ButtonLabel>
       </LinkStyled>
     );
-  }
+  },
 );

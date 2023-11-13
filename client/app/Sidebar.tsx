@@ -122,7 +122,7 @@ export const Sidebar: FCC = ({ children }) => {
         animate(x, 0);
       }
     },
-    [x]
+    [x],
   );
 
   useEffect(() => {
@@ -148,7 +148,7 @@ export const Sidebar: FCC = ({ children }) => {
       // Auto-focus current active link
       if (sidebarRef.current !== null) {
         let currentLink: HTMLAnchorElement | HTMLButtonElement | null = sidebarRef.current.querySelector(
-          `a[href="${document.location.pathname}"]`
+          `a[href="${document.location.pathname}"]`,
         );
         if (!currentLink) {
           currentLink = buttonRef.current;

@@ -92,7 +92,7 @@ export function getFiles(
   selected: Array<Binding>,
   platforms: PlatformSelection,
   source: boolean,
-  javadoc: boolean
+  javadoc: boolean,
 ): Array<string> {
   const files: Array<string> = [];
   const rootRegExp = new RegExp(`^${path}/bin/`);
@@ -267,7 +267,7 @@ export function downloadFiles(files: Array<string>, jszip: JSZip, log: (msg: str
           }
         }
         resolve();
-      })
+      }),
     );
   }
 
@@ -279,7 +279,7 @@ export async function beginDownload(
   store: BuildStore,
   downloadCancel: (msg?: string) => void,
   downloadLog: (msg: string) => void,
-  downloadComplete: () => void
+  downloadComplete: () => void,
 ) {
   // Fetch all data that we will need from the store
   const { build, path, selected, platforms, source, javadoc, includeJSON, version, addons } = getBuild(store);
@@ -335,7 +335,7 @@ export async function beginDownload(
 
   saveAs(
     blob,
-    `lwjgl-${build}-${build === BuildType.Release ? version : new Date().toISOString().slice(0, 10)}-custom.zip`
+    `lwjgl-${build}-${build === BuildType.Release ? version : new Date().toISOString().slice(0, 10)}-custom.zip`,
   );
 
   downloadComplete();

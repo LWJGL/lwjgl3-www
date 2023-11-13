@@ -40,7 +40,7 @@ export function BrowserRouter({ basename, children, window }: BrowserRouterProps
           setState(update);
         });
       }),
-    [history, startTransition]
+    [history, startTransition],
   );
 
   return (
@@ -70,7 +70,7 @@ export interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorEle
  */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function LinkWithRef(
   { onClick, replace = false, state, target, to, ...rest },
-  ref
+  ref,
 ) {
   let href = useHref(to);
   let internalOnClick = useLinkClickHandler(to, { replace, state, target });
@@ -108,7 +108,7 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavL
     to,
     ...rest
   },
-  ref
+  ref,
 ) {
   let location = useLocation();
   let path = useResolvedPath(to);
@@ -166,7 +166,7 @@ export function useLinkClickHandler<E extends Element = HTMLAnchorElement>(
     target?: React.HTMLAttributeAnchorTarget;
     replace?: boolean;
     state?: any;
-  } = {}
+  } = {},
 ): (event: React.MouseEvent<E, MouseEvent>) => void {
   let navigate = useNavigate();
   let location = useLocation();
@@ -188,7 +188,7 @@ export function useLinkClickHandler<E extends Element = HTMLAnchorElement>(
         navigate(to, { replace, state });
       }
     },
-    [location, navigate, path, replaceProp, state, target, to]
+    [location, navigate, path, replaceProp, state, target, to],
   );
 }
 
@@ -219,7 +219,7 @@ export function useSearchParams(defaultInit?: URLSearchParamsInit) {
     (nextInit: URLSearchParamsInit, navigateOptions?: { replace?: boolean; state?: any }) => {
       navigate('?' + createSearchParams(nextInit), navigateOptions);
     },
-    [navigate]
+    [navigate],
   );
 
   return [searchParams, setSearchParams] as const;
@@ -257,6 +257,6 @@ export function createSearchParams(init: URLSearchParamsInit = ''): URLSearchPar
       : Object.keys(init).reduce((memo, key) => {
           let value = init[key];
           return memo.concat(Array.isArray(value) ? value.map((v) => [key, v]) : [[key, value]]);
-        }, [] as ParamKeyValuePair[])
+        }, [] as ParamKeyValuePair[]),
   );
 }

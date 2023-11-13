@@ -140,7 +140,7 @@ function handler(event) {
     if (headers.host.value === 'slack.lwjgl.org') {
       return redirect(
         301,
-        'https://join.slack.com/t/lwjgl/shared_invite/enQtODI1MTY2MzE4MDk4LWE5ZjU5OTA0N2VmOWMxNDA1YjRlMTI3NzA0ZWMyYjFkYzI0NGIxMDI4ZTA0ODcxYWQ1MzI4YWRiYTFjNTMyODE'
+        'https://join.slack.com/t/lwjgl/shared_invite/enQtODI1MTY2MzE4MDk4LWE5ZjU5OTA0N2VmOWMxNDA1YjRlMTI3NzA0ZWMyYjFkYzI0NGIxMDI4ZTA0ODcxYWQ1MzI4YWRiYTFjNTMyODE',
       );
     }
 
@@ -169,12 +169,12 @@ function handler(event) {
   if (request.uri.startsWith('/forum/')) {
     return redirect(
       308,
-      `http://forum.lwjgl.org${request.uri.replace(/^\/forum/, '')}${formatQueryString(request.querystring)}`
+      `http://forum.lwjgl.org${request.uri.replace(/^\/forum/, '')}${formatQueryString(request.querystring)}`,
     );
   } else if (request.uri.startsWith('/wiki/')) {
     return redirect(
       308,
-      `http://wiki.lwjgl.org${request.uri.replace(/^\/wiki/, '')}${formatQueryString(request.querystring)}`
+      `http://wiki.lwjgl.org${request.uri.replace(/^\/wiki/, '')}${formatQueryString(request.querystring)}`,
     );
   }
 

@@ -119,7 +119,7 @@ mime.define(
     'application/json; charset=utf-8': ['json'],
     'application/manifest+json; charset=utf-8': ['webmanifest'],
   },
-  true
+  true,
 );
 
 // ------------------------------------------------------------------------------
@@ -157,7 +157,7 @@ app.register(fastifyStatic, {
       case 'favicon.ico':
         res.setHeader(
           'Cache-Control',
-          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`,
         );
         break;
       case 'favicon.ico.gz':
@@ -165,7 +165,7 @@ app.register(fastifyStatic, {
         res.setHeader('Content-Type', 'image/x-icon');
         res.setHeader(
           'Cache-Control',
-          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`,
         );
         break;
       case 'favicon.ico.br':
@@ -173,7 +173,7 @@ app.register(fastifyStatic, {
         res.setHeader('Content-Type', 'image/x-icon');
         res.setHeader(
           'Cache-Control',
-          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`,
         );
         break;
       case 'manifest.webmanifest':
@@ -182,7 +182,7 @@ app.register(fastifyStatic, {
       case 'sample.html':
         res.setHeader(
           'Cache-Control',
-          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`
+          `public,max-age=${3600 * 24 * 7},s-maxage=${3600 * 24 * 30},stale-while-revalidate=3600`,
         );
         break;
       case 'sw.js': {
@@ -388,7 +388,7 @@ shutdownController.signal.addEventListener('abort', () => {
       console.error('Server termination timeout. Forcing shutdown...');
       process.exit(1);
     },
-    PRODUCTION ? 5000 : 1000
+    PRODUCTION ? 5000 : 1000,
   );
   // Don't require the Node.js event loop to remain active.
   // If there is no other activity keeping the event loop running,
@@ -427,6 +427,6 @@ ${hr}
 Started server on:
 ${devUrl}
 ${hr}
-`
+`,
   );
 }

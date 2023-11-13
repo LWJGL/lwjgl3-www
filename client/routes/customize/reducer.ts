@@ -307,7 +307,7 @@ export const fields = {
 // Reducer
 export const reducer: React.Reducer<BuildStore, ActionMessage> = (
   state: BuildStore = config,
-  action: ActionMessage
+  action: ActionMessage,
 ) => {
   return produce(state, (draft: BuildStore) => {
     switch (action.type) {
@@ -381,7 +381,7 @@ export const reducer: React.Reducer<BuildStore, ActionMessage> = (
       case Action.TOGGLE_PLATFORM:
         const selections = state.natives.allIds.reduce(
           (previousValue, platform) => previousValue + (state.platform[platform] ? 1 : 0),
-          0
+          0,
         );
         if (selections > 1 || state.platform[action.platform] === false) {
           draft.platform[action.platform] = !state.platform[action.platform];

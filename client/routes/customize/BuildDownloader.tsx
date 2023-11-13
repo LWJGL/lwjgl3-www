@@ -133,7 +133,7 @@ export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
     (e: React.MouseEvent<HTMLButtonElement>) => {
       stop();
     },
-    [stop]
+    [stop],
   );
 
   const start = useCallback(() => {

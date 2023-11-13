@@ -21,7 +21,7 @@ export const BuildAddons: React.FC<{ children?: never }> = () => {
   const descriptions = useStore(selectorDescriptions);
   const onChange: CheckboxProps['onChange'] = useCallback(
     (e, addon: Addon) => dispatch(createActionAddonToggle(addon)),
-    [dispatch]
+    [dispatch],
   );
 
   return (

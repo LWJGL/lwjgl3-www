@@ -14,6 +14,6 @@ export async function computeMD5(filepath) {
     createReadStream(filepath, {
       encoding: 'utf-8',
       highWaterMark: 4 * 1024,
-    })
+    }),
   );
 }

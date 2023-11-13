@@ -78,7 +78,7 @@ async function install() {
     if (deps !== null) {
       files.push.apply(
         files,
-        deps.map(id => `/js/${manifest.assets[id]}`)
+        deps.map(id => `/js/${manifest.assets[id]}`),
       );
     }
   }
@@ -122,7 +122,7 @@ function onFetch(event) {
   const url = new URL(event.request.url);
   const req = event.request;
   event.respondWith(
-    req.method !== 'GET' || url.hostname !== self.location.hostname ? fetch(req) : cacheFirstStrategy(event, req, url)
+    req.method !== 'GET' || url.hostname !== self.location.hostname ? fetch(req) : cacheFirstStrategy(event, req, url),
   );
 }
 

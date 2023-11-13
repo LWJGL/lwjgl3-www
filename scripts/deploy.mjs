@@ -110,7 +110,7 @@ async function uploadFile(file) {
         // ACL: 'public-read',
         ContentMD5: Buffer.from(digest, 'hex').toString('base64'),
         ...headers,
-      })
+      }),
     );
   } catch (err) {
     console.error(`${basename}: ${err.message}`);

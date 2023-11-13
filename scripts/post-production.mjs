@@ -65,7 +65,7 @@ manifest.assets
           throw new Error(`Unknown record type: ${record.type}`);
       }
     },
-    []
+    [],
   )
   // populate chunk map
   .forEach(record => {

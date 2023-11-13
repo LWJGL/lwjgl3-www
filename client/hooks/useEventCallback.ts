@@ -10,7 +10,7 @@ export function useEventCallback(fn: Function, dependencies: Array<any>) {
       ref.current = fn;
     },
     // eslint-disable-next-line
-    [fn, ...dependencies]
+    [fn, ...dependencies],
   );
 
   return useCallback(() => {

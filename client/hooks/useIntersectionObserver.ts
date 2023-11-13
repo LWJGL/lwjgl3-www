@@ -4,7 +4,7 @@ import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 export function useIntersectionObserver(
   ref: React.RefObject<HTMLElement>,
   serverFallback: boolean = false,
-  options: IntersectionObserverInit = { rootMargin: '0px' }
+  options: IntersectionObserverInit = { rootMargin: '0px' },
 ) {
   const intersectingRef = useRef<boolean>(serverFallback);
   const [subscribe, getSnapshot, getServerSnapshot] = useMemo(() => {

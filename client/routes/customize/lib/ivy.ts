@@ -1,7 +1,13 @@
 import { ScriptState } from '../BuildScript';
-import {BuildType} from '../types';
+import { BuildType } from '../types';
 import type { Addon } from '../types';
-import {generateDependencies, getArtifactName, getLinuxSuffix, getVersion, isNativeApplicableToAllPlatforms} from './script';
+import {
+  generateDependencies,
+  getArtifactName,
+  getLinuxSuffix,
+  getVersion,
+  isNativeApplicableToAllPlatforms,
+} from './script';
 
 export function generateIvy({
   build,
@@ -60,7 +66,9 @@ export function generateIvy({
     if (linuxArches !== 0) {
       if (linuxArches === 1) {
         script += `
-<condition property="lwjgl.natives" value="natives-linux${getLinuxSuffix(platform)}">${nl2}<os name="Linux"/>${nl1}</condition>`;
+<condition property="lwjgl.natives" value="natives-linux${getLinuxSuffix(
+          platform,
+        )}">${nl2}<os name="Linux"/>${nl1}</condition>`;
       } else {
         if (platform.linux) {
           script += `
@@ -191,7 +199,7 @@ export function generateIvy({
           .map((p) => `<equals arg1="\${lwjgl.natives}" arg2="native-${p}"/>`);
 
         return `\t<condition property="lwjgl.natives.${getArtifactName(
-          artifact
+          artifact,
         )}" value="\${lwjgl.natives}" else="">${nl2}${
           predicates.length === 1 ? predicates : `<or>${nl3}${predicates.join(nl3)}${nl2}</or>`
         }${nl1}</condition>`;
@@ -219,7 +227,7 @@ export function generateIvy({
                 : `\${lwjgl.natives.${getArtifactName(artifact)}}`
             }"/>${nl2}</dependency>`
           : '/>'
-      }`
+      }`,
   );
 
   selectedAddons.forEach((id: Addon) => {

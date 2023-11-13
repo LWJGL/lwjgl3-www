@@ -8,10 +8,10 @@ const UIRadioChecked = 'ui/radio/checked';
 const UISwitch = 'ui/switch';
 
 register(
-  `<symbol id="${UICheckboxChecked}" viewBox="0 0 24 24"><path fill="none" stroke-width="2" stroke="currentColor" d="M19.7 6.3c-.4-.4-1-.4-1.4 0L9 15.6l-3.3-3.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l4 4c.2.2.4.3.7.3s.5-.1.7-.3l10-10c.4-.4.4-1 0-1.4z"></path></svg>`
+  `<symbol id="${UICheckboxChecked}" viewBox="0 0 24 24"><path fill="none" stroke-width="2" stroke="currentColor" d="M19.7 6.3c-.4-.4-1-.4-1.4 0L9 15.6l-3.3-3.3c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l4 4c.2.2.4.3.7.3s.5-.1.7-.3l10-10c.4-.4.4-1 0-1.4z"></path></svg>`,
 );
 register(
-  `<symbol id="${UICheckboxIndeterminate}" viewBox="0 0 24 24"><path fill="none" stroke-width="2" stroke="currentColor" d="M18 11H6c-.6 0-1 .4-1 1s.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1z"></path></symbol>`
+  `<symbol id="${UICheckboxIndeterminate}" viewBox="0 0 24 24"><path fill="none" stroke-width="2" stroke="currentColor" d="M18 11H6c-.6 0-1 .4-1 1s.4 1 1 1h12c.6 0 1-.4 1-1s-.4-1-1-1z"></path></symbol>`,
 );
 register(`<symbol id="${UIRadioChecked}" viewBox="-4 -4 8 8"><circle r="2" fill="currentColor"/></symbol>`);
 register(`<symbol id="${UISwitch}" viewBox="-4 -4 8 8"><circle r="3" fill="currentColor"/></symbol>`);
