@@ -104,14 +104,14 @@ export function generateMaven({
   }
 
   if (build !== BuildType.Release) {
-    script += `\t<repositories>
-\t\t<repository>
-\t\t\t<id>sonatype-snapshots</id>
-\t\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-\t\t\t<releases><enabled>false</enabled></releases>
-\t\t\t<snapshots><enabled>true</enabled></snapshots>
-\t\t</repository>
-\t</repositories>\n\n`;
+    script += `<repositories>
+\t<repository>
+\t\t<id>sonatype-snapshots</id>
+\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+\t\t<releases><enabled>false</enabled></releases>
+\t\t<snapshots><enabled>true</enabled></snapshots>
+\t</repository>
+</repositories>\n\n`;
   }
 
   if (hasBoM) {
