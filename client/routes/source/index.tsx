@@ -126,6 +126,22 @@ const SourceRoute: React.FC = () => (
 
         <Box>
           <BuildBadge
+              title="FreeType"
+              href="https://github.com/LWJGL-CI/freetype/actions/workflows/lwjgl.yml"
+              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/freetype/lwjgl.yml?branch=master"
+          />
+        </Box>
+
+        <Box>
+          <BuildBadge
+              title="HarfBuzz"
+              href="https://github.com/LWJGL-CI/harfbuzz/actions/workflows/lwjgl.yml"
+              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/harfbuzz/lwjgl.yml?branch=main"
+          />
+        </Box>
+
+        <Box>
+          <BuildBadge
             title="GLFW"
             href="https://github.com/LWJGL-CI/glfw/actions/workflows/lwjgl.yml"
             src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/glfw/lwjgl.yml?branch=master"
@@ -134,9 +150,25 @@ const SourceRoute: React.FC = () => (
 
         <Box>
           <BuildBadge
+              title="hwloc"
+              href="https://github.com/LWJGL-CI/hwloc/actions/workflows/lwjgl.yml"
+              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/hwloc/lwjgl.yml?branch=master"
+          />
+        </Box>
+
+        <Box>
+          <BuildBadge
             title="jemalloc"
             href="https://github.com/LWJGL-CI/jemalloc/actions/workflows/lwjgl.yml"
             src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/jemalloc/lwjgl.yml?branch=master"
+          />
+        </Box>
+
+        <Box>
+          <BuildBadge
+              title="KTX"
+              href="https://github.com/LWJGL-CI/KTX-Software/actions/workflows/lwjgl.yml"
+              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/KTX-Software/lwjgl.yml?branch=main"
           />
         </Box>
 
@@ -153,6 +185,14 @@ const SourceRoute: React.FC = () => (
             title="OpenAL Soft"
             href="https://github.com/LWJGL-CI/openal-soft/actions/workflows/lwjgl.yml"
             src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/openal-soft/lwjgl.yml?branch=master"
+          />
+        </Box>
+
+        <Box>
+          <BuildBadge
+              title="OpenXR Loader"
+              href="https://github.com/LWJGL-CI/OpenXR-SDK/actions/workflows/lwjgl.yml"
+              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/OpenXR-SDK/lwjgl.yml?branch=main"
           />
         </Box>
 
