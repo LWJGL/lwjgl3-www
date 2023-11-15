@@ -92,7 +92,7 @@ const SourceRoute: React.FC = () => (
           '@lg': { grid: 'auto-flow / repeat(3, 1fr)' },
         }}
       >
-        <Box css={{ '@lg': { gridRow: '1/7' } }}>
+        <Box css={{ '@lg': { gridRow: '1/9' } }}>
           <BuildBadge
             title="LWJGL"
             href="https://github.com/LWJGL-CI/lwjgl3/actions/workflows/CI.yml"
