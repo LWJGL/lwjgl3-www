@@ -116,7 +116,7 @@ export function generateGradle({
 \twhen {`;
       if (platform.freebsd) {
         script += `\n\t\t"FreeBSD".equals(name)                                    ->
-        \t\t\t"natives-freebsd"`
+\t\t\t"natives-freebsd"`
       }
       if (linuxArches != 0) {
         script +=
