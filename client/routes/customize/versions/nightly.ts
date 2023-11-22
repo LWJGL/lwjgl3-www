@@ -29,6 +29,7 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.OPENXR]: {
       ...(prev.byId[Binding.OPENXR] as BindingDefinition),
       natives: [
+        Native.FreeBSD,
         Native.Linux,
         Native.LinuxARM64,
         Native.LinuxARM32,

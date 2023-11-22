@@ -40,6 +40,8 @@ export function getDefaultPlatform(): Native {
         return Native.MacOSARM64;
       }
       return Native.MacOS;
+    } else if (platform.toLowerCase().includes('freebsd')) {
+      return Native.FreeBSD;
     } else if (platform.toLowerCase().includes('linux')) {
       if (arch !== null) {
         if (arch.indexOf('arm') > -1) {
@@ -112,6 +114,11 @@ function getInitialConfig(): BuildStore {
     },
     natives: {
       byId: {
+        [Native.FreeBSD]: {
+          id: Native.FreeBSD,
+          title: 'FreeBSD x64',
+          since: Version.LWJGL334,
+        },
         [Native.Linux]: {
           id: Native.Linux,
           title: 'Linux x64',
@@ -285,6 +292,7 @@ function getInitialConfig(): BuildStore {
     includeJSON: true,
     language: Language.Groovy,
     platform: {
+      [Native.FreeBSD]: false,
       [Native.Linux]: false,
       [Native.LinuxARM64]: false,
       [Native.LinuxARM32]: false,

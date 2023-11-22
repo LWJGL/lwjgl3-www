@@ -84,6 +84,7 @@ export enum BuildType {
 }
 
 export enum Native {
+  FreeBSD = 'freebsd',
   Linux = 'linux',
   LinuxARM64 = 'linux-arm64',
   LinuxARM32 = 'linux-arm32',
@@ -106,6 +107,7 @@ export const NATIVE_LTE_333 = [
   Native.WindowsARM64,
 ];
 export const NATIVE_ALL = [
+  Native.FreeBSD,
   Native.Linux,
   Native.LinuxARM64,
   Native.LinuxARM32,

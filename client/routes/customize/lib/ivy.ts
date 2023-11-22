@@ -57,8 +57,12 @@ export function generateIvy({
 
   if (platformSingle === null) {
     script += `<!-- Add to build.xml -->`;
+    if (platform.freebsd) {
+      script += `
+<condition property="lwjgl.natives" value="natives-freebsd">${nl2}<os name="FreeBSD"/>${nl1}</condition>`;
+    }
     const linuxArches =
-      +platform.linux +
+      +platform['linux'] +
       +platform['linux-arm64'] +
       +platform['linux-arm32'] +
       +platform['linux-ppc64le'] +

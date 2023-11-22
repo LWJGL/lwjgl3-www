@@ -46,7 +46,7 @@ export function generateGradle({
   }
   if (platformSingle === null) {
     const linuxArches =
-      +platform.linux +
+      +platform['linux'] +
       +platform['linux-arm64'] +
       +platform['linux-arm32'] +
       +platform['linux-ppc64le'] +
@@ -55,6 +55,12 @@ export function generateGradle({
     const windowsArches = +platform.windows + +platform['windows-x86'] + +platform['windows-arm64'];
     if (language === Language.Groovy) {
       script += `switch (OperatingSystem.current()) {`;
+      if (platform.freebsd) {
+        script += `
+\tcase OperatingSystem.FREE_BSD:
+\t\tproject.ext.lwjglNatives = "natives-freebsd"
+\t\tbreak`
+      }
       if (linuxArches != 0) {
         script +=
           linuxArches == 1
@@ -108,12 +114,16 @@ export function generateGradle({
 \tSystem.getProperty("os.arch")!!
 ).let { (name, arch) ->
 \twhen {`;
+      if (platform.freebsd) {
+        script += `\n\t\t"FreeBSD".equals(name)                                    ->
+        \t\t\t"natives-freebsd"`
+      }
       if (linuxArches != 0) {
         script +=
           linuxArches == 1
-            ? `\n\t\tarrayOf("Linux", "FreeBSD", "SunOS", "Unit").any { name.startsWith(it) } ->
+            ? `\n\t\tarrayOf("Linux", "SunOS", "Unit").any { name.startsWith(it) } ->
 \t\t\t"natives-linux${getLinuxSuffix(platform)}"`
-            : `\n\t\tarrayOf("Linux", "FreeBSD", "SunOS", "Unit").any { name.startsWith(it) } ->
+            : `\n\t\tarrayOf("Linux", "SunOS", "Unit").any { name.startsWith(it) } ->
 \t\t\tif (arrayOf("arm", "aarch64").any { arch.startsWith(it) })
 \t\t\t\t"natives-linux\${if (arch.contains("64") || arch.startsWith("armv8")) "-arm64" else "-arm32"}"
 \t\t\telse if (arch.startsWith("ppc"))
@@ -126,24 +136,25 @@ export function generateGradle({
       if (macosArches != 0) {
         script +=
           macosArches == 1
-            ? `\n\t\tarrayOf("Mac OS X", "Darwin").any { name.startsWith(it) }                ->
+            ? `\n\t\tarrayOf("Mac OS X", "Darwin").any { name.startsWith(it) }     ->
 \t\t\t"natives-macos${platform.macos ? '' : '-arm64'}"`
-            : `\n\t\tarrayOf("Mac OS X", "Darwin").any { name.startsWith(it) }                ->
+            : `\n\t\tarrayOf("Mac OS X", "Darwin").any { name.startsWith(it) }     ->
 \t\t\t"natives-macos\${if (arch.startsWith("aarch64")) "-arm64" else ""}"`;
       }
       if (windowsArches != 0) {
         script +=
           windowsArches == 1
-            ? `\n\t\tarrayOf("Windows").any { name.startsWith(it) }                           ->
+            ? `\n\t\tarrayOf("Windows").any { name.startsWith(it) }                ->
 \t\t\t"natives-windows${platform.windows ? '' : platform['windows-arm64'] ? '-arm64' : '-x86'}"`
-            : `\n\t\tarrayOf("Windows").any { name.startsWith(it) }                           ->
+            : `\n\t\tarrayOf("Windows").any { name.startsWith(it) }                ->
 \t\t\tif (arch.contains("64"))
 \t\t\t\t"natives-windows\${if (arch.startsWith("aarch64")) "-arm64" else ""}"
 \t\t\telse
 \t\t\t\t"natives-windows-x86"`;
       }
       script += `
-\t\telse -> throw Error("Unrecognized or unsupported platform. Please set \\"lwjglNatives\\" manually")
+\t\telse                                                                            ->
+\t\t\tthrow Error("Unrecognized or unsupported platform. Please set \\"lwjglNatives\\" manually")
 \t}
 }
 \n\n`;

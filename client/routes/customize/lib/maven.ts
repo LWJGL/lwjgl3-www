@@ -45,7 +45,7 @@ export function generateMaven({
   }
 
   if (platformSingle === null) {
-    const generateProfile = (profile: Native, family: string, arch: string, natives: String) => {
+    const generateProfile = (profile: Native, family: string, name: string | null, arch: string, natives: String) => {
       let dependencies = selected
         .filter((binding) => {
           const artifact = artifacts[binding];
@@ -63,42 +63,45 @@ export function generateMaven({
           }${nl5}<classifier>${natives}</classifier>${nl4}</dependency>`;
         });
 
-      return `\n\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${nl3}</properties>${
+      return `\n\t<profile>${nl3}<id>lwjgl-natives-${profile}-${arch}</id>${nl3}<activation>${nl4}<os>${nl5}<family>${family}</family>${name === null ? '' : '${nl5}<name>${name}</name>'}${nl5}<arch>${arch}</arch>${nl4}</os>${nl3}</activation>${nl3}<properties>${nl4}<lwjgl.natives>${natives}</lwjgl.natives>${nl3}</properties>${
         dependencies.length === 0 ? '' : `${nl3}<dependencies>${dependencies.join(nl4)}${nl3}</dependencies>`
       }${nl2}</profile>`;
     };
 
     script += '<profiles>';
+    if (platform.freebsd) {
+      script += generateProfile(Native.FreeBSD, 'unix', 'freebsd', 'amd64', 'natives-freebsd');
+    }
     if (platform.linux) {
-      script += generateProfile(Native.Linux, 'unix', 'amd64', 'natives-linux');
+      script += generateProfile(Native.Linux, 'unix', 'linux', 'amd64', 'natives-linux');
     }
     if (platform['linux-arm64']) {
-      script += generateProfile(Native.Linux, 'unix', 'aarch64', 'natives-linux-arm64');
+      script += generateProfile(Native.Linux, 'unix', 'linux', 'aarch64', 'natives-linux-arm64');
     }
     if (platform['linux-arm32']) {
-      script += generateProfile(Native.Linux, 'unix', 'arm', 'natives-linux-arm32');
-      script += generateProfile(Native.Linux, 'unix', 'arm32', 'natives-linux-arm32');
+      script += generateProfile(Native.Linux, 'unix', 'linux', 'arm', 'natives-linux-arm32');
+      script += generateProfile(Native.Linux, 'unix', 'linux', 'arm32', 'natives-linux-arm32');
     }
     if (platform['linux-ppc64le']) {
-      script += generateProfile(Native.Linux, 'unix', 'ppc64le', 'natives-linux-ppc64le');
+      script += generateProfile(Native.Linux, 'unix', 'linux', 'ppc64le', 'natives-linux-ppc64le');
     }
     if (platform['linux-riscv64']) {
-      script += generateProfile(Native.Linux, 'unix', 'riscv64', 'natives-linux-riscv64');
+      script += generateProfile(Native.Linux, 'unix', 'linux', 'riscv64', 'natives-linux-riscv64');
     }
     if (platform.macos) {
-      script += generateProfile(Native.MacOS, 'mac', 'x86_64', 'natives-macos');
+      script += generateProfile(Native.MacOS, 'mac', null, 'x86_64', 'natives-macos');
     }
     if (platform['macos-arm64']) {
-      script += generateProfile(Native.MacOS, 'mac', 'aarch64', 'natives-macos-arm64');
+      script += generateProfile(Native.MacOS, 'mac', null, 'aarch64', 'natives-macos-arm64');
     }
     if (platform.windows) {
-      script += generateProfile(Native.Windows, 'windows', 'amd64', 'natives-windows');
+      script += generateProfile(Native.Windows, 'windows', null, 'amd64', 'natives-windows');
     }
     if (platform['windows-x86']) {
-      script += generateProfile(Native.Windows, 'windows', 'x86', 'natives-windows-x86');
+      script += generateProfile(Native.Windows, 'windows', null, 'x86', 'natives-windows-x86');
     }
     if (platform['windows-arm64']) {
-      script += generateProfile(Native.Windows, 'windows', 'aarch64', 'natives-windows-arm64');
+      script += generateProfile(Native.Windows, 'windows', null, 'aarch64', 'natives-windows-arm64');
     }
     script += '\n</profiles>\n\n';
   }
@@ -146,7 +149,7 @@ export function generateMaven({
       return `\n\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
         hasBoM ? '' : `${nl3}<version>${v}</version>`
       }${nl3}<classifier>${classifier}</classifier>${nl2}</dependency>`;
-    },
+    }
   );
 
   selectedAddons.forEach((id: Addon) => {

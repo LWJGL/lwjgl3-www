@@ -1,11 +1,14 @@
 import { Native } from '../types';
 import { Icon } from '~/components/ui/Icon';
 import '~/theme/icons/fa/brands/apple';
+import '~/theme/icons/fa/brands/freebsd';
 import '~/theme/icons/fa/brands/linux';
 import '~/theme/icons/fa/brands/windows';
 
 export const getPlatformIcon = (platform: Native) => {
   switch (platform) {
+    case Native.FreeBSD:
+      return <Icon aria-label="FreeBSD" name="fa/brands/freebsd" key={`fa-${platform}`} />;
     case Native.Linux:
     case Native.LinuxARM64:
     case Native.LinuxARM32:

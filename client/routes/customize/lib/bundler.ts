@@ -156,6 +156,8 @@ export function getFiles(
 
 function pathToNative(folder: string): Native | null {
   switch (folder) {
+    case 'freebsd':
+      return Native.FreeBSD;
     case 'linux':
       return Native.Linux;
     case 'linux-arm64':
