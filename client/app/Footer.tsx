@@ -184,11 +184,6 @@ const FOOTER = (
           <Heading>Community</Heading>
           <ul>
             <li>
-              <FooterLink href="https://slack.lwjgl.org/" rel="noopener external">
-                Slack {external}
-              </FooterLink>
-            </li>
-            <li>
               <FooterLink href="https://discord.gg/6CywMCs" rel="noopener external">
                 Discord {external}
               </FooterLink>

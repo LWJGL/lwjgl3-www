@@ -219,9 +219,9 @@ const HomeRoute: React.FC = () => (
                 forum
               </Anchor>{' '}
               is a great place to seek a solution. Up for a chat? Join our{' '}
-              <a href="https://slack.lwjgl.org/" rel="noopener external">
-                Slack team
-              </a>
+              <Anchor href="https://discord.gg/6CywMCs" rel="noopener external">
+                Discord server
+              </Anchor>
             </p>
           </Feature>
 
