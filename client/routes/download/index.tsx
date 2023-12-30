@@ -107,9 +107,6 @@ const DownloadRoute: React.FC = (): JSX.Element => {
           <AnchorButton variant="outline" href="http://legacy.lwjgl.org/" rel="noopener external">
             LWJGL 2 WEBSITE
           </AnchorButton>
-          <AnchorButton variant="outline" href="http://wiki.lwjgl.org/" rel="noopener external">
-            LWJGL 2 WIKI
-          </AnchorButton>
         </Grid>
       </Container>
     </PageView>
