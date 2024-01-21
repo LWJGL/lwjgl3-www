@@ -10,7 +10,7 @@ export async function setUserAgentData(): Promise<void> {
       userAgentData = null;
       // ignore
     }
-    console.log(userAgentData);
+    // console.log(userAgentData);
   }
 }
 
