@@ -9,12 +9,6 @@
       "options": {
         "arrowParens": "always"
       }
-    },
-    {
-      "files": "*.pug",
-      "options": {
-        "singleQuote": false
-      }
     }
   ]
 }

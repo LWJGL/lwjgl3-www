@@ -149,7 +149,7 @@ export function generateMaven({
       return `\n\t<dependency>${nl3}<groupId>${groupId}</groupId>${nl3}<artifactId>${artifactId}</artifactId>${
         hasBoM ? '' : `${nl3}<version>${v}</version>`
       }${nl3}<classifier>${classifier}</classifier>${nl2}</dependency>`;
-    }
+    },
   );
 
   selectedAddons.forEach((id: Addon) => {

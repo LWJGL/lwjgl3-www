@@ -218,8 +218,8 @@ export const Checkbox: FCC<CheckboxProps> = ({
       {variant === 'switch'
         ? getVisualMark(UISwitch)
         : checked || indeterminate
-        ? getVisualMark(indeterminate ? UICheckboxIndeterminate : UICheckboxChecked)
-        : null}
+          ? getVisualMark(indeterminate ? UICheckboxIndeterminate : UICheckboxChecked)
+          : null}
     </Visual>
     {children && (
       <>

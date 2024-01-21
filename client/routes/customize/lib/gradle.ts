@@ -59,7 +59,7 @@ export function generateGradle({
         script += `
 \tcase OperatingSystem.FREE_BSD:
 \t\tproject.ext.lwjglNatives = "natives-freebsd"
-\t\tbreak`
+\t\tbreak`;
       }
       if (linuxArches != 0) {
         script +=
@@ -116,7 +116,7 @@ export function generateGradle({
 \twhen {`;
       if (platform.freebsd) {
         script += `\n\t\t"FreeBSD".equals(name)                                    ->
-\t\t\t"natives-freebsd"`
+\t\t\t"natives-freebsd"`;
       }
       if (linuxArches != 0) {
         script +=

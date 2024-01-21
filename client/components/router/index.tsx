@@ -936,8 +936,8 @@ function getToPathname(to: To): string | undefined {
   return to === '' || (to as Path).pathname === ''
     ? '/'
     : typeof to === 'string'
-    ? parsePath(to).pathname
-    : to.pathname;
+      ? parsePath(to).pathname
+      : to.pathname;
 }
 
 function stripBasename(pathname: string, basename: string): string | null {

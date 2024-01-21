@@ -126,17 +126,17 @@ const SourceRoute: React.FC = () => (
 
         <Box>
           <BuildBadge
-              title="FreeType"
-              href="https://github.com/LWJGL-CI/freetype/actions/workflows/lwjgl.yml"
-              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/freetype/lwjgl.yml?branch=master"
+            title="FreeType"
+            href="https://github.com/LWJGL-CI/freetype/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/freetype/lwjgl.yml?branch=master"
           />
         </Box>
 
         <Box>
           <BuildBadge
-              title="HarfBuzz"
-              href="https://github.com/LWJGL-CI/harfbuzz/actions/workflows/lwjgl.yml"
-              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/harfbuzz/lwjgl.yml?branch=main"
+            title="HarfBuzz"
+            href="https://github.com/LWJGL-CI/harfbuzz/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/harfbuzz/lwjgl.yml?branch=main"
           />
         </Box>
 
@@ -150,9 +150,9 @@ const SourceRoute: React.FC = () => (
 
         <Box>
           <BuildBadge
-              title="hwloc"
-              href="https://github.com/LWJGL-CI/hwloc/actions/workflows/lwjgl.yml"
-              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/hwloc/lwjgl.yml?branch=master"
+            title="hwloc"
+            href="https://github.com/LWJGL-CI/hwloc/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/hwloc/lwjgl.yml?branch=master"
           />
         </Box>
 
@@ -166,9 +166,9 @@ const SourceRoute: React.FC = () => (
 
         <Box>
           <BuildBadge
-              title="KTX"
-              href="https://github.com/LWJGL-CI/KTX-Software/actions/workflows/lwjgl.yml"
-              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/KTX-Software/lwjgl.yml?branch=main"
+            title="KTX"
+            href="https://github.com/LWJGL-CI/KTX-Software/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/KTX-Software/lwjgl.yml?branch=main"
           />
         </Box>
 
@@ -190,9 +190,9 @@ const SourceRoute: React.FC = () => (
 
         <Box>
           <BuildBadge
-              title="OpenXR Loader"
-              href="https://github.com/LWJGL-CI/OpenXR-SDK/actions/workflows/lwjgl.yml"
-              src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/OpenXR-SDK/lwjgl.yml?branch=main"
+            title="OpenXR Loader"
+            href="https://github.com/LWJGL-CI/OpenXR-SDK/actions/workflows/lwjgl.yml"
+            src="https://img.shields.io/github/actions/workflow/status/LWJGL-CI/OpenXR-SDK/lwjgl.yml?branch=main"
           />
         </Box>
 

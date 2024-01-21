@@ -41,7 +41,6 @@
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.5.11",
-    "@prettier/plugin-pug": "3.0.0",
     "@react-aria/overlays": "3.20.0",
     "@stitches/react": "1.2.8",
     "@types/lodash-es": "4.17.12",
