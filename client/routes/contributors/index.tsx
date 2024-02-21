@@ -1,6 +1,5 @@
 import { PageView } from '~/routes/PageView';
 import { ImgLazy } from '~/components/ui/ImgLazy';
-import { GoldSponsors } from './Gold';
 import { HowToSupport } from './HowToSupport';
 import { SectionContainer } from '~/components/ui/Section';
 import { Box } from '~/components/ui/Box';
@@ -13,7 +12,6 @@ export default function SponsorsRoute() {
       description="LWJGL exists thanks to all the people who contribute and back/sponsor our collective."
     >
       <HowToSupport />
-      <GoldSponsors />
 
       <SectionContainer padding>
         <TitleSection>Contributors:</TitleSection>

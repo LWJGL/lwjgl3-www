@@ -3,7 +3,6 @@ import { Link } from '~/components/router/client';
 import { Frameworks, License, Download, Guide, Source } from '~/routes';
 import { PageView } from '~/routes/PageView';
 import { HomeHero } from './Hero';
-import { GoldSponsors } from '~/routes/contributors/Gold';
 import { HowToSupport } from '~/routes/contributors/HowToSupport';
 import { Grid } from '~/components/layout/Grid';
 import { Prose } from '~/components/ui/Prose';
@@ -222,6 +221,7 @@ const HomeRoute: React.FC = () => (
               <Anchor href="https://discord.gg/6CywMCs" rel="noopener external">
                 Discord server
               </Anchor>
+              .
             </p>
           </Feature>
 
@@ -426,7 +426,6 @@ const HomeRoute: React.FC = () => (
     </Dark>
 
     <HowToSupport id="credits" />
-    <GoldSponsors />
 
     <SectionContentVisibility padding>
       <TitleSection>Looking for LWJGL 2?</TitleSection>
