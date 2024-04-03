@@ -72,6 +72,7 @@ export enum Binding {
 
 export enum Addon {
   JOML = 'joml',
+  JOMLPrimitives = 'joml-primitives',
   LWJGLXDebug = 'lwjglx-debug',
   LWJGLXLWJGL3Awt = 'lwjgl3-awt',
   Steamworks4J = 'steamworks4j',

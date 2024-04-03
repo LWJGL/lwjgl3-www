@@ -222,11 +222,22 @@ function getInitialConfig(): BuildStore {
           id: Addon.JOML,
           title: 'JOML',
           description: 'A Java math library for OpenGL rendering calculations.',
-          website: 'http://joml-ci.github.io/JOML/',
+          website: 'https://joml-ci.github.io/JOML/',
           maven: {
             groupId: 'org.joml',
             artifactId: 'joml',
             version: '1.10.5',
+          },
+        },
+        [Addon.JOMLPrimitives]: {
+          id: Addon.JOMLPrimitives,
+          title: 'JOML Primitives',
+          description: 'JOML geometric primitives',
+          website: 'https://github.com/JOML-CI/joml-primitives',
+          maven: {
+            groupId: 'org.joml',
+            artifactId: 'joml-primitives',
+            version: '1.10.0',
           },
         },
         [Addon.LWJGLXDebug]: {
