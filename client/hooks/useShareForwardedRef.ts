@@ -1,6 +1,6 @@
 import { useRef, useEffect } from 'react';
 
-export function useShareForwardedRef<T>(forwardedRef: React.Ref<T>) {
+export function useShareForwardedRef<T>(forwardedRef?: React.Ref<T>) {
   // final ref that will share value with forward ref. this is the one we will attach to components
   const innerRef = useRef<T>(null);
 
@@ -14,7 +14,6 @@ export function useShareForwardedRef<T>(forwardedRef: React.Ref<T>) {
       return;
     } else {
       // by default forwardedRef.current is readonly. Let's ignore it
-      // @ts-expect-error
       forwardedRef.current = innerRef.current;
     }
   });

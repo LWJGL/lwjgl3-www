@@ -1,11 +1,9 @@
 import path from 'node:path';
 import { readFile, writeFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
 import shiki from 'shiki';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const sourcePath = path.resolve(__dirname, '../client/routes/guide/sample.java');
-const targetPath = path.resolve(__dirname, '../public/sample.html');
+const sourcePath = path.resolve(import.meta.dirname, '../client/routes/guide/sample.java');
+const targetPath = path.resolve(import.meta.dirname, '../public/sample.html');
 
 const source = await readFile(sourcePath, { encoding: 'utf8' });
 

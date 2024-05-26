@@ -1,12 +1,9 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { existsSync, createReadStream } from 'node:fs';
 import { readFile, writeFile } from 'node:fs/promises';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { concurrentRun } from './lib/concurrent.mjs';
 import { computeMD5 } from './lib/computeMD5.mjs';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // ------------------------------------------------------------------------------
 // CLI ARGS
@@ -28,8 +25,8 @@ process.argv.slice(2).forEach(arg => {
 // READ MANIFEST
 // ------------------------------------------------------------------------------
 
-const buildManifestPath = path.join(__dirname, '../public/manifest.json');
-const deployManifestPath = path.join(__dirname, '../public/js/deploy.json');
+const buildManifestPath = path.join(import.meta.dirname, '../public/manifest.json');
+const deployManifestPath = path.join(import.meta.dirname, '../public/js/deploy.json');
 
 const buildManifest = JSON.parse(await readFile(buildManifestPath));
 const deployManifest = useCache && existsSync(deployManifestPath) ? JSON.parse(await readFile(deployManifestPath)) : {};
@@ -41,13 +38,13 @@ const deployManifest = useCache && existsSync(deployManifestPath) ? JSON.parse(a
 const generated = new Set(); // Collect generated files here (that are already pre-hashed).
 const files = Object.keys(buildManifest.assets).map(id => {
   const extension = path.extname(buildManifest.assets[id]);
-  const filename = path.join(__dirname, `../public/${extension.slice(1)}/`, buildManifest.assets[id]);
+  const filename = path.join(import.meta.dirname, `../public/${extension.slice(1)}/`, buildManifest.assets[id]);
   generated.add(filename);
   return filename;
 });
 
 // // Useful for debugging dependency issues (CI)
-// files.push(path.join(__dirname, '../package-lock.json'));
+// files.push(path.join(import.meta.dirname, '../package-lock.json'));
 
 // ------------------------------------------------------------------------------
 // UPLOAD FILES

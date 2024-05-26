@@ -1,23 +1,22 @@
 import path from 'node:path';
 import process from 'node:process';
 import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 import fastify from 'fastify';
 import fastifyAccepts from '@fastify/accepts';
 import fastifyStatic from '@fastify/static';
 import fastifyEtag from '@fastify/etag';
 import fastifyView from '@fastify/view';
-import mime from 'mime';
 import pug from 'pug';
+
+// Custom Mime
+import { Mime } from 'mime/lite';
+import standardTypes from 'mime/types/standard.js';
+import otherTypes from 'mime/types/other.js';
+const mime = new Mime(standardTypes, otherTypes);
 
 import chunkMap from './routes/chunkMap.mjs';
 import routeBin from './routes/bin.mjs';
 import routeBrowse from './routes/browse.mjs';
-
-const filePath = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(filePath);
-const require = createRequire(import.meta.url);
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 const DEVELOPMENT = !PRODUCTION;
@@ -76,7 +75,7 @@ if (PRODUCTION) {
     })
   ).default;
 
-  global.globalCss = await readFile(path.resolve(__dirname, '../public/global.min.css'), {
+  global.globalCss = await readFile(path.resolve(import.meta.dirname, '../public/global.min.css'), {
     encoding: 'utf-8',
   });
 }
@@ -132,7 +131,7 @@ app.register(fastifyAccepts);
 // Template
 app.register(fastifyView, {
   engine: { pug },
-  root: path.join(__dirname, 'views'),
+  root: path.join(import.meta.dirname, 'views'),
   options: {
     pretty: DEVELOPMENT || argv.pretty === true ? '  ' : false,
     cache: PRODUCTION && argv.nocache === undefined,
@@ -141,7 +140,7 @@ app.register(fastifyView, {
 
 // Static files
 app.register(fastifyStatic, {
-  root: path.resolve(__dirname, '../public'),
+  root: path.resolve(import.meta.dirname, '../public'),
   wildcard: false,
   acceptRanges: true,
   cacheControl: false,
@@ -204,18 +203,18 @@ if (DEVELOPMENT) {
   // Allow source access in development
   // Required for Sass source maps to be resolved by browsers when HMR is off
   app.register(fastifyStatic, {
-    root: path.resolve(__dirname, '../client'),
+    root: path.resolve(import.meta.dirname, '../client'),
     prefix: '/client/',
     decorateReply: false,
   });
   app.register(fastifyStatic, {
-    root: path.resolve(__dirname, '../node_modules'),
+    root: path.resolve(import.meta.dirname, '../node_modules'),
     prefix: '/node_modules/',
     decorateReply: false,
   });
 
   // Proxy webpack-dev-server generated files
-  const httpProxy = require('@fastify/http-proxy');
+  const httpProxy = await import('@fastify/http-proxy');
   await app.register(httpProxy, {
     prefix: '/js',
     rewritePrefix: '/js',
@@ -228,7 +227,7 @@ if (DEVELOPMENT) {
 // In development these paths will hit Node, therefore we need to handle them.
 // CAUTION: Internet connection is required!
 if (DEVELOPMENT || argv.s3proxy === true) {
-  const httpProxy = require('@fastify/http-proxy');
+  const httpProxy = await import('@fastify/http-proxy');
   await app.register(httpProxy, { prefix: '/img', rewritePrefix: '/img', upstream: 'https://www.lwjgl.org' });
   await app.register(httpProxy, { prefix: '/svg', rewritePrefix: '/svg', upstream: 'https://www.lwjgl.org' });
 }

@@ -7,5 +7,5 @@ interface Props {
 
 export const ControlledPanel: FCC<Props> = ({ children, predicate }) => {
   const visible = useStore(predicate);
-  return visible ? (children as JSX.Element) : null;
+  return visible ? children : null;
 };

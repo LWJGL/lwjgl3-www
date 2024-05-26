@@ -13,24 +13,17 @@ import { generateGradle } from './gradle';
 import { generateIvy } from './ivy';
 import { generateMaven } from './maven';
 
-export function copyToClipboard(ref: React.RefObject<HTMLElement>) {
-  const selection = window.getSelection();
-  if (selection === null) {
-    return;
-  }
-  if (selection.rangeCount > 0) {
-    selection.removeAllRanges();
-  }
-  const range = document.createRange();
+export async function copyToClipboard(ref: React.RefObject<HTMLPreElement | null>) {
   const pre = ref.current;
   if (pre === null) {
     return;
   }
-  range.selectNode(pre);
-  selection.addRange(range);
-  document.execCommand('copy');
-  selection.removeAllRanges();
-  alert('Script copied to clipboard.');
+  try {
+    await navigator.clipboard.writeText(pre.innerText);
+    alert('Script copied to clipboard.');
+  } catch (err) {
+    alert('Failed to copy script to clipboard.\n' + err.message);
+  }
 }
 
 export function mime(mode: ModeDefinition) {

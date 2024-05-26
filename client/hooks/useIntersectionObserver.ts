@@ -2,7 +2,7 @@ import { useSyncExternalStore, useRef, useMemo } from 'react';
 import { SUPPORTS_INTERSECTION_OBSERVER } from '~/services/supports';
 
 export function useIntersectionObserver(
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   serverFallback: boolean = false,
   options: IntersectionObserverInit = { rootMargin: '0px' },
 ) {

@@ -42,7 +42,7 @@ const config = {
     ],
     ['@babel/preset-react', { runtime: 'automatic', development: DEV }],
   ],
-  plugins: [],
+  plugins: ['babel-plugin-react-compiler'],
 };
 
 if (DEV) {

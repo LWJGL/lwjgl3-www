@@ -50,10 +50,6 @@ const FeatureImage = styled('div', {
   },
 });
 
-FeatureImage.defaultProps = {
-  'aria-hidden': true,
-};
-
 const Feature = styled('div', {
   // fontSize: 'calc(1rem * var(--scale-sm, 1))',
   h3: {
@@ -146,7 +142,7 @@ const HomeRoute: React.FC = () => (
       </Grid>
     </SectionContentVisibility>
 
-    <Dark>
+    <Dark className="dark">
       <SectionContentVisibility padding>
         <TitleSection css={{ mb: '$safe' }}>Main Features</TitleSection>
 
@@ -163,7 +159,7 @@ const HomeRoute: React.FC = () => (
           }}
         >
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/duotone/microchip" />
             </FeatureImage>
             <h3>Low-level Bindings</h3>
@@ -174,7 +170,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/brands/github" />
             </FeatureImage>
             <h3>Open Source</h3>
@@ -192,7 +188,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/duotone/book" />
             </FeatureImage>
             <h3>Built-in Documentation</h3>
@@ -200,7 +196,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/duotone/phone-laptop" />
             </FeatureImage>
             <h3>Cross-platform</h3>
@@ -208,7 +204,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/duotone/comments" />
             </FeatureImage>
             <h3>Community</h3>
@@ -226,7 +222,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/duotone/gamepad" />
             </FeatureImage>
             <h3>GLFW Bindings</h3>
@@ -241,7 +237,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <ImgLazy width={226} height={60} src="/svg/Vulkan_RGB_June16.svg" alt="Vulkan" />
             </FeatureImage>
             <h3>
@@ -258,7 +254,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <ImgLazy
                 width={60}
                 height={60}
@@ -281,7 +277,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <ImgLazy width={112} height={60} src="/svg/OpenAL_Logo.svg" alt="OpenAL" />
             </FeatureImage>
             <h3>OpenAL Bindings</h3>
@@ -292,7 +288,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <ImgLazy width={144} height={60} src="/svg/OpenGL_RGB_June16.svg" alt="OpenGL" />
             </FeatureImage>
             <h3>
@@ -314,7 +310,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <ImgLazy width={180} height={60} src="/svg/OpenGL_ES_RGB_June16.svg" alt="OpenGL|ES" />
             </FeatureImage>
             <h3>
@@ -332,7 +328,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <ImgLazy width={180} height={60} src="/svg/EGL_RGB_June16.svg" alt="EGL" />
             </FeatureImage>
             <h3>
@@ -351,7 +347,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <ImgLazy width={1576.2 * 0.15} height={340.9 * 0.15} src="/svg/oculus-logo-white.svg" alt="" />
             </FeatureImage>
             <h3>LibOVR Bindings</h3>
@@ -359,7 +355,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/brands/apple" />
             </FeatureImage>
             <h3>Objective-C Bindings</h3>
@@ -367,7 +363,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon name="fa/duotone/project-diagram" />
             </FeatureImage>
             <h3>Customization & Utilities</h3>
@@ -389,7 +385,7 @@ const HomeRoute: React.FC = () => (
           </Feature>
 
           <Feature css={{ '@xl': { gridColumn: '1/-1' } }}>
-            <FeatureImage>
+            <FeatureImage aria-hidden={true}>
               <Icon display="block" name="fa/duotone/brackets-curly" css={{ color: '$caution700' }} />
             </FeatureImage>
             <h3>Your favorite API here!</h3>

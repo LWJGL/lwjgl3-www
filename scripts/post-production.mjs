@@ -1,5 +1,4 @@
 import path from 'node:path';
-import { fileURLToPath } from 'url';
 import { readFileSync } from 'node:fs';
 import { copyFile, writeFile } from 'node:fs/promises';
 import chalk from 'chalk';
@@ -12,8 +11,6 @@ import formatSize from './lib/formatSize.mjs';
 import ellipsis from './lib/ellipsis.mjs';
 
 import manifest from '../public/js/webpack.manifest.json' assert { type: 'json' };
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /*
   POST PRODUCTION:
@@ -70,7 +67,7 @@ manifest.assets
   // populate chunk map
   .forEach(record => {
     const name = record.chunkNames.length > 0 ? record.chunkNames[0] : record.name.split('.')[0];
-    const src = readFileSync(path.resolve(__dirname, '../public/js', record.name), { encoding: 'utf-8' });
+    const src = readFileSync(path.resolve(import.meta.dirname, '../public/js', record.name), { encoding: 'utf-8' });
 
     let asset = {
       id: record.chunks[0],
@@ -97,12 +94,12 @@ for (let chunkName of Object.keys(manifest.namedChunkGroups)) {
 }
 
 // Store production manifest
-await writeFile(path.resolve(__dirname, '../public/manifest.json'), JSON.stringify(productionManifest, null, 2));
+await writeFile(path.resolve(import.meta.dirname, '../public/manifest.json'), JSON.stringify(productionManifest, null, 2));
 
 /*
 // Generate Service Worker
-let sw = await readFile(path.resolve(__dirname, '../client/sw.js'), { encoding: 'utf-8' });
-let css = await readFile(path.resolve(__dirname, '../public/global.min.css'), { encoding: 'utf-8' });
+let sw = await readFile(path.resolve(import.meta.dirname, '../client/sw.js'), { encoding: 'utf-8' });
+let css = await readFile(path.resolve(import.meta.dirname, '../public/global.min.css'), { encoding: 'utf-8' });
 sw = sw.replace(/manifest = {}/, `manifest = ${JSON.stringify(productionManifest)}`);
 
 const swMD5 = crypto.createHash('MD5');
@@ -112,11 +109,11 @@ swMD5.update(css);
 sw = sw.replace(/VERSION/, swMD5.digest('hex'));
 
 // optimize
-const terserConfig = JSON.parse(await readFile(path.resolve(__dirname, '../scripts/terser-config.json')));
+const terserConfig = JSON.parse(await readFile(path.resolve(import.meta.dirname, '../scripts/terser-config.json')));
 sw = (await minify(sw, terserConfig)).code;
-await writeFile(path.resolve(__dirname, '../public/sw.js'), sw, { encoding: 'utf-8' });
+await writeFile(path.resolve(import.meta.dirname, '../public/sw.js'), sw, { encoding: 'utf-8' });
 */
-await copyFile(path.resolve(__dirname, '../client/sw-destroy.js'), path.resolve(__dirname, '../public/sw.js'));
+await copyFile(path.resolve(import.meta.dirname, '../client/sw-destroy.js'), path.resolve(import.meta.dirname, '../public/sw.js'));
 
 // Print file report
 let sum = 0;

@@ -20,7 +20,7 @@ const buttonSizes: React.ComponentProps<typeof LinkButton>['size'] = {
   '@xl': 'xl',
 };
 
-const DownloadRoute: React.FC = (): JSX.Element => {
+const DownloadRoute: React.FC = () => {
   return (
     <PageView title="Download" description="Download LWJGL 3">
       <Container padding>
@@ -70,7 +70,7 @@ const DownloadRoute: React.FC = (): JSX.Element => {
         </Grid>
       </Container>
 
-      <Dark>
+      <Dark className="dark">
         <Container padding>
           <Heading level={2} css={{ mt: -4 }}>
             Build from source?

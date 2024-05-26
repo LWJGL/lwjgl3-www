@@ -1,11 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
 import puppeteer from 'puppeteer-core';
 import { parseArgs } from './parseArgs.mjs';
-
-const filePath = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(filePath);
 
 async function getDebuggerUrl() {
   const response = await fetch('http://localhost:9222/json/version');
@@ -66,7 +62,7 @@ const { argv, positionals } = parseArgs({
 });
 
 // read source file
-let source = await fs.readFile(path.resolve(__dirname, positionals[0]), { encoding: 'utf-8' });
+let source = await fs.readFile(path.resolve(import.meta.dirname, positionals[0]), { encoding: 'utf-8' });
 const options = {
   type: 'png',
   omitBackground: argv.background === undefined || argv.radius !== undefined,
@@ -123,7 +119,7 @@ source = `<!DOCTYPE html>
   </body>
   </html>`;
 
-// await fs.writeFile(path.resolve(__dirname, 'output.html'), source);
+// await fs.writeFile(path.resolve(import.meta.dirname, 'output.html'), source);
 
 // Launch browser
 
@@ -140,7 +136,7 @@ const browser = await puppeteer.connect({
 const page = await browser.newPage();
 await page.setContent(source, { waitUntil: ['domcontentloaded', 'networkidle0'] });
 const data = await page.screenshot(options);
-await fs.writeFile(path.resolve(__dirname, positionals[1]), data);
+await fs.writeFile(path.resolve(import.meta.dirname, positionals[1]), data);
 
 // Cleanup
 await page.close();

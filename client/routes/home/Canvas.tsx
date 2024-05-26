@@ -21,6 +21,7 @@ const Canvas = styled('canvas', {
 });
 
 const HomeCanvas: React.FC<{ width: number; height: number }> = ({ width, height }) => {
+  'use no memo';
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cameraRef = useRef<any>(null);
   const rendererRef = useRef<any>(null);

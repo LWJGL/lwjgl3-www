@@ -23,7 +23,7 @@ export function Browser({ path: targetPath }: Props) {
         setPath(targetPath);
       });
     }
-  }, [targetPath]);
+  }, [targetPath, path]);
 
   return (
     <Box css={{ '.light &': { boxShadow: '$sm' } }}>

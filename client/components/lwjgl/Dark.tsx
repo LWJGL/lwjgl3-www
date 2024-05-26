@@ -8,7 +8,3 @@ export const Dark = styled('div', {
     backgroundColor: '$darker',
   },
 });
-
-Dark.defaultProps = {
-  className: 'dark',
-};

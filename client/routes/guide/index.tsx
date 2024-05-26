@@ -64,7 +64,7 @@ const GuideRoute: React.FC = () => (
       </ProseSection>
     </Container>
 
-    <Dark>
+    <Dark className="dark">
       <Suspense
         fallback={
           <Container padding css={{ display: 'flex', justifyContent: 'center', height: 2460 }}>
@@ -208,7 +208,7 @@ const GuideRoute: React.FC = () => (
       </ProseSection>
     </Container>
 
-    <Dark>
+    <Dark className="dark">
       <Container padding>
         <ProseSection>
           <h1>

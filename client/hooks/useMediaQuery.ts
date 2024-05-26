@@ -7,17 +7,9 @@ export function useMediaQuery(query: string, serverFallback: boolean = false): b
     return [
       () => mediaQueryList.matches,
       (notify: () => void) => {
-        if ('addEventListener' in mediaQueryList) {
-          mediaQueryList.addEventListener('change', notify);
-        } else {
-          mediaQueryList.addListener(notify);
-        }
+        mediaQueryList.addEventListener('change', notify);
         return () => {
-          if ('removeEventListener' in mediaQueryList) {
-            mediaQueryList.removeEventListener('change', notify);
-          } else {
-            mediaQueryList.removeListener(notify);
-          }
+          mediaQueryList.removeEventListener('change', notify);
         };
       },
       () => serverFallback,

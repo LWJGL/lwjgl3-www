@@ -1,7 +1,6 @@
 import {
   useCallback,
   useRef,
-  forwardRef,
   useState,
   useImperativeHandle,
   useEffect,
@@ -103,7 +102,10 @@ const Pre = styled('pre', {
   fontSize: '$sm',
 });
 
-export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
+interface BuildDownloaderProps {
+  ref: React.Ref<DownloadHandle>;
+}
+export const BuildDownloader: React.FC<BuildDownloaderProps> = ({ ref }) => {
   const store = useStore();
   const [isDownloading, setIsDownloading] = useState(false);
   const usingNetworkRef = useRef(false);
@@ -179,4 +181,4 @@ export const BuildDownloader = forwardRef<DownloadHandle>((props, ref) => {
       </Grid>
     </ModalDialog>
   );
-});
+};

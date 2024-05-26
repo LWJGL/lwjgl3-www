@@ -1,4 +1,4 @@
-import { useRef, useTransition, useState, useLayoutEffect, forwardRef, useCallback, useMemo } from 'react';
+import { useRef, useTransition, useState, useLayoutEffect, useCallback, useMemo } from 'react';
 import { createBrowserHistory, createPath } from 'history';
 import { Router, useHref, useLocation, useNavigate, useResolvedPath } from './index';
 import type { BrowserHistory, To } from 'history';
@@ -21,7 +21,7 @@ export interface BrowserRouterProps {
 export function BrowserRouter({ basename, children, window }: BrowserRouterProps) {
   let [isPending, startTransition] = useTransition();
 
-  let historyRef = useRef<BrowserHistory>();
+  let historyRef = useRef<BrowserHistory>(null);
   if (historyRef.current == null) {
     historyRef.current = createBrowserHistory({ window });
   }
@@ -63,15 +63,13 @@ export interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorEle
   replace?: boolean;
   state?: any;
   to: To;
+  ref?: React.Ref<HTMLAnchorElement>;
 }
 
 /**
  * The public API for rendering a history-aware <a>.
  */
-export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function LinkWithRef(
-  { onClick, replace = false, state, target, to, ...rest },
-  ref,
-) {
+export const Link: React.FC<LinkProps> = ({ onClick, replace = false, state, target, to, ref, ...rest }) => {
   let href = useHref(to);
   let internalOnClick = useLinkClickHandler(to, { replace, state, target });
   function handleClick(event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) {
@@ -82,7 +80,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function LinkWithRe
   }
 
   return <a {...rest} href={href} onClick={handleClick} ref={ref} target={target} />;
-});
+};
 
 if (!FLAG_PRODUCTION) {
   Link.displayName = 'Link';
@@ -93,23 +91,22 @@ export interface NavLinkProps extends Omit<LinkProps, 'className' | 'style'> {
   className?: string | ((props: { isActive: boolean }) => string);
   end?: boolean;
   style?: React.CSSProperties | ((props: { isActive: boolean }) => React.CSSProperties);
+  ref: React.Ref<HTMLAnchorElement>;
 }
 
 /**
  * A <Link> wrapper that knows if it's "active" or not.
  */
-export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavLinkWithRef(
-  {
-    'aria-current': ariaCurrentProp = 'page',
-    caseSensitive = false,
-    className: classNameProp = '',
-    end = false,
-    style: styleProp,
-    to,
-    ...rest
-  },
+export const NavLink: React.FC<NavLinkProps> = ({
+  'aria-current': ariaCurrentProp = 'page',
+  caseSensitive = false,
+  className: classNameProp = '',
+  end = false,
+  style: styleProp,
+  to,
   ref,
-) {
+  ...rest
+}) => {
   let location = useLocation();
   let path = useResolvedPath(to);
 
@@ -141,7 +138,7 @@ export const NavLink = forwardRef<HTMLAnchorElement, NavLinkProps>(function NavL
   let style = typeof styleProp === 'function' ? styleProp({ isActive }) : styleProp;
 
   return <Link {...rest} aria-current={ariaCurrent} className={className} ref={ref} style={style} to={to} />;
-});
+};
 
 if (!FLAG_PRODUCTION) {
   NavLink.displayName = 'NavLink';

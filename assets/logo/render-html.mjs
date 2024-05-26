@@ -1,11 +1,7 @@
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer-core';
 import { parseArgs } from './parseArgs.mjs';
-
-const filePath = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(filePath);
 
 async function getDebuggerUrl() {
   const response = await fetch('http://localhost:9222/json/version');
@@ -49,7 +45,7 @@ const { argv, positionals } = parseArgs({
 });
 
 // Read source file
-let sourceHtml = await fs.readFile(path.resolve(__dirname, positionals[0]), { encoding: 'utf-8' });
+let sourceHtml = await fs.readFile(path.resolve(import.meta.dirname, positionals[0]), { encoding: 'utf-8' });
 const screenshotOptions = {
   type: 'png',
   omitBackground: argv.background === undefined,
@@ -70,7 +66,7 @@ const browser = await puppeteer.connect({
 const page = await browser.newPage();
 await page.setContent(sourceHtml, { waitUntil: ['domcontentloaded', 'networkidle0'] });
 const data = await page.screenshot(screenshotOptions);
-await fs.writeFile(path.resolve(__dirname, positionals[1]), data);
+await fs.writeFile(path.resolve(import.meta.dirname, positionals[1]), data);
 
 // Cleanup
 await page.close();

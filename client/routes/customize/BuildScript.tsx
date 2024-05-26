@@ -110,6 +110,11 @@ const selector = createSelectorDeepEqual(
     } as ScriptState;
   },
   (data) => data,
+  {
+    devModeChecks: {
+      identityFunctionCheck: 'never',
+    },
+  },
 );
 
 export function BuildScript({ configDownload, configLoad }: Props) {
@@ -168,7 +173,7 @@ export function BuildScript({ configDownload, configLoad }: Props) {
         <Button
           tone="accent"
           onClick={() => copyToClipboard(preRef)}
-          disabled={!document.execCommand}
+          disabled={typeof navigator.clipboard === 'undefined'}
           title="Copy to clipboard"
         >
           <Icon name="fa/duotone/copy" />

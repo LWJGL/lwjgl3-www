@@ -2,9 +2,6 @@ import path from 'path';
 import { promises as fs } from 'fs';
 import prettier from 'prettier';
 
-import { fileURLToPath } from 'url';
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 const WHITELIST = `
 fa/brands/apple
 fa/brands/github
@@ -61,8 +58,8 @@ const collectIcons = async folder => {
 };
 
 const main = async () => {
-  const sourceDir = path.resolve(__dirname, './icons');
-  const targetDir = path.resolve(__dirname, '../client/theme/icons');
+  const sourceDir = path.resolve(import.meta.dirname, './icons');
+  const targetDir = path.resolve(import.meta.dirname, '../client/theme/icons');
   const sourceDirStringLength = sourceDir.length + 1;
   const icons = (await collectIcons(sourceDir))
     .map(file => ({

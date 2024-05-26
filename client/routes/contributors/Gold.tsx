@@ -1,11 +1,10 @@
-import { ImgLazy } from '~/components/ui/ImgLazy';
 import { Grid } from '~/components/layout/Grid';
 import { TitleSection } from '~/components/lwjgl/TitleSection';
 import { Dark } from '~/components/lwjgl/Dark';
 import { SectionContainer } from '~/components/ui/Section';
 
 export const GoldSponsors: FCC = ({ children }) => (
-  <Dark>
+  <Dark className="dark">
     <SectionContainer padding>
       <TitleSection>
         Our <span style={{ color: 'gold' }}>Gold</span> Sponsors:
@@ -31,8 +30,7 @@ export const GoldSponsors: FCC = ({ children }) => (
           //   grid: 'auto-flow / repeat(4, 1fr)',
           // },
         }}
-      >
-      </Grid>
+      ></Grid>
       {children}
     </SectionContainer>
   </Dark>

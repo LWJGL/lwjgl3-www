@@ -1,11 +1,9 @@
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
 import { opendir, unlink, writeFile } from 'node:fs/promises';
 import webpack from 'webpack';
 import config from '../webpack.config.js';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildPath = path.resolve(__dirname, '../public/js');
+const buildPath = path.resolve(import.meta.dirname, '../public/js');
 
 // Cleanup build directory
 const buildDir = await opendir(buildPath);
@@ -58,7 +56,7 @@ compiler.run((err, stats) => {
     }
 
     await writeFile(
-      path.resolve(__dirname, '../public/js/webpack.manifest.json'),
+      path.resolve(import.meta.dirname, '../public/js/webpack.manifest.json'),
       JSON.stringify(
         stats.toJson({
           colors: false,

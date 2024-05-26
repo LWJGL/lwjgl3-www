@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef, useMemo, forwardRef } from 'react';
+import { useEffect, useState, useRef, useMemo } from 'react';
+import { useComposedRefs } from '@radix-ui/react-compose-refs';
 import { styled, css, keyframes } from '~/theme/stitches.config';
-import { useShareForwardedRef } from '~/hooks/useShareForwardedRef';
 import { Link } from '~/components/router/client';
 
 // Button style is a mix of
@@ -470,6 +470,10 @@ const ButtonStyled = styled('button', ButtonCss);
 const AnchorStyled = styled('a', ButtonCss);
 const LinkStyled = styled(Link, ButtonCss);
 
+// interface ButtonStyledProps extends React.ComponentProps<typeof ButtonStyled> {
+//   ref?: React.Ref<HTMLButtonElement>;
+// }
+
 type ButtonStyledProps = React.ComponentProps<typeof ButtonStyled>;
 type AnchorStyledProps = React.ComponentProps<typeof AnchorStyled>;
 type LinkStyledProps = React.ComponentProps<typeof LinkStyled>;
@@ -504,8 +508,8 @@ function initTransition(
 }
 
 function useMaterialButton(
-  ref: React.RefObject<HTMLButtonElement | HTMLAnchorElement>,
-  rippleRef: React.RefObject<HTMLSpanElement>,
+  ref: React.RefObject<HTMLButtonElement | HTMLAnchorElement | null>,
+  rippleRef: React.RefObject<HTMLSpanElement | null>,
   rounding: ButtonStyledProps['rounding'],
   props: any,
 ) {
@@ -651,77 +655,89 @@ function useMaterialButton(
   return [eventHandlers, otherProps];
 }
 
-export const Button = forwardRef<HTMLButtonElement, ButtonStyledProps>(
-  (
-    { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
-    forwardedRef,
-  ) => {
-    const ref = useShareForwardedRef<HTMLButtonElement>(forwardedRef);
-    const rippleRef = useRef<HTMLSpanElement>(null);
-    const [eventHandlers, otherProps] = useMaterialButton(ref, rippleRef, rounding, rest);
+export const Button: React.FC<ButtonStyledProps> = ({
+  variant = 'contained',
+  tone = 'neutral',
+  size = 'base',
+  rounding = 'normal',
+  children,
+  ref,
+  ...rest
+}) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const rippleRef = useRef<HTMLSpanElement>(null);
+  const sharedRef = useComposedRefs(ref, buttonRef);
+  const [eventHandlers, otherProps] = useMaterialButton(buttonRef, rippleRef, rounding, rest);
 
-    if (rest.type === undefined) {
-      rest.type = 'button';
-    }
+  if (rest.type === undefined) {
+    rest.type = 'button';
+  }
 
-    return (
-      <ButtonStyled
-        ref={ref}
-        className={ButtonCss({ size, variant, tone, rounding })}
-        {...eventHandlers}
-        {...otherProps}
-      >
-        <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
-        <ButtonLabel>{children}</ButtonLabel>
-      </ButtonStyled>
-    );
-  },
-);
+  return (
+    <ButtonStyled
+      ref={sharedRef}
+      className={ButtonCss({ size, variant, tone, rounding })}
+      {...eventHandlers}
+      {...otherProps}
+    >
+      <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
+      <ButtonLabel>{children}</ButtonLabel>
+    </ButtonStyled>
+  );
+};
 
-export const AnchorButton = forwardRef<HTMLAnchorElement, AnchorStyledProps>(
-  (
-    { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
-    forwardedRef,
-  ) => {
-    const ref = useShareForwardedRef<HTMLAnchorElement>(forwardedRef);
-    const rippleRef = useRef<HTMLSpanElement>(null);
-    const [eventHandlers, otherProps] = useMaterialButton(ref, rippleRef, rounding, rest);
+export const AnchorButton: React.FC<AnchorStyledProps> = ({
+  variant = 'contained',
+  tone = 'neutral',
+  size = 'base',
+  rounding = 'normal',
+  children,
+  ref,
+  ...rest
+}) => {
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const rippleRef = useRef<HTMLSpanElement>(null);
+  const sharedRef = useComposedRefs(ref, buttonRef);
+  const [eventHandlers, otherProps] = useMaterialButton(buttonRef, rippleRef, rounding, rest);
 
-    return (
-      <AnchorStyled
-        ref={ref}
-        className={ButtonCss({ size, variant, tone, rounding })}
-        draggable="false"
-        {...eventHandlers}
-        {...otherProps}
-      >
-        <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
-        <ButtonLabel>{children}</ButtonLabel>
-      </AnchorStyled>
-    );
-  },
-);
+  return (
+    <AnchorStyled
+      ref={sharedRef}
+      className={ButtonCss({ size, variant, tone, rounding })}
+      draggable="false"
+      {...eventHandlers}
+      {...otherProps}
+    >
+      <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
+      <ButtonLabel>{children}</ButtonLabel>
+    </AnchorStyled>
+  );
+};
 
-export const LinkButton = forwardRef<HTMLAnchorElement, LinkStyledProps>(
-  (
-    { variant = 'contained', tone = 'neutral', size = 'base', rounding = 'normal', children, ...rest },
-    forwardedRef,
-  ) => {
-    const ref = useShareForwardedRef<HTMLAnchorElement>(forwardedRef);
-    const rippleRef = useRef<HTMLSpanElement>(null);
-    const [eventHandlers, otherProps] = useMaterialButton(ref, rippleRef, rounding, rest);
+export const LinkButton: React.FC<LinkStyledProps> = ({
+  variant = 'contained',
+  tone = 'neutral',
+  size = 'base',
+  rounding = 'normal',
+  children,
+  ref,
+  ...rest
+}) => {
+  const buttonRef = useRef<HTMLAnchorElement>(null);
+  const rippleRef = useRef<HTMLSpanElement>(null);
+  const sharedRef = useComposedRefs(ref, buttonRef);
+  const [eventHandlers, otherProps] = useMaterialButton(buttonRef, rippleRef, rounding, rest);
 
-    return (
-      <LinkStyled
-        ref={ref}
-        className={ButtonCss({ size, variant, tone, rounding })}
-        draggable="false"
-        {...eventHandlers}
-        {...otherProps}
-      >
-        <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
-        <ButtonLabel>{children}</ButtonLabel>
-      </LinkStyled>
-    );
-  },
-);
+  return (
+    <LinkStyled
+      ref={sharedRef}
+      className={ButtonCss({ size, variant, tone, rounding })}
+      draggable="false"
+      {...eventHandlers}
+      {...otherProps}
+    >
+      <Ripple ref={rippleRef} size={size} variant={variant} tone={tone} rounding={rounding} />
+      <ButtonLabel>{children}</ButtonLabel>
+    </LinkStyled>
+  );
+};
