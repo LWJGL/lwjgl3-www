@@ -10,7 +10,7 @@ import prettyBytes from './lib/prettyBytes.mjs';
 import formatSize from './lib/formatSize.mjs';
 import ellipsis from './lib/ellipsis.mjs';
 
-import manifest from '../public/js/webpack.manifest.json' assert { type: 'json' };
+import manifest from '../public/js/webpack.manifest.json' with { type: 'json' };
 
 /*
   POST PRODUCTION:
@@ -94,7 +94,10 @@ for (let chunkName of Object.keys(manifest.namedChunkGroups)) {
 }
 
 // Store production manifest
-await writeFile(path.resolve(import.meta.dirname, '../public/manifest.json'), JSON.stringify(productionManifest, null, 2));
+await writeFile(
+  path.resolve(import.meta.dirname, '../public/manifest.json'),
+  JSON.stringify(productionManifest, null, 2),
+);
 
 /*
 // Generate Service Worker
@@ -113,7 +116,10 @@ const terserConfig = JSON.parse(await readFile(path.resolve(import.meta.dirname,
 sw = (await minify(sw, terserConfig)).code;
 await writeFile(path.resolve(import.meta.dirname, '../public/sw.js'), sw, { encoding: 'utf-8' });
 */
-await copyFile(path.resolve(import.meta.dirname, '../client/sw-destroy.js'), path.resolve(import.meta.dirname, '../public/sw.js'));
+await copyFile(
+  path.resolve(import.meta.dirname, '../client/sw-destroy.js'),
+  path.resolve(import.meta.dirname, '../public/sw.js'),
+);
 
 // Print file report
 let sum = 0;
