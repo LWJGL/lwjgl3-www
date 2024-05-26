@@ -30,13 +30,11 @@ jobs:
           aws-region: us-east-1
 
       - name: Compile files
-        env:
-          NODE_ENV: production
         run: |
           corepack enable
           pnpm i
-          node ./scripts/build-styles.mjs
-          node ./scripts/build-production.mjs
+          NODE_ENV=production node ./scripts/build-styles.mjs
+          NODE_ENV=production node ./scripts/build-production.mjs
           node --no-warnings ./scripts/post-production.mjs
 
       - name: Upload artifacts
