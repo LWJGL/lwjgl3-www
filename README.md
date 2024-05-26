@@ -32,22 +32,23 @@ Build status icons are loaded directly from [travis-ci.org](https://travis-ci.or
 
 ## Prerequisites
 
-- [Node.js v19+](https://nodejs.org/)
-- [NPM v9+](https://npmjs.com/)
+- [Node.js v22+](https://nodejs.org/)
+- [PNPM](https://pnpm.io/)
 
 ## Development
 
 Install all required npm packages and build styles:
 
 ```shell
-npm i
-npm run build:styles
+#corepack enable
+pnpm i
+node --run build:styles
 ```
 
 Start the server in dev mode:
 
 ```shell
-npm -s start
+node --run start
 ```
 
 ### CLI flags
@@ -82,14 +83,14 @@ To deploy LWJGL in production please read the separate guide: [DEPLOYMENT.md](./
 
 ```shell
 git pull
-npm i
-npm run release
+pnpm i
+node --run release
 ```
 
 You can run the production build locally:
 
 ```shell
-npm run dev:test-production
+node --run dev:test-production
 ```
 
 ### Debugging production output

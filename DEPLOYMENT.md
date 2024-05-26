@@ -36,18 +36,18 @@ docker run -it --rm docker.pkg.github.com/lwjgl/lwjgl3-www/lwjgl-website sh
 
 ```shell
 git pull
-npm i
-npm run release
+pnpm i
+node --run release
 # to launch use:
-npm run test-production
+node --run test-production
 ```
 
 ## Build Docker image locally
 
 ```shell
 git pull
-npm i
-npm run release
+pnpm i
+node --run release
 docker build --rm -t lwjgl/website:latest .
 # To test the production docker image:
 docker-compose up
