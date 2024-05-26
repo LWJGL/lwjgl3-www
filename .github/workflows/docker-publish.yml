@@ -19,10 +19,10 @@ jobs:
     if: github.event_name == 'push'
 
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 22.x
       - uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -33,7 +33,7 @@ jobs:
         env:
           NODE_ENV: production
         run: |
-          npm i --force --production=false
+          pnpm i
           node ./scripts/build-styles.mjs
           node ./scripts/build-production.mjs
           node --no-warnings ./scripts/post-production.mjs
