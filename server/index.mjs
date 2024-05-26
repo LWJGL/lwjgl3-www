@@ -69,12 +69,7 @@ process.argv.slice(2).forEach(arg => {
 // ------------------------------------------------------------------------------
 
 if (PRODUCTION) {
-  global.manifest = (
-    await import('../public/manifest.json', {
-      assert: { type: 'json' },
-    })
-  ).default;
-
+  global.manifest = (await import('../public/manifest.json', { with: { type: 'json' } })).default;
   global.globalCss = await readFile(path.resolve(import.meta.dirname, '../public/global.min.css'), {
     encoding: 'utf-8',
   });

@@ -1,7 +1,10 @@
 FROM node:slim AS build
+ENV NODE_ENV production
+ENV CI true
 WORKDIR /srv
-COPY package.json package-lock.json .npmrc ./
-RUN npm ci --omit=dev --force --no-audit --no-fund
+COPY package.json pnpm-lock.yaml .npmrc ./
+RUN corepack enable
+RUN pnpm i
 
 FROM node:slim
 ENV NODE_ENV production
