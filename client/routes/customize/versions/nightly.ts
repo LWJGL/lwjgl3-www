@@ -20,6 +20,13 @@ export default (prev: BuildBindings): BuildBindings => ({
     [Binding.LMDB]: { ...(prev.byId[Binding.LMDB] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LZ4]: { ...(prev.byId[Binding.LZ4] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.MESHOPTIMIZER]: { ...(prev.byId[Binding.MESHOPTIMIZER] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.MSDFGEN]: {
+      id: Binding.MSDFGEN,
+      title: 'msdfgen',
+      description: 'Multi-channel signed distance field generator.',
+      natives: NATIVE_ALL,
+      website: 'https://github.com/Chlumsky/msdfgen',
+    },
     [Binding.NANOVG]: { ...(prev.byId[Binding.NANOVG] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.NFD]: { ...(prev.byId[Binding.NFD] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.NUKLEAR]: { ...(prev.byId[Binding.NUKLEAR] as BindingDefinition), natives: NATIVE_ALL },

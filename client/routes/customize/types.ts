@@ -41,6 +41,7 @@ export enum Binding {
   LZ4 = 'lwjgl-lz4',
   MEOW = 'lwjgl-meow',
   MESHOPTIMIZER = 'lwjgl-meshoptimizer',
+  MSDFGEN = 'lwjgl-msdfgen',
   NANOVG = 'lwjgl-nanovg',
   NFD = 'lwjgl-nfd',
   NUKLEAR = 'lwjgl-nuklear',
