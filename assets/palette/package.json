@@ -7,7 +7,7 @@
   "author": "Apostolos Tsakpinis <apostolos.tsakpinis@gmail.com>",
   "dependencies": {
     "@radix-ui/colors": "3.0.0",
-    "chroma-js": "2.4.2",
+    "chroma-js": "2.6.0",
     "ciebase": "0.1.1",
     "ciecam02": "0.4.6",
     "hsluv": "1.0.1"
