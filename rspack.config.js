@@ -18,7 +18,7 @@ const env = {
 
 const browserslistConfig = PRODUCTION
   ? {
-      targets: { chrome: '79', edge: '88', firefox: '85', safari: '13' },
+      targets: ['chrome >= 79', 'edge >= 88', 'firefox >= 85', 'safari >= 13'],
       entry: 'usage',
       coreJs: '3.38',
       loose: true,
@@ -26,7 +26,7 @@ const browserslistConfig = PRODUCTION
       // forceAllTransforms: true,
     }
   : {
-      targets: 'last 1 chrome version, last 1 firefox version, last 1 safari version',
+      targets: ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
       entry: 'usage',
       coreJs: '3.38',
       loose: true,
@@ -36,6 +36,7 @@ const browserslistConfig = PRODUCTION
 function buildConfiguration() {
   /** @type {import('@rspack/cli').Configuration} */
   const config = {
+    context: __dirname,
     experiments: {
       futureDefaults: true,
     },
@@ -68,16 +69,8 @@ function buildConfiguration() {
           options: {
             jsc: {
               externalHelpers: true,
-              parser: {
-                syntax: 'typescript',
-              },
-              transform: {
-                react: {
-                  runtime: 'automatic',
-                  development: !PRODUCTION,
-                  refresh: !PRODUCTION,
-                },
-              },
+              parser: { syntax: 'typescript' },
+              transform: { react: { runtime: 'automatic', development: !PRODUCTION, refresh: !PRODUCTION } },
             },
             env: browserslistConfig,
           },
@@ -89,17 +82,8 @@ function buildConfiguration() {
           options: {
             jsc: {
               externalHelpers: true,
-              parser: {
-                syntax: 'typescript',
-                tsx: true,
-              },
-              transform: {
-                react: {
-                  runtime: 'automatic',
-                  development: !PRODUCTION,
-                  refresh: !PRODUCTION,
-                },
-              },
+              parser: { syntax: 'typescript', tsx: true },
+              transform: { react: { runtime: 'automatic', development: !PRODUCTION, refresh: !PRODUCTION } },
             },
             env: browserslistConfig,
           },
