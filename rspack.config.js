@@ -67,24 +67,28 @@ function buildConfiguration() {
             jsc: {
               externalHelpers: true,
               parser: { syntax: 'typescript' },
-              transform: { react: { runtime: 'automatic', development: !PRODUCTION, refresh: !PRODUCTION } },
             },
             env: browserslistConfig,
           },
         },
         {
           test: /\.(j|t)sx$/,
-          loader: 'builtin:swc-loader',
           // exclude: [/[\\/]node_modules[\\/]/],
           include: [path.resolve(__dirname, '.')],
-          options: {
-            jsc: {
-              externalHelpers: true,
-              parser: { syntax: 'typescript', tsx: true },
-              transform: { react: { runtime: 'automatic', development: !PRODUCTION, refresh: !PRODUCTION } },
+          use: [
+            {
+              loader: 'builtin:swc-loader',
+              options: {
+                jsc: {
+                  externalHelpers: true,
+                  parser: { syntax: 'typescript', tsx: true },
+                  transform: { react: { runtime: 'automatic', development: !PRODUCTION, refresh: !PRODUCTION } },
+                },
+                env: browserslistConfig,
+              },
             },
-            env: browserslistConfig,
-          },
+            { loader: 'babel-loader' },
+          ],
         },
       ],
     },
@@ -127,8 +131,12 @@ function buildConfiguration() {
       }
     }
   } else {
+    // Compatibility with older browsers (no #private class fields, no public class fields)
     //@ts-ignore
-    config.module.rules[0].include.push(path.dirname(require.resolve('minimatch')));
+    config.module.rules[0].include.push(
+      path.dirname(require.resolve('minimatch')),
+      path.dirname(require.resolve('reselect')),
+    );
 
     if (ENABLE_PROFILING) {
       if (!config.resolve) {
