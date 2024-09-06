@@ -7,9 +7,19 @@ export function useMediaQuery(query: string, serverFallback: boolean = false): b
     return [
       () => mediaQueryList.matches,
       (notify: () => void) => {
-        mediaQueryList.addEventListener('change', notify);
+        if ('addEventListener' in mediaQueryList) {
+          mediaQueryList.addEventListener('change', notify);
+        } else {
+          //@ts-expect-error - Needed for Safari 13
+          mediaQueryList.addListener(notify);
+        }
         return () => {
-          mediaQueryList.removeEventListener('change', notify);
+          if ('removeEventListener' in mediaQueryList) {
+            mediaQueryList.removeEventListener('change', notify);
+          } else {
+            //@ts-expect-error - Needed for Safari 13
+            mediaQueryList.removeListener(notify);
+          }
         };
       },
       () => serverFallback,
