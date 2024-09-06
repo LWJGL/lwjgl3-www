@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { opendir, unlink, writeFile } from 'node:fs/promises';
-import webpack from 'webpack';
-import config from '../webpack.config.js';
+import { rspack } from '@rspack/core';
+import config from '../rspack.config.js';
 
 const buildPath = path.resolve(import.meta.dirname, '../public/js');
 
@@ -10,16 +10,13 @@ const buildDir = await opendir(buildPath);
 for await (const entry of buildDir) {
   const ext = path.extname(entry.name);
   // Remove all JS files and webpack manifest. Keep everything else, including deploy.json
-  if (ext === '.js' || (ext === '.json' && entry.name === 'webpack.manifest.json')) {
+  if (ext === '.js' || (ext === '.json' && entry.name === 'compiler.manifest.json')) {
     await unlink(path.resolve(buildPath, entry.name));
   }
 }
 
-// console.log(`Compiling JS in ${process.env.NODE_ENV === 'production' ? 'production' : 'development'} mode...`);
-
 // Build with webpack
-config.plugins.push(new webpack.ProgressPlugin());
-const compiler = webpack(config);
+const compiler = rspack(config);
 compiler.run((err, stats) => {
   compiler.close(async () => {
     if (err) {
@@ -56,7 +53,7 @@ compiler.run((err, stats) => {
     }
 
     await writeFile(
-      path.resolve(import.meta.dirname, '../public/js/webpack.manifest.json'),
+      path.resolve(import.meta.dirname, '../public/js/compiler.manifest.json'),
       JSON.stringify(
         stats.toJson({
           colors: false,

@@ -10,7 +10,7 @@ import prettyBytes from './lib/prettyBytes.mjs';
 import formatSize from './lib/formatSize.mjs';
 import ellipsis from './lib/ellipsis.mjs';
 
-import manifest from '../public/js/webpack.manifest.json' with { type: 'json' };
+import manifest from '../public/js/compiler.manifest.json' with { type: 'json' };
 
 /*
   POST PRODUCTION:
