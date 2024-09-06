@@ -19,18 +19,14 @@ const env = {
 const browserslistConfig = PRODUCTION
   ? {
       targets: ['chrome >= 79', 'edge >= 88', 'firefox >= 85', 'safari >= 13'],
-      entry: 'usage',
+      entry: 'entry',
       coreJs: '3.38',
-      loose: true,
       shippedProposals: true,
+      // loose: true, // Breaks #private class fields
       // forceAllTransforms: true,
     }
   : {
       targets: ['last 1 chrome version', 'last 1 firefox version', 'last 1 safari version'],
-      entry: 'usage',
-      coreJs: '3.38',
-      loose: true,
-      shippedProposals: true,
     };
 
 function buildConfiguration() {
@@ -64,8 +60,9 @@ function buildConfiguration() {
       rules: [
         {
           test: /\.(j|t)s$/,
-          exclude: [/[\\/]node_modules[\\/]/],
           loader: 'builtin:swc-loader',
+          // exclude: [/[\\/]node_modules[\\/]/],
+          include: [path.resolve(__dirname, '.')],
           options: {
             jsc: {
               externalHelpers: true,
@@ -78,7 +75,8 @@ function buildConfiguration() {
         {
           test: /\.(j|t)sx$/,
           loader: 'builtin:swc-loader',
-          exclude: [/[\\/]node_modules[\\/]/],
+          // exclude: [/[\\/]node_modules[\\/]/],
+          include: [path.resolve(__dirname, '.')],
           options: {
             jsc: {
               externalHelpers: true,
@@ -129,6 +127,9 @@ function buildConfiguration() {
       }
     }
   } else {
+    //@ts-ignore
+    config.module.rules[0].include.push(path.dirname(require.resolve('minimatch')));
+
     if (ENABLE_PROFILING) {
       if (!config.resolve) {
         config.resolve = {};
