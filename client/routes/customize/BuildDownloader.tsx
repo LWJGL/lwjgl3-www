@@ -106,6 +106,7 @@ interface BuildDownloaderProps {
   ref: React.Ref<DownloadHandle>;
 }
 export const BuildDownloader: React.FC<BuildDownloaderProps> = ({ ref }) => {
+  'use no memo';
   const store = useStore();
   const [isDownloading, setIsDownloading] = useState(false);
   const usingNetworkRef = useRef(false);

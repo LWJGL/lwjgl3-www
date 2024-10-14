@@ -101,7 +101,7 @@ The following debugging tips may come in handy:
 - Prevent Terser from dropping `console.log` or `debugger` by changing `terserOptions` in [terser-config.json](./scripts/terser-config.json)
 - Set `PROFILING=1` env variable to load React profiling builds
 - Output `named` module & chunk ids in [webpack.config.js](./webpack.config.js)
-- Analyze build output with `npx webpack-bundle-analyzer public/js/manifest.json -h 0.0.0.0` (for full breakdown, change to `all: true` when writing `manifest.json` in [build-production.js](./scripts/build-production.mjs))
+- Analyze build output with `npx webpack-bundle-analyzer public/js/build.manifest.json -h 0.0.0.0` (for full breakdown, change to `all: true` when writing `build.manifest.json` in [build-production.js](./scripts/build-production.mjs))
 
 ## Other LWJGL subdomains:
 

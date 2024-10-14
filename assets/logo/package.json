@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "dependencies": {
-    "puppeteer-core": "23.3.0"
+    "puppeteer-core": "23.5.3"
   }
 }
