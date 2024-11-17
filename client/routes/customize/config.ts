@@ -261,7 +261,7 @@ function getInitialConfig(): BuildStore {
           maven: {
             groupId: 'org.lwjglx',
             artifactId: 'lwjgl3-awt',
-            version: '0.1.8',
+            version: '0.2.2',
           },
         },
         [Addon.Steamworks4J]: {
