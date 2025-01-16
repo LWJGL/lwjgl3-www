@@ -229,7 +229,7 @@ function getInitialConfig(): BuildStore {
           maven: {
             groupId: 'org.joml',
             artifactId: 'joml',
-            version: '1.10.7',
+            version: '1.10.8',
           },
         },
         [Addon.JOMLPrimitives]: {
