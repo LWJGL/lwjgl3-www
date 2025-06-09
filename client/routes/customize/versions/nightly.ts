@@ -26,6 +26,14 @@ export default (prev: BuildBindings): BuildBindings => {
         natives: NATIVE_ALL,
         website: 'https://www.libsdl.org/',
       },
+      [Binding.SPNG]: {
+        id: Binding.SPNG,
+        title: 'Simple PNG (libspng)',
+        description:
+          'A C library for reading and writing Portable Network Graphics (PNG) format files with a focus on security and easy of use.',
+        natives: NATIVE_ALL,
+        website: 'https://libspng.org/',
+      },
     },
   };
 };

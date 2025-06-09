@@ -62,6 +62,7 @@ export enum Binding {
   RPMALLOC = 'lwjgl-rpmalloc',
   SDL = 'lwjgl-sdl',
   SHADERC = 'lwjgl-shaderc',
+  SPNG = 'lwjgl-spng',
   SPVC = 'lwjgl-spvc',
   SSE = 'lwjgl-sse',
   STB = 'lwjgl-stb',
