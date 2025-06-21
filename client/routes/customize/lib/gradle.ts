@@ -165,9 +165,9 @@ export function generateGradle({
 \tmavenCentral()`;
   if (build !== BuildType.Release) {
     if (language === Language.Groovy) {
-      script += `\n\tmaven { url "https://oss.sonatype.org/content/repositories/snapshots/" }`;
+      script += `\n\tmaven { url "https://central.sonatype.com/repository/maven-snapshots" }`;
     } else {
-      script += `\n\tmaven("https://oss.sonatype.org/content/repositories/snapshots/")`;
+      script += `\n\tmaven("https://central.sonatype.com/repository/maven-snapshots")`;
     }
   }
   script += `

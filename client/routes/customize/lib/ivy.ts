@@ -49,7 +49,7 @@ export function generateIvy({
     script += `<settings defaultResolver="maven-with-snapshots"/>
 <resolvers>
 \t<chain name="maven-with-snapshots">
-\t\t<ibiblio name="sonatype-snapshots" m2compatible="true" root="https://oss.sonatype.org/content/repositories/snapshots/"/>
+\t\t<ibiblio name="central-snapshots" m2compatible="true" root="https://central.sonatype.com/repository/maven-snapshots"/>
 \t\t<ibiblio name="maven-central" m2compatible="true"/>
 \t</chain>
 </resolvers>\n\n`;

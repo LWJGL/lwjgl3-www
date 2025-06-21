@@ -109,8 +109,8 @@ export function generateMaven({
   if (build !== BuildType.Release) {
     script += `<repositories>
 \t<repository>
-\t\t<id>sonatype-snapshots</id>
-\t\t<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+\t\t<id>central-snapshots</id>
+\t\t<url>https://central.sonatype.com/repository/maven-snapshots</url>
 \t\t<releases><enabled>false</enabled></releases>
 \t\t<snapshots><enabled>true</enabled></snapshots>
 \t</repository>
