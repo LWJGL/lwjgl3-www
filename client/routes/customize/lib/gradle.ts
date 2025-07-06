@@ -191,7 +191,7 @@ dependencies {`;
       (artifact, groupId, artifactId, hasEnabledNativePlatform) =>
         `\n\timplementation "${groupId}:${artifactId}${hasBoM ? '' : `:${v}`}"`,
       (artifact, groupId, artifactId) =>
-        `\n\t${guardNative(artifact, platform)}runtimeOnly "${groupId}:${artifactId}:${
+        `\n\t${guardNative(artifact, platform)}implementation "${groupId}:${artifactId}:${
           hasBoM ? '' : `${v}`
         }:${classifier}"`,
     );
@@ -221,7 +221,7 @@ dependencies {`;
         `\n\t${guardNative(
           artifact,
           platform,
-        )}runtimeOnly("${groupId}", "${artifactId}"${v}, classifier = ${classifier})`,
+        )}implementation ("${groupId}", "${artifactId}"${v}, classifier = ${classifier})`,
     );
 
     selectedAddons.forEach((id: Addon) => {
