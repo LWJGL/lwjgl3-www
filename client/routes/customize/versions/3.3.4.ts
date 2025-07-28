@@ -1,4 +1,4 @@
-import { Binding, BindingDefinition, Native, NATIVE_ALL, Version } from '../types';
+import { Binding, BindingDefinition, Native, NATIVE_LTE_322, NATIVE_ALL, Version } from '../types';
 import type { BuildBindings } from '../types';
 
 export default (prev: BuildBindings): BuildBindings => ({
@@ -8,13 +8,37 @@ export default (prev: BuildBindings): BuildBindings => ({
     ...prev.byId,
     [Binding.LWJGL]: { ...(prev.byId[Binding.LWJGL] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.ASSIMP]: { ...(prev.byId[Binding.ASSIMP] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.BGFX]: { ...(prev.byId[Binding.BGFX] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.BGFX]: {
+      ...(prev.byId[Binding.BGFX] as BindingDefinition),
+      natives: [
+        ...NATIVE_LTE_322,
+        Native.FreeBSD,
+        Native.LinuxARM64,
+        Native.LinuxARM32,
+        Native.LinuxPPC64LE,
+        Native.LinuxRISCV64,
+        Native.MacOSARM64,
+        Native.WindowsX86,
+      ],
+    },
     [Binding.FREETYPE]: { ...(prev.byId[Binding.FREETYPE] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.GLFW]: { ...(prev.byId[Binding.GLFW] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.HARFBUZZ]: { ...(prev.byId[Binding.HARFBUZZ] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.HWLOC]: { ...(prev.byId[Binding.HWLOC] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.JEMALLOC]: { ...(prev.byId[Binding.JEMALLOC] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.KTX]: { ...(prev.byId[Binding.KTX] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.KTX]: {
+      ...(prev.byId[Binding.KTX] as BindingDefinition),
+      natives: [
+        ...NATIVE_LTE_322,
+        Native.FreeBSD,
+        Native.LinuxARM64,
+        Native.LinuxARM32,
+        Native.LinuxPPC64LE,
+        Native.LinuxRISCV64,
+        Native.MacOSARM64,
+        Native.WindowsARM64,
+      ],
+    },
     [Binding.LIBDIVIDE]: { ...(prev.byId[Binding.LIBDIVIDE] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LLVM]: { ...(prev.byId[Binding.LLVM] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.LMDB]: { ...(prev.byId[Binding.LMDB] as BindingDefinition), natives: NATIVE_ALL },
@@ -49,9 +73,22 @@ export default (prev: BuildBindings): BuildBindings => ({
     },
     [Binding.OPUS]: { ...(prev.byId[Binding.OPUS] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.PAR]: { ...(prev.byId[Binding.PAR] as BindingDefinition), natives: NATIVE_ALL },
-    [Binding.REMOTERY]: { ...(prev.byId[Binding.REMOTERY] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.REMOTERY]: {
+      ...(prev.byId[Binding.REMOTERY] as BindingDefinition),
+      natives: [
+        ...NATIVE_LTE_322,
+        Native.FreeBSD,
+        Native.LinuxARM64,
+        Native.LinuxARM32,
+        Native.LinuxPPC64LE,
+        Native.LinuxRISCV64,
+        Native.MacOSARM64,
+        Native.WindowsX86,
+      ],
+    },
     [Binding.RPMALLOC]: { ...(prev.byId[Binding.RPMALLOC] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.SHADERC]: { ...(prev.byId[Binding.SHADERC] as BindingDefinition), natives: NATIVE_ALL },
+    [Binding.SPVC]: { ...(prev.byId[Binding.SPVC] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.STB]: { ...(prev.byId[Binding.STB] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.TINYEXR]: { ...(prev.byId[Binding.TINYEXR] as BindingDefinition), natives: NATIVE_ALL },
     [Binding.TINYFD]: { ...(prev.byId[Binding.TINYFD] as BindingDefinition), natives: NATIVE_ALL },
