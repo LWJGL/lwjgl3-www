@@ -3,6 +3,7 @@ ENV NODE_ENV production
 ENV CI true
 WORKDIR /srv
 COPY package.json pnpm-lock.yaml .npmrc ./
+RUN npm -g i corepack
 RUN corepack enable
 RUN pnpm i
 
