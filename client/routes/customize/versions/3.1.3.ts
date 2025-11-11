@@ -12,7 +12,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       description:
         'A public domain cross platform lock free thread caching 16-byte aligned memory allocator implemented in C.',
       natives: NATIVE_LTE_322,
-      website: 'https://github.com/rampantpixels/rpmalloc',
+      website: 'https://github.com/mjansson/rpmalloc',
     },
   },
 });

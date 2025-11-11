@@ -26,7 +26,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'Yoga',
       description: 'An open-source, cross-platform layout library that implements Flexbox.',
       natives: NATIVE_LTE_322,
-      website: 'https://facebook.github.io/yoga/',
+      website: 'https://www.yogalayout.dev/',
     },
   },
 });

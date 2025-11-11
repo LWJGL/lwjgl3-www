@@ -13,7 +13,6 @@ export default (prev: BuildBindings): BuildBindings => ({
         'A cross-platform, graphics API agnostic rendering library. It provides a high performance, low level abstraction for common platform graphics APIs like OpenGL, Direct3D and Apple Metal.',
       natives: NATIVE_LTE_322,
       website: 'https://github.com/bkaradzic/bgfx',
-      presets: [Preset.GettingStarted],
     },
     [Binding.LMDB]: {
       id: Binding.LMDB,
@@ -28,7 +27,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'Nuklear',
       description: 'A minimal state immediate mode graphical user interface toolkit.',
       natives: NATIVE_LTE_322,
-      website: 'https://github.com/Immediate-Mode-UI/Nuklear',
+      website: 'https://immediate-mode-ui.github.io/Nuklear/',
       presets: [Preset.GettingStarted],
     },
     [Binding.TINYFD]: {
@@ -36,7 +35,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'Tiny File Dialogs',
       description: 'Provides basic modal dialogs.',
       natives: NATIVE_LTE_322,
-      website: 'https://sourceforge.net/projects/tinyfiledialogs/files/',
+      website: 'https://sourceforge.net/projects/tinyfiledialogs/',
     },
   },
 });

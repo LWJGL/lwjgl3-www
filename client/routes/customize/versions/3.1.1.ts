@@ -11,7 +11,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'Assimp',
       description: 'A portable Open Source library to import various well-known 3D model formats in a uniform manner.',
       natives: NATIVE_LTE_322,
-      website: 'http://www.assimp.org/',
+      website: 'https://www.assimp.org/',
       presets: [Preset.GettingStarted, Preset.OpenGL, Preset.OpenGLES, Preset.Vulkan],
     },
     [Binding.OPENGL]: {

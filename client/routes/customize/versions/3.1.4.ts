@@ -12,14 +12,14 @@ export default (prev: BuildBindings): BuildBindings => ({
       description:
         'LZ4 is a lossless data compression algorithm that is focused on compression and decompression speed.',
       natives: NATIVE_LTE_322,
-      website: 'http://lz4.github.io/lz4/',
+      website: 'https://lz4.org/',
     },
     [Binding.ODBC]: {
       id: Binding.ODBC,
       title: 'ODBC',
       description:
         'A C programming language interface that makes it possible for applications to access data from a variety of database management systems (DBMSs).',
-      website: 'https://docs.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc',
+      website: 'https://learn.microsoft.com/en-us/sql/odbc/microsoft-open-database-connectivity-odbc',
     },
     [Binding.REMOTERY]: {
       id: Binding.REMOTERY,
@@ -34,7 +34,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       description:
         'Zstandard (zstd) is a fast lossless compression algorithm, targeting real-time compression scenarios at zlib-level and better compression ratios.',
       natives: NATIVE_LTE_322,
-      website: 'http://facebook.github.io/zstd/',
+      website: 'https://facebook.github.io/zstd/',
     },
   },
 });

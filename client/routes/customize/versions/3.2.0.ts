@@ -11,7 +11,7 @@ export default (prev: BuildBindings): BuildBindings => ({
       title: 'Vulkan Memory Allocator',
       description: 'An easy to integrate Vulkan memory allocation library.',
       natives: NATIVE_LTE_322,
-      website: 'https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator',
+      website: 'https://gpuopen.com/vulkan-memory-allocator/',
     },
     [Binding.VULKAN]: {
       ...(prev.byId[Binding.VULKAN] as BindingDefinition),

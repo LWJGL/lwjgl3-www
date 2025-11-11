@@ -42,7 +42,7 @@ export default (): BuildBindings => ({
       description:
         'A general purpose malloc implementation that emphasizes fragmentation avoidance and scalable concurrency support.',
       natives: NATIVE_LTE_322,
-      website: 'http://jemalloc.net/',
+      website: 'https://jemalloc.net/',
     },
     [Binding.NANOVG]: {
       id: Binding.NANOVG,
@@ -55,10 +55,10 @@ export default (): BuildBindings => ({
     },
     [Binding.NFD]: {
       id: Binding.NFD,
-      title: 'Native File Dialog',
+      title: 'Native File Dialog Extended',
       description: 'A small C library that portably invokes native file open, folder select and file save dialogs.',
       natives: NATIVE_LTE_322,
-      website: 'https://github.com/mlabbe/nativefiledialog',
+      website: 'https://github.com/btzy/nativefiledialog-extended',
     },
     [Binding.OPENAL]: {
       id: Binding.OPENAL,
@@ -135,7 +135,7 @@ export default (): BuildBindings => ({
       title: 'xxHash',
       description: 'An Extremely fast Hash algorithm, running at RAM speed limits.',
       natives: NATIVE_LTE_322,
-      website: 'https://cyan4973.github.io/xxHash/',
+      website: 'https://xxhash.com/',
     },
   },
 });
