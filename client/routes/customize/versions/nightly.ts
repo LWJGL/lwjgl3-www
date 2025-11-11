@@ -18,6 +18,12 @@ export default (prev: BuildBindings): BuildBindings => {
     alias: Version.Nightly,
     byId: {
       ...bindings340,
+      [Binding.RENDERDOC]: {
+        id: Binding.RENDERDOC,
+        title: 'RenderDoc',
+        description: 'An API to control the RenderDoc GPU debugger.',
+        website: 'https://renderdoc.org/',
+      },
       [Binding.SDL]: {
         id: Binding.SDL,
         title: 'SDL (Simple DirectMedia Layer)',
