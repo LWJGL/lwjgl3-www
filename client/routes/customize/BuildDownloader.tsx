@@ -4,7 +4,7 @@ import {
   useState,
   useImperativeHandle,
   useEffect,
-  experimental_useEffectEvent as useEffectEvent,
+  useEffectEvent,
 } from 'react';
 import { usePreventScroll } from '@react-aria/overlays';
 import { styled } from '~/theme/stitches.config';

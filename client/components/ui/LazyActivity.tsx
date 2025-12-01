@@ -1,4 +1,4 @@
-import { unstable_Activity as Activity, useEffect, useRef } from 'react';
+import { Activity, useEffect, useRef } from 'react';
 
 // Wrapper around the Activity API that defers rendering the Activity tree initially,
 // until it's been explicitly marked as "visible".
