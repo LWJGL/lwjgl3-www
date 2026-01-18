@@ -1,10 +1,10 @@
 [production]
 # Run `pnpm dlx autoprefixer --info` to view CSS properties that need polyfill
-# From: https://github.com/adobe/react-spectrum/blob/main/.browserslistrc
-chrome >= 79
-edge >= 88
-firefox >= 85
-safari >= 13
+# Follows: https://github.com/vercel/next.js/blob/canary/packages/next/src/shared/lib/modern-browserslist-target.js
+chrome >= 111
+edge >= 111
+firefox >= 111
+safari 16.4
 
 [legacy]
 # https://github.com/browserslist/browserslist

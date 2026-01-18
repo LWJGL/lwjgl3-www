@@ -1,14 +1,7 @@
-import {
-  useCallback,
-  useRef,
-  useState,
-  useImperativeHandle,
-  useEffect,
-  useEffectEvent,
-} from 'react';
+import { useCallback, useRef, useState, useImperativeHandle, useEffect, useEffectEvent } from 'react';
 import { usePreventScroll } from '@react-aria/overlays';
 import { styled } from '~/theme/stitches.config';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { BackdropCss } from '~/components/ui/Backdrop';
 import { CircularProgress } from '~/components/ui/CircularProgress';
 import { Grid } from '~/components/layout/Grid';

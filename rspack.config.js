@@ -36,6 +36,7 @@ function buildConfiguration() {
     experiments: {
       futureDefaults: true,
     },
+    lazyCompilation: false,
     mode: PRODUCTION ? 'production' : 'development',
     target: PRODUCTION ? 'browserslist' : 'web',
     devtool: false,

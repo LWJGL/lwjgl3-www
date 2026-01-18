@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { useLocation } from '~/components/router/client';
 import { usePreventScroll } from '@react-aria/overlays';
-import { motion, useMotionValue, useMotionTemplate, useTransform, animate, type PanInfo } from 'framer-motion';
+import { motion, useMotionValue, useMotionTemplate, useTransform, animate, type PanInfo } from 'motion/react';
 import { useBreakpoint, Breakpoint } from '~/hooks/useBreakpoint';
 import { supportsDialog } from '~/services/dialog';
 
