@@ -275,7 +275,7 @@ function getInitialConfig(): BuildStore {
           maven: {
             groupId: 'com.code-disaster.steamworks4j',
             artifactId: 'steamworks4j',
-            version: '1.9.0',
+            version: '1.10.0',
           },
         },
         [Addon.Steamworks4JServer]: {
@@ -287,7 +287,7 @@ function getInitialConfig(): BuildStore {
           maven: {
             groupId: 'com.code-disaster.steamworks4j',
             artifactId: 'steamworks4j-server',
-            version: '1.9.0',
+            version: '1.10.0',
           },
         },
       },
