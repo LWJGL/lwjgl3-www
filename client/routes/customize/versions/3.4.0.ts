@@ -16,7 +16,6 @@ export default (prev: BuildBindings): BuildBindings => {
   return {
     ...prev,
     version: Version.LWJGL340,
-    alias: Version.Nightly,
     byId: {
       ...bindings340,
       [Binding.RENDERDOC]: {

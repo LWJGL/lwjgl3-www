@@ -360,7 +360,7 @@ function getInitialConfig(): BuildStore {
     config.lwjgl[build.alias !== undefined ? build.alias : build.version] = build;
     return build;
   }, build);
-
+  
   // Versions
   config.versions = Object.keys(config.lwjgl)
     .map((it) => config.lwjgl[it])
