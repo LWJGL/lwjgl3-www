@@ -34,7 +34,7 @@
     "@fastify/view": "11.1.1",
     "fastify": "5.7.1",
     "mime": "4.1.0",
-    "minimatch": "10.1.1",
+    "minimatch": "10.2.1",
     "pug": "3.0.3"
   },
   "devDependencies": {
