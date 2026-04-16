@@ -29,7 +29,7 @@
     "@fastify/accepts": "5.0.4",
     "@fastify/etag": "6.1.0",
     "@fastify/helmet": "13.0.2",
-    "@fastify/http-proxy": "11.4.1",
+    "@fastify/http-proxy": "11.4.4",
     "@fastify/static": "9.0.0",
     "@fastify/view": "11.1.1",
     "fastify": "5.7.1",
