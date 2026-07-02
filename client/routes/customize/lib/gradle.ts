@@ -203,8 +203,8 @@ dependencies {`;
       script += `\n\timplementation "${groupId}:${artifactId}:${hardcoded ? version : `\${${id}Version}`}"`;
     });
   } else {
-    const v = hasBoM ? '' : `, ${hardcoded ? `"${versionString}"` : 'lwjglVersion'}`;
-    const classifier = !hardcoded || platformSingle == null ? 'lwjglNatives' : `"natives-${platformSingle}"`;
+    const v = hasBoM ? '' : hardcoded ? versionString : '$lwjglVersion';
+    const classifier = !hardcoded || platformSingle == null ? '$lwjglNatives' : `natives-${platformSingle}`;
     if (hasBoM) {
       script += `
 \timplementation(platform("org.lwjgl:lwjgl-bom:${hardcoded ? versionString : '$lwjglVersion'}"))
@@ -216,20 +216,20 @@ dependencies {`;
       platform,
       osgi,
       (artifact, groupId, artifactId, hasEnabledNativePlatform) =>
-        `\n\timplementation("${groupId}", "${artifactId}"${v})`,
+        `\n\timplementation("${groupId}:${artifactId}${v?':':''}${v}")`,
       (artifact, groupId, artifactId) =>
         `\n\t${guardNative(
           artifact,
           platform,
-        )}implementation ("${groupId}", "${artifactId}"${v}, classifier = ${classifier})`,
+        )}implementation("${groupId}:${artifactId}:${v}:${classifier}")`,
     );
 
     selectedAddons.forEach((id: Addon) => {
       const {
         maven: { groupId, artifactId, version },
       } = addons[id];
-      const v = id.indexOf('-') === -1 ? `${id}Version` : `\`${id}Version\``;
-      script += `\n\timplementation("${groupId}", "${artifactId}", ${hardcoded ? `"${version}"` : v})`;
+      const v = id.indexOf('-') === -1 ? `$${id}Version` : `$\{\`${id}Version\`}`;
+      script += `\n\timplementation("${groupId}:${artifactId}:${hardcoded ? `${version}` : v}")`;
     });
   }
 
