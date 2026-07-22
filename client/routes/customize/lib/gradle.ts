@@ -121,9 +121,9 @@ export function generateGradle({
       if (linuxArches != 0) {
         script +=
           linuxArches == 1
-            ? `\n\t\tarrayOf("Linux", "SunOS", "Unit").any { name.startsWith(it) } ->
+            ? `\n\t\tarrayOf("Linux", "SunOS", "Unix").any { name.startsWith(it) } ->
 \t\t\t"natives-linux${getLinuxSuffix(platform)}"`
-            : `\n\t\tarrayOf("Linux", "SunOS", "Unit").any { name.startsWith(it) } ->
+            : `\n\t\tarrayOf("Linux", "SunOS", "Unix").any { name.startsWith(it) } ->
 \t\t\tif (arrayOf("arm", "aarch64").any { arch.startsWith(it) })
 \t\t\t\t"natives-linux\${if (arch.contains("64") || arch.startsWith("armv8")) "-arm64" else "-arm32"}"
 \t\t\telse if (arch.startsWith("ppc"))
