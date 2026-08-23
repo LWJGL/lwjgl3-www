@@ -39,7 +39,7 @@ git pull
 pnpm i
 node --run release
 # to launch use:
-node --run test-production
+node --run dev:test-production
 ```
 
 ## Build Docker image locally
@@ -69,7 +69,7 @@ services:
 ## Deploy on ECS
 
 ```bash
-./aws/update.sh
+./scripts/aws/update.sh
 # after rollout has completed, run
-./aws/invalidate.sh
+./scripts/aws/invalidate.sh
 ```
