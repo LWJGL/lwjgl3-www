@@ -37,6 +37,7 @@ export const BuildConfigArea = styled('div', {
       borderColor: '$accent1',
     },
     py: '$gutter',
+    pb: '100px',
   },
 });
 
